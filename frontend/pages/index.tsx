@@ -109,6 +109,7 @@ const Home: NextPage = () => {
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
                   alt="Workflow"
+                  layout="fill"
                 />
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
@@ -151,6 +152,7 @@ const Home: NextPage = () => {
                 className="h-8 w-auto"
                 src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
                 alt="Workflow"
+                layout="fill"
               />
             </div>
             <div className="mt-5 flex-1 flex flex-col">
@@ -226,6 +228,7 @@ const Home: NextPage = () => {
                       className="h-8 w-8 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
+                      layout="fill"
                     />
                   </Menu.Button>
                 </div>
