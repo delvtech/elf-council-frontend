@@ -133,7 +133,7 @@ const Home: NextPage = () => {
                       )}
                     >
                       <item.icon
-                        className="mr-4 flex-shrink-0 h-6 w-6 text-blue-500"
+                        className="mr-4 flex-shrink-0 h-6 w-6 text-blue-400"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -171,7 +171,7 @@ const Home: NextPage = () => {
                     )}
                   >
                     <item.icon
-                      className="mr-3 flex-shrink-0 h-6 w-6 text-blue-600"
+                      className="mr-3 flex-shrink-0 h-6 w-6 text-blue-400"
                       aria-hidden="true"
                     />
                     {item.name}
@@ -269,7 +269,8 @@ const Home: NextPage = () => {
         <main className="flex-1 relative overflow-y-auto focus:outline-none">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              <h1 className="text-2xl font-semibold text-gray-900">
+              {/* This changes sidebar text colour*/}
+              <h1 className="text-2xl font-semibold text-blue-400">
                 Dashboard
               </h1>
             </div>
