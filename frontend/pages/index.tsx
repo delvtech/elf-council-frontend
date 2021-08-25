@@ -63,7 +63,9 @@ const Home: NextPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="h-screen flex overflow-hidden bg-gray-100">
+
+    /* changes the background colour of main overview (not sidebar) */   
+    <div className="h-screen flex overflow-hidden bg-blue-50">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
@@ -150,7 +152,7 @@ const Home: NextPage = () => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden bg-blue-50 md:flex md:flex-shrink-0">
+      <div className="hidden bg-gray-50 md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow pt-4 pb-4 overflow-y-auto">
@@ -186,7 +188,7 @@ const Home: NextPage = () => {
         <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
           <button
             type="button"
-            className="px-4 border-r border-gray-50 text-gray-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
+            className="px-4 border-r border-blue-50 text-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
@@ -194,17 +196,7 @@ const Home: NextPage = () => {
           </button>
           <div className="flex-1 px-4 flex justify-between">
             <div className="flex-1 flex">
-              <form className="w-full flex md:ml-0" action="#" method="GET">
-                <label htmlFor="search-field" className="sr-only">
-                  Search
-                </label>
-                <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                  <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                    <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  
-                </div>
-              </form>
+          
             </div>
             <div className="ml-4 flex items-center md:ml-6">
               <button
@@ -264,7 +256,7 @@ const Home: NextPage = () => {
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* This changes sidebar text colour*/}
-              <h1 className="text-2xl font-semibold text-blue-400">
+              <h1 className="text-2xl font-semibold text-blue-600">
                 Governance Overview
               </h1>
             </div>
