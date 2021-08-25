@@ -39,14 +39,6 @@ import Img from "next/image";
 */
 
 const navigation = [
-
-  <Img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
-                  alt="Workflow"
-                  layout="fill"
-                />
-
   { name: "Overview", href: "#", icon: HomeIcon, current: true },
   { name: "Proposals", href: "#", icon: PencilIcon, current: false },
   { name: "Leaderboard", href: "#", icon: UserGroupIcon, current: false },
