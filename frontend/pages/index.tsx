@@ -40,7 +40,13 @@ import Img from "next/image";
 
 const navigation = [
 
-  
+  <Img
+                  className="h-8 w-auto"
+                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
+                  alt="Workflow"
+                  layout="fill"
+                />
+
   { name: "Overview", href: "#", icon: HomeIcon, current: true },
   { name: "Proposals", href: "#", icon: PencilIcon, current: false },
   { name: "Leaderboard", href: "#", icon: UserGroupIcon, current: false },
@@ -256,9 +262,8 @@ const Home: NextPage = () => {
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* This changes sidebar text colour*/}
-              <h1 className="text-2xl font-semibold text-blue-400">        
-                <center> Governance Overview </center> 
-              </h1>
+              <h1 className="text-2xl font-semibold text-blue-400">                
+                <center> Governance Overview </center> </h1>   
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* If we want to put borders we put them here */}
