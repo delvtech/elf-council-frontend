@@ -202,13 +202,7 @@ const Home: NextPage = () => {
                   <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
                     <SearchIcon className="h-5 w-5" aria-hidden="true" />
                   </div>
-                  <input
-                    id="search-field"
-                    className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
-                    placeholder="Search"
-                    type="search"
-                    name="search"
-                  />
+                  
                 </div>
               </form>
             </div>
@@ -271,13 +265,12 @@ const Home: NextPage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* This changes sidebar text colour*/}
               <h1 className="text-2xl font-semibold text-blue-400">
-                Dashboard
+                Governance Overview
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {/* Replace with your content */}
+              {/* If we want to put borders we put them here */}
               <div className="py-4">
-                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
               </div>
               {/* /End replace */}
             </div>
