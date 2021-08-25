@@ -185,7 +185,7 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+        <div className="relative z-10 flex-shrink-0 flex h-16 bg-gray shadow">
           <button
             type="button"
             className="px-4 border-r border-blue-50 text-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
@@ -236,7 +236,7 @@ const Home: NextPage = () => {
                           <a
                             href={item.href}
                             className={classNames(
-                              active ? "bg-gray-100" : "",
+                              active ? "bg-blue-50" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
                           >
@@ -256,8 +256,8 @@ const Home: NextPage = () => {
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* This changes sidebar text colour*/}
-              <h1 className="text-2xl font-semibold text-blue-600">
-                Governance Overview
+              <h1 className="text-2xl font-semibold text-blue-400">        
+                <center> Governance Overview </center> 
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
