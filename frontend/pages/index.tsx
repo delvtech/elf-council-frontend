@@ -107,7 +107,7 @@ const Home: NextPage = () => {
                     onClick={() => setSidebarOpen(false)}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XIcon className="h-6 w-6 text-blue" aria-hidden="true" />
+                    <XIcon className="h-6 w-6 text-blue-400" aria-hidden="true" />
                   </button>
                 </div>
               </Transition.Child>
@@ -150,7 +150,7 @@ const Home: NextPage = () => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden bg-gray-50 md:flex md:flex-shrink-0">
+      <div className="hidden bg-blue-50 md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow pt-4 pb-4 overflow-y-auto">
@@ -199,7 +199,7 @@ const Home: NextPage = () => {
             <div className="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
-                className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="bg-white p-1 rounded-full text-blue-400 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 <span className="sr-only">View notifications</span>
                 <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -235,7 +235,7 @@ const Home: NextPage = () => {
                             href={item.href}
                             className={classNames(
                               active ? "bg-blue-50" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              "block px-4 py-2 text-sm text-blue-700"
                             )}
                           >
                             {item.name}
@@ -255,7 +255,7 @@ const Home: NextPage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* This changes sidebar text colour*/}
               <h1 className="text-2xl font-semibold text-blue-400">                
-                <center> Governance Overview </center> </h1>   
+                 Governance Overview </h1>   
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* If we want to put borders we put them here */}
