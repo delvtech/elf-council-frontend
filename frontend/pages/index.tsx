@@ -19,12 +19,22 @@ import {
 import Img from "next/image";
 
 const navigation = [
-  { name: "Overview", href: "#", icon: HomeIcon, current: true },
-  { name: "Proposals", href: "#", icon: PencilIcon, current: false },
-  { name: "Leaderboard", href: "#", icon: UserGroupIcon, current: false },
-  { name: "Delegate", href: "#", icon: UserAddIcon, current: false },
-  { name: "Forum", href: "#", icon: ChatAltIcon, current: false },
-  { name: "Resources", href: "#", icon: DocumentTextIcon, current: false },
+  { name: "Overview", href: "/overview", icon: HomeIcon, current: true },
+  { name: "Proposals", href: "/proposals", icon: PencilIcon, current: false },
+  {
+    name: "Leaderboard",
+    href: "/leaderboard",
+    icon: UserGroupIcon,
+    current: false,
+  },
+  { name: "Delegate", href: "/delegate", icon: UserAddIcon, current: false },
+  { name: "Forum", href: "/forum", icon: ChatAltIcon, current: false },
+  {
+    name: "Resources",
+    href: "/resources",
+    icon: DocumentTextIcon,
+    current: false,
+  },
 ];
 
 const userNavigation = [
