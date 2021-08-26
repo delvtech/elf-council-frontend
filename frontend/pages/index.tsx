@@ -5,47 +5,37 @@ import "tailwindcss/tailwind.css";
 import { Dialog, Menu, Transition } from "@headlessui/react";
 import {
   BellIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  CollectionIcon,
-  FolderIcon,
-  GiftIcon,
   HomeIcon,
-  InboxIcon,
   MenuAlt2Icon,
   UserAddIcon,
   UserGroupIcon,
-  UsersIcon,
   XIcon,
 } from "@heroicons/react/outline";
-import { ChatAltIcon, DocumentTextIcon, PencilIcon, SearchIcon } from "@heroicons/react/solid";
+import {
+  ChatAltIcon,
+  DocumentTextIcon,
+  PencilIcon,
+} from "@heroicons/react/solid";
 import Img from "next/image";
 
-/*
-  This example requires Tailwind CSS v2.0+
-
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-
 const navigation = [
-  { name: "Overview", href: "#", icon: HomeIcon, current: true },
-  { name: "Proposals", href: "#", icon: PencilIcon, current: false },
-  { name: "Leaderboard", href: "#", icon: UserGroupIcon, current: false },
-  { name: "Delegate", href: "#", icon: UserAddIcon, current: false },
-  { name: "Forum", href: "#", icon: ChatAltIcon, current: false },
-  { name: "Resources", href: "#", icon: DocumentTextIcon, current: false },
-]; 
+  { name: "Overview", href: "/overview", icon: HomeIcon, current: true },
+  { name: "Proposals", href: "/proposals", icon: PencilIcon, current: false },
+  {
+    name: "Leaderboard",
+    href: "/leaderboard",
+    icon: UserGroupIcon,
+    current: false,
+  },
+  { name: "Delegate", href: "/delegate", icon: UserAddIcon, current: false },
+  { name: "Forum", href: "/forum", icon: ChatAltIcon, current: false },
+  {
+    name: "Resources",
+    href: "/resources",
+    icon: DocumentTextIcon,
+    current: false,
+  },
+];
 
 const userNavigation = [
   { name: "Your Profile", href: "#" },
@@ -61,8 +51,7 @@ const Home: NextPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-
-    /* changes the background colour of main overview (not sidebar) */   
+    /* changes the background colour of main overview (not sidebar) */
     <div className="h-screen flex overflow-hidden bg-blue-50">
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
@@ -107,7 +96,10 @@ const Home: NextPage = () => {
                     onClick={() => setSidebarOpen(false)}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XIcon className="h-6 w-6 text-blue-400" aria-hidden="true" />
+                    <XIcon
+                      className="h-6 w-6 text-blue-400"
+                      aria-hidden="true"
+                    />
                   </button>
                 </div>
               </Transition.Child>
@@ -154,9 +146,7 @@ const Home: NextPage = () => {
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex flex-col flex-grow pt-4 pb-4 overflow-y-auto">
-            <div className="flex items-center flex-shrink-0 px-3">
-              
-            </div>
+            <div className="flex items-center flex-shrink-0 px-3"></div>
             <div className="mt-5 flex-1 flex flex-col">
               <nav className="flex-1 px-2 space-y-1">
                 {navigation.map((item) => (
@@ -193,9 +183,7 @@ const Home: NextPage = () => {
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
           <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex">
-          
-            </div>
+            <div className="flex-1 flex"></div>
             <div className="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
@@ -254,13 +242,13 @@ const Home: NextPage = () => {
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* This changes sidebar text colour*/}
-              <h1 className="text-2xl font-semibold text-blue-400">                
-                 Governance Overview </h1>   
+              <h1 className="text-2xl font-semibold text-blue-400">
+                Governance Overview{" "}
+              </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               {/* If we want to put borders we put them here */}
-              <div className="py-4">
-              </div>
+              <div className="py-4"></div>
               {/* /End replace */}
             </div>
           </div>
