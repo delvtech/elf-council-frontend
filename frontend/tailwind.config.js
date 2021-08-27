@@ -10,3 +10,10 @@ module.exports = {
   },
   plugins: [],
 }
+module.exports = {
+  // ...
+  plugins: [
+    // ...
+    require('@tailwindcss/forms'),
+  ],
+}

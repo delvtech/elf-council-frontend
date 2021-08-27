@@ -30,11 +30,11 @@ import {
 import { SearchIcon } from '@heroicons/react/solid'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+  { name: 'Overview', href: '#', icon: HomeIcon, current: true },
+  { name: 'Leaderboard', href: '#', icon: UsersIcon, current: false },
+  { name: 'Delegate', href: '#', icon: FolderIcon, current: false },
+  { name: 'Forum', href: '#', icon: CalendarIcon, current: false },
+  { name: 'Resources', href: '#', icon: InboxIcon, current: false },
   { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
 ]
 const userNavigation = [
