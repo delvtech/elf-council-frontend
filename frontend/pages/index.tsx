@@ -1,64 +1,59 @@
-import type { NextPage } from "next";
-import { Fragment, useState } from "react";
-import "tailwindcss/tailwind.css";
-
-import { Dialog, Menu, Transition } from "@headlessui/react";
+/*
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+*/
+import { Fragment, useState } from 'react'
+import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   BellIcon,
+  CalendarIcon,
+  ChartBarIcon,
+  FolderIcon,
   HomeIcon,
+  InboxIcon,
   MenuAlt2Icon,
-  UserAddIcon,
-  UserGroupIcon,
+  UsersIcon,
   XIcon,
-} from "@heroicons/react/outline";
-import {
-  ChatAltIcon,
-  DocumentTextIcon,
-  PencilIcon,
-} from "@heroicons/react/solid";
-import Img from "next/image";
+} from '@heroicons/react/outline'
+import { SearchIcon } from '@heroicons/react/solid'
 
 const navigation = [
-  { name: "Overview", href: "/overview", icon: HomeIcon, current: true },
-  { name: "Proposals", href: "/proposals", icon: PencilIcon, current: false },
-  {
-    name: "Leaderboard",
-    href: "/leaderboard",
-    icon: UserGroupIcon,
-    current: false,
-  },
-  { name: "Delegate", href: "/delegate", icon: UserAddIcon, current: false },
-  { name: "Forum", href: "/forum", icon: ChatAltIcon, current: false },
-  {
-    name: "Resources",
-    href: "/resources",
-    icon: DocumentTextIcon,
-    current: false,
-  },
-];
-
+  { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
+  { name: 'Team', href: '#', icon: UsersIcon, current: false },
+  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
+  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
+  { name: 'Documents', href: '#', icon: InboxIcon, current: false },
+  { name: 'Reports', href: '#', icon: ChartBarIcon, current: false },
+]
 const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' },
+]
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
 }
 
-const Home: NextPage = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+export default function Example() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    /* changes the background colour of main overview (not sidebar) */
-    <div className="h-screen flex overflow-hidden bg-blue-50">
+    <div className="h-screen flex overflow-hidden bg-gray-100">
       <Transition.Root show={sidebarOpen} as={Fragment}>
-        <Dialog
-          as="div"
-          className="fixed inset-0 flex z-40 md:hidden"
-          onClose={setSidebarOpen}
-        >
+        <Dialog as="div" className="fixed inset-0 flex z-40 md:hidden" onClose={setSidebarOpen}>
           <Transition.Child
             as={Fragment}
             enter="transition-opacity ease-linear duration-300"
@@ -68,7 +63,7 @@ const Home: NextPage = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-gray-50 bg-opacity-75" />
+            <Dialog.Overlay className="fixed inset-0 bg-gray-600 bg-opacity-75" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
@@ -79,7 +74,7 @@ const Home: NextPage = () => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-blue-500">
+            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -96,19 +91,15 @@ const Home: NextPage = () => {
                     onClick={() => setSidebarOpen(false)}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XIcon
-                      className="h-6 w-6 text-blue-400"
-                      aria-hidden="true"
-                    />
+                    <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
                   </button>
                 </div>
               </Transition.Child>
               <div className="flex-shrink-0 flex items-center px-4">
-                <Img
+                <img
                   className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-300-mark-white-text.svg"
+                  src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
                   alt="Workflow"
-                  layout="fill"
                 />
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
@@ -119,13 +110,16 @@ const Home: NextPage = () => {
                       href={item.href}
                       className={classNames(
                         item.current
-                          ? "bg-blue-500 text-blue"
-                          : "text-blue-100 hover:bg-blue-600",
-                        "group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                          ? 'bg-gray-100 text-gray-900'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                        'group flex items-center px-2 py-2 text-base font-medium rounded-md'
                       )}
                     >
                       <item.icon
-                        className="mr-4 flex-shrink-0 h-6 w-6 text-blue-400"
+                        className={classNames(
+                          item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                          'mr-4 flex-shrink-0 h-6 w-6'
+                        )}
                         aria-hidden="true"
                       />
                       {item.name}
@@ -142,26 +136,33 @@ const Home: NextPage = () => {
       </Transition.Root>
 
       {/* Static sidebar for desktop */}
-      <div className="hidden bg-blue-50 md:flex md:flex-shrink-0">
+      <div className="hidden md:flex md:flex-shrink-0">
         <div className="flex flex-col w-64">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex flex-col flex-grow pt-4 pb-4 overflow-y-auto">
-            <div className="flex items-center flex-shrink-0 px-3"></div>
-            <div className="mt-5 flex-1 flex flex-col">
-              <nav className="flex-1 px-2 space-y-1">
+          <div className="flex flex-col flex-grow border-r border-gray-200 pt-5 pb-4 bg-white overflow-y-auto">
+            <div className="flex items-center flex-shrink-0 px-4">
+              <img
+                className="h-8 w-auto"
+                src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
+                alt="Workflow"
+              />
+            </div>
+            <div className="mt-5 flex-grow flex flex-col">
+              <nav className="flex-1 px-2 bg-white space-y-1">
                 {navigation.map((item) => (
                   <a
                     key={item.name}
                     href={item.href}
                     className={classNames(
-                      item.current
-                        ? "bg-darkblue-800 text-blue"
-                        : "text-lightblue-100 hover:bg-blue-600",
-                      "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                      item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                     )}
                   >
                     <item.icon
-                      className="mr-3 flex-shrink-0 h-6 w-6 text-blue-400"
+                      className={classNames(
+                        item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                        'mr-3 flex-shrink-0 h-6 w-6'
+                      )}
                       aria-hidden="true"
                     />
                     {item.name}
@@ -173,21 +174,39 @@ const Home: NextPage = () => {
         </div>
       </div>
       <div className="flex flex-col w-0 flex-1 overflow-hidden">
-        <div className="relative z-10 flex-shrink-0 flex h-16 bg-gray shadow">
+        <div className="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
           <button
             type="button"
-            className="px-4 border-r border-blue-50 text-blue-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 md:hidden"
+            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
           <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex"></div>
+            <div className="flex-1 flex">
+              <form className="w-full flex md:ml-0" action="#" method="GET">
+                <label htmlFor="search-field" className="sr-only">
+                  Search
+                </label>
+                <div className="relative w-full text-gray-400 focus-within:text-gray-600">
+                  <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                    <SearchIcon className="h-5 w-5" aria-hidden="true" />
+                  </div>
+                  <input
+                    id="search-field"
+                    className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
+                    placeholder="Search"
+                    type="search"
+                    name="search"
+                  />
+                </div>
+              </form>
+            </div>
             <div className="ml-4 flex items-center md:ml-6">
               <button
                 type="button"
-                className="bg-white p-1 rounded-full text-blue-400 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <span className="sr-only">View notifications</span>
                 <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -196,13 +215,12 @@ const Home: NextPage = () => {
               {/* Profile dropdown */}
               <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <span className="sr-only">Open user menu</span>
-                    <Img
+                    <img
                       className="h-8 w-8 rounded-full"
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
-                      layout="fill"
                     />
                   </Menu.Button>
                 </div>
@@ -221,10 +239,7 @@ const Home: NextPage = () => {
                         {({ active }) => (
                           <a
                             href={item.href}
-                            className={classNames(
-                              active ? "bg-blue-50" : "",
-                              "block px-4 py-2 text-sm text-blue-700"
-                            )}
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             {item.name}
                           </a>
@@ -241,21 +256,18 @@ const Home: NextPage = () => {
         <main className="flex-1 relative overflow-y-auto focus:outline-none">
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {/* This changes sidebar text colour*/}
-              <h1 className="text-2xl font-semibold text-blue-400">
-                Governance Overview{" "}
-              </h1>
+              <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-              {/* If we want to put borders we put them here */}
-              <div className="py-4"></div>
+              {/* Replace with your content */}
+              <div className="py-4">
+                <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
+              </div>
               {/* /End replace */}
             </div>
           </div>
         </main>
       </div>
     </div>
-  );
-};
-
-export default Home;
+  )
+}
