@@ -1,0 +1,23 @@
+{
+  "name": "ui1",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
+    "autoprefixer": "^10.2.1",
+    "chart.js": "^2.9.4",
+    "next": "10.0.5",
+    "postcss": "^8.2.3",
+    "react": "17.0.1",
+    "react-chartjs-2": "^2.11.1",
+    "react-dom": "17.0.1",
+    "tailwindcss": "^2.0.2"
+  }
+}
