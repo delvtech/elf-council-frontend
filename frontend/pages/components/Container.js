@@ -13,7 +13,7 @@ const Container = () => {
         <div className=" bg-gradient-to-r from-gray-100 to-gray-50 h-full " >
             <div className="  px-8 py-1 ">
 
-                <p><p className="text-blue-500 font-bold text-2xl transform -translate-y-2">
+                <p><p className="text-blue-400 font-bold text-2xl transform -translate-y-2">
                     Governance Overview
             </p></p>
             </div>

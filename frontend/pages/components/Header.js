@@ -16,7 +16,7 @@ const Header = () => {
 
                 <NotificationsIcon />
                 <ExitToAppIcon />
-                <p className="text-gray-600 font-semibold">Connect Wallet</p>
+                <p className="text-blue-400 font-semibold">Connect Wallet</p>
             </div>
         </div>
     )
