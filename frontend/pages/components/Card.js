@@ -1,14 +1,15 @@
 import React from 'react'
-import AllOutIcon from '@material-ui/icons/AllOut';
-import DoneIcon from '@material-ui/icons/Done';
-import EcoIcon from '@material-ui/icons/Eco';
-import LockIcon from '@material-ui/icons/Lock';
+import GavelIcon from '@material-ui/icons/Gavel';
+import GradeIcon from '@material-ui/icons/Grade';
+import DescriptionIcon from '@material-ui/icons/Description';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
+
 
 
 const Style = "text-white text-xs"
 
-const arrayIcon = [<AllOutIcon fontSize="small" className={Style} />, <DoneIcon fontSize="small" className={Style} />, <EcoIcon fontSize="small" className={Style} />, <LockIcon fontSize="small" className={Style} />]
-const Color = ["from-blue-400 to-blue-500", "from-blue-400 to-blue-300", "from-blue-400 to-blue-500", "from-blue-400 to-blue-300"]
+const arrayIcon = [<GavelIcon fontSize="small" className={Style} />, <GradeIcon fontSize="small" className={Style} />, <DescriptionIcon fontSize="small" className={Style} />, <MonetizationOnIcon fontSize="small" className={Style} />]
+const Color = ["from-blue-400 to-blue-300", "from-blue-400 to-blue-300", "from-blue-400 to-blue-300", "from-blue-400 to-blue-300"]
 
 
 const Card = (props) => {
