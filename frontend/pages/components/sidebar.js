@@ -1,6 +1,7 @@
 import React from 'react'
 import HomeIcon from '@material-ui/icons/Home';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
+import BallotIcon from '@material-ui/icons/Ballot';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import SyncAltIcon from '@material-ui/icons/SyncAlt';
@@ -57,7 +58,7 @@ const Sidebar = () => {
                     </div>
                     <div className="">
                         <div className="flex p-3 text-blue-400  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-                            <ArrowDownwardIcon className="text-blue-400" />
+                            <BallotIcon className="text-blue-400" />
                             <p className="text-blue-400  " >Delegate</p>
                         </div>
                     </div>
