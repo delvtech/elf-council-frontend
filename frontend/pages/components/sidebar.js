@@ -2,8 +2,7 @@ import React from 'react'
 import HomeIcon from '@material-ui/icons/Home';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
 import HowToVoteIcon from '@material-ui/icons/HowToVote';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import PeopleIcon from '@material-ui/icons/People';
 import ForumIcon from '@material-ui/icons/Forum';
 import LayersIcon from '@material-ui/icons/Layers';
 import LockIcon from '@material-ui/icons/Lock';
@@ -52,7 +51,7 @@ const Sidebar = () => {
                     </div>
                     <div className="">
                         <div className="flex p-3 text-blue-400  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-                            <ArrowUpwardIcon className="text-blue-400" />
+                            <PeopleIcon className="text-blue-400" />
                             <p className="text-blue-400  " >Leaderboard</p>
                         </div>
                     </div>
