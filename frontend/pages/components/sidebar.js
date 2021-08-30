@@ -4,10 +4,10 @@ import BorderColorIcon from '@material-ui/icons/BorderColor';
 import BallotIcon from '@material-ui/icons/Ballot';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import SyncAltIcon from '@material-ui/icons/SyncAlt';
+import ForumIcon from '@material-ui/icons/Forum';
 import LayersIcon from '@material-ui/icons/Layers';
 import LockIcon from '@material-ui/icons/Lock';
-import EcoIcon from '@material-ui/icons/Eco';
+import CollectionsBookmarkIcon from '@material-ui/icons/CollectionsBookmark';
 
 const Sidebar = () => {
     return (
@@ -64,7 +64,7 @@ const Sidebar = () => {
                     </div>
                     <div className="">
                         <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-                            <SyncAltIcon className="text-blue-400" />
+                            <ForumIcon className="text-blue-400" />
                             <p className="text-blue-400  " >Forum</p>
                         </div>
                     </div>
@@ -72,7 +72,7 @@ const Sidebar = () => {
 
                     <div className="">
                         <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-                            <EcoIcon className="text-blue-400" />
+                            <CollectionsBookmarkIcon className="text-blue-400" />
                             <p className="text-blue-400  " >Resources</p>
                         </div>
                     </div>
