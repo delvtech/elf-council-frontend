@@ -9,7 +9,7 @@ const data = {
         data: [10, 100],
         backgroundColor: [
             ' rgba(67, 56, 202)',
-            'rgba(229, 231, 235)',
+            'rgba(209, 236, 241)',
 
         ],
         hoverBackgroundColor: [
