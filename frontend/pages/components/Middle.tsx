@@ -1,7 +1,7 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import { ChartData, Line } from "react-chartjs-2";
 
-const data = {
+const data: ChartData<any> = {
   labels: [
     "Sept 19",
     "Sept 20",
