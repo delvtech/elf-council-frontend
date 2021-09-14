@@ -1,0 +1,56 @@
+{
+  "extends": [
+    "next",
+    "react-app",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "no-undef": ["off"],
+        "react-hooks/exhaustive-deps": "error"
+      }
+    }
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
+    "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
+    "@typescript-eslint/no-empty-interface": "off", // empty interfaces for component props should be allowed
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^unused"
+      }
+    ],
+    "import/no-unused-modules": "error",
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error", "info", "assert"]
+      }
+    ],
+    "no-new-func": "error", // const func = new Function()
+    "no-restricted-imports": [
+      "error",
+      {
+        "patterns": ["\\.\\./*"]
+      }
+    ],
+    ,
+    "no-unused-vars": "off",
+    "prefer-template": "error",
+    "react/no-unused-prop-types": 0
+  },
+  "settings": {
+    "import/resolver": {
+      // always try to resolve types under `<root>@types` directory even it doesn't contain any
+      // source code, like `@types/unist`
+      "eslint-import-resolver-typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  }
+}
