@@ -39,7 +39,6 @@
         "patterns": ["\\.\\./*"]
       }
     ],
-    ,
     "no-unused-vars": "off",
     "prefer-template": "error",
     "react/no-unused-prop-types": 0
