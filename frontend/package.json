@@ -1,12 +1,4 @@
 {
-  "name": "ui1",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
@@ -19,5 +11,14 @@
     "react-chartjs-2": "^2.11.1",
     "react-dom": "17.0.1",
     "tailwindcss": "^2.0.2"
-  }
+  },
+  "name": "ui1",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "version": "0.1.0"
 }
