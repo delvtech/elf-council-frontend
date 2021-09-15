@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 import DescriptionIcon from "@material-ui/icons/Description";
 import GavelIcon from "@material-ui/icons/Gavel";
@@ -8,10 +8,10 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 const Style = "text-white text-xs";
 
 const arrayIcon = [
-  <GavelIcon fontSize="small" className={Style} />,
-  <GradeIcon fontSize="small" className={Style} />,
-  <DescriptionIcon fontSize="small" className={Style} />,
-  <MonetizationOnIcon fontSize="small" className={Style} />,
+  <GavelIcon key="gavel" fontSize="small" className={Style} />,
+  <GradeIcon key="grade" fontSize="small" className={Style} />,
+  <DescriptionIcon key="description" fontSize="small" className={Style} />,
+  <MonetizationOnIcon key="monetization" fontSize="small" className={Style} />,
 ];
 
 const Color = [
@@ -26,9 +26,9 @@ interface CardProps {
   balance: number;
   icon: number;
 }
-export function Card(props: CardProps) {
-  var balance = props.balance;
-  balance = balance * 9.5;
+export function Card(props: CardProps): ReactElement {
+  const { balance, icon, title } = props;
+  const increasedBalance = balance * 9.5;
 
   return (
     <div
@@ -39,12 +39,12 @@ export function Card(props: CardProps) {
       <div className="flex justify-between">
         <div></div>
         <div className=" w-10  h-10 flex items-center justify-center  bg-gray-300 rounded-xl m-1  bg-opacity-30">
-          {arrayIcon[props.icon]}
+          {arrayIcon[icon]}
         </div>
       </div>
-      <p className="text-gray-200 text-xs  ">{props.title}</p>
-      <p className="text-gray-50 text-lg  font-semibold  ">{props.balance}</p>
-      <p className="text-gray-300  text-sm ">${balance}</p>
+      <p className="text-gray-200 text-xs  ">{title}</p>
+      <p className="text-gray-50 text-lg  font-semibold  ">{balance}</p>
+      <p className="text-gray-300  text-sm ">${increasedBalance}</p>
     </div>
   );
 }

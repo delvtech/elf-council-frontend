@@ -1,6 +1,8 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { ChartData, Line } from "react-chartjs-2";
 
+// this is just stubbed data for now, ignore the 'any'
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const data: ChartData<any> = {
   labels: [
     "Sept 19",
@@ -36,7 +38,7 @@ const data: ChartData<any> = {
   ],
 };
 
-function Middle() {
+function Middle(): ReactElement {
   return (
     <div className=" bg-white ml-2   shadow-sm w-8/12 border rounded-xl border-gray-100">
       <div className="border-b p-3 border-gray-100">

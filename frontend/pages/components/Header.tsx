@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 
-function Header() {
+function Header(): ReactElement {
   return (
     <div className="flex shadow-sm bg-gray-50  p-4 justify-between  ">
       <div className="flex space-x-3  "></div>
