@@ -102,8 +102,8 @@ export default function Sidebar(): ReactElement {
             />
           </div>
           <div className="">
-            <SidebarLink
-              link="/proposals"
+            <SidebarLinkExternal
+              link="https://snapshot.org/#/element-finance.eth"
               label="Proposals"
               icon={<BorderColorIcon className="text-blue-400" />}
             />
@@ -124,7 +124,7 @@ export default function Sidebar(): ReactElement {
           </div>
           <div className="">
             <SidebarLink
-              link="/forum"
+              link="https://forum.element.fi"
               label="Forum"
               icon={<ForumIcon className="text-blue-400" />}
             />
@@ -168,5 +168,17 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
         </div>
       </a>
     </Link>
+  );
+}
+
+function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
+  const { link, label, icon } = props;
+  return (
+    <a href={link}>
+      <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
+        {icon}
+        <p className="text-blue-400  ">{label}</p>
+      </div>
+    </a>
   );
 }
