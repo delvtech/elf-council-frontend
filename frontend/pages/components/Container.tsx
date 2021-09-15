@@ -1,10 +1,10 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 import Card from "components/Card";
 import Middle from "components/Middle";
 import RightBar from "components/RightBar";
 
-export function Container() {
+export function Container(): ReactElement {
   return (
     <div className=" bg-gradient-to-r from-gray-100 to-gray-50 h-full ">
       <div className="  px-8 py-1 ">

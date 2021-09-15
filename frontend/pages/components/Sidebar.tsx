@@ -1,4 +1,5 @@
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
+import Link from "next/link";
 
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
@@ -8,7 +9,7 @@ import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import LockIcon from "@material-ui/icons/Lock";
 import PeopleIcon from "@material-ui/icons/People";
 
-export function Sidebar() {
+export function Sidebar(): ReactElement {
   return (
     <div className="md:w-3/12 w-6/12 h-screen shadow-2xl">
       <div className=" border-b py-3 mt-1 flex justify-around ">
@@ -94,51 +95,78 @@ export function Sidebar() {
       <div className="p-4 space-y-14">
         <div className="space-y-4">
           <div className="">
-            <div className="flex p-3 text-blue-400  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <HomeIcon className=" text-blue-400" />
-              <p className=" ">Overview</p>
-            </div>
+            <SidebarLink
+              link="/"
+              label="Overview"
+              icon={<HomeIcon className="text-blue-400" />}
+            />
           </div>
           <div className="">
-            <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <BorderColorIcon className="text-blue-400" />
-              <p className="text-blue-400  ">Proposals</p>
-            </div>
+            <SidebarLink
+              link="/proposals"
+              label="Proposals"
+              icon={<BorderColorIcon className="text-blue-400" />}
+            />
           </div>
           <div className="">
-            <div className="flex p-3 text-blue-400  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <PeopleIcon className="text-blue-400" />
-              <p className="text-blue-400  ">Leaderboard</p>
-            </div>
+            <SidebarLink
+              link="/leaderboard"
+              label="Leaderboard"
+              icon={<PeopleIcon className="text-blue-400" />}
+            />
           </div>
           <div className="">
-            <div className="flex p-3 text-blue-400  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <HowToVoteIcon className="text-blue-400" />
-              <p className="text-blue-400  ">Delegate</p>
-            </div>
+            <SidebarLink
+              link="/delegates"
+              label="Delegate"
+              icon={<HowToVoteIcon className="text-blue-400" />}
+            />
           </div>
           <div className="">
-            <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <ForumIcon className="text-blue-400" />
-              <p className="text-blue-400  ">Forum</p>
-            </div>
+            <SidebarLink
+              link="/forum"
+              label="Forum"
+              icon={<ForumIcon className="text-blue-400" />}
+            />
           </div>
 
           <div className="">
-            <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <CollectionsBookmarkIcon className="text-blue-400" />
-              <p className="text-blue-400  ">Resources</p>
-            </div>
+            <SidebarLink
+              link="/resources"
+              label="Resources"
+              icon={<CollectionsBookmarkIcon className="text-blue-400" />}
+            />
           </div>
           <div className="">
-            <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-              <LockIcon className="text-blue-400" />
-              <p className="text-blue-400  ">Rewards</p>
-            </div>
+            <SidebarLink
+              link="/rewards"
+              label="Rewards"
+              icon={<LockIcon className="text-blue-400" />}
+            />
           </div>
         </div>
         <div className="space-y-6"></div>
       </div>
     </div>
+  );
+}
+
+interface SidebarLinkProps {
+  link: string;
+  label: string;
+  icon: ReactNode;
+}
+
+function SidebarLink(props: SidebarLinkProps): ReactElement {
+  const { link, label, icon } = props;
+  return (
+    <Link href={link} passHref>
+      <a href={link}>
+        <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
+          {icon}
+          <p className="text-blue-400  ">{label}</p>
+        </div>
+      </a>
+    </Link>
   );
 }

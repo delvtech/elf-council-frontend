@@ -17,7 +17,8 @@
     "rootDir": "pages",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["pages/components/*"]
+      "components/*": ["pages/components/*"],
+      "styles/*": ["styles/*"]
     }
   },
   "include": ["pages"],
