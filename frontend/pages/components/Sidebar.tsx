@@ -1,13 +1,14 @@
 import React from "react";
-import HomeIcon from "@material-ui/icons/Home";
-import BorderColorIcon from "@material-ui/icons/BorderColor";
-import HowToVoteIcon from "@material-ui/icons/HowToVote";
-import PeopleIcon from "@material-ui/icons/People";
-import ForumIcon from "@material-ui/icons/Forum";
-import LockIcon from "@material-ui/icons/Lock";
-import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
 
-const Sidebar = () => {
+import BorderColorIcon from "@material-ui/icons/BorderColor";
+import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
+import ForumIcon from "@material-ui/icons/Forum";
+import HomeIcon from "@material-ui/icons/Home";
+import HowToVoteIcon from "@material-ui/icons/HowToVote";
+import LockIcon from "@material-ui/icons/Lock";
+import PeopleIcon from "@material-ui/icons/People";
+
+export function Sidebar() {
   return (
     <div className="md:w-3/12 w-6/12 h-screen shadow-2xl">
       <div className=" border-b py-3 mt-1 flex justify-around ">
@@ -140,6 +141,4 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
-
-export default Sidebar;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 
-const RightBar = () => {
+function RightBar() {
   return (
     <div className="bg-white  w-4/12 rounded-xl border border-gray-100">
       <div className="border-b p-3 border-gray-100">
@@ -35,6 +35,6 @@ const RightBar = () => {
       </div>
     </div>
   );
-};
+}
 
 export default RightBar;

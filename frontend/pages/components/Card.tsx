@@ -13,6 +13,7 @@ const arrayIcon = [
   <DescriptionIcon fontSize="small" className={Style} />,
   <MonetizationOnIcon fontSize="small" className={Style} />,
 ];
+
 const Color = [
   "from-blue-400 to-blue-300",
   "from-blue-400 to-blue-300",
@@ -20,7 +21,12 @@ const Color = [
   "from-blue-400 to-blue-300",
 ];
 
-const Card = (props) => {
+interface CardProps {
+  title: string;
+  balance: number;
+  icon: number;
+}
+export function Card(props: CardProps) {
   var balance = props.balance;
   balance = balance * 9.5;
 
@@ -41,6 +47,6 @@ const Card = (props) => {
       <p className="text-gray-300  text-sm ">${balance}</p>
     </div>
   );
-};
+}
 
 export default Card;

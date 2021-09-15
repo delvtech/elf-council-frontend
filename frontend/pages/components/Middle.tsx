@@ -36,7 +36,7 @@ const data: ChartData<any> = {
   ],
 };
 
-const Middle = () => {
+function Middle() {
   return (
     <div className=" bg-white ml-2   shadow-sm w-8/12 border rounded-xl border-gray-100">
       <div className="border-b p-3 border-gray-100">
@@ -47,6 +47,6 @@ const Middle = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Middle;
