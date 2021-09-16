@@ -14,13 +14,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "rootDir": "pages",
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "components/*": ["pages/components/*"],
-      "styles/*": ["styles/*"]
+      "styles/*": ["styles/*"],
+      "elf-tailwindcss-classnames": ["tailwindcss-classnames/index.ts"]
     }
   },
-  "include": ["pages"],
+  "include": ["pages", "tailwindcss-classnames"],
   "exclude": ["node_modules"]
 }

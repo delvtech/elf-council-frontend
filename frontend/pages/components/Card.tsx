@@ -1,30 +1,11 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 
-import DescriptionIcon from "@material-ui/icons/Description";
-import GavelIcon from "@material-ui/icons/Gavel";
-import GradeIcon from "@material-ui/icons/Grade";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-
-const Style = "text-white text-xs";
-
-const arrayIcon = [
-  <GavelIcon key="gavel" fontSize="small" className={Style} />,
-  <GradeIcon key="grade" fontSize="small" className={Style} />,
-  <DescriptionIcon key="description" fontSize="small" className={Style} />,
-  <MonetizationOnIcon key="monetization" fontSize="small" className={Style} />,
-];
-
-const Color = [
-  "from-blue-400 to-blue-300",
-  "from-blue-400 to-blue-300",
-  "from-blue-400 to-blue-300",
-  "from-blue-400 to-blue-300",
-];
+import tw from "elf-tailwindcss-classnames";
 
 interface CardProps {
   title: string;
   balance: number;
-  icon: number;
+  icon: ReactNode;
 }
 export function Card(props: CardProps): ReactElement {
   const { balance, icon, title } = props;
@@ -32,19 +13,45 @@ export function Card(props: CardProps): ReactElement {
 
   return (
     <div
-      className={`transform hover:scale-110 cursor-pointer transition delay-100 w-3/12  p-2 py-4 shadow-xl  border rounded-xl bg-gradient-to-r ${
-        Color[props.icon]
-      }`}
+      className={tw(
+        "transform-gpu",
+        "hover:scale-110",
+        "cursor-pointer",
+        "transition",
+        "delay-100",
+        "w-3/12",
+        "p-2",
+        "py-4",
+        "shadow-xl",
+        "border",
+        "rounded-xl",
+        "bg-gradient-to-r",
+        "from-blue-400",
+        "to-blue-300"
+      )}
     >
-      <div className="flex justify-between">
-        <div></div>
-        <div className=" w-10  h-10 flex items-center justify-center  bg-gray-300 rounded-xl m-1  bg-opacity-30">
-          {arrayIcon[icon]}
+      <div className={tw("flex", "justify-end")}>
+        <div
+          className={tw(
+            "w-10",
+            "h-10",
+            "flex",
+            "items-center",
+            "justify-center",
+            "bg-gray-300",
+            "rounded-xl",
+            "m-1",
+            "bg-opacity-30"
+          )}
+        >
+          {icon}
         </div>
       </div>
-      <p className="text-gray-200 text-xs  ">{title}</p>
-      <p className="text-gray-50 text-lg  font-semibold  ">{balance}</p>
-      <p className="text-gray-300  text-sm ">${increasedBalance}</p>
+      <p className={tw("text-gray-200", "text-xs")}>{title}</p>
+      <p className={tw("text-gray-50", "text-lg", "font-semibold")}>
+        {balance}
+      </p>
+      <p className={tw("text-gray-300", "text-sm")}>${increasedBalance}</p>
     </div>
   );
 }

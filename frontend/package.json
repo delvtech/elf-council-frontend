@@ -12,6 +12,7 @@
     "react-chartjs-2": "^2.11.1",
     "react-dom": "17.0.1",
     "tailwindcss": "^2.0.2",
+    "tailwindcss-classnames": "^2.2.3",
     "ttag": "^1.7.24"
   },
   "devDependencies": {
@@ -29,6 +30,8 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "build:tailwindcss-classnames": "tailwindcss-classnames -i tailwind.config.js -o tailwindcss-classnames/index.ts",
     "dev": "next dev",
     "lint": "next lint",
     "prettier:check": "prettier --check pages/**/*.ts{,x}",
