@@ -124,7 +124,7 @@ export default function Sidebar(): ReactElement {
             />
           </div>
           <div className="">
-            <SidebarLink
+            <SidebarLinkExternal
               link="https://forum.element.fi"
               label={t`Forum`}
               icon={<ForumIcon className="text-blue-400" />}
