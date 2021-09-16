@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import { t } from "ttag";
 
 function Header(): ReactElement {
   return (
@@ -10,7 +11,7 @@ function Header(): ReactElement {
       <div className="flex space-x-4 text-gray-400 mr-3">
         <NotificationsIcon />
         <ExitToAppIcon />
-        <p className="text-blue-400 font-semibold">Connect Wallet</p>
+        <p className="text-blue-400 font-semibold">{t`Connect Wallet`}</p>
       </div>
     </div>
   );

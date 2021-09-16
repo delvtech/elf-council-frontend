@@ -1,15 +1,16 @@
 import React, { ReactElement } from "react";
+import { t } from "ttag";
 
 function RightBar(): ReactElement {
   return (
     <div className="bg-white  w-4/12 rounded-xl border border-gray-100">
       <div className="border-b p-3 border-gray-100">
-        <p className="font-semibold  ">Delegation </p>
+        <p className="font-semibold  ">{t`Delegation`}</p>
       </div>
       <div className="flex flex-col items-center p-3">
         <p className="font-semibold text-lg text-gray-800"> 23 h 56 m 14s</p>
         <p className="text-gray-600 text-sm">
-          until voting closes for EFIP: Education Fund
+          {t`until voting closes for EFIP: Education Fund`}
         </p>
       </div>
 

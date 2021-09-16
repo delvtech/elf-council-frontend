@@ -1,5 +1,4 @@
 import React, { ReactElement, ReactNode } from "react";
-import Link from "next/link";
 
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
@@ -8,6 +7,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import LockIcon from "@material-ui/icons/Lock";
 import PeopleIcon from "@material-ui/icons/People";
+import Link from "next/link";
+import { t } from "ttag";
 
 export default function Sidebar(): ReactElement {
   return (
@@ -97,35 +98,35 @@ export default function Sidebar(): ReactElement {
           <div className="">
             <SidebarLink
               link="/"
-              label="Overview"
+              label={t`Overview`}
               icon={<HomeIcon className="text-blue-400" />}
             />
           </div>
           <div className="">
             <SidebarLinkExternal
               link="https://snapshot.org/#/element-finance.eth"
-              label="Proposals"
+              label={t`Proposals`}
               icon={<BorderColorIcon className="text-blue-400" />}
             />
           </div>
           <div className="">
             <SidebarLink
               link="/leaderboard"
-              label="Leaderboard"
+              label={t`Leaderboard`}
               icon={<PeopleIcon className="text-blue-400" />}
             />
           </div>
           <div className="">
             <SidebarLink
               link="/delegates"
-              label="Delegate"
+              label={t`Delegate`}
               icon={<HowToVoteIcon className="text-blue-400" />}
             />
           </div>
           <div className="">
             <SidebarLink
               link="https://forum.element.fi"
-              label="Forum"
+              label={t`Forum`}
               icon={<ForumIcon className="text-blue-400" />}
             />
           </div>
@@ -133,14 +134,14 @@ export default function Sidebar(): ReactElement {
           <div className="">
             <SidebarLink
               link="/resources"
-              label="Resources"
+              label={t`Resources`}
               icon={<CollectionsBookmarkIcon className="text-blue-400" />}
             />
           </div>
           <div className="">
             <SidebarLink
               link="/rewards"
-              label="Rewards"
+              label={t`Rewards`}
               icon={<LockIcon className="text-blue-400" />}
             />
           </div>
