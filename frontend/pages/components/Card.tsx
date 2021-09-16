@@ -1,35 +1,11 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 
-import DescriptionIcon from "@material-ui/icons/Description";
-import GavelIcon from "@material-ui/icons/Gavel";
-import GradeIcon from "@material-ui/icons/Grade";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import tw from "elf-tailwindcss-classnames";
-
-const iconStyle = tw("text-white", "text-xs");
-
-const arrayIcon = [
-  <GavelIcon key="gavel" fontSize="small" className={iconStyle} />,
-  <GradeIcon key="grade" fontSize="small" className={iconStyle} />,
-  <DescriptionIcon key="description" fontSize="small" className={iconStyle} />,
-  <MonetizationOnIcon
-    key="monetization"
-    fontSize="small"
-    className={iconStyle}
-  />,
-];
-
-const Color = [
-  tw("from-blue-400", "to-blue-300"),
-  tw("from-blue-400", "to-blue-300"),
-  tw("from-blue-400", "to-blue-300"),
-  tw("from-blue-400", "to-blue-300"),
-];
 
 interface CardProps {
   title: string;
   balance: number;
-  icon: number;
+  icon: ReactNode;
 }
 export function Card(props: CardProps): ReactElement {
   const { balance, icon, title } = props;
@@ -50,7 +26,8 @@ export function Card(props: CardProps): ReactElement {
         "border",
         "rounded-xl",
         "bg-gradient-to-r",
-        Color[props.icon]
+        "from-blue-400",
+        "to-blue-300"
       )}
     >
       <div className={tw("flex", "justify-end")}>
@@ -67,7 +44,7 @@ export function Card(props: CardProps): ReactElement {
             "bg-opacity-30"
           )}
         >
-          {arrayIcon[icon]}
+          {icon}
         </div>
       </div>
       <p className={tw("text-gray-200", "text-xs")}>{title}</p>
