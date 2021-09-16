@@ -17,11 +17,11 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["pages/components/*"],
+      "components/*": ["pages/components/*", "components/*"],
       "styles/*": ["styles/*"],
       "elf-tailwindcss-classnames": ["tailwindcss-classnames/index.ts"]
     }
   },
-  "include": ["pages", "tailwindcss-classnames"],
+  "include": ["pages", "components", "tailwindcss-classnames"],
   "exclude": ["node_modules"]
 }
