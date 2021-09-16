@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import Card from "components/Card";
 import Middle from "components/Middle";
 import RightBar from "components/RightBar";
+import { t } from "ttag";
 
 export function Container(): ReactElement {
   return (
@@ -10,7 +11,7 @@ export function Container(): ReactElement {
       <div className="  px-8 py-1 ">
         <p>
           <p className="text-blue-400 font-bold text-2xl transform -translate-y-2">
-            Governance Overview
+            {t`Governance Overview`}
           </p>
         </p>
       </div>
