@@ -1,13 +1,12 @@
-import { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 
 import classNames from "classnames";
 import tw from "elf-tailwindcss-classnames";
-import { ChainId } from "elf/ethereum";
 import { t } from "ttag";
 
-import { ConnectWalletDialog } from "efi-ui/wallets/ConnectWalletDialog/ConnectWalletDialog";
-import { WalletJazzicon } from "efi-ui/wallets/WalletJazzicon/WalletJazzicon";
-import { formatWalletAddress } from "efi/wallets/formatWalletAddress";
+import { WalletJazzicon } from "components/WalletJazzicon/WalletJazzicon";
+import { ConnectWalletDialog } from "components/ConnectWalletDialog/ConnectWalletDialog";
+import { formatWalletAddress } from "elf/formatWalletAddress";
 
 interface ConnectWalletButtonProps {
   account: string | null | undefined;
@@ -16,15 +15,16 @@ interface ConnectWalletButtonProps {
   className?: string;
 }
 
-const ChainColor: Record<number, string> = {
-  [ChainId.GOERLI]: tw("text-blue-400"),
-  [ChainId.MAINNET]: tw("text-green-400"),
-  [ChainId.LOCAL]: tw("text-white"),
-};
+// const ChainColor: Record<number, string> = {
+//   [ChainId.GOERLI]: tw("text-blue-400"),
+//   [ChainId.MAINNET]: tw("text-green-400"),
+//   [ChainId.LOCAL]: tw("text-white"),
+// };
+
 export function ConnectWalletButton(
   props: ConnectWalletButtonProps
 ): ReactElement {
-  const { account, chainId, walletConnectionActive, className } = props;
+  const { account, className } = props;
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
   const onOpenWalletDialog = useCallback(() => setWalletDialogOpen(true), []);
