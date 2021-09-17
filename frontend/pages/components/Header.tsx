@@ -4,8 +4,10 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { ConnectWalletButton } from "components/ConnectWalletButton/ConnectWalletButton";
 import tw from "elf-tailwindcss-classnames";
+import { useWeb3React } from "@web3-react/core";
 
 function Header(): ReactElement {
+  const { account, active, chainId } = useWeb3React();
   return (
     <div
       className={tw(
@@ -21,9 +23,9 @@ function Header(): ReactElement {
         <NotificationsIcon />
         <ExitToAppIcon />
         <ConnectWalletButton
-          account={undefined}
-          walletConnectionActive={undefined}
-          chainId={undefined}
+          account={account}
+          walletConnectionActive={active}
+          chainId={chainId}
         />
       </div>
     </div>

@@ -24,7 +24,7 @@ interface ConnectWalletButtonsProps {
 export function ConnectWalletButtons({
   onClick,
 }: ConnectWalletButtonsProps): ReactElement {
-  const { activate, deactivate } = useWeb3React<Web3Provider>();
+  const { activate, deactivate, active } = useWeb3React<Web3Provider>();
 
   const deactivateActiveConnector = useCallback(async () => {
     await deactivate();
