@@ -2,10 +2,12 @@ import React, { ReactElement } from "react";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { t } from "ttag";
+import { ConnectWalletButton } from "components/ConnectWalletButton/ConnectWalletButton";
 import tw from "elf-tailwindcss-classnames";
+import { useWeb3React } from "@web3-react/core";
 
 function Header(): ReactElement {
+  const { account, active, chainId } = useWeb3React();
   return (
     <div
       className={tw(
@@ -20,9 +22,11 @@ function Header(): ReactElement {
       <div className={tw("flex", "space-x-4", "text-gray-400", "mr-3")}>
         <NotificationsIcon />
         <ExitToAppIcon />
-        <p
-          className={tw("text-blue-400", "font-semibold")}
-        >{t`Connect Wallet`}</p>
+        <ConnectWalletButton
+          account={account}
+          walletConnectionActive={active}
+          chainId={chainId}
+        />
       </div>
     </div>
   );

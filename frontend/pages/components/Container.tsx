@@ -23,18 +23,16 @@ export function Container(): ReactElement {
       )}
     >
       <div className={tw("px-8", "py-1")}>
-        <p>
-          <p
-            className={tw(
-              "text-blue-400",
-              "font-bold",
-              "text-2xl",
-              "transform-gpu",
-              "-translate-y-2"
-            )}
-          >
-            {t`Governance Overview`}
-          </p>
+        <p
+          className={tw(
+            "text-blue-400",
+            "font-bold",
+            "text-2xl",
+            "transform-gpu",
+            "-translate-y-2"
+          )}
+        >
+          {t`Governance Overview`}
         </p>
       </div>
       <div className={tw("flex", "p-4", "space-x-3")}>
