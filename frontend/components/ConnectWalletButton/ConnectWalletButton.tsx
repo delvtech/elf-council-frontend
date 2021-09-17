@@ -35,13 +35,13 @@ export function ConnectWalletButton(
     >
       {!account ? (
         <div>
-          <button onClick={onOpenWalletDialog}>
+          <button className={tw("text-blue-400")} onClick={onOpenWalletDialog}>
             <span className={tw("text-center")}>{t`Connect Wallet`}</span>
           </button>
         </div>
       ) : (
         <div>
-          <button onClick={onOpenWalletDialog}>
+          <button className={tw("text-blue-400")} onClick={onOpenWalletDialog}>
             <WalletJazzicon size={28} account={account} />
             {formatWalletAddress(account)}
           </button>

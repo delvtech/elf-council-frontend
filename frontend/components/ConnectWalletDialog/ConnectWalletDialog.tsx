@@ -1,5 +1,7 @@
-import ExampleDialog from "components/ExampleDialog/ExampleDialog";
 import React, { ReactElement } from "react";
+
+import Dialog from "components/Dialog/Dialog";
+import { ConnectWalletButtons } from "components/ConnectWalletButtons/ConnectWalletButtons";
 
 interface ConnectWalletDialogProps {
   isOpen: boolean;
@@ -9,5 +11,9 @@ export function ConnectWalletDialog({
   isOpen,
   onClose,
 }: ConnectWalletDialogProps): ReactElement {
-  return <ExampleDialog isOpen={isOpen} onClose={onClose} />;
+  return (
+    <Dialog isOpen={isOpen} onClose={onClose}>
+      <ConnectWalletButtons />
+    </Dialog>
+  );
 }
