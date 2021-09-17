@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 
-import Dialog from "components/Dialog/Dialog";
+import SimpleDialog from "components/Dialog/Dialog";
 import { ConnectWalletButtons } from "components/ConnectWalletButtons/ConnectWalletButtons";
 
 interface ConnectWalletDialogProps {
@@ -12,8 +12,8 @@ export function ConnectWalletDialog({
   onClose,
 }: ConnectWalletDialogProps): ReactElement {
   return (
-    <Dialog isOpen={isOpen} onClose={onClose}>
+    <SimpleDialog isOpen={isOpen} onClose={onClose}>
       <ConnectWalletButtons onClick={onClose} />
-    </Dialog>
+    </SimpleDialog>
   );
 }
