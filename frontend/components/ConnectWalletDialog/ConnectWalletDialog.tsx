@@ -13,7 +13,7 @@ export function ConnectWalletDialog({
 }: ConnectWalletDialogProps): ReactElement {
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <ConnectWalletButtons />
+      <ConnectWalletButtons onClick={onClose} />
     </Dialog>
   );
 }
