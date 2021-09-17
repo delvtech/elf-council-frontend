@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { t } from "ttag";
+import { ConnectWalletButton } from "components/ConnectWalletButton/ConnectWalletButton";
 import tw from "elf-tailwindcss-classnames";
 
 function Header(): ReactElement {
@@ -20,9 +20,11 @@ function Header(): ReactElement {
       <div className={tw("flex", "space-x-4", "text-gray-400", "mr-3")}>
         <NotificationsIcon />
         <ExitToAppIcon />
-        <p
-          className={tw("text-blue-400", "font-semibold")}
-        >{t`Connect Wallet`}</p>
+        <ConnectWalletButton
+          account={undefined}
+          walletConnectionActive={undefined}
+          chainId={undefined}
+        />
       </div>
     </div>
   );
