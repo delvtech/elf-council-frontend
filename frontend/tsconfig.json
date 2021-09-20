@@ -17,12 +17,12 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["pages/components/*", "components/*"],
+      "components/*": ["pages/components/*", "src/components/*"],
       "elf/*": ["src/*"],
       "styles/*": ["styles/*"],
       "elf-tailwindcss-classnames": ["tailwindcss-classnames/index.ts"]
     }
   },
-  "include": ["pages", "components", "src", "tailwindcss-classnames"],
+  "include": ["pages", "src/components", "src", "tailwindcss-classnames"],
   "exclude": ["node_modules"]
 }

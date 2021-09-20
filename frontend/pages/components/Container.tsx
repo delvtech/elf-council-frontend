@@ -8,11 +8,15 @@ import Card from "components/Card";
 import Middle from "components/Middle";
 import RightBar from "components/RightBar";
 import tw from "elf-tailwindcss-classnames";
+import { useProposals } from "elf/efi/proposals/useProposals";
 import { t } from "ttag";
 
 const iconStyle = tw("text-white", "text-xs");
 
 export function Container(): ReactElement {
+  const { data } = useProposals();
+  console.log("data", data);
+
   return (
     <div
       className={tw(
