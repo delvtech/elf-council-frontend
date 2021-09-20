@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
-import SimpleDialog from "components/Dialog/Dialog";
-import { ConnectWalletButtons } from "components/ConnectWalletButtons/ConnectWalletButtons";
+import SimpleDialog from "elf/efi-ui/Dialog/Dialog";
+import { ConnectWalletButtons } from "elf/efi-ui/ConnectWalletButtons/ConnectWalletButtons";
 
 interface ConnectWalletDialogProps {
   isOpen: boolean;

@@ -4,8 +4,8 @@ import classNames from "classnames";
 import tw from "elf-tailwindcss-classnames";
 import { t } from "ttag";
 
-import { WalletJazzicon } from "components/WalletJazzicon/WalletJazzicon";
-import { ConnectWalletDialog } from "components/ConnectWalletDialog/ConnectWalletDialog";
+import { WalletJazzicon } from "elf/efi-ui/WalletJazzicon/WalletJazzicon";
+import { ConnectWalletDialog } from "elf/efi-ui/ConnectWalletDialog/ConnectWalletDialog";
 import { formatWalletAddress } from "elf/formatWalletAddress";
 
 interface ConnectWalletButtonProps {
