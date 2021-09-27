@@ -1,19 +1,18 @@
-import React, { ReactElement } from "react";
-
 import DescriptionIcon from "@material-ui/icons/Description";
 import GavelIcon from "@material-ui/icons/Gavel";
 import GradeIcon from "@material-ui/icons/Grade";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import Card from "components/Card";
-import Middle from "components/Middle";
-import RightBar from "components/RightBar";
 import tw from "elf-tailwindcss-classnames";
-import { useProposals } from "elf/efi/proposals/useProposals";
+import React, { ReactElement } from "react";
+import Card from "src/efi-ui/app/Card";
+import Middle from "src/efi-ui/app/Middle";
+import RightBar from "src/efi-ui/app/RightBar";
+import { useProposals } from "src/efi-ui/proposals/useProposals";
 import { t } from "ttag";
 
 const iconStyle = tw("text-white", "text-xs");
 
-export function Container(): ReactElement {
+export function OverviewPage(): ReactElement {
   const { data } = useProposals();
   console.log("data", data);
 
@@ -85,4 +84,4 @@ export function Container(): ReactElement {
   );
 }
 
-export default Container;
+export default OverviewPage;

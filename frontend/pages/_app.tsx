@@ -1,12 +1,12 @@
+import "src/efi-ui/styles/tailwind.css";
+
+import { Web3ReactProvider } from "@web3-react/core";
+import { AppProps } from "next/app";
 import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import "styles/globals.css";
-
-import { Web3ReactProvider } from "@web3-react/core";
-import { getEthereumProviderLibrary } from "elf/efi/getEthereumProviderLibrary";
-import { queryClient } from "elf/efi/queryClient";
-import { AppProps } from "next/app";
+import { getEthereumProviderLibrary } from "src/efi/getEthereumProviderLibrary";
+import { queryClient } from "src/efi/queryClient";
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return (

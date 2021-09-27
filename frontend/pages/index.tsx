@@ -1,12 +1,11 @@
+import OverviewPage from "src/efi-ui/overview/OverviewPage";
 import React, { ReactElement } from "react";
-
-import Container from "components/Container";
-import PageView from "components/PageView";
+import PageView from "src/efi-ui/app/PageView";
 
 export default function Home(): ReactElement {
   return (
     <PageView>
-      <Container />
+      <OverviewPage />
     </PageView>
   );
 }

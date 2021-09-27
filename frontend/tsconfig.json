@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,13 +20,13 @@
     "jsx": "preserve",
     "rootDir": ".",
     "baseUrl": ".",
-    "paths": {
-      "components/*": ["pages/components/*", "src/components/*"],
-      "elf/*": ["src/*"],
-      "styles/*": ["styles/*"],
-      "elf-tailwindcss-classnames": ["tailwindcss-classnames/index.ts"]
-    }
   },
-  "include": ["pages", "src/components", "src", "tailwindcss-classnames"],
-  "exclude": ["node_modules"]
+  "include": [
+    "pages",
+    "src",
+    "elf-tailwindcss-classnames"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

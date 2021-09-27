@@ -5,10 +5,10 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 import {
   ALCHEMY_GOERLI_HTTP_URL,
   ALCHEMY_MAINNET_HTTP_URL,
-} from "elf/efi/providers/providers";
+} from "src/efi/providers/providers";
 import { t } from "ttag";
 
-import { ChainId, ChainNames, DEFAULT_CHAIN_IDS } from "elf/ethereum";
+import { ChainId, ChainNames, DEFAULT_CHAIN_IDS } from "src/ethereum";
 
 /**
  * The 'injected' connector refers to plugin-based wallets like MetaMask, which
