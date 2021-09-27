@@ -4,12 +4,12 @@ import { Fragment, ReactElement, ReactNode } from "react";
 import tw from "elf-tailwindcss-classnames";
 import { Dialog, Transition } from "@headlessui/react";
 
-interface SimpleDialog {
+interface SimpleDialogProps {
   isOpen: boolean;
   onClose: () => void;
   children?: ReactNode;
 }
-export default function SimpleDialog(props: SimpleDialog): ReactElement {
+export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
   const { isOpen, onClose, children } = props;
   return (
     <Transition.Root show={isOpen} as={Fragment}>

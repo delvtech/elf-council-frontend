@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 
-import SimpleDialog from "elf/efi-ui/Dialog/Dialog";
+import SimpleDialog from "elf/efi-ui/base/Dialog/Dialog";
 import { ConnectWalletButtons } from "elf/efi-ui/ConnectWalletButtons/ConnectWalletButtons";
 
 interface ConnectWalletDialogProps {
