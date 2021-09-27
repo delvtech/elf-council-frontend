@@ -20,17 +20,12 @@
     "jsx": "preserve",
     "rootDir": ".",
     "baseUrl": ".",
-    "paths": {
-      "styles/*": [
-        "styles/*"
-      ]
-    }
   },
   "include": [
     "pages",
     "src/components",
     "src",
-    "tailwindcss-classnames"
+    "elf-tailwindcss-classnames"
   ],
   "exclude": [
     "node_modules"
