@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, ReactElement, ReactNode } from "react";
 
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import { Dialog, Transition } from "@headlessui/react";
 
 interface SimpleDialogProps {

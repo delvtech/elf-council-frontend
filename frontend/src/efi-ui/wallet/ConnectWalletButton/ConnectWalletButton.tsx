@@ -1,6 +1,6 @@
 import { t } from "ttag";
 import classNames from "classnames";
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, useCallback, useState } from "react";
 import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
 import { formatWalletAddress } from "src/formatWalletAddress";

@@ -1,4 +1,4 @@
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, ReactNode } from "react";
 import Header from "src/efi-ui/app/Header";
 import Sidebar from "src/efi-ui/app/Sidebar";

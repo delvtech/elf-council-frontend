@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode } from "react";
 
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 
 interface CardProps {
   title: string;

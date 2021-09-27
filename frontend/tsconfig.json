@@ -23,8 +23,7 @@
   },
   "include": [
     "pages",
-    "src",
-    "elf-tailwindcss-classnames"
+    "src"
   ],
   "exclude": [
     "node_modules"

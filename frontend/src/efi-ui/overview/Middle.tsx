@@ -1,4 +1,4 @@
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
 import { ChartData, Line } from "react-chartjs-2";
 

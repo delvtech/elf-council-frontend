@@ -5,7 +5,7 @@ import { useWeb3React } from "@web3-react/core";
 
 // import { ReactComponent as MetamaskIcon } from "efi-static-assets/logos/metamask.svg";
 // import { ReactComponent as WalletConnectIcon } from "efi-static-assets/logos/walletConnectIcon.svg";
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import {
   getWalletConnectConnector,
   injectedConnector,

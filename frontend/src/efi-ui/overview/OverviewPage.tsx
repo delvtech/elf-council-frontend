@@ -2,7 +2,7 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import GavelIcon from "@material-ui/icons/Gavel";
 import GradeIcon from "@material-ui/icons/Grade";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
 import Card from "src/efi-ui/overview/Card";
 import Middle from "src/efi-ui/overview/Middle";
