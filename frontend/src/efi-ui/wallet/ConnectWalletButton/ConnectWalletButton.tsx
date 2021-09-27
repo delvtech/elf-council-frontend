@@ -2,9 +2,9 @@ import { t } from "ttag";
 import classNames from "classnames";
 import tw from "elf-tailwindcss-classnames";
 import React, { ReactElement, useCallback, useState } from "react";
-import { ConnectWalletDialog } from "src/efi-ui/ConnectWalletDialog/ConnectWalletDialog";
-import { WalletJazzicon } from "src/efi-ui/WalletJazzicon/WalletJazzicon";
+import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import { ConnectWalletDialog } from "src/efi-ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
 
 interface ConnectWalletButtonProps {
   account: string | null | undefined;

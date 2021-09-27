@@ -4,9 +4,9 @@ import GradeIcon from "@material-ui/icons/Grade";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import tw from "elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
-import Card from "src/efi-ui/app/Card";
-import Middle from "src/efi-ui/app/Middle";
-import RightBar from "src/efi-ui/app/RightBar";
+import Card from "src/efi-ui/overview/Card";
+import Middle from "src/efi-ui/overview/Middle";
+import RightBar from "src/efi-ui/overview/RightBar";
 import { useProposals } from "src/efi-ui/proposals/useProposals";
 import { t } from "ttag";
 
