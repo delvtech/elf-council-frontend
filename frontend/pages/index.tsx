@@ -1,11 +1,11 @@
-import Container from "pages/components/Container";
+import OverviewPage from "pages/components/OverviewPage";
 import PageView from "pages/components/PageView";
 import React, { ReactElement } from "react";
 
 export default function Home(): ReactElement {
   return (
     <PageView>
-      <Container />
+      <OverviewPage />
     </PageView>
   );
 }

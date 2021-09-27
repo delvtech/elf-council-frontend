@@ -12,7 +12,7 @@ import { t } from "ttag";
 
 const iconStyle = tw("text-white", "text-xs");
 
-export function Container(): ReactElement {
+export function OverviewPage(): ReactElement {
   const { data } = useProposals();
   console.log("data", data);
 
@@ -84,4 +84,4 @@ export function Container(): ReactElement {
   );
 }
 
-export default Container;
+export default OverviewPage;
