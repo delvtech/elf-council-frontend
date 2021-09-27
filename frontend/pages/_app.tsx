@@ -1,4 +1,4 @@
-import "styles/globals.css";
+import "src/efi-ui/styles/tailwind.css";
 
 import { Web3ReactProvider } from "@web3-react/core";
 import { AppProps } from "next/app";

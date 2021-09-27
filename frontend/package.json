@@ -44,7 +44,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "build:tailwind": "tailwindcss build src/tailwind.css -o src/tailwind.output.css",
+    "build:tailwind": "npx tailwindcss build -i src/efi-ui/styles/tailwind.css -o src/tailwind.output.css",
     "build:tailwindcss-classnames": "tailwindcss-classnames -i tailwind.config.js -o elf-tailwindcss-classnames/index.ts",
     "depcruise": "depcruise --config .dependency-cruiser.js .",
     "dev": "next dev",

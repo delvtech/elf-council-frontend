@@ -23,7 +23,6 @@
   },
   "include": [
     "pages",
-    "src/components",
     "src",
     "elf-tailwindcss-classnames"
   ],
