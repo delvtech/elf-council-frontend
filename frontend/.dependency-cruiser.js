@@ -197,6 +197,17 @@ module.exports = {
     },
 
     {
+      name: "elf-no-outside-src",
+      comment: "Importing from outside src/ is prohibited",
+      severity: "error",
+      from: {
+        path: "src/",
+      },
+      to: {
+        pathNot: "src/",
+      },
+    },
+    {
       name: "elf-not-outside-ui-base",
       comment:
         "Importing modules in efi-ui/base/ that are not from efi-ui/base/ is prohibited",

@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { ConnectWalletButton } from "src/efi-ui/wallet/ConnectWalletButton/ConnectWalletButton";
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import { useWeb3React } from "@web3-react/core";
 
 function Header(): ReactElement {

@@ -9,7 +9,7 @@ import LockIcon from "@material-ui/icons/Lock";
 import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
 import { t } from "ttag";
-import tw from "elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 
 export default function Sidebar(): ReactElement {
   return (
