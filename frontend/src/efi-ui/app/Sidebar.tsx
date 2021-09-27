@@ -13,7 +13,7 @@ import tw from "src/elf-tailwindcss-classnames";
 
 export default function Sidebar(): ReactElement {
   return (
-    <div className={tw("md:w-3/12", "w-6/12", "h-screen", "shadow-2xl")}>
+    <div className={tw("md:w-3/12", "w-6/12", "h-screen")}>
       <div className={tw("border-b", "py-3", "mt-1", "flex", "justify-around")}>
         <ElementLogo />
       </div>

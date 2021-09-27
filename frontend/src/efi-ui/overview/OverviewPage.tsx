@@ -17,14 +17,7 @@ export function OverviewPage(): ReactElement {
   console.log("data", data);
 
   return (
-    <div
-      className={tw(
-        "bg-gradient-to-r",
-        "from-gray-100",
-        "to-gray-50",
-        "h-full"
-      )}
-    >
+    <div className={tw("h-full")}>
       <div className={tw("px-8", "py-1")}>
         <p
           className={tw(
