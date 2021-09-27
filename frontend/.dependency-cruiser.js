@@ -149,7 +149,7 @@ module.exports = {
 
     /* custom rules specific to Element.fi */
     {
-      name: "efi-not-to-graveyard",
+      name: "elf-not-to-graveyard",
       comment: "Importing from graveyard/ is prohibited",
       severity: "error",
       from: {
@@ -160,7 +160,7 @@ module.exports = {
       },
     },
     {
-      name: "efi-not-to-ui",
+      name: "elf-not-to-ui",
       comment:
         "Importing from efi-ui/ is prohibited outside of efi-ui and pages directories",
       severity: "error",
@@ -173,7 +173,7 @@ module.exports = {
     },
 
     {
-      name: "efi-not-to-react",
+      name: "elf-not-to-react",
       comment:
         "Importing React from outside the ui and pages directories is prohibited",
       severity: "error",
@@ -185,7 +185,7 @@ module.exports = {
       },
     },
     {
-      name: "efi-not-to-localStorage",
+      name: "elf-not-to-localStorage",
       comment: "Importing efiLocalStorage outside of prefs/ is prohibited",
       severity: "error",
       from: {
@@ -197,7 +197,7 @@ module.exports = {
     },
 
     {
-      name: "efi-not-outside-ui-base",
+      name: "elf-not-outside-ui-base",
       comment:
         "Importing modules in efi-ui/base/ that are not from efi-ui/base/ is prohibited",
       severity: "error",
@@ -209,7 +209,7 @@ module.exports = {
       },
     },
     {
-      name: "efi-not-outside-base",
+      name: "elf-not-outside-base",
       comment:
         "Importing modules in efi/base/ that are not from efi/base/ is prohibited",
       severity: "error",
@@ -221,7 +221,7 @@ module.exports = {
       },
     },
     {
-      name: "efi-static-assets-not-outside-efi-ui",
+      name: "elf-static-assets-not-outside-efi-ui",
       comment: "Importing static assets outside of efi-ui/ is prohibited",
       severity: "error",
       from: {
