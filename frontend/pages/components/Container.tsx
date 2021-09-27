@@ -1,15 +1,14 @@
-import React, { ReactElement } from "react";
-
 import DescriptionIcon from "@material-ui/icons/Description";
 import GavelIcon from "@material-ui/icons/Gavel";
 import GradeIcon from "@material-ui/icons/Grade";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import tw from "elf-tailwindcss-classnames";
-import { useProposals } from "elf/efi/proposals/useProposals";
-import { t } from "ttag";
 import Card from "pages/components/Card";
 import Middle from "pages/components/Middle";
 import RightBar from "pages/components/RightBar";
+import React, { ReactElement } from "react";
+import { useProposals } from "src/efi/proposals/useProposals";
+import { t } from "ttag";
 
 const iconStyle = tw("text-white", "text-xs");
 

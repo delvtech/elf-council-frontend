@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useRef } from "react";
 
 import jazzicon from "@metamask/jazzicon";
-import { getMetamaskJazziconSeed } from "elf/getMetamaskJazziconSeed";
+import { getMetamaskJazziconSeed } from "src/getMetamaskJazziconSeed";
 
 interface WalletJazziconProps {
   account: string | null | undefined;
