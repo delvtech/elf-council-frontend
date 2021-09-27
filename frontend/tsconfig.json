@@ -17,7 +17,6 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["pages/components/*", "src/components/*"],
       "elf/*": ["src/*"],
       "styles/*": ["styles/*"],
       "elf-tailwindcss-classnames": ["tailwindcss-classnames/index.ts"]

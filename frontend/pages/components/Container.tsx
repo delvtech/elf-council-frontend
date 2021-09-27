@@ -4,12 +4,12 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import GavelIcon from "@material-ui/icons/Gavel";
 import GradeIcon from "@material-ui/icons/Grade";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import Card from "components/Card";
-import Middle from "components/Middle";
-import RightBar from "components/RightBar";
 import tw from "elf-tailwindcss-classnames";
 import { useProposals } from "elf/efi/proposals/useProposals";
 import { t } from "ttag";
+import Card from "pages/components/Card";
+import Middle from "pages/components/Middle";
+import RightBar from "pages/components/RightBar";
 
 const iconStyle = tw("text-white", "text-xs");
 
