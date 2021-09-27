@@ -23,9 +23,6 @@
     "paths": {
       "styles/*": [
         "styles/*"
-      ],
-      "elf-tailwindcss-classnames": [
-        "tailwindcss-classnames/index.ts"
       ]
     }
   },
