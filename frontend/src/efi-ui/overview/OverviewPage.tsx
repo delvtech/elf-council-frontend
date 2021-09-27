@@ -3,11 +3,11 @@ import GavelIcon from "@material-ui/icons/Gavel";
 import GradeIcon from "@material-ui/icons/Grade";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import tw from "elf-tailwindcss-classnames";
-import Card from "pages/components/Card";
-import Middle from "pages/components/Middle";
-import RightBar from "pages/components/RightBar";
 import React, { ReactElement } from "react";
-import { useProposals } from "src/efi/proposals/useProposals";
+import Card from "src/efi-ui/app/Card";
+import Middle from "src/efi-ui/app/Middle";
+import RightBar from "src/efi-ui/app/RightBar";
+import { useProposals } from "src/efi-ui/proposals/useProposals";
 import { t } from "ttag";
 
 const iconStyle = tw("text-white", "text-xs");

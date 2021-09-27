@@ -1,6 +1,6 @@
-import OverviewPage from "pages/components/OverviewPage";
-import PageView from "pages/components/PageView";
+import OverviewPage from "src/efi-ui/overview/OverviewPage";
 import React, { ReactElement } from "react";
+import PageView from "src/efi-ui/app/PageView";
 
 export default function Home(): ReactElement {
   return (
