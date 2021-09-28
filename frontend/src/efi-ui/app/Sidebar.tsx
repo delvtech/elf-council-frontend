@@ -5,58 +5,57 @@ import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
 import ForumIcon from "@material-ui/icons/Forum";
 import HomeIcon from "@material-ui/icons/Home";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
-import LockIcon from "@material-ui/icons/Lock";
+import StarIcon from "@material-ui/icons/Star";
 import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
 import { t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
+import Button from "src/efi-ui/base/Button/Button";
 
 export default function Sidebar(): ReactElement {
   return (
-    <div className={tw("md:w-3/12", "w-6/12", "h-screen")}>
+    <div className={tw("w-80", "h-screen")}>
       <div className={tw("border-b", "py-3", "mt-1", "flex", "justify-around")}>
         <ElementLogo />
       </div>
-      <div className={tw("p-4", "space-y-14")}>
-        <div className={tw("space-y-4")}>
-          <SidebarLink
-            link="/"
-            label={t`Overview`}
-            icon={<HomeIcon className={tw("text-blue-400")} />}
-          />
-          <SidebarLinkExternal
-            link="https://snapshot.org/#/element-finance.eth"
-            label={t`Proposals`}
-            icon={<BorderColorIcon className={tw("text-blue-400")} />}
-          />
-          <SidebarLink
-            link="/leaderboard"
-            label={t`Leaderboard`}
-            icon={<PeopleIcon className={tw("text-blue-400")} />}
-          />
-          <SidebarLink
-            link="/delegates"
-            label={t`Delegate`}
-            icon={<HowToVoteIcon className={tw("text-blue-400")} />}
-          />
-          <SidebarLinkExternal
-            link="https://forum.element.fi"
-            label={t`Forum`}
-            icon={<ForumIcon className={tw("text-blue-400")} />}
-          />
+      <div className={tw("space-y-8", "mt-12")}>
+        <SidebarLink
+          link="/"
+          label={t`Overview`}
+          icon={<HomeIcon className={tw("text-blue-800")} />}
+        />
+        <SidebarLinkExternal
+          link="https://snapshot.org/#/element-finance.eth"
+          label={t`Proposals`}
+          icon={<BorderColorIcon className={tw("text-blue-800")} />}
+        />
+        <SidebarLink
+          link="/leaderboard"
+          label={t`Leaderboard`}
+          icon={<PeopleIcon className={tw("text-blue-800")} />}
+        />
+        <SidebarLink
+          link="/delegates"
+          label={t`Delegate`}
+          icon={<HowToVoteIcon className={tw("text-blue-800")} />}
+        />
+        <SidebarLinkExternal
+          link="https://forum.element.fi"
+          label={t`Forum`}
+          icon={<ForumIcon className={tw("text-blue-800")} />}
+        />
 
-          <SidebarLink
-            link="/resources"
-            label={t`Resources`}
-            icon={<CollectionsBookmarkIcon className={tw("text-blue-400")} />}
-          />
-          <SidebarLink
-            link="/rewards"
-            label={t`Rewards`}
-            icon={<LockIcon className={tw("text-blue-400")} />}
-          />
+        <SidebarLink
+          link="/resources"
+          label={t`Resources`}
+          icon={<CollectionsBookmarkIcon className={tw("text-blue-800")} />}
+        />
+        <div className={tw("text-center", "pt-8")}>
+          <Button>
+            {t`Rewards`}
+            <StarIcon className={tw("ml-2")} />
+          </Button>
         </div>
-        <div className={tw("space-y-6")}></div>
       </div>
     </div>
   );
@@ -69,14 +68,22 @@ interface SidebarLinkProps {
 }
 
 function SidebarLink(props: SidebarLinkProps): ReactElement {
-  const { link, label, icon } = props;
+  const { link, label } = props;
   return (
     <div>
       <Link href={link} passHref>
         <a href={link}>
-          <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-            {icon}
-            <p className="text-blue-400  ">{label}</p>
+          <div
+            className={tw(
+              "flex",
+              "p-3",
+              "pl-16",
+              "space-x-4",
+              "hover:bg-blue-50",
+              "cursor-pointer"
+            )}
+          >
+            <p className={tw("text-blue-800")}>{label}</p>
           </div>
         </a>
       </Link>
@@ -85,13 +92,21 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 }
 
 function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
-  const { link, label, icon } = props;
+  const { link, label } = props;
   return (
     <div>
       <a href={link}>
-        <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
-          {icon}
-          <p className="text-blue-400  ">{label}</p>
+        <div
+          className={tw(
+            "flex",
+            "p-3",
+            "pl-16",
+            "space-x-4",
+            "hover:bg-blue-50",
+            "cursor-pointer"
+          )}
+        >
+          <p className="text-blue-800">{label}</p>
         </div>
       </a>
     </div>
