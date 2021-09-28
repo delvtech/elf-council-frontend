@@ -38,7 +38,7 @@ const usefulToolsLink = (
   <a
     key="useful-tools"
     href=""
-    className={tw("font-semibold", "text-blue-900", "hover:underline")}
+    className={tw("font-semibold", "text-blue-800", "hover:underline")}
   >
     {t`Tools`}
   </a>
@@ -47,7 +47,7 @@ const onChainGovernanceLink = (
   <a
     key="on-chain-governance"
     href=""
-    className={tw("font-semibold", "text-blue-900", "hover:underline")}
+    className={tw("font-semibold", "text-blue-800", "hover:underline")}
   >
     {t`On-Chain Governance`}
   </a>
