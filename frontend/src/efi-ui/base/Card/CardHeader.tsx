@@ -33,7 +33,7 @@ export default function CardHeader({
             "font-semibold",
             "leading-6",
             "font-medium",
-            "text-blue-700"
+            "text-blue-900"
           )}
         >
           {title}
