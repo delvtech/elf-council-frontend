@@ -28,7 +28,13 @@ export default function CardHeader({
     >
       <div className={tw("ml-4", "mt-4")}>
         <h3
-          className={tw("text-lg", "leading-6", "font-medium", "text-gray-900")}
+          className={tw(
+            "text-lg",
+            "font-semibold",
+            "leading-6",
+            "font-medium",
+            "text-blue-700"
+          )}
         >
           {title}
         </h3>
