@@ -5,6 +5,7 @@ import React, { ReactElement, useCallback, useState } from "react";
 import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { ConnectWalletDialog } from "src/efi-ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
+import Button from "src/efi-ui/base/Button/Button";
 
 interface ConnectWalletButtonProps {
   account: string | null | undefined;
@@ -33,9 +34,7 @@ export function ConnectWalletButton(
     >
       {!account ? (
         <div>
-          <button className={tw("text-blue-400")} onClick={onOpenWalletDialog}>
-            <span className={tw("text-center")}>{t`Connect Wallet`}</span>
-          </button>
+          <Button onClick={onOpenWalletDialog}>{t`Connect Wallet`}</Button>
         </div>
       ) : (
         <div>

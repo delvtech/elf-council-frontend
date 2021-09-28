@@ -13,7 +13,16 @@ export default function PageView(props: PageViewProps): ReactElement {
     <div>
       <div className={tw("flex", "w-screen", "h-screen")}>
         <Sidebar />
-        <div className={tw("w-screen")}>
+        <div
+          className={tw(
+            "w-screen",
+            "bg-gradient-to-b",
+            "from-gray-50",
+            "to-gray-100",
+            "p-8",
+            "space-y-8"
+          )}
+        >
           <Header />
           {children}
         </div>
