@@ -5,6 +5,7 @@ import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
 import ForumIcon from "@material-ui/icons/Forum";
 import HomeIcon from "@material-ui/icons/Home";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
+import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import StarIcon from "@material-ui/icons/Star";
 import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
@@ -72,20 +73,17 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
   return (
     <div>
       <Link href={link} passHref>
-        <a href={link}>
-          <div
-            className={tw(
-              "flex",
-              "p-3",
-              "pl-16",
-              "space-x-4",
-              "hover:bg-blue-50",
-              "cursor-pointer"
-            )}
-          >
-            <p className={tw("text-blue-800")}>{label}</p>
-          </div>
-        </a>
+        <div
+          className={tw(
+            "flex",
+            "p-3",
+            "pl-16",
+            "hover:bg-blue-50",
+            "cursor-pointer"
+          )}
+        >
+          <p className={tw("text-blue-800")}>{label}</p>
+        </div>
       </Link>
     </div>
   );
@@ -101,12 +99,14 @@ function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
             "flex",
             "p-3",
             "pl-16",
-            "space-x-4",
             "hover:bg-blue-50",
-            "cursor-pointer"
+            "cursor-pointer",
+            "justify-between",
+            "text-blue-800"
           )}
         >
-          <p className="text-blue-800">{label}</p>
+          <p>{label}</p>
+          <ExternalLinkIcon />
         </div>
       </a>
     </div>
