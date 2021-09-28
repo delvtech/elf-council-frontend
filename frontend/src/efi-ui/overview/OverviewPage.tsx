@@ -1,16 +1,10 @@
-import DescriptionIcon from "@material-ui/icons/Description";
-import GavelIcon from "@material-ui/icons/Gavel";
-import GradeIcon from "@material-ui/icons/Grade";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
-import Card from "src/efi-ui/overview/Card";
+import SummaryCard from "src/efi-ui/overview/SummaryCard";
 import Middle from "src/efi-ui/overview/Middle";
 import RightBar from "src/efi-ui/overview/RightBar";
 import { useProposals } from "src/efi-ui/proposals/useProposals";
 import { t } from "ttag";
-
-const iconStyle = tw("text-white", "text-xs");
 
 export function OverviewPage(): ReactElement {
   const { data } = useProposals();
@@ -21,9 +15,10 @@ export function OverviewPage(): ReactElement {
       <div className={tw("px-8", "py-1")}>
         <p
           className={tw(
-            "text-blue-400",
+            "text-blue-900",
             "font-bold",
             "text-2xl",
+            "text-center",
             "transform-gpu",
             "-translate-y-2"
           )}
@@ -31,43 +26,22 @@ export function OverviewPage(): ReactElement {
           {t`Governance Overview`}
         </p>
       </div>
-      <div className={tw("flex", "p-4", "space-x-3")}>
-        <Card
-          title="VOTES DELEGATED"
-          balance={6000}
-          icon={
-            <GavelIcon key="gavel" fontSize="small" className={iconStyle} />
-          }
-        />
-        <Card
-          title="TOTAL GOVERNANCE REWARDS"
-          balance={400.079}
-          icon={
-            <GradeIcon key="grade" fontSize="small" className={iconStyle} />
-          }
-        />
-        <Card
-          title="PROPOSALS"
-          balance={100}
-          icon={
-            <DescriptionIcon
-              key="description"
-              fontSize="small"
-              className={iconStyle}
-            />
-          }
-        />
-        <Card
-          title="GOVERNANCE TOKENS CIRCULATING"
-          balance={790}
-          icon={
-            <MonetizationOnIcon
-              key="monetization"
-              fontSize="small"
-              className={iconStyle}
-            />
-          }
-        />
+      <div
+        className={tw(
+          "flex",
+          "flex-col",
+          "p-4",
+          "space-y-6",
+          "lg:space-y-0",
+          "lg:grid",
+          "lg:grid-cols-4",
+          "lg:gap-6"
+        )}
+      >
+        <SummaryCard title="Votes Delegated" balance={6000} />
+        <SummaryCard title="Total Governance Rewards" balance={400.079} />
+        <SummaryCard title="Proposals" balance={100} />
+        <SummaryCard title="Governance Tokens Circulating" balance={790} />
       </div>
       <div className={tw("flex", "ml-3", "mt-6", "space-x-6", "mr-4")}>
         <Middle />
