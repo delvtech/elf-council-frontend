@@ -22,38 +22,38 @@ export default function Sidebar(): ReactElement {
           <SidebarLink
             link="/"
             label={t`Overview`}
-            icon={<HomeIcon className={tw("text-blue-400")} />}
+            icon={<HomeIcon className={tw("text-blue-900")} />}
           />
           <SidebarLinkExternal
             link="https://snapshot.org/#/element-finance.eth"
             label={t`Proposals`}
-            icon={<BorderColorIcon className={tw("text-blue-400")} />}
+            icon={<BorderColorIcon className={tw("text-blue-900")} />}
           />
           <SidebarLink
             link="/leaderboard"
             label={t`Leaderboard`}
-            icon={<PeopleIcon className={tw("text-blue-400")} />}
+            icon={<PeopleIcon className={tw("text-blue-900")} />}
           />
           <SidebarLink
             link="/delegates"
             label={t`Delegate`}
-            icon={<HowToVoteIcon className={tw("text-blue-400")} />}
+            icon={<HowToVoteIcon className={tw("text-blue-900")} />}
           />
           <SidebarLinkExternal
             link="https://forum.element.fi"
             label={t`Forum`}
-            icon={<ForumIcon className={tw("text-blue-400")} />}
+            icon={<ForumIcon className={tw("text-blue-900")} />}
           />
 
           <SidebarLink
             link="/resources"
             label={t`Resources`}
-            icon={<CollectionsBookmarkIcon className={tw("text-blue-400")} />}
+            icon={<CollectionsBookmarkIcon className={tw("text-blue-900")} />}
           />
           <SidebarLink
             link="/rewards"
             label={t`Rewards`}
-            icon={<LockIcon className={tw("text-blue-400")} />}
+            icon={<LockIcon className={tw("text-blue-900")} />}
           />
         </div>
         <div className={tw("space-y-6")}></div>
@@ -76,7 +76,7 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
         <a href={link}>
           <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
             {icon}
-            <p className="text-blue-400  ">{label}</p>
+            <p className="text-blue-900">{label}</p>
           </div>
         </a>
       </Link>
@@ -91,7 +91,7 @@ function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
       <a href={link}>
         <div className="flex p-3 text-gray-700  space-x-4 0 hover:bg-gray-50 hover:text-blue-600  cursor-pointer  ">
           {icon}
-          <p className="text-blue-400  ">{label}</p>
+          <p className="text-blue-900">{label}</p>
         </div>
       </a>
     </div>
