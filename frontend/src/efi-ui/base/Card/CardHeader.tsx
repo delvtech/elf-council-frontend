@@ -27,7 +27,7 @@ export default function CardHeader({
       )}
     >
       <div className={tw("ml-4", "mt-4")}>
-        <h3
+        <h2
           className={tw(
             "text-lg",
             "font-semibold",
@@ -37,7 +37,7 @@ export default function CardHeader({
           )}
         >
           {title}
-        </h3>
+        </h2>
         <p className={tw("mt-1", "text-sm", "text-gray-500")}>{description}</p>
       </div>
       <div className={tw("ml-4", "mt-4", "flex-shrink-0")}>{action}</div>
