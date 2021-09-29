@@ -20,7 +20,8 @@ export default function PageView(props: PageViewProps): ReactElement {
             "from-gray-50",
             "to-gray-100",
             "p-8",
-            "space-y-8"
+            "space-y-8",
+            "overflow-scroll"
           )}
         >
           <Header />

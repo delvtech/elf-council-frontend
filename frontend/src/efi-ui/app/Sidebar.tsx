@@ -13,8 +13,6 @@ import { t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/efi-ui/base/Button/Button";
 
-export const SNAPSHOT_URL = "https://snapshot.org/#/element-finance.eth";
-
 export default function Sidebar(): ReactElement {
   return (
     <div className={tw("w-80", "h-screen")}>
