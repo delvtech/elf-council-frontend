@@ -7,7 +7,6 @@ import HomeIcon from "@material-ui/icons/Home";
 import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import StarIcon from "@material-ui/icons/Star";
-import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
 import { t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
@@ -29,11 +28,6 @@ export default function Sidebar(): ReactElement {
           link="/proposals"
           label={t`Proposals`}
           icon={<BorderColorIcon className={tw("text-blue-800")} />}
-        />
-        <SidebarLink
-          link="/leaderboard"
-          label={t`Leaderboard`}
-          icon={<PeopleIcon className={tw("text-blue-800")} />}
         />
         <SidebarLink
           link="/delegates"
