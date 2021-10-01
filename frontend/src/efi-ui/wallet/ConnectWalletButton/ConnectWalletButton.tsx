@@ -1,11 +1,11 @@
-import { t } from "ttag";
 import classNames from "classnames";
-import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, useCallback, useState } from "react";
-import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
-import { formatWalletAddress } from "src/formatWalletAddress";
-import { ConnectWalletDialog } from "src/efi-ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
 import Button from "src/efi-ui/base/Button/Button";
+import { ConnectWalletDialog } from "src/efi-ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
+import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
+import tw from "src/elf-tailwindcss-classnames";
+import { formatWalletAddress } from "src/formatWalletAddress";
+import { t } from "ttag";
 
 interface ConnectWalletButtonProps {
   account: string | null | undefined;
@@ -38,10 +38,14 @@ export function ConnectWalletButton(
         </div>
       ) : (
         <div>
-          <button className={tw("text-blue-400")} onClick={onOpenWalletDialog}>
-            <WalletJazzicon size={28} account={account} />
+          <Button minimal onClick={onOpenWalletDialog}>
+            <WalletJazzicon
+              size={28}
+              account={account}
+              className={tw("mr-4")}
+            />
             {formatWalletAddress(account)}
-          </button>
+          </Button>
         </div>
       )}
       <ConnectWalletDialog
