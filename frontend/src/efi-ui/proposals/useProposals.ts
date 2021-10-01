@@ -1,8 +1,8 @@
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 
 import request, { gql } from "graphql-request";
 
-export function useProposals(): any {
+export function useProposals(): UseQueryResult<any[]> {
   return useQuery(["proposals"], async () => {
     const { proposals } = await request(
       endpoint,
@@ -17,6 +17,7 @@ export function useProposals(): any {
           ) {
             id
             title
+            link
             body
             choices
             start

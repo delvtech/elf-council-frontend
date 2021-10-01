@@ -2,22 +2,27 @@
 
 import { MouseEventHandler, ReactElement, ReactNode } from "react";
 import { TAILWIND_BUTTON_CLASS } from "src/efi-ui/base/Button/styles";
-import tw from "src/elf-tailwindcss-classnames";
 
-interface ButtonProps {
+interface AnchorButtonProps {
   children: ReactNode;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+  href?: string;
   // TODO: Add rounded prop
 }
 
-export default function Button({
+export default function AnchorButton({
   onClick,
+  href,
   children,
-}: ButtonProps): ReactElement {
+}: AnchorButtonProps): ReactElement {
   return (
-    <button onClick={onClick} type="button" className={TAILWIND_BUTTON_CLASS}>
+    <a
+      href={href}
+      role="button"
+      onClick={onClick}
+      className={TAILWIND_BUTTON_CLASS}
+    >
       {children}
-    </button>
+    </a>
   );
 }

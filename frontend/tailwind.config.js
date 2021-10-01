@@ -1,13 +1,13 @@
 module.exports = {
   // allows tailwind to tree shake all css not included in the files found in this array.
-  purge: {
-    // TODO: Turn this off in development, and on in production. Maybe a
-    // separate tailwind.config.prod.js file that extends this one?
-    // see https://github.com/tailwindlabs/tailwindcss/discussions/2963#discussioncomment-145462
-    // enabled: true,
-
-    content: ["./pages/**/*.tsx", "./src/**/*.tsx"],
-  },
+  purge: [
+    // .ts allow for long tailwind classes to be extract to their own files.
+    "./pages/**/*.ts",
+    "./pages/**/*.tsx",
+    // .ts allow for long tailwind classes to be extract to their own files.
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -15,5 +15,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
