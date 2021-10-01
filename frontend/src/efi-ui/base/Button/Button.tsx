@@ -2,6 +2,7 @@
 
 import { MouseEventHandler, ReactElement, ReactNode } from "react";
 import { TAILWIND_BUTTON_CLASS } from "src/efi-ui/base/Button/styles";
+import tw from "src/elf-tailwindcss-classnames";
 
 interface ButtonProps {
   children: ReactNode;
