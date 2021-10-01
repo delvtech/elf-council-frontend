@@ -1,17 +1,10 @@
-import React, { ReactElement, ReactNode } from "react";
-
-import BorderColorIcon from "@material-ui/icons/BorderColor";
-import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
-import ForumIcon from "@material-ui/icons/Forum";
-import HomeIcon from "@material-ui/icons/Home";
-import HowToVoteIcon from "@material-ui/icons/HowToVote";
 import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import StarIcon from "@material-ui/icons/Star";
-import PeopleIcon from "@material-ui/icons/People";
 import Link from "next/link";
-import { t } from "ttag";
-import tw from "src/elf-tailwindcss-classnames";
+import React, { ReactElement } from "react";
 import Button from "src/efi-ui/base/Button/Button";
+import tw from "src/elf-tailwindcss-classnames";
+import { t } from "ttag";
 
 export default function Sidebar(): ReactElement {
   return (
@@ -20,37 +13,12 @@ export default function Sidebar(): ReactElement {
         <ElementLogo />
       </div>
       <div className={tw("space-y-8", "mt-12")}>
-        <SidebarLink
-          link="/"
-          label={t`Overview`}
-          icon={<HomeIcon className={tw("text-blue-800")} />}
-        />
-        <SidebarLink
-          link="/proposals"
-          label={t`Proposals`}
-          icon={<BorderColorIcon className={tw("text-blue-800")} />}
-        />
-        <SidebarLink
-          link="/leaderboard"
-          label={t`Leaderboard`}
-          icon={<PeopleIcon className={tw("text-blue-800")} />}
-        />
-        <SidebarLink
-          link="/delegates"
-          label={t`Delegate`}
-          icon={<HowToVoteIcon className={tw("text-blue-800")} />}
-        />
-        <SidebarLinkExternal
-          link="https://forum.element.fi"
-          label={t`Forum`}
-          icon={<ForumIcon className={tw("text-blue-800")} />}
-        />
+        <SidebarLink link="/" label={t`Overview`} />
+        <SidebarLink link="/proposals" label={t`Proposals`} />
+        <SidebarLink link="/delegates" label={t`Delegate`} />
+        <SidebarLinkExternal link="https://forum.element.fi" label={t`Forum`} />
+        <SidebarLink link="/resources" label={t`Resources`} />
 
-        <SidebarLink
-          link="/resources"
-          label={t`Resources`}
-          icon={<CollectionsBookmarkIcon className={tw("text-blue-800")} />}
-        />
         <div className={tw("text-center", "pt-8")}>
           <Button>
             {t`Rewards`}
@@ -65,7 +33,6 @@ export default function Sidebar(): ReactElement {
 interface SidebarLinkProps {
   link: string;
   label: string;
-  icon: ReactNode;
 }
 
 function SidebarLink(props: SidebarLinkProps): ReactElement {
