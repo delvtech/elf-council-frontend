@@ -18,7 +18,7 @@
     "classnames": "^2.3.1",
     "d3-time-format": "^4.0.0",
     "dependency-cruiser": "^10.3.1",
-    "elf-contracts-typechain": "git+ssh://git@github.com/element-fi/elf-council-typechain.git",
+    "elf-contracts-typechain": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
     "eslint-config-prettier": "^8.3.0",
     "ethers": "^5.4.7",
     "graphql": "^15.5.3",
@@ -55,7 +55,7 @@
     "lint": "next lint",
     "prettier:check": "prettier --check pages/**/*.ts{,x}",
     "start": "next start",
-    "update-elf-council-typechain": "npm install git+ssh://git@github.com/element-fi/elf-council-typechain.git"
+    "update-elf-council-typechain": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git"
   },
   "version": "0.1.0"
 }
