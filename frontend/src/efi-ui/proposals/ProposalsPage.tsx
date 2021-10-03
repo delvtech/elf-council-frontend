@@ -1,14 +1,23 @@
-import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, useMemo, useState } from "react";
-import { useProposals } from "src/efi-ui/proposals/useProposals";
-import { t } from "ttag";
-import H1 from "src/efi-ui/base/H1";
+
+import { CoreVoting__factory } from "elf-contracts-typechain";
+import AnchorButton from "src/efi-ui/base/Button/AnchorButton";
 import Button from "src/efi-ui/base/Button/Button";
-import { ProposalTabs } from "./ProposalTabs";
 import Card from "src/efi-ui/base/Card/Card";
 import CardHeader from "src/efi-ui/base/Card/CardHeader";
-import AnchorButton from "src/efi-ui/base/Button/AnchorButton";
+import H1 from "src/efi-ui/base/H1";
+import { useProposals } from "src/efi-ui/proposals/useProposals";
 import { formatFullDate } from "src/efi/base/dates";
+import { defaultProvider } from "src/efi/providers/providers";
+import tw from "src/elf-tailwindcss-classnames";
+import { t } from "ttag";
+
+import { ProposalTabs } from "./ProposalTabs";
+
+const coreVotingContract = CoreVoting__factory.connect(
+  "0x0000000000000000000000000000000000000000",
+  defaultProvider
+);
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
