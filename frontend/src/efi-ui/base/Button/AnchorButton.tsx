@@ -7,7 +7,6 @@ interface AnchorButtonProps {
   children: ReactNode;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   href?: string;
-
   minimal?: boolean;
   // TODO: Add rounded prop
 }

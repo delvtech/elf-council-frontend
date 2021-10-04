@@ -30,7 +30,7 @@ export default function DelegatePage(): ReactElement {
 function DelegateSection() {
   return (
     <OutlinedSection className={tw("space-y-4")}>
-      <H3 className={tw("flex-1")}>{t`Delegate Your Vote`}</H3>
+      <H3 className={tw("flex-1", "text-blue-900")}>{t`Delegate Your Vote`}</H3>
       <p
         className={tw("mt-1", "text-sm", "text-blue-900", "font-semibold")}
       >{t`Current voting status:`}</p>

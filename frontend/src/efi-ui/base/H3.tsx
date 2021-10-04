@@ -8,12 +8,7 @@ interface H3Props {
 }
 export default function H3({ className, children }: H3Props): ReactElement {
   return (
-    <h3
-      className={classNames(
-        tw("text-blue-900", "text-lg", "font-semibold"),
-        className
-      )}
-    >
+    <h3 className={classNames(tw("text-lg", "font-semibold"), className)}>
       {children}
     </h3>
   );
