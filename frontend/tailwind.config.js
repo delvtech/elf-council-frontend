@@ -10,7 +10,21 @@ module.exports = {
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        // Used this tool for color variants: https://material.io/resources/color
+        brandLightBlue: {
+          light: "#c2ffff",
+          DEFAULT: "#8FD8E7",
+          dark: "#5da6b5",
+        },
+        brandDarkBlue: {
+          light: "#588bf1",
+          DEFAULT: "#005EBE",
+          dark: "#00368d",
+        },
+      },
+    },
   },
   variants: {
     extend: {},
