@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useState } from "react";
 import Button from "src/efi-ui/base/Button/Button";
+import { ButtonVariant } from "src/efi-ui/base/Button/styles";
 import { ConnectWalletDialog } from "src/efi-ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
 import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
 import tw from "src/elf-tailwindcss-classnames";
@@ -34,11 +35,19 @@ export function ConnectWalletButton(
     >
       {!account ? (
         <div>
-          <Button onClick={onOpenWalletDialog}>{t`Connect Wallet`}</Button>
+          <Button
+            round
+            variant={ButtonVariant.OUTLINE_BLUE}
+            onClick={onOpenWalletDialog}
+          >{t`Connect Wallet`}</Button>
         </div>
       ) : (
         <div>
-          <Button minimal onClick={onOpenWalletDialog}>
+          <Button
+            round
+            variant={ButtonVariant.MINIMAL}
+            onClick={onOpenWalletDialog}
+          >
             <WalletJazzicon
               size={28}
               account={account}

@@ -14,9 +14,9 @@ module.exports = {
       colors: {
         // Used this tool for color variants: https://material.io/resources/color
         brandLightBlue: {
-          light: "#c2ffff",
-          DEFAULT: "#8FD8E7",
-          dark: "#5da6b5",
+          light: "#acffff",
+          DEFAULT: "#78D3E2",
+          dark: "#42a2b0",
         },
         brandDarkBlue: {
           light: "#588bf1",

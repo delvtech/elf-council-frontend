@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import Button from "src/efi-ui/base/Button/Button";
+import { ButtonVariant } from "src/efi-ui/base/Button/styles";
 import GradientCard from "src/efi-ui/base/Card/GradientCard";
 import { ElementLogo } from "src/efi-ui/base/ElementLogo";
 import { Label } from "src/efi-ui/base/Label/Label";
@@ -64,8 +65,14 @@ export function RewardsPage(props: RewardsPageProps): ReactElement {
           </div>
           <Label small>{t`Go to Dashboard Overview`}</Label>
           <div className={tw("flex", "gap-4")}>
-            <Button>{t`Withdraw`}</Button>
-            <Button>{t`Claim & Deposit`}</Button>
+            <Button
+              round
+              variant={ButtonVariant.OUTLINE_WHITE}
+            >{t`Withdraw`}</Button>
+            <Button
+              round
+              variant={ButtonVariant.WHITE}
+            >{t`Claim & Deposit`}</Button>
           </div>
         </div>
       </GradientCard>
