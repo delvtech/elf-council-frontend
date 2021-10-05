@@ -2,6 +2,7 @@ import React, { ReactElement, useMemo, useState } from "react";
 
 import AnchorButton from "src/efi-ui/base/Button/AnchorButton";
 import Button from "src/efi-ui/base/Button/Button";
+import { ButtonVariant } from "src/efi-ui/base/Button/styles";
 import Card from "src/efi-ui/base/Card/Card";
 import CardHeader from "src/efi-ui/base/Card/CardHeader";
 import H1 from "src/efi-ui/base/H1";
@@ -75,13 +76,18 @@ function ProposalList({ proposals }: ProposalListProps) {
             <CardHeader title={proposal.title} />
             <div className={tw("flex", "space-x-4")}>
               <AnchorButton
+                variant={ButtonVariant.PRIMARY}
+                round
                 href={proposal.link}
               >{t`View Proposal`}</AnchorButton>
-              <Button>{t`Discussion`}</Button>
+              <Button
+                round
+                variant={ButtonVariant.SECONDARY}
+              >{t`Discussion`}</Button>
             </div>
           </div>
           <div className={tw("space-x-4")}>
-            <Button>{t`Vote`}</Button>
+            <Button variant={ButtonVariant.GRADIENT}>{t`Vote`}</Button>
             {/* TODO: Make this a "Tag" */}
             <span>
               {t`Voting ends ${formatFullDate(new Date(proposal.end * 1000))}`}
@@ -97,7 +103,7 @@ function ProposalPageHeader() {
   return (
     <div className={tw("flex")}>
       <H1 className={tw("flex-1", "text-center")}>{t`Proposals`}</H1>
-      <Button>{t`New Proposal`}</Button>
+      <Button variant={ButtonVariant.GRADIENT}>{t`New Proposal`}</Button>
     </div>
   );
 }

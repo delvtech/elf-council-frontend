@@ -1,23 +1,24 @@
 // See: https://tailwindui.com/components/application-ui/elements/buttons
 
 import { MouseEventHandler, ReactElement, ReactNode } from "react";
-import { getButtonClass } from "src/efi-ui/base/Button/styles";
-import tw from "src/elf-tailwindcss-classnames";
+import {
+  ButtonStyles,
+  ButtonVariant,
+  getButtonClass,
+} from "src/efi-ui/base/Button/styles";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonStyles {
   children: ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-
-  minimal?: boolean;
-  // TODO: Add rounded prop
 }
 
 export default function Button({
   onClick,
+  variant,
+  round,
   children,
-  minimal,
 }: ButtonProps): ReactElement {
-  const buttonClassName = getButtonClass({ minimal });
+  const buttonClassName = getButtonClass({ variant, round });
 
   return (
     <button onClick={onClick} type="button" className={buttonClassName}>

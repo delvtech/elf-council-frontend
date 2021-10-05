@@ -2,9 +2,8 @@ import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import StarIcon from "@material-ui/icons/Star";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import AnchorButton from "src/efi-ui/base/Button/AnchorButton";
-import Button from "src/efi-ui/base/Button/Button";
 import LinkButton from "src/efi-ui/base/Button/LinkButton";
+import { ButtonVariant } from "src/efi-ui/base/Button/styles";
 import { ElementLogo } from "src/efi-ui/base/ElementLogo";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
@@ -23,7 +22,7 @@ export default function Sidebar(): ReactElement {
         <SidebarLink link="/resources" label={t`Resources`} />
 
         <div className={tw("text-center", "pt-8")}>
-          <LinkButton link="/rewards">
+          <LinkButton round variant={ButtonVariant.GRADIENT} link="/rewards">
             {t`Rewards`}
             <StarIcon className={tw("ml-2")} />
           </LinkButton>
