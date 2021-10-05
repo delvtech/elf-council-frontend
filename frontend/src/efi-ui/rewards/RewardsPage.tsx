@@ -48,9 +48,9 @@ export function RewardsPage(props: RewardsPageProps): ReactElement {
           )}
         >
           <Image
-            height={96}
-            width={96}
-            src="/assets/ElementLogo-light.svg"
+            height={84}
+            width={84}
+            src="/assets/ElementLogo--light.svg"
             alt={t`Element logo`}
           />
           <div className={tw("flex", "flex-col")}>
