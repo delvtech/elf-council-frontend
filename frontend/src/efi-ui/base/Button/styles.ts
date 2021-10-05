@@ -29,7 +29,8 @@ export function getButtonClass({
     "text-sm",
     "leading-4",
     "font-medium",
-    "hover:shadow",
+    "shadow",
+    "hover:shadow-lg",
     "focus:outline-none",
     "focus:ring-2",
     "focus:ring-offset-2",
@@ -52,6 +53,13 @@ export function getButtonClass({
     case ButtonVariant.PRIMARY:
       return primaryButtonVariant;
 
+    case ButtonVariant.SECONDARY:
+      return tw(
+        defaultStyling,
+        "bg-brandLightBlue",
+        "text-brandDarkBlue-dark",
+        "hover:bg-brandLightBlue-dark"
+      );
     case ButtonVariant.GRADIENT:
       return tw(
         defaultStyling,
@@ -87,14 +95,6 @@ export function getButtonClass({
         "border-brandDarkBlue-dark",
         "text-brandDarkBlue-dark",
         "hover:bg-blue-100"
-      );
-
-    case ButtonVariant.SECONDARY:
-      return tw(
-        defaultStyling,
-        "bg-brandLightBlue",
-        "text-white",
-        "hover:bg-brandLightBlue-dark"
       );
 
     case ButtonVariant.WHITE:
