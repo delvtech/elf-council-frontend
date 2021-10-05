@@ -48,10 +48,11 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
             "p-3",
             "pl-16",
             "hover:bg-blue-50",
-            "cursor-pointer"
+            "cursor-pointer",
+            "text-brandDarkBlue-dark"
           )}
         >
-          <p className={tw("text-blue-800")}>{label}</p>{" "}
+          <p>{label}</p>
         </div>
       </Link>
     </div>
@@ -71,7 +72,7 @@ function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
             "hover:bg-blue-50",
             "cursor-pointer",
             "justify-between",
-            "text-blue-800"
+            "text-brandDarkBlue-dark"
           )}
         >
           <p>{label}</p>

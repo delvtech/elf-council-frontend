@@ -10,7 +10,7 @@ export default function H1({ className, children }: H1Props): ReactElement {
   return (
     <h1
       className={classNames(
-        tw("text-blue-900", "text-2xl", "font-bold"),
+        tw("text-brandDarkBlue-dark", "text-2xl", "font-bold"),
         className
       )}
     >
