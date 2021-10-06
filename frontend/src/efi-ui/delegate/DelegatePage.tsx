@@ -14,12 +14,16 @@ export default function DelegatePage(): ReactElement {
       <div className={tw("grid", "grid-cols-3", "w-full", "gap-16")}>
         {/* Left side */}
         <div className={tw()}>
-          <H2 className={tw("mb-4")}>{t`Delegate`}</H2>
+          <H2
+            className={tw("mb-4", "text-brandDarkBlue-dark")}
+          >{t`Delegate`}</H2>
           <DelegateSection />
         </div>
         {/* Right side */}
         <div className={tw("col-span-2")}>
-          <H2 className={tw("mb-4")}>{t`Delegate Leaderboard`}</H2>
+          <H2
+            className={tw("mb-4", "text-brandDarkBlue-dark")}
+          >{t`Delegate Leaderboard`}</H2>
           <DelegateLeaderboardSection />
         </div>
       </div>
@@ -30,9 +34,16 @@ export default function DelegatePage(): ReactElement {
 function DelegateSection() {
   return (
     <OutlinedSection className={tw("space-y-4")}>
-      <H3 className={tw("flex-1", "text-blue-900")}>{t`Delegate Your Vote`}</H3>
+      <H3
+        className={tw("flex-1", "text-brandDarkBlue-dark")}
+      >{t`Delegate Your Vote`}</H3>
       <p
-        className={tw("mt-1", "text-sm", "text-blue-900", "font-semibold")}
+        className={tw(
+          "mt-1",
+          "text-sm",
+          "text-brandDarkBlue-dark",
+          "font-semibold"
+        )}
       >{t`Current voting status:`}</p>
       <TextInput
         screenReaderLabel={t`Insert Delegate Address`}

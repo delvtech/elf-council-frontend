@@ -16,7 +16,7 @@ export default function OutlinedSection({
       className={tw(
         "overflow-hidden",
         "border",
-        "border-blue-900",
+        "border-brandDarkBlue-dark",
         "rounded-lg"
       )}
     >
