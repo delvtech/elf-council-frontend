@@ -1,10 +1,11 @@
-import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
+import H1 from "src/efi-ui/base/H1";
 import Middle from "src/efi-ui/overview/Middle";
 import RightBar from "src/efi-ui/overview/RightBar";
+import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
+
 import { SummaryCards } from "./SummaryCards";
-import H1 from "src/efi-ui/base/H1";
 
 export function OverviewPage(): ReactElement {
   return (
