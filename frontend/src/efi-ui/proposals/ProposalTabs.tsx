@@ -15,7 +15,7 @@ export function ProposalTabs({
     <div className={tw("flex", "items-center", "space-x-8", "pb-8")}>
       <a
         href={SNAPSHOT_URL}
-        className={tw("font-semibold", "text-blue-800", "hover:underline")}
+        className={tw("font-semibold", "text-brandDarkBlue", "hover:underline")}
       >
         {t`Off-chain`}
         <ExternalLinkIcon className={tw("ml-2")} />
