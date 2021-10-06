@@ -47,7 +47,7 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
         </select>
       </div>
       <div className={tw("hidden", "sm:block")}>
-        <nav className={tw("-mb-px", "flex", "space-x-6")} aria-label="Tabs">
+        <nav className={tw("-mb-px", "flex", "space-x-6")} aria-label={t`Tabs`}>
           {tabs.map((tab) => (
             <button
               key={tab.name}
