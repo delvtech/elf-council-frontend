@@ -1,0 +1,28 @@
+{
+  "name": "Testnet token list",
+  "logoURI": "https://element.fi/logo.svg",
+  "tags": {
+    "element": {
+      "name": "Element token",
+      "description": "The official Element governance token."
+    }
+  },
+  "timestamp": "2021-10-07T23:41:04.700Z",
+  "version": {
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  },
+  "tokens": [
+    {
+      "chainId": 31337,
+      "address": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+      "symbol": "ELFI",
+      "decimals": 18,
+      "name": "Element Governance Token",
+      "tags": [
+        "element"
+      ]
+    }
+  ]
+}
