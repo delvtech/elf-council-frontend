@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
 import React, { ReactElement, ReactNode } from "react";
-import { ButtonStyles, getButtonClass } from "src/efi-ui/base/Button/styles";
+import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 import tw from "src/elf-tailwindcss-classnames";
 
 interface LinkButtonProps extends ButtonStyles {

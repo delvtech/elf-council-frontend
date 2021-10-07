@@ -1,7 +1,7 @@
 import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import React, { ReactElement } from "react";
-import Tabs, { TabInfo } from "src/efi-ui/base/Tabs/Tabs";
-import { SNAPSHOT_URL } from "src/efi-ui/proposals/SNAPSHOT_URL";
+import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
+import { SNAPSHOT_URL } from "src/ui/proposals/SNAPSHOT_URL";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 

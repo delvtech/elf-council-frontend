@@ -2,9 +2,9 @@ import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import StarIcon from "@material-ui/icons/Star";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import LinkButton from "src/efi-ui/base/Button/LinkButton";
-import { ButtonVariant } from "src/efi-ui/base/Button/styles";
-import { ElementLogo } from "src/efi-ui/base/ElementLogo";
+import LinkButton from "src/ui/base/Button/LinkButton";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ElementLogo } from "src/ui/base/ElementLogo";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 

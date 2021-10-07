@@ -1,4 +1,4 @@
-import { brandedBlueGradientBackgroundClassName } from "src/efi-ui/base/backgroundGradient";
+import { brandedBlueGradientBackgroundClassName } from "src/ui/base/backgroundGradient";
 import { assertNever } from "src/efi/base/assertNever";
 import tw from "src/elf-tailwindcss-classnames";
 

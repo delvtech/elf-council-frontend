@@ -5,7 +5,7 @@ import {
   ButtonStyles,
   ButtonVariant,
   getButtonClass,
-} from "src/efi-ui/base/Button/styles";
+} from "src/ui/base/Button/styles";
 
 interface ButtonProps extends ButtonStyles {
   children: ReactNode;

@@ -1,12 +1,12 @@
 import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
 import { t } from "ttag";
-import Button from "src/efi-ui/base/Button/Button";
-import OutlinedSection from "src/efi-ui/base/OutlinedSection/OutlinedSection";
-import H3 from "src/efi-ui/base/H3";
-import H2 from "src/efi-ui/base/H2";
-import TableExample from "src/efi-ui/base/Table/Table.example";
-import TextInput from "src/efi-ui/base/Input/Input";
+import Button from "src/ui/base/Button/Button";
+import OutlinedSection from "src/ui/base/OutlinedSection/OutlinedSection";
+import H3 from "src/ui/base/H3";
+import H2 from "src/ui/base/H2";
+import TableExample from "src/ui/base/Table/Table.example";
+import TextInput from "src/ui/base/Input/Input";
 
 export default function DelegatePage(): ReactElement {
   return (

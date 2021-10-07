@@ -1,6 +1,6 @@
 import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
-import SummaryCard from "src/efi-ui/overview/SummaryCard";
+import SummaryCard from "src/ui/overview/SummaryCard";
 
 export function SummaryCards(): ReactElement {
   return (

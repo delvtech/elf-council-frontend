@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import Button from "src/efi-ui/base/Button/Button";
-import Card from "src/efi-ui/base/Card/Card";
-import CardHeader from "src/efi-ui/base/Card/CardHeader";
-import Well from "src/efi-ui/base/Well/Well";
+import Button from "src/ui/base/Button/Button";
+import Card from "src/ui/base/Card/Card";
+import CardHeader from "src/ui/base/Card/CardHeader";
+import Well from "src/ui/base/Well/Well";
 import tw from "src/elf-tailwindcss-classnames";
 import { jt, t } from "ttag";
 

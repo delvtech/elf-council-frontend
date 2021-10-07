@@ -1,7 +1,7 @@
 // See: https://tailwindui.com/components/application-ui/elements/buttons
 
 import { MouseEventHandler, ReactElement, ReactNode } from "react";
-import { ButtonStyles, getButtonClass } from "src/efi-ui/base/Button/styles";
+import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
 interface AnchorButtonProps extends ButtonStyles {
   children: ReactNode;

@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React, { ReactElement, useCallback, useState } from "react";
-import Button from "src/efi-ui/base/Button/Button";
-import { ButtonVariant } from "src/efi-ui/base/Button/styles";
-import { ConnectWalletDialog } from "src/efi-ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
-import { WalletJazzicon } from "src/efi-ui/wallet/WalletJazzicon/WalletJazzicon";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 import tw from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";

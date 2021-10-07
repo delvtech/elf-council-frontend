@@ -1,12 +1,12 @@
 import React, { ReactElement, useMemo, useState } from "react";
 
-import AnchorButton from "src/efi-ui/base/Button/AnchorButton";
-import Button from "src/efi-ui/base/Button/Button";
-import { ButtonVariant } from "src/efi-ui/base/Button/styles";
-import Card from "src/efi-ui/base/Card/Card";
-import CardHeader from "src/efi-ui/base/Card/CardHeader";
-import H1 from "src/efi-ui/base/H1";
-import { useProposals } from "src/efi-ui/proposals/useProposals";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import Card from "src/ui/base/Card/Card";
+import CardHeader from "src/ui/base/Card/CardHeader";
+import H1 from "src/ui/base/H1";
+import { useProposals } from "src/ui/proposals/useProposals";
 import { formatFullDate } from "src/efi/base/dates";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";

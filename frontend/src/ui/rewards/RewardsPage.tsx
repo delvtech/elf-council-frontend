@@ -1,9 +1,9 @@
 import Image from "next/image";
 import React, { ReactElement } from "react";
-import Button from "src/efi-ui/base/Button/Button";
-import { ButtonVariant } from "src/efi-ui/base/Button/styles";
-import GradientCard from "src/efi-ui/base/Card/GradientCard";
-import { Label } from "src/efi-ui/base/Label/Label";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import GradientCard from "src/ui/base/Card/GradientCard";
+import { Label } from "src/ui/base/Label/Label";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 

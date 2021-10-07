@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Card from "src/efi-ui/base/Card/Card";
+import Card from "src/ui/base/Card/Card";
 
 import tw from "src/elf-tailwindcss-classnames";
 

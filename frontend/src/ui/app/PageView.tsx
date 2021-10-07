@@ -1,7 +1,7 @@
 import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, ReactNode } from "react";
-import Header from "src/efi-ui/app/Header";
-import Sidebar from "src/efi-ui/app/Sidebar";
+import Header from "src/ui/app/Header";
+import Sidebar from "src/ui/app/Sidebar";
 
 interface PageViewProps {
   children?: ReactNode;

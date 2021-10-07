@@ -1,8 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement } from "react";
-import LinkButton from "src/efi-ui/base/Button/LinkButton";
-import { ButtonVariant } from "src/efi-ui/base/Button/styles";
-import { ConnectWalletButton } from "src/efi-ui/wallet/ConnectWalletButton/ConnectWalletButton";
+import LinkButton from "src/ui/base/Button/LinkButton";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import tw from "src/elf-tailwindcss-classnames";
 
 function Header(): ReactElement {
