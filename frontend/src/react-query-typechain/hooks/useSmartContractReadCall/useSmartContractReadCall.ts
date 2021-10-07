@@ -4,7 +4,7 @@ import {
   ContractMethodName,
   StaticContractReturnType,
   ContractMethodArgs,
-} from "src/efi-contract-hooks/types";
+} from "src/react-query-typechain/types";
 import { Unpacked } from "src/efi/base/Unpacked";
 
 export interface UseSmartContractReadCallOptions<

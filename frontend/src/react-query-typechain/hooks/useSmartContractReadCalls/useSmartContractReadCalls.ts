@@ -5,12 +5,12 @@ import { QueryObserverResult, useQueries, UseQueryOptions } from "react-query";
 import {
   makeSmartContractReadCallUseQueryOptions,
   UseSmartContractReadCallOptions,
-} from "src/efi-contract-hooks/hooks/useSmartContractReadCall/useSmartContractReadCall";
+} from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import {
   ContractMethodName,
   StaticContractReturnType,
-} from "src/efi-contract-hooks/types";
-import { Unpacked } from "src/efi-contract-hooks/Unpacked";
+} from "src/react-query-typechain/types";
+import { Unpacked } from "src/react-query-typechain/Unpacked";
 
 /**
  * A hook for calling the same method on a list of contracts.

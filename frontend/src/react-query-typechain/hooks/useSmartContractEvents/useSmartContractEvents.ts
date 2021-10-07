@@ -4,7 +4,7 @@ import { Contract, Event } from "ethers";
 import {
   ContractFilterName,
   ContractFilterArgs,
-} from "src/efi-contract-hooks/types";
+} from "src/react-query-typechain/types";
 
 export interface UseSmartContractEventsCallOptions<
   TContract extends Contract,

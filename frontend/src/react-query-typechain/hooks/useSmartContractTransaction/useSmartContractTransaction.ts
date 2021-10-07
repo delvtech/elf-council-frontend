@@ -3,12 +3,12 @@ import { useMutation, UseMutationResult } from "react-query";
 import {
   isTransactionReplacedError,
   TransactionError,
-} from "src/efi-contract-hooks/TransactionError";
-import { TransactionStatus } from "src/efi-contract-hooks/TransactionStatus";
+} from "src/react-query-typechain/TransactionError";
+import { TransactionStatus } from "src/react-query-typechain/TransactionStatus";
 import {
   ContractMethodArgs,
   ContractMethodName,
-} from "src/efi-contract-hooks/types";
+} from "src/react-query-typechain/types";
 
 export interface UseSmartContractTransactionOptions<
   TContract extends Contract,
