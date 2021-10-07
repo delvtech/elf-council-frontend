@@ -5,6 +5,7 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import Well from "src/ui/base/Well/Well";
 import tw from "src/elf-tailwindcss-classnames";
 import { jt, t } from "ttag";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 const howToParticipateLink = (
   <a
@@ -62,8 +63,8 @@ export default function ResourcesCard(): ReactElement {
           consectetur.`}
         action={
           <div className="sm:space-x-4">
-            <Button>{t`View Template`}</Button>
-            <Button>{t`New Proposal`}</Button>
+            <Button variant={ButtonVariant.GRADIENT}>{t`View Template`}</Button>
+            <Button variant={ButtonVariant.GRADIENT}>{t`New Proposal`}</Button>
           </div>
         }
       />
