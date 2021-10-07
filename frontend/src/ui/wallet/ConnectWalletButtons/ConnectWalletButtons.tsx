@@ -2,8 +2,6 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import Image from "next/image";
 import React, { ReactElement, useCallback } from "react";
-// import { ReactComponent as MetamaskIcon } from "efi-static-assets/logos/metamask.svg";
-// import { ReactComponent as WalletConnectIcon } from "efi-static-assets/logos/walletConnectIcon.svg";
 import tw from "src/elf-tailwindcss-classnames";
 import {
   getWalletConnectConnector,
