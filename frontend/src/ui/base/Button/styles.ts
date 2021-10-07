@@ -5,6 +5,7 @@ import tw from "src/elf-tailwindcss-classnames";
 export interface ButtonStyles {
   variant?: ButtonVariant;
   round?: boolean;
+  fill?: boolean;
 }
 
 export enum ButtonVariant {
@@ -19,6 +20,7 @@ export enum ButtonVariant {
 
 export function getButtonClass({
   variant = ButtonVariant.PRIMARY,
+  fill = false,
   round = false,
 }: ButtonStyles): string {
   const defaultStyling = tw(
@@ -34,7 +36,8 @@ export function getButtonClass({
     "focus:ring-2",
     "focus:ring-offset-2",
     "focus:ring-brandDarkBlue",
-    round ? "rounded-full" : "rounded-md"
+    round ? "rounded-full" : "rounded-md",
+    { "flex-1": fill }
   );
 
   const primaryButtonVariant = tw(

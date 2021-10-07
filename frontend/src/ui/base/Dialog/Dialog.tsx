@@ -89,7 +89,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
                 "transition-all",
                 "sm:my-8",
                 "sm:align-middle",
-                "sm:max-w-sm",
+                "sm:max-w-lg",
                 "sm:w-full",
                 "sm:p-6"
               )}
