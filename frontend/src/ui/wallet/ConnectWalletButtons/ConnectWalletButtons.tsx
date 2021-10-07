@@ -1,21 +1,16 @@
-import React, { ReactElement, useCallback } from "react";
-
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-
-// import { ReactComponent as MetamaskIcon } from "efi-static-assets/logos/metamask.svg";
-// import { ReactComponent as WalletConnectIcon } from "efi-static-assets/logos/walletConnectIcon.svg";
+import Image from "next/image";
+import React, { ReactElement, useCallback } from "react";
 import tw from "src/elf-tailwindcss-classnames";
 import {
   getWalletConnectConnector,
   injectedConnector,
 } from "src/elf/wallets/connectors";
-
-const connectorButtonClassName = tw("p-12", "w-1/4", "flex-col", "space-y-3");
-// const iconStyle: CSSProperties = {
-//   height: 48,
-//   width: 48,
-// };
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import H3 from "src/ui/base/H3";
+import { t } from "ttag";
 
 interface ConnectWalletButtonsProps {
   onClick?: () => void;
@@ -24,7 +19,7 @@ interface ConnectWalletButtonsProps {
 export function ConnectWalletButtons({
   onClick,
 }: ConnectWalletButtonsProps): ReactElement {
-  const { activate, deactivate, active } = useWeb3React<Web3Provider>();
+  const { activate, deactivate } = useWeb3React<Web3Provider>();
 
   const deactivateActiveConnector = useCallback(async () => {
     await deactivate();
@@ -49,22 +44,61 @@ export function ConnectWalletButtons({
       className={tw(
         "flex",
         "flex-col",
-        "w-full",
         "justify-center",
-        "overflow-scroll"
+        "overflow-scroll",
+        "p-8"
       )}
     >
-      <button className={connectorButtonClassName} onClick={connectToMetaMask}>
-        {/* <MetamaskIcon style={iconStyle} /> */}
-        <span className={tw("text-base")}>MetaMask</span>
-      </button>
-      <button
-        className={connectorButtonClassName}
-        onClick={connectToWalletConnect}
-      >
-        {/* <WalletConnectIcon style={iconStyle} /> */}
-        <span className={tw("text-base")}>WalletConnect</span>
-      </button>
+      <H3
+        className={tw("text-brandDarkBlue-dark", "text-center", "mb-8")}
+      >{t`Select Wallet`}</H3>
+      <div className={tw("flex", "gap-6", "justify-center")}>
+        <Button variant={ButtonVariant.MINIMAL} onClick={connectToMetaMask}>
+          <div
+            className={tw(
+              "flex",
+              "flex-col",
+              "w-32",
+              "space-y-2",
+              "p-6",
+              "justify-center",
+              "items-center"
+            )}
+          >
+            <Image
+              height={48}
+              width={48}
+              src="/assets/metamask.svg"
+              alt="MetaMask"
+            />
+            <span className={tw("text-base")}>MetaMask</span>
+          </div>
+        </Button>
+        <Button
+          variant={ButtonVariant.MINIMAL}
+          onClick={connectToWalletConnect}
+        >
+          <div
+            className={tw(
+              "flex",
+              "flex-col",
+              "w-32",
+              "space-y-2",
+              "p-6",
+              "justify-center",
+              "items-center"
+            )}
+          >
+            <Image
+              height={48}
+              width={48}
+              src="/assets/walletConnectIcon.svg"
+              alt="MetaMask"
+            />
+            <span className={tw("text-base")}>WalletConnect</span>
+          </div>
+        </Button>
+      </div>
     </div>
   );
 }
