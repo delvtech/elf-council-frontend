@@ -112,8 +112,8 @@ module.exports = {
         pathNot: `(${[
           "\\.(spec|test)\\.(js|mjs|cjs|ts|tsx|ls|coffee|litcoffee|coffee\\.md)$",
           // test utils aren't tests themselves, but should be allowed to import devDependencies
-          "src/efi/testing/",
-          "src/efi-ui/testing/",
+          "src/elf/testing/",
+          "src/ui/testing/",
         ].join("|")})`,
       },
       to: {
@@ -153,22 +153,22 @@ module.exports = {
       comment: "Importing from graveyard/ is prohibited",
       severity: "error",
       from: {
-        pathNot: `(${["src/efi-ui/graveyard", "src/efi/graveyard"].join("|")})`,
+        pathNot: `(${["src/ui/graveyard", "src/elf/graveyard"].join("|")})`,
       },
       to: {
-        path: `(${["efi-ui/graveyard", "efi/graveyard"].join("|")})`,
+        path: `(${["ui/graveyard", "elf/graveyard"].join("|")})`,
       },
     },
     {
       name: "elf-not-to-ui",
       comment:
-        "Importing from efi-ui/ is prohibited outside of efi-ui and pages directories",
+        "Importing from ui/ is prohibited outside of ui and pages directories",
       severity: "error",
       from: {
-        pathNot: `(${["src/efi-ui", "pages/"].join("|")})`,
+        pathNot: `(${["src/ui", "pages/"].join("|")})`,
       },
       to: {
-        path: "src/efi-ui/",
+        path: "src/ui/",
       },
     },
 
@@ -178,7 +178,7 @@ module.exports = {
         "Importing React from outside the ui and pages directories is prohibited",
       severity: "error",
       from: {
-        pathNot: `(${["src/efi-ui", "pages"].join("|")})`,
+        pathNot: `(${["src/ui", "pages"].join("|")})`,
       },
       to: {
         path: "node_modules/react/index.js",
@@ -186,13 +186,13 @@ module.exports = {
     },
     {
       name: "elf-not-to-localStorage",
-      comment: "Importing efiLocalStorage outside of prefs/ is prohibited",
+      comment: "Importing elfLocalStorage outside of prefs/ is prohibited",
       severity: "error",
       from: {
-        pathNot: `(${["src/efi/prefs", "src/efi-ui/prefs"].join("|")})`,
+        pathNot: `(${["src/elf/prefs", "src/ui/prefs"].join("|")})`,
       },
       to: {
-        path: "src/efi/base/localStorage.ts",
+        path: "src/elf/base/localStorage.ts",
       },
     },
 
@@ -210,36 +210,25 @@ module.exports = {
     {
       name: "elf-not-outside-ui-base",
       comment:
-        "Importing modules in efi-ui/base/ that are not from efi-ui/base/ is prohibited",
+        "Importing modules in ui/base/ that are not from ui/base/ is prohibited",
       severity: "error",
       from: {
-        path: "src/efi-ui/base",
+        path: "src/ui/base",
       },
       to: {
-        path: "src/efi-ui/(?!base)",
+        path: "src/ui/(?!base)",
       },
     },
     {
       name: "elf-not-outside-base",
       comment:
-        "Importing modules in efi/base/ that are not from efi/base/ is prohibited",
+        "Importing modules in base/ that are not from base/ is prohibited",
       severity: "error",
       from: {
-        path: "src/efi/base",
+        path: "src/base",
       },
       to: {
-        path: "src/efi/(?!base)",
-      },
-    },
-    {
-      name: "elf-static-assets-not-outside-efi-ui",
-      comment: "Importing static assets outside of efi-ui/ is prohibited",
-      severity: "error",
-      from: {
-        path: "efi-static-assets",
-      },
-      to: {
-        path: "src/efi-ui",
+        path: "src/(?!base)",
       },
     },
   ],
@@ -285,11 +274,11 @@ module.exports = {
     /* list of module systems to cruise */
     // moduleSystems: ['amd', 'cjs', 'es6', 'tsd'],
 
-    /* prefix for links in html and svg output (e.g. 'https://github.com/you/yourrepo/blob/develop/'
+    /* prelfx for links in html and svg output (e.g. 'https://github.com/you/yourrepo/blob/develop/'
        to open it on your online repo or `vscode://file/${process.cwd()}/` to
        open it in visual studio code),
      */
-    // prefix: '',
+    // prelfx: '',
 
     /* false (the default): ignore dependencies that only exist before typescript-to-javascript compilation
        true: also detect dependencies that only exist before typescript-to-javascript compilation
@@ -299,7 +288,7 @@ module.exports = {
 
     /* if true combines the package.jsons found from the module up to the base
        folder the cruise is initiated from. Useful for how (some) mono-repos
-       manage dependencies & dependency definitions.
+       manage dependencies & dependency delfnitions.
      */
     // combinedDependencies: false,
 
