@@ -62,6 +62,7 @@
     "lint": "next lint",
     "prettier:check": "prettier --check pages/**/*.ts{,x}",
     "start": "next start",
+    "copy-testnet-tokenlist": "cp ../../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/testnet.tokenlist.json",
     "update-elf-council-typechain": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git"
   },
   "version": "0.1.0"
