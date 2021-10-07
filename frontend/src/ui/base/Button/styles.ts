@@ -1,5 +1,5 @@
 import { brandedBlueGradientBackgroundClassName } from "src/ui/base/backgroundGradient";
-import { assertNever } from "src/efi/base/assertNever";
+import { assertNever } from "src/elf/base/assertNever";
 import tw from "src/elf-tailwindcss-classnames";
 
 export interface ButtonStyles {

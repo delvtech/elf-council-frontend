@@ -6,8 +6,8 @@ import { AppProps } from "next/app";
 import React, { ReactElement } from "react";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { getEthereumProviderLibrary } from "src/efi/getEthereumProviderLibrary";
-import { queryClient } from "src/efi/queryClient";
+import { getEthereumProviderLibrary } from "src/elf/getEthereumProviderLibrary";
+import { queryClient } from "src/elf/queryClient";
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return (

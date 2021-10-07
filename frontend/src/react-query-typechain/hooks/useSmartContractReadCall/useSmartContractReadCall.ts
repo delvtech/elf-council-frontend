@@ -5,7 +5,7 @@ import {
   StaticContractReturnType,
   ContractMethodArgs,
 } from "src/react-query-typechain/types";
-import { Unpacked } from "src/efi/base/Unpacked";
+import { Unpacked } from "src/elf/base/Unpacked";
 
 export interface UseSmartContractReadCallOptions<
   TContract extends Contract,

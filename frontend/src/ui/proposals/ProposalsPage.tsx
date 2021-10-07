@@ -7,7 +7,7 @@ import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import H1 from "src/ui/base/H1";
 import { useProposals } from "src/ui/proposals/useProposals";
-import { formatFullDate } from "src/efi/base/dates";
+import { formatFullDate } from "src/elf/base/dates";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 

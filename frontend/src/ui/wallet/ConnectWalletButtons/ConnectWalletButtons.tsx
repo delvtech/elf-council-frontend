@@ -9,7 +9,7 @@ import tw from "src/elf-tailwindcss-classnames";
 import {
   getWalletConnectConnector,
   injectedConnector,
-} from "src/efi/wallets/connectors";
+} from "src/elf/wallets/connectors";
 
 const connectorButtonClassName = tw("p-12", "w-1/4", "flex-col", "space-y-3");
 // const iconStyle: CSSProperties = {
