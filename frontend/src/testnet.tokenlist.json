@@ -7,10 +7,10 @@
       "description": "The official Element governance token."
     }
   },
-  "timestamp": "2021-10-07T23:41:04.700Z",
+  "timestamp": "2021-10-11T20:44:47.073Z",
   "version": {
     "major": 0,
-    "minor": 0,
+    "minor": 1,
     "patch": 0
   },
   "tokens": [
@@ -23,6 +23,71 @@
       "tags": [
         "element"
       ]
+    },
+    {
+      "chainId": 31337,
+      "address": "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+      "name": "Element Core Voting Contract",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "baseQuorum": 1,
+        "lockDuration": 19488,
+        "minProposalPower": 1,
+        "extraVoteTime": 32480
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x59b670e9fA9D0A427751Af201D676719a970857b",
+      "name": "Element GSC Core Voting Contract",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "baseQuorum": 0,
+        "lockDuration": 19488,
+        "minProposalPower": 0,
+        "extraVoteTime": 32480
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+      "name": "Element Locking Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "token": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+        "staleBlockLag": 10000
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+      "name": "Element Optimistic Rewards Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "pendingRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "proposalTime": 0,
+        "proposer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+        "challengePeriod": 604800,
+        "rewardsRoot": "0xb3bc27033f96d4ab101b807a06fef330523d308e202f9733d748412c008251aa",
+        "lockingVault": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+        "token": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c"
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+      "name": "Element Governance Steering Committee Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "coreVoting": "0x59b670e9fA9D0A427751Af201D676719a970857b",
+        "votingPowerBound": 0,
+        "idleDuration": 345600
+      }
     }
   ]
 }
