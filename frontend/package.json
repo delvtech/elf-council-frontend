@@ -65,7 +65,9 @@
     "lint": "next lint",
     "prettier:check": "prettier --check pages/**/*.ts{,x}",
     "start": "next start",
-    "copy-testnet-tokenlist": "cp ../../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json; cp ../../elf-council-testnet/src/tokenlist/types.ts src/elf-council-tokenlist/types.ts",
+    "copy-testnet": "npm run _copy_testnet-addresses && npm run _copy-testnet-tokenlist",
+    "_copy-testnet-addresses": "cp ../../elf-council-testnet/src/addresses/addresses.json src/elf-council-addresses/testnet.addresses.json; cp ../../elf-council-testnet/src/addresses/AddressesJsonFile.ts src/elf-council-addresses/AddressesJsonFile.ts",
+    "_copy-testnet-tokenlist": "cp ../../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json; cp ../../elf-council-testnet/src/tokenlist/types.ts src/elf-council-tokenlist/types.ts",
     "update-elf-council-typechain": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git"
   },
   "version": "0.1.0"
