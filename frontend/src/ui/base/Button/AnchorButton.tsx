@@ -9,6 +9,9 @@ interface AnchorButtonProps extends ButtonStyles {
   href?: string;
 }
 
+/**
+ * Button for external links
+ */
 export default function AnchorButton({
   onClick,
   href,
