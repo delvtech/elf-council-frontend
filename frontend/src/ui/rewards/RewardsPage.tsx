@@ -6,10 +6,16 @@ import GradientCard from "src/ui/base/Card/GradientCard";
 import { Label } from "src/ui/base/Label/Label";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
+import { formatEther } from "ethers/lib/utils";
+import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
+import { useWeb3React } from "@web3-react/core";
 
 interface RewardsPageProps {}
 
 export function RewardsPage(props: RewardsPageProps): ReactElement {
+  const { account } = useWeb3React();
+  const { data: balanceOf } = useElementTokenBalanceOf(account);
+  const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
   return (
     <div
       className={tw(
@@ -62,7 +68,7 @@ export function RewardsPage(props: RewardsPageProps): ReactElement {
           <Label>{t`People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $ELF distributions as incentives. $ELF token holders help foster the Element Protocol can shape its future by voting and engaging with our governance.`}</Label>
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
             <Label className={tw("text-left")}>{t`Balance:`}</Label>
-            <Label className={tw("text-right")}>{t`0.00000`}</Label>
+            <Label className={tw("text-right")}>{formattedBalance}</Label>
           </div>
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
             <Label className={tw("text-left")}>{t`Unclaimed:`}</Label>
