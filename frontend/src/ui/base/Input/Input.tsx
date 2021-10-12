@@ -29,8 +29,8 @@ export default function TextInput({
         className={classNames(
           tw(
             "shadow-sm",
-            "focus:ring-indigo-500",
-            "focus:border-indigo-500",
+            "focus:ring-brandDarkBlue",
+            "focus:border-brandDarkBlue",
             "block",
             "w-full",
             "sm:text-sm",
