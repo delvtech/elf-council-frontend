@@ -7,8 +7,15 @@ import H3 from "src/ui/base/H3";
 import H2 from "src/ui/base/H2";
 import TableExample from "src/ui/base/Table/Table.example";
 import TextInput from "src/ui/base/Input/Input";
+import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
+import { lockingVaultContract } from "src/elf/contracts";
+import { Signer } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 
 export default function DelegatePage(): ReactElement {
+  const { account, library } = useWeb3React();
+  const signer = account ? (library?.getSigner(account) as Signer) : undefined;
+
   return (
     <div className={tw("flex", "h-full", "pt-8", "px-8")}>
       <div className={tw("grid", "grid-cols-3", "w-full", "gap-16")}>
@@ -17,7 +24,7 @@ export default function DelegatePage(): ReactElement {
           <H2
             className={tw("mb-4", "text-brandDarkBlue-dark")}
           >{t`Delegate`}</H2>
-          <DelegateSection />
+          <DelegateSection signer={signer} />
         </div>
         {/* Right side */}
         <div className={tw("col-span-2")}>
@@ -31,7 +38,20 @@ export default function DelegatePage(): ReactElement {
   );
 }
 
-function DelegateSection() {
+interface DelegationSectionProps {
+  signer: Signer | undefined;
+}
+
+function DelegateSection({ signer }: DelegationSectionProps) {
+  const { mutate: changeDelegation } = useSmartContractTransaction(
+    lockingVaultContract,
+    "changeDelegation",
+    signer,
+    {
+      onTransactionSubmitted: onChangeDeletagationSubmitted,
+      onTransactionMined: onChangeDelegationMined,
+    }
+  );
   return (
     <OutlinedSection className={tw("space-y-4")}>
       <H3
