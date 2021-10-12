@@ -5,10 +5,16 @@ import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 import tw from "src/elf-tailwindcss-classnames";
 
 interface LinkButtonProps extends ButtonStyles {
+  /**
+   * path for next router to navigate to
+   */
   link: string;
   children?: ReactNode;
 }
 
+/**
+ * Button for next router links
+ */
 export default function LinkButton(props: LinkButtonProps): ReactElement {
   const { link, variant, round, children } = props;
   const buttonClass = getButtonClass({ variant, round });

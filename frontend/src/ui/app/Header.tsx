@@ -10,7 +10,7 @@ function Header(): ReactElement {
     <div className={tw("flex", "justify-between")}>
       <div className={tw("flex", "space-x-3")}></div>
       <div className={tw("flex", "space-x-4", "text-gray-400", "mr-3")}>
-        <TokenRewardsButton account={account} />
+        {account ? <TokenRewardsButton account={account} /> : null}
         <ConnectWalletButton
           account={account}
           walletConnectionActive={active}
