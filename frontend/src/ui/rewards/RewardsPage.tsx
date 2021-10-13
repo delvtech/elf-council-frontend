@@ -9,13 +9,23 @@ import { t } from "ttag";
 import { formatEther } from "ethers/lib/utils";
 import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
 import { useWeb3React } from "@web3-react/core";
+import { elementTokenContract, rewardsContract } from "src/elf/contracts";
+import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 
 interface RewardsPageProps {}
 
-export function RewardsPage(props: RewardsPageProps): ReactElement {
+export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const { account } = useWeb3React();
   const { data: balanceOf } = useElementTokenBalanceOf(account);
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
+
+  const { claimed, balance, merkleInfo } = useRewardsInfo(account);
+  console.log("merkleInfo", merkleInfo);
+  console.log("balance", balance);
+  console.log("claimed", claimed);
+
   return (
     <div
       className={tw(
@@ -89,4 +99,24 @@ export function RewardsPage(props: RewardsPageProps): ReactElement {
       </GradientCard>
     </div>
   );
+}
+
+function useRewardsInfo(address: string | undefined | null) {
+  const { data: claimedBN } = useSmartContractReadCall(
+    rewardsContract,
+    "claimed",
+    {
+      callArgs: [address as string],
+      enabled: !!address,
+    }
+  );
+
+  const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, address);
+  const { data: merkleInfo } = useMerkleInfo(address);
+
+  return {
+    claimed: formatEther(claimedBN || 0),
+    balance: formatEther(balanceBN || 0),
+    merkleInfo,
+  };
 }
