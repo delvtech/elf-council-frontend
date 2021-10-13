@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { Fragment, ReactElement, useCallback, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
@@ -8,21 +8,14 @@ import tw from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 
-interface ConnectWalletButtonProps {
+interface WalletProfileButtonProps {
   account: string | null | undefined;
   walletConnectionActive: boolean | undefined;
-  chainId: number | undefined;
   className?: string;
 }
 
-// const ChainColor: Record<number, string> = {
-//   [ChainId.GOERLI]: tw("text-blue-400"),
-//   [ChainId.MAINNET]: tw("text-green-400"),
-//   [ChainId.LOCAL]: tw("text-white"),
-// };
-
-export function ConnectWalletButton(
-  props: ConnectWalletButtonProps
+export function WalletProfileButton(
+  props: WalletProfileButtonProps
 ): ReactElement {
   const { account, className } = props;
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
@@ -34,13 +27,7 @@ export function ConnectWalletButton(
       className={classNames(className, tw("flex", "space-x-8", "items-center"))}
     >
       {!account ? (
-        <div>
-          <Button
-            round
-            variant={ButtonVariant.OUTLINE_BLUE}
-            onClick={onOpenWalletDialog}
-          >{t`Connect Wallet`}</Button>
-        </div>
+        <ConnectWalletButton />
       ) : (
         <div>
           <Button
@@ -62,5 +49,31 @@ export function ConnectWalletButton(
         onClose={onCloseWalletDialog}
       />
     </div>
+  );
+}
+
+export function ConnectWalletButton({
+  label = t`Connect Wallet`,
+}: {
+  label?: string;
+}): ReactElement {
+  const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
+  const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
+  const onOpenWalletDialog = useCallback(() => setWalletDialogOpen(true), []);
+
+  return (
+    <Fragment>
+      <Button
+        round
+        variant={ButtonVariant.OUTLINE_BLUE}
+        onClick={onOpenWalletDialog}
+      >
+        {label}
+      </Button>
+      <ConnectWalletDialog
+        isOpen={isWalletDialogOpen}
+        onClose={onCloseWalletDialog}
+      />
+    </Fragment>
   );
 }

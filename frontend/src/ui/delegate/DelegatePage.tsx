@@ -10,6 +10,8 @@ import TextInput from "src/ui/base/Input/Input";
 import { Signer } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
+import { isValidAddress } from "src/base/isValidAddress";
+import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -34,7 +36,7 @@ export default function DelegatePage(): ReactElement {
           <H2
             className={tw("mb-4", "text-brandDarkBlue-dark")}
           >{t`Delegate`}</H2>
-          <DelegateSection signer={signer} />
+          <DelegateSection account={account} signer={signer} />
         </div>
         {/* Right/Bottom side */}
         <div className={tw("lg:col-span-2")}>
@@ -49,16 +51,17 @@ export default function DelegatePage(): ReactElement {
 }
 
 interface DelegationSectionProps {
+  account: string | null | undefined;
   signer: Signer | undefined;
 }
 
-function DelegateSection({ signer }: DelegationSectionProps) {
+function DelegateSection({ account, signer }: DelegationSectionProps) {
   const { mutate: changeDelegation } = useChangeDelegation(signer);
   const [delegateAddress, setDelegateAddressInput] = useState<
     string | undefined
   >();
   const onDelegateClick = useCallback(() => {
-    if (delegateAddress) {
+    if (delegateAddress && isValidAddress(delegateAddress)) {
       changeDelegation([delegateAddress]);
     }
   }, [changeDelegation, delegateAddress]);
@@ -86,7 +89,13 @@ function DelegateSection({ signer }: DelegationSectionProps) {
         onChange={(event) => setDelegateAddressInput(event.target.value)}
       />
       <div className={tw("text-center")}>
-        <Button onClick={onDelegateClick}>{t`Delegate Vote`}</Button>
+        {account ? (
+          <Button onClick={onDelegateClick}>{t`Delegate Vote`}</Button>
+        ) : (
+          <ConnectWalletButton
+            label={t`Connect your wallet to delegate your vote`}
+          />
+        )}
       </div>
     </OutlinedSection>
   );
