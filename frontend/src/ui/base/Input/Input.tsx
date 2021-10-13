@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { ReactElement } from "react";
+import { ChangeEventHandler, ReactElement } from "react";
 import tw from "src/elf-tailwindcss-classnames";
 
 interface TextInputProps {
@@ -8,6 +8,8 @@ interface TextInputProps {
   id: string;
   name: string;
   placeholder?: string;
+  value?: string | undefined;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 export default function TextInput({
@@ -16,6 +18,8 @@ export default function TextInput({
   id,
   name,
   placeholder,
+  value,
+  onChange,
 }: TextInputProps): ReactElement {
   return (
     <div>
@@ -29,8 +33,8 @@ export default function TextInput({
         className={classNames(
           tw(
             "shadow-sm",
-            "focus:ring-indigo-500",
-            "focus:border-indigo-500",
+            "focus:ring-brandDarkBlue",
+            "focus:border-brandDarkBlue",
             "block",
             "w-full",
             "sm:text-sm",
@@ -40,6 +44,8 @@ export default function TextInput({
           className
         )}
         placeholder={placeholder}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );
