@@ -1,6 +1,6 @@
 import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, useCallback, useState } from "react";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import OutlinedSection from "src/ui/base/OutlinedSection/OutlinedSection";
 import H3 from "src/ui/base/H3";
@@ -12,6 +12,9 @@ import { useWeb3React } from "@web3-react/core";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { isValidAddress } from "src/base/isValidAddress";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
+import { useDeposits } from "src/ui/contracts/useDeposits";
+import { formatEther } from "ethers/lib/utils";
+import { formatWalletAddress } from "src/formatWalletAddress";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -56,36 +59,57 @@ interface DelegationSectionProps {
 }
 
 function DelegateSection({ account, signer }: DelegationSectionProps) {
+  const { data: [delegateAddressOnChain, amountDelegated] = [] } =
+    useDeposits(account);
+
   const { mutate: changeDelegation } = useChangeDelegation(signer);
-  const [delegateAddress, setDelegateAddressInput] = useState<
+
+  const [delegateAddressInput, setDelegateAddressInput] = useState<
     string | undefined
   >();
   const onDelegateClick = useCallback(() => {
-    if (delegateAddress && isValidAddress(delegateAddress)) {
-      changeDelegation([delegateAddress]);
+    if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
+      changeDelegation([delegateAddressInput]);
     }
-  }, [changeDelegation, delegateAddress]);
+  }, [changeDelegation, delegateAddressInput]);
 
+  const walletLink = (
+    <a
+      className={tw("font-semibold", "text-brandDarkBlue", "hover:underline")}
+      key="delegate-lnik"
+      href={`https://etherscan.io/address/${delegateAddressOnChain}`}
+    >
+      {formatWalletAddress(delegateAddressOnChain || "")}
+    </a>
+  );
   return (
     <OutlinedSection className={tw("space-y-4")}>
       <H3
         className={tw("flex-1", "text-brandDarkBlue-dark")}
       >{t`Delegate Your Vote`}</H3>
-      <p
-        className={tw(
-          "mt-1",
-          "text-sm",
-          "text-brandDarkBlue-dark",
-          "font-semibold"
-        )}
-      >{t`Current voting status:`}</p>
+      <div className={tw("flex", "justify-between", "text-sm")}>
+        <span
+          className={tw("text-brandDarkBlue-dark", "font-semibold")}
+        >{t`Current voting status:`}</span>
+        <span>
+          {delegateAddressOnChain
+            ? jt`Delegated to ${walletLink}`
+            : t`Not delegated`}
+        </span>
+      </div>
+      <div className={tw("flex", "justify-between", "text-sm")}>
+        <span
+          className={tw("text-brandDarkBlue-dark", "font-semibold")}
+        >{t`Amount delegated:`}</span>
+        <span>{amountDelegated ? formatEther(amountDelegated) : "-"}</span>
+      </div>
       <TextInput
         screenReaderLabel={t`Insert Delegate Address`}
         id={"delegate-address"}
         name={t`Insert Delegate Address`}
         placeholder={t`Insert Delegate Address`}
         className={tw("mb-8", "h-12", "text-center")}
-        value={delegateAddress}
+        value={delegateAddressInput}
         onChange={(event) => setDelegateAddressInput(event.target.value)}
       />
       <div className={tw("text-center")}>
