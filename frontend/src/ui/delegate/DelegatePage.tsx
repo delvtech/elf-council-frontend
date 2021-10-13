@@ -7,10 +7,9 @@ import H3 from "src/ui/base/H3";
 import H2 from "src/ui/base/H2";
 import TableExample from "src/ui/base/Table/Table.example";
 import TextInput from "src/ui/base/Input/Input";
-import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
-import { lockingVaultContract } from "src/elf/contracts";
 import { Signer } from "ethers";
 import { useWeb3React } from "@web3-react/core";
+import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -43,15 +42,10 @@ interface DelegationSectionProps {
 }
 
 function DelegateSection({ signer }: DelegationSectionProps) {
-  const { mutate: changeDelegation } = useSmartContractTransaction(
-    lockingVaultContract,
-    "changeDelegation",
-    signer,
-    {
-      onTransactionSubmitted: onChangeDeletagationSubmitted,
-      onTransactionMined: onChangeDelegationMined,
-    }
-  );
+  const { mutate: changeDelegation } = useChangeDelegation(signer);
+  const onClick = useCallback(() => {
+    changeDelegation([]);
+  }, [changeDelegation]);
   return (
     <OutlinedSection className={tw("space-y-4")}>
       <H3
