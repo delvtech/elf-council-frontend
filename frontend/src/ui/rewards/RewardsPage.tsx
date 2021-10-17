@@ -1,30 +1,49 @@
+import React, { ReactElement, useCallback } from "react";
+
+import { useWeb3React } from "@web3-react/core";
+import { formatEther, parseEther } from "ethers/lib/utils";
 import Image from "next/image";
-import React, { ReactElement } from "react";
+import tw from "src/elf-tailwindcss-classnames";
+import { elementTokenContract, rewardsContract } from "src/elf/contracts";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { Label } from "src/ui/base/Label/Label";
-import tw from "src/elf-tailwindcss-classnames";
-import { t } from "ttag";
-import { formatEther } from "ethers/lib/utils";
 import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
-import { useWeb3React } from "@web3-react/core";
-import { elementTokenContract, rewardsContract } from "src/elf/contracts";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { t } from "ttag";
+import { useSigner } from "src/ui/signer/useSigner";
+import { useClaimRewards } from "./useClaimRewards";
 
 interface RewardsPageProps {}
 
 export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
+  const signer = useSigner(account, library);
   const { data: balanceOf } = useElementTokenBalanceOf(account);
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
 
   const { claimed, balance, merkleInfo } = useRewardsInfo(account);
+
+  // TODO: display this info on the page
   console.log("merkleInfo", merkleInfo);
   console.log("balance", balance);
   console.log("claimed", claimed);
+
+  const { mutate: claim } = useClaimRewards(signer);
+  const onClaim = useCallback(async () => {
+    if (!account || !merkleInfo) {
+      return;
+    }
+
+    const { value } = merkleInfo?.leaf;
+    const { proof } = merkleInfo;
+    const valueBN = parseEther(value);
+
+    await claim([valueBN, valueBN, proof, account]);
+  }, [account, claim, merkleInfo]);
 
   return (
     <div
@@ -87,6 +106,8 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
           <Label small>{t`Go to Dashboard Overview`}</Label>
           <div className={tw("flex", "gap-4")}>
             <Button
+              onClick={onClaim}
+              disabled={!account || !merkleInfo}
               round
               variant={ButtonVariant.OUTLINE_WHITE}
             >{t`Withdraw`}</Button>
