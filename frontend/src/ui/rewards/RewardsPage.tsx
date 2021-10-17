@@ -20,7 +20,10 @@ import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
+import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 
+import { addressesJson } from "src/elf-council-addresses";
+import { ethers } from "ethers";
 interface RewardsPageProps {}
 
 export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
@@ -28,6 +31,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const signer = useSigner(account, library);
   const { data: balanceOf } = useElementTokenBalanceOf(account);
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
+  const { elementToken, lockingVault } = addressesJson.addresses;
 
   const { claimed, balance, merkleInfo } = useRewardsInfo(account);
 
@@ -67,6 +71,15 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 
     await deposit([account, parseEther(depositAmount), account]);
   }, [account, deposit, depositAmount]);
+
+  const { mutate: allow } = useSetTokenAllowance(signer, elementToken);
+  const onSetAllowance = useCallback(async () => {
+    if (!account) {
+      return;
+    }
+
+    await allow([lockingVault, ethers.constants.MaxUint256]);
+  }, [account, allow, lockingVault]);
 
   return (
     <div
@@ -141,6 +154,12 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
               >{t`Claim & Deposit`}</Button>
             </div>
             <div className={tw("flex", "gap-4", "space-y-4", "flex-wrap")}>
+              <Button
+                onClick={onSetAllowance}
+                disabled={!account || !merkleInfo}
+                round
+                variant={ButtonVariant.OUTLINE_WHITE}
+              >{t`Allow`}</Button>
               <Button
                 onClick={onSetMax}
                 disabled={!account || !merkleInfo}
