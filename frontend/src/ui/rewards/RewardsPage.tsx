@@ -19,6 +19,7 @@ import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
+import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 
 interface RewardsPageProps {}
 
@@ -57,6 +58,15 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const onSetMax = useCallback(async () => {
     setDepositAmount(balance);
   }, [balance, setDepositAmount]);
+
+  const { mutate: deposit } = useDepositIntoLockingVault(signer);
+  const onDeposit = useCallback(async () => {
+    if (!account) {
+      return;
+    }
+
+    await deposit([account, parseEther(depositAmount), account]);
+  }, [account, deposit, depositAmount]);
 
   return (
     <div
@@ -130,7 +140,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 variant={ButtonVariant.WHITE}
               >{t`Claim & Deposit`}</Button>
             </div>
-            <div className={tw("flex", "gap-4", "space-y-4")}>
+            <div className={tw("flex", "gap-4", "space-y-4", "flex-wrap")}>
               <Button
                 onClick={onSetMax}
                 disabled={!account || !merkleInfo}
@@ -146,8 +156,8 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 name={"Deposit Amount"}
               />
               <Button
-                onClick={onClaim}
-                disabled={!account || !merkleInfo}
+                onClick={onDeposit}
+                disabled={!account}
                 round
                 variant={ButtonVariant.OUTLINE_WHITE}
               >{t`Deposit`}</Button>
