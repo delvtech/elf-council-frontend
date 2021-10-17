@@ -11,10 +11,13 @@ import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSma
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import NumericInput from "src/ui/base/Input/NumericInput";
+import { useNumericInput } from "src/ui/base/Input/useNumericInput";
 import { Label } from "src/ui/base/Label/Label";
 import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
-import { t } from "ttag";
 import { useSigner } from "src/ui/signer/useSigner";
+import { t } from "ttag";
+
 import { useClaimRewards } from "./useClaimRewards";
 
 interface RewardsPageProps {}
@@ -44,6 +47,16 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 
     await claim([valueBN, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
+
+  const {
+    stringValue: depositAmount,
+    onChange: onSetDepositAmount,
+    setValue: setDepositAmount,
+  } = useNumericInput();
+
+  const onSetMax = useCallback(async () => {
+    setDepositAmount(balance);
+  }, [balance, setDepositAmount]);
 
   return (
     <div
@@ -104,17 +117,41 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             <Label className={tw("text-right")}>{t`150.00000`}</Label>
           </div>
           <Label small>{t`Go to Dashboard Overview`}</Label>
-          <div className={tw("flex", "gap-4")}>
-            <Button
-              onClick={onClaim}
-              disabled={!account || !merkleInfo}
-              round
-              variant={ButtonVariant.OUTLINE_WHITE}
-            >{t`Withdraw`}</Button>
-            <Button
-              round
-              variant={ButtonVariant.WHITE}
-            >{t`Claim & Deposit`}</Button>
+          <div className={tw("flex", "flex-col")}>
+            <div className={tw("flex", "gap-4")}>
+              <Button
+                onClick={onClaim}
+                disabled={!account || !merkleInfo}
+                round
+                variant={ButtonVariant.OUTLINE_WHITE}
+              >{t`Withdraw`}</Button>
+              <Button
+                round
+                variant={ButtonVariant.WHITE}
+              >{t`Claim & Deposit`}</Button>
+            </div>
+            <div className={tw("flex", "gap-4", "space-y-4")}>
+              <Button
+                onClick={onSetMax}
+                disabled={!account || !merkleInfo}
+                round
+                variant={ButtonVariant.OUTLINE_WHITE}
+              >{t`Max`}</Button>
+              <NumericInput
+                value={depositAmount}
+                onChange={onSetDepositAmount}
+                screenReaderLabel={t`deposit amount`}
+                htmlFor={"depaoit-amount"}
+                id={"deposit-amount"}
+                name={"Deposit Amount"}
+              />
+              <Button
+                onClick={onClaim}
+                disabled={!account || !merkleInfo}
+                round
+                variant={ButtonVariant.OUTLINE_WHITE}
+              >{t`Deposit`}</Button>
+            </div>
           </div>
         </div>
       </GradientCard>
