@@ -6,6 +6,7 @@ export interface ButtonStyles {
   variant?: ButtonVariant;
   round?: boolean;
   fill?: boolean;
+  disabled?: boolean;
 }
 
 export enum ButtonVariant {
@@ -22,6 +23,7 @@ export function getButtonClass({
   variant = ButtonVariant.PRIMARY,
   fill = false,
   round = false,
+  disabled = false,
 }: ButtonStyles): string {
   const defaultStyling = tw(
     "inline-flex",
@@ -37,7 +39,9 @@ export function getButtonClass({
     "focus:ring-offset-2",
     "focus:ring-brandDarkBlue",
     round ? "rounded-full" : "rounded-md",
-    { "flex-1": fill }
+    { "flex-1": fill },
+    { "pointer-events-none": disabled },
+    { "opacity-50": disabled }
   );
 
   const primaryButtonVariant = tw(

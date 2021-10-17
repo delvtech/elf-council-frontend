@@ -10,15 +10,21 @@ interface ButtonProps extends ButtonStyles {
 
 export default function Button({
   onClick,
+  disabled,
   variant,
   round,
   fill,
   children,
 }: ButtonProps): ReactElement {
-  const buttonClassName = getButtonClass({ variant, round, fill });
+  const buttonClassName = getButtonClass({ variant, round, fill, disabled });
 
   return (
-    <button onClick={onClick} type="button" className={buttonClassName}>
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      type="button"
+      className={buttonClassName}
+    >
       {children}
     </button>
   );
