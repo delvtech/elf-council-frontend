@@ -5,6 +5,7 @@ import tw from "src/elf-tailwindcss-classnames";
 interface TextInputProps {
   className?: string;
   screenReaderLabel: string;
+  htmlFor: string;
   id: string;
   name: string;
   placeholder?: string;
@@ -15,6 +16,7 @@ interface TextInputProps {
 export default function TextInput({
   className,
   screenReaderLabel,
+  htmlFor,
   id,
   name,
   placeholder,
@@ -23,7 +25,7 @@ export default function TextInput({
 }: TextInputProps): ReactElement {
   return (
     <div>
-      <label htmlFor="email" className="sr-only">
+      <label htmlFor={htmlFor} className="sr-only">
         {screenReaderLabel}
       </label>
       <input

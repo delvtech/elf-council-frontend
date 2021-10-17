@@ -105,6 +105,7 @@ function DelegateSection({ account, signer }: DelegationSectionProps) {
       </div>
       <TextInput
         screenReaderLabel={t`Insert Delegate Address`}
+        htmlFor={t`address`}
         id={"delegate-address"}
         name={t`Insert Delegate Address`}
         placeholder={t`Insert Delegate Address`}
