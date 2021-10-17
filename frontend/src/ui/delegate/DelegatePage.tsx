@@ -1,20 +1,21 @@
-import tw from "src/elf-tailwindcss-classnames";
 import React, { ReactElement, useCallback, useState } from "react";
-import { jt, t } from "ttag";
-import Button from "src/ui/base/Button/Button";
-import OutlinedSection from "src/ui/base/OutlinedSection/OutlinedSection";
-import H3 from "src/ui/base/H3";
-import H2 from "src/ui/base/H2";
-import TableExample from "src/ui/base/Table/Table.example";
-import TextInput from "src/ui/base/Input/Input";
-import { Signer } from "ethers";
+
 import { useWeb3React } from "@web3-react/core";
-import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
-import { isValidAddress } from "src/base/isValidAddress";
-import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
-import { useDeposits } from "src/ui/contracts/useDeposits";
+import { Signer } from "ethers";
 import { formatEther } from "ethers/lib/utils";
+import { isValidAddress } from "src/base/isValidAddress";
+import tw from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import Button from "src/ui/base/Button/Button";
+import H2 from "src/ui/base/H2";
+import H3 from "src/ui/base/H3";
+import TextInput from "src/ui/base/Input/TextInput";
+import OutlinedSection from "src/ui/base/OutlinedSection/OutlinedSection";
+import TableExample from "src/ui/base/Table/Table.example";
+import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
+import { useDeposits } from "src/ui/contracts/useDeposits";
+import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
+import { jt, t } from "ttag";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
