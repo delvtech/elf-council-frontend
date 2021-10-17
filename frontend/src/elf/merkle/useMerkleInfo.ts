@@ -10,7 +10,6 @@ export function useMerkleInfo(
   return useQuery({
     queryKey: ["merkleInfo", address],
     queryFn: () => fetchMerkleInfo(address as string),
-    refetchInterval: 5000,
     enabled: !!address,
   });
 }
