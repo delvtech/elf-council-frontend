@@ -6,7 +6,7 @@ import { Dialog, Transition } from "@headlessui/react";
 
 interface SimpleDialogProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children?: ReactNode;
 }
 export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
@@ -16,7 +16,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
       <Dialog
         as="div"
         className={tw("fixed", "z-10", "inset-0", "overflow-y-auto")}
-        onClose={onClose}
+        onClose={onClose ? onClose : () => {}}
       >
         <div
           className={tw(
