@@ -28,6 +28,8 @@ import { t } from "ttag";
 import { useClaimRewards } from "./useClaimRewards";
 import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
 import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
+import TextInput from "src/ui/base/Input/TextInput";
+import { isValidAddress } from "src/base/isValidAddress";
 
 interface RewardsPageProps {}
 
@@ -115,6 +117,13 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
     allow([lockingVault, ethers.constants.MaxUint256]);
   }, [account, allow, lockingVault]);
 
+  const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
+  const onUpdateDelegateAddress = useCallback(() => {
+    if (delegateAddress && isValidAddress(delegateAddress)) {
+      setDelegateAddress(delegateAddress);
+    }
+  }, [delegateAddress]);
+
   return (
     <div
       className={tw(
@@ -190,6 +199,13 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 round
                 variant={ButtonVariant.OUTLINE_WHITE}
               >{t`Withdraw`}</Button>
+              <TextInput
+                value={delegateAddress}
+                onChange={onUpdateDelegateAddress}
+                screenReaderLabel={t`delegate address`}
+                id={"delete-address"}
+                name={"Delegate Address"}
+              />
               <Button
                 onClick={onClaimAndDeposit}
                 round
