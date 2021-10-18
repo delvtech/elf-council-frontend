@@ -5,7 +5,7 @@
  * @param stringValue a numeric string with or without a decimal i.e. 3.14 or 42.
  */
 export function getPlacesAfterDecimal(stringValue: string | undefined): number {
-  if (stringValue === undefined) {
+  if (!stringValue) {
     return 0;
   }
 

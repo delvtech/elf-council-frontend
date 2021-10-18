@@ -6,7 +6,6 @@ import tw from "src/elf-tailwindcss-classnames";
 interface NumericInputProps {
   className?: string;
   screenReaderLabel: string;
-  htmlFor: string;
   id: string;
   name: string;
   placeholder?: string;
@@ -17,7 +16,6 @@ interface NumericInputProps {
 export default function NumericInput({
   className,
   screenReaderLabel,
-  htmlFor,
   id,
   name,
   placeholder,
@@ -26,7 +24,7 @@ export default function NumericInput({
 }: NumericInputProps): ReactElement {
   return (
     <div>
-      <label htmlFor={htmlFor} className="sr-only">
+      <label htmlFor={id} className={tw("sr-only")}>
         {screenReaderLabel}
       </label>
       <input

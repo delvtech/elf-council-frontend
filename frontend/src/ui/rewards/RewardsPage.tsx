@@ -1,8 +1,10 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
 
 import { useWeb3React } from "@web3-react/core";
+import { ethers } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Image from "next/image";
+import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract, rewardsContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
@@ -12,18 +14,16 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import NumericInput from "src/ui/base/Input/NumericInput";
-import { useNumericInput } from "src/ui/base/Input/useNumericInput";
 import { Label } from "src/ui/base/Label/Label";
+import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
+import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
-import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
-import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
+import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
 
-import { addressesJson } from "src/elf-council-addresses";
-import { ethers } from "ethers";
 interface RewardsPageProps {}
 
 export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
@@ -41,7 +41,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   console.log("claimed", claimed);
 
   const { mutate: claim } = useClaimRewards(signer);
-  const onClaim = useCallback(async () => {
+  const onClaim = useCallback(() => {
     if (!account || !merkleInfo) {
       return;
     }
@@ -50,35 +50,39 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
     const { proof } = merkleInfo;
     const valueBN = parseEther(value);
 
-    await claim([valueBN, valueBN, proof, account]);
+    claim([valueBN, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
 
-  const {
-    stringValue: depositAmount,
-    onChange: onSetDepositAmount,
-    setValue: setDepositAmount,
-  } = useNumericInput();
+  const [depositAmount, setDepositAmount] = useState("");
+  const onSetDepositAmount = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const newDepositAmount = event.target.value;
+      const validValue = validateNumericInput(depositAmount, newDepositAmount);
+      setDepositAmount(validValue);
+    },
+    [depositAmount]
+  );
 
-  const onSetMax = useCallback(async () => {
+  const onSetMax = useCallback(() => {
     setDepositAmount(balance);
   }, [balance, setDepositAmount]);
 
   const { mutate: deposit } = useDepositIntoLockingVault(signer);
-  const onDeposit = useCallback(async () => {
+  const onDeposit = useCallback(() => {
     if (!account) {
       return;
     }
 
-    await deposit([account, parseEther(depositAmount), account]);
+    deposit([account, parseEther(depositAmount), account]);
   }, [account, deposit, depositAmount]);
 
   const { mutate: allow } = useSetTokenAllowance(signer, elementToken);
-  const onSetAllowance = useCallback(async () => {
+  const onSetAllowance = useCallback(() => {
     if (!account) {
       return;
     }
 
-    await allow([lockingVault, ethers.constants.MaxUint256]);
+    allow([lockingVault, ethers.constants.MaxUint256]);
   }, [account, allow, lockingVault]);
 
   return (
@@ -170,7 +174,6 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 value={depositAmount}
                 onChange={onSetDepositAmount}
                 screenReaderLabel={t`deposit amount`}
-                htmlFor={"depaoit-amount"}
                 id={"deposit-amount"}
                 name={"Deposit Amount"}
               />
