@@ -27,6 +27,7 @@ import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
 import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
+import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
 
 interface RewardsPageProps {}
 
@@ -48,7 +49,6 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   console.log("merkleInfo", merkleInfo);
   console.log("balance", balance);
   console.log("claimed", claimed);
-  // console.log("delegate", delegate);
 
   const { mutate: claim } = useClaimRewards(signer);
   const onClaim = useCallback(() => {
@@ -62,6 +62,26 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 
     claim([valueBN, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
+
+  const { mutate: claimAndDeposit } = useClaimAndDepositRewards(signer);
+  const onClaimAndDeposit = useCallback(() => {
+    if (!account || !merkleInfo) {
+      return;
+    }
+
+    const { value } = merkleInfo?.leaf;
+    const { proof } = merkleInfo;
+    const valueBN = parseEther(value);
+
+    claimAndDeposit([
+      ethers.constants.WeiPerEther,
+      // we are just depositing so we assume the delegate is already set and this address will be ignored.
+      ethers.constants.AddressZero,
+      valueBN,
+      proof,
+      account,
+    ]);
+  }, [account, claimAndDeposit, merkleInfo]);
 
   const [depositAmount, setDepositAmount] = useState("");
   const onSetDepositAmount = useCallback(
@@ -171,6 +191,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 variant={ButtonVariant.OUTLINE_WHITE}
               >{t`Withdraw`}</Button>
               <Button
+                onClick={onClaimAndDeposit}
                 round
                 variant={ButtonVariant.WHITE}
               >{t`Claim & Deposit`}</Button>
