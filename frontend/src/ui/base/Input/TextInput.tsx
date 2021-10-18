@@ -23,7 +23,7 @@ export default function TextInput({
 }: TextInputProps): ReactElement {
   return (
     <div>
-      <label htmlFor="email" className="sr-only">
+      <label htmlFor={id} className={tw("sr-only")}>
         {screenReaderLabel}
       </label>
       <input
