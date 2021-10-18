@@ -6,7 +6,11 @@ import { formatEther, parseEther } from "ethers/lib/utils";
 import Image from "next/image";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
-import { elementTokenContract, rewardsContract } from "src/elf/contracts";
+import {
+  elementTokenContract,
+  lockingVaultContract,
+  rewardsContract,
+} from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
@@ -33,12 +37,17 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
   const { elementToken, lockingVault } = addressesJson.addresses;
 
-  const { claimed, balance, merkleInfo } = useRewardsInfo(account);
+  const { claimed, balance, merkleInfo, who, amount } = useRewardsInfo(account);
+  const totalGrant = merkleInfo?.leaf?.value || 0;
+  const unclaimed = Math.max(Number(totalGrant) - Number(claimed), 0);
 
   // TODO: display this info on the page
+  console.log("who", who);
+  console.log("amount", amount);
   console.log("merkleInfo", merkleInfo);
   console.log("balance", balance);
   console.log("claimed", claimed);
+  // console.log("delegate", delegate);
 
   const { mutate: claim } = useClaimRewards(signer);
   const onClaim = useCallback(() => {
@@ -129,19 +138,27 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             alt={t`Element logo`}
           />
           <div className={tw("flex", "flex-col")}>
-            <span className={tw("text-3xl", "mb-4")}>150.00</span>
+            <span className={tw("text-3xl", "mb-4")}>
+              {unclaimed.toFixed(2)}
+            </span>
             <Label
               className={tw("text-center", "px-12")}
             >{t`You have ELF ready to claim from the Element LP Program.`}</Label>
           </div>
           <Label>{t`People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $ELF distributions as incentives. $ELF token holders help foster the Element Protocol can shape its future by voting and engaging with our governance.`}</Label>
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
-            <Label className={tw("text-left")}>{t`Balance:`}</Label>
+            <Label className={tw("text-left")}>{t`Wallet Balance:`}</Label>
             <Label className={tw("text-right")}>{formattedBalance}</Label>
           </div>
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
             <Label className={tw("text-left")}>{t`Unclaimed:`}</Label>
-            <Label className={tw("text-right")}>{t`150.00000`}</Label>
+            <Label className={tw("text-right")}>{unclaimed.toFixed(2)}</Label>
+          </div>
+          <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
+            <Label className={tw("text-left")}>{t`Deposited:`}</Label>
+            <Label className={tw("text-right")}>
+              {Number(amount).toFixed(2)}
+            </Label>
           </div>
           <Label small>{t`Go to Dashboard Overview`}</Label>
           <div className={tw("flex", "flex-col")}>
@@ -201,10 +218,23 @@ function useRewardsInfo(address: string | undefined | null) {
     }
   );
 
+  const { data: deposited } = useSmartContractReadCall(
+    lockingVaultContract,
+    "deposits",
+    {
+      callArgs: [address as string],
+      enabled: !!address,
+    }
+  );
+
+  const [who, amountBN] = deposited || [];
+
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, address);
   const { data: merkleInfo } = useMerkleInfo(address);
 
   return {
+    who,
+    amount: formatEther(amountBN || 0),
     claimed: formatEther(claimedBN || 0),
     balance: formatEther(balanceBN || 0),
     merkleInfo,
