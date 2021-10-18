@@ -44,6 +44,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
     useRewardsInfo(account);
   const totalGrant = merkleInfo?.leaf?.value || 0;
   const unclaimed = Math.max(Number(totalGrant) - Number(claimed), 0);
+  const totalBalance = Number(balance) + Number(unclaimed) + Number(amount);
 
   // TODO: display this info on the page
   console.log("delegatee", delegatee);
@@ -169,7 +170,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
           />
           <div className={tw("flex", "flex-col")}>
             <span className={tw("text-3xl", "mb-4")}>
-              {unclaimed.toFixed(2)}
+              {totalBalance.toFixed(2)}
             </span>
             <Label
               className={tw("text-center", "px-12")}
