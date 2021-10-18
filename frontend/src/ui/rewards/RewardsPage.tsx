@@ -37,12 +37,13 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
   const { elementToken, lockingVault } = addressesJson.addresses;
 
-  const { claimed, balance, merkleInfo, who, amount } = useRewardsInfo(account);
+  const { claimed, balance, merkleInfo, delegatee, amount } =
+    useRewardsInfo(account);
   const totalGrant = merkleInfo?.leaf?.value || 0;
   const unclaimed = Math.max(Number(totalGrant) - Number(claimed), 0);
 
   // TODO: display this info on the page
-  console.log("who", who);
+  console.log("delegatee", delegatee);
   console.log("amount", amount);
   console.log("merkleInfo", merkleInfo);
   console.log("balance", balance);
@@ -227,13 +228,13 @@ function useRewardsInfo(address: string | undefined | null) {
     }
   );
 
-  const [who, amountBN] = deposited || [];
+  const [delegatee, amountBN] = deposited || [];
 
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, address);
   const { data: merkleInfo } = useMerkleInfo(address);
 
   return {
-    who,
+    delegatee,
     amount: formatEther(amountBN || 0),
     claimed: formatEther(claimedBN || 0),
     balance: formatEther(balanceBN || 0),
