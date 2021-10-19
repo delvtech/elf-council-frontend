@@ -13,10 +13,21 @@ interface CardProps {
 export default function Card(props: CardProps): ReactElement {
   const { className, children } = props;
   return (
-    <div className={tw("bg-white", "overflow-hidden", "shadow", "rounded-lg")}>
-      <div className={classNames(tw("px-4", "py-5", "sm:p-6"), className)}>
-        {children}
-      </div>
+    <div
+      className={classNames(
+        tw(
+          "bg-white",
+          "overflow-hidden",
+          "shadow",
+          "rounded-lg",
+          "px-4",
+          "py-5",
+          "sm:p-6"
+        ),
+        className
+      )}
+    >
+      {children}
     </div>
   );
 }

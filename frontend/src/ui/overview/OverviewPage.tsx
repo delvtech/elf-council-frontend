@@ -1,8 +1,10 @@
 import React, { ReactElement } from "react";
+
+import tw from "src/elf-tailwindcss-classnames";
 import H1 from "src/ui/base/H1";
 import PortfolioCard from "src/ui/overview/PortfolioCard";
-import RightBar from "src/ui/overview/RightBar";
-import tw from "src/elf-tailwindcss-classnames";
+import RewardsCard from "src/ui/overview/RewardsCard";
+import VotingCard from "src/ui/overview/VotingCard";
 import { t } from "ttag";
 
 import { SummaryCards } from "./SummaryCards";
@@ -16,7 +18,10 @@ export function OverviewPage(): ReactElement {
       <SummaryCards />
       <div className={tw("flex", "ml-3", "mt-6", "space-x-6", "mr-4")}>
         <PortfolioCard />
-        <RightBar />
+        <VotingCard />
+      </div>
+      <div className={tw("flex", "ml-3", "mt-6", "space-x-6", "mr-4")}>
+        <RewardsCard />
       </div>
     </div>
   );
