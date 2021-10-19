@@ -6,7 +6,11 @@ import { formatEther, parseEther } from "ethers/lib/utils";
 import Image from "next/image";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
-import { elementTokenContract, rewardsContract } from "src/elf/contracts";
+import {
+  elementTokenContract,
+  lockingVaultContract,
+  rewardsContract,
+} from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
@@ -23,6 +27,10 @@ import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
 import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
+import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
+import TextInput from "src/ui/base/Input/TextInput";
+import { isValidAddress } from "src/base/isValidAddress";
+import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 
 interface RewardsPageProps {}
 
@@ -33,9 +41,15 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
   const { elementToken, lockingVault } = addressesJson.addresses;
 
-  const { claimed, balance, merkleInfo } = useRewardsInfo(account);
+  const { claimed, balance, merkleInfo, delegatee, amount } =
+    useRewardsInfo(account);
+  const totalGrant = merkleInfo?.leaf?.value || 0;
+  const unclaimed = Math.max(Number(totalGrant) - Number(claimed), 0);
+  const totalBalance = Number(balance) + Number(unclaimed) + Number(amount);
 
   // TODO: display this info on the page
+  console.log("delegatee", delegatee);
+  console.log("amount", amount);
   console.log("merkleInfo", merkleInfo);
   console.log("balance", balance);
   console.log("claimed", claimed);
@@ -53,14 +67,35 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
     claim([valueBN, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
 
-  const [depositAmount, setDepositAmount] = useState("");
+  const { mutate: claimAndDeposit } = useClaimAndDepositRewards(signer);
+  const onClaimAndDeposit = useCallback(() => {
+    if (!account || !merkleInfo) {
+      return;
+    }
+
+    const { value } = merkleInfo?.leaf;
+    const { proof } = merkleInfo;
+    const valueBN = parseEther(value);
+
+    claimAndDeposit([
+      ethers.constants.WeiPerEther,
+      // we are just depositing so we assume the delegate is already set and this address will be ignored.
+      ethers.constants.AddressZero,
+      valueBN,
+      proof,
+      account,
+    ]);
+  }, [account, claimAndDeposit, merkleInfo]);
+
+  const { value: depositAmount, setNumericValue: setDepositAmount } =
+    useNumericInputValue();
+
   const onSetDepositAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const newDepositAmount = event.target.value;
-      const validValue = validateNumericInput(depositAmount, newDepositAmount);
-      setDepositAmount(validValue);
+      setDepositAmount(newDepositAmount);
     },
-    [depositAmount]
+    [setDepositAmount]
   );
 
   const onSetMax = useCallback(() => {
@@ -84,6 +119,13 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 
     allow([lockingVault, ethers.constants.MaxUint256]);
   }, [account, allow, lockingVault]);
+
+  const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
+  const onUpdateDelegateAddress = useCallback(() => {
+    if (delegateAddress && isValidAddress(delegateAddress)) {
+      setDelegateAddress(delegateAddress);
+    }
+  }, [delegateAddress]);
 
   return (
     <div
@@ -129,19 +171,27 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             alt={t`Element logo`}
           />
           <div className={tw("flex", "flex-col")}>
-            <span className={tw("text-3xl", "mb-4")}>150.00</span>
+            <span className={tw("text-3xl", "mb-4")}>
+              {totalBalance.toFixed(2)}
+            </span>
             <Label
               className={tw("text-center", "px-12")}
             >{t`You have ELF ready to claim from the Element LP Program.`}</Label>
           </div>
           <Label>{t`People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $ELF distributions as incentives. $ELF token holders help foster the Element Protocol can shape its future by voting and engaging with our governance.`}</Label>
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
-            <Label className={tw("text-left")}>{t`Balance:`}</Label>
+            <Label className={tw("text-left")}>{t`Wallet Balance:`}</Label>
             <Label className={tw("text-right")}>{formattedBalance}</Label>
           </div>
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
             <Label className={tw("text-left")}>{t`Unclaimed:`}</Label>
-            <Label className={tw("text-right")}>{t`150.00000`}</Label>
+            <Label className={tw("text-right")}>{unclaimed.toFixed(2)}</Label>
+          </div>
+          <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
+            <Label className={tw("text-left")}>{t`Deposited:`}</Label>
+            <Label className={tw("text-right")}>
+              {Number(amount).toFixed(2)}
+            </Label>
           </div>
           <Label small>{t`Go to Dashboard Overview`}</Label>
           <div className={tw("flex", "flex-col")}>
@@ -152,7 +202,15 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 round
                 variant={ButtonVariant.OUTLINE_WHITE}
               >{t`Withdraw`}</Button>
+              <TextInput
+                value={delegateAddress}
+                onChange={onUpdateDelegateAddress}
+                screenReaderLabel={t`delegate address`}
+                id={"delete-address"}
+                name={"Delegate Address"}
+              />
               <Button
+                onClick={onClaimAndDeposit}
                 round
                 variant={ButtonVariant.WHITE}
               >{t`Claim & Deposit`}</Button>
@@ -201,10 +259,23 @@ function useRewardsInfo(address: string | undefined | null) {
     }
   );
 
+  const { data: deposited } = useSmartContractReadCall(
+    lockingVaultContract,
+    "deposits",
+    {
+      callArgs: [address as string],
+      enabled: !!address,
+    }
+  );
+
+  const [delegatee, amountBN] = deposited || [];
+
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, address);
   const { data: merkleInfo } = useMerkleInfo(address);
 
   return {
+    delegatee,
+    amount: formatEther(amountBN || 0),
     claimed: formatEther(claimedBN || 0),
     balance: formatEther(balanceBN || 0),
     merkleInfo,

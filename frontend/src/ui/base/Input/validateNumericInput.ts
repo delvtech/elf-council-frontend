@@ -23,7 +23,7 @@ export interface NumericValueOptions {
   maxPrecision?: number;
 }
 
-const DEFAULT_NUMERIC_INPUT_OPTIONS: NumericValueOptions = {
+export const DEFAULT_NUMERIC_INPUT_OPTIONS: NumericValueOptions = {
   /**
    * Default to 0, as numeric inputs will rarely if ever accept negative inputs
    * from the user
@@ -38,13 +38,12 @@ const DEFAULT_NUMERIC_INPUT_OPTIONS: NumericValueOptions = {
 
 /**
  *
- * @param previousStringValue previous numeric value, assumed to be valid
  * @param newStringValue the numeric value to validate
  * @param options NumericValueOptions
  * @returns a valid numeric string
  */
 export function validateNumericInput(
-  previousStringValue: string,
+  currentStringValue: string,
   newStringValue: string,
   options = DEFAULT_NUMERIC_INPUT_OPTIONS
 ): string {
@@ -64,7 +63,8 @@ export function validateNumericInput(
     return newStringValue;
   }
 
-  return previousStringValue;
+  // if the value isn't valid, then we shouldn't update the input
+  return currentStringValue;
 }
 
 export function getIsValidNumericInput(
