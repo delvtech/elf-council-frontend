@@ -30,6 +30,7 @@ import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
 import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
 import TextInput from "src/ui/base/Input/TextInput";
 import { isValidAddress } from "src/base/isValidAddress";
+import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 
 interface RewardsPageProps {}
 
@@ -86,14 +87,15 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
     ]);
   }, [account, claimAndDeposit, merkleInfo]);
 
-  const [depositAmount, setDepositAmount] = useState("");
+  const { value: depositAmount, setNumericValue: setDepositAmount } =
+    useNumericInputValue();
+
   const onSetDepositAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const newDepositAmount = event.target.value;
-      const validValue = validateNumericInput(depositAmount, newDepositAmount);
-      setDepositAmount(validValue);
+      setDepositAmount(newDepositAmount);
     },
-    [depositAmount]
+    [setDepositAmount]
   );
 
   const onSetMax = useCallback(() => {
