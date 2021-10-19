@@ -26,7 +26,6 @@ import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
-import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
 import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
 import TextInput from "src/ui/base/Input/TextInput";
 import { isValidAddress } from "src/base/isValidAddress";

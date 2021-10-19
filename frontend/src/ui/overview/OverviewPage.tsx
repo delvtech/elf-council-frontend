@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import H1 from "src/ui/base/H1";
-import Middle from "src/ui/overview/Middle";
+import PortfolioCard from "src/ui/overview/PortfolioCard";
 import RightBar from "src/ui/overview/RightBar";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
@@ -15,7 +15,7 @@ export function OverviewPage(): ReactElement {
       </div>
       <SummaryCards />
       <div className={tw("flex", "ml-3", "mt-6", "space-x-6", "mr-4")}>
-        <Middle />
+        <PortfolioCard />
         <RightBar />
       </div>
     </div>
