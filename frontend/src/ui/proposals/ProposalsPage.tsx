@@ -1,14 +1,16 @@
+import { Event } from "@ethersproject/contracts";
 import React, { ReactElement, useMemo, useState } from "react";
-
+import { formatFullDate } from "src/base/dates";
+import { proposalsJson } from "src/elf-council-proposals";
+import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
+import tw from "src/elf-tailwindcss-classnames";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import H1 from "src/ui/base/H1";
-import { useProposals } from "src/ui/proposals/useProposals";
-import { formatFullDate } from "src/base/dates";
-import tw from "src/elf-tailwindcss-classnames";
+import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { t } from "ttag";
 
 import { ProposalTabs } from "./ProposalTabs";
@@ -16,7 +18,10 @@ import { ProposalTabs } from "./ProposalTabs";
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
 export default function ProposalsPage(): ReactElement {
-  const { data: proposals } = useProposals();
+  const { data: snapshotProposals } = useSnapshotProposals(
+    proposalsJson.proposals.map(({ snapshotId }) => snapshotId)
+  );
+  console.log("snapshotProposalResults", snapshotProposals);
 
   const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
 
@@ -39,17 +44,17 @@ export default function ProposalsPage(): ReactElement {
 
   const filteredProposals = useMemo(() => {
     if (activeTabId === "active-proposals-tab") {
-      return proposals?.filter((proposal) =>
+      return snapshotProposals?.filter((proposal) =>
         ["active", "pending"].includes(proposal.state)
       );
     }
 
     if (activeTabId === "past-proposals-tab") {
-      return proposals?.filter((proposal) =>
+      return snapshotProposals?.filter((proposal) =>
         ["closed"].includes(proposal.state)
       );
     }
-  }, [activeTabId, proposals]);
+  }, [activeTabId, snapshotProposals]);
 
   return (
     <div className={tw("h-full", "pt-8", "px-8")}>
@@ -61,7 +66,7 @@ export default function ProposalsPage(): ReactElement {
 }
 
 interface ProposalListProps {
-  proposals: any[];
+  proposals: SnapshotProposal[];
 }
 
 function ProposalList({ proposals }: ProposalListProps) {

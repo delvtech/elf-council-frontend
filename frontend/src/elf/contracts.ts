@@ -1,4 +1,5 @@
 import {
+  CoreVoting__factory,
   ERC20Permit__factory,
   LockingVault__factory,
   OptimisticRewards__factory,
