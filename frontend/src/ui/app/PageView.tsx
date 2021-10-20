@@ -24,17 +24,21 @@ export default function PageView(props: PageViewProps): ReactElement {
           <Sidebar />
           <div
             className={tw(
-              "w-screen",
+              "flex-1",
+              "h-screen",
               "bg-gradient-to-b",
               "from-gray-50",
               "to-gray-100",
-              "p-8",
-              "space-y-8",
-              "overflow-scroll"
+              "p-6",
+              "space-y-6",
+              "overflow-scroll",
+              "justify-center",
+              "align-middle",
+              "items-center"
             )}
           >
             <Header />
-            {children}
+            <div className={tw("max-w-6xl", "m-auto")}>{children}</div>
           </div>
         </div>
       </div>
