@@ -6,7 +6,7 @@ import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
 interface ButtonProps extends ButtonStyles {
   children: ReactNode;
-  className: string;
+  className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
