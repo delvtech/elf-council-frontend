@@ -8,11 +8,10 @@ export function SummaryCards(): ReactElement {
       className={tw(
         "flex",
         "flex-col",
-        "p-4",
         "space-y-6",
         "lg:space-y-0",
         "lg:grid",
-        "lg:grid-cols-4",
+        "lg:grid-cols-3",
         "lg:gap-6"
       )}
     >
