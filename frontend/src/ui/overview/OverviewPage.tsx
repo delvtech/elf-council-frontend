@@ -35,7 +35,7 @@ export function OverviewPage(): ReactElement {
         <VotingCard />
       </div>
       <div className={tw("flex", "space-x-6")}>
-        <RewardsCard signer={signer} />
+        <RewardsCard account={account} signer={signer} />
       </div>
     </div>
   );
