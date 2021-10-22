@@ -4,33 +4,30 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Image from "next/image";
+import { isValidAddress } from "src/base/isValidAddress";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
-import {
-  elementTokenContract,
-  lockingVaultContract,
-  rewardsContract,
-} from "src/elf/contracts";
+import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import NumericInput from "src/ui/base/Input/NumericInput";
+import TextInput from "src/ui/base/Input/TextInput";
+import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { Label } from "src/ui/base/Label/Label";
+import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
+import { useDelegate } from "src/ui/delegate/useDelegate";
+import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
+import { useClaimed } from "src/ui/rewards/useClaimed";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { useClaimRewards } from "./useClaimRewards";
-import { validateNumericInput } from "src/ui/base/Input/validateNumericInput";
-import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
-import TextInput from "src/ui/base/Input/TextInput";
-import { isValidAddress } from "src/base/isValidAddress";
-import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 
 interface RewardsPageProps {}
 
@@ -41,15 +38,15 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   const formattedBalance = balanceOf ? formatEther(balanceOf) : "-";
   const { elementToken, lockingVault } = addressesJson.addresses;
 
-  const { claimed, balance, merkleInfo, delegatee, amount } =
+  const { claimed, balance, merkleInfo, delegate, deposited } =
     useRewardsInfo(account);
   const totalGrant = merkleInfo?.leaf?.value || 0;
   const unclaimed = Math.max(Number(totalGrant) - Number(claimed), 0);
-  const totalBalance = Number(balance) + Number(unclaimed) + Number(amount);
+  const totalBalance = Number(balance) + Number(unclaimed) + Number(deposited);
 
   // TODO: display this info on the page
-  console.log("delegatee", delegatee);
-  console.log("amount", amount);
+  console.log("delegate", delegate);
+  console.log("deposited", deposited);
   console.log("merkleInfo", merkleInfo);
   console.log("balance", balance);
   console.log("claimed", claimed);
@@ -190,7 +187,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
           <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
             <Label className={tw("text-left")}>{t`Deposited:`}</Label>
             <Label className={tw("text-right")}>
-              {Number(amount).toFixed(2)}
+              {Number(deposited).toFixed(2)}
             </Label>
           </div>
           <Label small>{t`Go to Dashboard Overview`}</Label>
@@ -250,33 +247,17 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 }
 
 function useRewardsInfo(address: string | undefined | null) {
-  const { data: claimedBN } = useSmartContractReadCall(
-    rewardsContract,
-    "claimed",
-    {
-      callArgs: [address as string],
-      enabled: !!address,
-    }
-  );
-
-  const { data: deposited } = useSmartContractReadCall(
-    lockingVaultContract,
-    "deposits",
-    {
-      callArgs: [address as string],
-      enabled: !!address,
-    }
-  );
-
-  const [delegatee, amountBN] = deposited || [];
+  const claimed = useClaimed(address);
+  const deposited = useDeposited(address);
+  const delegate = useDelegate(address);
 
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, address);
   const { data: merkleInfo } = useMerkleInfo(address);
 
   return {
-    delegatee,
-    amount: formatEther(amountBN || 0),
-    claimed: formatEther(claimedBN || 0),
+    delegate,
+    deposited,
+    claimed,
     balance: formatEther(balanceBN || 0),
     merkleInfo,
   };

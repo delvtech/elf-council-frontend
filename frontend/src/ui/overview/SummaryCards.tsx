@@ -8,18 +8,16 @@ export function SummaryCards(): ReactElement {
       className={tw(
         "flex",
         "flex-col",
-        "p-4",
         "space-y-6",
         "lg:space-y-0",
         "lg:grid",
-        "lg:grid-cols-4",
+        "lg:grid-cols-3",
         "lg:gap-6"
       )}
     >
-      <SummaryCard title="Votes Delegated" balance={6000} />
-      <SummaryCard title="Total Governance Rewards" balance={400.079} />
-      <SummaryCard title="Proposals" balance={100} />
-      <SummaryCard title="Governance Tokens Circulating" balance={790} />
+      <SummaryCard title="Claimed Today" balance={6000} />
+      <SummaryCard title="Circulating Supply" balance={400.079} />
+      <SummaryCard title="Total Voting Power" balance={100} />
     </div>
   );
 }
