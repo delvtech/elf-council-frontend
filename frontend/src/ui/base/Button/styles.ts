@@ -26,6 +26,7 @@ export function getButtonClass({
   disabled = false,
 }: ButtonStyles): string {
   const defaultStyling = tw(
+    "h-12",
     "inline-flex",
     "items-center",
     "px-4",
