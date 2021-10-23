@@ -1,9 +1,9 @@
 import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import React, { ReactElement } from "react";
 import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
-import { SNAPSHOT_URL } from "src/ui/proposals/SNAPSHOT_URL";
 import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
+import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 
 interface ProposalTabsProps {
   proposalTabs: TabInfo[];
@@ -14,7 +14,7 @@ export function ProposalTabs({
   return (
     <div className={tw("flex", "items-center", "space-x-8", "pb-8")}>
       <a
-        href={SNAPSHOT_URL}
+        href={ELEMENT_FINANCE_SNAPSHOT_URL}
         className={tw("font-semibold", "text-brandDarkBlue", "hover:underline")}
       >
         {t`Off-chain`}
