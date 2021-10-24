@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
 
 import { parseEther } from "@ethersproject/units";
-import { ethers, Signer } from "ethers";
+import { ethers, FixedNumber, Signer } from "ethers";
 import { isValidAddress } from "src/base/isValidAddress";
 import tw from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
@@ -16,6 +16,8 @@ import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewa
 import { useClaimRewards } from "src/ui/rewards/useClaimRewards";
 import { t } from "ttag";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import { useClaimed } from "src/ui/rewards/useClaimed";
+import { MerkleProof } from "src/elf/merkle/MerkleProof";
 
 interface RewardsCardProps {
   account: string | undefined | null;
@@ -31,7 +33,7 @@ export default function RewardsCard(props: RewardsCardProps): ReactElement {
       <H2
         className={tw("text-blue-900", "font-semibold", "pb-4")}
       >{t`Rewards`}</H2>
-      <div className={tw("space-y-4")}>
+      <div className={tw("space-y-12")}>
         <ClaimAndDelegateSection account={account} signer={signer} />
         {!delegate && <FeaturedDelegatesTable />}
         <ClaimSection account={account} signer={signer} />
@@ -51,6 +53,8 @@ function ClaimAndDelegateSection(
   const { account, signer } = props;
   const delegate = useDelegate(account);
   const { data: merkleInfo } = useMerkleInfo(account);
+  const unclaimed = useUnclaimed(account, merkleInfo);
+  const hasUnclaimedRewards = !!Number(unclaimed);
 
   const title = delegate ? t`Claim and deposit` : t`Claim and delegate`;
   const description = delegate
@@ -98,7 +102,7 @@ function ClaimAndDelegateSection(
 
   return (
     <div>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "sm:grid-cols-2")}>
+      <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
         <div>
           <H3 className={tw("text-blue-900", "font-semibold", "pb-2")}>
             {title}
@@ -126,9 +130,12 @@ function ClaimAndDelegateSection(
           )}
 
           <Button
+            disabled={!account || !hasUnclaimedRewards}
             className={tw("w-full", "text-center")}
             onClick={onClaimAndDeposit}
-          >{t`Claim`}</Button>
+          >
+            <span className={tw("w-full")}>{t`Claim and deposit`}</span>
+          </Button>
         </div>
       </div>
     </div>
@@ -144,6 +151,8 @@ function ClaimSection(props: ClaimSectionProps) {
 
   const { mutate: claim } = useClaimRewards(signer);
   const { data: merkleInfo } = useMerkleInfo(account);
+  const unclaimed = useUnclaimed(account, merkleInfo);
+  const hasUnclaimedRewards = !!Number(unclaimed);
   const onClaim = useCallback(() => {
     if (!account || !merkleInfo) {
       return;
@@ -161,7 +170,7 @@ function ClaimSection(props: ClaimSectionProps) {
       <H3
         className={tw("text-blue-900", "font-semibold")}
       >{t`Claim without delegating`}</H3>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "sm:grid-cols-2")}>
+      <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
         <div>
           <p>
             {t`If you'd simply like to claim your rewards, you can do so here.`}
@@ -170,11 +179,28 @@ function ClaimSection(props: ClaimSectionProps) {
 
         <div>
           <Button
+            disabled={!account || !hasUnclaimedRewards}
             className={tw("w-full", "text-center")}
             onClick={onClaim}
-          >{t`Claim`}</Button>
+          >
+            <span className={tw("w-full")}>{t`Claim`}</span>
+          </Button>
         </div>
       </div>
     </div>
   );
+}
+
+function useUnclaimed(
+  account: string | undefined | null,
+  merkleInfo: MerkleProof | undefined
+): string {
+  const claimed = useClaimed(account);
+  const { value: totalGrant = "0" } = merkleInfo?.leaf || {};
+
+  const unclaimed = FixedNumber.from(totalGrant)
+    .subUnsafe(FixedNumber.from(claimed))
+    .toString();
+
+  return unclaimed;
 }

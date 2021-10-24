@@ -5,6 +5,7 @@ import { ethers, Signer } from "ethers";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
+import { useTokenAllowance } from "src/elf/token/useTokenAlloance";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -13,10 +14,11 @@ import H2 from "src/ui/base/H2";
 import H3 from "src/ui/base/H3";
 import NumericInput from "src/ui/base/Input/NumericInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
+import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
-import { t } from "ttag";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
+import { t } from "ttag";
 
 interface DepositCardProps {
   account: string | undefined | null;
@@ -48,7 +50,13 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const { account, signer } = props;
   const { elementToken, lockingVault } = addressesJson.addresses;
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, account);
+  const { data: allowanceBN } = useTokenAllowance(
+    elementTokenContract,
+    account,
+    lockingVault
+  );
   const balance = formatEther(balanceBN || 0);
+  const hasBalanceToDeposit = !!Number(balance);
 
   const title = t`Stake`;
   const description = t`Deposit your ELFI tokens into the governanace system.`;
@@ -57,6 +65,8 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
 
+  const hasAllowance =
+    allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
   const onSetDepositAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const newDepositAmount = event.target.value;
@@ -92,7 +102,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
 
   return (
     <div>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "sm:grid-cols-2")}>
+      <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
         <div>
           <H3 className={tw("text-blue-900", "font-semibold", "pb-2")}>
             {title}
@@ -102,7 +112,10 @@ function DepositSection(props: DepositSectionProps): ReactElement {
 
         <div className={tw("space-y-4")}>
           <div className={tw("flex", "space-x-4", "w-full")}>
-            <Button onClick={onSetMax}>
+            <Button
+              disabled={!hasBalanceToDeposit || !account}
+              onClick={onSetMax}
+            >
               <span className={tw("w-full")}>{t`Max`}</span>
             </Button>
             <NumericInput
@@ -119,12 +132,18 @@ function DepositSection(props: DepositSectionProps): ReactElement {
           <Button
             className={tw("w-full")}
             onClick={onSetAllowance}
-            disabled={!account}
+            disabled={!account || hasAllowance}
             variant={ButtonVariant.OUTLINE_BLUE}
           >
-            <span className={tw("w-full")}>{t`Allow`}</span>
+            <span className={tw("w-full")}>
+              {hasAllowance ? t`Approved` : t`Allow`}
+            </span>
           </Button>
-          <Button className={tw("w-full")} onClick={onDeposit}>
+          <Button
+            disabled={!hasAllowance || !account}
+            className={tw("w-full")}
+            onClick={onDeposit}
+          >
             <span className={tw("w-full")}>{t`Deposit`}</span>
           </Button>
         </div>
@@ -139,8 +158,8 @@ interface WithdrawSectionProps {
 }
 function WithdrawSection(props: WithdrawSectionProps) {
   const { account, signer } = props;
-  const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, account);
-  const balance = formatEther(balanceBN || 0);
+  const amountDeposited = useDeposited(account);
+  const hasAmountDeposited = !!Number(amountDeposited);
 
   const title = t`Unstake`;
   const description = t`Withdraw your ELFI tokens to your wallet.`;
@@ -159,8 +178,10 @@ function WithdrawSection(props: WithdrawSectionProps) {
 
   // handler for max button
   const onSetMax = useCallback(() => {
-    setWithdrawAmount(balance);
-  }, [balance, setWithdrawAmount]);
+    if (amountDeposited) {
+      setWithdrawAmount(amountDeposited);
+    }
+  }, [amountDeposited, setWithdrawAmount]);
 
   // handler for withdraw button
   const { mutate: withdraw } = useWithdrawFromLockingVault(signer);
@@ -184,7 +205,10 @@ function WithdrawSection(props: WithdrawSectionProps) {
 
         <div className={tw("space-y-4")}>
           <div className={tw("flex", "space-x-4", "w-full")}>
-            <Button onClick={onSetMax}>
+            <Button
+              disabled={!hasAmountDeposited || !account}
+              onClick={onSetMax}
+            >
               <span className={tw("w-full")}>{t`Max`}</span>
             </Button>
             <NumericInput
@@ -198,7 +222,11 @@ function WithdrawSection(props: WithdrawSectionProps) {
               onChange={onSetWithdrawAmount}
             />
           </div>
-          <Button className={tw("w-full")} onClick={onWithdraw}>
+          <Button
+            disabled={!account}
+            className={tw("w-full")}
+            onClick={onWithdraw}
+          >
             <span className={tw("w-full")}>{t`Withdraw`}</span>
           </Button>
         </div>
