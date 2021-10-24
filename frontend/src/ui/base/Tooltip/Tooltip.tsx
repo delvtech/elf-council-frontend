@@ -1,33 +1,49 @@
-import { ReactElement, ReactNode } from "react";
+import { CSSProperties, ReactElement, ReactNode } from "react";
+
+import classNames from "classnames";
 import tw from "src/elf-tailwindcss-classnames";
 
+const bottomFull: CSSProperties = {
+  bottom: "calc(100% + 4px)",
+};
 interface TooltipProps {
+  className?: string;
+  tooltipClassName?: string;
   text: ReactNode;
   enabled?: boolean;
+  show?: boolean;
   position?: "top" | "botton";
   children: ReactNode;
 }
 export function Tooltip(props: TooltipProps): ReactElement {
-  const { text, enabled = false, position = "top", children } = props;
+  const {
+    className,
+    tooltipClassName,
+    text,
+    enabled = false,
+    show = false,
+    position = "top",
+    children,
+  } = props;
   return (
-    <div className={tw("relative", "py-3", "sm:max-w-xl", "sm:mx-auto")}>
-      <div
-        className={tw(
+    <div
+      className={classNames(
+        tw(
           "group",
           "cursor-pointer",
           "relative",
           "inline-block",
-          "border-b",
-          "border-gray-400",
-          "w-28",
           "text-center"
-        )}
-      >
-        {children}
-        <div
-          className={tw(
+        ),
+        className
+      )}
+    >
+      {children}
+      <div
+        style={bottomFull}
+        className={classNames(
+          tw(
             "opacity-0",
-            "w-28",
             "bg-black",
             "text-white",
             "text-center",
@@ -36,35 +52,34 @@ export function Tooltip(props: TooltipProps): ReactElement {
             "py-2",
             "absolute",
             "z-10",
-            "bottom-full",
-            "-left-1/2",
-            "ml-14",
+            "left-1/2",
             "px-3",
             "pointer-events-none",
-            { "group-hover:opacity-100": enabled }
+            { "group-hover:opacity-100": enabled, "opacity-100": show }
+          ),
+          tooltipClassName
+        )}
+      >
+        {text}
+        <svg
+          className={tw(
+            "absolute",
+            "text-black",
+            "h-2",
+            "w-full",
+            "left-0",
+            "top-full"
           )}
+          x="0px"
+          y="4px"
+          viewBox="0 0 255 255"
+          xmlSpace="preserve"
         >
-          {text}
-          <svg
-            className={tw(
-              "absolute",
-              "text-black",
-              "h-2",
-              "w-full",
-              "left-0",
-              "top-full"
-            )}
-            x="0px"
-            y="4px"
-            viewBox="0 0 255 255"
-            xmlSpace="preserve"
-          >
-            <polygon
-              className={tw("fill-current")}
-              points="0,0 127.5,127.5 255,0"
-            />
-          </svg>
-        </div>
+          <polygon
+            className={tw("fill-current")}
+            points="0,0 127.5,127.5 255,0"
+          />
+        </svg>
       </div>
     </div>
   );

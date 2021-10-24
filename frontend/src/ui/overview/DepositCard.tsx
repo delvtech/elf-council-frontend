@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ReactElement, useCallback } from "react";
 
 import { formatEther, parseEther } from "@ethersproject/units";
+import { Tooltip } from "@material-ui/core";
 import { ethers, Signer } from "ethers";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
@@ -19,7 +20,6 @@ import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { t } from "ttag";
-import { Tooltip } from "src/ui/base/Tooltip/Tooltip";
 
 interface DepositCardProps {
   account: string | undefined | null;
@@ -66,6 +66,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
 
+  const hasDepositAmount = !!Number(depositAmount);
   const hasAllowance =
     allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
   const onSetDepositAmount = useCallback(
@@ -140,15 +141,12 @@ function DepositSection(props: DepositSectionProps): ReactElement {
               {hasAllowance ? t`Approved` : t`Allow`}
             </span>
           </Button>
-          <Tooltip enabled={!account} text={t`Connect wallet`}>
-            <Button
-              disabled={!hasAllowance || !account}
-              className={tw("w-full")}
-              onClick={onDeposit}
-            >
-              <span className={tw("w-full")}>{t`Deposit`}</span>
-            </Button>
-          </Tooltip>
+          <DepositButton
+            hasAllowance={hasAllowance}
+            account={account}
+            hasDepositAmount={hasDepositAmount}
+            onDeposit={onDeposit}
+          />
         </div>
       </div>
     </div>
@@ -159,6 +157,47 @@ interface WithdrawSectionProps {
   account: string | undefined | null;
   signer: Signer | undefined;
 }
+
+interface DepositButtonProps {
+  hasAllowance: boolean;
+  account: string | null | undefined;
+  hasDepositAmount: boolean;
+  onDeposit: () => void;
+}
+function DepositButton(props: DepositButtonProps): ReactElement {
+  const { hasAllowance, account, hasDepositAmount, onDeposit } = props;
+  let tooltipTitle = "";
+  if (!account) {
+    tooltipTitle = t`Connect wallet`;
+  }
+
+  if (!hasAllowance) {
+    tooltipTitle = t`Need allowance`;
+  }
+  if (!hasDepositAmount) {
+    tooltipTitle = t`Enter a deposit amount`;
+  }
+
+  return (
+    <Tooltip
+      id="deposit-button-tooltp"
+      arrow
+      title={tooltipTitle}
+      placement="top"
+    >
+      <div>
+        <Button
+          disabled={!hasAllowance || !account || !hasDepositAmount}
+          className={tw("w-full")}
+          onClick={onDeposit}
+        >
+          <span className={tw("w-full")}>{t`Deposit`}</span>
+        </Button>
+      </div>
+    </Tooltip>
+  );
+}
+
 function WithdrawSection(props: WithdrawSectionProps) {
   const { account, signer } = props;
   const amountDeposited = useDeposited(account);
