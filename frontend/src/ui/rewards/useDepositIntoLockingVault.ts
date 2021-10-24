@@ -6,7 +6,8 @@ import { lockingVaultContract } from "src/elf/contracts";
 import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
 
 export function useDepositIntoLockingVault(
-  signer: Signer | undefined
+  signer: Signer | undefined,
+  onSuccess?: () => void
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,
@@ -15,7 +16,8 @@ export function useDepositIntoLockingVault(
   const deposit = useSmartContractTransaction(
     lockingVaultContract,
     "deposit",
-    signer
+    signer,
+    { onTransactionMined: onSuccess }
   );
   return deposit;
 }

@@ -21,14 +21,21 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const { account, signer } = props;
   const amountDeposited = useDeposited(account) || "0";
 
-  const hasAmountDeposited = !!Number(amountDeposited);
-
   const title = t`Unstake`;
   const description = t`Withdraw your ELFI tokens to your wallet.`;
 
-  // handler for numeric input
   const { value: withdrawAmount, setNumericValue: setWithdrawAmount } =
     useNumericInputValue();
+
+  const hasAmountDeposited = !!Number(amountDeposited);
+  const hasEnoughDeposited = !FixedNumber.from(amountDeposited)
+    .subUnsafe(FixedNumber.from(withdrawAmount || "0"))
+    .isNegative();
+
+  // handlers for numeric input
+  const clearWithdrawInput = useCallback(() => {
+    setWithdrawAmount("");
+  }, [setWithdrawAmount]);
 
   const onSetWithdrawAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,10 +45,6 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     [setWithdrawAmount]
   );
 
-  const hasEnoughDeposited = !FixedNumber.from(amountDeposited)
-    .subUnsafe(FixedNumber.from(withdrawAmount || "0"))
-    .isNegative();
-
   // handler for max button
   const onSetMax = useCallback(() => {
     if (amountDeposited) {
@@ -50,7 +53,11 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   }, [amountDeposited, setWithdrawAmount]);
 
   // handler for withdraw button
-  const { mutate: withdraw } = useWithdrawFromLockingVault(signer);
+  const withdrawFromLockingVault = useWithdrawFromLockingVault(
+    signer,
+    clearWithdrawInput
+  );
+  const { mutate: withdraw } = withdrawFromLockingVault;
   const onWithdraw = useCallback(() => {
     if (!account) {
       return;
