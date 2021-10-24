@@ -70,9 +70,9 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               <span className={tw("w-full")}>{t`Max`}</span>
             </Button>
             <NumericInput
-              screenReaderLabel={t`Amount to deposit`}
-              id={"deposit-amount"}
-              name={t`Deposit amount`}
+              screenReaderLabel={t`Amount to withdraw`}
+              id={"withdraw-amount"}
+              name={t`Withdraw amount`}
               placeholder={t`Insert amount to withdraw`}
               className={tw("h-12", "text-center", "flex-grow")}
               inputClassName={tw("h-12", "text-center", "flex-grow")}
