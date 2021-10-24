@@ -12,11 +12,13 @@ interface DepositInputProps {
 
 export function DepositInput(props: DepositInputProps): ReactElement {
   const { depositAmount, balance, onSetDepositAmount } = props;
+  const hasBalance = Number(balance);
   const hasEnoughBalance = !FixedNumber.from(balance || "0")
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
   return (
     <NumericInput
+      disabled={!hasBalance}
       error={!hasEnoughBalance}
       screenReaderLabel={t`Amount to deposit`}
       id={"deposit-amount"}

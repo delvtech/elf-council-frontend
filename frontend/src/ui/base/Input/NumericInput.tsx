@@ -12,6 +12,7 @@ interface NumericInputProps {
   placeholder?: string;
   value?: string | undefined;
   error?: boolean;
+  disabled?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -24,6 +25,7 @@ export default function NumericInput({
   placeholder,
   value,
   error = false,
+  disabled = false,
   onChange,
 }: NumericInputProps): ReactElement {
   return (
@@ -32,6 +34,7 @@ export default function NumericInput({
         {screenReaderLabel}
       </label>
       <input
+        disabled={disabled}
         type="text"
         name={name}
         id={id}
@@ -50,6 +53,8 @@ export default function NumericInput({
               "focus:ring-red-500": error,
               "focus:border-red-500": error,
               "border-red-500": error,
+              "pointer-events-none": disabled,
+              "opacity-50": disabled,
             }
           ),
           inputClassName

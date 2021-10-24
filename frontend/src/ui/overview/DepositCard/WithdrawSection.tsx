@@ -70,6 +70,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               <span className={tw("w-full")}>{t`Max`}</span>
             </Button>
             <NumericInput
+              disabled={!hasAmountDeposited}
               screenReaderLabel={t`Amount to withdraw`}
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
