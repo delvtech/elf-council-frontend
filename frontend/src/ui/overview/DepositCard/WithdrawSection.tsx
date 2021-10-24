@@ -1,7 +1,10 @@
 import React, { ChangeEvent, ReactElement, useCallback } from "react";
-import { parseEther } from "@ethersproject/units";
+
+import { formatEther, parseEther } from "@ethersproject/units";
 import { Signer } from "ethers";
 import tw from "src/elf-tailwindcss-classnames";
+import { elementTokenContract } from "src/elf/contracts";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
 import NumericInput from "src/ui/base/Input/NumericInput";
@@ -9,6 +12,8 @@ import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { t } from "ttag";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
+import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
 
 interface WithdrawSectionProps {
   account: string | undefined | null;
@@ -17,6 +22,7 @@ interface WithdrawSectionProps {
 export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const { account, signer } = props;
   const amountDeposited = useDeposited(account);
+
   const hasAmountDeposited = !!Number(amountDeposited);
 
   const title = t`Unstake`;
@@ -64,6 +70,12 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
         </div>
 
         <div className={tw("space-y-4")}>
+          <div className={tw("flex", "flex-grow", "justify-end")}>
+            <LabeledStat
+              data={amountDeposited || "0"}
+              bottomLabel={t`Unclaimed rewards`}
+            />
+          </div>
           <div className={tw("flex", "space-x-4", "w-full")}>
             <Button
               disabled={!hasAmountDeposited || !account}

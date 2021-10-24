@@ -15,6 +15,7 @@ import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLocking
 import { t } from "ttag";
 import { DepositButton } from "./DepositButton";
 import { DepositInput } from "./DepositInput";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 
 const { elementToken, lockingVault } = addressesJson.addresses;
 
@@ -89,6 +90,9 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
         </div>
 
         <div className={tw("space-y-4")}>
+          <div className={tw("flex", "flex-grow", "justify-end")}>
+            <LabeledStat data={balance} bottomLabel={t`Balance in wallet`} />
+          </div>
           <div className={tw("flex", "space-x-4", "w-full")}>
             <Button
               disabled={!hasBalanceToDeposit || !account}
