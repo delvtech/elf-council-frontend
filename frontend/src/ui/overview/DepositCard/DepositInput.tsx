@@ -24,8 +24,8 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       id={"deposit-amount"}
       name={t`Deposit amount`}
       placeholder={t`Insert amount to deposit`}
-      className={tw("h-12", "text-center", "flex-grow")}
-      inputClassName={tw("h-12", "text-center", "flex-grow")}
+      className={tw("flex-grow")}
+      inputClassName={tw("h-12", "text-center")}
       value={depositAmount}
       onChange={onSetDepositAmount}
     />

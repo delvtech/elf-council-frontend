@@ -55,7 +55,9 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     <div>
       <div className={tw("grid", "grid-cols-1", "gap-6", "sm:grid-cols-2")}>
         <div>
-          <H3 className={tw("text-blue-900", "font-semibold", "pb-2")}>
+          <H3
+            className={tw("text-brandDarkBlue-dark", "font-semibold", "pb-2")}
+          >
             {title}
           </H3>
           <p>{description}</p>
@@ -75,8 +77,8 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
               placeholder={t`Insert amount to withdraw`}
-              className={tw("h-12", "text-center", "flex-grow")}
-              inputClassName={tw("h-12", "text-center", "flex-grow")}
+              className={tw("flex-grow")}
+              inputClassName={tw("h-12", "text-center")}
               value={withdrawAmount}
               onChange={onSetWithdrawAmount}
             />

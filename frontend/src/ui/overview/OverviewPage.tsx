@@ -35,12 +35,8 @@ export function OverviewPage(): ReactElement {
         <PortfolioCard />
         <VotingCard />
       </div>
-      <div className={tw("flex", "space-x-6")}>
-        <DepositCard account={account} signer={signer} />
-      </div>
-      <div className={tw("flex", "space-x-6")}>
-        <RewardsCard account={account} signer={signer} />
-      </div>
+      <DepositCard account={account} signer={signer} />
+      <RewardsCard account={account} signer={signer} />
     </div>
   );
 }

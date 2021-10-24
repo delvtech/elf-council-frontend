@@ -4,7 +4,7 @@ import { ethers, Signer } from "ethers";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
-import { useTokenAllowance } from "src/elf/token/useTokenAlloance";
+import { useTokenAllowance } from "src/elf/token/useTokenAllowance";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -16,13 +16,14 @@ import { t } from "ttag";
 import { DepositButton } from "./DepositButton";
 import { DepositInput } from "./DepositInput";
 
+const { elementToken, lockingVault } = addressesJson.addresses;
+
 interface DepositSectionProps {
   account: string | undefined | null;
   signer: Signer | undefined;
 }
 export function DepositSection(props: DepositSectionProps): ReactElement {
   const { account, signer } = props;
-  const { elementToken, lockingVault } = addressesJson.addresses;
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, account);
   const { data: allowanceBN } = useTokenAllowance(
     elementTokenContract,
@@ -34,7 +35,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const hasBalanceToDeposit = !!Number(balance);
 
   const title = t`Stake`;
-  const description = t`Deposit your ELFI tokens into the governanace system.`;
+  const description = t`Deposit your ELFI tokens into the governance system.`;
 
   // handler for numeric input
   const { value: depositAmount, setNumericValue: setDepositAmount } =
@@ -73,13 +74,15 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     }
 
     allow([lockingVault, ethers.constants.MaxUint256]);
-  }, [account, allow, lockingVault]);
+  }, [account, allow]);
 
   return (
     <div>
       <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
         <div>
-          <H3 className={tw("text-blue-900", "font-semibold", "pb-2")}>
+          <H3
+            className={tw("text-brandDarkBlue-dark", "font-semibold", "pb-2")}
+          >
             {title}
           </H3>
           <p>{description}</p>
