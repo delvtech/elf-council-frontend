@@ -53,7 +53,11 @@ export function ConnectWalletButtons({
         className={tw("text-brandDarkBlue-dark", "text-center", "mb-8")}
       >{t`Select Wallet`}</H3>
       <div className={tw("flex", "gap-6", "justify-center")}>
-        <Button variant={ButtonVariant.MINIMAL} onClick={connectToMetaMask}>
+        <Button
+          className={tw("h-auto")}
+          variant={ButtonVariant.MINIMAL}
+          onClick={connectToMetaMask}
+        >
           <div
             className={tw(
               "flex",
@@ -75,6 +79,7 @@ export function ConnectWalletButtons({
           </div>
         </Button>
         <Button
+          className={tw("h-auto")}
           variant={ButtonVariant.MINIMAL}
           onClick={connectToWalletConnect}
         >

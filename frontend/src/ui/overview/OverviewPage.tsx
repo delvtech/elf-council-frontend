@@ -10,6 +10,7 @@ import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { SummaryCards } from "./SummaryCards";
+import DepositCard from "src/ui/overview/DepositCard/DepositCard";
 
 export function OverviewPage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -34,9 +35,8 @@ export function OverviewPage(): ReactElement {
         <PortfolioCard />
         <VotingCard />
       </div>
-      <div className={tw("flex", "space-x-6")}>
-        <RewardsCard account={account} signer={signer} />
-      </div>
+      <DepositCard account={account} signer={signer} />
+      <RewardsCard account={account} signer={signer} />
     </div>
   );
 }
