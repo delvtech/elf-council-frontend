@@ -1,34 +1,102 @@
+import React, { Fragment, ReactElement, useCallback, useState } from "react";
+
 import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
 import StarIcon from "@material-ui/icons/Star";
+import MenuIcon from "@material-ui/icons/Menu";
+import CloseIcon from "@material-ui/icons/Close";
 import Link from "next/link";
-import React, { ReactElement } from "react";
+import tw from "src/elf-tailwindcss-classnames";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ElementLogo } from "src/ui/base/ElementLogo";
-import tw from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 
 export default function Sidebar(): ReactElement {
-  return (
-    <div className={tw("w-80", "h-screen")}>
-      <div className={tw("border-b", "py-3", "mt-1", "flex", "justify-around")}>
-        <ElementLogo />
-      </div>
-      <div className={tw("space-y-8", "mt-12")}>
-        <SidebarLink link="/" label={t`Overview`} />
-        <SidebarLink link="/proposals" label={t`Proposals`} />
-        <SidebarLink link="/delegates" label={t`Delegate`} />
-        <SidebarLinkExternal link="https://forum.element.fi" label={t`Forum`} />
-        <SidebarLink link="/resources" label={t`Resources`} />
+  const [isOpen, setIsOpen] = useState(false);
+  const onOpen = useCallback(() => {
+    setIsOpen(true);
+  }, []);
 
-        <div className={tw("text-center", "pt-8")}>
-          <LinkButton round variant={ButtonVariant.GRADIENT} link="/rewards">
-            {t`Rewards`}
-            <StarIcon className={tw("ml-2")} />
-          </LinkButton>
+  const onClose = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  return (
+    <Fragment>
+      <button
+        className={tw(
+          "absolute",
+          "md:hidden",
+          "h-16",
+          "w-16",
+          "top-0",
+          "left-0",
+          "cursor-pointer",
+          "p-0",
+          "hover:shadow"
+        )}
+        onClick={onOpen}
+      >
+        <MenuIcon className={tw("h-16", "w-16")} />
+      </button>
+      <div
+        className={tw(
+          "w-full",
+          "ease-in-out",
+          "transition-all",
+          "duration-300",
+          "z-30",
+          "h-screen",
+          "fixed",
+          "top-0",
+          "left-0",
+          "md:w-80",
+          "md:static",
+          "bg-white",
+          "transform-gpu",
+          "md:translate-x-0",
+          { "translate-x-0": isOpen, "-translate-x-full": !isOpen }
+        )}
+      >
+        <div
+          className={tw("border-b", "py-3", "mt-1", "flex", "justify-around")}
+        >
+          <ElementLogo />
+          <button
+            onClick={onClose}
+            className={tw(
+              "absolute",
+              "h-16",
+              "w-16",
+              "top-0",
+              "right-0",
+              "cursor-pointer",
+              "p-0",
+              "hover:shadow"
+            )}
+          >
+            <CloseIcon />
+          </button>
+        </div>
+        <div className={tw("space-y-8", "mt-12")}>
+          <SidebarLink link="/" label={t`Overview`} />
+          <SidebarLink link="/proposals" label={t`Proposals`} />
+          <SidebarLink link="/delegates" label={t`Delegate`} />
+          <SidebarLinkExternal
+            link="https://forum.element.fi"
+            label={t`Forum`}
+          />
+          <SidebarLink link="/resources" label={t`Resources`} />
+
+          <div className={tw("text-center", "pt-8")}>
+            <LinkButton round variant={ButtonVariant.GRADIENT} link="/rewards">
+              {t`Rewards`}
+              <StarIcon className={tw("ml-2")} />
+            </LinkButton>
+          </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 }
 
