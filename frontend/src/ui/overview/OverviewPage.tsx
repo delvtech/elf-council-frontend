@@ -4,7 +4,7 @@ import { useWeb3React } from "@web3-react/core";
 import tw from "src/elf-tailwindcss-classnames";
 import H1 from "src/ui/base/H1";
 import DepositCard from "src/ui/overview/DepositCard/DepositCard";
-import PortfolioCard from "src/ui/overview/PortfolioCard";
+import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 import RewardsCard from "src/ui/overview/RewardsCard/RewardsCard";
 import VotingCard from "src/ui/overview/VotingCard";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -32,7 +32,7 @@ export function OverviewPage(): ReactElement {
           "lg:space-y-0"
         )}
       >
-        <PortfolioCard />
+        <PortfolioCard account={account} />
         <VotingCard />
       </div>
       <DepositCard account={account} signer={signer} />
