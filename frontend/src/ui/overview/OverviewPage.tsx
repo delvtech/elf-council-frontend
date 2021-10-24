@@ -10,7 +10,7 @@ import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { SummaryCards } from "./SummaryCards";
-import DepositCard from "src/ui/overview/DepositCard";
+import DepositCard from "src/ui/overview/DepositCard/DepositCard";
 
 export function OverviewPage(): ReactElement {
   const { account, library } = useWeb3React();
