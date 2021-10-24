@@ -18,6 +18,7 @@ import { t } from "ttag";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useClaimed } from "src/ui/rewards/useClaimed";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 
 interface RewardsCardProps {
   account: string | undefined | null;
@@ -111,6 +112,13 @@ function ClaimAndDelegateSection(
         </div>
 
         <div>
+          <div className={tw("flex", "justify-between")}>
+            <LabeledStat
+              data={formatWalletAddress(delegate || t`N/A`)}
+              bottomLabel={t`delegate`}
+            />
+            <LabeledStat data={unclaimed} bottomLabel={t`Unclaimed`} />
+          </div>
           {!delegate && (
             <TextInput
               screenReaderLabel={t`Insert Delegate Address`}
@@ -121,12 +129,6 @@ function ClaimAndDelegateSection(
               value={delegateAddress}
               onChange={onUpdateDelegateAddress}
             />
-          )}
-          {delegate && (
-            <div>
-              <p>{t`current delegate address:`}</p>
-              <p>{formatWalletAddress(delegate)}</p>
-            </div>
           )}
 
           <Button
