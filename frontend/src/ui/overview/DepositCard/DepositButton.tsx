@@ -10,10 +10,19 @@ interface DepositButtonProps {
   allowance: string;
   balance: string;
   depositAmount: string;
+
+  isLoading?: boolean;
   onDeposit: () => void;
 }
 export function DepositButton(props: DepositButtonProps): ReactElement {
-  const { allowance, account, balance, depositAmount, onDeposit } = props;
+  const {
+    allowance,
+    account,
+    balance,
+    depositAmount,
+    isLoading = false,
+    onDeposit,
+  } = props;
   const hasDepositAmount = !!Number(depositAmount);
   const hasAllowance = !!Number(allowance);
   const hasAnyBalance = !!Number(balance);
@@ -38,9 +47,14 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     >
       <div>
         <Button
+          loading={isLoading}
           error={!hasEnoughBalance}
           disabled={
-            !hasEnoughBalance || !hasAllowance || !account || !hasDepositAmount
+            isLoading ||
+            !hasEnoughBalance ||
+            !hasAllowance ||
+            !account ||
+            !hasDepositAmount
           }
           className={tw("w-full")}
           onClick={onDeposit}

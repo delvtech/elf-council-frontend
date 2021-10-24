@@ -3,11 +3,15 @@
 import { MouseEventHandler, ReactElement, ReactNode } from "react";
 
 import classNames from "classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
+
+import { Spinner } from "./Spinner";
 
 interface ButtonProps extends ButtonStyles {
   children: ReactNode;
   className?: string;
+  loading?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -17,6 +21,7 @@ export default function Button({
   variant,
   round,
   fill,
+  loading = false,
   children,
   error,
   className,
@@ -36,7 +41,13 @@ export default function Button({
       type="button"
       className={classNames(buttonClassName, className)}
     >
-      {children}
+      {loading ? (
+        <div className={tw("w-full", "justify-center")}>
+          <Spinner />
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 }

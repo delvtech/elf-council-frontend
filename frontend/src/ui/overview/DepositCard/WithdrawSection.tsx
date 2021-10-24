@@ -57,7 +57,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     signer,
     clearWithdrawInput
   );
-  const { mutate: withdraw } = withdrawFromLockingVault;
+  const { mutate: withdraw, isLoading } = withdrawFromLockingVault;
   const onWithdraw = useCallback(() => {
     if (!account) {
       return;
@@ -103,6 +103,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
             />
           </div>
           <WithdrawButton
+            isLoading={isLoading}
             account={account}
             amountDeposited={amountDeposited}
             withdrawAmount={withdrawAmount}

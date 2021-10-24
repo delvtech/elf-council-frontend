@@ -80,7 +80,8 @@ function ClaimAndDelegateSection(
   );
 
   // handler for button
-  const { mutate: claimAndDeposit } = useClaimAndDepositRewards(signer);
+  const { mutate: claimAndDeposit, isLoading } =
+    useClaimAndDepositRewards(signer);
   const onClaimAndDeposit = useCallback(() => {
     if (!account || !merkleInfo) {
       return;
@@ -132,7 +133,8 @@ function ClaimAndDelegateSection(
           )}
 
           <Button
-            disabled={!account || !hasUnclaimedRewards}
+            loading={isLoading}
+            disabled={isLoading || !account || !hasUnclaimedRewards}
             className={tw("w-full", "text-center")}
             onClick={onClaimAndDeposit}
           >
@@ -151,7 +153,7 @@ interface ClaimSectionProps {
 function ClaimSection(props: ClaimSectionProps) {
   const { account, signer } = props;
 
-  const { mutate: claim } = useClaimRewards(signer);
+  const { mutate: claim, isLoading } = useClaimRewards(signer);
   const { data: merkleInfo } = useMerkleInfo(account);
   const unclaimed = useUnclaimed(account, merkleInfo);
   const hasUnclaimedRewards = !!Number(unclaimed);
@@ -164,7 +166,7 @@ function ClaimSection(props: ClaimSectionProps) {
     const { proof } = merkleInfo;
     const valueBN = parseEther(value);
 
-    claim([valueBN, valueBN, proof, account]);
+    claim([ethers.constants.WeiPerEther, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
 
   return (
@@ -181,7 +183,8 @@ function ClaimSection(props: ClaimSectionProps) {
 
         <div>
           <Button
-            disabled={!account || !hasUnclaimedRewards}
+            loading={isLoading}
+            disabled={isLoading || !account || !hasUnclaimedRewards}
             className={tw("w-full", "text-center")}
             onClick={onClaim}
           >

@@ -9,10 +9,17 @@ interface WithdrawButtonProps {
   account: string | null | undefined;
   amountDeposited: string;
   withdrawAmount: string;
+  isLoading?: boolean;
   onWithdraw: () => void;
 }
 export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
-  const { account, amountDeposited, withdrawAmount, onWithdraw } = props;
+  const {
+    account,
+    amountDeposited,
+    withdrawAmount,
+    isLoading = false,
+    onWithdraw,
+  } = props;
   const hasWithdrawAmount = !!Number(withdrawAmount);
   const hasAnyDeposited = !!Number(amountDeposited);
   const hasEnoughDeposited = !FixedNumber.from(amountDeposited || "0")
@@ -35,8 +42,11 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
     >
       <div>
         <Button
+          loading={isLoading}
           error={!hasEnoughDeposited}
-          disabled={!hasEnoughDeposited || !account || !hasWithdrawAmount}
+          disabled={
+            isLoading || !hasEnoughDeposited || !account || !hasWithdrawAmount
+          }
           className={tw("w-full")}
           onClick={onWithdraw}
         >

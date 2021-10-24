@@ -62,7 +62,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   }, [balance, setDepositAmount]);
 
   // handler for deposit button
-  const { mutate: deposit } = useDepositIntoLockingVault(
+  const { mutate: deposit, isLoading } = useDepositIntoLockingVault(
     signer,
     clearDepositAmount
   );
@@ -124,6 +124,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             </span>
           </Button>
           <DepositButton
+            isLoading={isLoading}
             balance={balance}
             allowance={allowance}
             account={account}
