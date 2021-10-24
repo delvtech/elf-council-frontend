@@ -2,7 +2,7 @@ import React, { ChangeEvent, ReactElement, useCallback } from "react";
 
 import { formatEther, parseEther } from "@ethersproject/units";
 import { Tooltip } from "@material-ui/core";
-import { ethers, Signer } from "ethers";
+import { ethers, FixedNumber, Signer } from "ethers";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
@@ -57,6 +57,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
     lockingVault
   );
   const balance = formatEther(balanceBN || 0);
+  const allowance = formatEther(allowanceBN || 0);
   const hasBalanceToDeposit = !!Number(balance);
 
   const title = t`Stake`;
@@ -66,7 +67,6 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
 
-  const hasDepositAmount = !!Number(depositAmount);
   const hasAllowance =
     allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
   const onSetDepositAmount = useCallback(
@@ -120,15 +120,10 @@ function DepositSection(props: DepositSectionProps): ReactElement {
             >
               <span className={tw("w-full")}>{t`Max`}</span>
             </Button>
-            <NumericInput
-              screenReaderLabel={t`Amount to deposit`}
-              id={"deposit-amount"}
-              name={t`Deposit amount`}
-              placeholder={t`Insert amount to deposit`}
-              className={tw("h-12", "text-center", "flex-grow")}
-              inputClassName={tw("h-12", "text-center", "flex-grow")}
-              value={depositAmount}
-              onChange={onSetDepositAmount}
+            <DepsoitInput
+              balance={balance}
+              depositAmount={depositAmount}
+              onSetDepositAmount={onSetDepositAmount}
             />
           </div>
           <Button
@@ -142,9 +137,10 @@ function DepositSection(props: DepositSectionProps): ReactElement {
             </span>
           </Button>
           <DepositButton
-            hasAllowance={hasAllowance}
+            balance={balance}
+            allowance={allowance}
             account={account}
-            hasDepositAmount={hasDepositAmount}
+            depositAmount={depositAmount}
             onDeposit={onDeposit}
           />
         </div>
@@ -153,19 +149,46 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   );
 }
 
-interface WithdrawSectionProps {
-  account: string | undefined | null;
-  signer: Signer | undefined;
+interface DepositInputProps {
+  depositAmount: string;
+  balance: string;
+  onSetDepositAmount: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+function DepsoitInput(props: DepositInputProps) {
+  const { depositAmount, balance, onSetDepositAmount } = props;
+  const hasEnoughBalance = !FixedNumber.from(balance || "0")
+    .subUnsafe(FixedNumber.from(depositAmount || "0"))
+    .isNegative();
+  return (
+    <NumericInput
+      error={!hasEnoughBalance}
+      screenReaderLabel={t`Amount to deposit`}
+      id={"deposit-amount"}
+      name={t`Deposit amount`}
+      placeholder={t`Insert amount to deposit`}
+      className={tw("h-12", "text-center", "flex-grow")}
+      inputClassName={tw("h-12", "text-center", "flex-grow")}
+      value={depositAmount}
+      onChange={onSetDepositAmount}
+    />
+  );
+}
 interface DepositButtonProps {
-  hasAllowance: boolean;
   account: string | null | undefined;
-  hasDepositAmount: boolean;
+  allowance: string;
+  balance: string;
+  depositAmount: string;
   onDeposit: () => void;
 }
 function DepositButton(props: DepositButtonProps): ReactElement {
-  const { hasAllowance, account, hasDepositAmount, onDeposit } = props;
+  const { allowance, account, balance, depositAmount, onDeposit } = props;
+  const hasDepositAmount = !!Number(depositAmount);
+  const hasAllowance = !!Number(allowance);
+  const hasEnoughBalance = !FixedNumber.from(balance || "0")
+    .subUnsafe(FixedNumber.from(depositAmount || "0"))
+    .isNegative();
+
   let tooltipTitle = "";
   if (!account) {
     tooltipTitle = t`Connect wallet`;
@@ -174,8 +197,13 @@ function DepositButton(props: DepositButtonProps): ReactElement {
   if (!hasAllowance) {
     tooltipTitle = t`Need allowance`;
   }
+
   if (!hasDepositAmount) {
     tooltipTitle = t`Enter a deposit amount`;
+  }
+
+  if (!hasEnoughBalance) {
+    tooltipTitle = t`Not enough tokens`;
   }
 
   return (
@@ -187,7 +215,10 @@ function DepositButton(props: DepositButtonProps): ReactElement {
     >
       <div>
         <Button
-          disabled={!hasAllowance || !account || !hasDepositAmount}
+          error={!hasEnoughBalance}
+          disabled={
+            !hasEnoughBalance || !hasAllowance || !account || !hasDepositAmount
+          }
           className={tw("w-full")}
           onClick={onDeposit}
         >
@@ -196,6 +227,11 @@ function DepositButton(props: DepositButtonProps): ReactElement {
       </div>
     </Tooltip>
   );
+}
+
+interface WithdrawSectionProps {
+  account: string | undefined | null;
+  signer: Signer | undefined;
 }
 
 function WithdrawSection(props: WithdrawSectionProps) {

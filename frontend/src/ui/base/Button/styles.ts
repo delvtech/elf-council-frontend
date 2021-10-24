@@ -7,6 +7,7 @@ export interface ButtonStyles {
   round?: boolean;
   fill?: boolean;
   disabled?: boolean;
+  error?: boolean;
 }
 
 export enum ButtonVariant {
@@ -24,6 +25,7 @@ export function getButtonClass({
   fill = false,
   round = false,
   disabled = false,
+  error = false,
 }: ButtonStyles): string {
   const defaultStyling = tw(
     "h-12",
@@ -45,11 +47,12 @@ export function getButtonClass({
     { "opacity-50": disabled }
   );
 
+  // TODO: add error styling to other variants
   const primaryButtonVariant = tw(
     defaultStyling,
-    "bg-brandDarkBlue",
     "text-white",
-    "hover:bg-brandDarkBlue-dark"
+    { "bg-brandDarkBlue": !error, "hover:bg-brandDarkBlue-dark": !error },
+    { "bg-red-500": error, "hover:bg-red-700": error }
   );
 
   if (!variant) {

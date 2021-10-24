@@ -18,9 +18,16 @@ export default function Button({
   round,
   fill,
   children,
+  error,
   className,
 }: ButtonProps): ReactElement {
-  const buttonClassName = getButtonClass({ variant, round, fill, disabled });
+  const buttonClassName = getButtonClass({
+    variant,
+    round,
+    fill,
+    disabled,
+    error,
+  });
 
   return (
     <button

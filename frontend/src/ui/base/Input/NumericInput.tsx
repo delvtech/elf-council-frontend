@@ -11,6 +11,7 @@ interface NumericInputProps {
   name: string;
   placeholder?: string;
   value?: string | undefined;
+  error?: boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -22,6 +23,7 @@ export default function NumericInput({
   name,
   placeholder,
   value,
+  error = false,
   onChange,
 }: NumericInputProps): ReactElement {
   return (
@@ -37,13 +39,18 @@ export default function NumericInput({
           tw(
             "shadow-sm",
             "text-black",
-            "focus:ring-brandDarkBlue",
-            "focus:border-brandDarkBlue",
             "block",
             "w-full",
             "sm:text-sm",
             "border-gray-300",
-            "rounded-md"
+            "rounded-md",
+            {
+              "focus:ring-brandDarkBlue": !error,
+              "focus:border-brandDarkBlue": !error,
+              "focus:ring-red-500": error,
+              "focus:border-red-500": error,
+              "border-red-500": error,
+            }
           ),
           inputClassName
         )}
