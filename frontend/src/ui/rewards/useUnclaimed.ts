@@ -1,13 +1,17 @@
-import { FixedNumber } from "@ethersproject/bignumber";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { FixedNumber } from "ethers";
+import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useClaimed } from "src/ui/rewards/useClaimed";
 
-export function useUnclaimed(address: string | undefined | null): string {
-  const { data: merkleInfo } = useMerkleInfo(address);
-  const claimed = useClaimed(address);
+export function useUnclaimed(
+  account: string | undefined | null,
+  merkleInfo: MerkleProof | undefined
+): string {
+  const claimed = useClaimed(account);
+  const { value: totalGrant = "0" } = merkleInfo?.leaf || {};
 
-  const totalGrantFN = FixedNumber.fromString(merkleInfo?.leaf?.value || "0");
-  const claimedFN = FixedNumber.fromString(claimed);
-  const unclaimed = totalGrantFN.subUnsafe(claimedFN);
-  return unclaimed.toString();
+  const unclaimed = FixedNumber.from(totalGrant)
+    .subUnsafe(FixedNumber.from(claimed))
+    .toString();
+
+  return unclaimed;
 }

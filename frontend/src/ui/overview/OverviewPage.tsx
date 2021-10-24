@@ -3,14 +3,14 @@ import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
 import tw from "src/elf-tailwindcss-classnames";
 import H1 from "src/ui/base/H1";
+import DepositCard from "src/ui/overview/DepositCard/DepositCard";
 import PortfolioCard from "src/ui/overview/PortfolioCard";
-import RewardsCard from "src/ui/overview/RewardsCard";
+import RewardsCard from "src/ui/overview/RewardsCard/RewardsCard";
 import VotingCard from "src/ui/overview/VotingCard";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { SummaryCards } from "./SummaryCards";
-import DepositCard from "src/ui/overview/DepositCard/DepositCard";
 
 export function OverviewPage(): ReactElement {
   const { account, library } = useWeb3React();
