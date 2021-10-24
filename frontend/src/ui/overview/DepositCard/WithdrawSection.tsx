@@ -1,19 +1,17 @@
 import React, { ChangeEvent, ReactElement, useCallback } from "react";
 
-import { formatEther, parseEther } from "@ethersproject/units";
-import { Signer } from "ethers";
+import { parseEther } from "@ethersproject/units";
+import { FixedNumber, Signer } from "ethers";
 import tw from "src/elf-tailwindcss-classnames";
-import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
 import NumericInput from "src/ui/base/Input/NumericInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
+import { WithdrawButton } from "src/ui/overview/DepositCard/WithdrawButton";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { t } from "ttag";
-import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
-import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
 
 interface WithdrawSectionProps {
   account: string | undefined | null;
@@ -21,7 +19,7 @@ interface WithdrawSectionProps {
 }
 export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const { account, signer } = props;
-  const amountDeposited = useDeposited(account);
+  const amountDeposited = useDeposited(account) || "0";
 
   const hasAmountDeposited = !!Number(amountDeposited);
 
@@ -39,6 +37,10 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     },
     [setWithdrawAmount]
   );
+
+  const hasEnoughDeposited = !FixedNumber.from(amountDeposited)
+    .subUnsafe(FixedNumber.from(withdrawAmount || "0"))
+    .isNegative();
 
   // handler for max button
   const onSetMax = useCallback(() => {
@@ -71,10 +73,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
 
         <div className={tw("space-y-4")}>
           <div className={tw("flex", "flex-grow", "justify-end")}>
-            <LabeledStat
-              data={amountDeposited || "0"}
-              bottomLabel={t`Unclaimed rewards`}
-            />
+            <LabeledStat data={amountDeposited} bottomLabel={t`Deposited`} />
           </div>
           <div className={tw("flex", "space-x-4", "w-full")}>
             <Button
@@ -85,6 +84,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
             </Button>
             <NumericInput
               disabled={!hasAmountDeposited}
+              error={!hasEnoughDeposited}
               screenReaderLabel={t`Amount to withdraw`}
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
@@ -95,13 +95,12 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               onChange={onSetWithdrawAmount}
             />
           </div>
-          <Button
-            disabled={!account}
-            className={tw("w-full")}
-            onClick={onWithdraw}
-          >
-            <span className={tw("w-full")}>{t`Withdraw`}</span>
-          </Button>
+          <WithdrawButton
+            account={account}
+            amountDeposited={amountDeposited}
+            withdrawAmount={withdrawAmount}
+            onWithdraw={onWithdraw}
+          />
         </div>
       </div>
     </div>
