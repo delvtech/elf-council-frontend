@@ -19,6 +19,7 @@ import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { t } from "ttag";
+import { Tooltip } from "src/ui/base/Tooltip/Tooltip";
 
 interface DepositCardProps {
   account: string | undefined | null;
@@ -139,13 +140,15 @@ function DepositSection(props: DepositSectionProps): ReactElement {
               {hasAllowance ? t`Approved` : t`Allow`}
             </span>
           </Button>
-          <Button
-            disabled={!hasAllowance || !account}
-            className={tw("w-full")}
-            onClick={onDeposit}
-          >
-            <span className={tw("w-full")}>{t`Deposit`}</span>
-          </Button>
+          <Tooltip enabled={!account} text={t`Connect wallet`}>
+            <Button
+              disabled={!hasAllowance || !account}
+              className={tw("w-full")}
+              onClick={onDeposit}
+            >
+              <span className={tw("w-full")}>{t`Deposit`}</span>
+            </Button>
+          </Tooltip>
         </div>
       </div>
     </div>
