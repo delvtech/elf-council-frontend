@@ -14,22 +14,17 @@ interface WithdrawButtonProps {
 export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
   const { account, amountDeposited, withdrawAmount, onWithdraw } = props;
   const hasWithdrawAmount = !!Number(withdrawAmount);
+  const hasAnyDeposited = !!Number(amountDeposited);
   const hasEnoughDeposited = !FixedNumber.from(amountDeposited || "0")
     .subUnsafe(FixedNumber.from(withdrawAmount || "0"))
     .isNegative();
 
-  let tooltipTitle = "";
-  if (!account) {
-    tooltipTitle = t`Connect wallet`;
-  }
-
-  if (!hasWithdrawAmount) {
-    tooltipTitle = t`Enter withdrawal amount`;
-  }
-
-  if (!hasEnoughDeposited) {
-    tooltipTitle = t`Not enough tokens`;
-  }
+  const tooltipTitle = getTooltipTitle(
+    account,
+    hasAnyDeposited,
+    hasWithdrawAmount,
+    hasEnoughDeposited
+  );
 
   return (
     <Tooltip
@@ -50,4 +45,27 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
       </div>
     </Tooltip>
   );
+}
+function getTooltipTitle(
+  account: string | null | undefined,
+  hasAnyDeposited: boolean,
+  hasWithdrawAmount: boolean,
+  hasEnoughDeposited: boolean
+): string {
+  if (!account) {
+    return t`Connect wallet`;
+  }
+
+  if (!hasAnyDeposited) {
+    return t`No tokens to withdraw`;
+  }
+
+  if (!hasWithdrawAmount) {
+    return t`Enter withdrawal amount`;
+  }
+
+  if (!hasEnoughDeposited) {
+    return t`Not enough tokens`;
+  }
+  return "";
 }
