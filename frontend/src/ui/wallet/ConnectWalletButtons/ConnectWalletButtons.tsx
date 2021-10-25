@@ -8,7 +8,7 @@ import {
   injectedConnector,
 } from "src/elf/wallets/connectors";
 import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ButtonSize, ButtonVariant } from "src/ui/base/Button/styles";
 import H3 from "src/ui/base/H3";
 import { t } from "ttag";
 
@@ -79,7 +79,7 @@ export function ConnectWalletButtons({
           </div>
         </Button>
         <Button
-          className={tw("h-auto")}
+          size={ButtonSize.AUTO}
           variant={ButtonVariant.MINIMAL}
           onClick={connectToWalletConnect}
         >

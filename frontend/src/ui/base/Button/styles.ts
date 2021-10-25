@@ -1,9 +1,25 @@
 import { brandedBlueGradientBackgroundClassName } from "src/ui/base/backgroundGradient";
 import { assertNever } from "src/base/assertNever";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { THeight } from "src/elf-tailwindcss-classnames";
+
+export enum ButtonSize {
+  SMALL = "SMALL",
+  MEDIUM = "MEDIUM",
+  LARGE = "LARGE",
+  AUTO = "AUTO",
+}
+
+// TODO: include padding?
+const buttonSizes: Record<ButtonSize, THeight> = {
+  [ButtonSize.SMALL]: "h-8",
+  [ButtonSize.MEDIUM]: "h-12",
+  [ButtonSize.LARGE]: "h-16",
+  [ButtonSize.AUTO]: "h-auto",
+};
 
 export interface ButtonStyles {
   variant?: ButtonVariant;
+  size?: ButtonSize;
   round?: boolean;
   fill?: boolean;
   disabled?: boolean;
@@ -22,13 +38,15 @@ export enum ButtonVariant {
 
 export function getButtonClass({
   variant = ButtonVariant.PRIMARY,
+  size = ButtonSize.MEDIUM,
   fill = false,
   round = false,
   disabled = false,
   error = false,
 }: ButtonStyles): string {
+  const buttonSize = buttonSizes[size];
   const defaultStyling = tw(
-    "h-12",
+    buttonSize,
     "inline-flex",
     "items-center",
     "px-4",
