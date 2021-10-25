@@ -5,6 +5,7 @@ import tw from "src/elf-tailwindcss-classnames";
 import Card from "src/ui/base/Card/Card";
 import H3 from "src/ui/base/H3";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
+import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPower";
 import { t } from "ttag";
@@ -14,10 +15,11 @@ interface VotingCardProps {
 }
 function VotingCard(props: VotingCardProps): ReactElement {
   const { account } = props;
-  const walletBalance = "100";
   const proposalwithNearestDeadline = getNextProposal();
   const { data: currentBlock = 0 } = useLatestBlockNumber();
+  const delegate = useDelegate(account);
   const votingPower = useVotingPowerForAccount(account);
+  const delegateVotingPower = useVotingPowerForAccount(delegate);
 
   const blocksUntilNextVoteEnds =
     proposalwithNearestDeadline.expiration - currentBlock;
@@ -34,7 +36,10 @@ function VotingCard(props: VotingCardProps): ReactElement {
       </div>
       <p className={tw("text-lg", "text-blue-500", "font-semibold")}></p>
       <div className={tw("flex")}>
-        <LabeledStat data={walletBalance} bottomLabel={t`Delegate powers`} />
+        <LabeledStat
+          data={delegateVotingPower}
+          bottomLabel={t`Delegate powers`}
+        />
         <LabeledStat data={"YES"} bottomLabel={t`Current voting status`} />
       </div>
     </Card>

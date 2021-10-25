@@ -1,5 +1,5 @@
 import { formatEther } from "@ethersproject/units";
-import { BytesLike, ethers, FixedNumber } from "ethers";
+import { ethers, FixedNumber } from "ethers";
 import { lockingVaultContract, rewardsContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
