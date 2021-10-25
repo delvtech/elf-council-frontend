@@ -34,7 +34,7 @@ export function OverviewPage(): ReactElement {
         )}
       >
         <PortfolioCard account={account} />
-        <VotingCard />
+        <VotingCard account={account} />
       </div>
       <DepositCard account={account} signer={signer} />
       <RewardsCard account={account} signer={signer} />

@@ -6,12 +6,18 @@ import Card from "src/ui/base/Card/Card";
 import H3 from "src/ui/base/H3";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPower";
 import { t } from "ttag";
 
-function VotingCard(): ReactElement {
+interface VotingCardProps {
+  account: string | undefined | null;
+}
+function VotingCard(props: VotingCardProps): ReactElement {
+  const { account } = props;
   const walletBalance = "100";
   const proposalwithNearestDeadline = getNextProposal();
   const { data: currentBlock = 0 } = useLatestBlockNumber();
+  const votingPower = useVotingPowerForAccount(account);
 
   const blocksUntilNextVoteEnds =
     proposalwithNearestDeadline.expiration - currentBlock;
@@ -20,7 +26,7 @@ function VotingCard(): ReactElement {
     <Card>
       <H3 className={tw("text-blue-900", "font-semibold")}>{t`Voting`}</H3>
       <div className={tw("flex")}>
-        <LabeledStat data={walletBalance} bottomLabel={t`Voting Power`} />
+        <LabeledStat data={votingPower} bottomLabel={t`Voting Power`} />
         <LabeledStat
           data={String(blocksUntilNextVoteEnds)}
           bottomLabel={t`Next vote ends`}
