@@ -11,9 +11,10 @@ import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { SummaryCards } from "./SummaryCards";
+import { Web3Provider } from "@ethersproject/providers";
 
 export function OverviewPage(): ReactElement {
-  const { account, library } = useWeb3React();
+  const { account, library } = useWeb3React<Web3Provider>();
   const signer = useSigner(account, library);
   return (
     <div className={tw("h-full", "space-y-6")}>
