@@ -5,6 +5,24 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import tw from "src/elf-tailwindcss-classnames";
 
+const headerClassName = tw(
+  "px-6",
+  "py-3",
+  "text-left",
+  "text-xs",
+  "font-medium",
+  "text-gray-500",
+  "uppercase",
+  "tracking-wider"
+);
+const cellClassName = tw(
+  "px-6",
+  "py-4",
+  "whitespace-nowrap",
+  "text-sm",
+  "font-medium",
+  "text-gray-900"
+);
 export default function FeaturedDelegatesTable(): ReactElement {
   return (
     <div className={tw("flex", "flex-col")}>
@@ -23,79 +41,30 @@ export default function FeaturedDelegatesTable(): ReactElement {
             <table className={tw("min-w-full", "divide-y", "divide-gray-200")}>
               <thead>
                 <tr>
-                  <th
-                    scope="col"
-                    className={tw(
-                      "px-6",
-                      "py-3",
-                      "text-left",
-                      "text-xs",
-                      "font-medium",
-                      "text-gray-500",
-                      "uppercase",
-                      "tracking-wider"
-                    )}
-                  >
+                  <th scope="col" className={headerClassName}>
                     #
                   </th>
-                  <th
-                    scope="col"
-                    className={tw(
-                      "px-6",
-                      "py-3",
-                      "text-left",
-                      "text-xs",
-                      "font-medium",
-                      "text-gray-500",
-                      "uppercase",
-                      "tracking-wider"
-                    )}
-                  >
+                  <th scope="col" className={headerClassName}>
                     {t`Delegate Profile`}
                   </th>
                   <th
                     scope="col"
-                    className={tw(
-                      "px-6",
-                      "py-3",
-                      "text-left",
-                      "text-xs",
-                      "font-medium",
-                      "text-gray-500",
-                      "uppercase",
-                      "tracking-wider"
-                    )}
+                    className={tw("hidden", "md:table-cell", headerClassName)}
                   >
                     {t`Votes`}
                   </th>
                   <th
                     scope="col"
                     className={tw(
-                      "px-6",
-                      "py-3",
-                      "text-left",
-                      "text-xs",
-                      "font-medium",
-                      "text-gray-500",
-                      "uppercase",
-                      "tracking-wider"
+                      "w-4",
+                      "hidden",
+                      "lg:table-cell",
+                      headerClassName
                     )}
                   >
                     {t`Proposals Voted`}
                   </th>
-                  <th
-                    scope="col"
-                    className={tw(
-                      "px-6",
-                      "py-3",
-                      "text-left",
-                      "text-xs",
-                      "font-medium",
-                      "text-gray-500",
-                      "uppercase",
-                      "tracking-wider"
-                    )}
-                  >
+                  <th scope="col" className={tw("w-48", headerClassName)}>
                     {t`Address`}
                   </th>
                 </tr>
@@ -103,61 +72,19 @@ export default function FeaturedDelegatesTable(): ReactElement {
               <tbody>
                 {delegates.map((delegate, index) => (
                   <tr key={delegate.address}>
+                    <td className={cellClassName}>{index + 1}</td>
+                    <td className={cellClassName}>{delegate.name}</td>
                     <td
-                      className={tw(
-                        "px-6",
-                        "py-4",
-                        "whitespace-nowrap",
-                        "text-sm",
-                        "font-medium",
-                        "text-gray-900"
-                      )}
-                    >
-                      {index + 1}
-                    </td>
-                    <td
-                      className={tw(
-                        "px-6",
-                        "py-4",
-                        "whitespace-nowrap",
-                        "text-sm",
-                        "font-medium",
-                        "text-gray-900"
-                      )}
-                    >
-                      {delegate.name}
-                    </td>
-                    <td
-                      className={tw(
-                        "px-6",
-                        "py-4",
-                        "whitespace-nowrap",
-                        "text-sm",
-                        "text-gray-500"
-                      )}
+                      className={tw("hidden", "md:table-cell", cellClassName)}
                     >
                       {delegate.numDelegatedVotes}
                     </td>
                     <td
-                      className={tw(
-                        "px-6",
-                        "py-4",
-                        "whitespace-nowrap",
-                        "text-sm",
-                        "text-gray-500"
-                      )}
+                      className={tw("hidden", "lg:table-cell", cellClassName)}
                     >
                       {delegate.numProposalsVoted}
                     </td>
-                    <td
-                      className={tw(
-                        "px-6",
-                        "py-4",
-                        "whitespace-nowrap",
-                        "text-sm",
-                        "text-gray-500"
-                      )}
-                    >
+                    <td className={tw("w-48", cellClassName)}>
                       <div className={tw("flex", "justify-between")}>
                         {formatWalletAddress(delegate.address)}{" "}
                         <ContentCopyIcon />
