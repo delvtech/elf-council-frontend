@@ -1,5 +1,5 @@
-import { Event } from "@ethersproject/contracts";
 import React, { ReactElement, useMemo, useState } from "react";
+
 import { formatFullDate } from "src/base/dates";
 import { proposalsJson } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
@@ -21,7 +21,6 @@ export default function ProposalsPage(): ReactElement {
   const { data: snapshotProposals } = useSnapshotProposals(
     proposalsJson.proposals.map(({ snapshotId }) => snapshotId)
   );
-  console.log("snapshotProposalResults", snapshotProposals);
 
   const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
 

@@ -3,5 +3,5 @@ export interface MerkleProof {
     address: string;
     value: string;
   };
-  proof: number[][];
+  proof: string[];
 }

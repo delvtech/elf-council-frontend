@@ -1,4 +1,5 @@
 import {
+  CoreVoting__factory,
   ERC20Permit__factory,
   LockingVault__factory,
   OptimisticRewards__factory,
@@ -20,3 +21,14 @@ export const rewardsContract = OptimisticRewards__factory.connect(
   addressesJson.addresses.optimisticRewardsVault,
   defaultProvider
 );
+
+export const coreVotingContract = CoreVoting__factory.connect(
+  addressesJson.addresses.coreVoting,
+  defaultProvider
+);
+
+// TODO: add vesting vault to testnet
+// export const vestingContract = VestingVault__factory.connect(
+//   addressesJson.addresses.vestingVault,
+//   defaultProvider
+// );
