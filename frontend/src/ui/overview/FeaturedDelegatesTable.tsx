@@ -2,6 +2,8 @@ import { ReactElement } from "react";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { t } from "ttag";
 import { delegates } from "src/elf-council-delegates/delegates";
+import { formatWalletAddress } from "src/formatWalletAddress";
+import tw from "src/elf-tailwindcss-classnames";
 
 export default function FeaturedDelegatesTable(): ReactElement {
   return (
@@ -60,7 +62,10 @@ export default function FeaturedDelegatesTable(): ReactElement {
                       {delegate.numProposalsVoted}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {delegate.address} <ContentCopyIcon />
+                      <div className={tw("flex", "justify-between")}>
+                        {formatWalletAddress(delegate.address)}{" "}
+                        <ContentCopyIcon />
+                      </div>
                     </td>
                   </tr>
                 ))}
