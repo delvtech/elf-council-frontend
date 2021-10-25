@@ -11,11 +11,11 @@ import H2 from "src/ui/base/H2";
 import H3 from "src/ui/base/H3";
 import TextInput from "src/ui/base/Input/TextInput";
 import OutlinedSection from "src/ui/base/OutlinedSection/OutlinedSection";
-import TableExample from "src/ui/base/Table/Table.example";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { jt, t } from "ttag";
+import FeaturedDelegatesTable from "src/ui/overview/FeaturedDelegatesTable";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -47,7 +47,7 @@ export default function DelegatePage(): ReactElement {
           <H2
             className={tw("mb-4", "text-brandDarkBlue-dark")}
           >{t`Delegate Leaderboard`}</H2>
-          <DelegateLeaderboardSection />
+          <FeaturedDelegatesTable />
         </div>
       </div>
     </div>
@@ -122,14 +122,6 @@ function DelegateSection({ account, signer }: DelegationSectionProps) {
           />
         )}
       </div>
-    </OutlinedSection>
-  );
-}
-
-function DelegateLeaderboardSection() {
-  return (
-    <OutlinedSection>
-      <TableExample />
     </OutlinedSection>
   );
 }

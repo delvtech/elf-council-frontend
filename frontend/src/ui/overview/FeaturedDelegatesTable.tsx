@@ -1,111 +1,98 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback, useState } from "react";
+
+import { Tooltip } from "@material-ui/core";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
+import { copyToClipboard } from "src/base/copyToClipboard";
+import { delegates } from "src/elf-council-delegates/delegates";
+import tw from "src/elf-tailwindcss-classnames";
+import { formatWalletAddress } from "src/formatWalletAddress";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import { t } from "ttag";
 
-const people = [
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 400,
-    numProposalsVoted: 1,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  // More people...
-];
-
+const headerClassName = tw(
+  "px-6",
+  "py-3",
+  "text-left",
+  "text-xs",
+  "font-medium",
+  "text-gray-500",
+  "uppercase",
+  "tracking-wider"
+);
+const cellClassName = tw(
+  "px-6",
+  "py-4",
+  "whitespace-nowrap",
+  "text-sm",
+  "font-medium",
+  "text-gray-900"
+);
 export default function FeaturedDelegatesTable(): ReactElement {
   return (
-    <div className="flex flex-col">
-      <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-          <div className="overflow-hidden border-bsm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+    <div className={tw("flex", "flex-col")}>
+      <div className={tw("-my-2", "overflow-x-auto", "sm:-mx-6", "lg:-mx-8")}>
+        <div
+          className={tw(
+            "py-2",
+            "align-middle",
+            "inline-block",
+            "min-w-full",
+            "sm:px-6",
+            "lg:px-8"
+          )}
+        >
+          <div className={tw("overflow-hidden", "border", "rounded-lg")}>
+            <table className={tw("min-w-full", "divide-y", "divide-gray-200")}>
               <thead>
                 <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th scope="col" className={headerClassName}>
                     #
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th scope="col" className={headerClassName}>
                     {t`Delegate Profile`}
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className={tw("hidden", "md:table-cell", headerClassName)}
                   >
                     {t`Votes`}
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className={tw(
+                      "w-4",
+                      "hidden",
+                      "lg:table-cell",
+                      headerClassName
+                    )}
                   >
                     {t`Proposals Voted`}
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
+                  <th scope="col" className={tw("w-48", headerClassName)}>
                     {t`Address`}
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {people.map((person, personIdx) => (
-                  <tr key={person.address}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {personIdx + 1}
+                {delegates.map((delegate, index) => (
+                  <tr key={delegate.address}>
+                    <td className={cellClassName}>{index + 1}</td>
+                    <td className={cellClassName}>{delegate.name}</td>
+                    <td
+                      className={tw("hidden", "md:table-cell", cellClassName)}
+                    >
+                      {delegate.numDelegatedVotes}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {person.name}
+                    <td
+                      className={tw("hidden", "lg:table-cell", cellClassName)}
+                    >
+                      {delegate.numProposalsVoted}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.numDelegatedVotes}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.numProposalsVoted}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.address} <ContentCopyIcon />
+                    <td className={tw("w-48", cellClassName)}>
+                      <div className={tw("flex", "justify-center")}>
+                        <CopyAddressButton address={delegate.address} />
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -115,5 +102,35 @@ export default function FeaturedDelegatesTable(): ReactElement {
         </div>
       </div>
     </div>
+  );
+}
+
+interface CopyAddressButtonProps {
+  address: string;
+}
+function CopyAddressButton(props: CopyAddressButtonProps) {
+  const { address } = props;
+  const [showTooltip, setShowTooltip] = useState(false);
+  const onCopyAddress = useCallback(() => {
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 1000);
+    copyToClipboard(address);
+  }, [address]);
+
+  return (
+    <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
+      <div>
+        <Button
+          className={tw("shadow-none")}
+          variant={ButtonVariant.MINIMAL}
+          onClick={onCopyAddress}
+        >
+          <div className={tw("mr-2", "flex", "items-center")}>
+            {formatWalletAddress(address)}
+          </div>
+          <ContentCopyIcon />
+        </Button>
+      </div>
+    </Tooltip>
   );
 }
