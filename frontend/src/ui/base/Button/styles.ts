@@ -1,6 +1,6 @@
 import { brandedBlueGradientBackgroundClassName } from "src/ui/base/backgroundGradient";
 import { assertNever } from "src/base/assertNever";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { THeight } from "src/elf-tailwindcss-classnames";
 
 export enum ButtonSize {
   SMALL = "SMALL",
@@ -10,7 +10,7 @@ export enum ButtonSize {
 }
 
 // TODO: include padding?
-const buttonSizes = {
+const buttonSizes: Record<ButtonSize, THeight> = {
   [ButtonSize.SMALL]: "h-8",
   [ButtonSize.MEDIUM]: "h-12",
   [ButtonSize.LARGE]: "h-16",
