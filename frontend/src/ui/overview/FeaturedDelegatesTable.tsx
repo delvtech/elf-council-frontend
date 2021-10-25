@@ -1,9 +1,12 @@
-import { ReactElement } from "react";
+import { ReactElement, useCallback } from "react";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { t } from "ttag";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import tw from "src/elf-tailwindcss-classnames";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import { copyToClipboard } from "../../base/browser/copyToClipboard";
 
 const headerClassName = tw(
   "px-6",
@@ -85,9 +88,8 @@ export default function FeaturedDelegatesTable(): ReactElement {
                       {delegate.numProposalsVoted}
                     </td>
                     <td className={tw("w-48", cellClassName)}>
-                      <div className={tw("flex", "justify-between")}>
-                        {formatWalletAddress(delegate.address)}{" "}
-                        <ContentCopyIcon />
+                      <div className={tw("flex", "justify-center")}>
+                        <CopyAddressButton address={delegate.address} />
                       </div>
                     </td>
                   </tr>
@@ -98,5 +100,28 @@ export default function FeaturedDelegatesTable(): ReactElement {
         </div>
       </div>
     </div>
+  );
+}
+
+interface CopyAddressButtonProps {
+  address: string;
+}
+function CopyAddressButton(props: CopyAddressButtonProps) {
+  const { address } = props;
+  const onCopyAddress = useCallback(() => {
+    copyToClipboard(address);
+  }, [address]);
+
+  return (
+    <Button
+      className={tw("shadow-none")}
+      variant={ButtonVariant.MINIMAL}
+      onClick={onCopyAddress}
+    >
+      <div className={tw("mr-2", "flex", "items-center")}>
+        {formatWalletAddress(address)}
+      </div>
+      <ContentCopyIcon />
+    </Button>
   );
 }
