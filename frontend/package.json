@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.11.2",
     "@metamask/jazzicon": "^2.0.0",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
+    "@storybook/addon-backgrounds": "^6.3.12",
     "@tailwindcss/forms": "^0.3.4",
     "@types/d3-time-format": "^4.0.0",
     "@types/lodash.isequal": "^4.5.5",

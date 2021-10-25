@@ -2,6 +2,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import Button from "./Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -16,4 +17,5 @@ export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   children: <span>Click me</span>,
+  variant: ButtonVariant.PRIMARY,
 };
