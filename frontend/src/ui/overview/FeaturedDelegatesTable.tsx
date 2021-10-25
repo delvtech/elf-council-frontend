@@ -1,13 +1,14 @@
 import { ReactElement, useCallback, useState } from "react";
+
+import { Tooltip } from "@material-ui/core";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
-import { t } from "ttag";
+import { copyToClipboard } from "src/base/copyToClipboard";
 import { delegates } from "src/elf-council-delegates/delegates";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import tw from "src/elf-tailwindcss-classnames";
+import { formatWalletAddress } from "src/formatWalletAddress";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { copyToClipboard } from "../../base/browser/copyToClipboard";
-import { Tooltip } from "@material-ui/core";
+import { t } from "ttag";
 
 const headerClassName = tw(
   "px-6",
