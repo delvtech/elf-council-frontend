@@ -7,7 +7,7 @@ import H3 from "src/ui/base/H3";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPower";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
 interface VotingCardProps {

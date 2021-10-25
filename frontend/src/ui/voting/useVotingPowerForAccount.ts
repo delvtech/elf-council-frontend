@@ -14,7 +14,7 @@ export function useVotingPowerForAccount(
 
   const blockNumber = atblockNumber || latestBlockNumber;
   const { value: totalGrant } = merkleInfo?.leaf || {};
-  const { proof } = merkleInfo || {};
+  const { proof = [] } = merkleInfo || {};
   const byteslikeProof = ethers.utils.concat(proof as string[]);
 
   const { data: lockingVotingPowerBN } = useSmartContractReadCall(
