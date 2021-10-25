@@ -19,6 +19,7 @@ export default function Button({
   onClick,
   disabled,
   variant,
+  size,
   round,
   fill,
   loading = false,
@@ -28,6 +29,7 @@ export default function Button({
 }: ButtonProps): ReactElement {
   const buttonClassName = getButtonClass({
     variant,
+    size,
     round,
     fill,
     disabled,
