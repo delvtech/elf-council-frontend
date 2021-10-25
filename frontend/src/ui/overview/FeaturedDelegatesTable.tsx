@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from "react";
+import { ReactElement, useCallback, useState } from "react";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { t } from "ttag";
 import { delegates } from "src/elf-council-delegates/delegates";
@@ -7,6 +7,7 @@ import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { copyToClipboard } from "../../base/browser/copyToClipboard";
+import { Tooltip } from "@material-ui/core";
 
 const headerClassName = tw(
   "px-6",
@@ -108,20 +109,27 @@ interface CopyAddressButtonProps {
 }
 function CopyAddressButton(props: CopyAddressButtonProps) {
   const { address } = props;
+  const [showTooltip, setShowTooltip] = useState(false);
   const onCopyAddress = useCallback(() => {
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 1000);
     copyToClipboard(address);
   }, [address]);
 
   return (
-    <Button
-      className={tw("shadow-none")}
-      variant={ButtonVariant.MINIMAL}
-      onClick={onCopyAddress}
-    >
-      <div className={tw("mr-2", "flex", "items-center")}>
-        {formatWalletAddress(address)}
+    <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
+      <div>
+        <Button
+          className={tw("shadow-none")}
+          variant={ButtonVariant.MINIMAL}
+          onClick={onCopyAddress}
+        >
+          <div className={tw("mr-2", "flex", "items-center")}>
+            {formatWalletAddress(address)}
+          </div>
+          <ContentCopyIcon />
+        </Button>
       </div>
-      <ContentCopyIcon />
-    </Button>
+    </Tooltip>
   );
 }
