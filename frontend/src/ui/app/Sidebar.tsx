@@ -26,13 +26,14 @@ export default function Sidebar(): ReactElement {
       <button
         className={tw(
           "absolute",
-          "md:hidden",
-          "h-16",
-          "w-16",
+          "h-12",
+          "w-12",
           "top-0",
           "left-0",
           "cursor-pointer",
           "p-0",
+          "md:hidden",
+          "rounded-md",
           "hover:shadow"
         )}
         onClick={onOpen}
@@ -66,16 +67,18 @@ export default function Sidebar(): ReactElement {
             onClick={onClose}
             className={tw(
               "absolute",
-              "h-16",
-              "w-16",
+              "h-12",
+              "w-12",
               "top-0",
               "right-0",
               "cursor-pointer",
               "p-0",
+              "md:hidden",
+              "rounded-md",
               "hover:shadow"
             )}
           >
-            <CloseIcon />
+            <CloseIcon className={tw("h-16", "w-16")} />
           </button>
         </div>
         <div className={tw("space-y-8", "mt-12")}>
