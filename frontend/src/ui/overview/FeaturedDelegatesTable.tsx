@@ -1,52 +1,7 @@
 import { ReactElement } from "react";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { t } from "ttag";
-
-const people = [
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 400,
-    numProposalsVoted: 1,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  {
-    name: "Charles St. Louis",
-    numDelegatedVotes: 50000,
-    numProposalsVoted: 4,
-    address: "0x0000...0000",
-  },
-  // More people...
-];
+import { delegates } from "src/elf-council-delegates/delegates";
 
 export default function FeaturedDelegatesTable(): ReactElement {
   return (
@@ -90,22 +45,22 @@ export default function FeaturedDelegatesTable(): ReactElement {
                 </tr>
               </thead>
               <tbody>
-                {people.map((person, personIdx) => (
-                  <tr key={person.address}>
+                {delegates.map((delegate, index) => (
+                  <tr key={delegate.address}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {personIdx + 1}
+                      {index + 1}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {person.name}
+                      {delegate.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.numDelegatedVotes}
+                      {delegate.numDelegatedVotes}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.numProposalsVoted}
+                      {delegate.numProposalsVoted}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {person.address} <ContentCopyIcon />
+                      {delegate.address} <ContentCopyIcon />
                     </td>
                   </tr>
                 ))}
