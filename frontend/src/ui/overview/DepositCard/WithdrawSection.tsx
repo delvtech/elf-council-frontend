@@ -1,12 +1,15 @@
 import React, { ChangeEvent, ReactElement, useCallback } from "react";
+
 import { parseEther } from "@ethersproject/units";
-import { Signer } from "ethers";
+import { FixedNumber, Signer } from "ethers";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
 import NumericInput from "src/ui/base/Input/NumericInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
+import { WithdrawButton } from "src/ui/overview/DepositCard/WithdrawButton";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { t } from "ttag";
 
@@ -16,15 +19,23 @@ interface WithdrawSectionProps {
 }
 export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const { account, signer } = props;
-  const amountDeposited = useDeposited(account);
-  const hasAmountDeposited = !!Number(amountDeposited);
+  const amountDeposited = useDeposited(account) || "0";
 
   const title = t`Unstake`;
   const description = t`Withdraw your ELFI tokens to your wallet.`;
 
-  // handler for numeric input
   const { value: withdrawAmount, setNumericValue: setWithdrawAmount } =
     useNumericInputValue();
+
+  const hasAmountDeposited = !!Number(amountDeposited);
+  const hasEnoughDeposited = !FixedNumber.from(amountDeposited)
+    .subUnsafe(FixedNumber.from(withdrawAmount || "0"))
+    .isNegative();
+
+  // handlers for numeric input
+  const clearWithdrawInput = useCallback(() => {
+    setWithdrawAmount("");
+  }, [setWithdrawAmount]);
 
   const onSetWithdrawAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +53,11 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   }, [amountDeposited, setWithdrawAmount]);
 
   // handler for withdraw button
-  const { mutate: withdraw } = useWithdrawFromLockingVault(signer);
+  const withdrawFromLockingVault = useWithdrawFromLockingVault(
+    signer,
+    clearWithdrawInput
+  );
+  const { mutate: withdraw, isLoading } = withdrawFromLockingVault;
   const onWithdraw = useCallback(() => {
     if (!account) {
       return;
@@ -64,6 +79,9 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
         </div>
 
         <div className={tw("space-y-4")}>
+          <div className={tw("flex", "flex-grow", "justify-end")}>
+            <LabeledStat data={amountDeposited} bottomLabel={t`Deposited`} />
+          </div>
           <div className={tw("flex", "space-x-4", "w-full")}>
             <Button
               disabled={!hasAmountDeposited || !account}
@@ -73,6 +91,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
             </Button>
             <NumericInput
               disabled={!hasAmountDeposited}
+              error={!hasEnoughDeposited}
               screenReaderLabel={t`Amount to withdraw`}
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
@@ -83,13 +102,13 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               onChange={onSetWithdrawAmount}
             />
           </div>
-          <Button
-            disabled={!account}
-            className={tw("w-full")}
-            onClick={onWithdraw}
-          >
-            <span className={tw("w-full")}>{t`Withdraw`}</span>
-          </Button>
+          <WithdrawButton
+            isLoading={isLoading}
+            account={account}
+            amountDeposited={amountDeposited}
+            withdrawAmount={withdrawAmount}
+            onWithdraw={onWithdraw}
+          />
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLocking
 import { t } from "ttag";
 import { DepositButton } from "./DepositButton";
 import { DepositInput } from "./DepositInput";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 
 const { elementToken, lockingVault } = addressesJson.addresses;
 
@@ -37,12 +38,13 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const title = t`Stake`;
   const description = t`Deposit your ELFI tokens into the governance system.`;
 
-  // handler for numeric input
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
 
   const hasAllowance =
     allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
+
+  // handlers for numeric input
   const onSetDepositAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const newDepositAmount = event.target.value;
@@ -50,6 +52,9 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     },
     [setDepositAmount]
   );
+  const clearDepositAmount = useCallback(() => {
+    setDepositAmount("");
+  }, [setDepositAmount]);
 
   // handler for max button
   const onSetMax = useCallback(() => {
@@ -57,7 +62,10 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   }, [balance, setDepositAmount]);
 
   // handler for deposit button
-  const { mutate: deposit } = useDepositIntoLockingVault(signer);
+  const { mutate: deposit, isLoading } = useDepositIntoLockingVault(
+    signer,
+    clearDepositAmount
+  );
   const onDeposit = useCallback(() => {
     if (!account) {
       return;
@@ -89,6 +97,9 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
         </div>
 
         <div className={tw("space-y-4")}>
+          <div className={tw("flex", "flex-grow", "justify-end")}>
+            <LabeledStat data={balance} bottomLabel={t`Balance`} />
+          </div>
           <div className={tw("flex", "space-x-4", "w-full")}>
             <Button
               disabled={!hasBalanceToDeposit || !account}
@@ -113,6 +124,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             </span>
           </Button>
           <DepositButton
+            isLoading={isLoading}
             balance={balance}
             allowance={allowance}
             account={account}

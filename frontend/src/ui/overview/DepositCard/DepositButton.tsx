@@ -10,32 +10,33 @@ interface DepositButtonProps {
   allowance: string;
   balance: string;
   depositAmount: string;
+
+  isLoading?: boolean;
   onDeposit: () => void;
 }
 export function DepositButton(props: DepositButtonProps): ReactElement {
-  const { allowance, account, balance, depositAmount, onDeposit } = props;
+  const {
+    allowance,
+    account,
+    balance,
+    depositAmount,
+    isLoading = false,
+    onDeposit,
+  } = props;
   const hasDepositAmount = !!Number(depositAmount);
   const hasAllowance = !!Number(allowance);
+  const hasAnyBalance = !!Number(balance);
   const hasEnoughBalance = !FixedNumber.from(balance || "0")
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
 
-  let tooltipTitle = "";
-  if (!account) {
-    tooltipTitle = t`Connect wallet`;
-  }
-
-  if (!hasAllowance) {
-    tooltipTitle = t`Need allowance`;
-  }
-
-  if (!hasDepositAmount) {
-    tooltipTitle = t`Enter a deposit amount`;
-  }
-
-  if (!hasEnoughBalance) {
-    tooltipTitle = t`Not enough tokens`;
-  }
+  const tooltipTitle = getTooltipTitle(
+    account,
+    hasAllowance,
+    hasAnyBalance,
+    hasDepositAmount,
+    hasEnoughBalance
+  );
 
   return (
     <Tooltip
@@ -46,9 +47,14 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     >
       <div>
         <Button
+          loading={isLoading}
           error={!hasEnoughBalance}
           disabled={
-            !hasEnoughBalance || !hasAllowance || !account || !hasDepositAmount
+            isLoading ||
+            !hasEnoughBalance ||
+            !hasAllowance ||
+            !account ||
+            !hasDepositAmount
           }
           className={tw("w-full")}
           onClick={onDeposit}
@@ -58,4 +64,33 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
       </div>
     </Tooltip>
   );
+}
+function getTooltipTitle(
+  account: string | null | undefined,
+  hasAllowance: boolean,
+  hasAnyBalance: boolean,
+  hasDepositAmount: boolean,
+  hasEnoughBalance: boolean
+): string {
+  if (!account) {
+    return t`Connect wallet`;
+  }
+
+  if (!hasAllowance) {
+    return t`Need allowance`;
+  }
+
+  if (!hasAnyBalance) {
+    return t`No tokens to deposit`;
+  }
+
+  if (!hasDepositAmount) {
+    return t`Enter a deposit amount`;
+  }
+
+  if (!hasEnoughBalance) {
+    return t`Not enough tokens`;
+  }
+
+  return "";
 }
