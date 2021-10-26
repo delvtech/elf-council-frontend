@@ -9,9 +9,5 @@ module.exports = {
     "../src/ui/**/*.stories.mdx",
     "../src/ui/**/*.stories.@(js|jsx|ts|tsx)",
   ],
-  addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-backgrounds",
-  ],
+  addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
 };
