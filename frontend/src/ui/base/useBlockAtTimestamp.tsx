@@ -1,5 +1,6 @@
 import { useQuery } from "react-query";
 
+const NODE_ENV = process.env.NODE_ENV;
 export function useBlockAtTimestamp(
   timestampInSeconds: number
 ): number | undefined {
@@ -7,6 +8,12 @@ export function useBlockAtTimestamp(
     queryKey: ["block-at-timestamp", timestampInSeconds],
     queryFn: async () => fetchBlockAtTimestamp(timestampInSeconds),
   });
+
+  // quick hack to just get all the blocks for development
+  if (NODE_ENV === "development") {
+    return 0;
+  }
+
   return blockNumber;
 }
 interface EtherscanResponse {
