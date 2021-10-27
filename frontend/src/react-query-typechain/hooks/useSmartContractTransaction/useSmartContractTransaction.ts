@@ -90,6 +90,7 @@ export function useSmartContractTransaction<
 
       console.error(
         `Error calling ${methodName} on: ${contract?.address} with arguments:`,
+        variables,
         error
       );
       await onError?.(error);
