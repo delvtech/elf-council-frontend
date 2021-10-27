@@ -59,7 +59,7 @@ export function getButtonClass({
     "focus:ring-2",
     "focus:ring-offset-2",
     "focus:ring-brandDarkBlue",
-    round ? "rounded-full" : "rounded-md",
+    round ? "rounded-full" : "rounded-xl",
     { "flex-1": fill },
     { "pointer-events-none": disabled },
     { "opacity-50": disabled }
