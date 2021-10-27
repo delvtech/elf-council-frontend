@@ -1,11 +1,14 @@
 import React, { ReactElement, useMemo, useState } from "react";
 
-import { formatFullDate } from "src/base/dates";
-import { proposalsJson } from "src/elf-council-proposals";
+import {
+  proposalsBySnapShotId,
+  proposalsJson,
+} from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw from "src/elf-tailwindcss-classnames";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Button from "src/ui/base/Button/Button";
+import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
@@ -77,25 +80,34 @@ function ProposalList({ proposals }: ProposalListProps) {
           className={tw("flex", "justify-between", "items-center")}
         >
           <div className={tw("flex-col", "space-y-4")}>
-            <CardHeader title={proposal.title} />
+            <CardHeader
+              title={proposal.title}
+              description={t`Proposal #${
+                proposalsBySnapShotId[proposal.id].proposalId
+              }`}
+            />
             <div className={tw("flex", "space-x-4")}>
               <AnchorButton
                 variant={ButtonVariant.PRIMARY}
-                round
                 href={proposal.link}
               >{t`View Proposal`}</AnchorButton>
-              <Button
-                round
-                variant={ButtonVariant.SECONDARY}
-              >{t`Discussion`}</Button>
+              <Button variant={ButtonVariant.PRIMARY}>{t`Discuss`}</Button>
             </div>
           </div>
-          <div className={tw("space-x-4")}>
-            <Button variant={ButtonVariant.GRADIENT}>{t`Vote`}</Button>
+          <div className={tw("flex", "space-x-4")}>
+            <PopoverButton
+              button={
+                <Button variant={ButtonVariant.GRADIENT}>{t`Vote`}</Button>
+              }
+              popover={
+                <div className={tw("flex", "flex-col")}>
+                  <Button>{t`yes`}</Button>
+                  <Button>{t`no`}</Button>
+                  <Button>{t`maybe`}</Button>
+                </div>
+              }
+            ></PopoverButton>
             {/* TODO: Make this a "Tag" */}
-            <span>
-              {t`Voting ends ${formatFullDate(new Date(proposal.end * 1000))}`}
-            </span>
             <Button>{proposal.state}</Button>
           </div>
         </Card>

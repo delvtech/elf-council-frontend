@@ -93,9 +93,9 @@ export function getButtonClass({
         defaultStyling,
         brandedBlueGradientBackgroundClassName,
         "text-white",
-        // dark background on hover for good contrast
-        "hover:from-brandDarkBlue-dark",
-        "hover:to-brandDarkBlue-dark"
+        // light background on hover for good contrast
+        "hover:from-principalBlue",
+        "hover:to-principalBlue"
       );
 
     case ButtonVariant.MINIMAL:

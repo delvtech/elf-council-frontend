@@ -19,7 +19,7 @@ export default function Card(props: CardProps): ReactElement {
           "bg-white",
           "overflow-hidden",
           "shadow",
-          "rounded-lg",
+          "rounded-xl",
           "px-4",
           "py-5",
           "sm:p-6"
