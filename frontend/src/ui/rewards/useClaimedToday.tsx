@@ -1,14 +1,15 @@
 import { useMemo } from "react";
+
+import { BigNumber } from "ethers";
 import { formatEther } from "ethers/lib/utils";
+import { ONE_DAY_IN_SECONDS } from "src/base/time";
 import { addressesJson } from "src/elf-council-addresses";
 import { elementTokenContract } from "src/elf/contracts";
 import { useSmartContractEvents } from "src/react-query-typechain/hooks/useSmartContractEvents/useSmartContractEvents";
-import { BigNumber } from "ethers";
-import { useBlockAtTimestamp } from "src/ui/base/useBlockAtTimestamp";
+import { useBlockAtTimestamp } from "src/ui/ethereum/useBlockAtTimestamp";
 
 const now = Date.now();
 const nowInSeconds = Math.floor(now / 1000);
-const ONE_DAY_IN_SECONDS = 24 * 60 * 60;
 const { optimisticRewardsVault } = addressesJson.addresses;
 export function useClaimedToday(): string {
   const block24hrsAgo = useBlockAtTimestamp(nowInSeconds - ONE_DAY_IN_SECONDS);
