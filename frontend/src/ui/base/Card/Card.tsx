@@ -2,21 +2,39 @@
 
 import classNames from "classnames";
 import { ReactElement, ReactNode } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
+
+export enum CardVariant {
+  GRADIENT = "gradient",
+  WHITE = "white",
+  BLUE = "blue",
+}
 
 interface CardProps {
   children: ReactNode;
-
+  variant?: CardVariant;
   className?: string;
 }
 
+const variantBackgrounds: Record<CardVariant, TTailwindString> = {
+  [CardVariant.GRADIENT]: tw(
+    "bg-gradient-to-br",
+    "from-brandDarkBlue",
+    "to-brandLightBlue"
+  ),
+  [CardVariant.BLUE]: tw("bg-brandDarkBlue"),
+  [CardVariant.WHITE]: tw("bg-white"),
+};
 export default function Card(props: CardProps): ReactElement {
-  const { className, children } = props;
+  const { className, variant = CardVariant.WHITE, children } = props;
+
+  const variantBackground = variantBackgrounds[variant];
+
   return (
     <div
       className={classNames(
         tw(
-          "bg-white",
+          variantBackground,
           "overflow-hidden",
           "shadow",
           "rounded-xl",

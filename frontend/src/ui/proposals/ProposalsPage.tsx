@@ -1,3 +1,4 @@
+import { ChevronLeft } from "@material-ui/icons";
 import React, { ReactElement, useMemo, useState } from "react";
 
 import {
@@ -5,12 +6,12 @@ import {
   proposalsJson,
 } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Button from "src/ui/base/Button/Button";
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card from "src/ui/base/Card/Card";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import H1 from "src/ui/base/H1";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
@@ -97,18 +98,32 @@ function ProposalList({ proposals }: ProposalListProps) {
           <div className={tw("flex", "space-x-4")}>
             <PopoverButton
               button={
-                <Button variant={ButtonVariant.GRADIENT}>{t`Vote`}</Button>
+                <Button variant={ButtonVariant.GRADIENT}>
+                  {t`Vote`}
+                  <ChevronLeft
+                    className={tw(
+                      // transform is weird, it exists in the tailwind css, but
+                      // requires casting when using "tw()" :shrug:
+                      "transform" as TTailwindString,
+                      "-rotate-90"
+                    )}
+                  />
+                </Button>
               }
               popover={
-                <div className={tw("flex", "flex-col")}>
-                  <Button>{t`yes`}</Button>
-                  <Button>{t`no`}</Button>
-                  <Button>{t`maybe`}</Button>
-                </div>
+                <Card variant={CardVariant.BLUE}>
+                  <div className={tw("flex", "flex-col")}>
+                    <Button>{t`yes`}</Button>
+                    <Button>{t`no`}</Button>
+                    <Button>{t`maybe`}</Button>
+                  </div>
+                </Card>
               }
             ></PopoverButton>
             {/* TODO: Make this a "Tag" */}
-            <Button>{proposal.state}</Button>
+            <Button disabled variant={ButtonVariant.OUTLINE_BLUE}>
+              {proposal.state}
+            </Button>
           </div>
         </Card>
       ))}
