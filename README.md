@@ -5,7 +5,7 @@ First, some setup:
 ```bash
 # go into the frontend/ directory and install npm dependencies
 cd frontend/
-npm run ci
+npm ci
 # copy the tokenlist and addresses jsons from the testnet
 npm run copy-testnet
 ```
