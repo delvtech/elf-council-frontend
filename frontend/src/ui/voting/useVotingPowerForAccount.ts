@@ -1,5 +1,6 @@
 import { formatEther } from "@ethersproject/units";
-import { ethers, FixedNumber } from "ethers";
+import { BigNumber, ethers, FixedNumber } from "ethers";
+import { parseEther } from "ethers/lib/utils";
 import { lockingVaultContract, rewardsContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
@@ -25,11 +26,21 @@ export function useVotingPowerForAccount(
       enabled: !!account && !!blockNumber && !!proof,
     }
   );
+
+  const extraData = ethers.utils.defaultAbiCoder.encode(
+    ["uint256", "bytes32[]"],
+    [parseEther(totalGrant || "0"), proof]
+  );
+
+  // The CoreVoting contract passes this parameter to the rewards contract when querying vote power,
+  // so we have to pass it as well, though the rewards contract doesn't need this to calculate vote
+  // power.
+  const unusedBlockNumber = BigNumber.from(0);
   const { data: rewardsVotingPowerBN } = useSmartContractReadCall(
     rewardsContract,
     "queryVotePower",
     {
-      callArgs: [account as string, totalGrant as string, byteslikeProof],
+      callArgs: [account as string, unusedBlockNumber, extraData],
       enabled: !!account && !!blockNumber && !!totalGrant && !!proof,
     }
   );
