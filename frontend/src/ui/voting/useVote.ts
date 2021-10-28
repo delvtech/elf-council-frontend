@@ -13,7 +13,7 @@ const { optimisticRewardsVault, lockingVault } = addressesJson.addresses;
 
 export function useVote(
   account: string | undefined | null,
-  signer: Signer,
+  signer: Signer | undefined,
   atblockNumber?: number
 ): {
   mutate: (proposalId: string, ballot: Ballot) => void;
@@ -40,9 +40,12 @@ export function useVote(
       }
 
       const { extraDataForLockingVault, extraDataForRewardsVault } =
-        getCallDatasToQueryVotePower(blockNumber, merkleInfo, account);
+        getCallDatasToQueryVotePower(merkleInfo);
 
-      const votingVaults = [lockingVault, optimisticRewardsVault];
+      const votingVaults = [
+        lockingVault,
+        optimisticRewardsVault,
+      ];
       const extraData = [extraDataForLockingVault, extraDataForRewardsVault];
       vote([votingVaults, extraData, proposalId, ballot]);
     },
@@ -56,32 +59,21 @@ export function useVote(
  * Returns the calldata required to query vote power for each voting vault.
  * @param blockNumber the blocknumber at which the voting power is calculated
  * @param merkleInfo merkle proof information use to calculate voting power for the rewards vault
- * @param account the account we are interested in
  * @returns
  */
-function getCallDatasToQueryVotePower(
-  blockNumber: number,
-  merkleInfo: MerkleProof,
-  account: string
-): {
-  extraDataForLockingVault: Uint8Array;
-  extraDataForRewardsVault: Uint8Array;
+function getCallDatasToQueryVotePower(merkleInfo: MerkleProof): {
+  extraDataForLockingVault: string;
+  extraDataForRewardsVault: string;
 } {
   const { value: totalGrant } = merkleInfo?.leaf || {};
-  const totalGrantHexString = parseEther(totalGrant || "0").toHexString();
   const { proof = [] } = merkleInfo || {};
 
-  const extraDataForLockingVault = ethers.utils.concat([
-    account,
-    blockNumber,
-    ...proof,
-  ] as string[]);
+  const extraDataForLockingVault = "0x00";
 
-  const extraDataForRewardsVault = ethers.utils.concat([
-    account,
-    totalGrantHexString,
-    ...proof,
-  ] as string[]);
+  const extraDataForRewardsVault = ethers.utils.defaultAbiCoder.encode(
+    ["uint256", "bytes32[]"],
+    [parseEther(totalGrant || "0"), proof]
+  );
 
   return { extraDataForLockingVault, extraDataForRewardsVault };
 }

@@ -59,7 +59,7 @@ export function getButtonClass({
     "focus:ring-2",
     "focus:ring-offset-2",
     "focus:ring-brandDarkBlue",
-    round ? "rounded-full" : "rounded-md",
+    round ? "rounded-full" : "rounded-xl",
     { "flex-1": fill },
     { "pointer-events-none": disabled },
     { "opacity-50": disabled }
@@ -93,9 +93,9 @@ export function getButtonClass({
         defaultStyling,
         brandedBlueGradientBackgroundClassName,
         "text-white",
-        // dark background on hover for good contrast
-        "hover:from-brandDarkBlue-dark",
-        "hover:to-brandDarkBlue-dark"
+        // light background on hover for good contrast
+        "hover:from-principalBlue",
+        "hover:to-principalBlue"
       );
 
     case ButtonVariant.MINIMAL:
