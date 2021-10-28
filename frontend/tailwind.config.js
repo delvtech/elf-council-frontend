@@ -27,6 +27,7 @@ module.exports = {
         topaz: "#19C2A3",
         goldYellow: "#FFC300",
         statusGreen: "#007F00",
+        statusRed: "#FAEAEA",
 
         // Deprecated colors:
         // Used this tool for color variants: https://material.io/resources/color
