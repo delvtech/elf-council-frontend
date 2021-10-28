@@ -1,9 +1,12 @@
 import { Signer } from "@ethersproject/abstract-signer";
 import { ChevronLeft } from "@material-ui/icons";
 import { useWeb3React } from "@web3-react/core";
+import { Proposal } from "elf-council-proposals";
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
 
 import {
+  getIsExecutable,
+  getIsVotingOpen,
   proposalsBySnapShotId,
   proposalsJson,
 } from "src/elf-council-proposals";
@@ -16,6 +19,8 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import H1 from "src/ui/base/H1";
+import { Intent, Tag } from "src/ui/base/Tag/Tag";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 import { Ballot } from "src/ui/voting/Ballot";
@@ -91,7 +96,7 @@ function ProposalList({ account, proposals, signer }: ProposalListProps) {
       {proposals.map((proposal) => (
         <ProposalCardRow
           key={proposal.id}
-          proposal={proposal}
+          snapshotProposal={proposal}
           account={account}
           signer={signer}
         />
@@ -102,16 +107,20 @@ function ProposalList({ account, proposals, signer }: ProposalListProps) {
 interface ProposalCardRowProps {
   account: string | null | undefined;
   signer: Signer | undefined;
-  proposal: SnapshotProposal;
+  snapshotProposal: SnapshotProposal;
 }
 
 function ProposalCardRow({
   account,
   signer,
-  proposal,
+  snapshotProposal,
 }: ProposalCardRowProps): ReactElement {
-  const { proposalId: onChainProposalId } = proposalsBySnapShotId[proposal.id];
   const { mutate: vote } = useVote(account, signer);
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
+
+  const proposal = proposalsBySnapShotId[snapshotProposal.id];
+  const { proposalId: onChainProposalId } = proposal;
+
   const onYesVoteClick = useCallback(() => {
     vote(onChainProposalId.toString(), Ballot.YES);
   }, [onChainProposalId, vote]);
@@ -121,58 +130,99 @@ function ProposalCardRow({
   const onMaybeVoteClick = useCallback(() => {
     vote(onChainProposalId.toString(), Ballot.MAYBE);
   }, [onChainProposalId, vote]);
+
+  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+
   return (
     <Card
-      key={proposal.id}
+      key={snapshotProposal.id}
       className={tw("flex", "justify-between", "items-center")}
     >
       <div className={tw("flex-col", "space-y-4")}>
         <CardHeader
-          title={proposal.title}
+          title={snapshotProposal.title}
           description={t`Proposal #${
-            proposalsBySnapShotId[proposal.id].proposalId
+            proposalsBySnapShotId[snapshotProposal.id].proposalId
           }`}
         />
         <div className={tw("flex", "space-x-4")}>
           <AnchorButton
             variant={ButtonVariant.PRIMARY}
-            href={proposal.link}
+            href={snapshotProposal.link}
           >{t`View Proposal`}</AnchorButton>
           <Button variant={ButtonVariant.PRIMARY}>{t`Discuss`}</Button>
         </div>
       </div>
       <div className={tw("flex", "space-x-4")}>
-        <PopoverButton
-          button={
-            <Button variant={ButtonVariant.GRADIENT}>
-              {t`Vote`}
-              <ChevronLeft
-                className={tw(
-                  // transform is weird, it exists in the tailwind css, but
-                  // requires casting when using "tw()" :shrug:
-                  "transform" as TTailwindString,
-                  "-rotate-90"
-                )}
-              />
-            </Button>
-          }
-          popover={
-            <Card variant={CardVariant.BLUE}>
-              <div className={tw("flex", "flex-col")}>
-                <Button onClick={onYesVoteClick}>{t`yes`}</Button>
-                <Button onClick={onNoVoteClick}>{t`no`}</Button>
-                <Button onClick={onMaybeVoteClick}>{t`maybe`}</Button>
-              </div>
-            </Card>
-          }
-        ></PopoverButton>
-        {/* TODO: Make this a "Tag" */}
-        <Button disabled variant={ButtonVariant.OUTLINE_BLUE}>
-          {proposal.state}
-        </Button>
+        {isVotingOpen ? (
+          <PopoverButton
+            button={
+              <Button variant={ButtonVariant.GRADIENT}>
+                {t`Vote`}
+                <ChevronLeft
+                  className={tw(
+                    // transform is weird, it exists in the tailwind css, but
+                    // requires casting when using "tw()" :shrug:
+                    "transform" as TTailwindString,
+                    "-rotate-90"
+                  )}
+                />
+              </Button>
+            }
+            popover={
+              <Card variant={CardVariant.BLUE}>
+                <div className={tw("flex", "flex-col")}>
+                  <Button onClick={onYesVoteClick}>{t`yes`}</Button>
+                  <Button onClick={onNoVoteClick}>{t`no`}</Button>
+                  <Button onClick={onMaybeVoteClick}>{t`maybe`}</Button>
+                </div>
+              </Card>
+            }
+          ></PopoverButton>
+        ) : null}
+
+        <StatusButton proposal={proposal} />
       </div>
     </Card>
   );
+}
+
+interface StatusButtonProps {
+  proposal: Proposal;
+}
+
+function StatusButton({ proposal }: StatusButtonProps): ReactElement | null {
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
+  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const isExecutable = getIsExecutable(proposal, currentBlockNumber);
+
+  if (isExecutable) {
+    return (
+      <Button variant={ButtonVariant.OUTLINE_BLUE}>
+        <div className={tw("flex", "space-x-8", "items-center")}>
+          {t`Execute`}
+        </div>
+      </Button>
+    );
+  }
+
+  if (isVotingOpen) {
+    return (
+      <Tag intent={Intent.SUCCESS}>
+        <div className={tw("flex", "space-x-8", "items-center")}>
+          <svg
+            className="-ml-0.5 mr-1.5 h-3 w-3 text-statusGreen"
+            fill="currentColor"
+            viewBox="0 0 8 8"
+          >
+            <circle cx={4} cy={4} r={3} />
+          </svg>
+          {t`Open for Voting`}
+        </div>
+      </Tag>
+    );
+  }
+  return null;
 }
 
 function ProposalPageHeader() {
