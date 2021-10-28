@@ -42,7 +42,8 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     hasAllowance,
     hasAnyBalance,
     hasDepositAmount,
-    hasEnoughBalance
+    hasEnoughBalance,
+    hasValidDelegateAddress
   );
 
   return (
@@ -78,7 +79,8 @@ function getTooltipTitle(
   hasAllowance: boolean,
   hasAnyBalance: boolean,
   hasDepositAmount: boolean,
-  hasEnoughBalance: boolean
+  hasEnoughBalance: boolean,
+  hasValidDelegateAddress: boolean
 ): string {
   if (!account) {
     return t`Connect wallet`;
@@ -94,6 +96,10 @@ function getTooltipTitle(
 
   if (!hasDepositAmount) {
     return t`Enter a deposit amount`;
+  }
+
+  if (!hasValidDelegateAddress) {
+    return t`Enter a valid address to delegate to`;
   }
 
   if (!hasEnoughBalance) {
