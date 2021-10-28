@@ -37,6 +37,13 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     lockingVault
   );
   const delegate = useDelegate(account);
+  const balance = formatEther(balanceBN || 0);
+  const allowance = formatEther(allowanceBN || 0);
+  const hasBalanceToDeposit = !!Number(balance);
+
+  const title = t`Stake`;
+  const description = t`Deposit your ELFI tokens into the governance system.`;
+
   const [delegateAddress, setDelegateAddress] = useState<string>("");
   const onUpdateDelegateAddress = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,13 +54,6 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     },
     []
   );
-
-  const balance = formatEther(balanceBN || 0);
-  const allowance = formatEther(allowanceBN || 0);
-  const hasBalanceToDeposit = !!Number(balance);
-
-  const title = t`Stake`;
-  const description = t`Deposit your ELFI tokens into the governance system.`;
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
