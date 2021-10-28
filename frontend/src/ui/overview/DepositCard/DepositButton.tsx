@@ -4,12 +4,15 @@ import { FixedNumber } from "ethers";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
+import { isValidAddress } from "src/base/isValidAddress";
 
 interface DepositButtonProps {
   account: string | null | undefined;
   allowance: string;
   balance: string;
   depositAmount: string;
+  isDelegated: boolean;
+  delegateAddress: string;
 
   isLoading?: boolean;
   onDeposit: () => void;
@@ -20,12 +23,16 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     account,
     balance,
     depositAmount,
+    isDelegated,
+    delegateAddress,
     isLoading = false,
     onDeposit,
   } = props;
   const hasDepositAmount = !!Number(depositAmount);
   const hasAllowance = !!Number(allowance);
   const hasAnyBalance = !!Number(balance);
+  const hasValidDelegateAddress =
+    isDelegated || isValidAddress(delegateAddress);
   const hasEnoughBalance = !FixedNumber.from(balance || "0")
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
@@ -54,7 +61,8 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
             !hasEnoughBalance ||
             !hasAllowance ||
             !account ||
-            !hasDepositAmount
+            !hasDepositAmount ||
+            !hasValidDelegateAddress
           }
           className={tw("w-full")}
           onClick={onDeposit}

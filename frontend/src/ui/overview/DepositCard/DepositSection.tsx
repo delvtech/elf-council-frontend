@@ -1,6 +1,8 @@
-import React, { ChangeEvent, ReactElement, useCallback } from "react";
+import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
+
 import { formatEther, parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
+import { isValidAddress } from "src/base/isValidAddress";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
@@ -9,13 +11,16 @@ import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H3 from "src/ui/base/H3";
+import TextInput from "src/ui/base/Input/TextInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
+import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
+import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { t } from "ttag";
+
 import { DepositButton } from "./DepositButton";
 import { DepositInput } from "./DepositInput";
-import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 
 const { elementToken, lockingVault } = addressesJson.addresses;
 
@@ -31,6 +36,18 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     account,
     lockingVault
   );
+  const delegate = useDelegate(account);
+  const [delegateAddress, setDelegateAddress] = useState<string>("");
+  const onUpdateDelegateAddress = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const delegateAddress = event.target.value;
+      if (delegateAddress && isValidAddress(delegateAddress)) {
+        setDelegateAddress(delegateAddress);
+      }
+    },
+    []
+  );
+
   const balance = formatEther(balanceBN || 0);
   const allowance = formatEther(allowanceBN || 0);
   const hasBalanceToDeposit = !!Number(balance);
@@ -71,8 +88,8 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
       return;
     }
 
-    deposit([account, parseEther(depositAmount), account]);
-  }, [account, deposit, depositAmount]);
+    deposit([account, parseEther(depositAmount), delegateAddress]);
+  }, [account, delegateAddress, deposit, depositAmount]);
 
   // handler for allowance button
   const { mutate: allow } = useSetTokenAllowance(signer, elementToken);
@@ -113,6 +130,17 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
               onSetDepositAmount={onSetDepositAmount}
             />
           </div>
+          {!delegate && (
+            <TextInput
+              screenReaderLabel={t`Insert Delegate Address`}
+              id={"delegate-address"}
+              name={t`Insert Delegate Address`}
+              placeholder={t`Insert Delegate Address`}
+              className={tw("mb-8", "h-12", "text-center")}
+              value={delegateAddress}
+              onChange={onUpdateDelegateAddress}
+            />
+          )}
           <Button
             className={tw("w-full")}
             onClick={onSetAllowance}
@@ -129,6 +157,8 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             allowance={allowance}
             account={account}
             depositAmount={depositAmount}
+            isDelegated={isValidAddress(delegate || "")}
+            delegateAddress={delegateAddress}
             onDeposit={onDeposit}
           />
         </div>
