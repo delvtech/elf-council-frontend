@@ -7,6 +7,7 @@ export type ElementGovernanceTokenInfo = TokenInfo;
 
 export interface CoreVotingContractTokenInfo extends TokenInfo {
   extensions: {
+    dayInBlocks: number;
     baseQuorum: number;
     lockDuration: number;
     minProposalPower: number;
