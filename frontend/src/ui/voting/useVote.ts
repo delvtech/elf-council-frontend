@@ -42,10 +42,7 @@ export function useVote(
       const { extraDataForLockingVault, extraDataForRewardsVault } =
         getCallDatasToQueryVotePower(merkleInfo);
 
-      const votingVaults = [
-        lockingVault,
-        optimisticRewardsVault,
-      ];
+      const votingVaults = [lockingVault, optimisticRewardsVault];
       const extraData = [extraDataForLockingVault, extraDataForRewardsVault];
       vote([votingVaults, extraData, proposalId, ballot]);
     },
@@ -68,6 +65,7 @@ function getCallDatasToQueryVotePower(merkleInfo: MerkleProof): {
   const { value: totalGrant } = merkleInfo?.leaf || {};
   const { proof = [] } = merkleInfo || {};
 
+  // extra data is not needed for the locking vault to query vote power, stub with empty value
   const extraDataForLockingVault = "0x00";
 
   const extraDataForRewardsVault = ethers.utils.defaultAbiCoder.encode(
