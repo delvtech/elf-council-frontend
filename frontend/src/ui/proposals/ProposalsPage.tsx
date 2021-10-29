@@ -165,19 +165,7 @@ function ProposalCardRow({
         {isVotingOpen ? (
           <PopoverButton
             disabled={!account}
-            button={
-              <Button disabled={!account} variant={ButtonVariant.GRADIENT}>
-                {t`Vote`}
-                <ChevronLeft
-                  className={tw(
-                    // transform is weird, it exists in the tailwind css, but
-                    // requires casting when using "tw()" :shrug:
-                    "transform" as TTailwindString,
-                    "-rotate-90"
-                  )}
-                />
-              </Button>
-            }
+            variant={ButtonVariant.GRADIENT}
             popover={
               <Card variant={CardVariant.BLUE}>
                 <div className={tw("flex", "flex-col")}>
@@ -187,7 +175,17 @@ function ProposalCardRow({
                 </div>
               </Card>
             }
-          ></PopoverButton>
+          >
+            <span>{t`Vote`}</span>
+            <ChevronLeft
+              className={tw(
+                // transform is weird, it exists in the tailwind css, but
+                // requires casting when using "tw()" :shrug:
+                "transform" as TTailwindString,
+                "-rotate-90"
+              )}
+            />
+          </PopoverButton>
         ) : null}
 
         <StatusButton proposal={proposal} />
