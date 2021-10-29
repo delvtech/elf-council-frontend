@@ -26,7 +26,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const description = t`Withdraw your ELFI tokens to your wallet.`;
   const description2 = t`This will give your delegate less voting power.`;
   const learnMoreLink = (
-    <Link href="/resources">
+    <Link key="learn-more-link" href="/resources">
       <a
         className={tw("text-blue-500", "underline")}
         href="/resources"

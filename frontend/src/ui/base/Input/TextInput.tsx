@@ -1,6 +1,7 @@
-import classNames from "classnames";
 import { ChangeEventHandler, ReactElement } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+
+import classNames from "classnames";
+import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
 
 interface TextInputProps {
   className?: string;
@@ -23,9 +24,8 @@ export default function TextInput({
   error = false,
   onChange,
 }: TextInputProps): ReactElement {
-  const intent = error
-    ? tw("border-red-500", "focus:ring-red-500", "focus:border-red-500")
-    : tw("focus:ring-brandDarkBlue", "focus:border-brandDarkBlue");
+  const borderColor = getInputBorderColor(error);
+  const ringColor = getInputRingColor(error);
 
   return (
     <div>
@@ -38,7 +38,8 @@ export default function TextInput({
         id={id}
         className={classNames(
           tw(
-            intent,
+            borderColor,
+            ringColor,
             "shadow-sm",
             "text-black",
             "block",
@@ -55,4 +56,20 @@ export default function TextInput({
       />
     </div>
   );
+}
+
+function getInputBorderColor(error: boolean): TTailwindString {
+  const color = error
+    ? tw("border-red-500", "focus:border-red-500")
+    : tw("focus:border-brandDarkBlue");
+
+  return color;
+}
+
+function getInputRingColor(error: boolean): TTailwindString {
+  const color = error
+    ? tw("focus:ring-red-500", "focus:border-red-500")
+    : tw("focus:ring-brandDarkBlue");
+
+  return color;
 }

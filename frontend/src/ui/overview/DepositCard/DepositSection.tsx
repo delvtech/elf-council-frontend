@@ -46,7 +46,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const description = t`Deposit your ELFI tokens into the governance system.`;
   const description2 = t`This will give your delegate more voting power.`;
   const learnMoreLink = (
-    <Link href="/resources">
+    <Link key="learn-more-link" href="/resources">
       <a
         className={tw("text-blue-500", "underline")}
         href="/resources"
