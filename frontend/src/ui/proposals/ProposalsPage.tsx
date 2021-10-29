@@ -31,9 +31,10 @@ import { ProposalTabs } from "./ProposalTabs";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
+const { proposals } = proposalsJson;
 export default function ProposalsPage(): ReactElement {
   const { data: snapshotProposals } = useSnapshotProposals(
-    proposalsJson.proposals.map(({ snapshotId }) => snapshotId)
+    proposals.map(({ snapshotId }) => snapshotId)
   );
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
