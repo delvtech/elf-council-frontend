@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 const NODE_ENV = process.env.NODE_ENV;
 export function useBlockAtTimestamp(
@@ -9,9 +10,10 @@ export function useBlockAtTimestamp(
     queryFn: async () => fetchBlockAtTimestamp(timestampInSeconds),
   });
 
-  // quick hack to just get all the blocks for development
+  // quick hack to get some blocks for development
+  const { data: latestBlockNumber = 100 } = useLatestBlockNumber();
   if (NODE_ENV === "development") {
-    return 0;
+    return latestBlockNumber - 100;
   }
 
   return blockNumber;

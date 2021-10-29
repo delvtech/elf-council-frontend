@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { lockingVaultContract } from "src/elf/contracts";
 import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
@@ -15,5 +16,5 @@ export function useDelegate(
 
   const [delegate] = depositInfo || [];
 
-  return delegate;
+  return delegate === ethers.constants.AddressZero ? undefined : delegate;
 }

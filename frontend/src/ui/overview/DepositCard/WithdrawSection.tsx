@@ -2,6 +2,7 @@ import React, { ChangeEvent, ReactElement, useCallback } from "react";
 
 import { parseEther } from "@ethersproject/units";
 import { FixedNumber, Signer } from "ethers";
+import Link from "next/link";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
@@ -11,7 +12,7 @@ import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { WithdrawButton } from "src/ui/overview/DepositCard/WithdrawButton";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 interface WithdrawSectionProps {
   account: string | undefined | null;
@@ -21,8 +22,18 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const { account, signer } = props;
   const amountDeposited = useDeposited(account) || "0";
 
-  const title = t`Unstake`;
+  const title = t`Remove Voting Power`;
   const description = t`Withdraw your ELFI tokens to your wallet.`;
+  const description2 = t`This will give your delegate less voting power.`;
+  const learnMoreLink = (
+    <Link key="learn-more-link" href="/resources">
+      <a
+        className={tw("text-blue-500", "underline")}
+        href="/resources"
+      >{t`here.`}</a>
+    </Link>
+  );
+  const learnMore = jt`Learn more ${learnMoreLink}`;
 
   const { value: withdrawAmount, setNumericValue: setWithdrawAmount } =
     useNumericInputValue();
@@ -76,6 +87,8 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
             {title}
           </H3>
           <p>{description}</p>
+          <p>{description2}</p>
+          <p>{learnMore}</p>
         </div>
 
         <div className={tw("space-y-4")}>

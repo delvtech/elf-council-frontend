@@ -17,10 +17,11 @@ import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 import { DepositButton } from "./DepositButton";
 import { DepositInput } from "./DepositInput";
+import Link from "next/link";
 
 const { elementToken, lockingVault } = addressesJson.addresses;
 
@@ -37,23 +38,31 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     lockingVault
   );
   const delegate = useDelegate(account);
-  const [delegateAddress, setDelegateAddress] = useState<string>("");
-  const onUpdateDelegateAddress = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const delegateAddress = event.target.value;
-      if (delegateAddress && isValidAddress(delegateAddress)) {
-        setDelegateAddress(delegateAddress);
-      }
-    },
-    []
-  );
-
   const balance = formatEther(balanceBN || 0);
   const allowance = formatEther(allowanceBN || 0);
   const hasBalanceToDeposit = !!Number(balance);
 
-  const title = t`Stake`;
+  const title = t`Increase Voting Power`;
   const description = t`Deposit your ELFI tokens into the governance system.`;
+  const description2 = t`This will give your delegate more voting power.`;
+  const learnMoreLink = (
+    <Link key="learn-more-link" href="/resources">
+      <a
+        className={tw("text-blue-500", "underline")}
+        href="/resources"
+      >{t`here.`}</a>
+    </Link>
+  );
+  const learnMore = jt`Learn more ${learnMoreLink}`;
+
+  const [delegateAddress, setDelegateAddress] = useState<string>("");
+  const onUpdateDelegateAddress = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const delegateAddr = event.target.value;
+      setDelegateAddress(delegateAddr);
+    },
+    []
+  );
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
@@ -101,6 +110,13 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     allow([lockingVault, ethers.constants.MaxUint256]);
   }, [account, allow]);
 
+  // TODO: make DelegateAddressInput and move these inside there
+  const hasAnyBalance = !!Number(balance);
+  const disableWithoutError =
+    !account || !hasAllowance || !hasAnyBalance || !delegateAddress;
+  const addressError = disableWithoutError
+    ? false
+    : !isValidAddress(delegateAddress);
   return (
     <div>
       <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
@@ -111,6 +127,8 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             {title}
           </H3>
           <p>{description}</p>
+          <p>{description2}</p>
+          <p>{learnMore}</p>
         </div>
 
         <div className={tw("space-y-4")}>
@@ -132,6 +150,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
           </div>
           {!delegate && (
             <TextInput
+              error={addressError}
               screenReaderLabel={t`Insert Delegate Address`}
               id={"delegate-address"}
               name={t`Insert Delegate Address`}
