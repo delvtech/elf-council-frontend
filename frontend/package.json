@@ -41,8 +41,8 @@
     "react-dom": "17.0.1",
     "react-query": "^3.23.2",
     "storybook-color-picker": "^2.1.4",
-    "tailwindcss": "^2.0.2",
-    "tailwindcss-classnames": "^2.2.3",
+    "tailwindcss": "^2.2.19",
+    "tailwindcss-classnames": "^2.2.5",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
     "ttag": "^1.7.24"
   },
@@ -66,21 +66,21 @@
   "name": "ui1",
   "private": true,
   "scripts": {
+    "_copy-testnet-addresses": "cp ../../elf-council-testnet/src/addresses/addresses.json src/elf-council-addresses/testnet.addresses.json; cp ../../elf-council-testnet/src/addresses/AddressesJsonFile.ts src/elf-council-addresses/AddressesJsonFile.ts",
+    "_copy-testnet-tokenlist": "cp ../../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json; cp ../../elf-council-testnet/src/tokenlist/types.ts src/elf-council-tokenlist/types.ts",
     "build": "next build",
+    "build-storybook": "build-storybook",
     "build:tailwind": "npx tailwindcss build -i styles/globals.css -o src/tailwind.output.css",
-    "build:tailwindcss-classnames": "tailwindcss-classnames -i tailwind.config.js -o src/elf-tailwindcss-classnames/index.ts",
+    "build:tailwindcss-classnames": "tailwindcss-classnames -i tailwind.config.js --extra styles/Styles.ts -o src/elf-tailwindcss-classnames/index.ts",
+    "copy-testnet": "npm run _copy-testnet-addresses && npm run _copy-testnet-tokenlist",
     "depcruise": "depcruise --config .dependency-cruiser.js .",
     "dev": "next dev",
     "lint": "next lint",
     "prettier:check": "prettier --check pages/**/*.ts{,x}",
     "start": "next start",
-    "_copy-testnet-addresses": "cp ../../elf-council-testnet/src/addresses/addresses.json src/elf-council-addresses/testnet.addresses.json; cp ../../elf-council-testnet/src/addresses/AddressesJsonFile.ts src/elf-council-addresses/AddressesJsonFile.ts",
-    "_copy-testnet-tokenlist": "cp ../../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json; cp ../../elf-council-testnet/src/tokenlist/types.ts src/elf-council-tokenlist/types.ts",
-    "copy-testnet": "npm run _copy-testnet-addresses && npm run _copy-testnet-tokenlist",
-    "update-elf-council-typechain": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
-    "update-elf-council-proposals": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "update-elf-council-proposals": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
+    "update-elf-council-typechain": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git"
   },
   "version": "0.1.0"
 }
