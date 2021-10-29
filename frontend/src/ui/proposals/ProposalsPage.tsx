@@ -160,7 +160,7 @@ function ProposalCardRow({
           <Button variant={ButtonVariant.PRIMARY}>{t`Discuss`}</Button>
         </div>
       </div>
-      {account ? <span>{t`Your voting power: ${votePower}`}</span> : null}
+      {account ? <span>{t`Your voting power for this proposal: ${votePower}`}</span> : null}
       <div className={tw("flex", "space-x-4")}>
         {isVotingOpen ? (
           <PopoverButton

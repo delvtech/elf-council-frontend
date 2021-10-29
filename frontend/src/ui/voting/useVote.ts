@@ -54,7 +54,7 @@ export function useVote(
       }
 
       // We should not include any vaults that the user has 0 voting power in
-      // when casting a vote, as this will revert the whole transaction.
+      // when casting a vote to save gas
       const votingVaults: string[] = [];
       const extraDatas: string[] = [];
 
