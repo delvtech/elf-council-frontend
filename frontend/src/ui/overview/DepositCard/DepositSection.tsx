@@ -45,12 +45,11 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const description = t`Deposit your ELFI tokens into the governance system.`;
 
   const [delegateAddress, setDelegateAddress] = useState<string>("");
+  console.log("delegateAddress", delegateAddress);
   const onUpdateDelegateAddress = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      const delegateAddress = event.target.value;
-      if (delegateAddress && isValidAddress(delegateAddress)) {
-        setDelegateAddress(delegateAddress);
-      }
+      const delegateAddr = event.target.value;
+      setDelegateAddress(delegateAddr);
     },
     []
   );
@@ -101,6 +100,13 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     allow([lockingVault, ethers.constants.MaxUint256]);
   }, [account, allow]);
 
+  // TODO: make DelegateAddressInput and move these inside there
+  const hasAnyBalance = !!Number(balance);
+  const disableWithoutError =
+    !account || !hasAllowance || !hasAnyBalance || !delegateAddress;
+  const addressError = disableWithoutError
+    ? false
+    : !isValidAddress(delegateAddress);
   return (
     <div>
       <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
@@ -132,6 +138,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
           </div>
           {!delegate && (
             <TextInput
+              error={addressError}
               screenReaderLabel={t`Insert Delegate Address`}
               id={"delegate-address"}
               name={t`Insert Delegate Address`}

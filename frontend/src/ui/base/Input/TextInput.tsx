@@ -9,6 +9,7 @@ interface TextInputProps {
   name: string;
   placeholder?: string;
   value?: string | undefined;
+  error?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -19,8 +20,13 @@ export default function TextInput({
   name,
   placeholder,
   value,
+  error = false,
   onChange,
 }: TextInputProps): ReactElement {
+  const intent = error
+    ? tw("border-red-500", "focus:ring-red-500", "focus:border-red-500")
+    : tw("focus:ring-brandDarkBlue", "focus:border-brandDarkBlue");
+
   return (
     <div>
       <label htmlFor={id} className={tw("sr-only")}>
@@ -32,10 +38,9 @@ export default function TextInput({
         id={id}
         className={classNames(
           tw(
+            intent,
             "shadow-sm",
             "text-black",
-            "focus:ring-brandDarkBlue",
-            "focus:border-brandDarkBlue",
             "block",
             "w-full",
             "sm:text-sm",

@@ -46,6 +46,16 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     hasValidDelegateAddress
   );
 
+  const disableWithoutError =
+    !account ||
+    !hasAllowance ||
+    !hasAnyBalance ||
+    (!delegateAddress && hasEnoughBalance);
+
+  const error = disableWithoutError
+    ? false
+    : !hasEnoughBalance || !hasValidDelegateAddress;
+
   return (
     <Tooltip
       id="deposit-button-tooltp"
@@ -56,12 +66,13 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
       <div>
         <Button
           loading={isLoading}
-          error={!hasEnoughBalance}
+          error={error}
           disabled={
+            !account ||
+            !hasAllowance ||
+            !hasAnyBalance ||
             isLoading ||
             !hasEnoughBalance ||
-            !hasAllowance ||
-            !account ||
             !hasDepositAmount ||
             !hasValidDelegateAddress
           }
@@ -82,6 +93,7 @@ function getTooltipTitle(
   hasEnoughBalance: boolean,
   hasValidDelegateAddress: boolean
 ): string {
+  // disabled without error states
   if (!account) {
     return t`Connect wallet`;
   }
@@ -98,13 +110,15 @@ function getTooltipTitle(
     return t`Enter a deposit amount`;
   }
 
-  if (!hasValidDelegateAddress) {
-    return t`Enter a valid address to delegate to`;
-  }
-
+  // disabled with error states
   if (!hasEnoughBalance) {
     return t`Not enough tokens`;
   }
 
+  if (!hasValidDelegateAddress) {
+    return t`Enter a valid address to delegate to`;
+  }
+
+  // not disabled, no error, so don't show tooltip
   return "";
 }
