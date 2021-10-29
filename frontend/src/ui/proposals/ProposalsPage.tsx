@@ -21,6 +21,7 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import H1 from "src/ui/base/H1";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { useExecute } from "src/ui/proposals/useExecute";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 import { Ballot } from "src/ui/voting/Ballot";
@@ -160,23 +161,14 @@ function ProposalCardRow({
           <Button variant={ButtonVariant.PRIMARY}>{t`Discuss`}</Button>
         </div>
       </div>
-      {account ? <span>{t`Your voting power: ${votePower}`}</span> : null}
+      {account ? (
+        <span>{t`Your voting power for this proposal: ${votePower}`}</span>
+      ) : null}
       <div className={tw("flex", "space-x-4")}>
         {isVotingOpen ? (
           <PopoverButton
-            button={
-              <Button disabled={!account} variant={ButtonVariant.GRADIENT}>
-                {t`Vote`}
-                <ChevronLeft
-                  className={tw(
-                    // transform is weird, it exists in the tailwind css, but
-                    // requires casting when using "tw()" :shrug:
-                    "transform" as TTailwindString,
-                    "-rotate-90"
-                  )}
-                />
-              </Button>
-            }
+            disabled={!account}
+            variant={ButtonVariant.GRADIENT}
             popover={
               <Card variant={CardVariant.BLUE}>
                 <div className={tw("flex", "flex-col")}>
@@ -186,27 +178,45 @@ function ProposalCardRow({
                 </div>
               </Card>
             }
-          ></PopoverButton>
+          >
+            <span>{t`Vote`}</span>
+            <ChevronLeft
+              className={tw(
+                // transform is weird, it exists in the tailwind css, but
+                // requires casting when using "tw()" :shrug:
+                "transform" as TTailwindString,
+                "-rotate-90"
+              )}
+            />
+          </PopoverButton>
         ) : null}
 
-        <StatusButton proposal={proposal} />
+        <StatusButton signer={signer} proposal={proposal} />
       </div>
     </Card>
   );
 }
 
 interface StatusButtonProps {
+  signer: Signer | undefined;
   proposal: Proposal;
 }
 
-function StatusButton({ proposal }: StatusButtonProps): ReactElement | null {
+function StatusButton({
+  proposal,
+  signer,
+}: StatusButtonProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
   const isExecutable = getIsExecutable(proposal, currentBlockNumber);
+  const { mutate: execute } = useExecute(signer);
+  const onExecuteClick = useCallback(() => {
+    execute(proposal.proposalId);
+  }, [execute, proposal.proposalId]);
 
   if (isExecutable) {
     return (
-      <Button variant={ButtonVariant.OUTLINE_BLUE}>
+      <Button onClick={onExecuteClick} variant={ButtonVariant.OUTLINE_BLUE}>
         <div className={tw("flex", "space-x-8", "items-center")}>
           {t`Execute`}
         </div>

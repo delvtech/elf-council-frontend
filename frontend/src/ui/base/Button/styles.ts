@@ -8,6 +8,7 @@ import tw, {
   TGradientColorStops,
   TTextColor,
   TBorders,
+  TTailwindString,
 } from "src/elf-tailwindcss-classnames";
 
 export enum ButtonSize {
@@ -51,7 +52,7 @@ export function getButtonClass({
   round = false,
   disabled = false,
   error = false,
-}: ButtonStyles): string {
+}: ButtonStyles): TTailwindString {
   const buttonStyle = tw(
     "inline-flex",
     "items-center",

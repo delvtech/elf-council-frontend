@@ -8,7 +8,7 @@ import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
 import { Spinner } from "./Spinner";
 
-interface ButtonProps extends ButtonStyles {
+export interface ButtonProps extends ButtonStyles {
   children: ReactNode;
   className?: string;
   loading?: boolean;
