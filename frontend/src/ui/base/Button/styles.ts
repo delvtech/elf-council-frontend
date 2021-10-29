@@ -1,6 +1,7 @@
 import { brandedBlueGradientBackgroundClassName } from "src/ui/base/backgroundGradient";
 import { assertNever } from "src/base/assertNever";
-import tw, { THeight } from "src/elf-tailwindcss-classnames";
+import tw, { TBoxShadow, THeight } from "src/elf-tailwindcss-classnames";
+import { TPseudoClasses } from "tailwindcss-classnames";
 
 export enum ButtonSize {
   SMALL = "SMALL",
@@ -53,8 +54,7 @@ export function getButtonClass({
     "py-3",
     "leading-4",
     "font-bold",
-    "shadow",
-    "hover:shadow-lg",
+    ...getShadow(variant),
     "focus:outline-none",
     "focus:ring-2",
     "focus:ring-offset-2",
@@ -139,4 +139,11 @@ export function getButtonClass({
 
   // This will never happen because of assertNever, but it satisfies the return type
   return defaultStyling;
+}
+
+function getShadow(variant: ButtonVariant): TBoxShadow[] {
+  if (variant === ButtonVariant.GRADIENT) {
+    return ["shadow-2xl", "hover:shadow-lg" as TBoxShadow];
+  }
+  return ["shadow", "hover:shadow-lg" as TBoxShadow];
 }
