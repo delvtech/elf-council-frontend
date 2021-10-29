@@ -164,6 +164,7 @@ function ProposalCardRow({
       <div className={tw("flex", "space-x-4")}>
         {isVotingOpen ? (
           <PopoverButton
+            disabled={!account}
             button={
               <Button disabled={!account} variant={ButtonVariant.GRADIENT}>
                 {t`Vote`}
