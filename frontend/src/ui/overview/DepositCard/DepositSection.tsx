@@ -17,10 +17,11 @@ import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 import { DepositButton } from "./DepositButton";
 import { DepositInput } from "./DepositInput";
+import Link from "next/link";
 
 const { elementToken, lockingVault } = addressesJson.addresses;
 
@@ -41,11 +42,20 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const allowance = formatEther(allowanceBN || 0);
   const hasBalanceToDeposit = !!Number(balance);
 
-  const title = t`Stake`;
+  const title = t`Increase Voting Power`;
   const description = t`Deposit your ELFI tokens into the governance system.`;
+  const description2 = t`This will give your delegate more voting power.`;
+  const learnMoreLink = (
+    <Link href="/resources">
+      <a
+        className={tw("text-blue-500", "underline")}
+        href="/resources"
+      >{t`here.`}</a>
+    </Link>
+  );
+  const learnMore = jt`Learn more ${learnMoreLink}`;
 
   const [delegateAddress, setDelegateAddress] = useState<string>("");
-  console.log("delegateAddress", delegateAddress);
   const onUpdateDelegateAddress = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const delegateAddr = event.target.value;
@@ -117,6 +127,8 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             {title}
           </H3>
           <p>{description}</p>
+          <p>{description2}</p>
+          <p>{learnMore}</p>
         </div>
 
         <div className={tw("space-y-4")}>

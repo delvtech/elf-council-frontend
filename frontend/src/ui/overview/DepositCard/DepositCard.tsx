@@ -20,7 +20,7 @@ export default function DepositCard(props: DepositCardProps): ReactElement {
     <Card className={tw("w-full")}>
       <H2
         className={tw("text-brandDarkBlue-dark", "font-semibold", "pb-4")}
-      >{t`Staking`}</H2>
+      >{t`Voting Power`}</H2>
       <div className={tw("space-y-12")}>
         <DepositSection account={account} signer={signer} />
         <WithdrawSection account={account} signer={signer} />
