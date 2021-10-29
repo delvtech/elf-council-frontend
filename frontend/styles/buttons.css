@@ -1,0 +1,99 @@
+/* base button */
+.btn {
+  @apply inline-flex items-center px-4 py-3 leading-4 font-bold shadow rounded-xl h-12;
+}
+
+.btn-round {
+  @apply rounded-full;
+}
+
+.btn-disabled {
+  @apply pointer-events-none opacity-50;
+}
+
+.btn:hover {
+  @apply hover:shadow-lg;
+}
+
+.btn:focus {
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brandDarkBlue;
+}
+
+/* primary button */
+.btn-primary {
+  @apply text-white bg-brandDarkBlue;
+}
+
+.btn-primary:hover {
+  @apply bg-brandDarkBlue-dark;
+}
+
+/* primary outlined button */
+.btn-primary.btn-outlined {
+  @apply border border-brandDarkBlue-dark text-brandDarkBlue-dark bg-white;
+}
+
+.btn-primary.btn-outlined:hover {
+  @apply bg-blue-100;
+}
+
+/* secondary button */
+.btn-secondary {
+  @apply text-brandDarkBlue-dark bg-brandLightBlue;
+}
+
+.btn-secondary:hover {
+  @apply bg-brandLightBlue-dark;
+}
+
+/* gradient button */
+.btn-gradient {
+  @apply text-white bg-gradient-to-br from-principalBlue to-yieldBlue;
+}
+
+.btn-gradient:hover {
+  @apply from-principalBlue to-principalBlue;
+}
+
+/* minimal button */
+.btn-minimal {
+  @apply bg-none text-brandDarkBlue-dark;
+}
+
+.btn-minimal:hover {
+  @apply bg-brandLightBlue bg-opacity-20;
+}
+
+/* error button */
+.btn-error {
+  @apply bg-red-500;
+}
+
+.btn-error:hover {
+  @apply bg-red-700;
+}
+
+/* error outlined button */
+.btn-outlined.btn-error {
+  @apply border-red-500 text-red-500;
+}
+
+.btn-error:hover {
+  @apply border-red-700 text-red-700;
+}
+
+/*
+    Unused right now:
+
+    ButtonVariant.OUTLINE_WHITE:
+        "border",
+        "border-white",
+        "text-white",
+        "hover:bg-white",
+        "hover:bg-opacity-20"
+
+    ButtonVariant.WHITE:
+        "bg-white",
+        "text-brandLightBlue-dark",
+        "hover:bg-opacity-80"
+*/

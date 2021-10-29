@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind components;
+@import "./buttons.css";
 @tailwind utilities;
 
 body {
