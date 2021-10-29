@@ -8,7 +8,7 @@
 
 
 import classnamesLib from 'clsx';
-
+import type TCustomClassesFromExternalFile from '../../styles/Styles';
 
 export type TScreenReaders =
   | 'sr-only'
@@ -26906,7 +26906,7 @@ export type TClasses =
 
 export type TTailwindString = "TAILWIND_STRING"
 
-export type TKey = TClasses | TTailwindString
+export type TKey = TClasses | TTailwindString | TCustomClassesFromExternalFile
 
 export type TArg =
 | TClasses
@@ -26914,6 +26914,7 @@ export type TArg =
 | undefined
 | {[key in TKey]?: boolean}
 | TTailwindString
+| TCustomClassesFromExternalFile
 
 export type TTailwind = (...args: TArg[]) => TTailwindString
 
