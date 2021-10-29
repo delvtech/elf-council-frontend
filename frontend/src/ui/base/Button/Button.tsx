@@ -18,6 +18,7 @@ export interface ButtonProps extends ButtonStyles {
 export default function Button({
   onClick,
   disabled,
+  outlined,
   variant,
   size,
   round,
@@ -29,6 +30,7 @@ export default function Button({
 }: ButtonProps): ReactElement {
   const buttonClassName = getButtonClass({
     variant,
+    outlined,
     size,
     round,
     fill,

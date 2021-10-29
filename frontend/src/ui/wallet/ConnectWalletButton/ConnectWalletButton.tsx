@@ -59,7 +59,12 @@ export function ConnectWalletButton({
 
   return (
     <Fragment>
-      <Button variant={ButtonVariant.OUTLINE_BLUE} onClick={onOpenWalletDialog}>
+      <Button
+        round
+        outlined
+        variant={ButtonVariant.PRIMARY}
+        onClick={onOpenWalletDialog}
+      >
         {label}
       </Button>
       <ConnectWalletDialog
