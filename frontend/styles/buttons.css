@@ -48,7 +48,7 @@
 
 /* gradient button */
 .btn-gradient {
-  @apply text-white bg-gradient-to-br from-principalBlue to-yieldBlue;
+  @apply text-white shadow-md bg-gradient-to-br from-principalBlue to-yieldBlue;
 }
 
 .btn-gradient:hover {
