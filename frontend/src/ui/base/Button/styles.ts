@@ -1,7 +1,14 @@
-import { brandedBlueGradientBackgroundClassName } from "src/ui/base/backgroundGradient";
 import { assertNever } from "src/base/assertNever";
-import tw, { TBoxShadow, THeight } from "src/elf-tailwindcss-classnames";
-import { TPseudoClasses } from "tailwindcss-classnames";
+import tw, {
+  TBackgroundColor,
+  TPseudoClasses,
+  TBoxShadow,
+  THeight,
+  TBackgroundImage,
+  TGradientColorStops,
+  TTextColor,
+  TBorders,
+} from "src/elf-tailwindcss-classnames";
 
 export enum ButtonSize {
   SMALL = "SMALL",
@@ -45,105 +52,122 @@ export function getButtonClass({
   disabled = false,
   error = false,
 }: ButtonStyles): string {
-  const buttonSize = buttonSizes[size];
-  const defaultStyling = tw(
-    buttonSize,
+  const buttonStyle = tw(
     "inline-flex",
     "items-center",
     "px-4",
     "py-3",
     "leading-4",
     "font-bold",
-    ...getShadow(variant),
     "focus:outline-none",
     "focus:ring-2",
     "focus:ring-offset-2",
     "focus:ring-brandDarkBlue",
+    getHeight(size),
+    getTextColor(variant),
+    ...getShadow(variant),
+    ...getBackground(variant, error),
+    ...getBorder(variant),
     round ? "rounded-full" : "rounded-xl",
     { "flex-1": fill },
     { "pointer-events-none": disabled },
     { "opacity-50": disabled }
   );
 
-  // TODO: add error styling to other variants
-  const primaryButtonVariant = tw(
-    defaultStyling,
-    "text-white",
-    { "bg-brandDarkBlue": !error, "hover:bg-brandDarkBlue-dark": !error },
-    { "bg-red-500": error, "hover:bg-red-700": error }
-  );
-
-  if (!variant) {
-    return defaultStyling;
-  }
-
-  switch (variant) {
-    case ButtonVariant.PRIMARY:
-      return primaryButtonVariant;
-
-    case ButtonVariant.SECONDARY:
-      return tw(
-        defaultStyling,
-        "bg-brandLightBlue",
-        "text-brandDarkBlue-dark",
-        "hover:bg-brandLightBlue-dark"
-      );
-    case ButtonVariant.GRADIENT:
-      return tw(
-        defaultStyling,
-        brandedBlueGradientBackgroundClassName,
-        "text-white",
-        // light background on hover for good contrast
-        "hover:from-principalBlue",
-        "hover:to-principalBlue"
-      );
-
-    case ButtonVariant.MINIMAL:
-      return tw(
-        defaultStyling,
-        "text-brandDarkBlue-dark",
-        "hover:bg-brandLightBlue",
-        "hover:bg-opacity-20"
-      );
-
-    case ButtonVariant.OUTLINE_WHITE:
-      return tw(
-        defaultStyling,
-        "border",
-        "border-white",
-        "text-white",
-        "hover:bg-white",
-        "hover:bg-opacity-20"
-      );
-
-    case ButtonVariant.OUTLINE_BLUE:
-      return tw(
-        defaultStyling,
-        "border",
-        "border-brandDarkBlue-dark",
-        "text-brandDarkBlue-dark",
-        "hover:bg-blue-100"
-      );
-
-    case ButtonVariant.WHITE:
-      return tw(
-        defaultStyling,
-        "bg-white",
-        "text-brandLightBlue-dark",
-        "hover:bg-opacity-80"
-      );
-
-    default:
-      assertNever(variant);
-  }
-
-  // This will never happen because of assertNever, but it satisfies the return type
-  return defaultStyling;
+  return buttonStyle;
 }
 
-function getShadow(variant: ButtonVariant): TBoxShadow[] {
+function getHeight(size: ButtonSize): THeight {
+  return buttonSizes[size];
+}
+
+function getShadow(variant: ButtonVariant): (TBoxShadow | TPseudoClasses)[] {
   if (variant === ButtonVariant.GRADIENT) {
-    return ["shadow-2xl", "hover:shadow-lg" as TBoxShadow];
+    return ["shadow-2xl", "hover:shadow-lg"];
   }
-  return ["shadow", "hover:shadow-lg" as TBoxShadow];
+  return ["shadow", "hover:shadow-lg"];
+}
+
+function getBackground(
+  variant: ButtonVariant,
+  error: boolean
+): (
+  | TBackgroundColor
+  | TBackgroundImage
+  | TGradientColorStops
+  | TPseudoClasses
+)[] {
+  switch (variant) {
+    case ButtonVariant.PRIMARY:
+      return [
+        !error ? "bg-brandDarkBlue" : "bg-red-500",
+        !error ? "hover:bg-brandDarkBlue-dark" : "hover:bg-red-700",
+      ];
+
+    case ButtonVariant.SECONDARY:
+      return ["bg-brandLightBlue", "hover:bg-brandLightBlue-dark"];
+
+    case ButtonVariant.GRADIENT:
+      return [
+        "bg-gradient-to-br",
+        "from-principalBlue",
+        "to-yieldBlue",
+        // light background on hover for good contrast
+        "hover:from-principalBlue",
+        "hover:to-principalBlue",
+      ];
+
+    case ButtonVariant.MINIMAL:
+      return ["hover:bg-brandLightBlue", "hover:bg-opacity-20"];
+
+    case ButtonVariant.OUTLINE_WHITE:
+      return ["bg-transparent", "hover:bg-white", "hover:bg-opacity-20"];
+
+    case ButtonVariant.OUTLINE_BLUE:
+      return ["bg-transparent", "hover:bg-blue-100"];
+
+    case ButtonVariant.WHITE:
+      return ["bg-white", "hover:bg-opacity-80"];
+
+    default: {
+      assertNever(variant);
+      // This will never happen because of assertNever, but it satisfies the return type
+      return [];
+    }
+  }
+}
+
+function getTextColor(variant: ButtonVariant): TTextColor {
+  switch (variant) {
+    case ButtonVariant.PRIMARY:
+    case ButtonVariant.OUTLINE_WHITE:
+    case ButtonVariant.GRADIENT:
+      return "text-white";
+
+    case ButtonVariant.SECONDARY:
+    case ButtonVariant.MINIMAL:
+    case ButtonVariant.OUTLINE_BLUE:
+      return "text-brandDarkBlue-dark";
+
+    case ButtonVariant.WHITE:
+      return "text-brandLightBlue-dark";
+
+    default: {
+      assertNever(variant);
+      return "text-white";
+    }
+  }
+}
+
+function getBorder(variant: ButtonVariant): TBorders[] {
+  if (variant === ButtonVariant.OUTLINE_WHITE) {
+    return ["border", "border-white"];
+  }
+
+  if (variant === ButtonVariant.OUTLINE_BLUE) {
+    return ["border", "border-brandDarkBlue-dark"];
+  }
+
+  // No border by default
+  return [];
 }
