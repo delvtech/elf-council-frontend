@@ -97,7 +97,14 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
       return;
     }
 
-    deposit([account, parseEther(depositAmount), delegateAddress]);
+    deposit([
+      account,
+      parseEther(depositAmount),
+      // If the user is not delegated this will set the delegate upon
+      // depositing, otherwise it's a noop, however you must provide a real
+      // address that isn't the zero address, hence the account default.
+      delegateAddress || account
+    ]);
   }, [account, delegateAddress, deposit, depositAmount]);
 
   // handler for allowance button

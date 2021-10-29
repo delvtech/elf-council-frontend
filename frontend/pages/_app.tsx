@@ -8,7 +8,9 @@ import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { getEthereumProviderLibrary } from "src/elf/getEthereumProviderLibrary";
 import { queryClient } from "src/elf/queryClient";
+import { addressesJson } from "src/elf-council-addresses";
 
+console.log(addressesJson);
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return (
     <QueryClientProvider client={queryClient}>
