@@ -8,13 +8,18 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
+import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
+import { useRewardsVaultVotingPower } from "src/ui/voting/useRewardsVaultVotingPower";
 
-const { optimisticRewardsVault, lockingVault } = addressesJson.addresses;
+const {
+  optimisticRewardsVault: optimisticRewardsVaultAddress,
+  lockingVault: lockingVaultAddress,
+} = addressesJson.addresses;
 
 export function useVote(
   account: string | undefined | null,
   signer: Signer | undefined,
-  atblockNumber?: number
+  atBlockNumber?: number
 ): {
   mutate: (proposalId: string, ballot: Ballot) => void;
   isLoading: boolean;
@@ -31,47 +36,70 @@ export function useVote(
     isError,
   } = useSmartContractTransaction(coreVotingContract, "vote", signer);
 
+  const lockingVaultVotingPower = useLockingVaultVotingPower(
+    account,
+    atBlockNumber
+  );
+  const rewardsVaultVotingPower = useRewardsVaultVotingPower(
+    account,
+    atBlockNumber
+  );
+
   const onVote = useCallback(
     (proposalId: string, ballot: Ballot) => {
-      const blockNumber = atblockNumber || latestBlockNumber;
+      const blockNumber = atBlockNumber || latestBlockNumber;
 
       if (!blockNumber || !merkleInfo || !account) {
         return;
       }
 
-      const { extraDataForLockingVault, extraDataForRewardsVault } =
-        getCallDatasToQueryVotePower(merkleInfo);
+      // We should not include any vaults that the user has 0 voting power in
+      // when casting a vote, as this will revert the whole transaction.
+      const votingVaults: string[] = [];
+      const extraDatas: string[] = [];
 
-      const votingVaults = [lockingVault, optimisticRewardsVault];
-      const extraData = [extraDataForLockingVault, extraDataForRewardsVault];
-      vote([votingVaults, extraData, proposalId, ballot]);
+      if (+rewardsVaultVotingPower > 0) {
+        votingVaults.push(optimisticRewardsVaultAddress);
+        const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
+        extraDatas.push(extraData);
+      }
+      if (+lockingVaultVotingPower > 0) {
+        votingVaults.push(lockingVaultAddress);
+        const extraData = getCallDatasForLockingVaultQueryVotePower();
+        extraDatas.push(extraData);
+      }
+
+      vote([votingVaults, extraDatas, proposalId, ballot]);
     },
-    [account, atblockNumber, latestBlockNumber, merkleInfo, vote]
+    [
+      account,
+      atBlockNumber,
+      latestBlockNumber,
+      lockingVaultVotingPower,
+      merkleInfo,
+      rewardsVaultVotingPower,
+      vote,
+    ]
   );
 
   return { mutate: onVote, isLoading, isSuccess, isError };
 }
 
-/**
- * Returns the calldata required to query vote power for each voting vault.
- * @param blockNumber the blocknumber at which the voting power is calculated
- * @param merkleInfo merkle proof information use to calculate voting power for the rewards vault
- * @returns
- */
-function getCallDatasToQueryVotePower(merkleInfo: MerkleProof): {
-  extraDataForLockingVault: string;
-  extraDataForRewardsVault: string;
-} {
+function getCallDatasForLockingVaultQueryVotePower(): string {
+  // extra data is not needed for the locking vault to query vote power, stub with empty value
+  return "0x00";
+}
+
+function getCallDatasForRewardsVaultQueryVotePower(
+  merkleInfo: MerkleProof
+): string {
   const { value: totalGrant } = merkleInfo?.leaf || {};
   const { proof = [] } = merkleInfo || {};
-
-  // extra data is not needed for the locking vault to query vote power, stub with empty value
-  const extraDataForLockingVault = "0x00";
 
   const extraDataForRewardsVault = ethers.utils.defaultAbiCoder.encode(
     ["uint256", "bytes32[]"],
     [parseEther(totalGrant || "0"), proof]
   );
 
-  return { extraDataForLockingVault, extraDataForRewardsVault };
+  return extraDataForRewardsVault;
 }

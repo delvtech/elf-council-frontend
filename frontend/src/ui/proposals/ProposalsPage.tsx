@@ -25,6 +25,7 @@ import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useVote } from "src/ui/voting/useVote";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
 import { ProposalTabs } from "./ProposalTabs";
@@ -116,11 +117,16 @@ function ProposalCardRow({
   signer,
   snapshotProposal,
 }: ProposalCardRowProps): ReactElement {
-  const { mutate: vote } = useVote(account, signer);
-  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
-
   const proposal = proposalsBySnapShotId[snapshotProposal.id];
-  const { proposalId: onChainProposalId } = proposal;
+  const { proposalId: onChainProposalId, created: proposalCreatedBlockNumber } =
+    proposal;
+
+  const { mutate: vote } = useVote(account, signer, proposalCreatedBlockNumber);
+  const votePower = useVotingPowerForAccount(
+    account,
+    proposalCreatedBlockNumber
+  );
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
   const onYesVoteClick = useCallback(() => {
     vote(onChainProposalId.toString(), Ballot.YES);
@@ -154,6 +160,7 @@ function ProposalCardRow({
           <Button variant={ButtonVariant.PRIMARY}>{t`Discuss`}</Button>
         </div>
       </div>
+      {account ? <span>{t`Your voting power: ${votePower}`}</span> : null}
       <div className={tw("flex", "space-x-4")}>
         {isVotingOpen ? (
           <PopoverButton

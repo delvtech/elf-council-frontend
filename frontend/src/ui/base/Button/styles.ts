@@ -83,9 +83,9 @@ function getHeight(size: ButtonSize): THeight {
 
 function getShadow(variant: ButtonVariant): (TBoxShadow | TPseudoClasses)[] {
   if (variant === ButtonVariant.GRADIENT) {
-    return ["shadow-2xl", "hover:shadow-lg"];
+    return ["shadow-md", "hover:shadow-none"];
   }
-  return ["shadow", "hover:shadow-lg"];
+  return ["shadow", "hover:shadow-none"];
 }
 
 function getBackground(
