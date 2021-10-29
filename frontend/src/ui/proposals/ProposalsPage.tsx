@@ -165,7 +165,7 @@ function ProposalCardRow({
         {isVotingOpen ? (
           <PopoverButton
             button={
-              <Button variant={ButtonVariant.GRADIENT}>
+              <Button disabled={!account} variant={ButtonVariant.GRADIENT}>
                 {t`Vote`}
                 <ChevronLeft
                   className={tw(
