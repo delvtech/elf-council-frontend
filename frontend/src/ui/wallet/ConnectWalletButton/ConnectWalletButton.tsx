@@ -30,11 +30,7 @@ export function WalletProfileButton(
         <ConnectWalletButton />
       ) : (
         <div>
-          <Button
-            round
-            variant={ButtonVariant.MINIMAL}
-            onClick={onOpenWalletDialog}
-          >
+          <Button variant={ButtonVariant.MINIMAL} onClick={onOpenWalletDialog}>
             <WalletJazzicon
               size={28}
               account={account}
@@ -63,11 +59,7 @@ export function ConnectWalletButton({
 
   return (
     <Fragment>
-      <Button
-        round
-        variant={ButtonVariant.OUTLINE_BLUE}
-        onClick={onOpenWalletDialog}
-      >
+      <Button variant={ButtonVariant.OUTLINE_BLUE} onClick={onOpenWalletDialog}>
         {label}
       </Button>
       <ConnectWalletDialog
