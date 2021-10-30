@@ -5,7 +5,7 @@ import { TokenRewardsButton } from "src/ui/app/TokenRewardsButton";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 
 function Header(): ReactElement {
-  const { account, active, chainId } = useWeb3React();
+  const { account, active } = useWeb3React();
   return (
     <div className={tw("flex", "justify-between")}>
       <div className={tw("flex", "space-x-3")}></div>
