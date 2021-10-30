@@ -1,6 +1,7 @@
 import { Contract, ContractReceipt, ContractTransaction, Signer } from "ethers";
 import { useMutation, UseMutationResult } from "react-query";
 import {
+  isTransactionFailedError,
   isTransactionReplacedError,
   TransactionError,
 } from "src/react-query-typechain/TransactionError";
@@ -66,6 +67,19 @@ export function useSmartContractTransaction<
       return transaction?.wait();
     },
     onError: async (error: TransactionError, variables) => {
+      if (isTransactionFailedError(error)) {
+        // add an alert in development to remind you to reset your metamask account if the nonces
+        // don't match.  this is necessary every time you restart the local testnet if you've
+        // completed transactions.
+        if (
+          process.env.NODE_ENV === "development" &&
+          error.message.includes("Nonce too high.")
+        ) {
+          alert(
+            "Nonces don't match.  Try resetting your metamask account.  Click the account icon -> Settings -> Advanced -> Reset Account"
+          );
+        }
+      }
       // handle when we mine speedups and cancellations
       // see for reference: https://blog.ricmoo.com/highlights-ethers-js-may-2021-2826e858277d
       if (isTransactionReplacedError(error)) {
