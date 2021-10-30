@@ -1,4 +1,4 @@
-import tw, { THeight } from "src/elf-tailwindcss-classnames";
+import tw, { THeight, TTailwindString } from "src/elf-tailwindcss-classnames";
 
 export enum ButtonSize {
   SMALL = "SMALL",
@@ -43,7 +43,7 @@ export function getButtonClass({
   round = false,
   disabled = false,
   error = false,
-}: ButtonStyles): string {
+}: ButtonStyles): TTailwindString {
   const buttonSize = buttonSizes[size];
 
   if (!variant) {
