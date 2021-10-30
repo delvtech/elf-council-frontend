@@ -37,13 +37,14 @@ export default function FeaturedDelegatesTable(): ReactElement {
             "py-2",
             "align-middle",
             "inline-block",
-            "min-w-full",
+            "flex",
+            "justify-center",
             "sm:px-6",
             "lg:px-8"
           )}
         >
           <div className={tw("overflow-hidden", "border", "rounded-lg")}>
-            <table className={tw("min-w-full", "divide-y", "divide-gray-200")}>
+            <table className={tw("m-auto", "divide-y", "divide-gray-200")}>
               <thead>
                 <tr>
                   <th scope="col" className={headerClassName}>
@@ -57,17 +58,6 @@ export default function FeaturedDelegatesTable(): ReactElement {
                     className={tw("hidden", "md:table-cell", headerClassName)}
                   >
                     {t`Votes`}
-                  </th>
-                  <th
-                    scope="col"
-                    className={tw(
-                      "w-4",
-                      "hidden",
-                      "lg:table-cell",
-                      headerClassName
-                    )}
-                  >
-                    {t`Proposals Voted`}
                   </th>
                   <th scope="col" className={tw("w-48", headerClassName)}>
                     {t`Address`}
@@ -83,11 +73,6 @@ export default function FeaturedDelegatesTable(): ReactElement {
                       className={tw("hidden", "md:table-cell", cellClassName)}
                     >
                       {delegate.numDelegatedVotes}
-                    </td>
-                    <td
-                      className={tw("hidden", "lg:table-cell", cellClassName)}
-                    >
-                      {delegate.numProposalsVoted}
                     </td>
                     <td className={tw("w-48", cellClassName)}>
                       <div className={tw("flex", "justify-center")}>
