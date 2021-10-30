@@ -7,6 +7,7 @@ export interface AddressesJsonFile {
     gscVault: string;
     timeLock: string;
     lockingVault: string;
+    vestingVault: string;
     optimisticRewardsVault: string;
   };
 }

@@ -1,7 +1,7 @@
 {
   "name": "Council Testnet token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2021-10-28T21:17:57.918Z",
+  "timestamp": "2021-10-30T20:22:18.919Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -57,6 +57,17 @@
     {
       "chainId": 31337,
       "address": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+      "name": "Element Vesting Vault",
+      "decimals": 0,
+      "symbol": "",
+      "extensions": {
+        "token": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+        "staleBlockLag": 1
+      }
+    },
+    {
+      "chainId": 31337,
+      "address": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
       "name": "Element Optimistic Rewards Vault",
       "decimals": 0,
       "symbol": "",
