@@ -46,10 +46,6 @@ export function getButtonClass({
 }: ButtonStyles): TTailwindString {
   const buttonSize = buttonSizes[size];
 
-  if (!variant) {
-    return tw("btn");
-  }
-
   return tw("btn", buttonSize, {
     "btn-primary": variant === ButtonVariant.PRIMARY,
     "btn-secondary": variant === ButtonVariant.SECONDARY,
