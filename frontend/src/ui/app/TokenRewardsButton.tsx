@@ -15,7 +15,7 @@ export function TokenRewardsButton({
   const formatted = balanceOf ? formatEther(balanceOf) : "-";
 
   return (
-    <LinkButton variant={ButtonVariant.GRADIENT} link="/rewards">
+    <LinkButton round variant={ButtonVariant.GRADIENT} link="/rewards">
       {`${formatted} ELF`}
     </LinkButton>
   );
