@@ -9,6 +9,7 @@ import { formatWalletAddress } from "src/formatWalletAddress";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { t } from "ttag";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 const headerClassName = tw(
   "px-6",
@@ -72,7 +73,7 @@ export default function FeaturedDelegatesTable(): ReactElement {
                     <td
                       className={tw("hidden", "md:table-cell", cellClassName)}
                     >
-                      {delegate.numDelegatedVotes}
+                      <NumDelegatedVotes account={delegate.address} />
                     </td>
                     <td className={tw("w-48", cellClassName)}>
                       <div className={tw("flex", "justify-center")}>
@@ -118,4 +119,13 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
       </div>
     </Tooltip>
   );
+}
+
+interface NumDelegatedVotesProps {
+  account: string;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccount(account);
+  return <span>{votePower}</span>;
 }
