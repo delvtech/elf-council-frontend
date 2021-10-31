@@ -78,7 +78,7 @@ function getTooltipTitle(
 
   // disabled with error states
   if (!hasValidDelegateAddress) {
-    return t`Enter a valid address to delegate to`;
+    return t`Enter a valid address for your delegate`;
   }
 
   // not disabled, no error, so don't show tooltip
