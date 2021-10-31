@@ -19,27 +19,24 @@ export default function PageView(props: PageViewProps): ReactElement {
   const isWrongChain = !!chainId && chainId !== addressesJson.chainId;
   return (
     <Fragment>
-      <div>
-        <div className={tw("flex", "w-screen", "h-screen")}>
-          <Sidebar />
-          <div
-            className={tw(
-              "flex-1",
-              "h-screen",
-              "bg-gradient-to-b",
-              "from-gray-50",
-              "to-gray-100",
-              "p-6",
-              "space-y-6",
-              "overflow-scroll",
-              "justify-center",
-              "align-middle",
-              "items-center"
-            )}
-          >
-            <Header />
-            <div className={tw("max-w-6xl", "m-auto")}>{children}</div>
-          </div>
+      <div className={tw("w-full", "h-full", "md:pl-80", "overflow-hidden")}>
+        <Sidebar />
+        <div
+          className={tw(
+            "flex-1",
+            "h-full",
+            "p-6",
+            "overflow-scroll",
+            "justify-center",
+            "align-middle",
+            "items-center",
+            "bg-gradient-to-b",
+            "from-gray-50",
+            "to-gray-100"
+          )}
+        >
+          <Header />
+          <div className={tw("max-w-6xl", "mt-6", "m-auto")}>{children}</div>
         </div>
       </div>
       <SimpleDialog isOpen={isWrongChain}>

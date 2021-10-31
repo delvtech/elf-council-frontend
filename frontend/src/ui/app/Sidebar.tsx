@@ -25,7 +25,7 @@ export default function Sidebar(): ReactElement {
     <Fragment>
       <button
         className={tw(
-          "absolute",
+          "fixed",
           "h-12",
           "w-12",
           "top-0",
@@ -43,16 +43,15 @@ export default function Sidebar(): ReactElement {
       <div
         className={tw(
           "w-full",
+          "h-full",
           "ease-in-out",
           "transition-all",
           "duration-300",
           "z-30",
-          "h-screen",
           "fixed",
           "top-0",
           "left-0",
           "md:w-80",
-          "md:static",
           "bg-white",
           "transform-gpu",
           "md:translate-x-0",
