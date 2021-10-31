@@ -7,6 +7,7 @@
     "gscVault": "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
     "timeLock": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
     "lockingVault": "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
-    "optimisticRewardsVault": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E"
+    "vestingVault": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+    "optimisticRewardsVault": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB"
   }
 }

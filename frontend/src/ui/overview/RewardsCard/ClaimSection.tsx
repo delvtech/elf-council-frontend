@@ -9,6 +9,7 @@ import H3 from "src/ui/base/H3";
 import { useClaimRewards } from "src/ui/rewards/useClaimRewards";
 import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
+import { Tooltip } from "@material-ui/core";
 
 interface ClaimSectionProps {
   account: string | undefined | null;
@@ -33,6 +34,7 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
     claim([ethers.constants.WeiPerEther, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
 
+  const tooltipTitle = getTooltipTitle(account, hasUnclaimedRewards);
   return (
     <div>
       <H3
@@ -46,16 +48,41 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
         </div>
 
         <div>
-          <Button
-            loading={isLoading}
-            disabled={isLoading || !account || !hasUnclaimedRewards}
-            className={tw("w-full", "text-center")}
-            onClick={onClaim}
+          <Tooltip
+            id="claim-button-tooltp"
+            arrow
+            title={tooltipTitle}
+            placement="top"
           >
-            <span className={tw("w-full")}>{t`Claim`}</span>
-          </Button>
+            <div>
+              <Button
+                loading={isLoading}
+                disabled={!account || !hasUnclaimedRewards || isLoading}
+                className={tw("w-full")}
+                onClick={onClaim}
+              >
+                <span className={tw("w-full")}>{t`Claim`}</span>
+              </Button>
+            </div>
+          </Tooltip>
         </div>
       </div>
     </div>
   );
+}
+function getTooltipTitle(
+  account: string | null | undefined,
+  hasAnyBalance: boolean
+): string {
+  // disabled without error states
+  if (!account) {
+    return t`Connect wallet`;
+  }
+
+  if (!hasAnyBalance) {
+    return t`No tokens to claim`;
+  }
+
+  // not disabled, no error, so don't show tooltip
+  return "";
 }
