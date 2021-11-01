@@ -93,7 +93,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     clearDepositAmount
   );
   const onDeposit = useCallback(() => {
-    if (!account) {
+    if (!account || !delegateAddress) {
       return;
     }
 
