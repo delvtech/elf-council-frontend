@@ -3,14 +3,13 @@
 First, some setup:
 
 ```bash
-# go into the frontend/ directory and install npm dependencies
-cd frontend/
+# install npm dependencies
 npm ci
 # copy the tokenlist and addresses jsons from the testnet
 npm run copy-testnet
 ```
 
-Then, run the development server (again from frontend/ directory):
+Then, run the development server:
 
 ```bash
 npm run dev
