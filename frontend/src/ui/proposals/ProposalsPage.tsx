@@ -32,10 +32,9 @@ import { t } from "ttag";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
-const { proposals } = proposalsJson;
 export default function ProposalsPage(): ReactElement {
   const { data: snapshotProposals } = useSnapshotProposals(
-    proposals.map(({ snapshotId }) => snapshotId)
+    Object.keys(proposalsBySnapShotId)
   );
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
@@ -65,19 +64,10 @@ export default function ProposalsPage(): ReactElement {
     ];
   }, [activeTabId]);
 
-  const filteredProposals = useMemo(() => {
-    if (activeTabId === "active-proposals-tab") {
-      return snapshotProposals?.filter((proposal) =>
-        ["active", "pending"].includes(proposal.state)
-      );
-    }
-
-    if (activeTabId === "past-proposals-tab") {
-      return snapshotProposals?.filter((proposal) =>
-        ["closed"].includes(proposal.state)
-      );
-    }
-  }, [activeTabId, snapshotProposals]);
+  const filteredProposals = useFilteredProposals(
+    activeTabId,
+    snapshotProposals
+  );
 
   return (
     <div className={tw("h-full", "pt-8", "px-8", "space-y-8")}>
@@ -96,6 +86,25 @@ interface ProposalListProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   proposals: SnapshotProposal[];
+}
+
+function useFilteredProposals(
+  activeTabId: string,
+  snapshotProposals: SnapshotProposal[] | undefined
+) {
+  return useMemo(() => {
+    if (activeTabId === "active-proposals-tab") {
+      return snapshotProposals?.filter((proposal) =>
+        ["active", "pending"].includes(proposal.state)
+      );
+    }
+
+    if (activeTabId === "past-proposals-tab") {
+      return snapshotProposals?.filter((proposal) =>
+        ["closed"].includes(proposal.state)
+      );
+    }
+  }, [activeTabId, snapshotProposals]);
 }
 
 function ProposalList({ account, proposals, signer }: ProposalListProps) {
