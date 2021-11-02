@@ -3,13 +3,13 @@ import { ChevronLeft } from "@material-ui/icons";
 import { useWeb3React } from "@web3-react/core";
 import { Proposal } from "elf-council-proposals";
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
-
 import {
   getIsExecutable,
   getIsVotingOpen,
   proposalsBySnapShotId,
   proposalsJson,
 } from "src/elf-council-proposals";
+import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
@@ -19,6 +19,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import H1 from "src/ui/base/H1";
+import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useExecute } from "src/ui/proposals/useExecute";
@@ -28,8 +29,6 @@ import { Ballot } from "src/ui/voting/Ballot";
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
-
-import { ProposalTabs } from "./ProposalTabs";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
@@ -43,18 +42,24 @@ export default function ProposalsPage(): ReactElement {
 
   const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
 
-  const proposalTabs = useMemo(() => {
+  const proposalTabs: TabInfo[] = useMemo(() => {
     return [
+      {
+        id: "off-chain-proposals",
+        current: false,
+        href: ELEMENT_FINANCE_SNAPSHOT_URL,
+        name: t`Off-chain`,
+      },
       {
         id: "active-proposals-tab",
         current: activeTabId === "active-proposals-tab",
-        onChange: () => setActiveTab("active-proposals-tab"),
+        onTabClick: () => setActiveTab("active-proposals-tab"),
         name: t`Active`,
       },
       {
         id: "past-proposals-tab",
         current: activeTabId === "past-proposals-tab",
-        onChange: () => setActiveTab("past-proposals-tab"),
+        onTabClick: () => setActiveTab("past-proposals-tab"),
         name: t`Past`,
       },
     ];
@@ -75,9 +80,9 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId, snapshotProposals]);
 
   return (
-    <div className={tw("h-full", "pt-8", "px-8")}>
+    <div className={tw("h-full", "pt-8", "px-8", "space-y-4")}>
       <ProposalPageHeader />
-      <ProposalTabs proposalTabs={proposalTabs} />
+      <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
       <ProposalList
         account={account}
         signer={signer}
