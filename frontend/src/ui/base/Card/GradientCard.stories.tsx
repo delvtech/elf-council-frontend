@@ -12,9 +12,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Story: ComponentStory<typeof GradientCardComponent> = (args) => (
-  <div className={tw("flex", "w-96", "h-96")}>
-    <GradientCardComponent {...args} />
-  </div>
+  <GradientCardComponent {...args} />
 );
 
 export const GradientCard = Story.bind({});
@@ -24,7 +22,7 @@ GradientCard.args = {
   className: tw(
     "text-white",
     "w-96",
-    "h-full",
+    "h-96",
     "flex",
     "justify-center",
     "items-center"
