@@ -4,8 +4,6 @@ import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw from "src/elf-tailwindcss-classnames";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1";
 import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
@@ -62,7 +60,7 @@ export default function ProposalsPage(): ReactElement {
 
   return (
     <div className={tw("h-full", "pt-8", "px-8", "space-y-8")}>
-      <ProposalPageHeader />
+      <H1 className={tw("flex-1", "text-center")}>{t`Proposals`}</H1>
       <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
       <div className={tw("flex", "space-x-12")}>
         <ProposalList
@@ -94,13 +92,4 @@ function useFilteredProposals(
       );
     }
   }, [activeTabId, snapshotProposals]);
-}
-
-function ProposalPageHeader() {
-  return (
-    <div className={tw("flex")}>
-      <H1 className={tw("flex-1", "text-center")}>{t`Proposals`}</H1>
-      <Button variant={ButtonVariant.GRADIENT}>{t`New Proposal`}</Button>
-    </div>
-  );
 }

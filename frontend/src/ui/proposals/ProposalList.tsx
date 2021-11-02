@@ -1,5 +1,4 @@
 import { Signer } from "@ethersproject/abstract-signer";
-import { ChevronLeft } from "@material-ui/icons";
 import { Proposal } from "elf-council-proposals";
 import React, { ReactElement, useCallback } from "react";
 import {
@@ -8,12 +7,10 @@ import {
   proposalsBySnapShotId,
 } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
-import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
-import AnchorButton from "src/ui/base/Button/AnchorButton";
+import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
-import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
+import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
