@@ -17,6 +17,7 @@ module.exports = {
         yieldBlue: "#1568CA",
         denimBlue: "#7FBEEA",
         principalBlue: "#6ACDE2",
+        principalRoyalBlue: "#005EBE",
         clay: "#242E36",
         black: "#1B1D21",
         blueGrey: "#B2CAE3",
@@ -39,6 +40,7 @@ module.exports = {
         },
         brandDarkBlue: {
           light: "#588bf1",
+          // Deprecated: use principalRoyalBlue instead
           DEFAULT: "#005EBE",
           dark: "#00368d",
         },
