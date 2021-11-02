@@ -16,8 +16,8 @@ export default function GradientCard(props: GradientCardProps): ReactElement {
     <div
       className={tw(
         "bg-gradient-to-br",
-        "from-brandDarkBlue",
-        "to-brandLightBlue",
+        "to-principalRoyalBlue",
+        "from-principalBlue",
         "overflow-hidden",
         "shadow",
         "rounded-lg"
