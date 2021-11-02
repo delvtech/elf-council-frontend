@@ -2,10 +2,6 @@ name: Prettier
 
 on: [pull_request]
 
-defaults:
-  run:
-    working-directory: frontend
-
 jobs:
   prettier-check:
     runs-on: ubuntu-latest

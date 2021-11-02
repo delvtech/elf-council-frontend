@@ -2,10 +2,6 @@ name: Eslint
 
 on: [pull_request]
 
-defaults:
-  run:
-    working-directory: frontend
-
 jobs:
   eslint-check:
     runs-on: ubuntu-latest

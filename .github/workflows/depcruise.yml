@@ -2,10 +2,6 @@ name: Dependency cruiser
 
 on: [pull_request]
 
-defaults:
-  run:
-    working-directory: frontend
-
 jobs:
   depcruise-check:
     runs-on: ubuntu-latest
