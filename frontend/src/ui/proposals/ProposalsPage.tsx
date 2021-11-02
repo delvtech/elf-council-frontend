@@ -80,7 +80,7 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId, snapshotProposals]);
 
   return (
-    <div className={tw("h-full", "pt-8", "px-8", "space-y-4")}>
+    <div className={tw("h-full", "pt-8", "px-8", "space-y-8")}>
       <ProposalPageHeader />
       <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
       <ProposalList

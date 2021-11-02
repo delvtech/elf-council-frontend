@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { ReactElement } from "react";
 import tw, { TPseudoClasses, TTextColor } from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
