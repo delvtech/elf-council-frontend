@@ -40,6 +40,7 @@
     "react-chartjs-2": "^2.11.1",
     "react-dom": "17.0.1",
     "react-query": "^3.23.2",
+    "react-use": "^17.3.1",
     "storybook-color-picker": "^2.1.4",
     "tailwindcss": "^2.0.2",
     "tailwindcss-classnames": "^2.2.3",

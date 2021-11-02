@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ReactElement } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { TPseudoClasses, TTextColor } from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 
 export interface TabInfo {
@@ -16,66 +16,40 @@ interface TabsProps {
 }
 export default function Tabs({ tabs }: TabsProps): ReactElement {
   return (
-    <div>
-      <div className="sm:hidden">
-        <label htmlFor="tabs" className={tw("sr-only")}>
-          {t`Select a tab`}
-        </label>
-        {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-        <select
-          id="tabs"
-          name="tabs"
-          className={tw(
-            "block",
-            "w-full",
-            "pl-3",
-            "pr-10",
-            "py-2",
-            "focus:outline-none",
-            "focus:ring-brandDarkBlue",
-            "focus:border-brandDarkBlue",
-            "sm:text-sm",
-            "rounded-md"
+    <nav className={tw("-mb-px", "flex")} aria-label={t`Tabs`}>
+      {tabs.map((tab, i) => (
+        <button
+          key={tab.name}
+          onClick={tab.onChange}
+          className={classNames(
+            tw(
+              "border-gray-200",
+              "border-b-2",
+              "hover:border-gray-300",
+              "text-lg",
+              "px-4",
+              "py-2",
+              "font-semibold",
+              {
+                "rounded-l-xl": i === 0,
+                "rounded-r-xl": i === tabs.length - 1,
+              },
+              ...getTextColor(tab.current),
+              tab.current ? "bg-paleLily" : "bg-hackerSky"
+            )
           )}
-          defaultValue={tabs.find((tab) => tab.current)?.name}
+          aria-current={tab.current ? "page" : undefined}
         >
-          {tabs.map((tab) => (
-            <option onClick={tab.onChange} key={tab.name}>
-              {tab.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className={tw("hidden", "sm:block")}>
-        <nav className={tw("-mb-px", "flex", "space-x-6")} aria-label={t`Tabs`}>
-          {tabs.map((tab) => (
-            <button
-              key={tab.name}
-              onClick={tab.onChange}
-              className={classNames(
-                tab.current
-                  ? tw("border-brandDarkBlue", "text-brandDarkBlue")
-                  : tw(
-                      "border-transparent",
-                      "text-brandDarkBlue-light",
-                      "hover:text-brandDarkBlue",
-                      "hover:border-brandDarkBlue"
-                    ),
-                tw(
-                  "whitespace-nowrap",
-                  "py-1",
-                  "px-1",
-                  "border-b-4",
-                  "font-bold"
-                )
-              )}
-              aria-current={tab.current ? "page" : undefined}
-            >
-              {tab.name}
-            </button>
-          ))}
-        </nav>
-      </div>
-    </div>
+          {tab.name}
+        </button>
+      ))}
+    </nav>
   );
+}
+
+function getTextColor(current: boolean): (TTextColor | TPseudoClasses)[] {
+  if (current) {
+    return ["text-principalRoyalBlue", "hover:text-principalRoyalBlue"];
+  }
+  return ["text-yieldBlue"];
 }

@@ -17,6 +17,7 @@ module.exports = {
         yieldBlue: "#1568CA",
         denimBlue: "#7FBEEA",
         principalBlue: "#6ACDE2",
+        principalRoyalBlue: "#005EBE",
         clay: "#242E36",
         black: "#1B1D21",
         blueGrey: "#B2CAE3",
@@ -28,6 +29,7 @@ module.exports = {
         goldYellow: "#FFC300",
         statusGreen: "#007F00",
         statusRed: "#FAEAEA",
+        hackerSky: "#F1F5FE",
 
         // Deprecated colors:
         // Used this tool for color variants: https://material.io/resources/color
@@ -38,6 +40,7 @@ module.exports = {
         },
         brandDarkBlue: {
           light: "#588bf1",
+          // Deprecated: use principalRoyalBlue instead
           DEFAULT: "#005EBE",
           dark: "#00368d",
         },
