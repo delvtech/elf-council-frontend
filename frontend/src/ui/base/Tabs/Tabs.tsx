@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ReactElement } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { TPseudoClasses, TTextColor } from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 
 export interface TabInfo {
@@ -23,7 +23,9 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
           onClick={tab.onChange}
           className={classNames(
             tw(
-              "shadow",
+              "border-gray-200",
+              "border-b-2",
+              "hover:border-gray-300",
               "text-lg",
               "px-4",
               "py-2",
@@ -32,10 +34,7 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
                 "rounded-l-xl": i === 0,
                 "rounded-r-xl": i === tabs.length - 1,
               },
-              tab.current ? "text-principalRoyalBlue" : "text-yieldBlue",
-              tab.current
-                ? "hover:text-principalRoyalBlue"
-                : "hover:text-denimBlue",
+              ...getTextColor(tab.current),
               tab.current ? "bg-paleLily" : "bg-hackerSky"
             )
           )}
@@ -46,4 +45,11 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
       ))}
     </nav>
   );
+}
+
+function getTextColor(current: boolean): (TTextColor | TPseudoClasses)[] {
+  if (current) {
+    return ["text-principalRoyalBlue", "hover:text-principalRoyalBlue"];
+  }
+  return ["text-yieldBlue"];
 }
