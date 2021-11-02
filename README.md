@@ -3,8 +3,7 @@
 First, some setup:
 
 ```bash
-# go into the frontend/ directory and install npm dependencies
-cd frontend/
+# install npm dependencies
 npm ci
 # copy the tokenlist and addresses jsons from the testnet
 npm run copy-testnet
