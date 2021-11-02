@@ -9,7 +9,7 @@ npm ci
 npm run copy-testnet
 ```
 
-Then, run the development server (again from frontend/ directory):
+Then, run the development server:
 
 ```bash
 npm run dev
