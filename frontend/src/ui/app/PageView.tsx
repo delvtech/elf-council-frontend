@@ -29,14 +29,13 @@ export default function PageView(props: PageViewProps): ReactElement {
             "overflow-scroll",
             "justify-center",
             "align-middle",
-            "items-center",
-            "bg-gradient-to-b",
-            "from-gray-50",
-            "to-gray-100"
+            "items-center"
           )}
         >
           <Header />
-          <div className={tw("max-w-6xl", "mt-6", "m-auto")}>{children}</div>
+          <div className={tw("max-w-6xl", "mt-6", "m-auto", "h-full")}>
+            {children}
+          </div>
         </div>
       </div>
       <SimpleDialog isOpen={isWrongChain}>
