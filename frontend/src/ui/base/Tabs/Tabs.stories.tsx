@@ -19,9 +19,9 @@ export const Tabs = TabsStory.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Tabs.args = {
   tabs: [
-    { id: "First", name: "First", current: true, onChange },
-    { id: "Second", name: "Second", current: false, onChange },
-    { id: "Third", name: "Third", current: false, onChange },
+    { id: "First", name: "First", current: true, onTabClick: onChange },
+    { id: "Second", name: "Second", current: false, onTabClick: onChange },
+    { id: "Third", name: "Third", current: false, onTabClick: onChange },
   ],
   "aria-label": "Storybook tabs label",
 };

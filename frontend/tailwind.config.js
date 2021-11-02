@@ -30,6 +30,7 @@ module.exports = {
         statusGreen: "#007F00",
         statusRed: "#FAEAEA",
         hackerSky: "#F1F5FE",
+        appBackgroundLight: "#FAF9F9",
 
         // Deprecated colors:
         // Used this tool for color variants: https://material.io/resources/color

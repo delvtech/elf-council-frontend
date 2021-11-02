@@ -89,13 +89,6 @@ export default function Sidebar(): ReactElement {
             label={t`Forum`}
           />
           <SidebarLink link="/resources" label={t`Resources`} />
-
-          <div className={tw("text-center", "pt-8")}>
-            <LinkButton round variant={ButtonVariant.GRADIENT} link="/rewards">
-              {t`Rewards`}
-              <StarIcon className={tw("ml-2")} />
-            </LinkButton>
-          </div>
         </div>
       </div>
     </Fragment>
