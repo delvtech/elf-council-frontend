@@ -9,10 +9,7 @@ export const proposalsBySnapShotId = keyBy(
   "snapshotId"
 );
 
-export const proposalsByOnChainId = keyBy(
-  proposalsJson.proposals,
-  "proposalId"
-);
+export const proposalsById = keyBy(proposalsJson.proposals, "proposalId");
 
 export function getIsVotingOpen(
   proposal: Proposal,

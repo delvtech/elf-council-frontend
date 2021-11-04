@@ -15,6 +15,7 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useExecute } from "src/ui/proposals/useExecute";
+import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
@@ -23,22 +24,25 @@ import { t } from "ttag";
 interface ProposalListProps {
   account: string | null | undefined;
   signer: Signer | undefined;
-  proposals: SnapshotProposal[];
+  proposals: Proposal[];
   activeProposalId: string | undefined;
+  setActiveProposal: (proposalId: string | undefined) => void;
 }
 export function ProposalList({
   account,
   proposals,
   signer,
   activeProposalId,
+  setActiveProposal,
 }: ProposalListProps): ReactElement {
   return (
     <div className={tw("flex", "w-full", "flex-col", "space-y-4", "pb-8")}>
       {proposals.map((proposal) => (
         <ProposalCardRow
-          key={proposal.id}
-          active={proposal.id === activeProposalId}
-          snapshotProposal={proposal}
+          key={proposal.proposalId}
+          active={proposal.proposalId === activeProposalId}
+          proposal={proposal}
+          setActiveProposal={setActiveProposal}
           account={account}
           signer={signer}
         />
@@ -49,17 +53,24 @@ export function ProposalList({
 interface ProposalCardRowProps {
   account: string | null | undefined;
   signer: Signer | undefined;
-  snapshotProposal: SnapshotProposal;
+  proposal: Proposal;
   active: boolean;
+  setActiveProposal: (proposalId: string | undefined) => void;
 }
 function ProposalCardRow({
   account,
   signer,
-  snapshotProposal,
+  proposal,
+  active,
+  setActiveProposal,
 }: ProposalCardRowProps): ReactElement {
-  const proposal = proposalsBySnapShotId[snapshotProposal.id];
-  const { proposalId: onChainProposalId, created: proposalCreatedBlockNumber } =
-    proposal;
+  const {
+    proposalId,
+    created: proposalCreatedBlockNumber,
+    snapshotId,
+  } = proposal;
+
+  const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
 
   const { mutate: vote } = useVote(account, signer, proposalCreatedBlockNumber);
   const votePower = useVotingPowerForAccount(
@@ -69,28 +80,31 @@ function ProposalCardRow({
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
   const onYesVoteClick = useCallback(() => {
-    vote(onChainProposalId.toString(), Ballot.YES);
-  }, [onChainProposalId, vote]);
+    vote(proposalId.toString(), Ballot.YES);
+  }, [proposalId, vote]);
   const onNoVoteClick = useCallback(() => {
-    vote(onChainProposalId.toString(), Ballot.NO);
-  }, [onChainProposalId, vote]);
+    vote(proposalId.toString(), Ballot.NO);
+  }, [proposalId, vote]);
   const onMaybeVoteClick = useCallback(() => {
-    vote(onChainProposalId.toString(), Ballot.MAYBE);
-  }, [onChainProposalId, vote]);
+    vote(proposalId.toString(), Ballot.MAYBE);
+  }, [proposalId, vote]);
 
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
 
   return (
     <Card
-      key={snapshotProposal.id}
+      interactive
+      active={active}
+      onClick={() => {
+        return setActiveProposal(proposalId);
+      }}
+      key={proposal.proposalId}
       className={tw("flex", "justify-between", "items-center")}
     >
       <div className={tw("flex-col", "space-y-4")}>
         <CardHeader
-          title={snapshotProposal.title}
-          description={t`Proposal #${
-            proposalsBySnapShotId[snapshotProposal.id].proposalId
-          }`}
+          title={snapshotProposal?.title}
+          description={t`Proposal #${proposalId}`}
         />
         {/* <div className={tw("flex", "space-x-4")}>
           <AnchorButton
