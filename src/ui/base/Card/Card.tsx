@@ -2,7 +2,12 @@
 
 import classNames from "classnames";
 import { ReactElement, ReactNode } from "react";
-import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
+import { assertNever } from "src/base/assertNever";
+import tw, {
+  TBackgroundColor,
+  TBackgroundImage,
+  TGradientColorStops,
+} from "src/elf-tailwindcss-classnames";
 
 export enum CardVariant {
   GRADIENT = "gradient",
@@ -14,38 +19,67 @@ interface CardProps {
   children: ReactNode;
   variant?: CardVariant;
   className?: string;
+  interactive?: boolean;
+  active?: boolean;
+  onClick?: () => void;
 }
 
-const variantBackgrounds: Record<CardVariant, TTailwindString> = {
-  [CardVariant.GRADIENT]: tw(
-    "bg-gradient-to-br",
-    "from-brandDarkBlue",
-    "to-brandLightBlue"
-  ),
-  [CardVariant.BLUE]: tw("bg-brandDarkBlue"),
-  [CardVariant.WHITE]: tw("bg-white"),
-};
 export default function Card(props: CardProps): ReactElement {
-  const { className, variant = CardVariant.WHITE, children } = props;
+  const {
+    className,
+    variant = CardVariant.WHITE,
+    interactive = false,
+    active = false,
+    onClick,
+    children,
+  } = props;
 
-  const variantBackground = variantBackgrounds[variant];
-
-  return (
-    <div
-      className={classNames(
-        tw(
-          variantBackground,
-          "overflow-hidden",
-          "shadow",
-          "rounded-xl",
-          "px-4",
-          "py-5",
-          "sm:p-6"
-        ),
-        className
-      )}
-    >
-      {children}
-    </div>
+  const cardClassName = classNames(
+    tw(
+      "overflow-hidden",
+      "rounded-xl",
+      "px-4",
+      "py-5",
+      "sm:p-6",
+      ...getBackgroundColor(variant, active),
+      active ? "shadow-md" : "shadow",
+      {
+        "hover:shadow-md": interactive,
+        "focus:ring-principalRoyalBlue": interactive,
+        "focus:ring-2": interactive,
+      }
+    ),
+    className
   );
+
+  if (interactive) {
+    return (
+      <button className={cardClassName} onClick={onClick}>
+        {children}
+      </button>
+    );
+  }
+
+  return <div className={cardClassName}>{children}</div>;
+}
+
+function getBackgroundColor(
+  variant: CardVariant,
+  active: boolean
+): (TBackgroundColor | TBackgroundImage | TGradientColorStops)[] {
+  if (active) {
+    return ["bg-paleLily"];
+  }
+
+  switch (variant) {
+    case CardVariant.BLUE:
+      return ["bg-principalRoyalBlue"];
+    case CardVariant.GRADIENT:
+      return ["bg-gradient-to-br", "from-brandDarkBlue", "to-brandLightBlue"];
+    case CardVariant.WHITE:
+      return ["bg-white"];
+    default:
+      assertNever(variant);
+      return [];
+  }
 }

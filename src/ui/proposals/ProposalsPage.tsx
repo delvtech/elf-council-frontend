@@ -23,9 +23,9 @@ export default function ProposalsPage(): ReactElement {
 
   // TODO: Move these into the route so people can link to a proposal easily
   const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
-  const [activeProposalId, setActiveProposalId] = useState<string | undefined>(
-    ""
-  );
+  const [activeProposalId, setActiveProposalId] = useState<
+    string | undefined
+  >();
   const activeProposal = activeProposalId
     ? proposalsBySnapShotId[activeProposalId]
     : undefined;
@@ -66,8 +66,9 @@ export default function ProposalsPage(): ReactElement {
         <ProposalList
           account={account}
           signer={signer}
-          proposals={filteredProposals || []}
+          snapshotProposals={filteredProposals || []}
           activeProposalId={activeProposalId}
+          setActiveProposal={setActiveProposalId}
         />
         <ProposalDetailsCard proposal={activeProposal} />
       </div>

@@ -23,22 +23,28 @@ import { t } from "ttag";
 interface ProposalListProps {
   account: string | null | undefined;
   signer: Signer | undefined;
-  proposals: SnapshotProposal[];
+  snapshotProposals: SnapshotProposal[];
   activeProposalId: string | undefined;
+  setActiveProposal: (proposalId: string | undefined) => void;
 }
 export function ProposalList({
   account,
-  proposals,
+  snapshotProposals,
   signer,
   activeProposalId,
+  setActiveProposal,
 }: ProposalListProps): ReactElement {
   return (
     <div className={tw("flex", "w-full", "flex-col", "space-y-4", "pb-8")}>
-      {proposals.map((proposal) => (
+      {snapshotProposals.map((snapshotProposal) => (
         <ProposalCardRow
-          key={proposal.id}
-          active={proposal.id === activeProposalId}
-          snapshotProposal={proposal}
+          key={snapshotProposal.id}
+          active={
+            proposalsBySnapShotId[snapshotProposal.id].proposalId ===
+            activeProposalId
+          }
+          snapshotProposal={snapshotProposal}
+          setActiveProposal={setActiveProposal}
           account={account}
           signer={signer}
         />
@@ -51,11 +57,14 @@ interface ProposalCardRowProps {
   signer: Signer | undefined;
   snapshotProposal: SnapshotProposal;
   active: boolean;
+  setActiveProposal: (proposalId: string | undefined) => void;
 }
 function ProposalCardRow({
   account,
   signer,
   snapshotProposal,
+  active,
+  setActiveProposal,
 }: ProposalCardRowProps): ReactElement {
   const proposal = proposalsBySnapShotId[snapshotProposal.id];
   const { proposalId: onChainProposalId, created: proposalCreatedBlockNumber } =
@@ -82,6 +91,11 @@ function ProposalCardRow({
 
   return (
     <Card
+      interactive
+      active={active}
+      onClick={() => {
+        return setActiveProposal(proposal.proposalId);
+      }}
       key={snapshotProposal.id}
       className={tw("flex", "justify-between", "items-center")}
     >
