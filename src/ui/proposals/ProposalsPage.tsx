@@ -1,6 +1,10 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { ReactElement, useMemo, useState } from "react";
-import { proposalsBySnapShotId } from "src/elf-council-proposals";
+import { Proposal } from "elf-council-proposals";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import {
+  proposalsById,
+  proposalsBySnapShotId,
+} from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw from "src/elf-tailwindcss-classnames";
@@ -26,8 +30,14 @@ export default function ProposalsPage(): ReactElement {
   const [activeProposalId, setActiveProposalId] = useState<
     string | undefined
   >();
+  useEffect(() => {
+    // clear the active proposal when the user switches between Active and Past
+    // tabs.
+    setActiveProposalId(undefined);
+  }, [activeTabId]);
+
   const activeProposal = activeProposalId
-    ? proposalsBySnapShotId[activeProposalId]
+    ? proposalsById[activeProposalId]
     : undefined;
 
   const filteredProposals = useFilteredProposals(
@@ -66,7 +76,7 @@ export default function ProposalsPage(): ReactElement {
         <ProposalList
           account={account}
           signer={signer}
-          snapshotProposals={filteredProposals || []}
+          proposals={filteredProposals || []}
           activeProposalId={activeProposalId}
           setActiveProposal={setActiveProposalId}
         />
@@ -79,18 +89,24 @@ export default function ProposalsPage(): ReactElement {
 function useFilteredProposals(
   activeTabId: string,
   snapshotProposals: SnapshotProposal[] | undefined
-) {
+): Proposal[] | undefined {
   return useMemo(() => {
     if (activeTabId === "active-proposals-tab") {
-      return snapshotProposals?.filter((proposal) =>
-        ["active", "pending"].includes(proposal.state)
-      );
+      return snapshotProposals
+        ?.filter((snapshotProposal) =>
+          ["active", "pending"].includes(snapshotProposal.state)
+        )
+        .map((snapshotProposal) => proposalsBySnapShotId[snapshotProposal.id]);
     }
 
     if (activeTabId === "past-proposals-tab") {
-      return snapshotProposals?.filter((proposal) =>
-        ["closed"].includes(proposal.state)
-      );
+      return snapshotProposals
+        ?.filter((snapshotProposal) =>
+          ["closed"].includes(snapshotProposal.state)
+        )
+        .map((snapshotProposal) => proposalsBySnapShotId[snapshotProposal.id]);
     }
+
+    return [];
   }, [activeTabId, snapshotProposals]);
 }
