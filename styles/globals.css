@@ -3,19 +3,58 @@
 @tailwind utilities;
 
 :root {
-  --app-background-light: #faf9f9;
+	--app-background-light: #faf9f9;
+	--color-brandDark: #588bf1;
+	--color-brandDark-light: #005ebe;
+	--color-brandDark-dark: #00368d;
+	--color-brandLight: #78d3e2;
+	--color-brandLight-light: #acffff;
+	--color-brandLight-dark: #42a2b0;
+	--color-goldYellow: #ffc300;
+	--color-nightVote: #3a6073;
+
+	--color-yield-blue: #1568ca;
+	--color-denim-blue: #7fbeea;
+	--color-principal-blue: #6acde2;
+	--color-principal-royal-blue: #005ebe;
+	--color-clay: #242e36;
+	--color-black: #1b1d21;
+	--color-blue-grey: #b2cae3;
+	--color-pale-lily: #d1ecf1;
+	--color-voting-green: #cdffcd;
+	--color-deep-red: #f73030;
+	--color-indian-yellow: #e1af55;
+	--color-topaz: #19c2a3;
+	--color-gold-yellow: #ffc300;
+	--color-status-green: #007f00;
+	--color-status-red: #faeaea;
+	--color-hacker-sky: #f1f5fe;
+	--color-app-background-light: #faf9f9;
+	--color-egg-white: #faeaea;
+
+	--color-reward-blue: linear-gradient(
+		180deg,
+		rgba(151, 151, 151, 0.2) 0%,
+		#78d3e2 100%
+	);
+	--color-voting-blue: linear-gradient(180deg, #6acde2 0%, #005ebe 100%);
+	--color-night-vote: linear-gradient(180deg, #33404c 0%, #3a6073 100%);
+	--color-power-blue: linear-gradient(180deg, #33404c 0%, #005ebe 100%);
+
+	--color-white: #ffffff;
+	--transition: 0.2s;
 }
 
 body {
-  font-family: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  background-color: var(--app-background-light);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-family: "Rubik", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		"Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+		"Helvetica Neue", sans-serif;
+	background-color: var(--app-background-light);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+		monospace;
 }

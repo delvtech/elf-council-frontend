@@ -1,0 +1,20 @@
+.base {
+	color: var(--color-brandDark-light);
+	font-weight: 500;
+	font-size: 16px;
+	transition: var(--transition);
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.base:hover {
+	color: var(--color-principal-blue);
+}
+
+.bannerLink {
+	color: var(--color-goldYellow);
+}
+
+.bannerLink:hover {
+	color: var(--color-white);
+}
