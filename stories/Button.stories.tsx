@@ -19,7 +19,7 @@ FullWidth.args = {
 
 export const Gradient = Template.bind({});
 Gradient.args = {
-	gradient: true,
+	gradientButton: true,
 };
 
 export const ElfiToken = Template.bind({});

@@ -1,4 +1,4 @@
-import { StatusButton, EStatus } from "../components";
+import { StatusButton, ButtonStatus } from "../components";
 
 export default {
 	title: "StatusButton",
@@ -9,20 +9,20 @@ const Template = (args) => <StatusButton {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-	status: EStatus.Normal,
+	status: ButtonStatus.Default,
 };
 
 export const Success = Template.bind({});
 Success.args = {
-	status: EStatus.Success,
+	status: ButtonStatus.Success,
 };
 
 export const Fail = Template.bind({});
 Fail.args = {
-	status: EStatus.Failed,
+	status: ButtonStatus.Failed,
 };
 
 export const Queued = Template.bind({});
 Queued.args = {
-	status: EStatus.Queued,
+	status: ButtonStatus.Queued,
 };
