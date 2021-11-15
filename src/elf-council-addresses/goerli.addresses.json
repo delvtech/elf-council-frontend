@@ -1,5 +1,5 @@
 {
-  "chainId": "5",
+  "chainId": 5,
   "addresses": {
     "elementToken": "0xa7E598Ab2c0df4A55feBFDD32ee6Cc64d2aE54eA",
     "coreVoting": "0x5264a36f4839F45d753701B5BDFc66c3f4ad2F96",
