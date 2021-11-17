@@ -72,6 +72,7 @@
     "build:tailwindcss-classnames": "tailwindcss-classnames -i tailwind.config.js -o src/elf-tailwindcss-classnames/index.ts",
     "depcruise": "depcruise --config .dependency-cruiser.js .",
     "dev": "next dev",
+    "dev-goerli": "NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
     "lint": "next lint",
     "prettier:check": "prettier --check pages/**/*.ts{,x}",
     "start": "next start",
