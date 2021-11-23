@@ -3,6 +3,7 @@ import {
   ERC20Permit__factory,
   LockingVault__factory,
   OptimisticRewards__factory,
+  VestingVault__factory,
 } from "elf-council-typechain";
 import { addressesJson } from "src/elf-council-addresses";
 import { defaultProvider } from "src/elf/providers/providers";
@@ -27,8 +28,12 @@ export const coreVotingContract = CoreVoting__factory.connect(
   defaultProvider
 );
 
-// TODO: add vesting vault to testnet
-// export const vestingContract = VestingVault__factory.connect(
-//   addressesJson.addresses.vestingVault,
-//   defaultProvider
-// );
+export const vestingContract = VestingVault__factory.connect(
+  addressesJson.addresses.vestingVault,
+  defaultProvider
+);
+
+export const airdropContract = VestingVault__factory.connect(
+  addressesJson.addresses.airdrop,
+  defaultProvider
+);
