@@ -23,7 +23,7 @@
     "chart.js": "^2.9.4",
     "classnames": "^2.3.1",
     "d3-time-format": "^4.0.0",
-    "dependency-cruiser": "^10.3.1",
+    "dependency-cruiser": "^10.7.0",
     "elf-council-proposals": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
     "elf-council-typechain": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
     "eslint-config-prettier": "^8.3.0",
