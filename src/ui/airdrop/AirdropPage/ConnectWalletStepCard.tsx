@@ -1,11 +1,25 @@
 import React, { ReactElement } from "react";
 import tw from "src/elf-tailwindcss-classnames";
+import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
+import {
+  ConnectWalletButton,
+  WalletProfileButton,
+} from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { t } from "ttag";
 
-export function ConnectWalletStepCard(): ReactElement {
+interface ConnectWalletStepCardProps {
+  account: string | null | undefined;
+  walletConnectionActive: boolean | undefined;
+  onNextStep: () => void;
+}
+
+export function ConnectWalletStepCard({
+  walletConnectionActive,
+  account,
+  onNextStep,
+}: ConnectWalletStepCardProps): ReactElement {
   return (
     <Card
       variant={CardVariant.BLUE}
@@ -38,11 +52,24 @@ export function ConnectWalletStepCard(): ReactElement {
         </p>
         <p>{t`Connect your wallet to see if you have any tokens available to claim!`}</p>
       </div>
-      <div className={tw("flex", "justify-end", "w-full")}>
-        <ConnectWalletButton
-          label={t`Connect your wallet to begin`}
+      <div className={tw("flex", "justify-end", "w-full", "space-x-4")}>
+        {!account ? (
+          <ConnectWalletButton
+            label={t`Connect your wallet to begin`}
+            variant={ButtonVariant.OUTLINE_WHITE}
+          />
+        ) : (
+          <WalletProfileButton
+            variant={ButtonVariant.OUTLINE_WHITE}
+            account={account}
+            walletConnectionActive={walletConnectionActive}
+          />
+        )}
+        <Button
+          disabled={!account}
           variant={ButtonVariant.OUTLINE_WHITE}
-        />
+          onClick={onNextStep}
+        >{t`Next`}</Button>
       </div>
     </Card>
   );

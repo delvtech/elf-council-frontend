@@ -1,53 +1,91 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode, useMemo, useState } from "react";
 import tw from "src/elf-tailwindcss-classnames";
-import Button from "src/ui/base/Button/Button";
+import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
+import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
 import Card from "src/ui/base/Card/Card";
-import Steps from "src/ui/base/Card/Steps/Steps";
+import Steps, { Step } from "src/ui/base/Card/Steps/Steps";
 import H1 from "src/ui/base/H1";
 import { t } from "ttag";
 import { ConnectWalletStepCard } from "./ConnectWalletStepCard";
 
+interface StepWithContent extends Step {
+  content: ReactNode;
+}
+
 export default function AirdropPage(): ReactElement {
-  const { account, library } = useWeb3React();
+  const { account, active, library } = useWeb3React();
+
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const steps: StepWithContent[] = useMemo(() => {
+    return [
+      {
+        name: "Connect wallet",
+        status: account ? "complete" : "current",
+        onClick: () => {
+          setActiveStepIndex(0);
+        },
+        content: (
+          <ConnectWalletStepCard
+            account={account}
+            walletConnectionActive={active}
+            onNextStep={() => setActiveStepIndex(1)}
+          />
+        ),
+      },
+      {
+        name: "View airdrop",
+        status:
+          activeStepIndex === 1
+            ? "current"
+            : activeStepIndex === 2
+            ? "complete"
+            : "upcoming",
+        onClick: () => {
+          if (account) {
+            setActiveStepIndex(1);
+          }
+        },
+        content: (
+          <ViewAirdropStepCard onNextStep={() => setActiveStepIndex(2)} />
+        ),
+      },
+      {
+        name: "Claim and delegate",
+        status: activeStepIndex === 2 ? "current" : "upcoming",
+        onClick: () => {
+          if (account) {
+            setActiveStepIndex(2);
+          }
+        },
+        content: <DelegateStepCard />,
+      },
+    ];
+  }, [account, active, activeStepIndex]);
 
   return (
     <div className={tw("flex", "flex-col", "h-full", "pt-8", "space-y-8")}>
       <H1
         className={tw("flex-1", "text-center")}
       >{t`Element Finance Token Airdrop`}</H1>
-      <div className={tw("flex", "space-x-12", "flex-shrink-0")}>
-        <Card className={tw("flex", "flex-col", "text-white", "w-96")}>
-          <div
-            className={tw(
-              "text-xl",
-              "font-bold",
-              "text-principalRoyalBlue",
-              "text-center"
-            )}
-          >{t`Claim your ELFI in 3 steps.`}</div>
-          <Steps
-            steps={[
-              {
-                name: "Connect wallet",
-                status: account ? "complete" : "current",
-                onClick: () => {},
-              },
-              {
-                name: "View airdrop",
-                status: account ? "current" : "upcoming",
-                onClick: () => {},
-              },
-              {
-                name: "Claim and delegate",
-                status: "upcoming",
-                onClick: () => {},
-              },
-            ]}
-          />
-        </Card>
+      <div className={tw("flex", "space-x-12", "h-full")}>
+        <div>
+          <Card
+            className={tw("flex", "flex-col", "text-white", "w-80", "h-64")}
+          >
+            <div
+              className={tw(
+                "font-bold",
+                "text-principalRoyalBlue",
+                "text-center",
+                "mb-6"
+              )}
+            >{t`Claim your ELFI in 3 steps`}</div>
+            <Steps steps={steps} />
+          </Card>
+        </div>
 
-        <ConnectWalletStepCard />
+        <div style={{ width: 500 }}>{steps[activeStepIndex].content}</div>
       </div>
     </div>
   );

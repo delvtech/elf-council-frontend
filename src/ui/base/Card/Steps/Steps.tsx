@@ -16,9 +16,9 @@ const steps = [
 
 type StepStatus = "complete" | "current" | "upcoming";
 
-interface Step {
+export interface Step {
   name: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
   status: StepStatus;
 }
 interface StepsProps {
@@ -31,7 +31,7 @@ interface StepCompleteProps {
 
 function StepComplete({ step }: StepCompleteProps) {
   return (
-    <a onClick={step.onClick} className={tw("group")}>
+    <a onClick={step?.onClick} className={tw("group")}>
       <span className={tw("flex", "items-start")}>
         <span
           className={tw(
@@ -77,7 +77,7 @@ interface StepCurrentProps {
 function StepCurrent({ step }: StepCurrentProps) {
   return (
     <a
-      onClick={step.onClick}
+      onClick={step?.onClick}
       className={tw("flex", "items-start")}
       aria-current="step"
     >
@@ -133,7 +133,7 @@ interface StepUpcomingProps {
 
 function StepUpcoming({ step }: StepUpcomingProps) {
   return (
-    <a onClick={step.onClick} className={tw("group")}>
+    <a onClick={step?.onClick} className={tw("group")}>
       <div className={tw("flex", "items-start")}>
         <div
           className={tw(
@@ -175,37 +175,35 @@ function StepUpcoming({ step }: StepUpcomingProps) {
 
 export default function Steps({ steps }: StepsProps): ReactElement {
   return (
-    <div className={tw("py-12", "px-4", "sm:px-6", "lg:px-8")}>
-      <nav className={tw("flex", "justify-center")} aria-label="Progress">
-        <ol role="list" className={tw("space-y-6")}>
-          {steps.map((step, i) => {
-            switch (step.status) {
-              case "complete":
-                return (
-                  <li key={i}>
-                    <StepComplete step={step} />
-                  </li>
-                );
-              case "current":
-                return (
-                  <li key={i}>
-                    <StepCurrent step={step} />
-                  </li>
-                );
-              case "upcoming":
-                return (
-                  <li key={i}>
-                    <StepUpcoming step={step} />
-                  </li>
-                );
+    <nav className={tw("flex", "justify-center")} aria-label="Progress">
+      <ol role="list" className={tw("space-y-6")}>
+        {steps.map((step, i) => {
+          switch (step.status) {
+            case "complete":
+              return (
+                <li key={i}>
+                  <StepComplete step={step} />
+                </li>
+              );
+            case "current":
+              return (
+                <li key={i}>
+                  <StepCurrent step={step} />
+                </li>
+              );
+            case "upcoming":
+              return (
+                <li key={i}>
+                  <StepUpcoming step={step} />
+                </li>
+              );
 
-              default:
-                assertNever(step.status);
-                return null;
-            }
-          })}
-        </ol>
-      </nav>
-    </div>
+            default:
+              assertNever(step.status);
+              return null;
+          }
+        })}
+      </ol>
+    </nav>
   );
 }
