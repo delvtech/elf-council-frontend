@@ -11,16 +11,20 @@ import { t } from "ttag";
 
 interface PageViewProps {
   children?: ReactNode;
+  /**
+   * Whether or not the sidebar navigation should be shown, defaults to true
+   */
+  showSidebar?: boolean;
 }
 
 export default function PageView(props: PageViewProps): ReactElement {
-  const { children } = props;
+  const { children, showSidebar = true } = props;
   const { chainId } = useWeb3React();
   const isWrongChain = !!chainId && chainId !== addressesJson.chainId;
   return (
     <Fragment>
       <div className={tw("w-full", "h-full", "md:pl-80", "overflow-hidden")}>
-        <Sidebar />
+        {showSidebar ? <Sidebar /> : null}
         <div
           className={tw(
             "flex-1",
