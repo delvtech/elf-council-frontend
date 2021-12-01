@@ -4,21 +4,50 @@ import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
+import Steps from "src/ui/base/Card/Steps/Steps";
 import H1 from "src/ui/base/H1";
+import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { t } from "ttag";
 
 export default function AirdropPage(): ReactElement {
   const { account, library } = useWeb3React();
 
   return (
-    <div
-      style={{ width: 500 }}
-      className={tw("flex", "flex-col", "h-full", "pt-8", "space-y-8")}
-    >
+    <div className={tw("flex", "flex-col", "h-full", "pt-8", "space-y-8")}>
       <H1
         className={tw("flex-1", "text-center")}
-      >{t`Element Council Token Airdrop`}</H1>
-      <div className={tw("flex", "space-x-12")}>
+      >{t`Element Finance Token Airdrop`}</H1>
+      <div className={tw("flex", "space-x-12", "flex-shrink-0")}>
+        <Card className={tw("flex", "flex-col", "text-white", "w-96")}>
+          <div
+            className={tw(
+              "text-xl",
+              "font-bold",
+              "text-principalRoyalBlue",
+              "text-center"
+            )}
+          >{t`Claim your airdrop in 3 steps.`}</div>
+          <Steps
+            steps={[
+              {
+                name: "Connect wallet",
+                status: account ? "complete" : "current",
+                onClick: () => {},
+              },
+              {
+                name: "View airdrop",
+                status: account ? "current" : "upcoming",
+                onClick: () => {},
+              },
+              {
+                name: "Claim and delegate",
+                status: "upcoming",
+                onClick: () => {},
+              },
+            ]}
+          />
+        </Card>
+
         <Card
           variant={CardVariant.BLUE}
           className={tw(
@@ -51,9 +80,10 @@ export default function AirdropPage(): ReactElement {
             <p>{t`Connect your wallet to see if you have any tokens available to claim!`}</p>
           </div>
           <div className={tw("flex", "justify-end", "w-full")}>
-            <Button
+            <ConnectWalletButton
+              label={t`Connect your wallet to begin`}
               variant={ButtonVariant.OUTLINE_WHITE}
-            >{t`Get started`}</Button>
+            />
           </div>
         </Card>
       </div>
