@@ -39,7 +39,7 @@ export function ViewAirdropStepCard({
         <Button
           onClick={onNextStep}
           variant={ButtonVariant.OUTLINE_WHITE}
-        >{t`Claim and delegate`}</Button>
+        >{t`Pick a delegate`}</Button>
       </div>
     </Card>
   );

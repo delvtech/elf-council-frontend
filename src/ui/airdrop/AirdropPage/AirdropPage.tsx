@@ -20,7 +20,7 @@ export default function AirdropPage(): ReactElement {
   const steps: StepWithContent[] = useMemo(() => {
     return [
       {
-        name: "Connect wallet",
+        name: t`Connect wallet`,
         status: account ? "complete" : "current",
         onClick: () => {
           setActiveStepIndex(0);
@@ -34,7 +34,7 @@ export default function AirdropPage(): ReactElement {
         ),
       },
       {
-        name: "View airdrop",
+        name: t`View airdrop`,
         status:
           activeStepIndex === 1
             ? "current"
@@ -51,7 +51,7 @@ export default function AirdropPage(): ReactElement {
         ),
       },
       {
-        name: "Claim and delegate",
+        name: t`Delegate and claim tokens`,
         status: activeStepIndex === 2 ? "current" : "upcoming",
         onClick: () => {
           if (account) {
