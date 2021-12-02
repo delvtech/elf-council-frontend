@@ -5,7 +5,16 @@ import { TokenInfo } from "@uniswap/token-lists";
 
 export type ElementGovernanceTokenInfo = TokenInfo;
 
-export interface CoreVotingContractTokenInfo extends TokenInfo {
+export interface AirdropContractInfo extends TokenInfo {
+  extensions: {
+    rewardsRoot: string;
+    lockingVault: string;
+    expiration: string;
+    token: string;
+  };
+}
+
+export interface CoreVotingContractInfo extends TokenInfo {
   extensions: {
     dayInBlocks: number;
     baseQuorum: number;
@@ -15,14 +24,14 @@ export interface CoreVotingContractTokenInfo extends TokenInfo {
   };
 }
 
-export interface ElementLockingVaultTokenInfo extends TokenInfo {
+export interface LockingVaultInfo extends TokenInfo {
   extensions: {
     token: string;
     staleBlockLag: number;
   };
 }
 
-export interface ElementOptimisticsRewardsVaultTokenInfo extends TokenInfo {
+export interface OptimisticRewardsVaultInfo extends TokenInfo {
   extensions: {
     pendingRoot: string;
     proposalTime: number;
@@ -33,7 +42,22 @@ export interface ElementOptimisticsRewardsVaultTokenInfo extends TokenInfo {
     token: string;
   };
 }
-export interface ElementGSCVaultTokenInfo extends TokenInfo {
+
+export interface OptimisticsGrantsContractInfo extends TokenInfo {
+  extensions: {
+    token: string;
+    solvency: string;
+  };
+}
+
+export interface VestingVaultInfo extends TokenInfo {
+  extensions: {
+    token: string;
+    staleBlockLag: number;
+  };
+}
+
+export interface GSCVaultInfo extends TokenInfo {
   extensions: {
     coreVoting: string;
     votingPowerBound: number;
@@ -41,10 +65,27 @@ export interface ElementGSCVaultTokenInfo extends TokenInfo {
   };
 }
 
+export interface TimelockInfo extends TokenInfo {
+  extensions: {
+    waitTime: string;
+  };
+}
+
+export interface TreasuryInfo extends TokenInfo {
+  extensions: {
+    owner: string;
+  };
+}
+
 export type AnyTokenListInfo =
   | TokenInfo
   | ElementGovernanceTokenInfo
-  | CoreVotingContractTokenInfo
-  | ElementLockingVaultTokenInfo
-  | ElementOptimisticsRewardsVaultTokenInfo
-  | ElementGSCVaultTokenInfo;
+  | AirdropContractInfo
+  | CoreVotingContractInfo
+  | LockingVaultInfo
+  | OptimisticRewardsVaultInfo
+  | OptimisticsGrantsContractInfo
+  | VestingVaultInfo
+  | GSCVaultInfo
+  | TimelockInfo
+  | TreasuryInfo;

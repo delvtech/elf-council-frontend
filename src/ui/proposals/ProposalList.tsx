@@ -1,12 +1,8 @@
+import React, { ReactElement, useCallback } from "react";
+
 import { Signer } from "@ethersproject/abstract-signer";
 import { Proposal } from "elf-council-proposals";
-import React, { ReactElement, useCallback } from "react";
-import {
-  getIsExecutable,
-  getIsVotingOpen,
-  proposalsBySnapShotId,
-} from "src/elf-council-proposals";
-import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
+import { getIsExecutable, getIsVotingOpen } from "src/elf-council-proposals";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";

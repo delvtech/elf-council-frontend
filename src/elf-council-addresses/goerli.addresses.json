@@ -1,16 +1,17 @@
 {
-  "chainId": 5,
   "addresses": {
-    "elementToken": "0xa7E598Ab2c0df4A55feBFDD32ee6Cc64d2aE54eA",
+    "airdrop": "0x90123455668bA2B12CA76962a88c2e1c20B17F62",
     "coreVoting": "0x5264a36f4839F45d753701B5BDFc66c3f4ad2F96",
+    "elementToken": "0xa7E598Ab2c0df4A55feBFDD32ee6Cc64d2aE54eA",
     "gscCoreVoting": "0x43161786d23627C02f7D3AFD20489924b491b009",
     "gscVault": "0xf29658584ED4EB1FD22521D5A9437B20c9925dd6",
-    "timelock": "0x73E0C9AdF3E0f5535dA3A0b4265Dd73962643426",
     "lockingVault": "0xeA1f4ec61FEe5a7A6EC1A323e1d042282068a4d9",
-    "vestingVault": "0x40E10a6C50b2Cf77a804aA9e32D69aEc919E3765",
-    "optimisticRewardsVault": "0x847D90e827a11Da7c124992905CDf1F03F330fA8",
     "optimisticGrants": "0x2e25d3bfACF854c9b80f4A5A66ca0C32950f6c6d",
+    "optimisticRewardsVault": "0x847D90e827a11Da7c124992905CDf1F03F330fA8",
+    "spender": "0x9B0327A5E41bc8bF0d98cBEc04800cfFdDf45280",
+    "timelock": "0x73E0C9AdF3E0f5535dA3A0b4265Dd73962643426",
     "treasury": "0xa465170e7049d1D048ce179Cc0c864d13223a9E2",
-    "spender": "0x9B0327A5E41bc8bF0d98cBEc04800cfFdDf45280"
-  }
+    "vestingVault": "0x40E10a6C50b2Cf77a804aA9e32D69aEc919E3765"
+  },
+  "chainId": 5
 }
