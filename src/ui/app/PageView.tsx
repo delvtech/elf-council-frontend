@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import classNames from "classnames";
 import React, { Fragment, ReactElement, ReactNode } from "react";
 import { addressesJson } from "src/elf-council-addresses";
 import tw from "src/elf-tailwindcss-classnames";
@@ -11,29 +12,49 @@ import { t } from "ttag";
 
 interface PageViewProps {
   children?: ReactNode;
+  childrenContainerClassName?: string;
+  /**
+   * Whether or not the sidebar navigation should be shown, defaults to true
+   */
+  showSidebar?: boolean;
 }
 
 export default function PageView(props: PageViewProps): ReactElement {
-  const { children } = props;
+  const { children, showSidebar = true, childrenContainerClassName } = props;
   const { chainId } = useWeb3React();
   const isWrongChain = !!chainId && chainId !== addressesJson.chainId;
   return (
     <Fragment>
-      <div className={tw("w-full", "h-full", "md:pl-80", "overflow-hidden")}>
-        <Sidebar />
+      <div
+        className={tw(
+          "w-full",
+          "h-full",
+          {
+            "md:pl-80": showSidebar,
+          },
+          "overflow-hidden"
+        )}
+      >
+        {showSidebar ? <Sidebar /> : null}
         <div
           className={tw(
-            "flex-1",
+            "w-full",
             "h-full",
             "p-6",
+            "flex",
+            "flex-col",
+            "flex-1",
             "overflow-scroll",
-            "justify-center",
-            "align-middle",
             "items-center"
           )}
         >
           <Header />
-          <div className={tw("max-w-6xl", "mt-6", "m-auto", "h-full")}>
+          <div
+            className={classNames(
+              tw("max-w-6xl", "mt-6", "h-full"),
+              childrenContainerClassName
+            )}
+          >
             {children}
           </div>
         </div>

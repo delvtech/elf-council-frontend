@@ -12,12 +12,13 @@ interface WalletProfileButtonProps {
   account: string | null | undefined;
   walletConnectionActive: boolean | undefined;
   className?: string;
+  variant?: ButtonVariant;
 }
 
 export function WalletProfileButton(
   props: WalletProfileButtonProps
 ): ReactElement {
-  const { account, className } = props;
+  const { account, variant = ButtonVariant.MINIMAL, className } = props;
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
   const onOpenWalletDialog = useCallback(() => setWalletDialogOpen(true), []);
@@ -30,7 +31,7 @@ export function WalletProfileButton(
         <ConnectWalletButton />
       ) : (
         <div>
-          <Button variant={ButtonVariant.MINIMAL} onClick={onOpenWalletDialog}>
+          <Button variant={variant} onClick={onOpenWalletDialog}>
             <WalletJazzicon
               size={28}
               account={account}
@@ -50,8 +51,10 @@ export function WalletProfileButton(
 
 export function ConnectWalletButton({
   label = t`Connect Wallet`,
+  variant = ButtonVariant.OUTLINE_BLUE,
 }: {
   label?: string;
+  variant?: ButtonVariant;
 }): ReactElement {
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
@@ -59,7 +62,7 @@ export function ConnectWalletButton({
 
   return (
     <Fragment>
-      <Button variant={ButtonVariant.OUTLINE_BLUE} onClick={onOpenWalletDialog}>
+      <Button variant={variant} onClick={onOpenWalletDialog}>
         {label}
       </Button>
       <ConnectWalletDialog
