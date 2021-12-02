@@ -12,6 +12,5 @@ export interface AddressesJsonFile {
     optimisticGrants: string;
     airdrop: string;
     treasury: string;
-    spender: string;
   };
 }
