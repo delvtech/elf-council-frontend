@@ -1,7 +1,7 @@
 // See: https://tailwindui.com/components/application-ui/layout/panels#component-415761fd4b5592742ec78ce4c638973e
 
 import classNames from "classnames";
-import { ReactElement, ReactNode } from "react";
+import { CSSProperties, ReactElement, ReactNode } from "react";
 import { assertNever } from "src/base/assertNever";
 import tw, {
   TBackgroundColor,
@@ -21,6 +21,7 @@ interface CardProps {
   className?: string;
   interactive?: boolean;
   active?: boolean;
+  style?: CSSProperties;
   onClick?: () => void;
 }
 
@@ -32,6 +33,7 @@ export default function Card(props: CardProps): ReactElement {
     active = false,
     onClick,
     children,
+    style,
   } = props;
 
   const cardClassName = classNames(
@@ -54,13 +56,17 @@ export default function Card(props: CardProps): ReactElement {
 
   if (interactive) {
     return (
-      <button className={cardClassName} onClick={onClick}>
+      <button className={cardClassName} onClick={onClick} style={style}>
         {children}
       </button>
     );
   }
 
-  return <div className={cardClassName}>{children}</div>;
+  return (
+    <div className={cardClassName} style={style}>
+      {children}
+    </div>
+  );
 }
 
 function getBackgroundColor(
