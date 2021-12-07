@@ -1,12 +1,12 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, ReactNode, useMemo, useState } from "react";
 import tw from "src/elf-tailwindcss-classnames";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
 import Card from "src/ui/base/Card/Card";
 import Steps, { Step } from "src/ui/base/Card/Steps/Steps";
 import H1 from "src/ui/base/H1";
+import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 import { ConnectWalletStepCard } from "./ConnectWalletStepCard";
 
@@ -15,7 +15,8 @@ interface StepWithContent extends Step {
 }
 
 export default function AirdropPage(): ReactElement {
-  const { account, active } = useWeb3React();
+  const { account, active, library } = useWeb3React();
+  const signer = useSigner(account, library);
 
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const steps: StepWithContent[] = useMemo(() => {
@@ -62,10 +63,10 @@ export default function AirdropPage(): ReactElement {
             setActiveStepIndex(2);
           }
         },
-        content: <DelegateStepCard account={account} />,
+        content: <DelegateStepCard signer={signer} account={account} />,
       },
     ];
-  }, [account, active, activeStepIndex]);
+  }, [account, active, activeStepIndex, signer]);
 
   return (
     <div className={tw("flex", "flex-col", "h-full", "pt-8", "space-y-8")}>

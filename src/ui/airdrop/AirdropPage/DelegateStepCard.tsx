@@ -1,5 +1,7 @@
+import { parseEther } from "@ethersproject/units";
 import { Tooltip } from "@material-ui/core";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
+import { Signer } from "ethers";
 import React, { ReactElement, useCallback, useState } from "react";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { isValidAddress } from "src/base/isValidAddress";
@@ -7,22 +9,52 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import tw from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
+import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import TextInput from "src/ui/base/Input/TextInput";
+import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
 interface DelegateStepCardProps {
   account: string | null | undefined;
+  signer: Signer | undefined;
 }
 
 export function DelegateStepCard({
   account,
+  signer,
 }: DelegateStepCardProps): ReactElement {
   const [delegateAddress, setDelegateAddress] = useState("");
   const { data: merkleData } = useMerkleInfo(account);
+  const { mutate: claim } = useClaimAirdrop(signer);
+  const onClaimOnlyClick = useCallback(() => {
+    if (account && merkleData) {
+      claim([
+        parseEther(merkleData.leaf.value),
+        parseEther(merkleData.leaf.value),
+        merkleData.proof,
+        account,
+      ]);
+    }
+  }, [account, claim, merkleData]);
+
+  const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
+  const onClaimAndDepositClick = useCallback(() => {
+    if (account && merkleData) {
+      claimAndDeposit([
+        parseEther(merkleData.leaf.value),
+        delegateAddress,
+        parseEther(merkleData.leaf.value),
+        merkleData.proof,
+        account,
+      ]);
+    }
+  }, [account, claimAndDeposit, delegateAddress, merkleData]);
+
   return (
     <Card
       variant={CardVariant.BLUE}
@@ -59,11 +91,16 @@ export function DelegateStepCard({
           <div
             className={tw("flex-1", "font-semibold", "text-left")}
           >{`${merkleData?.leaf.value} ELFI`}</div>
-          <Button className={tw("mr-4")} variant={ButtonVariant.MINIMAL}>
+          <Button
+            onClick={onClaimOnlyClick}
+            className={tw("mr-4")}
+            variant={ButtonVariant.MINIMAL}
+          >
             <span className={tw("text-white", "text-xs")}>{t`Claim only`}</span>
           </Button>
           <Button
             disabled={!isValidAddress(delegateAddress)}
+            onClick={onClaimAndDepositClick}
             variant={ButtonVariant.GRADIENT}
           >{t`Claim and delegate`}</Button>
         </div>
