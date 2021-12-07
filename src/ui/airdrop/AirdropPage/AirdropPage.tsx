@@ -1,6 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, ReactNode, useMemo, useState } from "react";
 import tw from "src/elf-tailwindcss-classnames";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
 import Card from "src/ui/base/Card/Card";
@@ -61,7 +62,7 @@ export default function AirdropPage(): ReactElement {
             setActiveStepIndex(2);
           }
         },
-        content: <DelegateStepCard />,
+        content: <DelegateStepCard account={account} />,
       },
     ];
   }, [account, active, activeStepIndex]);
