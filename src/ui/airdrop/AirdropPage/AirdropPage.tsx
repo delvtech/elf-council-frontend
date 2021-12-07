@@ -14,7 +14,7 @@ interface StepWithContent extends Step {
 }
 
 export default function AirdropPage(): ReactElement {
-  const { account, active, library } = useWeb3React();
+  const { account, active } = useWeb3React();
 
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const steps: StepWithContent[] = useMemo(() => {
@@ -47,7 +47,10 @@ export default function AirdropPage(): ReactElement {
           }
         },
         content: (
-          <ViewAirdropStepCard onNextStep={() => setActiveStepIndex(2)} />
+          <ViewAirdropStepCard
+            account={account}
+            onNextStep={() => setActiveStepIndex(2)}
+          />
         ),
       },
       {
