@@ -11,7 +11,6 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import TextInput from "src/ui/base/Input/TextInput";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
-import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { t } from "ttag";
 
 interface DelegateStepCardProps {}
@@ -25,7 +24,7 @@ export function DelegateStepCard({}: DelegateStepCardProps): ReactElement {
     >
       <div className={tw("text-center", "text-sm", "mb-4")}>
         <div
-          className={tw("font-semibold", "tracking-wider")}
+          className={tw("font-semibold", "tracking-wide")}
         >{t`Delegate your voting power`}</div>
       </div>
       <div className={tw("space-y-4")}>
@@ -37,7 +36,9 @@ export function DelegateStepCard({}: DelegateStepCardProps): ReactElement {
           value={delegateAddress}
           placeholder={t`Copy and paste your delegate's address here`}
         />
-        <div className={tw("bg-white", "bg-opacity-20")}>
+        <div
+          className={tw("bg-white", "bg-opacity-20", "rounded-xl", "shadow")}
+        >
           <FeaturedDelegatesTable />
         </div>
         <div className={tw("flex", "justify-end", "w-full")}>
@@ -54,28 +55,33 @@ export function DelegateStepCard({}: DelegateStepCardProps): ReactElement {
   );
 }
 
-// const headerClassName = tw(
-//   "px-6",
-//   "py-3",
-//   "text-left",
-//   "text-xs",
-//   "font-medium",
-//   "text-gray-500",
-//   "uppercase",
-//   "tracking-wider"
-// );
-// const cellClassName = tw(
-//   "px-6",
-//   "py-4",
-//   "whitespace-nowrap",
-//   "text-sm",
-//   "font-medium",
-//   "text-gray-900"
-// );
+const headerClassName = tw(
+  "px-6",
+  "py-3",
+  "text-left",
+  "text-xs",
+  "font-medium",
+  "tracking-wide"
+);
+const cellClassName = tw(
+  "px-6",
+  "py-4",
+  "whitespace-nowrap",
+  "text-sm",
+  "font-medium"
+);
 function FeaturedDelegatesTable(): ReactElement {
   return (
-    <div className={tw("flex", "flex-col", "text-white")}>
-      <div className={tw("-my-2", "overflow-x-auto", "sm:-mx-6", "lg:-mx-8")}>
+    <div className={tw("flex", "flex-col", "text-white", "rounded-lg")}>
+      <div
+        className={tw(
+          "-my-2",
+          "overflow-x-auto",
+          "sm:-mx-6",
+          "lg:-mx-8",
+          "rounded-lg"
+        )}
+      >
         <div
           className={tw(
             "py-2",
@@ -84,16 +90,21 @@ function FeaturedDelegatesTable(): ReactElement {
             "flex",
             "justify-center",
             "sm:px-6",
-            "lg:px-8"
+            "lg:px-8",
+            "rounded-lg"
           )}
         >
-          <div className={tw("overflow-hidden", "border", "rounded-lg")}>
-            {/* <table className={tw("m-auto", "divide-y", "divide-gray-200")}>
-              <thead>
-                <tr>
-                  <th scope="col" className={headerClassName}>
-                    #
-                  </th>
+          <div className={tw("overflow-hidden", "rounded-xl")}>
+            <table
+              className={tw(
+                "m-auto",
+                "divide-y",
+                "divide-gray-200",
+                "rounded-lg"
+              )}
+            >
+              <thead className={tw("rounded-lg")}>
+                <tr className={tw("rounded-lg")}>
                   <th scope="col" className={headerClassName}>
                     {t`Delegate Profile`}
                   </th>
@@ -109,9 +120,8 @@ function FeaturedDelegatesTable(): ReactElement {
                 </tr>
               </thead>
               <tbody>
-                {delegates.map((delegate, index) => (
+                {delegates.map((delegate) => (
                   <tr key={delegate.address}>
-                    <td className={cellClassName}>{index + 1}</td>
                     <td className={cellClassName}>{delegate.name}</td>
                     <td
                       className={tw("hidden", "md:table-cell", cellClassName)}
@@ -126,7 +136,7 @@ function FeaturedDelegatesTable(): ReactElement {
                   </tr>
                 ))}
               </tbody>
-            </table> */}
+            </table>
           </div>
         </div>
       </div>
@@ -154,10 +164,10 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
-          <div className={tw("mr-2", "flex", "items-center")}>
+          <div className={tw("mr-2", "flex", "items-center", "text-white")}>
             {formatWalletAddress(address)}
           </div>
-          <ContentCopyIcon />
+          <ContentCopyIcon className={tw("text-white")} />
         </Button>
       </div>
     </Tooltip>
