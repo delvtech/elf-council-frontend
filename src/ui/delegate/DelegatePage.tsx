@@ -10,40 +10,61 @@ import Button from "src/ui/base/Button/Button";
 import H2 from "src/ui/base/H2";
 import H3 from "src/ui/base/H3";
 import TextInput from "src/ui/base/Input/TextInput";
-import OutlinedSection from "src/ui/base/OutlinedSection/OutlinedSection";
+import GradientCard from "src/ui/base/Card/GradientCard";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { jt, t } from "ttag";
 import FeaturedDelegatesTable from "src/ui/overview/FeaturedDelegatesTable";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
   const signer = account ? (library?.getSigner(account) as Signer) : undefined;
 
   return (
-    <div className={tw("flex", "h-full", "pt-8", "px-8")}>
+    <div className={tw("flex", "h-full", "py-8")}>
       <div
         className={tw(
           "w-full",
-          "gap-16",
-          // use flexbox in mobile
+          "gap-6",
           "flex",
           "flex-col",
-          // use two column on desktop
-          "lg:grid",
-          "lg:grid-cols-3"
+          "lg:flex-row",
+          "items-center"
         )}
       >
-        {/* Left/Top side */}
-        <div className={tw()}>
-          <H2
-            className={tw("mb-4", "text-brandDarkBlue-dark")}
-          >{t`Delegate`}</H2>
-          <DelegateSection account={account} signer={signer} />
-        </div>
-        {/* Right/Bottom side */}
-        <div className={tw("lg:col-span-2")}>
+        {/* Portfolio & Delegate Card */}
+        <GradientCard
+          className={tw(
+            "w-full",
+            "lg:w-4/12",
+            "h-full",
+            "rounded-xl",
+            "shadow"
+          )}
+        >
+          <div className={tw("w-full", "p-4")}>
+            <H2 className={tw("mb-4", "text-white")}>{t`Delegate`}</H2>
+            <DelegateSection account={account} signer={signer} />
+          </div>
+          <div className={tw("w-full", "p-4")}>
+            <H2 className={tw("mb-4", "text-white")}>{t`Portfolio`}</H2>
+            <PortfolioSection />
+          </div>
+        </GradientCard>
+
+        {/* Delegate Leaderboard & Delegate Search */}
+        <div
+          className={tw(
+            "w-full",
+            "lg:w-8/12",
+            "bg-white",
+            "rounded-xl",
+            "shadow",
+            "p-4"
+          )}
+        >
           <H2
             className={tw("mb-4", "text-brandDarkBlue-dark")}
           >{t`Delegate Leaderboard`}</H2>
@@ -54,6 +75,11 @@ export default function DelegatePage(): ReactElement {
   );
 }
 
+interface PortfolioSectionProps {}
+
+function PortfolioSection(props: PortfolioSectionProps) {
+  return <div className={tw("text-white")}>Portfolio Section</div>;
+}
 interface DelegationSectionProps {
   account: string | null | undefined;
   signer: Signer | undefined;
@@ -84,23 +110,19 @@ function DelegateSection({ account, signer }: DelegationSectionProps) {
     </a>
   );
   return (
-    <OutlinedSection className={tw("space-y-4")}>
-      <H3
-        className={tw("flex-1", "text-brandDarkBlue-dark")}
-      >{t`Delegate Your Vote`}</H3>
-      <div className={tw("flex", "justify-between", "text-sm")}>
-        <span
-          className={tw("text-brandDarkBlue-dark", "font-semibold")}
-        >{t`Current voting status:`}</span>
+    <>
+      <H3 className={tw("flex-1", "text-white")}>{t`Delegate Your Vote`}</H3>
+      <div className={tw("flex", "justify-between", "text-sm", "text-white")}>
+        <span className={tw("font-semibold")}>{t`Current voting status:`}</span>
         <span>
           {delegateAddressOnChain
             ? jt`Delegated to ${walletLink}`
             : t`Not delegated`}
         </span>
       </div>
-      <div className={tw("flex", "justify-between", "text-sm")}>
+      <div className={tw("flex", "justify-between", "text-sm", "text-white")}>
         <span
-          className={tw("text-brandDarkBlue-dark", "font-semibold")}
+          className={tw("text-white", "font-semibold")}
         >{t`Amount delegated:`}</span>
         <span>{amountDelegated ? formatEther(amountDelegated) : "-"}</span>
       </div>
@@ -119,9 +141,10 @@ function DelegateSection({ account, signer }: DelegationSectionProps) {
         ) : (
           <ConnectWalletButton
             label={t`Connect your wallet to delegate your vote`}
+            variant={ButtonVariant.WHITE}
           />
         )}
       </div>
-    </OutlinedSection>
+    </>
   );
 }
