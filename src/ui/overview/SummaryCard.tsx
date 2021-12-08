@@ -12,11 +12,31 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
   const { balance, title, children } = props;
 
   return (
-    <Card>
-      <h3 className={tw("text-blue-900", "font-semibold")}>{title}</h3>
-      <p className={tw("text-lg", "text-blue-500", "font-semibold")}>
+    <Card className={tw("flex", "flex-col")}>
+      <div
+        className={tw(
+          "text-principalRoyalBlue",
+          "font-light",
+          "text-sm",
+          "-mt-2"
+        )}
+      >
+        {title}
+      </div>
+      <div
+        className={tw(
+          "py-4",
+          "flex",
+          "flex-1",
+          "justify-center",
+          "items-center",
+          "font-extralight",
+          "text-5xl",
+          "text-principalRoyalBlue"
+        )}
+      >
         {balance}
-      </p>
+      </div>
       {children}
     </Card>
   );

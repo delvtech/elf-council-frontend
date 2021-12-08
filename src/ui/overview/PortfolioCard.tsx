@@ -5,8 +5,9 @@ import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
-import Card from "src/ui/base/Card/Card";
-import H3 from "src/ui/base/H3";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
@@ -27,12 +28,27 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const unclaimed = useUnclaimed(account, merkleInfo);
 
   return (
-    <Card>
-      <H3 className={tw("text-blue-900", "font-semibold")}>{t`Portfolio`}</H3>
-      <div className={tw("flex", "min-h-full", "align-bottom")}>
-        <LabeledStat data={balance} bottomLabel={t`Wallet balance`} />
-        <LabeledStat data={amountDeposited} bottomLabel={t`Staked tokens`} />
-        <LabeledStat data={unclaimed} bottomLabel={t`Unclaimed rewards`} />
+    <Card variant={CardVariant.BLUE}>
+      <div className={tw("text-white", "font-light")}>{t`Portfolio`}</div>
+      <div className={tw("flex", "flex-col", "min-h-full", "align-bottom")}>
+        <LabeledStat whiteText data={balance} topLabel={t`Wallet balance`} />
+        <LabeledStat
+          whiteText
+          data={amountDeposited}
+          topLabel={t`Voting vault balance`}
+        />
+        <div className={tw("flex", "items-center", "justify-between")}>
+          <LabeledStat
+            whiteText
+            data={unclaimed}
+            topLabel={t`Unclaimed rewards`}
+          />
+          <Button
+            className={tw("self-end", "mb-5")}
+            variant={ButtonVariant.OUTLINE_WHITE}
+          >{t`Claim`}</Button>
+        </div>
+        <LabeledStat whiteText data={unclaimed} topLabel={t`Voting Power`} />
       </div>
     </Card>
   );

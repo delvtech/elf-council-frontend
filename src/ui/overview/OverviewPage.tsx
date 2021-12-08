@@ -1,21 +1,16 @@
 import React, { ReactElement } from "react";
 
+import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import tw from "src/elf-tailwindcss-classnames";
 import H1 from "src/ui/base/H1";
-import DepositCard from "src/ui/overview/DepositCard/DepositCard";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
-import RewardsCard from "src/ui/overview/RewardsCard/RewardsCard";
-import VotingCard from "src/ui/overview/VotingCard";
-import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 
 import { SummaryCards } from "./SummaryCards";
-import { Web3Provider } from "@ethersproject/providers";
 
 export function OverviewPage(): ReactElement {
-  const { account, library } = useWeb3React<Web3Provider>();
-  const signer = useSigner(account, library);
+  const { account } = useWeb3React<Web3Provider>();
   return (
     <div className={tw("h-full", "space-y-6")}>
       <div className={tw("px-8", "py-1")}>
@@ -34,10 +29,7 @@ export function OverviewPage(): ReactElement {
         )}
       >
         <PortfolioCard account={account} />
-        <VotingCard account={account} />
       </div>
-      <RewardsCard account={account} signer={signer} />
-      <DepositCard account={account} signer={signer} />
     </div>
   );
 }
