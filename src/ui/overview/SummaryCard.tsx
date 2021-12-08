@@ -13,7 +13,14 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
 
   return (
     <Card className={tw("flex", "flex-col")}>
-      <div className={tw("text-blue-900", "font-light", "text-sm", "-mt-2")}>
+      <div
+        className={tw(
+          "text-principalRoyalBlue",
+          "font-light",
+          "text-sm",
+          "-mt-2"
+        )}
+      >
         {title}
       </div>
       <div
@@ -25,7 +32,7 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
           "items-center",
           "font-extralight",
           "text-5xl",
-          "text-blue-500"
+          "text-principalRoyalBlue"
         )}
       >
         {balance}

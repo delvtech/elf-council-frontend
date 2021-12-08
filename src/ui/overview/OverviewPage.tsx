@@ -30,7 +30,7 @@ export function OverviewPage(): ReactElement {
           "lg:space-y-0"
         )}
       >
-        <PortfolioCard account={account} />
+        <PortfolioCard account={account} signer={signer} />
       </div>
     </div>
   );
