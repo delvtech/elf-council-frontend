@@ -188,7 +188,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
-          <div className={tw("hidden", "xs:block", "mr-2", "flex", "items-center")}>
+          <div className={tw("hidden", "sm:block", "mr-2", "flex", "items-center")}>
             {formatWalletAddress(address)}
           </div>
           <ContentCopyIcon />
