@@ -30,7 +30,7 @@ export default function PageView(props: PageViewProps): ReactElement {
           "w-full",
           "h-full",
           {
-            "md:pl-80": showSidebar,
+            "md:pl-60": showSidebar,
           },
           "overflow-hidden"
         )}
@@ -44,7 +44,7 @@ export default function PageView(props: PageViewProps): ReactElement {
             "flex",
             "flex-col",
             "flex-1",
-            "overflow-scroll",
+            "overflow-auto",
             "items-center"
           )}
         >

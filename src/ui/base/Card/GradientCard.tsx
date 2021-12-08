@@ -6,7 +6,6 @@ import tw from "src/elf-tailwindcss-classnames";
 
 interface GradientCardProps {
   children: ReactNode;
-
   className?: string;
   style?: CSSProperties;
 }
