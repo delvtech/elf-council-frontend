@@ -1,22 +1,20 @@
 import React, { ReactElement } from "react";
 
-import { Signer } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
-  signer: Signer | undefined;
 }
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { account } = props;
@@ -37,7 +35,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <LabeledStat
           whiteText
           data={amountDeposited}
-          topLabel={t`Staked tokens`}
+          topLabel={t`Voting vault balance`}
         />
         <div className={tw("flex", "items-center", "justify-between")}>
           <LabeledStat
