@@ -31,7 +31,6 @@ export default function PageView(props: PageViewProps): ReactElement {
           "h-full",
           {
             "md:pl-60": showSidebar,
-            "xl:pl-80": showSidebar,
           },
           "overflow-hidden"
         )}

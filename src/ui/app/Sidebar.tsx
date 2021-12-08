@@ -52,7 +52,6 @@ export default function Sidebar(): ReactElement {
           "top-0",
           "left-0",
           "md:w-60",
-          "xl:w-80",
           "bg-white",
           "transform-gpu",
           "md:translate-x-0",
