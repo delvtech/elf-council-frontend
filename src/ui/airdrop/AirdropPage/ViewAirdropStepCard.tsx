@@ -1,7 +1,9 @@
+import { parseEther } from "@ethersproject/units";
 import React, { ReactElement } from "react";
 import tw from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropPage/AirdropFullyClaimedCard";
 import { useClaimableAirdropBalance } from "src/ui/airdrop/useClaimableAirdropBalance";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -31,6 +33,12 @@ export function ViewAirdropStepCard({
   // user has no airdrop if they have no merkle value
   if (!data) {
     return <NoAirdropCard />;
+  }
+
+  // user has no airdrop if they have a merkle value but have already claimed
+  // the full amount
+  if (data && parseEther(claimableBalance).isZero()) {
+    return <AirdropFullyClaimedCard />;
   }
 
   const airdropAmountLabel = getAirdropAmountLabel(data, isLoadingMerkle);
