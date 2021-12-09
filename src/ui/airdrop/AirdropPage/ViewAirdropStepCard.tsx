@@ -7,6 +7,8 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
+import { LoadingAirdropCard } from "./LoadingAirdropCard";
+import { NoAirdropCard } from "./NoAirdropCard";
 
 interface ViewAirdropStepCardProps {
   account: string | null | undefined;
@@ -23,7 +25,7 @@ export function ViewAirdropStepCard({
   const claimableBalance = useClaimableAirdropBalance(account);
 
   if (isLoadingMerkle && !data) {
-    return <LoadingCard />;
+    return <LoadingAirdropCard />;
   }
 
   // user has no airdrop if they have no merkle value
@@ -75,6 +77,7 @@ export function ViewAirdropStepCard({
     </Card>
   );
 }
+
 function getAirdropAmountLabel(
   merkleProof: MerkleProof | undefined,
   isLoading: boolean
@@ -88,64 +91,4 @@ function getAirdropAmountLabel(
   }
 
   return "0 ELFI";
-}
-
-function LoadingCard(): ReactElement {
-  return (
-    <Card
-      variant={CardVariant.BLUE}
-      className={tw(
-        "flex",
-        "flex-col",
-        "text-white",
-        "text-center",
-        "h-full",
-        "justify-center",
-        "items-center"
-      )}
-    >
-      <div
-        className={tw(
-          "text-center",
-          "text-sm",
-          "mb-4",
-          "animate-pulse",
-          "items-center",
-          "justify-center",
-          "flex",
-          "flex-col"
-        )}
-      >
-        <div
-          className={tw("font-semibold", "tracking-wider")}
-        >{t`Checking for airdrop rewards...`}</div>
-      </div>
-    </Card>
-  );
-}
-
-function NoAirdropCard(): ReactElement {
-  return (
-    <Card
-      variant={CardVariant.BLUE}
-      className={tw(
-        "flex",
-        "flex-col",
-        "text-white",
-        "text-center",
-        "h-full",
-        "justify-center",
-        "items-center"
-      )}
-    >
-      <div className={tw("text-center", "text-sm", "mb-4")}>
-        <div
-          className={tw("font-semibold", "tracking-wider")}
-        >{t`Sorry, no airdrop found for this wallet.`}</div>
-      </div>
-      <div
-        className={tw("text-2xl", "font-bold", "text-white", "mb-6")}
-      >{t`0 ELFI`}</div>
-    </Card>
-  );
 }
