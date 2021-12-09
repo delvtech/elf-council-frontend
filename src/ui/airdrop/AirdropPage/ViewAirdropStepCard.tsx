@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import tw from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { useClaimableAirdropBalance } from "src/ui/airdrop/useClaimableAirdropBalance";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -19,6 +20,7 @@ export function ViewAirdropStepCard({
   const merkleInfoQueryData = useMerkleInfo(account);
 
   const { data, isLoading: isLoadingMerkle } = merkleInfoQueryData;
+  const claimableBalance = useClaimableAirdropBalance(account);
 
   if (isLoadingMerkle && !data) {
     return <LoadingCard />;
