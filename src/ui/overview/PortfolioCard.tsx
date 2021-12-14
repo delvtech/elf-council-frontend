@@ -12,6 +12,7 @@ import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -26,6 +27,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
 
   const { data: merkleInfo } = useMerkleInfo(account);
   const unclaimed = useUnclaimed(account, merkleInfo);
+  const votingPower = useVotingPowerForAccount(account);
 
   return (
     <Card variant={CardVariant.BLUE}>
@@ -48,7 +50,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             variant={ButtonVariant.OUTLINE_WHITE}
           >{t`Claim`}</Button>
         </div>
-        <LabeledStat whiteText data={unclaimed} topLabel={t`Voting Power`} />
+        <LabeledStat whiteText data={votingPower} topLabel={t`Voting Power`} />
       </div>
     </Card>
   );
