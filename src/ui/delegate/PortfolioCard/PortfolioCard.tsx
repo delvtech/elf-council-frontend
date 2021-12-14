@@ -13,7 +13,7 @@ import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useDeposits } from "src/ui/contracts/useDeposits";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 
@@ -24,54 +24,57 @@ interface PortfolioCardProps {
 }
 
 function WalletHelperText(): ReactElement {
+  const linkElement = (
+    <span key="wallet-balance-tooltip" className={tw("whitespace-nowrap")}>
+      the&nbsp;
+      <span className={tw("mx-1")}>
+        <Image
+          height={14}
+          width={14}
+          src="/assets/exclamation-circle--bold.svg"
+          alt={t`Tooltip icon`}
+        />
+      </span>
+      <span>icon to learn more.</span>
+    </span>
+  );
+
   return (
     <div>
       <span>
-        Don’t know what your wallet balance means? Click{" "}
-        <span className={tw("whitespace-nowrap")}>
-          the&nbsp;
-          <span className={tw("mx-1")}>
-            <Image
-              height={14}
-              width={14}
-              src="/assets/exclamation-circle--bold.svg"
-              alt={t`Tooltip icon`}
-            />
-          </span>
-        </span>
-      </span>{" "}
-      <span>icon to learn more.</span>
+        {jt`Don’t know what the difference between your wallet balance and eligible voting balance is? Click ${linkElement}`}
+      </span>
     </div>
   );
 }
 
 function VaultHelperText(): ReactElement {
+  const linkElement = (
+    <span key="vault-balance-tooltip" className={tw("whitespace-nowrap")}>
+      the&nbsp;
+      <span className={tw("mx-1")}>
+        <Image
+          height={14}
+          width={14}
+          src="/assets/exclamation-circle--bold.svg"
+          alt={t`Tooltip icon`}
+        />
+      </span>
+      <span>icon to learn more.</span>
+    </span>
+  );
+
   return (
     <div>
       <span>
-        Don’t know what the difference between your wallet balance and eligible
-        voting balance is? Click{" "}
-        <span className={tw("whitespace-nowrap")}>
-          the&nbsp;
-          <span className={tw("mx-1")}>
-            <Image
-              height={14}
-              width={14}
-              src="/assets/exclamation-circle--bold.svg"
-              alt={t`Tooltip icon`}
-            />
-          </span>
-        </span>{" "}
+        {jt`Don’t know what the difference between your wallet balance and eligible voting balance is? Click ${linkElement}`}
       </span>
-      <span>icon to learn more.</span>
     </div>
   );
 }
 
-const walletToolTip =
-  "This balance is the amount of $ELFI tokens you have in this wallet.  These are not eligible for voting unless they’re deposited into our voting vaults. This is done to protect our governance decisions. If you would like to vote and/or delegate, please deposit the amount of $ELFI tokens that you would like to use in this voting period into our voting vault. To learn more about our vaults read here.";
-const vaultToolTip =
-  "If you would like to remove tokens from our voter vaults that would no longer be eligible for voting/delegating please enter and withdraw below.";
+const walletToolTip = t`This balance is the amount of $ELFI tokens you have in this wallet.  These are not eligible for voting unless they’re deposited into our voting vaults. This is done to protect our governance decisions. If you would like to vote and/or delegate, please deposit the amount of $ELFI tokens that you would like to use in this voting period into our voting vault. To learn more about our vaults read here.`;
+const vaultToolTip = t`If you would like to remove tokens from our voter vaults that would no longer be eligible for voting/delegating please enter and withdraw below.`;
 
 function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { account, signer, currentDelegate } = props;
@@ -139,9 +142,8 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
       <div>
         <BalanceLabeledStat
           tooltip={walletToolTip}
-          tooltipTimeout={8000}
           helperText={<WalletHelperText />}
-          label={"Wallet Balance"}
+          label={t`Wallet Balance`}
           balance={walletBalance}
           className={tw("mb-3")}
         />
@@ -166,9 +168,8 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
       <div className={tw("mt-2")}>
         <BalanceLabeledStat
           tooltip={vaultToolTip}
-          tooltipTimeout={3000}
           helperText={<VaultHelperText />}
-          label={"Eligible Voting Balance"}
+          label={t`Eligible Voting Balance`}
           balance={vaultBalance}
           className={tw("mb-3")}
         />
