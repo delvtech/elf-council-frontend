@@ -25,6 +25,7 @@ export function useVotingPowerForAccount(
 
   const votingPower = FixedNumber.from(lockingVotingPower)
     .addUnsafe(FixedNumber.from(rewardsVotingPower))
+    .addUnsafe(FixedNumber.from(nonFungibleVotingPower))
     .toString();
 
   return votingPower;
