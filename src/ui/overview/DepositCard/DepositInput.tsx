@@ -8,22 +8,31 @@ interface DepositInputProps {
   depositAmount: string;
   balance: string;
   onSetDepositAmount: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  transactionType?: "deposit" | "withdraw";
 }
 
 export function DepositInput(props: DepositInputProps): ReactElement {
-  const { depositAmount, balance, onSetDepositAmount } = props;
+  const {
+    depositAmount,
+    balance,
+    onSetDepositAmount,
+    transactionType = "deposit",
+  } = props;
   const hasBalance = Number(balance);
   const hasEnoughBalance = !FixedNumber.from(balance || "0")
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
+  const properCaseName =
+    transactionType[0].toUpperCase() + transactionType.slice(1);
+
   return (
     <NumericInput
       disabled={!hasBalance}
       error={!hasEnoughBalance}
-      screenReaderLabel={t`Amount to deposit`}
-      id={"deposit-amount"}
-      name={t`Deposit amount`}
-      placeholder={t`Insert amount to deposit`}
+      screenReaderLabel={t`Amount to ${transactionType}`}
+      id={`${transactionType}-amount`}
+      name={t`${properCaseName} amount`}
+      placeholder={t`Insert amount to ${transactionType}`}
       className={tw("flex-grow")}
       inputClassName={tw("h-12", "text-center")}
       value={depositAmount}

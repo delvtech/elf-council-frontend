@@ -1,12 +1,14 @@
-import { ReactElement, useCallback, useState } from "react";
+import { ReactElement, useCallback, useState, useEffect } from "react";
 
 import { Tooltip } from "@material-ui/core";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { copyToClipboard } from "src/base/copyToClipboard";
-import { delegates } from "src/elf-council-delegates/delegates";
+import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import tw from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import H3 from "src/ui/base/H3";
 import Button from "src/ui/base/Button/Button";
+import TextInput from "src/ui/base/Input/TextInput";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { t } from "ttag";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
@@ -37,16 +39,31 @@ const addressHeaderClassName = tw(baseHeaderClassName, "w-5/12");
 const rankCellClassName = tw(baseCellClassName, "w-1/12", "text-center");
 const delegateCellClassName = tw(baseCellClassName, "w-4/12");
 const votesCellClassName = tw(baseCellClassName, "w-2/12");
-const addressCellClassName = tw(
-  baseCellClassName,
-  "w-5/12"
-  // "-ml-4",
-  // "sm:ml-0",
-);
-export default function FeaturedDelegatesTable(): ReactElement {
+const addressCellClassName = tw(baseCellClassName, "w-5/12");
+
+interface FeaturedDelegatesTableProps {
+  search?: boolean;
+}
+
+export default function FeaturedDelegatesTable(
+  props: FeaturedDelegatesTableProps
+): ReactElement {
+  const { search = false } = props;
+
+  const [searchResults, setSearchResults] = useState<Delegate[]>(delegates);
+  const [searchInput, setSearchInput] = useState<string>("");
+
   return (
     <div className={tw("flex", "flex-col", "items-start")}>
       <div className={tw("w-full", "-my-2", "overflow-x-auto")}>
+        {/* Search feature */}
+        {search ? (
+          <DelegatesSearchBar
+            searchInput={searchInput}
+            setSearchInput={setSearchInput}
+            setSearchResults={setSearchResults}
+          />
+        ) : null}
         <div
           className={tw(
             "py-2",
@@ -113,7 +130,7 @@ export default function FeaturedDelegatesTable(): ReactElement {
               </thead>
               {/* Desktop Cell */}
               <tbody className={tw("hidden", "sm:block")}>
-                {delegates.map((delegate, index) => (
+                {searchResults.map((delegate, index) => (
                   <tr key={delegate.address}>
                     <td className={rankCellClassName}>{index + 1}</td>
                     <td className={delegateCellClassName}>{delegate.name}</td>
@@ -136,7 +153,7 @@ export default function FeaturedDelegatesTable(): ReactElement {
               </tbody>
               {/* Mobile Cell */}
               <tbody className={tw("sm:hidden")}>
-                {delegates.map((delegate, index) => (
+                {searchResults.map((delegate, index) => (
                   <tr key={delegate.address}>
                     <td className={rankCellClassName}>{index + 1}</td>
                     <td
@@ -188,7 +205,9 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
-          <div className={tw("hidden", "sm:block", "mr-2", "flex", "items-center")}>
+          <div
+            className={tw("hidden", "sm:block", "mr-2", "flex", "items-center")}
+          >
             {formatWalletAddress(address)}
           </div>
           <ContentCopyIcon />
@@ -205,4 +224,52 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const { account } = props;
   const votePower = useVotingPowerForAccount(account);
   return <span>{votePower}</span>;
+}
+
+interface DelegatesSearchBarProps {
+  searchInput: string;
+  setSearchInput: (input: string) => void;
+  setSearchResults: (nextResults: Delegate[]) => void;
+}
+
+function DelegatesSearchBar(props: DelegatesSearchBarProps): ReactElement {
+  const { searchInput, setSearchInput, setSearchResults } = props;
+
+  const filterResults = useCallback(
+    (searchString: string) => {
+      if (!searchString) {
+        setSearchResults(delegates);
+        return;
+      }
+
+      const newResults = delegates.filter((d) => {
+        const nameRegex = new RegExp(searchString, "i");
+        const addressRegex = new RegExp(searchString);
+
+        return nameRegex.test(d.name) || addressRegex.test(d.address);
+      });
+
+      setSearchResults(newResults);
+    },
+    [setSearchResults]
+  );
+
+  useEffect(() => {
+    filterResults(searchInput);
+  }, [searchInput, filterResults]);
+
+  return (
+    <div className={tw("text-brandDarkBlue-dark")}>
+      <H3>{t`Search Delegates`}</H3>
+      <TextInput
+        screenReaderLabel={t`Search Delegates`}
+        id={"delegate-name-or-address"}
+        name={t`Search Delegates`}
+        placeholder={t`Insert Delegate Name or Address`}
+        className={tw("mb-8", "h-12", "text-center")}
+        value={searchInput}
+        onChange={(event) => setSearchInput(event.target.value)}
+      />
+    </div>
+  );
 }
