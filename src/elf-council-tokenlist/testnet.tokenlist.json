@@ -1,7 +1,7 @@
 {
-  "name": "Council Testnet token list",
+  "name": "Council testnet token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2021-12-02T23:27:51.855Z",
+  "timestamp": "2021-12-14T15:52:59.443Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -80,7 +80,7 @@
     {
       "chainId": 31337,
       "address": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
-      "name": "Element Optimistic Rewards Vault",
+      "name": "Element Non Fungible Voting Vault",
       "decimals": 0,
       "symbol": "",
       "extensions": {
@@ -102,7 +102,7 @@
       "extensions": {
         "rewardsRoot": "0x6dc5a608f709803fbd085c6fa82f7c1def6e42c351101dbc17767d4f3262ce62",
         "lockingVault": "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
-        "expiration": "1670023667",
+        "expiration": "1671033176",
         "token": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c"
       }
     },
