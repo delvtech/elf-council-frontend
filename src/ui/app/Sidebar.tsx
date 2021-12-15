@@ -1,5 +1,4 @@
 import React, { Fragment, ReactElement, useCallback, useState } from "react";
-
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import Link from "next/link";
@@ -87,7 +86,7 @@ export default function Sidebar(): ReactElement {
             <CloseIcon className={tw("h-16", "w-16")} />
           </button>
         </div>
-        <div className={tw("space-y-6", "mt-8")}>
+        <div className={tw("w-full", "space-y-6", "mt-8")}>
           <SidebarLink link="/" label={t`Overview`} router={router} />
           <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
           <SidebarLink link="/delegates" label={t`Delegate`} router={router} />
