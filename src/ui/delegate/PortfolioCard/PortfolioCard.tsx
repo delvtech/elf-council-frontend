@@ -151,6 +151,10 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           depositAmount={deposit}
           balance={walletBalance}
           onSetDepositAmount={onSetDepositAmount}
+          id={"deposit-amount"}
+          name={t`Deposit amount`}
+          placeholder={t`Insert amount to deposit`}
+          screenReaderLabel={t`Amount to deposit`}
         />
         <div className={tw("w-full", "flex", "justify-end", "mt-4", "gap-4")}>
           <Button
@@ -177,7 +181,10 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           depositAmount={withdraw}
           balance={vaultBalance}
           onSetDepositAmount={onSetWithdrawalAmount}
-          transactionType={"withdraw"}
+          id={"withdraw-amount"}
+          name={t`Withdraw amount`}
+          placeholder={t`Insert amount to withdraw`}
+          screenReaderLabel={t`Amount to withdraw`}
         />
         <div className={tw("w-full", "flex", "justify-end", "mt-4", "gap-4")}>
           <Button
