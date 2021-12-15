@@ -8,7 +8,7 @@ interface DepositInputProps {
   depositAmount: string;
   balance: string;
   onSetDepositAmount: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  transactionType?: "deposit" | "withdraw";
+  transactionType?: string;
 }
 
 export function DepositInput(props: DepositInputProps): ReactElement {

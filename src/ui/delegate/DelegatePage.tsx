@@ -1,19 +1,15 @@
 import { ReactElement, useState } from "react";
-
 import { useWeb3React } from "@web3-react/core";
 import { Signer } from "ethers";
-
 import { Delegate } from "src/elf-council-delegates/delegates";
 import tw from "src/elf-tailwindcss-classnames";
-
 import H1 from "src/ui/base/H1";
 import H2 from "src/ui/base/H2";
-
-import FeaturedDelegatesTable from "src/ui/overview/FeaturedDelegatesTable";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
-
 import { t } from "ttag";
+import DelegatesList from "./DelegatesList/DelegatesList";
+import GradientCard from 'src/ui/base/Card/GradientCard'
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -38,12 +34,8 @@ export default function DelegatePage(): ReactElement {
           )}
         >
           {/* Portfolio & Delegate Card */}
-          <div
+          <GradientCard
             className={tw(
-              "bg-gradient-to-br",
-              "from-principalRoyalBlue",
-              "via-principalRoyalBlue",
-              "to-principalBlue",
               "flex",
               "w-full",
               "flex-col",
@@ -64,32 +56,21 @@ export default function DelegatePage(): ReactElement {
                 setCurrentDelegate={setCurrentDelegate}
               />
             </div>
-            {account ? (
-              <div className={tw("w-full", "p-7", "xl:pt-4")}>
-                <PortfolioCard
-                  account={account}
-                  signer={signer}
-                  currentDelegate={currentDelegate}
-                />
-              </div>
-            ) : null}
-          </div>
+            <div className={tw("w-full", "p-7", "xl:pt-4")}>
+              <PortfolioCard
+                account={account}
+                signer={signer}
+                currentDelegate={currentDelegate}
+              />
+            </div>
+          </GradientCard>
 
-          {/* Delegate Leaderboard & Delegate Search */}
-          <div
-            className={tw(
-              "w-full",
-              "xl:w-9/12",
-              "bg-white",
-              "rounded-xl",
-              "shadow",
-              "p-4"
-            )}
-          >
+          {/* Delegate Leaderboard */}
+          <div className={tw("w-full", "xl:w-9/12", "p-4")}>
             <H2
               className={tw("mb-4", "text-brandDarkBlue-dark")}
-            >{t`Delegate Leaderboard`}</H2>
-            <FeaturedDelegatesTable search />
+            >{t`Explore Featured Delegates`}</H2>
+            <DelegatesList />
           </div>
         </div>
       </div>
