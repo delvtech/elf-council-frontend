@@ -1,18 +1,18 @@
 import React, { Fragment, ReactElement, useCallback, useState } from "react";
 
-import ExternalLinkIcon from "@material-ui/icons/ExitToApp";
-import StarIcon from "@material-ui/icons/Star";
 import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import Link from "next/link";
+import { useRouter, NextRouter } from "next/router";
 import tw from "src/elf-tailwindcss-classnames";
-import LinkButton from "src/ui/base/Button/LinkButton";
-import { ButtonVariant } from "src/ui/base/Button/styles";
-import { ElementLogo } from "src/ui/base/ElementLogo";
 import { t } from "ttag";
+import Image from "next/image";
+import { ElementLogo } from "src/ui/base/ElementLogo";
 
 export default function Sidebar(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+
   const onOpen = useCallback(() => {
     setIsOpen(true);
   }, []);
@@ -42,8 +42,12 @@ export default function Sidebar(): ReactElement {
       </button>
       <div
         className={tw(
+          "flex",
+          "flex-col",
+          "items-center",
           "w-full",
           "h-full",
+          "py-14",
           "ease-in-out",
           "transition-all",
           "duration-300",
@@ -58,10 +62,13 @@ export default function Sidebar(): ReactElement {
           { "translate-x-0": isOpen, "-translate-x-full": !isOpen }
         )}
       >
-        <div
-          className={tw("border-b", "py-3", "mt-1", "flex", "justify-around")}
-        >
-          <ElementLogo />
+        <div className={tw("py-3", "mt-1", "flex", "justify-around")}>
+          <Image
+            height={95}
+            width={95}
+            src="/assets/CouncilLogo.svg"
+            alt={t`Element Council logo`}
+          />
           <button
             onClick={onClose}
             className={tw(
@@ -80,15 +87,27 @@ export default function Sidebar(): ReactElement {
             <CloseIcon className={tw("h-16", "w-16")} />
           </button>
         </div>
-        <div className={tw("space-y-8", "mt-12")}>
-          <SidebarLink link="/" label={t`Overview`} />
-          <SidebarLink link="/proposals" label={t`Proposals`} />
-          <SidebarLink link="/delegates" label={t`Delegate`} />
+        <div className={tw("space-y-6", "mt-8")}>
+          <SidebarLink link="/" label={t`Overview`} router={router} />
+          <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
+          <SidebarLink link="/delegates" label={t`Delegate`} router={router} />
           <SidebarLinkExternal
             link="https://forum.element.fi"
             label={t`Forum`}
           />
-          <SidebarLink link="/resources" label={t`Resources`} />
+          <SidebarLink link="/resources" label={t`Resources`} router={router} />
+        </div>
+        <div
+          className={tw(
+            "flex",
+            "flex-col",
+            "items-center",
+            "mt-auto",
+            "text-principalRoyalBlue"
+          )}
+        >
+          <span className={tw("text-sm")}>Powered by</span>
+          <ElementLogo height={"40"} />
         </div>
       </div>
     </Fragment>
@@ -98,21 +117,33 @@ export default function Sidebar(): ReactElement {
 interface SidebarLinkProps {
   link: string;
   label: string;
+  router: NextRouter;
+}
+
+interface SidebarLinkExternalProps {
+  link: string;
+  label: string;
 }
 
 function SidebarLink(props: SidebarLinkProps): ReactElement {
-  const { link, label } = props;
+  const { link, label, router } = props;
+
+  const isActive = router.pathname === link;
+
   return (
     <div>
       <Link href={link} passHref>
         <div
           className={tw(
             "flex",
+            "justify-center",
             "p-3",
-            "pl-16",
             "hover:bg-blue-50",
             "cursor-pointer",
-            "text-brandDarkBlue-dark"
+            "text-brandDarkBlue-dark",
+            {
+              "font-bold": isActive,
+            }
           )}
         >
           <p>{label}</p>
@@ -122,7 +153,7 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
   );
 }
 
-function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
+function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
     <div>
@@ -130,16 +161,14 @@ function SidebarLinkExternal(props: SidebarLinkProps): ReactElement {
         <div
           className={tw(
             "flex",
+            "justify-center",
             "p-3",
-            "pl-16",
             "hover:bg-blue-50",
             "cursor-pointer",
-            "justify-between",
             "text-brandDarkBlue-dark"
           )}
         >
           <p>{label}</p>
-          <ExternalLinkIcon />
         </div>
       </a>
     </div>
