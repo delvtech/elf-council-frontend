@@ -17,11 +17,12 @@ export default function GradientCard(props: GradientCardProps): ReactElement {
       className={classNames(
         tw(
           "bg-gradient-to-br",
-          "to-principalRoyalBlue",
-          "from-principalBlue",
+          "from-principalRoyalBlue",
+          "via-principalRoyalBlue",
+          "to-principalBlue",
           "overflow-hidden",
           "shadow",
-          "rounded-lg"
+          "rounded-xl"
         ),
         className
       )}

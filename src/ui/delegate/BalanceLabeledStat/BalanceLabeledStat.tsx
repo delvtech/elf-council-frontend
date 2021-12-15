@@ -1,4 +1,4 @@
-import { ReactElement, useState, useRef } from "react";
+import { ReactElement, useState, MouseEvent } from "react";
 import { Tooltip } from "@material-ui/core";
 import classNames from "classnames";
 import tw from "src/elf-tailwindcss-classnames";
@@ -8,7 +8,6 @@ import { t } from "ttag";
 interface BalanceLabeledStatProps {
   className?: string;
   tooltip?: string;
-  tooltipTimeout?: number;
   helperText?: ReactElement;
   label: string;
   balance: string;
@@ -17,32 +16,16 @@ interface BalanceLabeledStatProps {
 export function BalanceLabeledStat(
   props: BalanceLabeledStatProps
 ): ReactElement {
-  const {
-    className,
-    tooltip,
-    tooltipTimeout = 1000,
-    helperText,
-    label,
-    balance,
-  } = props;
+  const { className, tooltip, helperText, label, balance } = props;
   const [showTooltip, setShowTooltip] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleClickToolTip = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-      setShowTooltip(false);
-      return;
-    }
-
-    const time = tooltipTimeout < 1000 ? 1000 : tooltipTimeout;
-
+  const enableTooltip = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setShowTooltip(true);
-    timeoutRef.current = setTimeout(() => {
-      setShowTooltip(false);
-      timeoutRef.current = null;
-    }, time);
+  };
+  const disableTooltip = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setShowTooltip(false);
   };
 
   return (
@@ -79,7 +62,11 @@ export function BalanceLabeledStat(
             open={showTooltip}
             title={t`${tooltip}`}
           >
-            <button className={tw("h-5")} onClick={handleClickToolTip}>
+            <button
+              className={tw("h-5")}
+              onMouseEnter={enableTooltip}
+              onMouseLeave={disableTooltip}
+            >
               <Image
                 height={20}
                 width={20}
