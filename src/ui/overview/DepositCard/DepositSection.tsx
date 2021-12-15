@@ -147,9 +147,9 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
               depositAmount={depositAmount}
               onSetDepositAmount={onSetDepositAmount}
               id={"deposit-amount"}
-              name={"Deposit amount"}
-              placeholder={"Insert amount to deposit"}
-              screenReaderLabel={"Amount to deposit"}
+              name={t`Deposit amount`}
+              placeholder={t`Insert amount to deposit`}
+              screenReaderLabel={t`Amount to deposit`}
             />
           </div>
           {!delegate && (

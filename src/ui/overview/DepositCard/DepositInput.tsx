@@ -33,10 +33,10 @@ export function DepositInput(props: DepositInputProps): ReactElement {
     <NumericInput
       disabled={!hasBalance}
       error={!hasEnoughBalance}
-      screenReaderLabel={t`${screenReaderLabel}`}
-      id={`${id}`}
-      name={t`${name}`}
-      placeholder={t`${placeholder}`}
+      screenReaderLabel={screenReaderLabel}
+      id={id}
+      name={name}
+      placeholder={placeholder}
       className={tw("flex-grow")}
       inputClassName={tw("h-12", "text-center")}
       value={depositAmount}
