@@ -1,8 +1,13 @@
+import { useCallback } from "react";
+
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
-import { useCallback } from "react";
 import { addressesJson } from "src/elf-council-addresses";
-import { coreVotingContract } from "src/elf/contracts";
+import {
+  coreVotingContract,
+  nonFungibleVotingContract,
+  rewardsContract,
+} from "src/elf/contracts";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
@@ -42,6 +47,12 @@ export function useVote(
   );
   const rewardsVaultVotingPower = useRewardsVaultVotingPower(
     account,
+    rewardsContract,
+    atBlockNumber
+  );
+  const nonFungibleVotingPower = useRewardsVaultVotingPower(
+    account,
+    nonFungibleVotingContract,
     atBlockNumber
   );
 
@@ -63,6 +74,11 @@ export function useVote(
         const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
         extraDatas.push(extraData);
       }
+      if (+nonFungibleVotingPower > 0) {
+        votingVaults.push(nonFungibleVotingContract.address);
+        const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
+        extraDatas.push(extraData);
+      }
       if (+lockingVaultVotingPower > 0) {
         votingVaults.push(lockingVaultAddress);
         const extraData = getCallDatasForLockingVaultQueryVotePower();
@@ -77,6 +93,7 @@ export function useVote(
       latestBlockNumber,
       lockingVaultVotingPower,
       merkleInfo,
+      nonFungibleVotingPower,
       rewardsVaultVotingPower,
       vote,
     ]

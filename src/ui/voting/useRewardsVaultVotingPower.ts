@@ -1,4 +1,5 @@
 import { formatEther } from "@ethersproject/units";
+import { OptimisticRewards } from "elf-council-typechain";
 import { BigNumber, ethers } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { rewardsContract } from "src/elf/contracts";
@@ -8,6 +9,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 export function useRewardsVaultVotingPower(
   account: string | undefined | null,
+  contract: OptimisticRewards,
   atblockNumber?: number
 ): string {
   const { data: latestBlockNumber } = useLatestBlockNumber();
