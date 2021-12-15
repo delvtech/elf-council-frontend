@@ -34,7 +34,7 @@ function WalletHelperText(): ReactElement {
           src="/assets/exclamation-circle--bold.svg"
           alt={t`Tooltip icon`}
         />
-      </span>
+      </span>{" "}
       <span>icon to learn more.</span>
     </span>
   );
@@ -59,7 +59,7 @@ function VaultHelperText(): ReactElement {
           src="/assets/exclamation-circle--bold.svg"
           alt={t`Tooltip icon`}
         />
-      </span>
+      </span>{" "}
       <span>icon to learn more.</span>
     </span>
   );
