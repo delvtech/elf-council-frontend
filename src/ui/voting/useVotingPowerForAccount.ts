@@ -15,6 +15,7 @@ export function useVotingPowerForAccount(
     rewardsContract,
     atBlockNumber
   );
+
   const nonFungibleVotingPower = useRewardsVaultVotingPower(
     account,
     nonFungibleVotingContract,
