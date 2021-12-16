@@ -6,6 +6,7 @@ import { copyToClipboard } from "src/base/copyToClipboard";
 import { t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import { DuplicateIcon } from "@heroicons/react/outline";
 
 interface DelegateProfileProps {
   delegate: Delegate;
@@ -44,6 +45,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
     <div
       className={tw(
         "flex",
+        "items-center",
         "justify-between",
         "py-3",
         "px-5",
@@ -67,10 +69,12 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             open={showToolTip.twitterHandle}
             title={t`Twitter handle copied`}
           >
-            <button onClick={handleCopyTwitterHandle}>
+            <button
+              className={tw("relative", "h-5", "w-5")}
+              onClick={handleCopyTwitterHandle}
+            >
               <Image
-                height={20}
-                width={20}
+                layout="fill"
                 src="/assets/Twitter.svg"
                 alt={t`Tooltip icon`}
               />
@@ -83,12 +87,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             title={t`Address copied`}
           >
             <button onClick={handleCopyAddress}>
-              <Image
-                height={20}
-                width={20}
-                src="/assets/copy.svg"
-                alt={t`Tooltip icon`}
-              />
+              <DuplicateIcon className={tw("h-5", "text-principalRoyalBlue")} />
             </button>
           </Tooltip>
         </span>

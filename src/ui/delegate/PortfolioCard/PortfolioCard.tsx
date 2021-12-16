@@ -16,6 +16,7 @@ import { useDeposits } from "src/ui/contracts/useDeposits";
 import { jt, t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
 
 interface PortfolioCardProps {
   account: string | null | undefined;
@@ -27,13 +28,8 @@ function WalletHelperText(): ReactElement {
   const linkElement = (
     <span key="wallet-balance-tooltip" className={tw("whitespace-nowrap")}>
       the&nbsp;
-      <span className={tw("mx-1")}>
-        <Image
-          height={14}
-          width={14}
-          src="/assets/exclamation-circle--bold.svg"
-          alt={t`Tooltip icon`}
-        />
+      <span>
+        <ExclamationCircleIcon className={tw("inline-block","h-3")} />
       </span>{" "}
       <span>icon to learn more.</span>
     </span>
@@ -52,13 +48,8 @@ function VaultHelperText(): ReactElement {
   const linkElement = (
     <span key="vault-balance-tooltip" className={tw("whitespace-nowrap")}>
       the&nbsp;
-      <span className={tw("mx-1")}>
-        <Image
-          height={14}
-          width={14}
-          src="/assets/exclamation-circle--bold.svg"
-          alt={t`Tooltip icon`}
-        />
+      <span>
+        <ExclamationCircleIcon className={tw("inline-block", "h-3")} />
       </span>{" "}
       <span>icon to learn more.</span>
     </span>
