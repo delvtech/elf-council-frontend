@@ -50,9 +50,6 @@ function Header(): ReactElement {
               >
                 {gasPrice?.recommendedBaseFee}
               </span>
-              <button>
-                <ChevronSvg />
-              </button>
             </div>
           </div>
         ) : null}
@@ -66,6 +63,7 @@ function Header(): ReactElement {
   );
 }
 
+// TODO: Replace with HeroIcon once implemented 
 const TooltipSvg = () => {
   return (
     <svg
@@ -83,6 +81,7 @@ const TooltipSvg = () => {
   );
 };
 
+// TODO: Replace with HeroIcon once implemented
 const ChevronSvg = () => {
   return (
     <svg

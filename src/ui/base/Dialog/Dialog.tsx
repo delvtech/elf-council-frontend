@@ -15,6 +15,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
+        // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-30
         className={tw("fixed", "z-50", "inset-0", "overflow-y-auto")}
         onClose={onClose ? onClose : () => {}}
       >
