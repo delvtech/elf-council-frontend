@@ -15,6 +15,7 @@ import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Tooltip } from "@material-ui/core";
+import { DuplicateIcon } from "@heroicons/react/outline";
 
 interface CurrentDelegateProps {
   delegate: Delegate;
@@ -74,17 +75,19 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         <span className={tw("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
         </span>
-        <span className={tw("flex", "gap-2", "mt-1.5")}>
+        <span className={tw("flex", "items-center", "gap-2", "mt-1.5")}>
           <Tooltip
             arrow
             placement="top"
             open={showToolTip.twitterHandle}
             title={t`Twitter handle copied`}
           >
-            <button onClick={handleCopyTwitterHandle}>
+            <button
+              className={tw("relative", "h-5", "w-5")}
+              onClick={handleCopyTwitterHandle}
+            >
               <Image
-                height={20}
-                width={20}
+                layout="fill"
                 src="/assets/Twitter.svg"
                 alt={t`Tooltip icon`}
               />
@@ -97,12 +100,7 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             title={t`Address copied`}
           >
             <button onClick={handleCopyAddress}>
-              <Image
-                height={20}
-                width={20}
-                src="/assets/copy.svg"
-                alt={t`Tooltip icon`}
-              />
+              <DuplicateIcon className={tw("h-5", "text-principalRoyalBlue")} />
             </button>
           </Tooltip>
         </span>

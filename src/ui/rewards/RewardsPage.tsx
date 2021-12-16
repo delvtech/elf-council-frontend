@@ -153,12 +153,13 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             "gap-4"
           )}
         >
-          <Image
-            height={84}
-            width={84}
-            src="/assets/ElementLogo--light.svg"
-            alt={t`Element logo`}
-          />
+          <div className={tw("relative", "h-20", "w-20")}>
+            <Image
+              layout="fill"
+              src="/assets/ElementLogo--light.svg"
+              alt={t`Element logo`}
+            />
+          </div>
           <div className={tw("flex", "flex-col")}>
             <span className={tw("text-3xl", "mb-4")}>
               {totalBalance.toFixed(2)}

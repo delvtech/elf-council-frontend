@@ -4,6 +4,7 @@ import classNames from "classnames";
 import tw from "src/elf-tailwindcss-classnames";
 import Image from "next/image";
 import { t } from "ttag";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
 
 interface BalanceLabeledStatProps {
   className?: string;
@@ -36,19 +37,20 @@ export function BalanceLabeledStat(
         <div
           className={tw(
             "grid",
-            "items-center",
+            "place-items-center",
             "w-7",
             "h-7",
             "bg-paleLily",
             "rounded-full"
           )}
         >
-          <Image
-            height={20}
-            width={20}
-            src="/assets/ElementLogo--dark.svg"
-            alt={t`Element logo`}
-          />
+          <div className={tw("relative", "h-5", "w-5")}>
+            <Image
+              layout="fill"
+              src="/assets/ElementLogo--dark.svg"
+              alt={t`Element logo`}
+            />
+          </div>
         </div>
       </div>
 
@@ -67,12 +69,7 @@ export function BalanceLabeledStat(
               onMouseEnter={enableTooltip}
               onMouseLeave={disableTooltip}
             >
-              <Image
-                height={20}
-                width={20}
-                src="/assets/exclamation-circle--thin.svg"
-                alt={t`Tooltip icon`}
-              />
+              <ExclamationCircleIcon className={tw("h-5")} />
             </button>
           </Tooltip>
         ) : null}

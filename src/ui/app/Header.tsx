@@ -1,11 +1,11 @@
-import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement } from "react";
+import { useWeb3React } from "@web3-react/core";
 import tw from "src/elf-tailwindcss-classnames";
-import { TokenRewardsButton } from "src/ui/app/TokenRewardsButton";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import Image from "next/image";
 import { t } from "ttag";
+import { QuestionMarkCircleIcon } from "@heroicons/react/solid";
 
 function Header(): ReactElement {
   const { account, active } = useWeb3React();
@@ -25,21 +25,24 @@ function Header(): ReactElement {
       >
         {account ? (
           <div className={tw("flex", "items-center")}>
-            <div className={tw("flex", "items-center", "gap-2", "mr-8")}>
+            <div className={tw("flex", "items-center", "gap-1", "mr-8")}>
               <span
                 className={tw("text-principalRoyalBlue")}
               >{t`Learn how to vote`}</span>
               <button>
-                <TooltipSvg />
+                <QuestionMarkCircleIcon
+                  className={tw("h-4", "text-principalRoyalBlue")}
+                />
               </button>
             </div>
             <div className={tw("flex", "items-center", "mr-8")}>
-              <Image
-                height={18}
-                width={18}
-                src="/assets/gas.svg"
-                alt={t`Gas pump icon`}
-              />
+              <div className={tw("relative", "h-5", "w-5")}>
+                <Image
+                  layout="fill"
+                  src="/assets/gas.svg"
+                  alt={t`Gas pump icon`}
+                />
+              </div>
               <span
                 className={tw(
                   "text-principalRoyalBlue",
@@ -62,24 +65,6 @@ function Header(): ReactElement {
     </div>
   );
 }
-
-// TODO: Replace with HeroIcon once implemented 
-const TooltipSvg = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 text-principalRoyalBlue"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-    >
-      <path
-        fillRule="evenodd"
-        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
-};
 
 // TODO: Replace with HeroIcon once implemented
 const ChevronSvg = () => {
