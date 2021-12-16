@@ -45,7 +45,7 @@ export function ConnectWalletButtons({
         "flex",
         "flex-col",
         "justify-center",
-        "overflow-scroll",
+        "overflow-auto",
         "p-8"
       )}
     >
