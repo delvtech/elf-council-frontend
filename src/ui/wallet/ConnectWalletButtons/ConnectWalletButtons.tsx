@@ -69,12 +69,9 @@ export function ConnectWalletButtons({
               "items-center"
             )}
           >
-            <Image
-              height={48}
-              width={48}
-              src="/assets/metamask.svg"
-              alt="MetaMask"
-            />
+            <div className={tw("relative", "h-12", "w-12")}>
+              <Image layout="fill" src="/assets/metamask.svg" alt="MetaMask" />
+            </div>
             <span className={tw("text-base")}>MetaMask</span>
           </div>
         </Button>
@@ -94,12 +91,13 @@ export function ConnectWalletButtons({
               "items-center"
             )}
           >
-            <Image
-              height={48}
-              width={48}
-              src="/assets/walletConnectIcon.svg"
-              alt="MetaMask"
-            />
+            <div className={tw("relative", "h-12", "w-12")}>
+              <Image
+                layout="fill"
+                src="/assets/walletConnectIcon.svg"
+                alt="MetaMask"
+              />
+            </div>
             <span className={tw("text-base")}>WalletConnect</span>
           </div>
         </Button>

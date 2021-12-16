@@ -62,12 +62,13 @@ export default function Sidebar(): ReactElement {
         )}
       >
         <div className={tw("py-3", "mt-1", "flex", "justify-around")}>
-          <Image
-            height={95}
-            width={95}
-            src="/assets/CouncilLogo.svg"
-            alt={t`Element Council logo`}
-          />
+          <div className={tw("relative", "h-24", "w-24")}>
+            <Image
+              layout="fill"
+              src="/assets/CouncilLogo.svg"
+              alt={t`Element Council logo`}
+            />
+          </div>
           <button
             onClick={onClose}
             className={tw(
