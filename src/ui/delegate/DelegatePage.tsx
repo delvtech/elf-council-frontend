@@ -9,7 +9,7 @@ import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import { t } from "ttag";
 import DelegatesList from "./DelegatesList/DelegatesList";
-import GradientCard from 'src/ui/base/Card/GradientCard'
+import GradientCard from "src/ui/base/Card/GradientCard";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -68,7 +68,7 @@ export default function DelegatePage(): ReactElement {
           {/* Delegate Leaderboard */}
           <div className={tw("w-full", "xl:w-9/12", "p-4")}>
             <H2
-              className={tw("mb-4", "text-brandDarkBlue-dark")}
+              className={tw("mb-4", "text-principalRoyalBlue")}
             >{t`Explore Featured Delegates`}</H2>
             <DelegatesList />
           </div>
