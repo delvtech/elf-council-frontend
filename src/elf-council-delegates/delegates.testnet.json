@@ -40,6 +40,166 @@
       "numDelegatedVotes": 400,
       "numProposalsVoted": 0,
       "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 0",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 1",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 2",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 3",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 4",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 0",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 1",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 2",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 3",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 4",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 0",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 1",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 2",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 3",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 4",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 0",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 1",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 2",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 3",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
+    },
+    {
+      "address": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "description": "Bacon ipsum dolor amet ribeye ham hock kielbasa, meatball shankle shank filet mignon strip steak hamburger short loin venison picanha jowl t-bone. Rump turkey hamburger, swine pig beef ribs capicola boudin. Ham hock pork belly turkey, biltong porchetta drumstick rump. Venison landjaeger ham hock, drumstick cow shank chuck rump burgdoggen pancetta capicola alcatra tri-tip.",
+      "name": "Hardat Signer 4",
+      "numDelegatedVotes": 400,
+      "numProposalsVoted": 0,
+      "twitterHandle": "@annonymous"
     }
   ],
   "version": "0.0.0"
