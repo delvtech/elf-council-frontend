@@ -3,13 +3,14 @@ import { Tooltip } from "@material-ui/core";
 import classNames from "classnames";
 import tw from "src/elf-tailwindcss-classnames";
 import Image from "next/image";
+import Link from "next/link";
 import { t } from "ttag";
-import { ExclamationCircleIcon } from "@heroicons/react/outline";
+import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 
 interface BalanceLabeledStatProps {
   className?: string;
   tooltip?: string;
-  helperText?: ReactElement;
+  tooltipHref?: string;
   label: string;
   balance: string;
 }
@@ -17,7 +18,7 @@ interface BalanceLabeledStatProps {
 export function BalanceLabeledStat(
   props: BalanceLabeledStatProps
 ): ReactElement {
-  const { className, tooltip, helperText, label, balance } = props;
+  const { className, tooltip, tooltipHref, label, balance } = props;
   const [showTooltip, setShowTooltip] = useState(false);
 
   const enableTooltip = (e: MouseEvent<HTMLButtonElement>) => {
@@ -29,6 +30,14 @@ export function BalanceLabeledStat(
     setShowTooltip(false);
   };
 
+  const tooltipIcon = tooltipHref ? (
+    <Link href={tooltipHref} passHref>
+      <QuestionMarkCircleIcon className={tw("h-5")} />
+    </Link>
+  ) : (
+    <QuestionMarkCircleIcon className={tw("h-5")} />
+  );
+
   return (
     <div className={classNames(tw("text-white"), className)}>
       {/* Balance */}
@@ -36,8 +45,7 @@ export function BalanceLabeledStat(
         <span className={tw("text-2xl", "mr-2")}>{balance}</span>
         <div
           className={tw(
-            "grid",
-            "place-items-center",
+            "grid", "place-items-center",
             "w-7",
             "h-7",
             "bg-paleLily",
@@ -69,15 +77,10 @@ export function BalanceLabeledStat(
               onMouseEnter={enableTooltip}
               onMouseLeave={disableTooltip}
             >
-              <ExclamationCircleIcon className={tw("h-5")} />
+              {tooltipIcon}
             </button>
           </Tooltip>
         ) : null}
-      </div>
-
-      {/* Helper Text */}
-      <div>
-        <span className={tw("text-sm", "leading-4")}>{helperText}</span>
       </div>
     </div>
   );
