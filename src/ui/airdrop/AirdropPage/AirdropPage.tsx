@@ -1,10 +1,8 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, ReactNode, useMemo, useState } from "react";
 import tw from "src/elf-tailwindcss-classnames";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
-import { useClaimableAirdropBalance } from "src/ui/airdrop/useClaimableAirdropBalance";
 import { Step } from "src/ui/base/Card/Steps/Steps";
 import Steps2 from "src/ui/base/Card/Steps2/Steps2";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -20,8 +18,6 @@ export default function AirdropPage(): ReactElement {
   const signer = useSigner(account, library);
 
   const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const { data: merkleData } = useMerkleInfo(account);
-  const claimableBalance = useClaimableAirdropBalance(account);
 
   const steps: StepWithContent[] = useMemo(() => {
     return [

@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
+import Card from "src/ui/base/Card/Card";
 import {
   ConnectWalletButton,
   WalletProfileButton,
@@ -22,7 +22,7 @@ export function ConnectWalletStepCard({
 }: ConnectWalletStepCardProps): ReactElement {
   return (
     <Card className={tw("flex", "flex-col", "h-96", "text-center", "w-full")}>
-      <div className={tw("p-12", "space-y-5")}>
+      <div className={tw("p-12", "flex", "flex-col", "h-full", "space-y-5")}>
         <div
           className={tw(
             "text-center",
@@ -42,11 +42,10 @@ export function ConnectWalletStepCard({
         <div
           className={tw(
             "flex",
-            "h-full",
             "justify-center",
-            "items-end",
             "w-full",
-            "space-x-4"
+            "space-x-4",
+            "pt-12"
           )}
         >
           {!account ? (
@@ -55,11 +54,13 @@ export function ConnectWalletStepCard({
               variant={ButtonVariant.GRADIENT}
             />
           ) : (
-            <WalletProfileButton
-              variant={ButtonVariant.OUTLINE_BLUE}
-              account={account}
-              walletConnectionActive={walletConnectionActive}
-            />
+            <div>
+              <WalletProfileButton
+                variant={ButtonVariant.OUTLINE_BLUE}
+                account={account}
+                walletConnectionActive={walletConnectionActive}
+              />
+            </div>
           )}
           <Button
             disabled={!account}
