@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 import classNames from "classnames";
-import { formatEther } from "ethers/lib/utils";
+import { commify, formatEther } from "ethers/lib/utils";
 import tw from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
@@ -15,6 +15,10 @@ import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
+
+const rand1 = Math.random() * 100000000;
+const rand2 = Math.random() * 100000000;
+const rand3 = Math.random() * 100000000;
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -30,6 +34,10 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccount(account);
+
+  const formattedBalance = commify((+balance * rand1).toFixed(4));
+  const formattedAirdrop = commify((+unclaimedAirdrop * rand2).toFixed(4));
+  const formattedVotingPower = commify((+votingPower * rand3).toFixed(4));
 
   return (
     <Card variant={CardVariant.GRADIENT} className={tw("shadow-md")}>
@@ -57,22 +65,20 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
       <div
         className={tw("flex", "flex-col", "min-h-full", "align-bottom", "mb-8")}
       >
-        <div className={tw("flex", "items-center", "justify-between")}>
-          <BalanceWithLabel
-            className={tw("mt-8")}
-            balance={balance}
-            label={t`Wallet balance`}
-          />
-          <BalanceWithLabel
-            className={tw("mt-8")}
-            balance={unclaimedAirdrop}
-            label={t`Voting Power`}
-          />
-        </div>
         <BalanceWithLabel
-          className={tw("mt-8")}
+          className={tw("w-full", "mt-8")}
+          balance={formattedBalance}
+          label={t`Wallet balance`}
+        />
+        <BalanceWithLabel
+          className={tw("w-full", "mt-8")}
           balance={amountDeposited}
           label={t`Eligible voting balance`}
+        />
+        <BalanceWithLabel
+          className={tw("w-full", "mt-8")}
+          balance={formattedVotingPower}
+          label={t`Voting Power`}
         />
         <div
           className={tw(
@@ -86,7 +92,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           )}
         >
           <BalanceWithLabel
-            balance={unclaimedAirdrop}
+            balance={formattedAirdrop}
             label={t`Unclaimed airdrop`}
           />
           <LinkButton
@@ -101,11 +107,10 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
 }
 
 interface BalanceWithLabelProps {
+  className?: string;
   balance: string;
   label: string;
-  className?: string;
 }
-
 function BalanceWithLabel(props: BalanceWithLabelProps) {
   const { className, balance, label } = props;
   return (
