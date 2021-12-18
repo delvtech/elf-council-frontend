@@ -9,6 +9,7 @@ interface LinkButtonProps extends ButtonStyles {
    * path for next router to navigate to
    */
   link: string;
+  className?: string;
   children?: ReactNode;
 }
 
@@ -16,11 +17,11 @@ interface LinkButtonProps extends ButtonStyles {
  * Button for next router links
  */
 export default function LinkButton(props: LinkButtonProps): ReactElement {
-  const { link, variant, round, children } = props;
+  const { link, variant, round, className, children } = props;
   const buttonClass = getButtonClass({ variant, round });
   return (
     <Link href={link} passHref>
-      <div className={classNames(buttonClass, tw("cursor-pointer"))}>
+      <div className={classNames(buttonClass, tw("cursor-pointer"), className)}>
         {children}
       </div>
     </Link>

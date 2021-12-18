@@ -13,6 +13,8 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
+import LinkButton from "src/ui/base/Button/LinkButton";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -45,10 +47,11 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             data={unclaimed}
             topLabel={t`Unclaimed rewards`}
           />
-          <Button
+          <LinkButton
+            link="/airdrop"
             className={tw("self-end", "mb-5")}
             variant={ButtonVariant.OUTLINE_WHITE}
-          >{t`Claim`}</Button>
+          >{t`Claim`}</LinkButton>
         </div>
         <LabeledStat whiteText data={votingPower} topLabel={t`Voting Power`} />
       </div>
