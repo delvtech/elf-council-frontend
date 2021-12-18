@@ -17,10 +17,16 @@ interface PageViewProps {
    * Whether or not the sidebar navigation should be shown, defaults to true
    */
   showSidebar?: boolean;
+  showHeader?: boolean;
 }
 
 export default function PageView(props: PageViewProps): ReactElement {
-  const { children, showSidebar = true, childrenContainerClassName } = props;
+  const {
+    children,
+    showSidebar = true,
+    showHeader = true,
+    childrenContainerClassName,
+  } = props;
   const { chainId } = useWeb3React();
   const isWrongChain = !!chainId && chainId !== addressesJson.chainId;
   return (
@@ -48,10 +54,11 @@ export default function PageView(props: PageViewProps): ReactElement {
             "items-center"
           )}
         >
-          <Header />
+          {showHeader ? <Header /> : null}
+
           <div
             className={classNames(
-              tw("max-w-6xl", "mt-6", "h-full"),
+              tw("mt-6", "w-full", "h-full"),
               childrenContainerClassName
             )}
           >

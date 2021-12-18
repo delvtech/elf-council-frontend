@@ -15,7 +15,6 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import TextInput from "src/ui/base/Input/TextInput";
-import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 

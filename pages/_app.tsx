@@ -1,4 +1,6 @@
 import "@fontsource/rubik";
+import "@fontsource/rubik/600.css";
+
 import "styles/globals.css";
 
 import { Web3ReactProvider } from "@web3-react/core";
