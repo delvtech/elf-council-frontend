@@ -1,11 +1,12 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, ReactNode, useMemo, useState } from "react";
 import tw from "src/elf-tailwindcss-classnames";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
-import Card from "src/ui/base/Card/Card";
-import Steps, { Step } from "src/ui/base/Card/Steps/Steps";
-import H1 from "src/ui/base/H1";
+import { useClaimableAirdropBalance } from "src/ui/airdrop/useClaimableAirdropBalance";
+import { Step } from "src/ui/base/Card/Steps/Steps";
+import Steps2 from "src/ui/base/Card/Steps2/Steps2";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 import { ConnectWalletStepCard } from "./ConnectWalletStepCard";
@@ -19,6 +20,9 @@ export default function AirdropPage(): ReactElement {
   const signer = useSigner(account, library);
 
   const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const { data: merkleData } = useMerkleInfo(account);
+  const claimableBalance = useClaimableAirdropBalance(account);
+
   const steps: StepWithContent[] = useMemo(() => {
     return [
       {
@@ -36,7 +40,7 @@ export default function AirdropPage(): ReactElement {
         ),
       },
       {
-        name: t`View airdrop`,
+        name: t`Delegate`,
         status:
           activeStepIndex === 1
             ? "current"
@@ -56,7 +60,7 @@ export default function AirdropPage(): ReactElement {
         ),
       },
       {
-        name: t`Delegate and claim tokens`,
+        name: t`Claim and Delegate`,
         status: activeStepIndex === 2 ? "current" : "upcoming",
         onClick: () => {
           if (account) {
@@ -69,28 +73,24 @@ export default function AirdropPage(): ReactElement {
   }, [account, active, activeStepIndex, signer]);
 
   return (
-    <div className={tw("flex", "flex-col", "h-full", "pt-8", "space-y-8")}>
-      <H1
-        className={tw("flex-1", "text-center")}
-      >{t`Element Finance Token Airdrop`}</H1>
-      <div className={tw("flex", "space-x-12", "h-full")}>
-        <div>
-          <Card
-            className={tw("flex", "flex-col", "text-white", "w-80", "h-64")}
-          >
-            <div
-              className={tw(
-                "font-bold",
-                "text-principalRoyalBlue",
-                "text-center",
-                "mb-6"
-              )}
-            >{t`Claim your ELFI in 3 steps`}</div>
-            <Steps steps={steps} />
-          </Card>
-        </div>
+    <div
+      className={tw(
+        "flex",
+        "flex-col",
+        "h-full",
+        "space-y-8",
+        "w-full",
+        "justify-center",
+        "items-center",
+        "mt-12"
+      )}
+    >
+      <div style={{ width: 600 }}>
+        <Steps2 steps={steps} />
+      </div>
 
-        <div style={{ width: 500 }}>{steps[activeStepIndex].content}</div>
+      <div className={tw("w-full", "md:w-3/5")}>
+        {steps[activeStepIndex].content}
       </div>
     </div>
   );
