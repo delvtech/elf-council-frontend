@@ -1,4 +1,3 @@
-import { Icon } from "@material-ui/core";
 import classNames from "classnames";
 import React, { ReactElement } from "react";
 import tw, { TTailwindString } from "tailwindcss-classnames";
