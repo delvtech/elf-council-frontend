@@ -4,16 +4,34 @@ import tw from "src/elf-tailwindcss-classnames";
 import { Step } from "src/ui/base/Card/Steps2/step";
 
 interface StepsProps {
+  activeStepIndex: number;
   steps: Step[];
   className?: string;
 }
 
-export default function Steps2({ steps, className }: StepsProps): ReactElement {
+export default function Steps2({
+  steps,
+  activeStepIndex,
+  className,
+}: StepsProps): ReactElement {
   return (
     <div className={classNames(tw("flex", "flex-col"), className)}>
+      {/* Step Count */}
       <div className={tw("grid", "h-10", "grid-cols-3", "w-full", "mb-2")}>
         {steps.map((step, index) => {
           const prevStep = index > 0 ? steps[index - 1] : undefined;
+
+          const isLeadingDividerActive = getIsLeadingDividerActive(
+            prevStep,
+            step
+          );
+
+          const isTrailingDividerActive = getIsTrailingDividerActive(
+            step,
+            index,
+            activeStepIndex
+          );
+
           return (
             <div
               key={index}
@@ -21,23 +39,19 @@ export default function Steps2({ steps, className }: StepsProps): ReactElement {
             >
               <Divider
                 isInvisible={index === 0}
-                isActive={
-                  (prevStep?.status === "complete" &&
-                    step.status === "current") ||
-                  step.status === "complete"
-                }
+                isActive={isLeadingDividerActive}
               />
               <StepCount step={step} count={index + 1}></StepCount>
               <Divider
                 isInvisible={index === steps.length - 1}
-                isActive={step.status === "complete"}
+                isActive={isTrailingDividerActive}
               />
             </div>
           );
         })}
       </div>
 
-      {/* Text below */}
+      {/* Step Labels */}
       <div className={tw("grid", "grid-cols-3", "w-full", "items-center")}>
         {steps.map((step, index) => (
           <div
@@ -56,6 +70,21 @@ export default function Steps2({ steps, className }: StepsProps): ReactElement {
         ))}
       </div>
     </div>
+  );
+}
+
+function getIsTrailingDividerActive(
+  step: Step,
+  index: number,
+  activeStepIndex: number
+) {
+  return step.status === "complete" && index !== activeStepIndex;
+}
+
+function getIsLeadingDividerActive(prevStep: Step | undefined, step: Step) {
+  return (
+    (prevStep?.status === "complete" && step.status === "current") ||
+    step.status === "complete"
   );
 }
 

@@ -86,7 +86,7 @@ export default function AirdropPage(): ReactElement {
       )}
     >
       <div style={{ width: 600 }}>
-        <Steps2 steps={steps} />
+        <Steps2 steps={steps} activeStepIndex={activeStepIndex} />
       </div>
 
       <div className={tw("w-full", "md:w-3/5")}>
