@@ -61,9 +61,9 @@ export function ElementIcon({
 function getIconSizeClasses(size: IconSize): TTailwindString {
   switch (size) {
     case IconSize.SMALL:
-      return tw("h-4", "w-4");
+      return tw("h-3", "w-3");
     case IconSize.MEDIUM:
-      return tw("h-8", "w-8");
+      return tw("h-6", "w-6");
     case IconSize.LARGE:
       return tw("h-12", "w-12");
   }
