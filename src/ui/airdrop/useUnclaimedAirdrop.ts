@@ -1,12 +1,12 @@
 import { FixedNumber } from "ethers";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
-import { useClaimedRewards } from "src/ui/rewards/useClaimed";
+import { useClaimedAirdrop } from "src/ui/airdrop/useClaimedAirdrop";
 
-export function useUnclaimedRewards(
+export function useUnclaimedAirdrop(
   account: string | undefined | null,
   merkleInfo: MerkleProof | undefined
 ): string {
-  const claimed = useClaimedRewards(account);
+  const claimed = useClaimedAirdrop(account);
   const { value: totalGrant = "0" } = merkleInfo?.leaf || {};
 
   const unclaimed = FixedNumber.from(totalGrant)

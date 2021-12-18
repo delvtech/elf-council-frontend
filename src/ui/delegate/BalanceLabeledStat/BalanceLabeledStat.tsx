@@ -2,9 +2,9 @@ import { ReactElement, useState, MouseEvent } from "react";
 import { Tooltip } from "@material-ui/core";
 import classNames from "classnames";
 import tw from "src/elf-tailwindcss-classnames";
-import Image from "next/image";
 import { t } from "ttag";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 
 interface BalanceLabeledStatProps {
   className?: string;
@@ -34,24 +34,7 @@ export function BalanceLabeledStat(
       {/* Balance */}
       <div className={tw("flex", "items-center")}>
         <span className={tw("text-2xl", "mr-2")}>{balance}</span>
-        <div
-          className={tw(
-            "grid",
-            "place-items-center",
-            "w-7",
-            "h-7",
-            "bg-paleLily",
-            "rounded-full"
-          )}
-        >
-          <div className={tw("relative", "h-5", "w-5")}>
-            <Image
-              layout="fill"
-              src="/assets/ElementLogo--dark.svg"
-              alt={t`Element logo`}
-            />
-          </div>
-        </div>
+        <ElementIcon size={IconSize.MEDIUM} />
       </div>
 
       {/* Label */}

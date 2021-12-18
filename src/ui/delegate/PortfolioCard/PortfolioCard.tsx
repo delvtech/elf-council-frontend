@@ -1,7 +1,6 @@
 import { Fragment, ReactElement, ChangeEvent, useCallback } from "react";
 import { Signer } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
-import Image from "next/image";
 
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -29,7 +28,7 @@ function WalletHelperText(): ReactElement {
     <span key="wallet-balance-tooltip" className={tw("whitespace-nowrap")}>
       the&nbsp;
       <span>
-        <ExclamationCircleIcon className={tw("inline-block","h-3")} />
+        <ExclamationCircleIcon className={tw("inline-block", "h-3")} />
       </span>{" "}
       <span>icon to learn more.</span>
     </span>
@@ -87,11 +86,15 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
   const vaultBalance = formatEther(vaultBalanceBN || 0);
 
-  const { mutate: onDeposit, isLoading: depositLoading } =
-    useDepositIntoLockingVault(signer, clearDepositInput);
+  const { mutate: onDeposit } = useDepositIntoLockingVault(
+    signer,
+    clearDepositInput
+  );
 
-  const { mutate: onWithdraw, isLoading: withdrawLoading } =
-    useWithdrawFromLockingVault(signer, clearWithdrawInput);
+  const { mutate: onWithdraw } = useWithdrawFromLockingVault(
+    signer,
+    clearWithdrawInput
+  );
 
   const onSetDepositAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {

@@ -4,7 +4,7 @@ import tw from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropPage/AirdropFullyClaimedCard";
-import { useClaimableAirdropBalance } from "src/ui/airdrop/useClaimableAirdropBalance";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -23,25 +23,25 @@ export function ViewAirdropStepCard({
 }: ViewAirdropStepCardProps): ReactElement {
   const merkleInfoQueryData = useMerkleInfo(account);
 
-  const { data, isLoading: isLoadingMerkle } = merkleInfoQueryData;
-  const claimableBalance = useClaimableAirdropBalance(account);
+  const { data: merkleInfo, isLoading: isLoadingMerkle } = merkleInfoQueryData;
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
-  if (isLoadingMerkle && !data) {
+  if (isLoadingMerkle && !merkleInfo) {
     return <LoadingAirdropCard />;
   }
 
   // user has no airdrop if they have no merkle value
-  if (!data) {
+  if (!merkleInfo) {
     return <NoAirdropCard />;
   }
 
   // user has no airdrop if they have a merkle value but have already claimed
   // the full amount
-  if (data && parseEther(claimableBalance).isZero()) {
+  if (merkleInfo && parseEther(claimableBalance).isZero()) {
     return <AirdropFullyClaimedCard />;
   }
 
-  const airdropAmountLabel = getAirdropAmountLabel(data, isLoadingMerkle);
+  const airdropAmountLabel = getAirdropAmountLabel(merkleInfo, isLoadingMerkle);
 
   return (
     <Card
