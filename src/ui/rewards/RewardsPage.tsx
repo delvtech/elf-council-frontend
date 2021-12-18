@@ -22,7 +22,7 @@ import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useElementTokenBalanceOf } from "src/ui/contracts/useElementTokenBalance";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
-import { useClaimed } from "src/ui/rewards/useClaimed";
+import { useClaimedRewards } from "src/ui/rewards/useClaimed";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
@@ -240,7 +240,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 }
 
 function useRewardsInfo(address: string | undefined | null) {
-  const claimed = useClaimed(address);
+  const claimed = useClaimedRewards(address);
   const deposited = useDeposited(address);
   const delegate = useDelegate(address);
 
