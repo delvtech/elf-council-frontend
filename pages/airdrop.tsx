@@ -7,6 +7,7 @@ export default function Proposals(): ReactElement {
   return (
     <PageView
       showSidebar={false}
+      showHeader={false}
       childrenContainerClassName={tw("flex", "justify-center")}
     >
       <AirdropPage />
