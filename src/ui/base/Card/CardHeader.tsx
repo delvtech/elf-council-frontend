@@ -40,7 +40,7 @@ export default function CardHeader({
         </h2>
         <p className={tw("mt-1", "text-sm", "text-gray-500")}>{description}</p>
       </div>
-      <div className={tw("ml-4", "mt-4", "flex-shrink-0")}>{action}</div>
+      <div className={tw("ml-4", "mt-4", "shrink-0")}>{action}</div>
     </div>
   );
 }

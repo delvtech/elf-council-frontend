@@ -121,7 +121,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
       className={tw(
         "flex",
         "h-full",
-        "flex-shrink-0",
+        "shrink-0",
         "items-center",
         "justify-center"
       )}

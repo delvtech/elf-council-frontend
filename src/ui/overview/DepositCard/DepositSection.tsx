@@ -132,7 +132,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
         </div>
 
         <div className={tw("space-y-4")}>
-          <div className={tw("flex", "flex-grow", "justify-end")}>
+          <div className={tw("flex", "grow", "justify-end")}>
             <LabeledStat data={balance} bottomLabel={t`Balance`} />
           </div>
           <div className={tw("flex", "space-x-4", "w-full")}>

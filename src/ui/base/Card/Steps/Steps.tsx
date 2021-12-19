@@ -35,7 +35,7 @@ function StepComplete({ step }: StepCompleteProps) {
       <span className={tw("flex", "items-start")}>
         <span
           className={tw(
-            "flex-shrink-0",
+            "shrink-0",
             "relative",
             "h-5",
             "w-5",
@@ -83,7 +83,7 @@ function StepCurrent({ step }: StepCurrentProps) {
     >
       <span
         className={tw(
-          "flex-shrink-0",
+          "shrink-0",
           "h-5",
           "w-5",
           "relative",
@@ -137,7 +137,7 @@ function StepUpcoming({ step }: StepUpcomingProps) {
       <div className={tw("flex", "items-start")}>
         <div
           className={tw(
-            "flex-shrink-0",
+            "shrink-0",
             "h-5",
             "w-5",
             "relative",
