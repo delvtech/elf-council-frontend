@@ -1,6 +1,6 @@
 module.exports = {
   // allows tailwind to tree shake all css not included in the files found in this array.
-  purge: [
+  content: [
     // .ts allow for long tailwind classes to be extract to their own files.
     "./pages/**/*.ts",
     "./pages/**/*.tsx",
@@ -8,7 +8,6 @@ module.exports = {
     "./src/**/*.ts",
     "./src/**/*.tsx",
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
@@ -47,9 +46,6 @@ module.exports = {
         },
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [require("@tailwindcss/forms")],
 };
