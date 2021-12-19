@@ -37,7 +37,7 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       id={id}
       name={name}
       placeholder={placeholder}
-      className={tw("flex-grow")}
+      className={tw("grow")}
       inputClassName={tw("h-12", "text-center")}
       value={depositAmount}
       onChange={onSetDepositAmount}

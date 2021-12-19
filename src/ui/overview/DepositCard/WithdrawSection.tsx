@@ -92,7 +92,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
         </div>
 
         <div className={tw("space-y-4")}>
-          <div className={tw("flex", "flex-grow", "justify-end")}>
+          <div className={tw("flex", "grow", "justify-end")}>
             <LabeledStat data={amountDeposited} bottomLabel={t`Deposited`} />
           </div>
           <div className={tw("flex", "space-x-4", "w-full")}>
@@ -109,7 +109,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
               placeholder={t`Insert amount to withdraw`}
-              className={tw("flex-grow")}
+              className={tw("grow")}
               inputClassName={tw("h-12", "text-center")}
               value={withdrawAmount}
               onChange={onSetWithdrawAmount}
