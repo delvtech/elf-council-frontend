@@ -1,13 +1,15 @@
-import React, { ReactElement } from "react";
+import React, { ChangeEvent, ReactElement, useCallback } from "react";
 import { FixedNumber } from "ethers";
 import tw from "src/elf-tailwindcss-classnames";
+import classNames from "classnames";
 import NumericInput from "src/ui/base/Input/NumericInput";
-import { t } from "ttag";
 
 interface DepositInputProps {
   depositAmount: string;
   balance: string;
-  onSetDepositAmount: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setDepositAmount: (value: string) => void;
+  className?: string;
+  inputClassName?: string;
   id: string;
   name: string;
   placeholder: string;
@@ -18,7 +20,9 @@ export function DepositInput(props: DepositInputProps): ReactElement {
   const {
     depositAmount,
     balance,
-    onSetDepositAmount,
+    setDepositAmount,
+    className = "",
+    inputClassName = "",
     id,
     name,
     placeholder,
@@ -29,6 +33,18 @@ export function DepositInput(props: DepositInputProps): ReactElement {
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
 
+  const onSetDepositAmount = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const newDepositAmount = event.target.value;
+      setDepositAmount(newDepositAmount);
+    },
+    [setDepositAmount]
+  );
+
+  const setMax = useCallback(() => {
+    setDepositAmount(balance);
+  }, [balance, setDepositAmount]);
+
   return (
     <NumericInput
       disabled={!hasBalance}
@@ -37,9 +53,10 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       id={id}
       name={name}
       placeholder={placeholder}
-      className={tw("flex-grow")}
-      inputClassName={tw("h-12", "text-center")}
+      className={classNames(className, tw("flex-grow"))}
+      inputClassName={classNames(inputClassName, tw("h-12", "text-left"))}
       value={depositAmount}
+      setMax={setMax}
       onChange={onSetDepositAmount}
     />
   );

@@ -2,7 +2,7 @@ import { ReactElement, ChangeEvent, useCallback } from "react";
 import { Signer } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
-        
+
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { Delegate } from "src/elf-council-delegates/delegates";
@@ -14,7 +14,7 @@ import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLocki
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import { jt, t } from "ttag";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface PortfolioCardProps {
@@ -119,7 +119,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <DepositInput
             depositAmount={deposit}
             balance={walletBalance}
-            onSetDepositAmount={onSetDepositAmount}
+            setDepositAmount={setDeposit}
             id={"deposit-amount"}
             name={t`Deposit amount`}
             placeholder={t`Insert amount to deposit`}
@@ -127,11 +127,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           />
         </div>
         <div className={tw("w-full", "flex", "justify-end", "mt-4", "gap-4")}>
-          <Button
-            onClick={setMaxDeposit}
-            disabled={!parseInt(walletBalance)}
-            variant={ButtonVariant.GRADIENT}
-          >{t`Max`}</Button>
           <Button
             onClick={depositClickHandler}
             disabled={!parseInt(walletBalance) || !deposit}
@@ -146,11 +141,11 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <div className={tw("mt-3")}>
           <div
             className={tw("text-white", "text-sm", "mb-2")}
-          >{jt`Tokens Eligible to Deposit: ${walletBalance}`}</div>
+          >{jt`Tokens Eligible to Withdraw: ${vaultBalance}`}</div>
           <DepositInput
             depositAmount={withdraw}
             balance={vaultBalance}
-            onSetDepositAmount={onSetWithdrawalAmount}
+            setDepositAmount={setWithdraw}
             id={"withdraw-amount"}
             name={t`Withdraw amount`}
             placeholder={t`Insert amount to withdraw`}
@@ -158,11 +153,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           />
         </div>
         <div className={tw("w-full", "flex", "justify-end", "mt-4", "gap-4")}>
-          <Button
-            onClick={setMaxWithdraw}
-            disabled={!parseInt(vaultBalance)}
-            variant={ButtonVariant.WHITE}
-          >{t`Max`}</Button>
           <Button
             onClick={withdrawClickHandler}
             disabled={!parseInt(vaultBalance) || !withdraw}
