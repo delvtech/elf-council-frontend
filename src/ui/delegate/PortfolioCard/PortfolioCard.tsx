@@ -66,7 +66,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   };
 
   return (
-    <div>
+    <div className={tw({ "opacity-50": !account })}>
       {/* Balance Stats */}
       <div className={tw("flex", "flex-col", "mb-4")}>
         <BalanceLabeledStat

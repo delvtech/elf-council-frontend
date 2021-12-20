@@ -62,8 +62,6 @@ export default function NumericInput({
                 "focus:ring-red-500": error,
                 "focus:border-red-500": error,
                 "border-red-500": error,
-                "pointer-events-none": disabled,
-                "opacity-50": disabled,
               }
             ),
             inputClassName

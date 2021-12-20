@@ -1,18 +1,14 @@
 import {
   ReactElement,
-  Dispatch,
-  SetStateAction,
   useCallback,
   useState,
   useRef,
 } from "react";
-import Button from "src/ui/base/Button/Button";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import tw from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import Image from "next/image";
 import { t } from "ttag";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Tooltip } from "@material-ui/core";
 import { DuplicateIcon } from "@heroicons/react/outline";
@@ -21,7 +17,6 @@ import classNames from "classnames";
 interface CurrentDelegateProps {
   className?: string;
   delegate: Delegate;
-  setEditDelegate: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultToolTipState = {
@@ -30,13 +25,9 @@ const defaultToolTipState = {
 };
 
 export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { className = "", delegate, setEditDelegate } = props;
+  const { className = "", delegate } = props;
   const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleClickEdit = useCallback(() => {
-    setEditDelegate((prevState) => !prevState);
-  }, [setEditDelegate]);
 
   // Slightly overengineered handleCopy?
   const handleCopy = useCallback(
@@ -63,7 +54,6 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       className={classNames(
         className,
         tw(
-          "mt-3",
           "py-6",
           "px-4",
           "flex",
@@ -109,11 +99,6 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             </button>
           </Tooltip>
         </span>
-      </div>
-      <div>
-        <Button onClick={handleClickEdit} variant={ButtonVariant.WHITE}>
-          Edit
-        </Button>
       </div>
     </div>
   );

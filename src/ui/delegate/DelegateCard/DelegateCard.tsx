@@ -33,8 +33,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     string | undefined
   >();
 
-  const [editDelegate, setEditDelegate] = useState(false);
-
   const { data: [delegateAddressOnChain, amountDelegated] = [] } =
     useDeposits(account);
 
@@ -70,23 +68,20 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   }, [delegateAddressOnChain, setCurrentDelegate]);
 
   return (
-    <div>
+    <div className={tw({ "opacity-50": !account })}>
       <div className={tw("flex-1", "text-white", "text-xl")}>
-        {delegateAddressOnChain
-          ? t`Current Delegate`
-          : t`Currently No Delegation`}
+        {t`Current Delegation`}
       </div>
 
-      <div className={tw("flex", "gap-7")}>
-        {currentDelegate && amountDelegated ? (
-          <CurrentDelegate
-            className={tw("w-1/2")}
-            delegate={currentDelegate}
-            setEditDelegate={setEditDelegate}
-          />
-        ) : null}
-
+      <div className={tw("flex", "gap-7", "mt-2")}>
         {/* Current Delegate Profile */}
+        {currentDelegate && amountDelegated ? (
+          <CurrentDelegate className={tw("w-1/2")} delegate={currentDelegate} />
+        ) : (
+          <NoDelegate />
+        )}
+
+        {/* Delegate Input */}
         <div className={tw("flex", "flex-col", "w-1/2")}>
           <TextInput
             screenReaderLabel={t`Enter delegate address`}
@@ -94,7 +89,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             name={t`Enter delegate address`}
             placeholder={t`Enter delegate address`}
             className={tw(
-              "my-4",
+              "mb-4",
               "h-12",
               "text-left",
               "text-principalRoyalBlue",
@@ -104,22 +99,34 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             onChange={(event) => setDelegateAddressInput(event.target.value)}
           />
           <div className={tw("text-center")}>
-            {account ? (
-              <div className={tw("w-full", "flex", "justify-end")}>
-                <Button
-                  onClick={onDelegateClick}
-                  variant={ButtonVariant.WHITE}
-                >{t`Delegate`}</Button>
-              </div>
-            ) : (
-              <ConnectWalletButton
-                label={t`Connect your wallet to delegate your vote`}
-                variant={ButtonVariant.WHITE}
-              />
-            )}
+            <div className={tw("w-full", "flex", "justify-end")}>
+              <Button
+                onClick={onDelegateClick}
+                variant={ButtonVariant.GRADIENT}
+              >{t`Delegate`}</Button>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function NoDelegate(): ReactElement {
+  return (
+    <div
+      className={tw(
+        "grid",
+        "place-items-center",
+        "w-1/2",
+        "bg-white",
+        "rounded-md",
+        "font-bold",
+        "text-principalRoyalBlue",
+        
+      )}
+    >
+      <span>{t`No current delegation`}</span>
     </div>
   );
 }
