@@ -7,7 +7,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
 import { useClaimRewards } from "src/ui/rewards/useClaimRewards";
-import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
+import { useUnclaimedRewards } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
 import { Tooltip } from "@material-ui/core";
 
@@ -20,7 +20,7 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
 
   const { mutate: claim, isLoading } = useClaimRewards(signer);
   const { data: merkleInfo } = useMerkleInfo(account);
-  const unclaimed = useUnclaimed(account, merkleInfo);
+  const unclaimed = useUnclaimedRewards(account, merkleInfo);
   const hasUnclaimedRewards = !!Number(unclaimed);
   const onClaim = useCallback(() => {
     if (!account || !merkleInfo) {

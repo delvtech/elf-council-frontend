@@ -11,7 +11,7 @@ import TextInput from "src/ui/base/Input/TextInput";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useClaimAndDepositRewards } from "src/ui/rewards/useClaimAndDepositRewards";
-import { useUnclaimed } from "src/ui/rewards/useUnclaimed";
+import { useUnclaimedRewards } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
 
 import { ClaimAndDelegateButton } from "./ClaimAndDelegateButton";
@@ -26,7 +26,7 @@ export function ClaimAndDelegateSection(
   const { account, signer } = props;
   const delegate = useDelegate(account);
   const { data: merkleInfo } = useMerkleInfo(account);
-  const unclaimed = useUnclaimed(account, merkleInfo);
+  const unclaimed = useUnclaimedRewards(account, merkleInfo);
 
   const title = delegate ? t`Claim and deposit` : t`Claim and delegate`;
   const description = delegate

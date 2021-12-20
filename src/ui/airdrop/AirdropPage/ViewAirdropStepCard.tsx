@@ -1,11 +1,16 @@
+import { parseEther } from "@ethersproject/units";
 import React, { ReactElement } from "react";
 import tw from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropPage/AirdropFullyClaimedCard";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
+import { LoadingAirdropCard } from "./LoadingAirdropCard";
+import { NoAirdropCard } from "./NoAirdropCard";
 
 interface ViewAirdropStepCardProps {
   account: string | null | undefined;
@@ -18,18 +23,25 @@ export function ViewAirdropStepCard({
 }: ViewAirdropStepCardProps): ReactElement {
   const merkleInfoQueryData = useMerkleInfo(account);
 
-  const { data, isLoading: isLoadingMerkle } = merkleInfoQueryData;
+  const { data: merkleInfo, isLoading: isLoadingMerkle } = merkleInfoQueryData;
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
-  if (isLoadingMerkle && !data) {
-    return <LoadingCard />;
+  if (isLoadingMerkle && !merkleInfo) {
+    return <LoadingAirdropCard />;
   }
 
   // user has no airdrop if they have no merkle value
-  if (!data) {
+  if (!merkleInfo) {
     return <NoAirdropCard />;
   }
 
-  const airdropAmountLabel = getAirdropAmountLabel(data, isLoadingMerkle);
+  // user has no airdrop if they have a merkle value but have already claimed
+  // the full amount
+  if (merkleInfo && parseEther(claimableBalance).isZero()) {
+    return <AirdropFullyClaimedCard />;
+  }
+
+  const airdropAmountLabel = getAirdropAmountLabel(merkleInfo, isLoadingMerkle);
 
   return (
     <Card
@@ -73,6 +85,7 @@ export function ViewAirdropStepCard({
     </Card>
   );
 }
+
 function getAirdropAmountLabel(
   merkleProof: MerkleProof | undefined,
   isLoading: boolean
@@ -86,64 +99,4 @@ function getAirdropAmountLabel(
   }
 
   return "0 ELFI";
-}
-
-function LoadingCard(): ReactElement {
-  return (
-    <Card
-      variant={CardVariant.BLUE}
-      className={tw(
-        "flex",
-        "flex-col",
-        "text-white",
-        "text-center",
-        "h-full",
-        "justify-center",
-        "items-center"
-      )}
-    >
-      <div
-        className={tw(
-          "text-center",
-          "text-sm",
-          "mb-4",
-          "animate-pulse",
-          "items-center",
-          "justify-center",
-          "flex",
-          "flex-col"
-        )}
-      >
-        <div
-          className={tw("font-semibold", "tracking-wider")}
-        >{t`Checking for airdrop rewards...`}</div>
-      </div>
-    </Card>
-  );
-}
-
-function NoAirdropCard(): ReactElement {
-  return (
-    <Card
-      variant={CardVariant.BLUE}
-      className={tw(
-        "flex",
-        "flex-col",
-        "text-white",
-        "text-center",
-        "h-full",
-        "justify-center",
-        "items-center"
-      )}
-    >
-      <div className={tw("text-center", "text-sm", "mb-4")}>
-        <div
-          className={tw("font-semibold", "tracking-wider")}
-        >{t`Sorry, no airdrop found for this wallet.`}</div>
-      </div>
-      <div
-        className={tw("text-2xl", "font-bold", "text-white", "mb-6")}
-      >{t`0 ELFI`}</div>
-    </Card>
-  );
 }

@@ -13,14 +13,14 @@ const ELEMENT_REWARDS_URL =
 const { chainId } = addressesJson;
 const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";
 
-enum RewardType {
+export enum MerkleRewardType {
   RETRO = "retro",
   REWARDS_VAULT = "rewardsVault",
 }
 
 export function useMerkleInfo(
   address: string | undefined | null,
-  rewardType: RewardType = RewardType.RETRO
+  rewardType: MerkleRewardType = MerkleRewardType.RETRO
 ): QueryObserverResult<MerkleProof> {
   return useQuery({
     queryKey: ["merkleInfo", address],
@@ -31,7 +31,7 @@ export function useMerkleInfo(
 
 export async function fetchMerkleInfo(
   address: string,
-  rewardType: RewardType
+  rewardType: MerkleRewardType
 ): Promise<MerkleProof> {
   // TODO: host this on s3 as well
   if (chainId === ChainId.LOCAL) {

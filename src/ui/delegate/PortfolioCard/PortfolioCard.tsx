@@ -2,6 +2,7 @@ import { Fragment, ReactElement, ChangeEvent, useCallback } from "react";
 import { Signer } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
+        
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { Delegate } from "src/elf-council-delegates/delegates";
@@ -44,11 +45,15 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
   const vaultBalance = formatEther(vaultBalanceBN || 0);
 
-  const { mutate: onDeposit, isLoading: depositLoading } =
-    useDepositIntoLockingVault(signer, clearDepositInput);
+  const { mutate: onDeposit } = useDepositIntoLockingVault(
+    signer,
+    clearDepositInput
+  );
 
-  const { mutate: onWithdraw, isLoading: withdrawLoading } =
-    useWithdrawFromLockingVault(signer, clearWithdrawInput);
+  const { mutate: onWithdraw } = useWithdrawFromLockingVault(
+    signer,
+    clearWithdrawInput
+  );
 
   const onSetDepositAmount = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
