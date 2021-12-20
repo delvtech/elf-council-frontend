@@ -3,7 +3,33 @@ import MenuIcon from "@material-ui/icons/Menu";
 import CloseIcon from "@material-ui/icons/Close";
 import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  position,
+  height,
+  width,
+  inset,
+  cursor,
+  padding,
+  display,
+  borderRadius,
+  boxShadow,
+  flexDirection,
+  alignItems,
+  transitionTimingFunction,
+  transitionProperty,
+  transitionDuration,
+  zIndex,
+  backgroundColor,
+  hardwareAcceleration,
+  translate,
+  margin,
+  justifyContent,
+  space,
+  textColor,
+  fontSize,
+  fontWeight,
+} from "src/elf-tailwindcss-classnames";
+import classnames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
 import { ElementLogo } from "src/ui/base/ElementLogo";
@@ -24,45 +50,54 @@ export default function Sidebar(): ReactElement {
     <Fragment>
       <button
         className={tw(
-          "fixed",
-          "h-12",
-          "w-12",
-          "top-0",
-          "left-0",
-          "cursor-pointer",
-          "p-0",
-          "md:hidden",
-          "rounded-md",
-          "hover:shadow"
+          position("fixed"),
+          height("h-12"),
+          width("w-12"),
+          inset("top-0", "left-0"),
+          cursor("cursor-pointer"),
+          padding("p-0"),
+          display("md:hidden"),
+          borderRadius("rounded-md"),
+          boxShadow("hover:shadow"),
         )}
         onClick={onOpen}
       >
-        <MenuIcon className={tw("h-16", "w-16")} />
+        <MenuIcon className={tw(height("h-16"), width("w-16"))} />
       </button>
       <div
-        className={tw(
-          "flex",
-          "flex-col",
-          "items-center",
-          "w-full",
-          "h-full",
-          "py-14",
-          "ease-in-out",
-          "transition-all",
-          "duration-300",
-          "z-30",
-          "fixed",
-          "top-0",
-          "left-0",
-          "md:w-60",
-          "bg-white",
-          "transform-gpu",
-          "md:translate-x-0",
-          { "translate-x-0": isOpen, "-translate-x-full": !isOpen }
+        className={classnames(
+          { "-translate-x-full": !isOpen },
+          tw(
+            display("flex"),
+            flexDirection("flex-col"),
+            alignItems("items-center"),
+            width("w-full", "md:w-60"),
+            height("h-full"),
+            padding("py-14"),
+            transitionTimingFunction("ease-in-out"),
+            transitionProperty("transition-all"),
+            transitionDuration("duration-300"),
+            zIndex("z-30"),
+            position("fixed"),
+            inset("top-0", "left-0"),
+            backgroundColor("bg-white"),
+            hardwareAcceleration("transform-gpu"),
+            translate("md:translate-x-0"),
+            translate({ "translate-x-0": isOpen }),
+          ),
         )}
       >
-        <div className={tw("py-3", "mt-1", "flex", "justify-around")}>
-          <div className={tw("relative", "h-24", "w-24")}>
+        <div
+          className={tw(
+            padding("py-3"),
+            margin("mt-1"),
+            display("flex"),
+            justifyContent("justify-around"),
+          )}
+        >
+          <div
+            className={tw(position("relative"), height("h-24"), width("w-24"))}
+          >
             <Image
               layout="fill"
               src="/assets/CouncilLogo.svg"
@@ -72,22 +107,23 @@ export default function Sidebar(): ReactElement {
           <button
             onClick={onClose}
             className={tw(
-              "absolute",
-              "h-12",
-              "w-12",
-              "top-0",
-              "right-0",
-              "cursor-pointer",
-              "p-0",
-              "md:hidden",
-              "rounded-md",
-              "hover:shadow"
+              position("absolute"),
+              height("h-12"),
+              width("w-12"),
+              inset("top-0", "right-0"),
+              cursor("cursor-pointer"),
+              padding("p-0"),
+              display("md:hidden"),
+              borderRadius("rounded-md"),
+              boxShadow("hover:shadow"),
             )}
           >
-            <CloseIcon className={tw("h-16", "w-16")} />
+            <CloseIcon className={tw(height("h-16"), width("w-16"))} />
           </button>
         </div>
-        <div className={tw("w-full", "space-y-6", "mt-8")}>
+        <div
+          className={tw(width("w-full"), space("space-y-6"), margin("mt-8"))}
+        >
           <SidebarLink link="/" label={t`Overview`} router={router} />
           <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
           <SidebarLink link="/delegates" label={t`Delegate`} router={router} />
@@ -99,14 +135,14 @@ export default function Sidebar(): ReactElement {
         </div>
         <div
           className={tw(
-            "flex",
-            "flex-col",
-            "items-center",
-            "mt-auto",
-            "text-principalRoyalBlue"
+            display("flex"),
+            flexDirection("flex-col"),
+            alignItems("items-center"),
+            margin("mt-auto"),
+            textColor("text-principalRoyalBlue"),
           )}
         >
-          <span className={tw("text-sm")}>Powered by</span>
+          <span className={tw(fontSize("text-sm"))}>Powered by</span>
           <ElementLogo height={"40"} />
         </div>
       </div>
@@ -135,15 +171,13 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
       <Link href={link} passHref>
         <div
           className={tw(
-            "flex",
-            "justify-center",
-            "p-3",
-            "hover:bg-blue-50",
-            "cursor-pointer",
-            "text-brandDarkBlue-dark",
-            {
-              "font-bold": isActive,
-            }
+            display("flex"),
+            justifyContent("justify-center"),
+            padding("p-3"),
+            backgroundColor("hover:bg-blue-50"),
+            cursor("cursor-pointer"),
+            textColor("text-brandDarkBlue-dark"),
+            fontWeight({ "font-bold": isActive }),
           )}
         >
           <p>{label}</p>
@@ -160,12 +194,12 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
       <a href={link}>
         <div
           className={tw(
-            "flex",
-            "justify-center",
-            "p-3",
-            "hover:bg-blue-50",
-            "cursor-pointer",
-            "text-brandDarkBlue-dark"
+            display("flex"),
+            justifyContent("justify-center"),
+            padding("p-3"),
+            backgroundColor("hover:bg-blue-50"),
+            cursor("cursor-pointer"),
+            textColor("text-brandDarkBlue-dark"),
           )}
         >
           <p>{label}</p>

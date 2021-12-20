@@ -1,6 +1,26 @@
 import classNames from "classnames";
 import React, { ReactElement } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  height,
+  gridTemplateColumns,
+  width,
+  margin,
+  alignItems,
+  justifyContent,
+  textColor,
+  fontWeight,
+  textOpacity,
+  borderWidth,
+  backgroundColor,
+  borderOpacity,
+  borderColor,
+  borderRadius,
+  opacity,
+  visibility,
+  flexShrink,
+} from "src/elf-tailwindcss-classnames";
 import { Step } from "src/ui/base/Card/Steps2/step";
 
 interface StepsProps {
@@ -15,27 +35,45 @@ export default function Steps2({
   className,
 }: StepsProps): ReactElement {
   return (
-    <div className={classNames(tw("flex", "flex-col"), className)}>
+    <div
+      className={classNames(
+        tw(display("flex"), flexDirection("flex-col")),
+        className,
+      )}
+    >
       {/* Step Count */}
-      <div className={tw("grid", "h-10", "grid-cols-3", "w-full", "mb-2")}>
+      <div
+        className={tw(
+          display("grid"),
+          height("h-10"),
+          gridTemplateColumns("grid-cols-3"),
+          width("w-full"),
+          margin("mb-2"),
+        )}
+      >
         {steps.map((step, index) => {
           const prevStep = index > 0 ? steps[index - 1] : undefined;
 
           const isLeadingDividerActive = getIsLeadingDividerActive(
             prevStep,
-            step
+            step,
           );
 
           const isTrailingDividerActive = getIsTrailingDividerActive(
             step,
             index,
-            activeStepIndex
+            activeStepIndex,
           );
 
           return (
             <div
               key={index}
-              className={tw("h-10", "flex", "items-center", "justify-center")}
+              className={tw(
+                height("h-10"),
+                display("flex"),
+                alignItems("items-center"),
+                justifyContent("justify-center"),
+              )}
             >
               <Divider
                 isInvisible={index === 0}
@@ -52,17 +90,24 @@ export default function Steps2({
       </div>
 
       {/* Step Labels */}
-      <div className={tw("grid", "grid-cols-3", "w-full", "items-center")}>
+      <div
+        className={tw(
+          display("grid"),
+          gridTemplateColumns("grid-cols-3"),
+          width("w-full"),
+          alignItems("items-center"),
+        )}
+      >
         {steps.map((step, index) => (
           <div
             key={`divider=${index}`}
             className={tw(
-              "flex",
-              "items-center",
-              "justify-center",
-              "text-principalRoyalBlue",
-              "font-semibold",
-              { "text-opacity-50": step.status === "upcoming" }
+              display("flex"),
+              alignItems("items-center"),
+              justifyContent("justify-center"),
+              textColor("text-principalRoyalBlue"),
+              fontWeight("font-semibold"),
+              textOpacity({ "text-opacity-50": step.status === "upcoming" }),
             )}
           >
             {step.name}
@@ -76,7 +121,7 @@ export default function Steps2({
 function getIsTrailingDividerActive(
   step: Step,
   index: number,
-  activeStepIndex: number
+  activeStepIndex: number,
 ) {
   return step.status === "complete" && index !== activeStepIndex;
 }
@@ -92,26 +137,28 @@ function StepCount({ step, count }: { step: Step; count: number }) {
   return (
     <div
       className={tw(
-        "w-10",
-        "h-10",
-        "flex",
-        "flex-shrink-0",
-        "items-center",
-        "justify-center",
-        "border-2",
-        {
+        flexShrink("shrink-0"),
+        width("w-10"),
+        height("h-10"),
+        display("flex"),
+        alignItems("items-center"),
+        justifyContent("justify-center"),
+        borderWidth("border-2"),
+        borderColor("border-principalRoyalBlue"),
+        borderRadius("rounded-full"),
+        backgroundColor({
           "bg-principalRoyalBlue": step.status === "complete",
-          "border-opacity-50": step.status === "upcoming",
-        },
-        "border-principalRoyalBlue",
-        "rounded-full"
+        }),
+        borderOpacity({ "border-opacity-50": step.status === "upcoming" }),
       )}
     >
       <span
         className={tw(
-          step.status === "complete" ? "text-white" : "text-principalRoyalBlue",
-          "font-semibold",
-          { "text-opacity-50": step.status === "upcoming" }
+          step.status === "complete"
+            ? textColor("text-white")
+            : textColor("text-principalRoyalBlue"),
+          fontWeight("font-semibold"),
+          textOpacity({ "text-opacity-50": step.status === "upcoming" }),
         )}
       >
         {count}
@@ -123,10 +170,13 @@ function StepCount({ step, count }: { step: Step; count: number }) {
 function Divider(props: { isInvisible: boolean; isActive: boolean }) {
   return (
     <div
-      className={tw("h-0.5", "w-full", "bg-principalRoyalBlue", {
-        "opacity-50": !props.isActive,
-        invisible: props.isInvisible,
-      })}
+      className={tw(
+        height("h-0.5"),
+        width("w-full"),
+        backgroundColor("bg-principalRoyalBlue"),
+        opacity({ "opacity-50": !props.isActive }),
+        visibility({ invisible: props.isInvisible }),
+      )}
     />
   );
 }

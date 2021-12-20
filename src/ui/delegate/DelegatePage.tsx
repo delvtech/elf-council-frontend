@@ -2,7 +2,23 @@ import { ReactElement, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Signer } from "ethers";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  alignItems,
+  height,
+  width,
+  padding,
+  borderRadius,
+  boxShadow,
+  margin,
+  textColor,
+  justifyContent,
+  fontSize,
+  letterSpacing,
+  maxHeight,
+  backgroundColor,
+} from "src/elf-tailwindcss-classnames";
 import H1 from "src/ui/base/H1";
 import H2 from "src/ui/base/H2";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
@@ -20,39 +36,48 @@ export default function DelegatePage(): ReactElement {
   >();
 
   return (
-    <div className={tw("flex", "flex-col", "items-start")}>
-      <div className={tw("flex", "h-full", "w-full", "py-8")}>
+    <div
+      className={tw(
+        display("flex"),
+        flexDirection("flex-col"),
+        alignItems("items-start"),
+      )}
+    >
+      <div
+        className={tw(
+          display("flex"),
+          height("h-full"),
+          width("w-full"),
+          padding("py-8"),
+        )}
+      >
         <div
           className={tw(
-            "w-full",
-            "flex",
-            "flex-col",
-            "xl:flex-row",
-            "justify-center"
+            width("w-full"),
+            display("flex"),
+            flexDirection("flex-col", "xl:flex-row"),
+            justifyContent("justify-center"),
           )}
         >
           {/* Portfolio Card */}
           <GradientCard
             className={tw(
-              "flex",
-              "w-full",
-              "flex-col",
-              "lg:flex-row",
-              "xl:flex-col",
-              "xl:w-4/12",
-              "h-full",
-              "rounded-xl",
-              "shadow",
-              "mr-8"
+              display("flex"),
+              width("w-full", "xl:w-4/12"),
+              flexDirection("flex-col", "lg:flex-row", "xl:flex-col"),
+              height("h-full"),
+              borderRadius("rounded-xl"),
+              boxShadow("shadow"),
+              margin("mr-8"),
             )}
           >
-            <div className={tw("w-full", "px-6", "py-7")}>
+            <div className={tw(width("w-full"), padding("px-6", "py-7"))}>
               <H2
                 className={tw(
-                  "mb-4",
-                  "text-white",
-                  "text-2xl",
-                  "tracking-wide"
+                  margin("mb-4"),
+                  textColor("text-white"),
+                  fontSize("text-2xl"),
+                  letterSpacing("tracking-wide"),
                 )}
               >{t`Portfolio`}</H2>
               <PortfolioCard
@@ -64,15 +89,22 @@ export default function DelegatePage(): ReactElement {
           </GradientCard>
 
           {/* Delegates */}
-          <div className={tw("flex", "flex-col", "max-h-full", "xl:w-7/12")}>
+          <div
+            className={tw(
+              display("flex"),
+              flexDirection("flex-col"),
+              maxHeight("max-h-full"),
+              width("xl:w-7/12"),
+            )}
+          >
             {/* Delegates List */}
             <div>
               <H2
                 className={tw(
-                  "mb-4",
-                  "text-2xl",
-                  "text-principalRoyalBlue",
-                  "tracking-wide"
+                  margin("mb-4"),
+                  fontSize("text-2xl"),
+                  textColor("text-principalRoyalBlue"),
+                  letterSpacing("tracking-wide"),
                 )}
               >{t`Explore Featured Delegates`}</H2>
               <DelegatesList />
@@ -81,20 +113,19 @@ export default function DelegatePage(): ReactElement {
             {/* Delegate Card */}
             <div
               className={tw(
-                "w-full",
-                "px-6",
-                "py-7",
-                "mt-auto",
-                "rounded-xl",
-                "bg-principalRoyalBlue"
+                width("w-full"),
+                padding("px-6", "py-7"),
+                margin("mt-auto"),
+                borderRadius("rounded-xl"),
+                backgroundColor("bg-principalRoyalBlue"),
               )}
             >
               <H2
                 className={tw(
-                  "mb-4",
-                  "text-white",
-                  "text-2xl",
-                  "tracking-wide"
+                  margin("mb-4"),
+                  textColor("text-white"),
+                  fontSize("text-2xl"),
+                  letterSpacing("tracking-wide"),
                 )}
               >{t`Delegate`}</H2>
               <DelegateCard

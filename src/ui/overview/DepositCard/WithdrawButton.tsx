@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Tooltip } from "@material-ui/core";
 import { FixedNumber } from "ethers";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 
@@ -30,7 +30,7 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
     account,
     hasAnyDeposited,
     hasWithdrawAmount,
-    hasEnoughDeposited
+    hasEnoughDeposited,
   );
 
   return (
@@ -47,10 +47,10 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
           disabled={
             isLoading || !hasEnoughDeposited || !account || !hasWithdrawAmount
           }
-          className={tw("w-full")}
+          className={tw(width("w-full"))}
           onClick={onWithdraw}
         >
-          <span className={tw("w-full")}>{t`Withdraw`}</span>
+          <span className={tw(width("w-full"))}>{t`Withdraw`}</span>
         </Button>
       </div>
     </Tooltip>
@@ -60,7 +60,7 @@ function getTooltipTitle(
   account: string | null | undefined,
   hasAnyDeposited: boolean,
   hasWithdrawAmount: boolean,
-  hasEnoughDeposited: boolean
+  hasEnoughDeposited: boolean,
 ): string {
   if (!account) {
     return t`Connect wallet`;

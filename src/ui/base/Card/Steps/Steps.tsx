@@ -5,7 +5,23 @@
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { ReactElement, ReactNode } from "react";
 import { assertNever } from "src/base/assertNever";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  alignItems,
+  flexShrink,
+  position,
+  height,
+  width,
+  justifyContent,
+  textColor,
+  margin,
+  fontSize,
+  fontWeight,
+  borderRadius,
+  backgroundColor,
+  space,
+} from "src/elf-tailwindcss-classnames";
+import classnames from "classnames";
 
 const steps = [
   { name: "Create account", href: "#", status: "complete" },
@@ -31,36 +47,37 @@ interface StepCompleteProps {
 
 function StepComplete({ step }: StepCompleteProps) {
   return (
-    <a onClick={step?.onClick} className={tw("group")}>
-      <span className={tw("flex", "items-start")}>
+    <a onClick={step?.onClick} className="group">
+      <span className={tw(display("flex"), alignItems("items-start"))}>
         <span
           className={tw(
-            "shrink-0",
-            "relative",
-            "h-5",
-            "w-5",
-            "flex",
-            "items-center",
-            "justify-center"
+            flexShrink("shrink-0"),
+            position("relative"),
+            height("h-5"),
+            width("w-5"),
+            display("flex"),
+            alignItems("items-center"),
+            justifyContent("justify-center"),
           )}
         >
           <CheckCircleIcon
             className={tw(
-              "h-full",
-              "w-full",
-              "text-principalRoyalBlue",
-              "group-hover:text-indigo-800"
+              height("h-full"),
+              width("w-full"),
+              textColor(
+                "text-principalRoyalBlue",
+                "group-hover:text-indigo-800",
+              ),
             )}
             aria-hidden="true"
           />
         </span>
         <span
           className={tw(
-            "ml-3",
-            "text-sm",
-            "font-medium",
-            "text-gray-500",
-            "group-hover:text-gray-900"
+            margin("ml-3"),
+            fontSize("text-sm"),
+            fontWeight("font-medium"),
+            textColor("text-gray-500", "group-hover:text-gray-900"),
           )}
         >
           {step.name}
@@ -78,47 +95,47 @@ function StepCurrent({ step }: StepCurrentProps) {
   return (
     <a
       onClick={step?.onClick}
-      className={tw("flex", "items-start")}
+      className={tw(display("flex"), alignItems("items-start"))}
       aria-current="step"
     >
       <span
         className={tw(
-          "shrink-0",
-          "h-5",
-          "w-5",
-          "relative",
-          "flex",
-          "items-center",
-          "justify-center"
+          flexShrink("shrink-0"),
+          height("h-5"),
+          width("w-5"),
+          position("relative"),
+          display("flex"),
+          alignItems("items-center"),
+          justifyContent("justify-center"),
         )}
         aria-hidden="true"
       >
         <span
           className={tw(
-            "absolute",
-            "h-4",
-            "w-4",
-            "rounded-full",
-            "bg-indigo-200"
+            position("absolute"),
+            height("h-4"),
+            width("w-4"),
+            borderRadius("rounded-full"),
+            backgroundColor("bg-indigo-200"),
           )}
         />
         <span
           className={tw(
-            "relative",
-            "block",
-            "w-2",
-            "h-2",
-            "bg-principalRoyalBlue",
-            "rounded-full"
+            position("relative"),
+            display("block"),
+            width("w-2"),
+            height("h-2"),
+            backgroundColor("bg-principalRoyalBlue"),
+            borderRadius("rounded-full"),
           )}
         />
       </span>
       <span
         className={tw(
-          "ml-3",
-          "text-sm",
-          "font-medium",
-          "text-principalRoyalBlue"
+          margin("ml-3"),
+          fontSize("text-sm"),
+          fontWeight("font-medium"),
+          textColor("text-principalRoyalBlue"),
         )}
       >
         {step.name}
@@ -133,37 +150,35 @@ interface StepUpcomingProps {
 
 function StepUpcoming({ step }: StepUpcomingProps) {
   return (
-    <a onClick={step?.onClick} className={tw("group")}>
-      <div className={tw("flex", "items-start")}>
+    <a onClick={step?.onClick} className="group">
+      <div className={tw(display("flex"), alignItems("items-start"))}>
         <div
           className={tw(
-            "shrink-0",
-            "h-5",
-            "w-5",
-            "relative",
-            "flex",
-            "items-center",
-            "justify-center"
+            flexShrink("shrink-0"),
+            height("h-5"),
+            width("w-5"),
+            position("relative"),
+            display("flex"),
+            alignItems("items-center"),
+            justifyContent("justify-center"),
           )}
           aria-hidden="true"
         >
           <div
             className={tw(
-              "h-2",
-              "w-2",
-              "bg-gray-300",
-              "rounded-full",
-              "group-hover:bg-gray-400"
+              height("h-2"),
+              width("w-2"),
+              backgroundColor("bg-gray-300", "group-hover:bg-gray-400"),
+              borderRadius("rounded-full"),
             )}
           />
         </div>
         <p
           className={tw(
-            "ml-3",
-            "text-sm",
-            "font-medium",
-            "text-gray-500",
-            "group-hover:text-gray-900"
+            margin("ml-3"),
+            fontSize("text-sm"),
+            fontWeight("font-medium"),
+            textColor("text-gray-500", "group-hover:text-gray-900"),
           )}
         >
           {step.name}
@@ -175,8 +190,11 @@ function StepUpcoming({ step }: StepUpcomingProps) {
 
 export default function Steps({ steps }: StepsProps): ReactElement {
   return (
-    <nav className={tw("flex", "justify-center")} aria-label="Progress">
-      <ol role="list" className={tw("space-y-6")}>
+    <nav
+      className={tw(display("flex"), justifyContent("justify-center"))}
+      aria-label="Progress"
+    >
+      <ol role="list" className={tw(space("space-y-6"))}>
         {steps.map((step, i) => {
           switch (step.status) {
             case "complete":

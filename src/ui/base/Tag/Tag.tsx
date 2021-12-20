@@ -3,6 +3,18 @@ import tw, {
   TBackgroundColor,
   TBorders,
   TTextColor,
+  display,
+  alignItems,
+  padding,
+  borderRadius,
+  fontSize,
+  fontWeight,
+  textColor,
+  backgroundColor,
+  TArg,
+  borderColor,
+  borderWidth,
+  borderStyle,
 } from "src/elf-tailwindcss-classnames";
 
 export enum Intent {
@@ -28,16 +40,15 @@ export function Tag({
   return (
     <span
       className={tw(
-        "inline-flex",
-        "items-center",
-        "px-4",
-        "py-3",
-        "rounded-xl",
-        "text-sm",
-        "font-medium",
-        intentTextColors[intent],
-        getBackgroundColor(intent, minimal),
-        ...getBorder(intent, minimal)
+        display("inline-flex"),
+        alignItems("items-center"),
+        padding("px-4", "py-3"),
+        borderRadius("rounded-xl"),
+        fontSize("text-sm"),
+        fontWeight("font-medium"),
+        textColor(intentTextColors[intent]),
+        backgroundColor(getBackgroundColor(intent, minimal)),
+        ...getBorder(intent, minimal),
       )}
     >
       {children}
@@ -51,7 +62,7 @@ const intentBackgroundColors: Record<Intent, TBackgroundColor> = {
 };
 function getBackgroundColor(
   intent: Intent,
-  minimal: boolean
+  minimal: boolean,
 ): TBackgroundColor {
   if (minimal) {
     return "bg-transparent";
@@ -60,13 +71,16 @@ function getBackgroundColor(
   return intentBackgroundColors[intent];
 }
 
-const intentBorderColors: Record<Intent, TBorders[]> = {
-  [Intent.SUCCESS]: ["border-votingGreen", "border-2"],
-  [Intent.ERROR]: ["border-deepRed", "border-2"],
+const intentBorderColors: Record<Intent, TArg[]> = {
+  [Intent.SUCCESS]: [
+    borderColor("border-votingGreen"),
+    borderWidth("border-2"),
+  ],
+  [Intent.ERROR]: [borderColor("border-deepRed"), borderWidth("border-2")],
 };
-function getBorder(intent: Intent, minimal: boolean): TBorders[] {
+function getBorder(intent: Intent, minimal: boolean): TArg[] {
   if (!minimal) {
-    return ["border-none"];
+    return [borderStyle("border-none")];
   }
 
   return intentBorderColors[intent];

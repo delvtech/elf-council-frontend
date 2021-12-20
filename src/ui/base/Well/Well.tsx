@@ -2,7 +2,12 @@
 
 import classNames from "classnames";
 import { ReactElement, ReactNode } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  backgroundColor,
+  overflow,
+  borderRadius,
+  padding,
+} from "src/elf-tailwindcss-classnames";
 
 interface WellProps {
   children?: ReactNode;
@@ -10,8 +15,16 @@ interface WellProps {
 }
 export default function Well({ className, children }: WellProps): ReactElement {
   return (
-    <div className={tw("bg-blue-100", "overflow-hidden", "rounded-2xl")}>
-      <div className={classNames(tw("px-4", "py-5", "sm:p-6"), className)}>
+    <div
+      className={tw(
+        backgroundColor("bg-blue-100"),
+        overflow("overflow-hidden"),
+        borderRadius("rounded-2xl"),
+      )}
+    >
+      <div
+        className={classNames(tw(padding("px-4", "py-5", "sm:p-6")), className)}
+      >
         {children}
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import { Tooltip } from "@material-ui/core";
@@ -15,7 +15,7 @@ interface ClaimAndDelegateButtonProps {
   onClaimAndDelegate: () => void;
 }
 export function ClaimAndDelegateButton(
-  props: ClaimAndDelegateButtonProps
+  props: ClaimAndDelegateButtonProps,
 ): ReactElement {
   const {
     account,
@@ -32,7 +32,7 @@ export function ClaimAndDelegateButton(
   const tooltipTitle = getTooltipTitle(
     account,
     hasAnyBalance,
-    hasValidDelegateAddress
+    hasValidDelegateAddress,
   );
 
   const disableWithoutError = !account || !hasAnyBalance || !delegateAddress;
@@ -53,10 +53,10 @@ export function ClaimAndDelegateButton(
           disabled={
             !account || !hasAnyBalance || isLoading || !hasValidDelegateAddress
           }
-          className={tw("w-full")}
+          className={tw(width("w-full"))}
           onClick={onClaimAndDelegate}
         >
-          <span className={tw("w-full")}>{t`Claim and deposit`}</span>
+          <span className={tw(width("w-full"))}>{t`Claim and deposit`}</span>
         </Button>
       </div>
     </Tooltip>
@@ -65,7 +65,7 @@ export function ClaimAndDelegateButton(
 function getTooltipTitle(
   account: string | null | undefined,
   hasAnyBalance: boolean,
-  hasValidDelegateAddress: boolean
+  hasValidDelegateAddress: boolean,
 ): string {
   // disabled without error states
   if (!account) {

@@ -1,7 +1,19 @@
 // See: https://tailwindui.com/components/application-ui/headings/card-headings#component-c8f5fb604fcc6cf6614aab0bfec6a3f2
 
 import React, { ReactElement, ReactNode } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  justifyContent,
+  alignItems,
+  flexWrap,
+  margin,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  textColor,
+  flexShrink,
+} from "src/elf-tailwindcss-classnames";
+import classnames from "classnames";
 
 interface CardHeaderProps {
   title: ReactNode;
@@ -16,31 +28,41 @@ export default function CardHeader({
 }: CardHeaderProps): ReactElement {
   return (
     <div
-      className={tw(
+      className={classnames(
         "-ml-4",
         "-mt-4",
-        "flex",
-        "justify-between",
-        "items-center",
-        "flex-wrap",
-        "sm:flex-nowrap"
+        tw(
+          display("flex"),
+          justifyContent("justify-between"),
+          alignItems("items-center"),
+          flexWrap("flex-wrap", "sm:flex-nowrap"),
+        ),
       )}
     >
-      <div className={tw("ml-4", "mt-4")}>
+      <div className={tw(margin("ml-4", "mt-4"))}>
         <h2
           className={tw(
-            "text-lg",
-            "font-semibold",
-            "leading-6",
-            "font-medium",
-            "text-brandDarkBlue-dark"
+            fontSize("text-lg"),
+            fontWeight("font-semibold", "font-medium"),
+            lineHeight("leading-6"),
+            textColor("text-brandDarkBlue-dark"),
           )}
         >
           {title}
         </h2>
-        <p className={tw("mt-1", "text-sm", "text-gray-500")}>{description}</p>
+        <p
+          className={tw(
+            margin("mt-1"),
+            fontSize("text-sm"),
+            textColor("text-gray-500"),
+          )}
+        >
+          {description}
+        </p>
       </div>
-      <div className={tw("ml-4", "mt-4", "shrink-0")}>{action}</div>
+      <div className={tw(margin("ml-4", "mt-4"), flexShrink("shrink-0"))}>
+        {action}
+      </div>
     </div>
   );
 }

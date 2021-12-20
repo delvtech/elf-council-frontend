@@ -1,5 +1,15 @@
 import React, { ReactElement } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  textColor,
+  display,
+  flexDirection,
+  padding,
+  overflow,
+  fontSize,
+  fontWeight,
+  textOverflow,
+  margin,
+} from "src/elf-tailwindcss-classnames";
 
 interface LabeledStatProps {
   data: string;
@@ -10,24 +20,31 @@ interface LabeledStatProps {
 }
 export function LabeledStat(props: LabeledStatProps): ReactElement {
   const { data, topLabel, bottomLabel, whiteText } = props;
-  const labelTextColor = whiteText ? tw("text-white") : tw("text-gray-500");
-  const dataTextColor = whiteText ? tw("text-white") : tw("text-gray-900");
+  const labelTextColor = whiteText
+    ? tw(textColor("text-white"))
+    : tw(textColor("text-gray-500"));
+  const dataTextColor = whiteText
+    ? tw(textColor("text-white"))
+    : tw(textColor("text-gray-900"));
 
   return (
     <div
       className={tw(
-        "flex",
-        "flex-col",
-        "px-4",
-        "py-5",
-        "overflow-hidden",
-        "sm:p-6"
+        display("flex"),
+        flexDirection("flex-col"),
+        padding("px-4", "py-5", "sm:p-6"),
+        overflow("overflow-hidden"),
       )}
     >
       {topLabel && (
         <div>
           <dt
-            className={tw(labelTextColor, "text-sm", "font-light", "truncate")}
+            className={tw(
+              labelTextColor,
+              fontSize("text-sm"),
+              fontWeight("font-light"),
+              textOverflow("truncate"),
+            )}
           >
             {topLabel}
           </dt>
@@ -35,7 +52,14 @@ export function LabeledStat(props: LabeledStatProps): ReactElement {
       )}
 
       <div>
-        <dd className={tw(dataTextColor, "mt-1", "text-4xl", "font-semibold")}>
+        <dd
+          className={tw(
+            dataTextColor,
+            margin("mt-1"),
+            fontSize("text-4xl"),
+            fontWeight("font-semibold"),
+          )}
+        >
           {data}
         </dd>
       </div>
@@ -43,7 +67,12 @@ export function LabeledStat(props: LabeledStatProps): ReactElement {
       {bottomLabel && (
         <div>
           <dt
-            className={tw(labelTextColor, "text-sm", "font-light", "truncate")}
+            className={tw(
+              labelTextColor,
+              fontSize("text-sm"),
+              fontWeight("font-light"),
+              textOverflow("truncate"),
+            )}
           >
             {bottomLabel}
           </dt>

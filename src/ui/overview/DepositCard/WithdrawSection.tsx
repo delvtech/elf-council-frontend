@@ -3,7 +3,21 @@ import React, { ChangeEvent, ReactElement, useCallback } from "react";
 import { parseEther } from "@ethersproject/units";
 import { FixedNumber, Signer } from "ethers";
 import Link from "next/link";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  textColor,
+  textDecoration,
+  display,
+  gridTemplateColumns,
+  gap,
+  fontWeight,
+  padding,
+  space,
+  flexGrow,
+  justifyContent,
+  width,
+  height,
+  textAlign,
+} from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
 import NumericInput from "src/ui/base/Input/NumericInput";
@@ -28,7 +42,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const learnMoreLink = (
     <Link key="learn-more-link" href="/resources">
       <a
-        className={tw("text-blue-500", "underline")}
+        className={tw(textColor("text-blue-500"), textDecoration("underline"))}
         href="/resources"
       >{t`here.`}</a>
     </Link>
@@ -53,7 +67,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
       const newWithdrawAmount = event.target.value;
       setWithdrawAmount(newWithdrawAmount);
     },
-    [setWithdrawAmount]
+    [setWithdrawAmount],
   );
 
   // handler for max button
@@ -66,7 +80,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   // handler for withdraw button
   const withdrawFromLockingVault = useWithdrawFromLockingVault(
     signer,
-    clearWithdrawInput
+    clearWithdrawInput,
   );
   const { mutate: withdraw, isLoading } = withdrawFromLockingVault;
   const onWithdraw = useCallback(() => {
@@ -79,10 +93,20 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
 
   return (
     <div>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "sm:grid-cols-2")}>
+      <div
+        className={tw(
+          display("grid"),
+          gridTemplateColumns("grid-cols-1", "sm:grid-cols-2"),
+          gap("gap-6"),
+        )}
+      >
         <div>
           <H3
-            className={tw("text-brandDarkBlue-dark", "font-semibold", "pb-2")}
+            className={tw(
+              textColor("text-brandDarkBlue-dark"),
+              fontWeight("font-semibold"),
+              padding("pb-2"),
+            )}
           >
             {title}
           </H3>
@@ -91,16 +115,24 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
           <p>{learnMore}</p>
         </div>
 
-        <div className={tw("space-y-4")}>
-          <div className={tw("flex", "grow", "justify-end")}>
+        <div className={tw(space("space-y-4"))}>
+          <div
+            className={tw(
+              display("flex"),
+              flexGrow("grow"),
+              justifyContent("justify-end"),
+            )}
+          >
             <LabeledStat data={amountDeposited} bottomLabel={t`Deposited`} />
           </div>
-          <div className={tw("flex", "space-x-4", "w-full")}>
+          <div
+            className={tw(display("flex"), space("space-x-4"), width("w-full"))}
+          >
             <Button
               disabled={!hasAmountDeposited || !account}
               onClick={onSetMax}
             >
-              <span className={tw("w-full")}>{t`Max`}</span>
+              <span className={tw(width("w-full"))}>{t`Max`}</span>
             </Button>
             <NumericInput
               disabled={!hasAmountDeposited}
@@ -109,8 +141,8 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
               placeholder={t`Insert amount to withdraw`}
-              className={tw("grow")}
-              inputClassName={tw("h-12", "text-center")}
+              className={tw(flexGrow("grow"))}
+              inputClassName={tw(height("h-12"), textAlign("text-center"))}
               value={withdrawAmount}
               onChange={onSetWithdrawAmount}
             />

@@ -4,9 +4,16 @@ import classNames from "classnames";
 import { CSSProperties, ReactElement, ReactNode } from "react";
 import { assertNever } from "src/base/assertNever";
 import tw, {
-  TBackgroundColor,
-  TBackgroundImage,
-  TGradientColorStops,
+  backgroundColor,
+  backgroundImage,
+  gradientColorStops,
+  boxShadow,
+  overflow,
+  borderRadius,
+  padding,
+  ringColor,
+  ringWidth,
+  TArg,
 } from "src/elf-tailwindcss-classnames";
 
 export enum CardVariant {
@@ -36,22 +43,20 @@ export default function Card(props: CardProps): ReactElement {
     style,
   } = props;
 
+  console.log(className);
+
   const cardClassName = classNames(
     tw(
-      "overflow-hidden",
-      "rounded-xl",
-      "px-4",
-      "py-5",
-      "sm:p-6",
       ...getBackgroundColor(variant, active),
-      active ? "shadow-md" : "shadow",
-      {
-        "hover:shadow-md": interactive,
-        "focus:ring-principalRoyalBlue": interactive,
-        "focus:ring-2": interactive,
-      }
+      boxShadow(active ? "shadow-md" : "shadow"),
+      overflow("overflow-hidden"),
+      borderRadius("rounded-xl"),
+      padding("px-4", "py-5", "sm:p-6"),
+      boxShadow({ "hover:shadow-md": interactive }),
+      ringColor({ "focus:ring-principalRoyalBlue": interactive }),
+      ringWidth({ "focus:ring-2": interactive }),
     ),
-    className
+    className,
   );
 
   if (interactive) {
@@ -69,21 +74,22 @@ export default function Card(props: CardProps): ReactElement {
   );
 }
 
-function getBackgroundColor(
-  variant: CardVariant,
-  active: boolean
-): (TBackgroundColor | TBackgroundImage | TGradientColorStops)[] {
+function getBackgroundColor(variant: CardVariant, active: boolean): TArg[] {
   if (active) {
-    return ["bg-paleLily"];
+    return [backgroundColor("bg-paleLily")];
   }
 
   switch (variant) {
     case CardVariant.BLUE:
-      return ["bg-principalRoyalBlue"];
+      return [backgroundColor("bg-principalRoyalBlue")];
     case CardVariant.GRADIENT:
-      return ["bg-gradient-to-br", "from-brandDarkBlue", "to-brandLightBlue"];
+      return [
+        backgroundImage("bg-gradient-to-br"),
+        gradientColorStops("from-brandDarkBlue"),
+        gradientColorStops("to-brandLightBlue"),
+      ];
     case CardVariant.WHITE:
-      return ["bg-white"];
+      return [backgroundColor("bg-white")];
     default:
       assertNever(variant);
       return [];

@@ -1,7 +1,13 @@
 import React, { ReactElement } from "react";
 
 import { Signer } from "ethers";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  width,
+  textColor,
+  fontWeight,
+  padding,
+  space,
+} from "src/elf-tailwindcss-classnames";
 import Card from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2";
 import { useDelegate } from "src/ui/delegate/useDelegate";
@@ -21,11 +27,15 @@ export default function RewardsCard(props: RewardsCardProps): ReactElement {
   const delegate = useDelegate(account);
 
   return (
-    <Card className={tw("w-full")}>
+    <Card className={tw(width("w-full"))}>
       <H2
-        className={tw("text-blue-900", "font-semibold", "pb-4")}
+        className={tw(
+          textColor("text-blue-900"),
+          fontWeight("font-semibold"),
+          padding("pb-4"),
+        )}
       >{t`Rewards`}</H2>
-      <div className={tw("space-y-12")}>
+      <div className={tw(space("space-y-12"))}>
         <ClaimAndDelegateSection account={account} signer={signer} />
         {!delegate && <FeaturedDelegatesTable />}
         <ClaimSection account={account} signer={signer} />

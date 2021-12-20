@@ -6,7 +6,25 @@ import { formatEther, parseEther } from "ethers/lib/utils";
 import Image from "next/image";
 import { isValidAddress } from "src/base/isValidAddress";
 import { addressesJson } from "src/elf-council-addresses";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  height,
+  flexShrink,
+  alignItems,
+  justifyContent,
+  textColor,
+  width,
+  flexDirection,
+  textAlign,
+  padding,
+  fontSize,
+  gap,
+  position,
+  margin,
+  gridTemplateColumns,
+  space,
+  flexWrap,
+} from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -84,7 +102,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
       const newDepositAmount = event.target.value;
       setDepositAmount(newDepositAmount);
     },
-    [setDepositAmount]
+    [setDepositAmount],
   );
 
   const onSetMax = useCallback(() => {
@@ -119,73 +137,113 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
   return (
     <div
       className={tw(
-        "flex",
-        "h-full",
-        "shrink-0",
-        "items-center",
-        "justify-center"
+        display("flex"),
+        height("h-full"),
+        flexShrink("shrink-0"),
+        alignItems("items-center"),
+        justifyContent("justify-center"),
       )}
     >
-      <GradientCard className={tw("text-white", "w-96", "flex-col", "flex")}>
+      <GradientCard
+        className={tw(
+          textColor("text-white"),
+          width("w-96"),
+          flexDirection("flex-col"),
+          display("flex"),
+        )}
+      >
         <div
           className={tw(
-            "flex-col",
-            "w-full",
-            "flex",
-            "items-center",
-            "text-center"
+            flexDirection("flex-col"),
+            width("w-full"),
+            display("flex"),
+            alignItems("items-center"),
+            textAlign("text-center"),
           )}
         >
-          <div className={tw("p-4", "text-xl")}>{t`Your ELF Balance`}</div>
+          <div
+            className={tw(padding("p-4"), fontSize("text-xl"))}
+          >{t`Your ELF Balance`}</div>
           <div className="w-full border-t border-gray-300" />
         </div>
 
         <div
           className={tw(
-            "flex-col",
-            "w-full",
-            "flex",
-            "items-center",
-            "text-center",
-            "pt-4",
-            "px-8",
-            "pb-8",
-            "gap-4"
+            flexDirection("flex-col"),
+            width("w-full"),
+            display("flex"),
+            alignItems("items-center"),
+            textAlign("text-center"),
+            padding("pt-4", "px-8", "pb-8"),
+            gap("gap-4"),
           )}
         >
-          <div className={tw("relative", "h-20", "w-20")}>
+          <div
+            className={tw(position("relative"), height("h-20"), width("w-20"))}
+          >
             <Image
               layout="fill"
               src="/assets/ElementLogo--light.svg"
               alt={t`Element logo`}
             />
           </div>
-          <div className={tw("flex", "flex-col")}>
-            <span className={tw("text-3xl", "mb-4")}>
+          <div className={tw(display("flex"), flexDirection("flex-col"))}>
+            <span className={tw(fontSize("text-3xl"), margin("mb-4"))}>
               {totalBalance.toFixed(2)}
             </span>
             <Label
-              className={tw("text-center", "px-12")}
+              className={tw(textAlign("text-center"), padding("px-12"))}
             >{t`You have ELF ready to claim from the Element LP Program.`}</Label>
           </div>
           <Label>{t`People who provide liquidity to eligible investment pools or trade on eligible token pairs receive weekly $ELF distributions as incentives. $ELF token holders help foster the Element Protocol can shape its future by voting and engaging with our governance.`}</Label>
-          <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
-            <Label className={tw("text-left")}>{t`Wallet Balance:`}</Label>
-            <Label className={tw("text-right")}>{formattedBalance}</Label>
+          <div
+            className={tw(
+              display("grid"),
+              gridTemplateColumns("grid-cols-2"),
+              width("w-full"),
+              padding("px-4"),
+            )}
+          >
+            <Label
+              className={tw(textAlign("text-left"))}
+            >{t`Wallet Balance:`}</Label>
+            <Label className={tw(textAlign("text-right"))}>
+              {formattedBalance}
+            </Label>
           </div>
-          <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
-            <Label className={tw("text-left")}>{t`Unclaimed:`}</Label>
-            <Label className={tw("text-right")}>{unclaimed.toFixed(2)}</Label>
+          <div
+            className={tw(
+              display("grid"),
+              gridTemplateColumns("grid-cols-2"),
+              width("w-full"),
+              padding("px-4"),
+            )}
+          >
+            <Label
+              className={tw(textAlign("text-left"))}
+            >{t`Unclaimed:`}</Label>
+            <Label className={tw(textAlign("text-right"))}>
+              {unclaimed.toFixed(2)}
+            </Label>
           </div>
-          <div className={tw("grid", "grid-cols-2", "w-full", "px-4")}>
-            <Label className={tw("text-left")}>{t`Deposited:`}</Label>
-            <Label className={tw("text-right")}>
+          <div
+            className={tw(
+              display("grid"),
+              gridTemplateColumns("grid-cols-2"),
+              width("w-full"),
+              padding("px-4"),
+            )}
+          >
+            <Label
+              className={tw(textAlign("text-left"))}
+            >{t`Deposited:`}</Label>
+            <Label className={tw(textAlign("text-right"))}>
               {Number(deposited).toFixed(2)}
             </Label>
           </div>
           <Label small>{t`Go to Dashboard Overview`}</Label>
-          <div className={tw("flex", "flex-col")}>
-            <div className={tw("flex", "gap-4")}>
+          <div className={tw(display("flex"), flexDirection("flex-col"))}>
+            <div className={tw(display("flex"), gap("gap-4"))}>
               <Button
                 onClick={onClaim}
                 disabled={!account || !merkleInfo}
@@ -205,7 +263,14 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 variant={ButtonVariant.WHITE}
               >{t`Claim & Deposit`}</Button>
             </div>
-            <div className={tw("flex", "gap-4", "space-y-4", "flex-wrap")}>
+            <div
+              className={tw(
+                display("flex"),
+                gap("gap-4"),
+                space("space-y-4"),
+                flexWrap("flex-wrap"),
+              )}
+            >
               <Button
                 onClick={onSetAllowance}
                 disabled={!account || !merkleInfo}

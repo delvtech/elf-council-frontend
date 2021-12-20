@@ -1,7 +1,29 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, ReactElement, ReactNode } from "react";
 
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  position,
+  zIndex,
+  inset,
+  overflow,
+  display,
+  alignItems,
+  justifyContent,
+  minHeight,
+  padding,
+  textAlign,
+  backgroundColor,
+  backgroundOpacity,
+  transitionProperty,
+  verticalAlign,
+  height,
+  borderRadius,
+  boxShadow,
+  hardwareAcceleration,
+  margin,
+  maxWidth,
+  width,
+} from "src/elf-tailwindcss-classnames";
 import { Dialog, Transition } from "@headlessui/react";
 
 interface SimpleDialogProps {
@@ -16,21 +38,22 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
       <Dialog
         as="div"
         // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-30
-        className={tw("fixed", "z-50", "inset-0", "overflow-y-auto")}
+        className={tw(
+          position("fixed"),
+          zIndex("z-50"),
+          inset("inset-0"),
+          overflow("overflow-y-auto"),
+        )}
         onClose={onClose ? onClose : () => {}}
       >
         <div
           className={tw(
-            "flex",
-            "items-end",
-            "justify-center",
-            "min-h-screen",
-            "pt-4",
-            "px-4",
-            "pb-20",
-            "text-center",
-            "sm:block",
-            "sm:p-0"
+            display("flex", "sm:block"),
+            alignItems("items-end"),
+            justifyContent("justify-center"),
+            minHeight("min-h-screen"),
+            padding("pt-4", "px-4", "pb-20", "sm:p-0"),
+            textAlign("text-center"),
           )}
         >
           <Transition.Child
@@ -44,11 +67,11 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
           >
             <Dialog.Overlay
               className={tw(
-                "fixed",
-                "inset-0",
-                "bg-gray-500",
-                "bg-opacity-75",
-                "transition-opacity"
+                position("fixed"),
+                inset("inset-0"),
+                backgroundColor("bg-gray-500"),
+                backgroundOpacity("bg-opacity-75"),
+                transitionProperty("transition-opacity"),
               )}
             />
           </Transition.Child>
@@ -56,10 +79,9 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
           {/* This element is to trick the browser into centering the modal contents. */}
           <span
             className={tw(
-              "hidden",
-              "sm:inline-block",
-              "sm:align-middle",
-              "sm:h-screen"
+              display("hidden", "sm:inline-block"),
+              verticalAlign("sm:align-middle"),
+              height("sm:h-screen"),
             )}
             aria-hidden="true"
           >
@@ -76,23 +98,19 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
           >
             <div
               className={tw(
-                "inline-block",
-                "align-bottom",
-                "bg-white",
-                "rounded-lg",
-                "px-4",
-                "pt-5",
-                "pb-4",
-                "text-left",
-                "overflow-hidden",
-                "shadow-xl",
-                "transform-gpu",
-                "transition-all",
-                "sm:my-8",
-                "sm:align-middle",
-                "sm:max-w-lg",
-                "sm:w-full",
-                "sm:p-6"
+                display("inline-block"),
+                verticalAlign("align-bottom", "sm:align-middle"),
+                backgroundColor("bg-white"),
+                borderRadius("rounded-lg"),
+                padding("px-4", "pt-5", "pb-4", "sm:p-6"),
+                textAlign("text-left"),
+                overflow("overflow-hidden"),
+                boxShadow("shadow-xl"),
+                hardwareAcceleration("transform-gpu"),
+                transitionProperty("transition-all"),
+                margin("sm:my-8"),
+                maxWidth("sm:max-w-lg"),
+                width("sm:w-full"),
               )}
             >
               {children}

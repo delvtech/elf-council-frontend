@@ -1,7 +1,12 @@
 import React, { ReactElement } from "react";
 
 import { proposalsJson } from "src/elf-council-proposals";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  textColor,
+  fontWeight,
+  display,
+  fontSize,
+} from "src/elf-tailwindcss-classnames";
 import Card from "src/ui/base/Card/Card";
 import H3 from "src/ui/base/H3";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
@@ -26,16 +31,24 @@ function VotingCard(props: VotingCardProps): ReactElement {
 
   return (
     <Card>
-      <H3 className={tw("text-blue-900", "font-semibold")}>{t`Voting`}</H3>
-      <div className={tw("flex")}>
+      <H3
+        className={tw(textColor("text-blue-900"), fontWeight("font-semibold"))}
+      >{t`Voting`}</H3>
+      <div className={tw(display("flex"))}>
         <LabeledStat data={votingPower} bottomLabel={t`Voting Power`} />
         <LabeledStat
           data={String(blocksUntilNextVoteEnds)}
           bottomLabel={t`Next vote ends`}
         />
       </div>
-      <p className={tw("text-lg", "text-blue-500", "font-semibold")}></p>
-      <div className={tw("flex")}>
+      <p
+        className={tw(
+          fontSize("text-lg"),
+          textColor("text-blue-500"),
+          fontWeight("font-semibold"),
+        )}
+      ></p>
+      <div className={tw(display("flex"))}>
         <LabeledStat
           data={delegateVotingPower}
           bottomLabel={t`Delegate powers`}

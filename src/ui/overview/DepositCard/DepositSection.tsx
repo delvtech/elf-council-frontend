@@ -4,7 +4,22 @@ import { formatEther, parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 import { isValidAddress } from "src/base/isValidAddress";
 import { addressesJson } from "src/elf-council-addresses";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  textColor,
+  textDecoration,
+  display,
+  gridTemplateColumns,
+  gap,
+  fontWeight,
+  padding,
+  space,
+  flexGrow,
+  justifyContent,
+  width,
+  margin,
+  height,
+  textAlign,
+} from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenAllowance } from "src/elf/token/useTokenAllowance";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -35,7 +50,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const { data: allowanceBN } = useTokenAllowance(
     elementTokenContract,
     account,
-    lockingVault
+    lockingVault,
   );
   const delegate = useDelegate(account);
   const balance = formatEther(balanceBN || 0);
@@ -48,7 +63,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const learnMoreLink = (
     <Link key="learn-more-link" href="/resources">
       <a
-        className={tw("text-blue-500", "underline")}
+        className={tw(textColor("text-blue-500"), textDecoration("underline"))}
         href="/resources"
       >{t`here.`}</a>
     </Link>
@@ -61,7 +76,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
       const delegateAddr = event.target.value;
       setDelegateAddress(delegateAddr);
     },
-    []
+    [],
   );
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
@@ -76,7 +91,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
       const newDepositAmount = event.target.value;
       setDepositAmount(newDepositAmount);
     },
-    [setDepositAmount]
+    [setDepositAmount],
   );
   const clearDepositAmount = useCallback(() => {
     setDepositAmount("");
@@ -90,7 +105,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   // handler for deposit button
   const { mutate: deposit, isLoading } = useDepositIntoLockingVault(
     signer,
-    clearDepositAmount
+    clearDepositAmount,
   );
   const onDeposit = useCallback(() => {
     if (!account || !delegateAddress) {
@@ -119,10 +134,20 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
     : !isValidAddress(delegateAddress);
   return (
     <div>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
+      <div
+        className={tw(
+          display("grid"),
+          gridTemplateColumns("grid-cols-1", "md:grid-cols-2"),
+          gap("gap-6"),
+        )}
+      >
         <div>
           <H3
-            className={tw("text-brandDarkBlue-dark", "font-semibold", "pb-2")}
+            className={tw(
+              textColor("text-brandDarkBlue-dark"),
+              fontWeight("font-semibold"),
+              padding("pb-2"),
+            )}
           >
             {title}
           </H3>
@@ -131,16 +156,24 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
           <p>{learnMore}</p>
         </div>
 
-        <div className={tw("space-y-4")}>
-          <div className={tw("flex", "grow", "justify-end")}>
+        <div className={tw(space("space-y-4"))}>
+          <div
+            className={tw(
+              display("flex"),
+              flexGrow("grow"),
+              justifyContent("justify-end"),
+            )}
+          >
             <LabeledStat data={balance} bottomLabel={t`Balance`} />
           </div>
-          <div className={tw("flex", "space-x-4", "w-full")}>
+          <div
+            className={tw(display("flex"), space("space-x-4"), width("w-full"))}
+          >
             <Button
               disabled={!hasBalanceToDeposit || !account}
               onClick={onSetMax}
             >
-              <span className={tw("w-full")}>{t`Max`}</span>
+              <span className={tw(width("w-full"))}>{t`Max`}</span>
             </Button>
             <DepositInput
               balance={balance}
@@ -159,18 +192,22 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
               id={"delegate-address"}
               name={t`Insert Delegate Address`}
               placeholder={t`Insert Delegate Address`}
-              className={tw("mb-8", "h-12", "text-center")}
+              className={tw(
+                margin("mb-8"),
+                height("h-12"),
+                textAlign("text-center"),
+              )}
               value={delegateAddress}
               onChange={onUpdateDelegateAddress}
             />
           )}
           <Button
-            className={tw("w-full")}
+            className={tw(width("w-full"))}
             onClick={onSetAllowance}
             disabled={!account || hasAllowance}
             variant={ButtonVariant.OUTLINE_BLUE}
           >
-            <span className={tw("w-full")}>
+            <span className={tw(width("w-full"))}>
               {hasAllowance ? t`Approved` : t`Allow`}
             </span>
           </Button>

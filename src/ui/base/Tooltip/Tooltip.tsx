@@ -1,7 +1,24 @@
 import { CSSProperties, ReactElement, ReactNode } from "react";
 
 import classNames from "classnames";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  cursor,
+  position as twPosition,
+  display,
+  textAlign,
+  opacity,
+  backgroundColor,
+  textColor,
+  fontSize,
+  borderRadius,
+  padding,
+  zIndex,
+  inset,
+  pointerEvents,
+  height,
+  width,
+  fill,
+} from "src/elf-tailwindcss-classnames";
 
 const bottomFull: CSSProperties = {
   bottom: "calc(100% + 4px)",
@@ -28,14 +45,14 @@ export function Tooltip(props: TooltipProps): ReactElement {
   return (
     <div
       className={classNames(
+        "group",
         tw(
-          "group",
-          "cursor-pointer",
-          "relative",
-          "inline-block",
-          "text-center"
+          cursor("cursor-pointer"),
+          twPosition("relative"),
+          display("inline-block"),
+          textAlign("text-center"),
         ),
-        className
+        className,
       )}
     >
       {children}
@@ -43,32 +60,33 @@ export function Tooltip(props: TooltipProps): ReactElement {
         style={bottomFull}
         className={classNames(
           tw(
-            "opacity-0",
-            "bg-black",
-            "text-white",
-            "text-center",
-            "text-xs",
-            "rounded-lg",
-            "py-2",
-            "absolute",
-            "z-10",
-            "left-1/2",
-            "px-3",
-            "pointer-events-none",
-            { "group-hover:opacity-100": enabled, "opacity-100": show }
+            opacity("opacity-0"),
+            backgroundColor("bg-black"),
+            textColor("text-white"),
+            textAlign("text-center"),
+            fontSize("text-xs"),
+            borderRadius("rounded-lg"),
+            padding("py-2", "px-3"),
+            twPosition("absolute"),
+            zIndex("z-10"),
+            inset("left-1/2"),
+            pointerEvents("pointer-events-none"),
+            opacity({
+              "group-hover:opacity-100": enabled,
+              "opacity-100": show,
+            }),
           ),
-          tooltipClassName
+          tooltipClassName,
         )}
       >
         {text}
         <svg
           className={tw(
-            "absolute",
-            "text-black",
-            "h-2",
-            "w-full",
-            "left-0",
-            "top-full"
+            twPosition("absolute"),
+            textColor("text-black"),
+            height("h-2"),
+            width("w-full"),
+            inset("left-0", "top-full"),
           )}
           x="0px"
           y="4px"
@@ -76,7 +94,7 @@ export function Tooltip(props: TooltipProps): ReactElement {
           xmlSpace="preserve"
         >
           <polygon
-            className={tw("fill-current")}
+            className={tw(fill("fill-current"))}
             points="0,0 127.5,127.5 255,0"
           />
         </svg>
