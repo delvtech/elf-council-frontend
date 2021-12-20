@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, ChangeEvent, useCallback } from "react";
+import { ReactElement, ChangeEvent, useCallback } from "react";
 import { Signer } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
@@ -177,17 +177,17 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
 function PortfolioDepositText(): ReactElement {
   return (
     <p className={tw("text-white", "font-light", "leading-5", "text-sm")}>
-      To protect our governance system, we ask our users to{" "}
-      <span className={tw("font-bold")}>deposit</span> their tokens when they
-      have the intention to vote and/or delegate.{" "}
+      {t`To protect our governance system, we ask our users to`}{" "}
+      <span className={tw("font-bold")}>{t`deposit`}</span>{" "}
+      {t`their tokens when they have the intention to vote and/or delegate.`}{" "}
       <span className={tw("font-bold")}>
-        This verifies your eligibility to vote and/or delegate.
-      </span>{" "}
+        {t`This verifies your eligibility to vote and/or delegate.`}
+      </span>
       <div>
         <Link href="/resources" passHref>
-          <a className={tw("text-goldYellow")} href="/resources">
-            To learn more about our vaults read here.
-          </a>
+          <span className={tw("text-goldYellow", "cursor-pointer")}>
+            {t`To learn more about our vaults read here.`}
+          </span>
         </Link>
       </div>
     </p>
@@ -197,13 +197,13 @@ function PortfolioDepositText(): ReactElement {
 function PortfolioWithdrawText(): ReactElement {
   return (
     <p className={tw("text-white", "font-light", "leading-5", "text-sm")}>
-      To remove deposited tokens from voting eligibility enter a withdrawal
-      amount.
+      {t`To remove deposited tokens from voting eligibility enter a withdrawal
+      amount.`}
       <div>
         <Link href="/resources" passHref>
-          <a className={tw("text-goldYellow")} href="/resources">
-            Read more to learn about our voting vaults.
-          </a>
+          <span className={tw("text-goldYellow", "cursor-pointer")}>
+            {t`Read more to learn about our voting vaults.`}
+          </span>
         </Link>
       </div>
     </p>
