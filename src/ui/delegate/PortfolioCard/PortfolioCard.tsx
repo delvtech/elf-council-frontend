@@ -1,4 +1,4 @@
-import { ReactElement, ChangeEvent, useCallback } from "react";
+import { ReactElement } from "react";
 import { Signer } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
@@ -14,7 +14,7 @@ import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLocki
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import { jt, t } from "ttag";
-import tw, { TTailwindString } from "src/elf-tailwindcss-classnames";
+import tw from "src/elf-tailwindcss-classnames";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface PortfolioCardProps {
@@ -55,22 +55,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
     clearWithdrawInput
   );
 
-  const onSetDepositAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newDepositAmount = event.target.value;
-      setDeposit(newDepositAmount);
-    },
-    [setDeposit]
-  );
-
-  const onSetWithdrawalAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newWithdrawalAmount = event.target.value;
-      setWithdraw(newWithdrawalAmount);
-    },
-    [setWithdraw]
-  );
-
   const depositClickHandler = () => {
     if (!account || !signer || !currentDelegate) return;
     onDeposit([account, parseEther(deposit), currentDelegate.address]);
@@ -79,15 +63,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const withdrawClickHandler = () => {
     if (!account) return;
     onWithdraw([parseEther(withdraw)]);
-  };
-
-  const setMaxDeposit = () => {
-    if (!account) return;
-    setDeposit(walletBalance);
-  };
-  const setMaxWithdraw = () => {
-    if (!account) return;
-    setWithdraw(vaultBalance);
   };
 
   return (

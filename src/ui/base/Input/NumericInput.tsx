@@ -72,23 +72,25 @@ export default function NumericInput({
           value={value}
           onChange={onChange}
         />
-        <button
-          className={tw(
-            "absolute",
-            "bg-principalRoyalBlue",
-            "rounded-md",
-            "px-2",
-            "py-1",
-            "top-1/2",
-            "right-3",
-            "transform" as TTailwindString,
-            "-translate-y-1/2"
-          )}
-          onClick={setMax}
-          disabled={disabled}
-        >
-          <span className={tw("text-white", "text-xs")}>{t`MAX`}</span>
-        </button>
+        {setMax ? (
+          <button
+            className={tw(
+              "absolute",
+              "bg-principalRoyalBlue",
+              "rounded-md",
+              "px-2",
+              "py-1",
+              "top-1/2",
+              "right-3",
+              "transform" as TTailwindString,
+              "-translate-y-1/2"
+            )}
+            onClick={setMax}
+            disabled={disabled}
+          >
+            <span className={tw("text-white", "text-xs")}>{t`MAX`}</span>
+          </button>
+        ) : null}
       </div>
     </div>
   );
