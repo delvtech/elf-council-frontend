@@ -21,19 +21,17 @@ export default function DelegatePage(): ReactElement {
 
   return (
     <div className={tw("flex", "flex-col", "items-start")}>
-      <H1 className={tw("flex-1", "text-center")}>{t`Delegate`}</H1>
       <div className={tw("flex", "h-full", "w-full", "py-8")}>
         <div
           className={tw(
             "w-full",
-            "gap-6",
             "flex",
             "flex-col",
             "xl:flex-row",
-            "items-start"
+            "justify-center"
           )}
         >
-          {/* Portfolio & Delegate Card */}
+          {/* Portfolio Card */}
           <GradientCard
             className={tw(
               "flex",
@@ -44,19 +42,19 @@ export default function DelegatePage(): ReactElement {
               "xl:w-4/12",
               "h-full",
               "rounded-xl",
-              "shadow"
+              "shadow",
+              "mr-8"
             )}
           >
-            <div className={tw("w-full", "p-7", "xl:pb-0")}>
-              <H2 className={tw("mb-4", "text-white")}>{t`Portfolio`}</H2>
-              <DelegateCard
-                account={account}
-                signer={signer}
-                currentDelegate={currentDelegate}
-                setCurrentDelegate={setCurrentDelegate}
-              />
-            </div>
-            <div className={tw("w-full", "p-7", "xl:pt-4")}>
+            <div className={tw("w-full", "px-6", "py-7")}>
+              <H2
+                className={tw(
+                  "mb-4",
+                  "text-white",
+                  "text-2xl",
+                  "tracking-wide"
+                )}
+              >{t`Portfolio`}</H2>
               <PortfolioCard
                 account={account}
                 signer={signer}
@@ -65,12 +63,47 @@ export default function DelegatePage(): ReactElement {
             </div>
           </GradientCard>
 
-          {/* Delegate Leaderboard */}
-          <div className={tw("w-full", "xl:w-9/12", "p-4")}>
-            <H2
-              className={tw("mb-4", "text-principalRoyalBlue")}
-            >{t`Explore Featured Delegates`}</H2>
-            <DelegatesList />
+          {/* Delegates */}
+          <div className={tw("flex", "flex-col", "max-h-full", "xl:w-7/12")}>
+            {/* Delegates List */}
+            <div>
+              <H2
+                className={tw(
+                  "mb-4",
+                  "text-2xl",
+                  "text-principalRoyalBlue",
+                  "tracking-wide"
+                )}
+              >{t`Explore Featured Delegates`}</H2>
+              <DelegatesList />
+            </div>
+
+            {/* Delegate Card */}
+            <div
+              className={tw(
+                "w-full",
+                "px-6",
+                "py-7",
+                "mt-auto",
+                "rounded-xl",
+                "bg-principalRoyalBlue"
+              )}
+            >
+              <H2
+                className={tw(
+                  "mb-4",
+                  "text-white",
+                  "text-2xl",
+                  "tracking-wide"
+                )}
+              >{t`Delegate`}</H2>
+              <DelegateCard
+                account={account}
+                signer={signer}
+                currentDelegate={currentDelegate}
+                setCurrentDelegate={setCurrentDelegate}
+              />
+            </div>
           </div>
         </div>
       </div>

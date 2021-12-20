@@ -16,8 +16,10 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Tooltip } from "@material-ui/core";
 import { DuplicateIcon } from "@heroicons/react/outline";
+import classNames from "classnames";
 
 interface CurrentDelegateProps {
+  className?: string;
   delegate: Delegate;
   setEditDelegate: Dispatch<SetStateAction<boolean>>;
 }
@@ -28,7 +30,7 @@ const defaultToolTipState = {
 };
 
 export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { delegate, setEditDelegate } = props;
+  const { className = "", delegate, setEditDelegate } = props;
   const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -58,14 +60,17 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
 
   return (
     <div
-      className={tw(
-        "py-6",
-        "px-4",
-        "my-2",
-        "flex",
-        "justify-between",
-        "bg-hackerSky",
-        "rounded-xl"
+      className={classNames(
+        className,
+        tw(
+          "mt-3",
+          "py-6",
+          "px-4",
+          "flex",
+          "justify-between",
+          "bg-hackerSky",
+          "rounded-xl"
+        )
       )}
     >
       <div className={tw("flex", "flex-col")}>
