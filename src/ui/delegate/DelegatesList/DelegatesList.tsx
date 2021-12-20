@@ -5,7 +5,17 @@ import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 
 function DelegatesList(): ReactElement {
   return (
-    <div className={tw("grid", "grid-cols-3", "gap-x-4", "gap-y-3")}>
+    <div
+      className={tw(
+        "grid",
+        "grid-cols-2",
+        "lg:grid-cols-3",
+        "gap-x-4",
+        "gap-y-3",
+        "overflow-y-scroll",
+        "max-h-96"
+      )}
+    >
       {delegates.map((delegate) => {
         return <DelegateProfile key={delegate.address} delegate={delegate} />;
       })}

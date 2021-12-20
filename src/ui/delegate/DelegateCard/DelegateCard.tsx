@@ -70,25 +70,24 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   }, [delegateAddressOnChain, setCurrentDelegate]);
 
   return (
-    <Fragment>
-      <div className={tw("flex-1", "text-white", "font-light")}>
+    <div>
+      <div className={tw("flex-1", "text-white", "text-xl")}>
         {delegateAddressOnChain
           ? t`Current Delegate`
           : t`Currently No Delegation`}
       </div>
 
-      {currentDelegate && amountDelegated ? (
-        <Fragment>
+      <div className={tw("flex", "gap-7")}>
+        {currentDelegate && amountDelegated ? (
           <CurrentDelegate
+            className={tw("w-1/2")}
             delegate={currentDelegate}
             setEditDelegate={setEditDelegate}
           />
-        </Fragment>
-      ) : null}
+        ) : null}
 
-      {/* Current Delegate Profile */}
-      {!currentDelegate || editDelegate ? (
-        <Fragment>
+        {/* Current Delegate Profile */}
+        <div className={tw("flex", "flex-col", "w-1/2")}>
           <TextInput
             screenReaderLabel={t`Enter delegate address`}
             id={"delegate-address"}
@@ -119,9 +118,9 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               />
             )}
           </div>
-        </Fragment>
-      ) : null}
-    </Fragment>
+        </div>
+      </div>
+    </div>
   );
 }
 
