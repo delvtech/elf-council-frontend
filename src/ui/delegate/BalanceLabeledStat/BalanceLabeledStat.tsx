@@ -68,7 +68,7 @@ export function BalanceLabeledStat(
             title={t`${tooltip}`}
           >
             <button
-              className={tw(height("h-5"))}
+              className={height("h-5")}
               onMouseEnter={enableTooltip}
               onMouseLeave={disableTooltip}
             >

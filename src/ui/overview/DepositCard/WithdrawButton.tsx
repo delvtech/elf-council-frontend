@@ -47,10 +47,10 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
           disabled={
             isLoading || !hasEnoughDeposited || !account || !hasWithdrawAmount
           }
-          className={tw(width("w-full"))}
+          className={width("w-full")}
           onClick={onWithdraw}
         >
-          <span className={tw(width("w-full"))}>{t`Withdraw`}</span>
+          <span className={width("w-full")}>{t`Withdraw`}</span>
         </Button>
       </div>
     </Tooltip>

@@ -23,7 +23,7 @@ export default function DepositCard(props: DepositCardProps): ReactElement {
   const { account, signer } = props;
 
   return (
-    <Card className={tw(width("w-full"))}>
+    <Card className={width("w-full")}>
       <H2
         className={tw(
           textColor("text-brandDarkBlue-dark"),
@@ -31,7 +31,7 @@ export default function DepositCard(props: DepositCardProps): ReactElement {
           padding("pb-4"),
         )}
       >{t`Voting Power`}</H2>
-      <div className={tw(space("space-y-12"))}>
+      <div className={space("space-y-12")}>
         <DepositSection account={account} signer={signer} />
         <WithdrawSection account={account} signer={signer} />
       </div>

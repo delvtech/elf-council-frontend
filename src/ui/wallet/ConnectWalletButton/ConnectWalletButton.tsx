@@ -43,7 +43,7 @@ export function WalletProfileButton(
             <WalletJazzicon
               size={28}
               account={account}
-              className={tw(margin("mr-4"))}
+              className={margin("mr-4")}
             />
             {formatWalletAddress(account)}
           </Button>

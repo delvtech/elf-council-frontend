@@ -11,7 +11,7 @@ import tw, {
   borderRadius,
   backgroundColor,
 } from "src/elf-tailwindcss-classnames";
-import classnames from "classnames"
+import classnames from "classnames";
 import { t } from "ttag";
 
 export interface TabInfo {
@@ -31,7 +31,7 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
     <nav className={classnames("-mb-px", display("flex"))} aria-label={t`Tabs`}>
       {tabs.map((tab, i) => {
         const className = tw(
-          ...getTextColor(tab.current),
+          getTextColor(tab.current),
           tab.current
             ? backgroundColor("bg-paleLily")
             : backgroundColor("bg-hackerSky"),
@@ -74,11 +74,12 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
   );
 }
 
-function getTextColor(current: boolean): TArg[] {
+function getTextColor(current: boolean): TArg {
   if (current) {
-    return [
-      textColor("text-principalRoyalBlue", "hover:text-principalRoyalBlue"),
-    ];
+    return textColor(
+      "text-principalRoyalBlue",
+      "hover:text-principalRoyalBlue",
+    );
   }
-  return [textColor("text-yieldBlue")];
+  return textColor("text-yieldBlue");
 }

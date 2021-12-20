@@ -79,7 +79,7 @@ export function ViewAirdropStepCard({
             letterSpacing("tracking-wider"),
           )}
         >{t`Congratulations!`}</div>
-        <p className={tw(textAlign("text-center"))}>
+        <p className={textAlign("text-center")}>
           {t`You have some ELFI available to claim.`}
         </p>
       </div>

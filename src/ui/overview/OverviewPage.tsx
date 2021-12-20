@@ -20,8 +20,8 @@ export function OverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
     <div className={tw(height("h-full"), space("space-y-6"))}>
-      <div className={tw(padding("px-8", "py-1"))}>
-        <H1 className={tw(textAlign("text-center"))}>
+      <div className={padding("px-8", "py-1")}>
+        <H1 className={textAlign("text-center")}>
           {" "}
           {t`Governance Overview`}
         </H1>

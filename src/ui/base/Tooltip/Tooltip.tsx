@@ -94,7 +94,7 @@ export function Tooltip(props: TooltipProps): ReactElement {
           xmlSpace="preserve"
         >
           <polygon
-            className={tw(fill("fill-current"))}
+            className={fill("fill-current")}
             points="0,0 127.5,127.5 255,0"
           />
         </svg>

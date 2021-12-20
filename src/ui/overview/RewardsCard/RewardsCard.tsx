@@ -27,7 +27,7 @@ export default function RewardsCard(props: RewardsCardProps): ReactElement {
   const delegate = useDelegate(account);
 
   return (
-    <Card className={tw(width("w-full"))}>
+    <Card className={width("w-full")}>
       <H2
         className={tw(
           textColor("text-blue-900"),
@@ -35,7 +35,7 @@ export default function RewardsCard(props: RewardsCardProps): ReactElement {
           padding("pb-4"),
         )}
       >{t`Rewards`}</H2>
-      <div className={tw(space("space-y-12"))}>
+      <div className={space("space-y-12")}>
         <ClaimAndDelegateSection account={account} signer={signer} />
         {!delegate && <FeaturedDelegatesTable />}
         <ClaimSection account={account} signer={signer} />

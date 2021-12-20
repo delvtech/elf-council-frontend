@@ -39,7 +39,7 @@ export default function CardHeader({
         ),
       )}
     >
-      <div className={tw(margin("ml-4", "mt-4"))}>
+      <div className={margin("ml-4", "mt-4")}>
         <h2
           className={tw(
             fontSize("text-lg"),

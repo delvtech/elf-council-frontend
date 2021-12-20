@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Tooltip } from "@material-ui/core";
 import { FixedNumber } from "ethers";
-import tw, { width } from "src/elf-tailwindcss-classnames";
+import { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import { isValidAddress } from "src/base/isValidAddress";
@@ -76,10 +76,10 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
             !hasDepositAmount ||
             !hasValidDelegateAddress
           }
-          className={tw(width("w-full"))}
+          className={width("w-full")}
           onClick={onDeposit}
         >
-          <span className={tw(width("w-full"))}>{t`Deposit`}</span>
+          <span className={width("w-full")}>{t`Deposit`}</span>
         </Button>
       </div>
     </Tooltip>

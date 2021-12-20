@@ -76,7 +76,7 @@ export default function PageView(props: PageViewProps): ReactElement {
         </div>
       </div>
       <SimpleDialog isOpen={isWrongChain}>
-        <div className={tw(textAlign("text-center"))}>
+        <div className={textAlign("text-center")}>
           <H3>{t`Please connect to ${
             ChainNames[addressesJson.chainId as ChainId]
           }`}</H3>

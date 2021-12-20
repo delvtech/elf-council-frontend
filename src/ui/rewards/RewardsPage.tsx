@@ -205,9 +205,9 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             )}
           >
             <Label
-              className={tw(textAlign("text-left"))}
+              className={textAlign("text-left")}
             >{t`Wallet Balance:`}</Label>
-            <Label className={tw(textAlign("text-right"))}>
+            <Label className={textAlign("text-right")}>
               {formattedBalance}
             </Label>
           </div>
@@ -220,9 +220,9 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             )}
           >
             <Label
-              className={tw(textAlign("text-left"))}
+              className={textAlign("text-left")}
             >{t`Unclaimed:`}</Label>
-            <Label className={tw(textAlign("text-right"))}>
+            <Label className={textAlign("text-right")}>
               {unclaimed.toFixed(2)}
             </Label>
           </div>
@@ -235,9 +235,9 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
             )}
           >
             <Label
-              className={tw(textAlign("text-left"))}
+              className={textAlign("text-left")}
             >{t`Deposited:`}</Label>
-            <Label className={tw(textAlign("text-right"))}>
+            <Label className={textAlign("text-right")}>
               {Number(deposited).toFixed(2)}
             </Label>
           </div>

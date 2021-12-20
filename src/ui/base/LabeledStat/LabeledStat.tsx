@@ -21,11 +21,11 @@ interface LabeledStatProps {
 export function LabeledStat(props: LabeledStatProps): ReactElement {
   const { data, topLabel, bottomLabel, whiteText } = props;
   const labelTextColor = whiteText
-    ? tw(textColor("text-white"))
-    : tw(textColor("text-gray-500"));
+    ? textColor("text-white")
+    : textColor("text-gray-500");
   const dataTextColor = whiteText
-    ? tw(textColor("text-white"))
-    : tw(textColor("text-gray-900"));
+    ? textColor("text-white")
+    : textColor("text-gray-900");
 
   return (
     <div

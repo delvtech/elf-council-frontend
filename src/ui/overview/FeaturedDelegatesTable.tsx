@@ -128,7 +128,7 @@ export default function FeaturedDelegatesTable(
               )}
             >
               {/* Desktop Header */}
-              <thead className={tw(display("hidden", "sm:block"))}>
+              <thead className={display("hidden", "sm:block")}>
                 <tr>
                   <th scope="col" className={rankHeaderClassName}>
                     #
@@ -154,7 +154,7 @@ export default function FeaturedDelegatesTable(
                 </tr>
               </thead>
               {/* Mobile Header */}
-              <thead className={tw(display("sm:hidden"))}>
+              <thead className={display("sm:hidden")}>
                 <tr>
                   <th scope="col" className={rankHeaderClassName}>
                     #
@@ -184,7 +184,7 @@ export default function FeaturedDelegatesTable(
                 </tr>
               </thead>
               {/* Desktop Cell */}
-              <tbody className={tw(display("hidden", "sm:block"))}>
+              <tbody className={display("hidden", "sm:block")}>
                 {searchResults.map((delegate, index) => (
                   <tr key={delegate.address}>
                     <td className={rankCellClassName}>{index + 1}</td>
@@ -211,7 +211,7 @@ export default function FeaturedDelegatesTable(
                 ))}
               </tbody>
               {/* Mobile Cell */}
-              <tbody className={tw(display("sm:hidden"))}>
+              <tbody className={display("sm:hidden")}>
                 {searchResults.map((delegate, index) => (
                   <tr key={delegate.address}>
                     <td className={rankCellClassName}>{index + 1}</td>
@@ -265,7 +265,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
     <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
       <div>
         <Button
-          className={tw(boxShadow("shadow-none"))}
+          className={boxShadow("shadow-none")}
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
@@ -327,7 +327,7 @@ function DelegatesSearchBar(props: DelegatesSearchBarProps): ReactElement {
   }, [searchInput, filterResults]);
 
   return (
-    <div className={tw(textColor("text-brandDarkBlue-dark"))}>
+    <div className={textColor("text-brandDarkBlue-dark")}>
       <H3>{t`Search Delegates`}</H3>
       <TextInput
         screenReaderLabel={t`Search Delegates`}

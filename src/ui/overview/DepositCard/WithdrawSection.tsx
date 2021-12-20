@@ -115,7 +115,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
           <p>{learnMore}</p>
         </div>
 
-        <div className={tw(space("space-y-4"))}>
+        <div className={space("space-y-4")}>
           <div
             className={tw(
               display("flex"),
@@ -132,7 +132,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               disabled={!hasAmountDeposited || !account}
               onClick={onSetMax}
             >
-              <span className={tw(width("w-full"))}>{t`Max`}</span>
+              <span className={width("w-full")}>{t`Max`}</span>
             </Button>
             <NumericInput
               disabled={!hasAmountDeposited}
@@ -141,7 +141,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               id={"withdraw-amount"}
               name={t`Withdraw amount`}
               placeholder={t`Insert amount to withdraw`}
-              className={tw(flexGrow("grow"))}
+              className={flexGrow("grow")}
               inputClassName={tw(height("h-12"), textAlign("text-center"))}
               value={withdrawAmount}
               onChange={onSetWithdrawAmount}

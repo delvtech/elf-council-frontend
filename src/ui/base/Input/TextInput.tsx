@@ -40,7 +40,7 @@ export default function TextInput({
 
   return (
     <div>
-      <label htmlFor={id} className={tw(screenReaders("sr-only"))}>
+      <label htmlFor={id} className={screenReaders("sr-only")}>
         {screenReaderLabel}
       </label>
       <input
@@ -71,8 +71,8 @@ export default function TextInput({
 
 function getInputBorderColor(error: boolean): TTailwindString {
   const color = error
-    ? tw(borderColor("border-red-500", "focus:border-red-500"))
-    : tw(borderColor("focus:border-brandDarkBlue"));
+    ? borderColor("border-red-500", "focus:border-red-500")
+    : borderColor("focus:border-brandDarkBlue");
 
   return color;
 }
@@ -80,7 +80,7 @@ function getInputBorderColor(error: boolean): TTailwindString {
 function getInputRingColor(error: boolean): TTailwindString {
   const color = error
     ? tw(ringColor("focus:ring-red-500"), borderColor("focus:border-red-500"))
-    : tw(ringColor("focus:ring-brandDarkBlue"));
+    : ringColor("focus:ring-brandDarkBlue");
 
   return color;
 }

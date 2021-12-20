@@ -194,7 +194,7 @@ export default function Steps({ steps }: StepsProps): ReactElement {
       className={tw(display("flex"), justifyContent("justify-center"))}
       aria-label="Progress"
     >
-      <ol role="list" className={tw(space("space-y-6"))}>
+      <ol role="list" className={space("space-y-6")}>
         {steps.map((step, i) => {
           switch (step.status) {
             case "complete":

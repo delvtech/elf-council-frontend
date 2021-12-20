@@ -34,7 +34,7 @@ function VotingCard(props: VotingCardProps): ReactElement {
       <H3
         className={tw(textColor("text-blue-900"), fontWeight("font-semibold"))}
       >{t`Voting`}</H3>
-      <div className={tw(display("flex"))}>
+      <div className={display("flex")}>
         <LabeledStat data={votingPower} bottomLabel={t`Voting Power`} />
         <LabeledStat
           data={String(blocksUntilNextVoteEnds)}
@@ -48,7 +48,7 @@ function VotingCard(props: VotingCardProps): ReactElement {
           fontWeight("font-semibold"),
         )}
       ></p>
-      <div className={tw(display("flex"))}>
+      <div className={display("flex")}>
         <LabeledStat
           data={delegateVotingPower}
           bottomLabel={t`Delegate powers`}

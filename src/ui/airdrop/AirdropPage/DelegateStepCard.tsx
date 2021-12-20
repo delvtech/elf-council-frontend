@@ -96,10 +96,10 @@ export function DelegateStepCard({
         )}
       >
         <div
-          className={tw(letterSpacing("tracking-wide"))}
+          className={letterSpacing("tracking-wide")}
         >{t`Delegate your voting power`}</div>
       </div>
-      <div className={tw(space("space-y-4"))}>
+      <div className={space("space-y-4")}>
         <TextInput
           screenReaderLabel={t`Delegate address`}
           id={"delegate-address-input"}
@@ -138,7 +138,7 @@ export function DelegateStepCard({
           >{`${merkleData?.leaf.value} ELFI`}</div>
           <Button
             onClick={onClaimOnlyClick}
-            className={tw(margin("mr-4"))}
+            className={margin("mr-4")}
             variant={ButtonVariant.MINIMAL}
           >
             <span
@@ -240,7 +240,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
     <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
       <div>
         <Button
-          className={tw(boxShadow("shadow-none"))}
+          className={boxShadow("shadow-none")}
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
@@ -254,7 +254,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
           >
             {formatWalletAddress(address)}
           </div>
-          <ContentCopyIcon className={tw(textColor("text-white"))} />
+          <ContentCopyIcon className={textColor("text-white")} />
         </Button>
       </div>
     </Tooltip>

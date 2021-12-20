@@ -75,7 +75,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         >
           {delegate.name}
         </span>
-        <span className={tw(textColor("text-blueGrey"))}>
+        <span className={textColor("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
         </span>
       </div>

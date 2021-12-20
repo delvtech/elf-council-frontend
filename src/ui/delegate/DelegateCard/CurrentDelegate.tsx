@@ -96,7 +96,7 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         >
           {delegate.name}
         </span>
-        <span className={tw(textColor("text-blueGrey"))}>
+        <span className={textColor("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
         </span>
         <span

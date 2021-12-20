@@ -156,7 +156,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
           <p>{learnMore}</p>
         </div>
 
-        <div className={tw(space("space-y-4"))}>
+        <div className={space("space-y-4")}>
           <div
             className={tw(
               display("flex"),
@@ -173,7 +173,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
               disabled={!hasBalanceToDeposit || !account}
               onClick={onSetMax}
             >
-              <span className={tw(width("w-full"))}>{t`Max`}</span>
+              <span className={width("w-full")}>{t`Max`}</span>
             </Button>
             <DepositInput
               balance={balance}
@@ -202,12 +202,12 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             />
           )}
           <Button
-            className={tw(width("w-full"))}
+            className={width("w-full")}
             onClick={onSetAllowance}
             disabled={!account || hasAllowance}
             variant={ButtonVariant.OUTLINE_BLUE}
           >
-            <span className={tw(width("w-full"))}>
+            <span className={width("w-full")}>
               {hasAllowance ? t`Approved` : t`Allow`}
             </span>
           </Button>

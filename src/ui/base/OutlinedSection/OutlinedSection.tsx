@@ -27,7 +27,7 @@ export default function OutlinedSection({
       )}
     >
       <div
-        className={classNames(tw(padding("px-4", "py-5", "sm:p-6")), className)}
+        className={classNames(padding("px-4", "py-5", "sm:p-6"), className)}
       >
         {children}
       </div>

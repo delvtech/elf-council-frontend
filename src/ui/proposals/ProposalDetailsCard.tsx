@@ -46,7 +46,7 @@ export function ProposalDetailsCard({
     );
   }
   return (
-    <GradientCard className={tw(width("w-96"))}>
+    <GradientCard className={width("w-96")}>
       <h1
         className={tw(
           textColor("text-white"),

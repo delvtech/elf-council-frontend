@@ -35,7 +35,7 @@ export function ProgressCircle(props: ProgressCircleProps): ReactElement {
     >
       <svg className={tw(width("w-20"), height("h-20"))}>
         <circle
-          className={tw(textColor("text-gray-300"))}
+          className={textColor("text-gray-300")}
           strokeWidth="5"
           stroke="currentColor"
           fill="transparent"
@@ -44,7 +44,7 @@ export function ProgressCircle(props: ProgressCircleProps): ReactElement {
           cy="40"
         />
         <circle
-          className={tw(textColor("text-blue-600"))}
+          className={textColor("text-blue-600")}
           strokeWidth="5"
           strokeDasharray={circumference}
           strokeDashoffset={

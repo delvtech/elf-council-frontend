@@ -48,7 +48,7 @@ export function Tag({
         fontWeight("font-medium"),
         textColor(intentTextColors[intent]),
         backgroundColor(getBackgroundColor(intent, minimal)),
-        ...getBorder(intent, minimal),
+        getBorder(intent, minimal),
       )}
     >
       {children}
@@ -71,16 +71,16 @@ function getBackgroundColor(
   return intentBackgroundColors[intent];
 }
 
-const intentBorderColors: Record<Intent, TArg[]> = {
-  [Intent.SUCCESS]: [
+const intentBorderColors: Record<Intent, TArg> = {
+  [Intent.SUCCESS]: tw(
     borderColor("border-votingGreen"),
     borderWidth("border-2"),
-  ],
-  [Intent.ERROR]: [borderColor("border-deepRed"), borderWidth("border-2")],
+  ),
+  [Intent.ERROR]: tw(borderColor("border-deepRed"), borderWidth("border-2")),
 };
-function getBorder(intent: Intent, minimal: boolean): TArg[] {
+function getBorder(intent: Intent, minimal: boolean): TArg {
   if (!minimal) {
-    return [borderStyle("border-none")];
+    return borderStyle("border-none");
   }
 
   return intentBorderColors[intent];

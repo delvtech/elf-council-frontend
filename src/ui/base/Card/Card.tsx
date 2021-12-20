@@ -47,7 +47,7 @@ export default function Card(props: CardProps): ReactElement {
 
   const cardClassName = classNames(
     tw(
-      ...getBackgroundColor(variant, active),
+      getBackgroundColor(variant, active),
       boxShadow(active ? "shadow-md" : "shadow"),
       overflow("overflow-hidden"),
       borderRadius("rounded-xl"),
@@ -74,24 +74,22 @@ export default function Card(props: CardProps): ReactElement {
   );
 }
 
-function getBackgroundColor(variant: CardVariant, active: boolean): TArg[] {
+function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
   if (active) {
-    return [backgroundColor("bg-paleLily")];
+    return backgroundColor("bg-paleLily");
   }
 
   switch (variant) {
     case CardVariant.BLUE:
-      return [backgroundColor("bg-principalRoyalBlue")];
+      return backgroundColor("bg-principalRoyalBlue");
     case CardVariant.GRADIENT:
-      return [
+      return tw(
         backgroundImage("bg-gradient-to-br"),
-        gradientColorStops("from-brandDarkBlue"),
-        gradientColorStops("to-brandLightBlue"),
-      ];
+        gradientColorStops("from-brandDarkBlue", "to-brandLightBlue"),
+      );
     case CardVariant.WHITE:
-      return [backgroundColor("bg-white")];
+      return backgroundColor("bg-white");
     default:
       assertNever(variant);
-      return [];
   }
 }

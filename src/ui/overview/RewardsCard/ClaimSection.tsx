@@ -71,10 +71,10 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
               <Button
                 loading={isLoading}
                 disabled={!account || !hasUnclaimedRewards || isLoading}
-                className={tw(width("w-full"))}
+                className={width("w-full")}
                 onClick={onClaim}
               >
-                <span className={tw(width("w-full"))}>{t`Claim`}</span>
+                <span className={width("w-full")}>{t`Claim`}</span>
               </Button>
             </div>
           </Tooltip>

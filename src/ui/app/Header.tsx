@@ -52,7 +52,7 @@ function Header(): ReactElement {
               )}
             >
               <span
-                className={tw(textColor("text-principalRoyalBlue"))}
+                className={textColor("text-principalRoyalBlue")}
               >{t`Learn how to vote`}</span>
               <button>
                 <QuestionMarkCircleIcon

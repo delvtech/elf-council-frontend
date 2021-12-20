@@ -42,7 +42,7 @@ export default function NumericInput({
 }: NumericInputProps): ReactElement {
   return (
     <div className={className}>
-      <label htmlFor={id} className={tw(screenReaders("sr-only"))}>
+      <label htmlFor={id} className={screenReaders("sr-only")}>
         {screenReaderLabel}
       </label>
       <input

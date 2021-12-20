@@ -142,7 +142,7 @@ export default function Sidebar(): ReactElement {
             textColor("text-principalRoyalBlue"),
           )}
         >
-          <span className={tw(fontSize("text-sm"))}>Powered by</span>
+          <span className={fontSize("text-sm")}>Powered by</span>
           <ElementLogo height={"40"} />
         </div>
       </div>

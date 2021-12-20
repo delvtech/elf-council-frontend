@@ -133,7 +133,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             value={delegateAddressInput}
             onChange={(event) => setDelegateAddressInput(event.target.value)}
           />
-          <div className={tw(textAlign("text-center"))}>
+          <div className={textAlign("text-center")}>
             {account ? (
               <div
                 className={tw(
