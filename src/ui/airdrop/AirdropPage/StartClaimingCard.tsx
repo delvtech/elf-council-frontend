@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import tw, {
+  alignItems,
   display,
   flexDirection,
   fontSize,
@@ -39,7 +40,7 @@ export function StartClaimingCard({
       className={tw(
         display("flex"),
         flexDirection("flex-col"),
-        height("h-96"),
+        height("h-full"),
         textAlign("text-center"),
         textColor("text-white"),
         width("w-full"),
@@ -47,50 +48,70 @@ export function StartClaimingCard({
     >
       <div
         className={tw(
-          padding("p-6"),
+          display("flex"),
+          padding("p-4"),
+          justifyContent("justify-end"),
+        )}
+      >
+        {!account ? (
+          <ConnectWalletButton
+            label={t`Connect wallet`}
+            variant={ButtonVariant.GRADIENT}
+          />
+        ) : (
+          <WalletProfileButton
+            variant={ButtonVariant.PRIMARY}
+            account={account}
+            walletConnectionActive={walletConnectionActive}
+          />
+        )}
+      </div>
+      <div
+        className={tw(
+          padding("p-12"),
           display("flex"),
           flexDirection("flex-col"),
+          alignItems("items-center"),
+          justifyContent("justify-center"),
           height("h-full"),
           space("space-y-5"),
         )}
       >
-        <div className={tw(display("flex"), justifyContent("justify-end"))}>
-          {!account ? (
-            <ConnectWalletButton
-              label={t`Connect wallet`}
-              variant={ButtonVariant.GRADIENT}
-            />
-          ) : (
-            <WalletProfileButton
-              variant={ButtonVariant.OUTLINE_BLUE}
-              account={account}
-              walletConnectionActive={walletConnectionActive}
-            />
-          )}
-        </div>
         <div
           className={tw(
-            textAlign("text-center"),
-            fontWeight("font-semibold"),
-            letterSpacing("tracking-wider"),
-            fontSize("text-base"),
-          )}
-        >{t`Introducing $ELFI`}</div>
-        <div
-          className={tw(fontSize("text-3xl"), fontWeight("font-bold"))}
-        >{t`Help contribute to the next wave of Element`}</div>
-        <div
-          className={tw(
-            fontSize("text-base"),
-            textAlign("text-center"),
-            space("space-y-4"),
-            padding("px-4"),
+            width("w-full", "md:w-1/2"),
+            display("flex"),
+            flexDirection("flex-col"),
+            alignItems("items-center"),
+            justifyContent("justify-center"),
+            space("space-y-8"),
           )}
         >
-          <p>
-            {t`With the launch of $ELFI and the DAO, the community now leads the future of the protocol. `}{" "}
-          </p>
+          <div
+            className={tw(
+              textAlign("text-center"),
+              fontWeight("font-semibold"),
+              letterSpacing("tracking-wider"),
+              fontSize("text-base"),
+            )}
+          >{t`Introducing $ELFI`}</div>
+          <div
+            className={tw(fontSize("text-3xl"), fontWeight("font-bold"))}
+          >{t`Help contribute to the next wave of Element`}</div>
+          <div
+            className={tw(
+              fontSize("text-base"),
+              textAlign("text-center"),
+              space("space-y-4"),
+              padding("px-4"),
+            )}
+          >
+            <p>
+              {t`With the launch of $ELFI and the DAO, the community now leads the future of the protocol. `}{" "}
+            </p>
+          </div>
         </div>
+
         <div
           className={tw(
             display("flex"),
