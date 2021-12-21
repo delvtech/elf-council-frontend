@@ -30,6 +30,7 @@ import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
@@ -37,6 +38,10 @@ import { t } from "ttag";
 const rand1 = Math.random() * 100000000;
 const rand2 = Math.random() * 100000000;
 const rand3 = Math.random() * 100000000;
+
+const portfolioTooltipText = t`Don’t know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
+const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
+const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -92,16 +97,22 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <BalanceWithLabel
           className={tw(width("w-full"), margin("mt-8"))}
           balance={formattedBalance}
+          tooltipText={portfolioTooltipText}
+          tooltipHref={"/resources"}
           label={t`Wallet balance`}
         />
         <BalanceWithLabel
           className={tw(width("w-full"), margin("mt-8"))}
           balance={amountDeposited}
+          tooltipText={votingBalanceTooltipText}
+          tooltipHref={"/resources"}
           label={t`Eligible voting balance`}
         />
         <BalanceWithLabel
           className={tw(width("w-full"), margin("mt-8"))}
           balance={formattedVotingPower}
+          tooltipText={votingPowerTooltipText}
+          tooltipHref={"/resources"}
           label={t`Voting Power`}
         />
         <div
@@ -134,9 +145,11 @@ interface BalanceWithLabelProps {
   className?: string;
   balance: string;
   label: string;
+  tooltipText?: string;
+  tooltipHref?: string;
 }
 function BalanceWithLabel(props: BalanceWithLabelProps) {
-  const { className, balance, label } = props;
+  const { className, balance, label, tooltipHref, tooltipText } = props;
   return (
     <div className={classNames(className, tw(textColor("text-white")))}>
       <div className={tw(display("flex"), alignItems("items-center"))}>
@@ -152,9 +165,17 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
           display("flex"),
           fontSize("text-lg"),
           fontWeight("font-light"),
+          alignItems("items-center"),
         )}
       >
         {label}
+        {tooltipText && (
+          <InfoIconWithTooltip
+            className={tw(margin("ml-1"))}
+            tooltipText={tooltipText}
+            tooltipHref={tooltipHref}
+          />
+        )}
       </div>
     </div>
   );
