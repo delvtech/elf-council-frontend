@@ -76,27 +76,33 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId]);
 
   return (
-    <div
-      className={tw(
-        height("h-full"),
-        padding("pt-8", "px-8"),
-        space("space-y-8"),
-      )}
-    >
-      <H1
-        className={tw(flex("flex-1"), textAlign("text-center"))}
-      >{t`Proposals`}</H1>
-      <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
-      <div className={tw(display("flex"), space("space-x-12"))}>
-        <ProposalList
-          account={account}
-          signer={signer}
-          proposals={filteredProposals || []}
-          activeProposalId={activeProposalId}
-          setActiveProposal={setActiveProposalId}
-        />
-        <ProposalDetailsCard proposal={activeProposal} />
+    <div className={display("flex")}>
+      <div
+        className={tw(
+          flex("flex-1"),
+          height("h-full"),
+          padding("pt-8", "px-8"),
+          space("space-y-8"),
+        )}
+      >
+        <H1
+          className={tw(flex("flex-1"), textAlign("text-center"))}
+        >{t`Proposals`}</H1>
+        <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
+        <div className={tw(display("flex"), space("space-x-12"))}>
+          <ProposalList
+            account={account}
+            signer={signer}
+            proposals={filteredProposals || []}
+            activeProposalId={activeProposalId}
+            setActiveProposal={setActiveProposalId}
+          />
+        </div>
       </div>
+      <ProposalDetailsCard
+        className={tw(display("hidden", "lg:block"))}
+        proposal={activeProposal}
+      />
     </div>
   );
 }

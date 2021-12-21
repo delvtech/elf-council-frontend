@@ -1,35 +1,42 @@
-import { Proposal } from "elf-council-proposals";
 import React, { ReactElement } from "react";
+
+import classNames from "classnames";
+import { Proposal } from "elf-council-proposals";
 import tw, {
-  display,
-  width,
-  padding,
-  justifyContent,
   alignItems,
-  textColor,
-  textAlign,
+  display,
   fontSize,
   fontWeight,
+  justifyContent,
+  padding,
+  textAlign,
+  textColor,
+  width,
 } from "src/elf-tailwindcss-classnames";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { t } from "ttag";
 
 interface ProposalDetailsCardProps {
+  className?: string;
   proposal: Proposal | undefined;
 }
 
-export function ProposalDetailsCard({
-  proposal,
-}: ProposalDetailsCardProps): ReactElement {
+export function ProposalDetailsCard(
+  props: ProposalDetailsCardProps,
+): ReactElement {
+  const { className, proposal } = props;
   if (!proposal) {
     return (
       <GradientCard
-        className={tw(
-          display("flex"),
-          width("w-96"),
-          padding("p-6"),
-          justifyContent("justify-center"),
-          alignItems("items-center"),
+        className={classNames(
+          className,
+          tw(
+            display("flex"),
+            width("w-80"),
+            padding("p-6"),
+            justifyContent("justify-center"),
+            alignItems("items-center"),
+          ),
         )}
       >
         <span
@@ -46,7 +53,7 @@ export function ProposalDetailsCard({
     );
   }
   return (
-    <GradientCard className={width("w-96")}>
+    <GradientCard className={classNames(className, tw(width("w-80")))}>
       <h1
         className={tw(
           textColor("text-white"),
