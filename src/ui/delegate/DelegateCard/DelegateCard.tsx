@@ -99,10 +99,11 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             onChange={(event) => setDelegateAddressInput(event.target.value)}
           />
           <div className={tw("text-center")}>
-            <div className={tw("w-full", "flex", "justify-end")}>
+            <div className={tw("flex", "justify-end", "items-end")}>
               <Button
                 onClick={onDelegateClick}
                 variant={ButtonVariant.GRADIENT}
+                className={tw("w-28", "justify-center")}
               >{t`Delegate`}</Button>
             </div>
           </div>

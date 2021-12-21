@@ -52,7 +52,7 @@ export default function DelegatePage(): ReactElement {
           >
             {!account ? <NoConnection /> : <NoDelegate />}
           </div>
-          <div className={tw("xl:w-7/12")}>{/* Empty on purpose */}</div>
+          <div className={tw("xl:w-8/12")}>{/* Empty on purpose */}</div>
         </div>
       ) : null}
 
@@ -84,7 +84,7 @@ export default function DelegatePage(): ReactElement {
         </GradientCard>
 
         {/* Delegates */}
-        <div className={tw("flex", "flex-col", "xl:w-7/12")}>
+        <div className={tw("flex", "flex-col", "xl:w-8/12")}>
           {/* Delegates List */}
           <div>
             <H2

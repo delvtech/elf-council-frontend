@@ -1,13 +1,11 @@
 import { ReactElement, useState, useCallback, useRef } from "react";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import Image from "next/image";
 import { Tooltip } from "@material-ui/core";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { t } from "ttag";
 import tw from "src/elf-tailwindcss-classnames";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { DuplicateIcon } from "@heroicons/react/outline";
-
+import { AnnotationIcon } from "@heroicons/react/solid";
 interface DelegateProfileProps {
   delegate: Delegate;
 }
@@ -48,17 +46,35 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         "items-center",
         "justify-between",
         "py-3",
-        "px-5",
+        "px-4",
         "bg-hackerSky",
         "rounded-xl"
       )}
     >
       <div className={tw("flex", "flex-col")}>
-        <span className={tw("text-principalRoyalBlue", "font-bold")}>
-          {delegate.name}
-        </span>
+        <div
+          className={tw(
+            "text-principalRoyalBlue",
+            "font-bold",
+            "flex",
+            "items-center",
+            "mb-1"
+          )}
+        >
+          <span
+            className={tw(
+              "inline-block",
+              "h-5",
+              "w-5",
+              "rounded-xl",
+              "bg-principalRoyalBlue",
+              "mr-1.5"
+            )}
+          ></span>
+          <span>{delegate.name}</span>
+        </div>
         <span className={tw("text-blueGrey")}>
-          {formatWalletAddress(delegate.address)}
+          {t`${delegate.numDelegatedVotes} votes`}
         </span>
       </div>
       <div>
@@ -69,14 +85,9 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             open={showToolTip.twitterHandle}
             title={t`Twitter handle copied`}
           >
-            <button
-              className={tw("relative", "h-5", "w-5")}
-              onClick={handleCopyTwitterHandle}
-            >
-              <Image
-                layout="fill"
-                src="/assets/Twitter.svg"
-                alt={t`Tooltip icon`}
+            <button onClick={handleCopyTwitterHandle}>
+              <AnnotationIcon
+                className={tw("h-5", "text-principalRoyalBlue")}
               />
             </button>
           </Tooltip>
