@@ -70,14 +70,6 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const hasAllowance =
     allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
 
-  // handlers for numeric input
-  const onSetDepositAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newDepositAmount = event.target.value;
-      setDepositAmount(newDepositAmount);
-    },
-    [setDepositAmount]
-  );
   const clearDepositAmount = useCallback(() => {
     setDepositAmount("");
   }, [setDepositAmount]);
@@ -145,7 +137,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             <DepositInput
               balance={balance}
               depositAmount={depositAmount}
-              onSetDepositAmount={onSetDepositAmount}
+              setDepositAmount={setDepositAmount}
               id={"deposit-amount"}
               name={t`Deposit amount`}
               placeholder={t`Insert amount to deposit`}
