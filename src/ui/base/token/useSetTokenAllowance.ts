@@ -2,7 +2,7 @@ import { UseMutationResult } from "react-query";
 
 import { ERC20Permit, ERC20Permit__factory } from "elf-council-typechain";
 import { ContractReceipt, Signer } from "ethers";
-import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useSetTokenAllowance(
   signer: Signer | undefined,

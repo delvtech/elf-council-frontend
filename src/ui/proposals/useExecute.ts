@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { Signer } from "ethers";
 import { proposalsJson } from "src/elf-council-proposals";
 import { coreVotingContract } from "src/elf/contracts";
-import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 const { proposals } = proposalsJson;
 
