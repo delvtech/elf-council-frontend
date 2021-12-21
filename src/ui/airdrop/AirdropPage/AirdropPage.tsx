@@ -86,7 +86,6 @@ export default function AirdropPage(): ReactElement {
       className={tw(
         display("flex"),
         flexDirection("flex-col"),
-        height("h-full"),
         space("space-y-8"),
         width("w-full"),
         justifyContent("justify-center"),
