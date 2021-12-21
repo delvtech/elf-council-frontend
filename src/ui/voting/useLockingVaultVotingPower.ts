@@ -1,8 +1,8 @@
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { formatEther } from "@ethersproject/units";
 import { ethers } from "ethers";
 import { lockingVaultContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 export function useLockingVaultVotingPower(

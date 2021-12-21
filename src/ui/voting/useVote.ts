@@ -10,11 +10,11 @@ import {
 } from "src/elf/contracts";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
 import { useRewardsVaultVotingPower } from "src/ui/voting/useRewardsVaultVotingPower";
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 const {
   optimisticRewardsVault: optimisticRewardsVaultAddress,
