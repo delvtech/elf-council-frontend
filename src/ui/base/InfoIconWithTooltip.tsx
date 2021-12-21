@@ -1,9 +1,10 @@
 import React, { ReactElement, useCallback, useState } from "react";
+
 import { InformationCircleIcon } from "@heroicons/react/solid";
 import { Tooltip } from "@material-ui/core";
 import classNames from "classnames";
 import Link from "next/link";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { height } from "src/elf-tailwindcss-classnames";
 
 interface InfoIconProps {
   className?: string;
@@ -22,10 +23,10 @@ export function InfoIconWithTooltip(props: InfoIconProps): ReactElement {
 
   const tooltipIcon = tooltipHref ? (
     <Link href={tooltipHref} passHref>
-      <InformationCircleIcon className={tw("h-4")} />
+      <InformationCircleIcon className={tw(height("h-4"))} />
     </Link>
   ) : (
-    <InformationCircleIcon className={tw("h-4")} />
+    <InformationCircleIcon className={tw(height("h-4"))} />
   );
 
   return (
@@ -37,7 +38,7 @@ export function InfoIconWithTooltip(props: InfoIconProps): ReactElement {
       onClose={onCloseTooltip}
       title={tooltipText}
     >
-      <button className={classNames(className, tw("h-4"))}>
+      <button className={classNames(className, tw(height("h-4")))}>
         {tooltipIcon}
       </button>
     </Tooltip>
