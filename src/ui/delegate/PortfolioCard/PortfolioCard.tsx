@@ -1,32 +1,32 @@
-import { Fragment, ReactElement, ChangeEvent, useCallback } from "react";
+import { ChangeEvent, ReactElement, useCallback } from "react";
+
 import { Signer } from "ethers";
 import { formatEther, parseEther } from "ethers/lib/utils";
 import Link from "next/link";
-
-import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import Button from "src/ui/base/Button/Button";
-import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
-import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
-import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
-import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
-import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
-import { useDeposits } from "src/ui/contracts/useDeposits";
-import { jt, t } from "ttag";
 import tw, {
   display,
-  margin,
-  width,
-  justifyContent,
-  gap,
   flexDirection,
-  textColor,
   fontSize,
   fontWeight,
+  gap,
+  justifyContent,
   lineHeight,
+  margin,
+  textColor,
+  width,
 } from "src/elf-tailwindcss-classnames";
+import { elementTokenContract } from "src/elf/contracts";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
+import { useDeposits } from "src/ui/contracts/useDeposits";
+import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
+import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
+import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
+import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
+import { jt, t } from "ttag";
 
 interface PortfolioCardProps {
   account: string | null | undefined;
@@ -226,16 +226,16 @@ function PortfolioDepositText(): ReactElement {
       )}
     >
       To protect our governance system, we ask our users to{" "}
-      <span className={fontWeight("font-bold")}>deposit</span> their tokens
-      when they have the intention to vote and/or delegate.{" "}
+      <span className={fontWeight("font-bold")}>deposit</span> their tokens when
+      they have the intention to vote and/or delegate.{" "}
       <span className={fontWeight("font-bold")}>
         This verifies your eligibility to vote and/or delegate.
       </span>{" "}
       <div>
         <Link href="/resources" passHref>
-          <a className={textColor("text-goldYellow")} href="/resources">
+          <span className={tw(textColor("text-goldYellow"))}>
             To learn more about our vaults read here.
-          </a>
+          </span>
         </Link>
       </div>
     </p>
@@ -256,9 +256,9 @@ function PortfolioWithdrawText(): ReactElement {
       amount.
       <div>
         <Link href="/resources" passHref>
-          <a className={textColor("text-goldYellow")} href="/resources">
+          <span className={tw(textColor("text-goldYellow"))}>
             Read more to learn about our voting vaults.
-          </a>
+          </span>
         </Link>
       </div>
     </p>
