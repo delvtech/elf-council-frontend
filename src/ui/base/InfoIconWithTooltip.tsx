@@ -4,7 +4,6 @@ import { Tooltip } from "@material-ui/core";
 import classNames from "classnames";
 import Link from "next/link";
 import tw from "src/elf-tailwindcss-classnames";
-import { t } from "ttag";
 
 interface InfoIconProps {
   className?: string;
