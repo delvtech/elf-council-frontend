@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import React, { ReactElement, ReactNode } from "react";
 import { Popover } from "@headlessui/react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { position, zIndex } from "src/elf-tailwindcss-classnames";
 import { ButtonProps } from "src/ui/base/Button/Button";
 import { getButtonClass } from "src/ui/base/Button/styles";
 
@@ -31,12 +31,12 @@ export default function PopoverButton({
     <Popover>
       <Popover.Button
         disabled={disabled}
-        className={tw("relative", buttonClass)}
+        className={tw(buttonClass, position("relative"))}
       >
         {children}
       </Popover.Button>
 
-      <Popover.Panel className={tw("absolute", "z-10")}>
+      <Popover.Panel className={tw(position("absolute"), zIndex("z-10"))}>
         {popover}
       </Popover.Panel>
     </Popover>

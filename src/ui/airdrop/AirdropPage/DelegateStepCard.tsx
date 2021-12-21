@@ -6,7 +6,31 @@ import React, { ReactElement, useCallback, useState } from "react";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  textColor,
+  textAlign,
+  fontSize,
+  margin,
+  letterSpacing,
+  space,
+  backgroundColor,
+  backgroundOpacity,
+  padding,
+  borderRadius,
+  boxShadow,
+  height,
+  overflow,
+  justifyContent,
+  alignItems,
+  width,
+  flex,
+  fontWeight,
+  whitespace,
+  divideWidth,
+  divideColor,
+} from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
@@ -57,14 +81,25 @@ export function DelegateStepCard({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className={tw("flex", "flex-col", "text-white", "text-center")}
+      className={tw(
+        display("flex"),
+        flexDirection("flex-col"),
+        textColor("text-white"),
+        textAlign("text-center"),
+      )}
     >
-      <div className={tw("text-center", "text-sm", "mb-4")}>
+      <div
+        className={tw(
+          textAlign("text-center"),
+          fontSize("text-sm"),
+          margin("mb-4"),
+        )}
+      >
         <div
-          className={tw("tracking-wide")}
+          className={letterSpacing("tracking-wide")}
         >{t`Delegate your voting power`}</div>
       </div>
-      <div className={tw("space-y-4")}>
+      <div className={space("space-y-4")}>
         <TextInput
           screenReaderLabel={t`Delegate address`}
           id={"delegate-address-input"}
@@ -75,27 +110,40 @@ export function DelegateStepCard({
         />
         <div
           className={tw(
-            "bg-white",
-            "bg-opacity-20",
-            "p-1",
-            "rounded-xl",
-            "shadow",
-            "h-96",
-            "overflow-auto"
+            backgroundColor("bg-white"),
+            backgroundOpacity("bg-opacity-20"),
+            padding("p-1"),
+            borderRadius("rounded-xl"),
+            boxShadow("shadow"),
+            height("h-96"),
+            overflow("overflow-auto"),
           )}
         >
           <FeaturedDelegatesTable />
         </div>
-        <div className={tw("flex", "justify-end", "items-center", "w-full")}>
+        <div
+          className={tw(
+            display("flex"),
+            justifyContent("justify-end"),
+            alignItems("items-center"),
+            width("w-full"),
+          )}
+        >
           <div
-            className={tw("flex-1", "font-semibold", "text-left")}
+            className={tw(
+              flex("flex-1"),
+              fontWeight("font-semibold"),
+              textAlign("text-left"),
+            )}
           >{`${merkleData?.leaf.value} ELFI`}</div>
           <Button
             onClick={onClaimOnlyClick}
-            className={tw("mr-4")}
+            className={margin("mr-4")}
             variant={ButtonVariant.MINIMAL}
           >
-            <span className={tw("text-white", "text-xs")}>{t`Claim only`}</span>
+            <span
+              className={tw(textColor("text-white"), fontSize("text-xs"))}
+            >{t`Claim only`}</span>
           </Button>
           <Button
             disabled={!isValidAddress(delegateAddress)}
@@ -109,22 +157,22 @@ export function DelegateStepCard({
 }
 
 const headerClassName = tw(
-  "px-6",
-  "py-3",
-  "text-left",
-  "text-xs",
-  "tracking-wide"
+  padding("px-6", "py-3"),
+  textAlign("text-left"),
+  fontSize("text-xs"),
+  letterSpacing("tracking-wide"),
 );
 const cellClassName = tw(
-  "px-6",
-  "py-4",
-  "whitespace-nowrap",
-  "text-sm",
-  "font-medium"
+  padding("px-6", "py-4"),
+  whitespace("whitespace-nowrap"),
+  fontSize("text-sm"),
+  fontWeight("font-medium"),
 );
 function FeaturedDelegatesTable(): ReactElement {
   return (
-    <table className={tw("divide-y", "divide-gray-200")}>
+    <table
+      className={tw(divideWidth("divide-y"), divideColor("divide-gray-200"))}
+    >
       <thead>
         <tr>
           <th scope="col" className={headerClassName}>
@@ -132,11 +180,14 @@ function FeaturedDelegatesTable(): ReactElement {
           </th>
           <th
             scope="col"
-            className={tw("hidden", "md:table-cell", headerClassName)}
+            className={tw(headerClassName, display("hidden", "md:table-cell"))}
           >
             {t`Votes`}
           </th>
-          <th scope="col" className={tw("w-48", "pl-11", headerClassName)}>
+          <th
+            scope="col"
+            className={tw(headerClassName, width("w-48"), padding("pl-11"))}
+          >
             {t`Address`}
           </th>
         </tr>
@@ -145,14 +196,24 @@ function FeaturedDelegatesTable(): ReactElement {
         {delegates.map((delegate) => (
           <tr
             key={delegate.address}
-            className={tw("hover:bg-white", "hover:bg-opacity-20")}
+            className={tw(
+              backgroundColor("hover:bg-white"),
+              backgroundOpacity("hover:bg-opacity-20"),
+            )}
           >
             <td className={cellClassName}>{delegate.name}</td>
-            <td className={tw("hidden", "md:table-cell", cellClassName)}>
+            <td
+              className={tw(cellClassName, display("hidden", "md:table-cell"))}
+            >
               <NumDelegatedVotes account={delegate.address} />
             </td>
-            <td className={tw("w-48", cellClassName)}>
-              <div className={tw("flex", "justify-center")}>
+            <td className={tw(cellClassName, width("w-48"))}>
+              <div
+                className={tw(
+                  display("flex"),
+                  justifyContent("justify-center"),
+                )}
+              >
                 <CopyAddressButton address={delegate.address} />
               </div>
             </td>
@@ -179,14 +240,21 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
     <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
       <div>
         <Button
-          className={tw("shadow-none")}
+          className={boxShadow("shadow-none")}
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
-          <div className={tw("mr-2", "flex", "items-center", "text-white")}>
+          <div
+            className={tw(
+              margin("mr-2"),
+              display("flex"),
+              alignItems("items-center"),
+              textColor("text-white"),
+            )}
+          >
             {formatWalletAddress(address)}
           </div>
-          <ContentCopyIcon className={tw("text-white")} />
+          <ContentCopyIcon className={textColor("text-white")} />
         </Button>
       </div>
     </Tooltip>

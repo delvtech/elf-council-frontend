@@ -4,7 +4,12 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  space,
+  alignItems,
+  margin,
+} from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 
@@ -16,7 +21,7 @@ interface WalletProfileButtonProps {
 }
 
 export function WalletProfileButton(
-  props: WalletProfileButtonProps
+  props: WalletProfileButtonProps,
 ): ReactElement {
   const { account, variant = ButtonVariant.MINIMAL, className } = props;
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
@@ -25,7 +30,10 @@ export function WalletProfileButton(
 
   return (
     <div
-      className={classNames(className, tw("flex", "space-x-8", "items-center"))}
+      className={classNames(
+        className,
+        tw(display("flex"), space("space-x-8"), alignItems("items-center")),
+      )}
     >
       {!account ? (
         <ConnectWalletButton />
@@ -35,7 +43,7 @@ export function WalletProfileButton(
             <WalletJazzicon
               size={28}
               account={account}
-              className={tw("mr-4")}
+              className={margin("mr-4")}
             />
             {formatWalletAddress(account)}
           </Button>

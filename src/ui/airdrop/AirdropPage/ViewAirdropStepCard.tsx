@@ -1,6 +1,19 @@
 import { parseEther } from "@ethersproject/units";
 import React, { ReactElement } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  textColor,
+  height,
+  textAlign,
+  fontSize,
+  margin,
+  fontWeight,
+  letterSpacing,
+  space,
+  justifyContent,
+  width,
+} from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropPage/AirdropFullyClaimedCard";
@@ -46,37 +59,59 @@ export function ViewAirdropStepCard({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className={tw("flex", "flex-col", "text-white", "h-full")}
+      className={tw(
+        display("flex"),
+        flexDirection("flex-col"),
+        textColor("text-white"),
+        height("h-full"),
+      )}
     >
-      <div className={tw("text-center", "text-sm", "mb-4")}>
+      <div
+        className={tw(
+          textAlign("text-center"),
+          fontSize("text-sm"),
+          margin("mb-4"),
+        )}
+      >
         <div
-          className={tw("font-semibold", "tracking-wider")}
+          className={tw(
+            fontWeight("font-semibold"),
+            letterSpacing("tracking-wider"),
+          )}
         >{t`Congratulations!`}</div>
-        <p className={tw("text-center")}>
+        <p className={textAlign("text-center")}>
           {t`You have some ELFI available to claim.`}
         </p>
       </div>
       <div
         className={tw(
-          "text-2xl",
-          "text-center",
-          "font-bold",
-          "text-white",
-          "mb-6"
+          fontSize("text-2xl"),
+          textAlign("text-center"),
+          fontWeight("font-bold"),
+          textColor("text-white"),
+          margin("mb-6"),
         )}
       >
         {airdropAmountLabel}
       </div>
-      <div className={tw("text-sm", "mb-6", "space-y-4")}>
+      <div
+        className={tw(fontSize("text-sm"), margin("mb-6"), space("space-y-4"))}
+      >
         <div
-          className={tw("font-semibold", "text-center")}
+          className={tw(fontWeight("font-semibold"), textAlign("text-center"))}
         >{t`Next, pick your delegate!`}</div>
         <p>{t`The voting power of your ELFI tokens can be delegated to any address
         of your choosing. You can select anyone, including yourself.`}</p>
         <p>{t`Don't worry, you will still own your
         tokens and you can change your delegate at any time.`}</p>
       </div>
-      <div className={tw("flex", "justify-end", "w-full")}>
+      <div
+        className={tw(
+          display("flex"),
+          justifyContent("justify-end"),
+          width("w-full"),
+        )}
+      >
         <Button
           onClick={onNextStep}
           variant={ButtonVariant.OUTLINE_WHITE}
@@ -88,7 +123,7 @@ export function ViewAirdropStepCard({
 
 function getAirdropAmountLabel(
   merkleProof: MerkleProof | undefined,
-  isLoading: boolean
+  isLoading: boolean,
 ): string {
   if (isLoading) {
     return t`Loading...`;

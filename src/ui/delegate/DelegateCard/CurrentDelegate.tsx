@@ -8,7 +8,22 @@ import {
 } from "react";
 import Button from "src/ui/base/Button/Button";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  padding,
+  margin,
+  display,
+  justifyContent,
+  backgroundColor,
+  borderRadius,
+  flexDirection,
+  textColor,
+  fontWeight,
+  alignItems,
+  gap,
+  position,
+  height,
+  width,
+} from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import Image from "next/image";
 import { t } from "ttag";
@@ -52,7 +67,7 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       }, 1000);
       copyToClipboard(delegate[type]);
     },
-    [delegate]
+    [delegate],
   );
 
   const handleCopyTwitterHandle = () => handleCopy("twitterHandle");
@@ -63,24 +78,35 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       className={classNames(
         className,
         tw(
-          "mt-3",
-          "py-6",
-          "px-4",
-          "flex",
-          "justify-between",
-          "bg-hackerSky",
-          "rounded-xl"
-        )
+          margin("mt-3"),
+          padding("py-6", "px-4"),
+          display("flex"),
+          justifyContent("justify-between"),
+          backgroundColor("bg-hackerSky"),
+          borderRadius("rounded-xl"),
+        ),
       )}
     >
-      <div className={tw("flex", "flex-col")}>
-        <span className={tw("text-principalRoyalBlue", "font-bold")}>
+      <div className={tw(display("flex"), flexDirection("flex-col"))}>
+        <span
+          className={tw(
+            textColor("text-principalRoyalBlue"),
+            fontWeight("font-bold"),
+          )}
+        >
           {delegate.name}
         </span>
-        <span className={tw("text-blueGrey")}>
+        <span className={textColor("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
         </span>
-        <span className={tw("flex", "items-center", "gap-2", "mt-1.5")}>
+        <span
+          className={tw(
+            display("flex"),
+            alignItems("items-center"),
+            gap("gap-2"),
+            margin("mt-1.5"),
+          )}
+        >
           <Tooltip
             arrow
             placement="top"
@@ -88,7 +114,7 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             title={t`Twitter handle copied`}
           >
             <button
-              className={tw("relative", "h-5", "w-5")}
+              className={tw(position("relative"), height("h-5"), width("w-5"))}
               onClick={handleCopyTwitterHandle}
             >
               <Image
@@ -105,7 +131,12 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             title={t`Address copied`}
           >
             <button onClick={handleCopyAddress}>
-              <DuplicateIcon className={tw("h-5", "text-principalRoyalBlue")} />
+              <DuplicateIcon
+                className={tw(
+                  height("h-5"),
+                  textColor("text-principalRoyalBlue"),
+                )}
+              />
             </button>
           </Tooltip>
         </span>

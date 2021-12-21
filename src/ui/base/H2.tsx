@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ReactElement, ReactNode } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { fontSize, fontWeight } from "src/elf-tailwindcss-classnames";
 
 interface H2Props {
   className?: string;
@@ -8,7 +8,12 @@ interface H2Props {
 }
 export default function H2({ className, children }: H2Props): ReactElement {
   return (
-    <h2 className={classNames(tw("text-xl", "font-bold"), className)}>
+    <h2
+      className={classNames(
+        tw(fontSize("text-xl"), fontWeight("font-bold")),
+        className,
+      )}
+    >
       {children}
     </h2>
   );

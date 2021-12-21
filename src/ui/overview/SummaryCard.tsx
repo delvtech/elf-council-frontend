@@ -1,7 +1,18 @@
 import React, { ReactElement, ReactNode } from "react";
 import Card from "src/ui/base/Card/Card";
 
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  textColor,
+  fontWeight,
+  fontSize,
+  padding,
+  flex,
+  justifyContent,
+  alignItems,
+} from "src/elf-tailwindcss-classnames";
+import classnames from "classnames";
 
 interface SummaryCardProps {
   title: string;
@@ -12,27 +23,29 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
   const { balance, title, children } = props;
 
   return (
-    <Card className={tw("flex", "flex-col")}>
+    <Card className={tw(display("flex"), flexDirection("flex-col"))}>
       <div
-        className={tw(
-          "text-principalRoyalBlue",
-          "font-light",
-          "text-sm",
-          "-mt-2"
+        className={classnames(
+          "-mt-2",
+          tw(
+            textColor("text-principalRoyalBlue"),
+            fontWeight("font-light"),
+            fontSize("text-sm"),
+          ),
         )}
       >
         {title}
       </div>
       <div
         className={tw(
-          "py-4",
-          "flex",
-          "flex-1",
-          "justify-center",
-          "items-center",
-          "font-extralight",
-          "text-5xl",
-          "text-principalRoyalBlue"
+          padding("py-4"),
+          display("flex"),
+          flex("flex-1"),
+          justifyContent("justify-center"),
+          alignItems("items-center"),
+          fontWeight("font-extralight"),
+          fontSize("text-5xl"),
+          textColor("text-principalRoyalBlue"),
         )}
       >
         {balance}

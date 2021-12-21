@@ -1,7 +1,19 @@
 import { ChangeEvent, ReactElement } from "react";
 
 import classNames from "classnames";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  screenReaders,
+  boxShadow,
+  textColor,
+  display,
+  width,
+  fontSize,
+  borderColor,
+  borderRadius,
+  ringColor,
+  pointerEvents,
+  opacity,
+} from "src/elf-tailwindcss-classnames";
 
 interface NumericInputProps {
   className?: string;
@@ -30,7 +42,7 @@ export default function NumericInput({
 }: NumericInputProps): ReactElement {
   return (
     <div className={className}>
-      <label htmlFor={id} className={tw("sr-only")}>
+      <label htmlFor={id} className={screenReaders("sr-only")}>
         {screenReaderLabel}
       </label>
       <input
@@ -40,24 +52,26 @@ export default function NumericInput({
         id={id}
         className={classNames(
           tw(
-            "shadow-sm",
-            "text-black",
-            "block",
-            "w-full",
-            "sm:text-sm",
-            "border-gray-300",
-            "rounded-md",
-            {
+            boxShadow("shadow-sm"),
+            textColor("text-black"),
+            display("block"),
+            width("w-full"),
+            fontSize("sm:text-sm"),
+            borderColor("border-gray-300"),
+            borderRadius("rounded-md"),
+            ringColor({
               "focus:ring-brandDarkBlue": !error,
-              "focus:border-brandDarkBlue": !error,
               "focus:ring-red-500": error,
+            }),
+            borderColor({
+              "focus:border-brandDarkBlue": !error,
               "focus:border-red-500": error,
               "border-red-500": error,
-              "pointer-events-none": disabled,
-              "opacity-50": disabled,
-            }
+            }),
+            pointerEvents({ "pointer-events-none": disabled }),
+            opacity({ "opacity-50": disabled }),
           ),
-          inputClassName
+          inputClassName,
         )}
         placeholder={placeholder}
         value={value}

@@ -4,7 +4,31 @@ import { Tooltip } from "@material-ui/core";
 import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Delegate, delegates } from "src/elf-council-delegates/delegates";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  padding,
+  textAlign,
+  fontSize,
+  fontWeight,
+  textColor,
+  textTransform,
+  letterSpacing,
+  whitespace,
+  width,
+  display,
+  flexDirection,
+  alignItems,
+  overflow,
+  verticalAlign,
+  justifyContent,
+  borderWidth,
+  borderRadius,
+  margin,
+  divideWidth,
+  divideColor,
+  boxShadow,
+  height,
+} from "src/elf-tailwindcss-classnames";
+import classnames from "classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H3 from "src/ui/base/H3";
 import Button from "src/ui/base/Button/Button";
@@ -14,39 +38,45 @@ import { t } from "ttag";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 const baseHeaderClassName = tw(
-  "px-4",
-  "py-3",
-  "text-left",
-  "text-xs",
-  "font-medium",
-  "text-gray-500",
-  "uppercase",
-  "tracking-wider"
+  padding("px-4", "py-3"),
+  textAlign("text-left"),
+  fontSize("text-xs"),
+  fontWeight("font-medium"),
+  textColor("text-gray-500"),
+  textTransform("uppercase"),
+  letterSpacing("tracking-wider"),
 );
 const baseCellClassName = tw(
-  "px-4",
-  "py-4",
-  "whitespace-nowrap",
-  "text-sm",
-  "font-medium",
-  "text-gray-900"
+  padding("px-4", "py-4"),
+  whitespace("whitespace-nowrap"),
+  fontSize("text-sm"),
+  fontWeight("font-medium"),
+  textColor("text-gray-900"),
 );
 
-const rankHeaderClassName = tw(baseHeaderClassName, "w-1/12", "text-center");
-const delegateHeaderClassName = tw(baseHeaderClassName, "w-4/12");
-const votesHeaderClassName = tw(baseHeaderClassName, "w-2/12");
-const addressHeaderClassName = tw(baseHeaderClassName, "w-5/12");
-const rankCellClassName = tw(baseCellClassName, "w-1/12", "text-center");
-const delegateCellClassName = tw(baseCellClassName, "w-4/12");
-const votesCellClassName = tw(baseCellClassName, "w-2/12");
-const addressCellClassName = tw(baseCellClassName, "w-5/12");
+const rankHeaderClassName = tw(
+  baseHeaderClassName,
+  width("w-1/12"),
+  textAlign("text-center"),
+);
+const delegateHeaderClassName = tw(baseHeaderClassName, width("w-4/12"));
+const votesHeaderClassName = tw(baseHeaderClassName, width("w-2/12"));
+const addressHeaderClassName = tw(baseHeaderClassName, width("w-5/12"));
+const rankCellClassName = tw(
+  baseCellClassName,
+  width("w-1/12"),
+  textAlign("text-center"),
+);
+const delegateCellClassName = tw(baseCellClassName, width("w-4/12"));
+const votesCellClassName = tw(baseCellClassName, width("w-2/12"));
+const addressCellClassName = tw(baseCellClassName, width("w-5/12"));
 
 interface FeaturedDelegatesTableProps {
   search?: boolean;
 }
 
 export default function FeaturedDelegatesTable(
-  props: FeaturedDelegatesTableProps
+  props: FeaturedDelegatesTableProps,
 ): ReactElement {
   const { search = false } = props;
 
@@ -54,8 +84,19 @@ export default function FeaturedDelegatesTable(
   const [searchInput, setSearchInput] = useState<string>("");
 
   return (
-    <div className={tw("flex", "flex-col", "items-start")}>
-      <div className={tw("w-full", "-my-2", "overflow-x-auto")}>
+    <div
+      className={tw(
+        display("flex"),
+        flexDirection("flex-col"),
+        alignItems("items-start"),
+      )}
+    >
+      <div
+        className={classnames(
+          "-my-2",
+          tw(width("w-full"), overflow("overflow-x-auto")),
+        )}
+      >
         {/* Search feature */}
         {search ? (
           <DelegatesSearchBar
@@ -66,19 +107,28 @@ export default function FeaturedDelegatesTable(
         ) : null}
         <div
           className={tw(
-            "py-2",
-            "align-middle",
-            "inline-block",
-            "flex",
-            "justify-center",
-            "sm:px-6",
-            "lg:px-8"
+            padding("py-2", "sm:px-6", "lg:px-8"),
+            verticalAlign("align-middle"),
+            display("inline-block", "flex"),
+            justifyContent("justify-center"),
           )}
         >
-          <div className={tw("overflow-hidden", "border", "rounded-lg")}>
-            <table className={tw("m-auto", "divide-y", "divide-gray-200")}>
+          <div
+            className={tw(
+              overflow("overflow-hidden"),
+              borderWidth("border"),
+              borderRadius("rounded-lg"),
+            )}
+          >
+            <table
+              className={tw(
+                margin("m-auto"),
+                divideWidth("divide-y"),
+                divideColor("divide-gray-200"),
+              )}
+            >
               {/* Desktop Header */}
-              <thead className={tw("hidden", "sm:block")}>
+              <thead className={display("hidden", "sm:block")}>
                 <tr>
                   <th scope="col" className={rankHeaderClassName}>
                     #
@@ -89,30 +139,32 @@ export default function FeaturedDelegatesTable(
                   <th
                     scope="col"
                     className={tw(
-                      "hidden",
-                      "sm:table-cell",
-                      votesHeaderClassName
+                      votesHeaderClassName,
+                      display("hidden", "sm:table-cell"),
                     )}
                   >
                     {t`Votes`}
                   </th>
                   <th
                     scope="col"
-                    className={tw("w-48", addressHeaderClassName)}
+                    className={tw(addressHeaderClassName, width("w-48"))}
                   >
                     {t`Address`}
                   </th>
                 </tr>
               </thead>
               {/* Mobile Header */}
-              <thead className={tw("sm:hidden")}>
+              <thead className={display("sm:hidden")}>
                 <tr>
                   <th scope="col" className={rankHeaderClassName}>
                     #
                   </th>
                   <th
                     scope="col"
-                    className={tw("text-center", delegateHeaderClassName)}
+                    className={tw(
+                      delegateHeaderClassName,
+                      textAlign("text-center"),
+                    )}
                   >
                     <span>{t`Delegate`}</span>
                     <br />
@@ -120,7 +172,10 @@ export default function FeaturedDelegatesTable(
                   </th>
                   <th
                     scope="col"
-                    className={tw("text-center", addressHeaderClassName)}
+                    className={tw(
+                      addressHeaderClassName,
+                      textAlign("text-center"),
+                    )}
                   >
                     <span>{t`Copy`}</span>
                     <br />
@@ -129,22 +184,26 @@ export default function FeaturedDelegatesTable(
                 </tr>
               </thead>
               {/* Desktop Cell */}
-              <tbody className={tw("hidden", "sm:block")}>
+              <tbody className={display("hidden", "sm:block")}>
                 {searchResults.map((delegate, index) => (
                   <tr key={delegate.address}>
                     <td className={rankCellClassName}>{index + 1}</td>
                     <td className={delegateCellClassName}>{delegate.name}</td>
                     <td
                       className={tw(
-                        "hidden",
-                        "sm:table-cell",
-                        votesCellClassName
+                        votesCellClassName,
+                        display("hidden", "sm:table-cell"),
                       )}
                     >
                       <NumDelegatedVotes account={delegate.address} />
                     </td>
                     <td className={tw(addressCellClassName)}>
-                      <div className={tw("flex", "justify-center")}>
+                      <div
+                        className={tw(
+                          display("flex"),
+                          justifyContent("justify-center"),
+                        )}
+                      >
                         <CopyAddressButton address={delegate.address} />
                       </div>
                     </td>
@@ -152,16 +211,16 @@ export default function FeaturedDelegatesTable(
                 ))}
               </tbody>
               {/* Mobile Cell */}
-              <tbody className={tw("sm:hidden")}>
+              <tbody className={display("sm:hidden")}>
                 {searchResults.map((delegate, index) => (
                   <tr key={delegate.address}>
                     <td className={rankCellClassName}>{index + 1}</td>
                     <td
                       className={tw(
                         baseCellClassName,
-                        "flex",
-                        "flex-col",
-                        "mt-5"
+                        display("flex"),
+                        flexDirection("flex-col"),
+                        margin("mt-5"),
                       )}
                     >
                       <span>{delegate.name}</span>
@@ -170,7 +229,12 @@ export default function FeaturedDelegatesTable(
                       </span>
                     </td>
                     <td className={addressCellClassName}>
-                      <div className={tw("flex", "justify-center")}>
+                      <div
+                        className={tw(
+                          display("flex"),
+                          justifyContent("justify-center"),
+                        )}
+                      >
                         <CopyAddressButton address={delegate.address} />
                       </div>
                     </td>
@@ -201,12 +265,16 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
     <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
       <div>
         <Button
-          className={tw("shadow-none")}
+          className={boxShadow("shadow-none")}
           variant={ButtonVariant.MINIMAL}
           onClick={onCopyAddress}
         >
           <div
-            className={tw("hidden", "sm:block", "mr-2", "flex", "items-center")}
+            className={tw(
+              display("hidden", "sm:block", "flex"),
+              margin("mr-2"),
+              alignItems("items-center"),
+            )}
           >
             {formatWalletAddress(address)}
           </div>
@@ -251,7 +319,7 @@ function DelegatesSearchBar(props: DelegatesSearchBarProps): ReactElement {
 
       setSearchResults(newResults);
     },
-    [setSearchResults]
+    [setSearchResults],
   );
 
   useEffect(() => {
@@ -259,14 +327,14 @@ function DelegatesSearchBar(props: DelegatesSearchBarProps): ReactElement {
   }, [searchInput, filterResults]);
 
   return (
-    <div className={tw("text-brandDarkBlue-dark")}>
+    <div className={textColor("text-brandDarkBlue-dark")}>
       <H3>{t`Search Delegates`}</H3>
       <TextInput
         screenReaderLabel={t`Search Delegates`}
         id={"delegate-name-or-address"}
         name={t`Search Delegates`}
         placeholder={t`Insert Delegate Name or Address`}
-        className={tw("mb-8", "h-12", "text-center")}
+        className={tw(margin("mb-8"), height("h-12"), textAlign("text-center"))}
         value={searchInput}
         onChange={(event) => setSearchInput(event.target.value)}
       />

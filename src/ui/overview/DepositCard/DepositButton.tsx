@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { Tooltip } from "@material-ui/core";
 import { FixedNumber } from "ethers";
-import tw from "src/elf-tailwindcss-classnames";
+import { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import { isValidAddress } from "src/base/isValidAddress";
@@ -43,7 +43,7 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     hasAnyBalance,
     hasDepositAmount,
     hasEnoughBalance,
-    hasValidDelegateAddress
+    hasValidDelegateAddress,
   );
 
   const disableWithoutError =
@@ -76,10 +76,10 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
             !hasDepositAmount ||
             !hasValidDelegateAddress
           }
-          className={tw("w-full")}
+          className={width("w-full")}
           onClick={onDeposit}
         >
-          <span className={tw("w-full")}>{t`Deposit`}</span>
+          <span className={width("w-full")}>{t`Deposit`}</span>
         </Button>
       </div>
     </Tooltip>
@@ -91,7 +91,7 @@ function getTooltipTitle(
   hasAnyBalance: boolean,
   hasDepositAmount: boolean,
   hasEnoughBalance: boolean,
-  hasValidDelegateAddress: boolean
+  hasValidDelegateAddress: boolean,
 ): string {
   // disabled without error states
   if (!account) {
