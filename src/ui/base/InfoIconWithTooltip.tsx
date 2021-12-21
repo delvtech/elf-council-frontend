@@ -36,7 +36,7 @@ export function InfoIconWithTooltip(props: InfoIconProps): ReactElement {
       open={showTooltip}
       onOpen={onOpenTooltip}
       onClose={onCloseTooltip}
-      title={t`${tooltipText}`}
+      title={tooltipText}
     >
       <button className={classNames(className, tw("h-4"))}>
         {tooltipIcon}
