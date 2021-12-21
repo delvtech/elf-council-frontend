@@ -79,7 +79,14 @@ function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
 
   switch (variant) {
     case CardVariant.BLUE:
-      return backgroundColor("bg-principalRoyalBlue");
+      return tw(
+        backgroundImage("bg-gradient-to-br"),
+        gradientColorStops(
+          "from-principalRoyalBlue",
+          "via-yieldBlue",
+          "to-principalRoyalBlue",
+        ),
+      );
     case CardVariant.GRADIENT:
       return tw(
         backgroundImage("bg-gradient-to-br"),

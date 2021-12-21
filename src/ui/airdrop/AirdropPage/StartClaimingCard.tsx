@@ -2,69 +2,86 @@ import React, { ReactElement } from "react";
 import tw, {
   display,
   flexDirection,
+  fontSize,
+  fontWeight,
+  height,
+  justifyContent,
+  letterSpacing,
+  padding,
   space,
   textAlign,
-  fontWeight,
-  letterSpacing,
-  fontSize,
-  padding,
-  justifyContent,
+  textColor,
   width,
-  height,
 } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card from "src/ui/base/Card/Card";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 import {
   ConnectWalletButton,
   WalletProfileButton,
 } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { t } from "ttag";
 
-interface ConnectWalletStepCardProps {
+interface StartClaimingCardProps {
   account: string | null | undefined;
   walletConnectionActive: boolean | undefined;
   onNextStep: () => void;
 }
 
-export function ConnectWalletStepCard({
+export function StartClaimingCard({
   walletConnectionActive,
   account,
   onNextStep,
-}: ConnectWalletStepCardProps): ReactElement {
+}: StartClaimingCardProps): ReactElement {
   return (
     <Card
+      variant={CardVariant.BLUE}
       className={tw(
         display("flex"),
         flexDirection("flex-col"),
         height("h-96"),
         textAlign("text-center"),
+        textColor("text-white"),
         width("w-full"),
       )}
     >
       <div
         className={tw(
-          padding("p-12"),
+          padding("p-6"),
           display("flex"),
           flexDirection("flex-col"),
           height("h-full"),
           space("space-y-5"),
         )}
       >
+        <div className={tw(display("flex"), justifyContent("justify-end"))}>
+          {!account ? (
+            <ConnectWalletButton
+              label={t`Connect wallet`}
+              variant={ButtonVariant.GRADIENT}
+            />
+          ) : (
+            <WalletProfileButton
+              variant={ButtonVariant.OUTLINE_BLUE}
+              account={account}
+              walletConnectionActive={walletConnectionActive}
+            />
+          )}
+        </div>
         <div
           className={tw(
             textAlign("text-center"),
             fontWeight("font-semibold"),
             letterSpacing("tracking-wider"),
-            fontSize("text-sm"),
+            fontSize("text-base"),
           )}
         >{t`Introducing $ELFI`}</div>
         <div
-          className={tw(fontSize("text-2xl"), fontWeight("font-bold"))}
+          className={tw(fontSize("text-3xl"), fontWeight("font-bold"))}
         >{t`Help contribute to the next wave of Element`}</div>
         <div
           className={tw(
-            fontSize("text-sm"),
+            fontSize("text-base"),
             textAlign("text-center"),
             space("space-y-4"),
             padding("px-4"),
@@ -83,20 +100,6 @@ export function ConnectWalletStepCard({
             padding("pt-12"),
           )}
         >
-          {!account ? (
-            <ConnectWalletButton
-              label={t`Connect your wallet to begin`}
-              variant={ButtonVariant.GRADIENT}
-            />
-          ) : (
-            <div>
-              <WalletProfileButton
-                variant={ButtonVariant.OUTLINE_BLUE}
-                account={account}
-                walletConnectionActive={walletConnectionActive}
-              />
-            </div>
-          )}
           <Button
             disabled={!account}
             variant={ButtonVariant.GRADIENT}

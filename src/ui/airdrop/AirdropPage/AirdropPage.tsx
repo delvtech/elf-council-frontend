@@ -9,14 +9,18 @@ import tw, {
   justifyContent,
   alignItems,
   margin,
+  fontSize,
+  textColor,
+  flex,
 } from "src/elf-tailwindcss-classnames";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
 import { Step } from "src/ui/base/Card/Steps/Steps";
 import Steps2 from "src/ui/base/Card/Steps2/Steps2";
+import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
-import { ConnectWalletStepCard } from "./ConnectWalletStepCard";
+import { StartClaimingCard } from "./StartClaimingCard";
 
 interface StepWithContent extends Step {
   content: ReactNode;
@@ -37,7 +41,7 @@ export default function AirdropPage(): ReactElement {
           setActiveStepIndex(0);
         },
         content: (
-          <ConnectWalletStepCard
+          <StartClaimingCard
             account={account}
             walletConnectionActive={active}
             onNextStep={() => setActiveStepIndex(1)}
@@ -94,8 +98,21 @@ export default function AirdropPage(): ReactElement {
         <Steps2 steps={steps} activeStepIndex={activeStepIndex} />
       </div>
 
-      <div className={tw(width("w-full", "md:w-3/5"))}>
+      <div className={tw(width("w-full", "md:w-3/5"), height("h-full"))}>
         {steps[activeStepIndex].content}
+      </div>
+      <div
+        className={tw(
+          display("flex"),
+          flex("flex-1"),
+          flexDirection("flex-col"),
+          alignItems("items-center"),
+          margin("mt-auto"),
+          textColor("text-principalRoyalBlue"),
+        )}
+      >
+        <span className={fontSize("text-sm")}>{t`Powered by`}</span>
+        <ElementLogo height={"40"} />
       </div>
     </div>
   );
