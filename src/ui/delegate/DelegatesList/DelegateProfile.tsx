@@ -1,11 +1,12 @@
 import { ReactElement, useState, useCallback, useRef } from "react";
-import { Delegate } from "src/elf-council-delegates/delegates";
 import { Tooltip } from "@material-ui/core";
-import { copyToClipboard } from "src/base/copyToClipboard";
 import { t } from "ttag";
-import tw from "src/elf-tailwindcss-classnames";
-import { DuplicateIcon } from "@heroicons/react/outline";
 import { AnnotationIcon } from "@heroicons/react/solid";
+import { DuplicateIcon } from "@heroicons/react/outline";
+import tw from "src/elf-tailwindcss-classnames";
+import { Delegate } from "src/elf-council-delegates/delegates";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { copyToClipboard } from "src/base/copyToClipboard";
 interface DelegateProfileProps {
   delegate: Delegate;
 }
@@ -74,7 +75,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           <span>{delegate.name}</span>
         </div>
         <span className={tw("text-blueGrey")}>
-          {t`${delegate.numDelegatedVotes} votes`}
+          <NumDelegatedVotes account={delegate.address}/>
         </span>
       </div>
       <div>
@@ -105,6 +106,15 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
       </div>
     </div>
   );
+}
+
+interface NumDelegatedVotesProps {
+  account: string;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccount(account);
+  return <span>{t`${votePower} votes`}</span>;
 }
 
 export default DelegateProfile;

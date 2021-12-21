@@ -1,12 +1,10 @@
 import {
-  Fragment,
   ReactElement,
   useCallback,
   useEffect,
   useState,
 } from "react";
 import { Signer } from "ethers";
-import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import TextInput from "src/ui/base/Input/TextInput";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
@@ -17,7 +15,7 @@ import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import tw from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
-import { CurrentDelegate } from "./CurrentDelegate";
+import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate"
 
 interface DelegateCardProps {
   account: string | null | undefined;

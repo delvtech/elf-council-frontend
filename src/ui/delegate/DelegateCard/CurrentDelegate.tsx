@@ -8,6 +8,7 @@ import { Tooltip } from "@material-ui/core";
 import { DuplicateIcon } from "@heroicons/react/outline";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 interface CurrentDelegateProps {
   className?: string;
@@ -19,7 +20,7 @@ const defaultToolTipState = {
   address: false,
 };
 
-export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
+function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
   const { className = "", delegate } = props;
   const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -81,7 +82,7 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           <span>{delegate.name}</span>
         </div>
         <span className={tw("text-blueGrey")}>
-          {t`${delegate.numDelegatedVotes} votes`}
+          <NumDelegatedVotes account={delegate.address} />
         </span>
         <span className={tw("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
@@ -113,3 +114,14 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
     </div>
   );
 }
+
+interface NumDelegatedVotesProps {
+  account: string;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccount(account);
+  return <span>{t`${votePower} votes`}</span>;
+}
+
+export default CurrentDelegate;
