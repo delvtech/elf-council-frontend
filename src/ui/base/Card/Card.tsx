@@ -43,8 +43,6 @@ export default function Card(props: CardProps): ReactElement {
     style,
   } = props;
 
-  console.log(className);
-
   const cardClassName = classNames(
     tw(
       getBackgroundColor(variant, active),
@@ -85,7 +83,11 @@ function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
     case CardVariant.GRADIENT:
       return tw(
         backgroundImage("bg-gradient-to-br"),
-        gradientColorStops("from-brandDarkBlue", "to-brandLightBlue"),
+        gradientColorStops(
+          "from-principalRoyalBlue",
+          "via-principalRoyalBlue",
+          "to-principalBlue",
+        ),
       );
     case CardVariant.WHITE:
       return backgroundColor("bg-white");
