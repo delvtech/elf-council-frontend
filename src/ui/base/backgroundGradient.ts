@@ -1,7 +1,9 @@
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  backgroundImage,
+  gradientColorStops,
+} from "src/elf-tailwindcss-classnames";
 
 export const brandedBlueGradientBackgroundClassName = tw(
-  "bg-gradient-to-br",
-  "from-principalBlue",
-  "to-yieldBlue"
+  backgroundImage("bg-gradient-to-br"),
+  gradientColorStops("from-principalBlue", "to-yieldBlue"),
 );

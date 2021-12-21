@@ -2,7 +2,25 @@ import React, { ReactElement } from "react";
 
 import classNames from "classnames";
 import { commify, formatEther } from "ethers/lib/utils";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  boxShadow,
+  textColor,
+  fontWeight,
+  fontSize,
+  letterSpacing,
+  margin,
+  display,
+  flexDirection,
+  minHeight,
+  verticalAlign,
+  width,
+  alignItems,
+  justifyContent,
+  borderWidth,
+  borderColor,
+  padding,
+  alignSelf,
+} from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -40,55 +58,61 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const formattedVotingPower = commify((+votingPower * rand3).toFixed(4));
 
   return (
-    <Card variant={CardVariant.GRADIENT} className={tw("shadow-md")}>
+    <Card variant={CardVariant.GRADIENT} className={tw(boxShadow("shadow-md"))}>
       <div>
         <span
           className={tw(
-            "text-white",
-            "font-bold",
-            "text-xl",
-            "tracking-widest"
+            textColor("text-white"),
+            fontWeight("font-bold"),
+            fontSize("text-xl"),
+            letterSpacing("tracking-widest"),
           )}
         >{t`Portfolio`}</span>
         <span
           className={tw(
-            "ml-2",
-            "text-white",
-            "font-light",
-            "text-sm",
-            "tracking-widest"
+            margin("ml-2"),
+            textColor("text-white"),
+            fontWeight("font-light"),
+            fontSize("text-sm"),
+            letterSpacing("tracking-widest"),
           )}
         >
           {account && `(${formatWalletAddress(account)})`}
         </span>
       </div>
       <div
-        className={tw("flex", "flex-col", "min-h-full", "align-bottom", "mb-8")}
+        className={tw(
+          display("flex"),
+          flexDirection("flex-col"),
+          minHeight("min-h-full"),
+          verticalAlign("align-bottom"),
+          margin("mb-8"),
+        )}
       >
         <BalanceWithLabel
-          className={tw("w-full", "mt-8")}
+          className={tw(width("w-full"), margin("mt-8"))}
           balance={formattedBalance}
           label={t`Wallet balance`}
         />
         <BalanceWithLabel
-          className={tw("w-full", "mt-8")}
+          className={tw(width("w-full"), margin("mt-8"))}
           balance={amountDeposited}
           label={t`Eligible voting balance`}
         />
         <BalanceWithLabel
-          className={tw("w-full", "mt-8")}
+          className={tw(width("w-full"), margin("mt-8"))}
           balance={formattedVotingPower}
           label={t`Voting Power`}
         />
         <div
           className={tw(
-            "flex",
-            "items-center",
-            "justify-between",
-            "border-t",
-            "border-white",
-            "mt-4",
-            "pt-4"
+            display("flex"),
+            alignItems("items-center"),
+            justifyContent("justify-between"),
+            borderWidth("border-t"),
+            borderColor("border-white"),
+            margin("mt-4"),
+            padding("pt-4"),
           )}
         >
           <BalanceWithLabel
@@ -97,7 +121,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           />
           <LinkButton
             link="/airdrop"
-            className={tw("self-end", "mb-5")}
+            className={tw(alignSelf("self-end"), margin("mb-5"))}
             variant={ButtonVariant.OUTLINE_WHITE}
           >{t`Claim`}</LinkButton>
         </div>
@@ -114,12 +138,24 @@ interface BalanceWithLabelProps {
 function BalanceWithLabel(props: BalanceWithLabelProps) {
   const { className, balance, label } = props;
   return (
-    <div className={classNames(className, tw("text-white"))}>
-      <div className={tw("flex", "items-center")}>
-        <div className={tw("text-2xl", "font-extralight")}>{balance}</div>
-        <ElementIcon className={tw("ml-2")} size={IconSize.MEDIUM} />
+    <div className={classNames(className, tw(textColor("text-white")))}>
+      <div className={tw(display("flex"), alignItems("items-center"))}>
+        <div
+          className={tw(fontSize("text-2xl"), fontWeight("font-extralight"))}
+        >
+          {balance}
+        </div>
+        <ElementIcon className={tw(margin("ml-2"))} size={IconSize.MEDIUM} />
       </div>
-      <div className={tw("flex", "text-lg", "font-light")}>{label}</div>
+      <div
+        className={tw(
+          display("flex"),
+          fontSize("text-lg"),
+          fontWeight("font-light"),
+        )}
+      >
+        {label}
+      </div>
     </div>
   );
 }

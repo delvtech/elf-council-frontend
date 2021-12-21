@@ -1,4 +1,14 @@
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  position,
+  width,
+  height,
+  display,
+  alignItems,
+  justifyContent,
+  overflow,
+  borderRadius,
+  textColor,
+} from "src/elf-tailwindcss-classnames";
 import React, { ReactElement } from "react";
 
 interface ProgressCircleProps {
@@ -13,19 +23,19 @@ export function ProgressCircle(props: ProgressCircleProps): ReactElement {
   return (
     <div
       className={tw(
-        "relative",
-        "w-20",
-        "h-20",
-        "flex",
-        "items-center",
-        "justify-center",
-        "overflow-hidden",
-        "rounded-full"
+        position("relative"),
+        width("w-20"),
+        height("h-20"),
+        display("flex"),
+        alignItems("items-center"),
+        justifyContent("justify-center"),
+        overflow("overflow-hidden"),
+        borderRadius("rounded-full"),
       )}
     >
-      <svg className={tw("w-20", "h-20")}>
+      <svg className={tw(width("w-20"), height("h-20"))}>
         <circle
-          className={tw("text-gray-300")}
+          className={textColor("text-gray-300")}
           strokeWidth="5"
           stroke="currentColor"
           fill="transparent"
@@ -34,7 +44,7 @@ export function ProgressCircle(props: ProgressCircleProps): ReactElement {
           cy="40"
         />
         <circle
-          className={tw("text-blue-600")}
+          className={textColor("text-blue-600")}
           strokeWidth="5"
           strokeDasharray={circumference}
           strokeDashoffset={
@@ -48,7 +58,9 @@ export function ProgressCircle(props: ProgressCircleProps): ReactElement {
           cy="40"
         />
       </svg>
-      <span className={tw("absolute", "text-blue-700")}>{`${percent}%`}</span>
+      <span
+        className={tw(position("absolute"), textColor("text-blue-700"))}
+      >{`${percent}%`}</span>
     </div>
   );
 }

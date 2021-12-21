@@ -1,7 +1,14 @@
 import { ReactElement, useState, MouseEvent } from "react";
 import { Tooltip } from "@material-ui/core";
 import classNames from "classnames";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  height,
+  display,
+  alignItems,
+  fontSize,
+  margin,
+  textColor,
+} from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 import Link from "next/link";
 import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
@@ -16,7 +23,7 @@ interface BalanceLabeledStatProps {
 }
 
 export function BalanceLabeledStat(
-  props: BalanceLabeledStatProps
+  props: BalanceLabeledStatProps,
 ): ReactElement {
   const { className, tooltip, tooltipHref, label, balance } = props;
   const [showTooltip, setShowTooltip] = useState(false);
@@ -32,23 +39,27 @@ export function BalanceLabeledStat(
 
   const tooltipIcon = tooltipHref ? (
     <Link href={tooltipHref} passHref>
-      <QuestionMarkCircleIcon className={tw("h-5")} />
+      <QuestionMarkCircleIcon className={tw(height("h-5"))} />
     </Link>
   ) : (
-    <QuestionMarkCircleIcon className={tw("h-5")} />
+    <QuestionMarkCircleIcon className={tw(height("h-5"))} />
   );
 
   return (
-    <div className={classNames(tw("text-white"), className)}>
+    <div className={classNames(textColor("text-white"), className)}>
       {/* Balance */}
-      <div className={tw("flex", "items-center")}>
-        <span className={tw("text-2xl", "mr-2")}>{balance}</span>
+      <div className={tw(display("flex"), alignItems("items-center"))}>
+        <span className={tw(fontSize("text-2xl"), margin("mr-2"))}>
+          {balance}
+        </span>
         <ElementIcon size={IconSize.MEDIUM} />
       </div>
 
       {/* Label */}
-      <div className={tw("flex", "items-center")}>
-        <span className={tw("text-xl", "mr-2", "mb-1")}>{label}</span>
+      <div className={tw(display("flex"), alignItems("items-center"))}>
+        <span className={tw(fontSize("text-xl"), margin("mr-2", "mb-1"))}>
+          {label}
+        </span>
         {tooltip ? (
           <Tooltip
             arrow
@@ -57,7 +68,7 @@ export function BalanceLabeledStat(
             title={t`${tooltip}`}
           >
             <button
-              className={tw("h-5")}
+              className={height("h-5")}
               onMouseEnter={enableTooltip}
               onMouseLeave={disableTooltip}
             >

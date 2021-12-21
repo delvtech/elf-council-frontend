@@ -3,7 +3,15 @@ import React, { ReactElement, useCallback } from "react";
 import { Signer } from "@ethersproject/abstract-signer";
 import { Proposal } from "elf-council-proposals";
 import { getIsExecutable, getIsVotingOpen } from "src/elf-council-proposals";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  width,
+  flexDirection,
+  space,
+  padding,
+  justifyContent,
+  alignItems,
+} from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
@@ -32,7 +40,15 @@ export function ProposalList({
   setActiveProposal,
 }: ProposalListProps): ReactElement {
   return (
-    <div className={tw("flex", "w-full", "flex-col", "space-y-4", "pb-8")}>
+    <div
+      className={tw(
+        display("flex"),
+        width("w-full"),
+        flexDirection("flex-col"),
+        space("space-y-4"),
+        padding("pb-8"),
+      )}
+    >
       {proposals.map((proposal) => (
         <ProposalCardRow
           key={proposal.proposalId}
@@ -71,7 +87,7 @@ function ProposalCardRow({
   const { mutate: vote } = useVote(account, signer, proposalCreatedBlockNumber);
   const votePower = useVotingPowerForAccount(
     account,
-    proposalCreatedBlockNumber
+    proposalCreatedBlockNumber,
   );
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
@@ -95,14 +111,18 @@ function ProposalCardRow({
         return setActiveProposal(proposalId);
       }}
       key={proposal.proposalId}
-      className={tw("flex", "justify-between", "items-center")}
+      className={tw(
+        display("flex"),
+        justifyContent("justify-between"),
+        alignItems("items-center"),
+      )}
     >
-      <div className={tw("flex-col", "space-y-4")}>
+      <div className={tw(flexDirection("flex-col"), space("space-y-4"))}>
         <CardHeader
           title={snapshotProposal?.title}
           description={t`Proposal #${proposalId}`}
         />
-        {/* <div className={tw("flex", "space-x-4")}>
+        {/* <div className={tw(display("flex"), space("space-x-4"))}>
           <AnchorButton
             variant={ButtonVariant.PRIMARY}
             href={snapshotProposal.link}
@@ -113,14 +133,14 @@ function ProposalCardRow({
       {account ? (
         <span>{t`Your voting power for this proposal: ${votePower}`}</span>
       ) : null}
-      <div className={tw("flex", "space-x-4")}>
+      <div className={tw(display("flex"), space("space-x-4"))}>
         {/* {isVotingOpen ? (
           <PopoverButton
             disabled={!account}
             variant={ButtonVariant.GRADIENT}
             popover={
               <Card variant={CardVariant.BLUE}>
-                <div className={tw("flex", "flex-col")}>
+                <div className={tw(display("flex"), flexDirection("flex-col"))}>
                   <Button onClick={onYesVoteClick}>{t`yes`}</Button>
                   <Button onClick={onNoVoteClick}>{t`no`}</Button>
                   <Button onClick={onMaybeVoteClick}>{t`maybe`}</Button>
@@ -164,7 +184,13 @@ function StatusButton({
   if (isExecutable) {
     return (
       <Button onClick={onExecuteClick} variant={ButtonVariant.OUTLINE_BLUE}>
-        <div className={tw("flex", "space-x-8", "items-center")}>
+        <div
+          className={tw(
+            display("flex"),
+            space("space-x-8"),
+            alignItems("items-center"),
+          )}
+        >
           {t`Execute`}
         </div>
       </Button>
@@ -174,7 +200,13 @@ function StatusButton({
   if (isVotingOpen) {
     return (
       <Tag intent={Intent.SUCCESS}>
-        <div className={tw("flex", "space-x-8", "items-center")}>
+        <div
+          className={tw(
+            display("flex"),
+            space("space-x-8"),
+            alignItems("items-center"),
+          )}
+        >
           <svg
             className="-ml-0.5 mr-1.5 h-3 w-3 text-statusGreen"
             fill="currentColor"

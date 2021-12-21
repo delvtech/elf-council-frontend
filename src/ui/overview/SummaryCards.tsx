@@ -1,7 +1,13 @@
 import React, { ReactElement } from "react";
 
 import { commify, formatEther } from "ethers/lib/utils";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  space,
+  gridTemplateColumns,
+  gap,
+} from "src/elf-tailwindcss-classnames";
 import SummaryCard from "src/ui/overview/SummaryCard";
 import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 import { t } from "ttag";
@@ -16,7 +22,7 @@ export function SummaryCards(): ReactElement {
   const votingPower = useVotingPowerForProtocol();
   const { data: treasuryBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
-    treasury
+    treasury,
   );
 
   const treasuryBalance = formatEther(treasuryBalanceBN || 0);
@@ -25,13 +31,11 @@ export function SummaryCards(): ReactElement {
   return (
     <div
       className={tw(
-        "flex",
-        "flex-col",
-        "space-y-6",
-        "lg:space-y-0",
-        "lg:grid",
-        "lg:grid-cols-3",
-        "lg:gap-6"
+        display("flex", "lg:grid"),
+        flexDirection("flex-col"),
+        space("space-y-6", "lg:space-y-0"),
+        gridTemplateColumns("lg:grid-cols-3"),
+        gap("lg:gap-6"),
       )}
     >
       <SummaryCard title={t`Annual protocol revenue`} balance={"$180,000"} />

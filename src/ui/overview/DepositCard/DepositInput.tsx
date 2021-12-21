@@ -1,6 +1,10 @@
 import React, { ChangeEvent, ReactElement, useCallback } from "react";
 import { FixedNumber } from "ethers";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  flexGrow,
+  height,
+  textAlign,
+} from "src/elf-tailwindcss-classnames";
 import classNames from "classnames";
 import NumericInput from "src/ui/base/Input/NumericInput";
 
@@ -38,7 +42,7 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       const newDepositAmount = event.target.value;
       setDepositAmount(newDepositAmount);
     },
-    [setDepositAmount]
+    [setDepositAmount],
   );
 
   const setMax = useCallback(() => {
@@ -53,8 +57,11 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       id={id}
       name={name}
       placeholder={placeholder}
-      className={classNames(className, tw("flex-grow"))}
-      inputClassName={classNames(inputClassName, tw("h-12", "text-left"))}
+      className={classNames(className, tw(flexGrow("grow")))}
+      inputClassName={classNames(
+        inputClassName,
+        tw(height("h-12"), textAlign("text-left")),
+      )}
       value={depositAmount}
       setMax={setMax}
       onChange={onSetDepositAmount}

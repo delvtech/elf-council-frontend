@@ -1,9 +1,23 @@
 import { ReactElement, useState, useCallback, useRef } from "react";
 import { Tooltip } from "@material-ui/core";
 import { t } from "ttag";
-import { AnnotationIcon } from "@heroicons/react/solid";
+import tw, {
+  display,
+  alignItems,
+  justifyContent,
+  padding,
+  backgroundColor,
+  borderRadius,
+  flexDirection,
+  textColor,
+  fontWeight,
+  gap,
+  height,
+  width,
+  margin,
+} from "src/elf-tailwindcss-classnames";
 import { DuplicateIcon } from "@heroicons/react/outline";
-import tw from "src/elf-tailwindcss-classnames";
+import { AnnotationIcon } from "@heroicons/react/solid";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { copyToClipboard } from "src/base/copyToClipboard";
@@ -34,7 +48,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
       }, 1000);
       copyToClipboard(delegate[type]);
     },
-    [delegate]
+    [delegate],
   );
 
   const handleCopyTwitterHandle = () => handleCopy("twitterHandle");
@@ -43,43 +57,49 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
   return (
     <div
       className={tw(
-        "flex",
-        "items-center",
-        "justify-between",
-        "py-3",
-        "px-4",
-        "bg-hackerSky",
-        "rounded-xl"
+        display("flex"),
+        alignItems("items-center"),
+        justifyContent("justify-between"),
+        padding("py-3", "px-4"),
+
+        backgroundColor("bg-hackerSky"),
+        borderRadius("rounded-xl"),
       )}
     >
-      <div className={tw("flex", "flex-col")}>
+      <div className={tw(display("flex"), flexDirection("flex-col"))}>
         <div
           className={tw(
-            "text-principalRoyalBlue",
-            "font-bold",
-            "flex",
-            "items-center",
-            "mb-1"
+            textColor("text-principalRoyalBlue"),
+            fontWeight("font-bold"),
+            display("flex"),
+            alignItems("items-center"),
+            margin("mb-1"),
           )}
         >
           <span
             className={tw(
-              "inline-block",
-              "h-5",
-              "w-5",
-              "rounded-xl",
-              "bg-principalRoyalBlue",
-              "mr-1.5"
+              display("inline-block"),
+              height("h-5"),
+              width("w-5"),
+              borderRadius("rounded-xl"),
+              backgroundColor("bg-principalRoyalBlue"),
+              margin("mr-1.5"),
             )}
           ></span>
           <span>{delegate.name}</span>
         </div>
-        <span className={tw("text-blueGrey")}>
-          <NumDelegatedVotes account={delegate.address}/>
+        <span className={tw(textColor("text-blueGrey"))}>
+          <NumDelegatedVotes account={delegate.address} />
         </span>
       </div>
       <div>
-        <span className={tw("flex", "flex-col", "gap-1")}>
+        <span
+          className={tw(
+            display(display("flex")),
+            flexDirection("flex-col"),
+            gap("gap-1"),
+          )}
+        >
           <Tooltip
             arrow
             placement="top"
@@ -88,7 +108,10 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           >
             <button onClick={handleCopyTwitterHandle}>
               <AnnotationIcon
-                className={tw("h-5", "text-principalRoyalBlue")}
+                className={tw(
+                  height("h-5"),
+                  textColor("text-principalRoyalBlue"),
+                )}
               />
             </button>
           </Tooltip>
@@ -99,7 +122,12 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             title={t`Address copied`}
           >
             <button onClick={handleCopyAddress}>
-              <DuplicateIcon className={tw("h-5", "text-principalRoyalBlue")} />
+              <DuplicateIcon
+                className={tw(
+                  height("h-5"),
+                  textColor("text-principalRoyalBlue"),
+                )}
+              />
             </button>
           </Tooltip>
         </span>

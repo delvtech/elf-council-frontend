@@ -3,7 +3,18 @@ import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 import { isValidAddress } from "src/base/isValidAddress";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  gridTemplateColumns,
+  gap,
+  textColor,
+  fontWeight,
+  padding,
+  justifyContent,
+  margin,
+  height,
+  textAlign,
+} from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H3 from "src/ui/base/H3";
@@ -21,7 +32,7 @@ interface ClaimAndDelegateSectionProps {
   signer: Signer | undefined;
 }
 export function ClaimAndDelegateSection(
-  props: ClaimAndDelegateSectionProps
+  props: ClaimAndDelegateSectionProps,
 ): ReactElement {
   const { account, signer } = props;
   const delegate = useDelegate(account);
@@ -47,7 +58,7 @@ export function ClaimAndDelegateSection(
         setDelegateAddress(delegateAddress);
       }
     },
-    []
+    [],
   );
 
   // handler for button
@@ -75,16 +86,30 @@ export function ClaimAndDelegateSection(
 
   return (
     <div>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
+      <div
+        className={tw(
+          display("grid"),
+          gridTemplateColumns("grid-cols-1", "md:grid-cols-2"),
+          gap("gap-6"),
+        )}
+      >
         <div>
-          <H3 className={tw("text-blue-900", "font-semibold", "pb-2")}>
+          <H3
+            className={tw(
+              textColor("text-blue-900"),
+              fontWeight("font-semibold"),
+              padding("pb-2"),
+            )}
+          >
             {title}
           </H3>
           <p>{description}</p>
         </div>
 
         <div>
-          <div className={tw("flex", "justify-between")}>
+          <div
+            className={tw(display("flex"), justifyContent("justify-between"))}
+          >
             <LabeledStat
               data={formatWalletAddress(delegate || t`N/A`)}
               bottomLabel={t`delegate`}
@@ -97,7 +122,11 @@ export function ClaimAndDelegateSection(
               id={"delegate-address"}
               name={t`Insert Delegate Address`}
               placeholder={t`Insert Delegate Address`}
-              className={tw("mb-8", "h-12", "text-center")}
+              className={tw(
+                margin("mb-8"),
+                height("h-12"),
+                textAlign("text-center"),
+              )}
               value={delegateAddress}
               onChange={onUpdateDelegateAddress}
             />

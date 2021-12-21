@@ -2,7 +2,18 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import React, { Fragment, ReactElement, ReactNode } from "react";
 import { addressesJson } from "src/elf-council-addresses";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  width,
+  height,
+  padding,
+  overflow,
+  display,
+  flexDirection,
+  flex,
+  alignItems,
+  margin,
+  textAlign,
+} from "src/elf-tailwindcss-classnames";
 import { ChainId, ChainNames } from "src/ethereum";
 import Header from "src/ui/app/Header";
 import Sidebar from "src/ui/app/Sidebar";
@@ -33,33 +44,31 @@ export default function PageView(props: PageViewProps): ReactElement {
     <Fragment>
       <div
         className={tw(
-          "w-full",
-          "h-full",
-          {
-            "md:pl-60": showSidebar,
-          },
-          "overflow-hidden"
+          width("w-full"),
+          height("h-full"),
+          overflow("overflow-hidden"),
+          padding({ "md:pl-60": showSidebar }),
         )}
       >
         {showSidebar ? <Sidebar /> : null}
         <div
           className={tw(
-            "w-full",
-            "h-full",
-            "p-6",
-            "flex",
-            "flex-col",
-            "flex-1",
-            "overflow-auto",
-            "items-center"
+            width("w-full"),
+            height("h-full"),
+            padding("p-6"),
+            display("flex"),
+            flexDirection("flex-col"),
+            flex("flex-1"),
+            overflow("overflow-auto"),
+            alignItems("items-center"),
           )}
         >
           {showHeader ? <Header /> : null}
 
           <div
             className={classNames(
-              tw("mt-6", "w-full", "h-full"),
-              childrenContainerClassName
+              tw(margin("mt-6"), width("w-full"), height("h-full")),
+              childrenContainerClassName,
             )}
           >
             {children}
@@ -67,7 +76,7 @@ export default function PageView(props: PageViewProps): ReactElement {
         </div>
       </div>
       <SimpleDialog isOpen={isWrongChain}>
-        <div className={tw("text-center")}>
+        <div className={textAlign("text-center")}>
           <H3>{t`Please connect to ${
             ChainNames[addressesJson.chainId as ChainId]
           }`}</H3>

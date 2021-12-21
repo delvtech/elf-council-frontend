@@ -2,7 +2,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import React, { ReactElement, ReactNode } from "react";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
-import tw from "src/elf-tailwindcss-classnames";
+import { cursor } from "src/elf-tailwindcss-classnames";
 
 interface LinkButtonProps extends ButtonStyles {
   /**
@@ -21,7 +21,9 @@ export default function LinkButton(props: LinkButtonProps): ReactElement {
   const buttonClass = getButtonClass({ variant, round });
   return (
     <Link href={link} passHref>
-      <div className={classNames(buttonClass, tw("cursor-pointer"), className)}>
+      <div
+        className={classNames(buttonClass, cursor("cursor-pointer"), className)}
+      >
         {children}
       </div>
     </Link>

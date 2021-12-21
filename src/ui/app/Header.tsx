@@ -1,6 +1,18 @@
 import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  justifyContent,
+  width,
+  space,
+  alignItems,
+  textColor,
+  margin,
+  gap,
+  height,
+  position,
+  fontWeight,
+} from "src/elf-tailwindcss-classnames";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import Image from "next/image";
@@ -12,31 +24,59 @@ function Header(): ReactElement {
   const { data: gasPrice, isLoading } = useGasPrice();
 
   return (
-    <div className={tw("flex", "justify-between", "w-full")}>
-      <div className={tw("flex", "space-x-3")}></div>
+    <div
+      className={tw(
+        display("flex"),
+        justifyContent("justify-between"),
+        width("w-full"),
+      )}
+    >
+      <div className={tw(display("flex"), space("space-x-3"))}></div>
       <div
         className={tw(
-          "flex",
-          "items-center",
-          "space-x-4",
-          "text-gray-400",
-          "mr-3"
+          display("flex"),
+          alignItems("items-center"),
+          space("space-x-4"),
+          textColor("text-gray-400"),
+          margin("mr-3"),
         )}
       >
         {account ? (
-          <div className={tw("flex", "items-center")}>
-            <div className={tw("flex", "items-center", "gap-1", "mr-8")}>
+          <div className={tw(display("flex"), alignItems("items-center"))}>
+            <div
+              className={tw(
+                display("flex"),
+                alignItems("items-center"),
+                gap("gap-1"),
+                margin("mr-8"),
+              )}
+            >
               <span
-                className={tw("text-principalRoyalBlue")}
+                className={textColor("text-principalRoyalBlue")}
               >{t`Learn how to vote`}</span>
               <button>
                 <QuestionMarkCircleIcon
-                  className={tw("h-4", "text-principalRoyalBlue")}
+                  className={tw(
+                    height("h-4"),
+                    textColor("text-principalRoyalBlue"),
+                  )}
                 />
               </button>
             </div>
-            <div className={tw("flex", "items-center", "mr-8")}>
-              <div className={tw("relative", "h-5", "w-5")}>
+            <div
+              className={tw(
+                display("flex"),
+                alignItems("items-center"),
+                margin("mr-8"),
+              )}
+            >
+              <div
+                className={tw(
+                  position("relative"),
+                  height("h-5"),
+                  width("w-5"),
+                )}
+              >
                 <Image
                   layout="fill"
                   src="/assets/gas.svg"
@@ -45,10 +85,9 @@ function Header(): ReactElement {
               </div>
               <span
                 className={tw(
-                  "text-principalRoyalBlue",
-                  "font-bold",
-                  "ml-2",
-                  "mr-1"
+                  textColor("text-principalRoyalBlue"),
+                  fontWeight("font-bold"),
+                  margin("ml-2", "mr-1"),
                 )}
               >
                 {gasPrice?.recommendedBaseFee}

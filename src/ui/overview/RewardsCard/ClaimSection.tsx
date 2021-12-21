@@ -2,7 +2,14 @@ import React, { ReactElement, useCallback } from "react";
 
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  textColor,
+  fontWeight,
+  display,
+  gridTemplateColumns,
+  gap,
+  width,
+} from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
@@ -38,9 +45,15 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
   return (
     <div>
       <H3
-        className={tw("text-blue-900", "font-semibold")}
+        className={tw(textColor("text-blue-900"), fontWeight("font-semibold"))}
       >{t`Claim without delegating`}</H3>
-      <div className={tw("grid", "grid-cols-1", "gap-6", "md:grid-cols-2")}>
+      <div
+        className={tw(
+          display("grid"),
+          gridTemplateColumns("grid-cols-1", "md:grid-cols-2"),
+          gap("gap-6"),
+        )}
+      >
         <div>
           <p>
             {t`If you'd simply like to claim your rewards, you can do so here.`}
@@ -58,10 +71,10 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
               <Button
                 loading={isLoading}
                 disabled={!account || !hasUnclaimedRewards || isLoading}
-                className={tw("w-full")}
+                className={width("w-full")}
                 onClick={onClaim}
               >
-                <span className={tw("w-full")}>{t`Claim`}</span>
+                <span className={width("w-full")}>{t`Claim`}</span>
               </Button>
             </div>
           </Tooltip>
@@ -72,7 +85,7 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
 }
 function getTooltipTitle(
   account: string | null | undefined,
-  hasAnyBalance: boolean
+  hasAnyBalance: boolean,
 ): string {
   // disabled without error states
   if (!account) {

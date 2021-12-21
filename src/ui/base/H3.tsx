@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { ReactElement, ReactNode } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, { fontSize, fontWeight } from "src/elf-tailwindcss-classnames";
 
 interface H3Props {
   className?: string;
@@ -8,7 +8,12 @@ interface H3Props {
 }
 export default function H3({ className, children }: H3Props): ReactElement {
   return (
-    <h3 className={classNames(tw("text-lg", "font-semibold"), className)}>
+    <h3
+      className={classNames(
+        tw(fontSize("text-lg"), fontWeight("font-semibold")),
+        className,
+      )}
+    >
       {children}
     </h3>
   );

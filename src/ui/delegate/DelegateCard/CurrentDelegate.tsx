@@ -1,6 +1,20 @@
 import { ReactElement, useCallback, useState, useRef } from "react";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  padding,
+  margin,
+  display,
+  justifyContent,
+  backgroundColor,
+  borderRadius,
+  flexDirection,
+  textColor,
+  fontWeight,
+  alignItems,
+  gap,
+  height,
+  width,
+} from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { copyToClipboard } from "src/base/copyToClipboard";
@@ -39,7 +53,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       }, 1000);
       copyToClipboard(delegate[type]);
     },
-    [delegate]
+    [delegate],
   );
 
   const handleCopyTwitterHandle = () => handleCopy("twitterHandle");
@@ -50,46 +64,52 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       className={classNames(
         className,
         tw(
-          "flex",
-          "py-4",
-          "px-4",
-          "justify-between",
-          "bg-hackerSky",
-          "rounded-xl"
-        )
+          display("flex"),
+          padding("py-4", "px-4"),
+          justifyContent("justify-between"),
+          backgroundColor("bg-hackerSky"),
+          borderRadius("rounded-xl"),
+        ),
       )}
     >
-      <div className={tw("flex", "flex-col")}>
+      <div className={tw(display("flex"), flexDirection("flex-col"))}>
         <div
           className={tw(
-            "text-principalRoyalBlue",
-            "font-bold",
-            "flex",
-            "items-center",
-            "mb-1"
+            textColor("text-principalRoyalBlue"),
+            fontWeight("font-bold"),
+            display("flex"),
+            alignItems("items-center"),
+            margin("mb-1"),
           )}
         >
           <span
             className={tw(
-              "inline-block",
-              "h-5",
-              "w-5",
-              "rounded-xl",
-              "bg-principalRoyalBlue",
-              "mr-1.5"
+              display("inline-block"),
+              height("h-5"),
+              width("w-5"),
+              borderRadius("rounded-xl"),
+              backgroundColor("bg-principalRoyalBlue"),
+              margin("mr-1.5"),
             )}
           ></span>
           <span>{delegate.name}</span>
         </div>
-        <span className={tw("text-blueGrey")}>
+        <span className={tw(textColor("text-blueGrey"))}>
           <NumDelegatedVotes account={delegate.address} />
         </span>
-        <span className={tw("text-blueGrey")}>
+        <span className={textColor("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
         </span>
       </div>
 
-      <div className={tw("flex", "flex-col", "justify-center", "gap-2")}>
+      <div
+        className={tw(
+          display("flex"),
+          flexDirection("flex-col"),
+          justifyContent("justify-center"),
+          gap("gap-2"),
+        )}
+      >
         <Tooltip
           arrow
           placement="top"
@@ -97,7 +117,12 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           title={t`Twitter handle copied`}
         >
           <button onClick={handleCopyTwitterHandle}>
-            <AnnotationIcon className={tw("h-5", "text-principalRoyalBlue")} />
+            <AnnotationIcon
+              className={tw(
+                height("h-5"),
+                textColor("text-principalRoyalBlue"),
+              )}
+            />
           </button>
         </Tooltip>
         <Tooltip
@@ -107,7 +132,12 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           title={t`Address copied`}
         >
           <button onClick={handleCopyAddress}>
-            <DuplicateIcon className={tw("h-5", "text-principalRoyalBlue")} />
+            <DuplicateIcon
+              className={tw(
+                height("h-5"),
+                textColor("text-principalRoyalBlue"),
+              )}
+            />
           </button>
         </Tooltip>
       </div>

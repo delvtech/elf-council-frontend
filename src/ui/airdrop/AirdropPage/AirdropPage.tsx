@@ -1,6 +1,15 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, ReactNode, useMemo, useState } from "react";
-import tw from "src/elf-tailwindcss-classnames";
+import tw, {
+  display,
+  flexDirection,
+  height,
+  space,
+  width,
+  justifyContent,
+  alignItems,
+  margin,
+} from "src/elf-tailwindcss-classnames";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
 import { Step } from "src/ui/base/Card/Steps/Steps";
@@ -71,21 +80,21 @@ export default function AirdropPage(): ReactElement {
   return (
     <div
       className={tw(
-        "flex",
-        "flex-col",
-        "h-full",
-        "space-y-8",
-        "w-full",
-        "justify-center",
-        "items-center",
-        "mt-12"
+        display("flex"),
+        flexDirection("flex-col"),
+        height("h-full"),
+        space("space-y-8"),
+        width("w-full"),
+        justifyContent("justify-center"),
+        alignItems("items-center"),
+        margin("mt-12"),
       )}
     >
       <div style={{ width: 600 }}>
         <Steps2 steps={steps} activeStepIndex={activeStepIndex} />
       </div>
 
-      <div className={tw("w-full", "md:w-3/5")}>
+      <div className={tw(width("w-full", "md:w-3/5"))}>
         {steps[activeStepIndex].content}
       </div>
     </div>
