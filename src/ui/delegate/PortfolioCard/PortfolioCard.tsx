@@ -106,6 +106,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
             onClick={depositClickHandler}
             disabled={!parseInt(walletBalance) || !deposit}
             variant={ButtonVariant.GRADIENT}
+            className={tw("w-28", "justify-center")}
           >{t`Deposit`}</Button>
         </div>
       </div>
@@ -132,6 +133,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
             onClick={withdrawClickHandler}
             disabled={!parseInt(vaultBalance) || !withdraw}
             variant={ButtonVariant.WHITE}
+            className={tw("w-28", "text-center")}
           >{t`Withdraw`}</Button>
         </div>
       </div>

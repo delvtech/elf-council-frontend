@@ -19,29 +19,31 @@ export default function DelegatePage(): ReactElement {
     Delegate | undefined
   >();
 
-  const showStatusCard = !account || !currentDelegate;
+  const showWarning = !account || !currentDelegate;
 
   return (
-    <div className={tw("pb-8")}>
-      {/* Status Card */}
-      {showStatusCard ? (
+    <div className={tw("mb-8", { "mt-16": !showWarning })}>
+      {/* Warning Card */}
+      {showWarning ? (
         <div
           className={tw(
             "flex",
             "flex-col",
             "xl:flex-row",
             "justify-center",
-            "mb-6"
+            "mb-4"
           )}
         >
           <div
             className={tw(
+              "flex",
+              "items-center",
+              "h-12",
               "xl:w-4/12",
               "mr-8",
               "bg-goldYellow",
               "rounded-md",
               "px-6",
-              "py-3",
               "text-white",
               "leading-4",
               "font-bold",
@@ -124,7 +126,7 @@ export default function DelegatePage(): ReactElement {
 
 function NoConnection(): ReactElement {
   return (
-    <p className={tw("text-center")}>
+    <p className={tw("text-left")}>
       <div>{t`Unable to determine delegation eligibility`}</div>
       <div>
         {t`Please connect your wallet`}
@@ -144,7 +146,7 @@ function NoConnection(): ReactElement {
 
 function NoDelegate(): ReactElement {
   return (
-    <p className={tw("text-center")}>
+    <p className={tw("text-left")}>
       <div>
         {t`Please ensure you deposit your tokens to earn your delegating power`}
         <SparklesIcon
