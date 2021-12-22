@@ -24,7 +24,7 @@ import tw, {
 import { Step } from "src/ui/base/Card/Steps2/step";
 
 interface StepsProps {
-  activeStepIndex: number;
+  activeStepIndex: number | undefined;
   steps: Step[];
   className?: string;
 }
@@ -121,9 +121,13 @@ export default function Steps2({
 function getIsTrailingDividerActive(
   step: Step,
   index: number,
-  activeStepIndex: number,
+  activeStepIndex: number | undefined,
 ) {
-  return step.status === "complete" && index !== activeStepIndex;
+  return (
+    step.status === "complete" &&
+    index !== activeStepIndex &&
+    activeStepIndex !== undefined
+  );
 }
 
 function getIsLeadingDividerActive(prevStep: Step | undefined, step: Step) {

@@ -30,7 +30,7 @@ const steps = [
   { name: "Preview", href: "#", status: "upcoming" },
 ];
 
-type StepStatus = "complete" | "current" | "upcoming";
+export type StepStatus = "complete" | "current" | "upcoming";
 
 export interface Step {
   name: ReactNode;
