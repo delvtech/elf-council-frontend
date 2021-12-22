@@ -60,7 +60,7 @@ export default function useRouterSteps(
         { shallow: true }
       )
     }
-  }, [currentStep, getStepPath]);
+  }, [canViewStep, currentStep, getStepPath, completedSteps]);
 
   return {
     canViewStep,
