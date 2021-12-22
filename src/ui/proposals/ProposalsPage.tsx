@@ -7,10 +7,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import {
-  proposalsById,
-  proposalsBySnapShotId,
-} from "src/elf-council-proposals";
+import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw, {
@@ -40,31 +37,32 @@ export default function ProposalsPage(): ReactElement {
   const [activeProposalId, setActiveProposalId] = useState<
     string | undefined
   >();
+  const [activeProposal, setActiveProposal] = useState<Proposal | undefined>();
 
   const { data: snapshotProposals } = useSnapshotProposals(
     Object.keys(proposalsBySnapShotId),
   );
 
-  const activeProposal = activeProposalId
-    ? proposalsById[activeProposalId]
-    : undefined;
-
-  const filteredProposals = useFilteredProposals(
+  const filteredProposals = useOnChainProposalsWithSnapshotInfo(
     activeTabId,
     snapshotProposals,
   );
 
-  // clear the active proposal when the user switches between Active and Past
+  // set the active proposal when the user switches between Active and Past
   // tabs.
   useEffect(() => {
-    setActiveProposalId(undefined);
-  }, [activeTabId]);
+    setActiveProposalId(filteredProposals?.[0].proposalId);
+    setActiveProposal(filteredProposals?.[0]);
+  }, [activeTabId, filteredProposals]);
 
   const onSetActiveProposalId = useCallback(
     (proposalId: string | undefined) => {
+      setActiveProposal(
+        filteredProposals?.find((p) => p.proposalId === proposalId),
+      );
       setActiveProposalId(proposalId);
     },
-    [],
+    [filteredProposals],
   );
 
   const proposalTabs: TabInfo[] = useMemo(() => {
@@ -124,7 +122,16 @@ export default function ProposalsPage(): ReactElement {
   );
 }
 
-function useFilteredProposals(
+/**
+ * To make sure we are only showing proposals that are deemed safe to vote on, we keep a curated
+ * list of proposals hardcoded in the frontend.  The client grabs the snapshot information and we
+ * link the on-chain proposal with the snapshot information.
+ *
+ * @param activeTabId
+ * @param snapshotProposals
+ * @returns
+ */
+function useOnChainProposalsWithSnapshotInfo(
   activeTabId: string,
   snapshotProposals: SnapshotProposal[] | undefined,
 ): Proposal[] | undefined {
