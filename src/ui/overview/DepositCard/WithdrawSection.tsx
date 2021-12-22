@@ -20,7 +20,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import H3 from "src/ui/base/H3";
-import NumericInput from "src/ui/base/Input/NumericInput";
+import TokenInput from "src/ui/base/Input/TokenInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
@@ -134,7 +134,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
             >
               <span className={width("w-full")}>{t`Max`}</span>
             </Button>
-            <NumericInput
+            <TokenInput
               disabled={!hasAmountDeposited}
               error={!hasEnoughDeposited}
               screenReaderLabel={t`Amount to withdraw`}

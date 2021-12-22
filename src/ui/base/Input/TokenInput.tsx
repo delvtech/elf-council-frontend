@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement } from "react";
+import { ChangeEvent, ReactElement, useCallback } from "react";
 
 import classNames from "classnames";
 import tw, {
@@ -17,12 +17,11 @@ import tw, {
   position,
   backgroundColor,
   padding,
-  translate,
   inset,
 } from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 
-interface NumericInputProps {
+interface TokenInputProps {
   className?: string;
   inputClassName?: string;
   screenReaderLabel: string;
@@ -32,11 +31,12 @@ interface NumericInputProps {
   value?: string | undefined;
   error?: boolean;
   disabled?: boolean;
-  setMax?: () => void;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  showMaxButton?: boolean;
+  maxValue?: string;
+  onChange: (newValue: string) => void;
 }
 
-export default function NumericInput({
+export default function TokenInput({
   className,
   inputClassName,
   screenReaderLabel,
@@ -46,9 +46,18 @@ export default function NumericInput({
   value,
   error = false,
   disabled = false,
-  setMax,
+  showMaxButton = false,
+  maxValue,
   onChange,
-}: NumericInputProps): ReactElement {
+}: TokenInputProps): ReactElement {
+  const onInputChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const newDepositAmount = event.target.value;
+      onChange(newDepositAmount);
+    },
+    [onChange],
+  );
+
   return (
     <div className={className}>
       <label htmlFor={id} className={screenReaders("sr-only")}>
@@ -88,9 +97,9 @@ export default function NumericInput({
           )}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={onInputChange}
         />
-        {setMax ? (
+        {showMaxButton && maxValue ? (
           <button
             className={tw(
               position("absolute"),
@@ -103,7 +112,7 @@ export default function NumericInput({
               "transform" as TTailwindString,
               "-translate-y-1/2" as TTailwindString,
             )}
-            onClick={setMax}
+            onClick={() => onChange(maxValue)}
             disabled={disabled}
           >
             <span

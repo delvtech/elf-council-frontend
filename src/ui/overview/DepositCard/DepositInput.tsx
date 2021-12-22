@@ -6,7 +6,7 @@ import tw, {
   textAlign,
 } from "src/elf-tailwindcss-classnames";
 import classNames from "classnames";
-import NumericInput from "src/ui/base/Input/NumericInput";
+import TokenInput from "src/ui/base/Input/TokenInput";
 
 interface DepositInputProps {
   depositAmount: string;
@@ -37,20 +37,8 @@ export function DepositInput(props: DepositInputProps): ReactElement {
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
 
-  const onSetDepositAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newDepositAmount = event.target.value;
-      setDepositAmount(newDepositAmount);
-    },
-    [setDepositAmount],
-  );
-
-  const setMax = useCallback(() => {
-    setDepositAmount(balance);
-  }, [balance, setDepositAmount]);
-
   return (
-    <NumericInput
+    <TokenInput
       disabled={!hasBalance}
       error={!hasEnoughBalance}
       screenReaderLabel={screenReaderLabel}
@@ -63,8 +51,9 @@ export function DepositInput(props: DepositInputProps): ReactElement {
         tw(height("h-12"), textAlign("text-left")),
       )}
       value={depositAmount}
-      setMax={setMax}
-      onChange={onSetDepositAmount}
+      showMaxButton
+      maxValue={balance}
+      onChange={setDepositAmount}
     />
   );
 }
