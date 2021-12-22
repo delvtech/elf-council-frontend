@@ -19,9 +19,11 @@ import tw, {
   letterSpacing,
   textAlign,
   backgroundColor,
+  maxWidth,
   lineHeight,
   position,
   inset,
+  flex,
 } from "src/elf-tailwindcss-classnames";
 import H2 from "src/ui/base/H2";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
@@ -56,15 +58,23 @@ export default function DelegatePage(): ReactElement {
     !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
 
   return (
-    <div className={tw(margin("mb-8", { "mt-16": !showWarning }))}>
+    <div
+      className={tw(
+        display("flex"),
+        flexDirection("flex-col"),
+        alignItems("items-center"),
+        margin("mb-8", { "mt-16": !showWarning }),
+      )}
+    >
       {/* Warning Card */}
       {showWarning ? (
         <div
           className={tw(
             display("flex"),
             flexDirection("flex-col", "xl:flex-row"),
-            justifyContent("justify-center"),
             margin("mb-4"),
+            maxWidth("max-w-7xl"),
+            width("w-full"),
           )}
         >
           <div
@@ -87,10 +97,10 @@ export default function DelegatePage(): ReactElement {
           </div>
 
           {/***
-           * This is just a empty placeholder to match the width of its 
-           * counterpart container: delegates list. Matches the '7/12' width. 
-           * Helps keep warning label flush with the main content of the page, 
-           * i.e. the PortfolioCard & DelegateList + DelegateCard, due to the 
+           * This is just a empty placeholder to match the width of its
+           * counterpart container: delegates list. Matches the '7/12' width.
+           * Helps keep warning label flush with the main content of the page,
+           * i.e. the PortfolioCard & DelegateList + DelegateCard, due to the
            * 'justify-center' attribute on the main content, which makes it hard
            * to keep things flush and responsive.
            */}
@@ -102,7 +112,7 @@ export default function DelegatePage(): ReactElement {
         className={tw(
           display("flex"),
           flexDirection("flex-col", "xl:flex-row"),
-          justifyContent("justify-center"),
+          maxWidth("max-w-7xl"),
         )}
       >
         {/* Portfolio Card */}
