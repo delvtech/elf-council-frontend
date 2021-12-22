@@ -46,12 +46,12 @@ export function AirdropFullyClaimedCard({
           padding("p-6"),
         )}
       >
-        <div className={tw(textAlign("text-right"))}>
+        <div className={textAlign("text-right")}>
           <Tag intent={Intent.ERROR}>
             <span
-              className={tw(fontWeight("font-bold"))}
+              className={fontWeight("font-bold")}
             >{t`Already claimed tokens`}</span>
-            <ShieldExclamationIcon height={24} className={tw(margin("ml-4"))} />
+            <ShieldExclamationIcon height={24} className={margin("ml-4")} />
           </Tag>
         </div>
         <div
@@ -73,7 +73,7 @@ export function AirdropFullyClaimedCard({
           )}
         >
           <span
-            className={tw(width("w-full", "md:w-1/2"))}
+            className={width("w-full", "md:w-1/2")}
           >{t`You have already claimed the $ELFI tokens in which you were eligible for.`}</span>
         </div>
         <div
@@ -98,7 +98,7 @@ export function AirdropFullyClaimedCard({
           )}
         >
           <span
-            className={tw(width("w-full", "md:w-1/2"))}
+            className={width("w-full", "md:w-1/2")}
           >{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</span>
         </div>
       </div>
