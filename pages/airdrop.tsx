@@ -7,6 +7,8 @@ export default function Proposals(): ReactElement {
   return (
     <PageView
       showSidebar={false}
+      showHeader={false}
+      showFooter
       childrenContainerClassName={tw(
         display("flex"),
         justifyContent("justify-center"),
