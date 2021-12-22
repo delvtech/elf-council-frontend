@@ -7,6 +7,7 @@ import tw, {
   display,
   fontSize,
   fontWeight,
+  height,
   justifyContent,
   padding,
   textAlign,
@@ -25,6 +26,7 @@ export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement {
   const { className, proposal } = props;
+
   if (!proposal) {
     return (
       <GradientCard
@@ -33,6 +35,7 @@ export function ProposalDetailsCard(
           tw(
             display("flex"),
             width("w-80"),
+            height("h-full"),
             padding("p-6"),
             justifyContent("justify-center"),
             alignItems("items-center"),
@@ -53,7 +56,18 @@ export function ProposalDetailsCard(
     );
   }
   return (
-    <GradientCard className={classNames(className, tw(width("w-80")))}>
+    <GradientCard
+      className={classNames(
+        className,
+        tw(
+          height("h-full"),
+          width("w-80"),
+          padding("p-6"),
+          justifyContent("justify-center"),
+          alignItems("items-center"),
+        ),
+      )}
+    >
       <h1
         className={tw(
           textColor("text-white"),

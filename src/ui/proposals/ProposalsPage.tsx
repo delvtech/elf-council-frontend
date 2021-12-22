@@ -1,6 +1,12 @@
 import { useWeb3React } from "@web3-react/core";
 import { Proposal } from "elf-council-proposals";
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   proposalsById,
   proposalsBySnapShotId,
@@ -26,9 +32,6 @@ import { ProposalList } from "./ProposalList";
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
 export default function ProposalsPage(): ReactElement {
-  const { data: snapshotProposals } = useSnapshotProposals(
-    Object.keys(proposalsBySnapShotId),
-  );
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
@@ -37,11 +40,10 @@ export default function ProposalsPage(): ReactElement {
   const [activeProposalId, setActiveProposalId] = useState<
     string | undefined
   >();
-  useEffect(() => {
-    // clear the active proposal when the user switches between Active and Past
-    // tabs.
-    setActiveProposalId(undefined);
-  }, [activeTabId]);
+
+  const { data: snapshotProposals } = useSnapshotProposals(
+    Object.keys(proposalsBySnapShotId),
+  );
 
   const activeProposal = activeProposalId
     ? proposalsById[activeProposalId]
@@ -50,6 +52,19 @@ export default function ProposalsPage(): ReactElement {
   const filteredProposals = useFilteredProposals(
     activeTabId,
     snapshotProposals,
+  );
+
+  // clear the active proposal when the user switches between Active and Past
+  // tabs.
+  useEffect(() => {
+    setActiveProposalId(undefined);
+  }, [activeTabId]);
+
+  const onSetActiveProposalId = useCallback(
+    (proposalId: string | undefined) => {
+      setActiveProposalId(proposalId);
+    },
+    [],
   );
 
   const proposalTabs: TabInfo[] = useMemo(() => {
@@ -76,7 +91,7 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId]);
 
   return (
-    <div className={display("flex")}>
+    <div className={tw(height("h-full"), display("flex"))}>
       <div
         className={tw(
           flex("flex-1"),
@@ -95,14 +110,16 @@ export default function ProposalsPage(): ReactElement {
             signer={signer}
             proposals={filteredProposals || []}
             activeProposalId={activeProposalId}
-            setActiveProposal={setActiveProposalId}
+            setActiveProposal={onSetActiveProposalId}
           />
         </div>
       </div>
-      <ProposalDetailsCard
-        className={tw(display("hidden", "lg:block"))}
-        proposal={activeProposal}
-      />
+      <div className={padding("pb-20")}>
+        <ProposalDetailsCard
+          className={tw(display("hidden", "lg:block"))}
+          proposal={activeProposal}
+        />
+      </div>
     </div>
   );
 }
