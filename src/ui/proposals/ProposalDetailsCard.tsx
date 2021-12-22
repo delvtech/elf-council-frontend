@@ -10,6 +10,8 @@ import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw, {
   alignItems,
   display,
+  flex,
+  flexDirection,
   fontSize,
   fontWeight,
   height,
@@ -22,6 +24,7 @@ import tw, {
   textOverflow,
   width,
 } from "src/elf-tailwindcss-classnames";
+import Button from "src/ui/base/Button/Button";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
@@ -29,6 +32,7 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -80,16 +84,19 @@ export function ProposalDetailsCard(
       </GradientCard>
     );
   }
+
   return (
     <GradientCard
       className={classNames(
         className,
         tw(
+          display("flex"),
+          flexDirection("flex-col"),
+          alignItems("items-start"),
           height("h-full"),
           width("w-80"),
           padding("p-6"),
           justifyContent("justify-center"),
-          alignItems("items-center"),
         ),
       )}
     >
@@ -178,6 +185,19 @@ export function ProposalDetailsCard(
         tooltipHref={"/resources"}
         label={t`Eligible voting balance`}
       />
+
+      <div
+        className={tw(
+          display("flex"),
+          flex("flex-1"),
+          width("w-full"),
+          alignItems("items-end"),
+          justifyContent("justify-between"),
+        )}
+      >
+        <Button variant={ButtonVariant.WHITE}>{t`Choice`}</Button>
+        <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
+      </div>
     </GradientCard>
   );
 }

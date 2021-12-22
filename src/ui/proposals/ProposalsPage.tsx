@@ -114,7 +114,7 @@ export default function ProposalsPage(): ReactElement {
       </div>
       <div className={padding("pb-20")}>
         <ProposalDetailsCard
-          className={tw(display("hidden", "lg:block"))}
+          className={tw(display("hidden", "lg:flex"))}
           account={account}
           proposal={activeProposal}
         />
