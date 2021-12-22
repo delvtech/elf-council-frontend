@@ -20,6 +20,7 @@ export enum CardVariant {
   GRADIENT = "gradient",
   WHITE = "white",
   BLUE = "blue",
+  HACKER_SKY = "hackersky",
 }
 
 interface CardProps {
@@ -98,6 +99,8 @@ function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
       );
     case CardVariant.WHITE:
       return backgroundColor("bg-white");
+    case CardVariant.HACKER_SKY:
+      return backgroundColor("bg-hackerSky");
     default:
       assertNever(variant);
   }

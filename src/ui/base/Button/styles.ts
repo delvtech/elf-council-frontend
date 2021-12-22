@@ -167,7 +167,7 @@ function getTextColor(variant: ButtonVariant): TArg {
       return textColor("text-brandDarkBlue-dark");
 
     case ButtonVariant.WHITE:
-      return textColor("text-brandLightBlue-dark");
+      return textColor("text-principalRoyalBlue");
 
     default: {
       assertNever(variant);

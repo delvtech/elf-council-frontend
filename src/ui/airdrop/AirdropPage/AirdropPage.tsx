@@ -16,7 +16,7 @@ import tw, {
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
-import { Step } from "src/ui/base/Card/Steps/Steps";
+import { Step, StepStatus } from "src/ui/base/Card/Steps/Steps";
 import Steps2 from "src/ui/base/Card/Steps2/Steps2";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -30,13 +30,19 @@ export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
 
-  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>();
 
   const steps: StepWithContent[] = useMemo(() => {
+    let connectWalletStatus: StepStatus = "upcoming";
+    if (account) {
+      connectWalletStatus = "complete";
+    } else if (activeStepIndex === 0) {
+      connectWalletStatus = "current";
+    }
     return [
       {
         name: t`Connect wallet`,
-        status: account ? "complete" : "current",
+        status: connectWalletStatus,
         onClick: () => {
           setActiveStepIndex(0);
         },
@@ -90,7 +96,6 @@ export default function AirdropPage(): ReactElement {
         width("w-full"),
         justifyContent("justify-center"),
         alignItems("items-center"),
-        margin("mt-12"),
       )}
     >
       <div style={{ width: 600 }}>
@@ -98,7 +103,7 @@ export default function AirdropPage(): ReactElement {
       </div>
 
       <div className={tw(width("w-full", "md:w-3/5"), height("h-full"))}>
-        {steps[activeStepIndex].content}
+        {steps[activeStepIndex || 0].content}
       </div>
       <div
         className={tw(

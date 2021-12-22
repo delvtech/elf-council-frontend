@@ -1,6 +1,15 @@
 import classNames from "classnames";
 import React, { ReactElement } from "react";
-import tw, { TTailwindString } from "tailwindcss-classnames";
+import tw, {
+  backgroundColor,
+  borderRadius,
+  boxShadow,
+  height,
+  opacity,
+  TBackgroundColor,
+  TTailwindString,
+  width,
+} from "src/elf-tailwindcss-classnames";
 
 export enum IconSize {
   SMALL = "small",
@@ -10,6 +19,7 @@ export enum IconSize {
 
 interface ElementIconProps {
   className?: string;
+  bgColorClassName?: TBackgroundColor;
   size: IconSize;
 }
 
@@ -20,6 +30,7 @@ interface ElementIconProps {
  */
 export function ElementIcon({
   className,
+  bgColorClassName = "bg-white",
   size = IconSize.SMALL,
 }: ElementIconProps): ReactElement {
   const iconSizeClass = getIconSizeClasses(size);
@@ -27,7 +38,13 @@ export function ElementIcon({
     <div
       className={classNames(
         className,
-        tw(iconSizeClass, "rounded-full", "bg-white", "opacity-90", "shadow")
+        tw(
+          iconSizeClass,
+          boxShadow("shadow"),
+          opacity("opacity-90"),
+          borderRadius("rounded-full"),
+          backgroundColor(bgColorClassName),
+        ),
       )}
     >
       <svg
@@ -61,10 +78,10 @@ export function ElementIcon({
 function getIconSizeClasses(size: IconSize): TTailwindString {
   switch (size) {
     case IconSize.SMALL:
-      return tw("h-3", "w-3");
+      return tw(height("h-3"), width("w-3"));
     case IconSize.MEDIUM:
-      return tw("h-6", "w-6");
+      return tw(height("h-6"), width("w-6"));
     case IconSize.LARGE:
-      return tw("h-12", "w-12");
+      return tw(height("h-12"), width("w-12"));
   }
 }
