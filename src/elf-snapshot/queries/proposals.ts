@@ -29,14 +29,14 @@ export interface SnapshotProposal {
 }
 
 export async function fetchSnapshotProposals(
-  proposalIds: string[]
+  snapshotIds: string[],
 ): Promise<SnapshotProposal> {
   const { proposals } = await request(
     SNAPSHOT_GRAPHQL_ENDPOINT,
     gql`
       query {
         proposals(
-          where: { id_in: ${JSON.stringify(proposalIds)} }
+          where: { id_in: ${JSON.stringify(snapshotIds)} }
         ) {
           id
           title
@@ -54,7 +54,7 @@ export async function fetchSnapshotProposals(
           }
         }
       }
-    `
+    `,
   );
   return proposals;
 }

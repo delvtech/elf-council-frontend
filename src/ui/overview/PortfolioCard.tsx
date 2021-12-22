@@ -3,29 +3,30 @@ import React, { ReactElement } from "react";
 import classNames from "classnames";
 import { commify, formatEther } from "ethers/lib/utils";
 import tw, {
+  alignItems,
+  alignSelf,
+  borderColor,
+  borderWidth,
   boxShadow,
-  textColor,
-  fontWeight,
-  fontSize,
-  letterSpacing,
-  margin,
   display,
   flexDirection,
+  fontSize,
+  fontWeight,
+  justifyContent,
+  letterSpacing,
+  margin,
   minHeight,
+  padding,
+  textColor,
   verticalAlign,
   width,
-  alignItems,
-  justifyContent,
-  borderWidth,
-  borderColor,
-  padding,
-  alignSelf,
 } from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import Button from "src/ui/base/Button/Button";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -39,7 +40,7 @@ const rand1 = Math.random() * 100000000;
 const rand2 = Math.random() * 100000000;
 const rand3 = Math.random() * 100000000;
 
-const portfolioTooltipText = t`Don’t know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
+const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 

@@ -1,10 +1,13 @@
 import { useWeb3React } from "@web3-react/core";
 import { Proposal } from "elf-council-proposals";
-import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import {
-  proposalsById,
-  proposalsBySnapShotId,
-} from "src/elf-council-proposals";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import tw, {
@@ -26,9 +29,6 @@ import { ProposalList } from "./ProposalList";
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
 export default function ProposalsPage(): ReactElement {
-  const { data: snapshotProposals } = useSnapshotProposals(
-    Object.keys(proposalsBySnapShotId),
-  );
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
@@ -37,19 +37,32 @@ export default function ProposalsPage(): ReactElement {
   const [activeProposalId, setActiveProposalId] = useState<
     string | undefined
   >();
-  useEffect(() => {
-    // clear the active proposal when the user switches between Active and Past
-    // tabs.
-    setActiveProposalId(undefined);
-  }, [activeTabId]);
+  const [activeProposal, setActiveProposal] = useState<Proposal | undefined>();
 
-  const activeProposal = activeProposalId
-    ? proposalsById[activeProposalId]
-    : undefined;
+  const { data: snapshotProposals } = useSnapshotProposals(
+    Object.keys(proposalsBySnapShotId),
+  );
 
-  const filteredProposals = useFilteredProposals(
+  const filteredProposals = useOnChainProposalsWithSnapshotInfo(
     activeTabId,
     snapshotProposals,
+  );
+
+  // set the active proposal when the user switches between Active and Past
+  // tabs.
+  useEffect(() => {
+    setActiveProposalId(filteredProposals?.[0].proposalId);
+    setActiveProposal(filteredProposals?.[0]);
+  }, [activeTabId, filteredProposals]);
+
+  const onSetActiveProposalId = useCallback(
+    (proposalId: string | undefined) => {
+      setActiveProposal(
+        filteredProposals?.find((p) => p.proposalId === proposalId),
+      );
+      setActiveProposalId(proposalId);
+    },
+    [filteredProposals],
   );
 
   const proposalTabs: TabInfo[] = useMemo(() => {
@@ -76,32 +89,50 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId]);
 
   return (
-    <div
-      className={tw(
-        height("h-full"),
-        padding("pt-8", "px-8"),
-        space("space-y-8"),
-      )}
-    >
-      <H1
-        className={tw(flex("flex-1"), textAlign("text-center"))}
-      >{t`Proposals`}</H1>
-      <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
-      <div className={tw(display("flex"), space("space-x-12"))}>
-        <ProposalList
+    <div className={tw(height("h-full"), display("flex"))}>
+      <div
+        className={tw(
+          flex("flex-1"),
+          height("h-full"),
+          padding("pt-8", "px-8"),
+          space("space-y-8"),
+        )}
+      >
+        <H1
+          className={tw(flex("flex-1"), textAlign("text-center"))}
+        >{t`Proposals`}</H1>
+        <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
+        <div className={tw(display("flex"), space("space-x-12"))}>
+          <ProposalList
+            account={account}
+            signer={signer}
+            proposals={filteredProposals || []}
+            activeProposalId={activeProposalId}
+            setActiveProposal={onSetActiveProposalId}
+          />
+        </div>
+      </div>
+      <div className={padding("pb-20")}>
+        <ProposalDetailsCard
+          className={tw(display("hidden", "lg:flex"))}
           account={account}
-          signer={signer}
-          proposals={filteredProposals || []}
-          activeProposalId={activeProposalId}
-          setActiveProposal={setActiveProposalId}
+          proposal={activeProposal}
         />
-        <ProposalDetailsCard proposal={activeProposal} />
       </div>
     </div>
   );
 }
 
-function useFilteredProposals(
+/**
+ * To make sure we are only showing proposals that are deemed safe to vote on, we keep a curated
+ * list of proposals hardcoded in the frontend.  The client grabs the snapshot information and we
+ * link the on-chain proposal with the snapshot information.
+ *
+ * @param activeTabId
+ * @param snapshotProposals
+ * @returns
+ */
+function useOnChainProposalsWithSnapshotInfo(
   activeTabId: string,
   snapshotProposals: SnapshotProposal[] | undefined,
 ): Proposal[] | undefined {

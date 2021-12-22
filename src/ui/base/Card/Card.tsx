@@ -75,7 +75,7 @@ export default function Card(props: CardProps): ReactElement {
 
 function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
   if (active) {
-    return backgroundColor("bg-paleLily");
+    return backgroundColor("bg-hackerSky");
   }
 
   switch (variant) {

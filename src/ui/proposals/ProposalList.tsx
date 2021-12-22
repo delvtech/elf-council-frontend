@@ -1,27 +1,22 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
 import { Proposal } from "elf-council-proposals";
-import { getIsExecutable, getIsVotingOpen } from "src/elf-council-proposals";
+import { getIsVotingOpen } from "src/elf-council-proposals";
 import tw, {
-  display,
-  width,
-  flexDirection,
-  space,
-  padding,
-  justifyContent,
   alignItems,
+  display,
+  flexDirection,
+  justifyContent,
+  padding,
+  space,
+  width,
 } from "src/elf-tailwindcss-classnames";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
-import { useExecute } from "src/ui/proposals/useExecute";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { Ballot } from "src/ui/voting/Ballot";
-import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
@@ -84,24 +79,10 @@ function ProposalCardRow({
 
   const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
 
-  const { mutate: vote } = useVote(account, signer, proposalCreatedBlockNumber);
   const votePower = useVotingPowerForAccount(
     account,
     proposalCreatedBlockNumber,
   );
-  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
-
-  const onYesVoteClick = useCallback(() => {
-    vote(proposalId.toString(), Ballot.YES);
-  }, [proposalId, vote]);
-  const onNoVoteClick = useCallback(() => {
-    vote(proposalId.toString(), Ballot.NO);
-  }, [proposalId, vote]);
-  const onMaybeVoteClick = useCallback(() => {
-    vote(proposalId.toString(), Ballot.MAYBE);
-  }, [proposalId, vote]);
-
-  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
 
   return (
     <Card
@@ -122,44 +103,14 @@ function ProposalCardRow({
           title={snapshotProposal?.title}
           description={t`Proposal #${proposalId}`}
         />
-        {/* <div className={tw(display("flex"), space("space-x-4"))}>
-          <AnchorButton
-            variant={ButtonVariant.PRIMARY}
-            href={snapshotProposal.link}
-          >{t`View Proposal`}</AnchorButton>
-          <Button variant={ButtonVariant.PRIMARY}>{t`Discuss`}</Button>
-        </div> */}
+        <div className={tw(display("flex"), space("space-x-4"))}>
+          <Tag intent={Intent.PRIMARY}>{t`No vote found`}</Tag>
+        </div>
       </div>
       {account ? (
         <span>{t`Your voting power for this proposal: ${votePower}`}</span>
       ) : null}
       <div className={tw(display("flex"), space("space-x-4"))}>
-        {/* {isVotingOpen ? (
-          <PopoverButton
-            disabled={!account}
-            variant={ButtonVariant.GRADIENT}
-            popover={
-              <Card variant={CardVariant.BLUE}>
-                <div className={tw(display("flex"), flexDirection("flex-col"))}>
-                  <Button onClick={onYesVoteClick}>{t`yes`}</Button>
-                  <Button onClick={onNoVoteClick}>{t`no`}</Button>
-                  <Button onClick={onMaybeVoteClick}>{t`maybe`}</Button>
-                </div>
-              </Card>
-            }
-          >
-            <span>{t`Vote`}</span>
-            <ChevronLeft
-              className={tw(
-                // transform is weird, it exists in the tailwind css, but
-                // requires casting when using "tw()" :shrug:
-                "transform" as TTailwindString,
-                "-rotate-90"
-              )}
-            />
-          </PopoverButton>
-        ) : null} */}
-
         <StatusButton signer={signer} proposal={proposal} />
       </div>
     </Card>
@@ -169,37 +120,12 @@ interface StatusButtonProps {
   signer: Signer | undefined;
   proposal: Proposal;
 }
-function StatusButton({
-  proposal,
-  signer,
-}: StatusButtonProps): ReactElement | null {
+function StatusButton({ proposal }: StatusButtonProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
-  const isExecutable = getIsExecutable(proposal, currentBlockNumber);
-  const { mutate: execute } = useExecute(signer);
-  const onExecuteClick = useCallback(() => {
-    execute(proposal.proposalId);
-  }, [execute, proposal.proposalId]);
-
-  if (isExecutable) {
-    return (
-      <Button onClick={onExecuteClick} variant={ButtonVariant.OUTLINE_BLUE}>
-        <div
-          className={tw(
-            display("flex"),
-            space("space-x-8"),
-            alignItems("items-center"),
-          )}
-        >
-          {t`Execute`}
-        </div>
-      </Button>
-    );
-  }
-
   if (isVotingOpen) {
     return (
-      <Tag intent={Intent.SUCCESS}>
+      <Tag intent={Intent.ERROR}>
         <div
           className={tw(
             display("flex"),
@@ -208,13 +134,13 @@ function StatusButton({
           )}
         >
           <svg
-            className="-ml-0.5 mr-1.5 h-3 w-3 text-statusGreen"
+            className="-ml-0.5 mr-1.5 h-3 w-3"
             fill="currentColor"
             viewBox="0 0 8 8"
           >
             <circle cx={4} cy={4} r={3} />
           </svg>
-          {t`Open for Voting`}
+          {t`Failing`}
         </div>
       </Tag>
     );

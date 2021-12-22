@@ -18,6 +18,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 
 export enum Intent {
+  PRIMARY = "primary",
   SUCCESS = "success",
   ERROR = "error",
 }
@@ -29,6 +30,7 @@ interface TagProps {
 }
 
 const intentTextColors: Record<Intent, TTextColor> = {
+  [Intent.PRIMARY]: "text-yieldBlue",
   [Intent.SUCCESS]: "text-statusGreen",
   [Intent.ERROR]: "text-deepRed",
 };
@@ -57,6 +59,7 @@ export function Tag({
 }
 
 const intentBackgroundColors: Record<Intent, TBackgroundColor> = {
+  [Intent.PRIMARY]: "bg-paleLily",
   [Intent.SUCCESS]: "bg-votingGreen",
   [Intent.ERROR]: "bg-statusRed",
 };
@@ -72,6 +75,10 @@ function getBackgroundColor(
 }
 
 const intentBorderColors: Record<Intent, TArg> = {
+  [Intent.PRIMARY]: tw(
+    borderColor("border-yieldBlue"),
+    borderWidth("border-2"),
+  ),
   [Intent.SUCCESS]: tw(
     borderColor("border-votingGreen"),
     borderWidth("border-2"),
