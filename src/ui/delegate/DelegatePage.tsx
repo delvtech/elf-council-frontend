@@ -63,7 +63,7 @@ export default function DelegatePage(): ReactElement {
         display("flex"),
         flexDirection("flex-col"),
         alignItems("items-center"),
-        margin("mb-8", { "mt-16": !showWarning }),
+        padding("pb-8", { "pt-16": !showWarning }),
       )}
     >
       {/* Warning Card */}
@@ -72,6 +72,7 @@ export default function DelegatePage(): ReactElement {
           className={tw(
             display("flex"),
             flexDirection("flex-col", "xl:flex-row"),
+            justifyContent("xl:justify-center"),
             margin("mb-4"),
             maxWidth("max-w-7xl"),
             width("w-full"),
@@ -112,6 +113,7 @@ export default function DelegatePage(): ReactElement {
         className={tw(
           display("flex"),
           flexDirection("flex-col", "xl:flex-row"),
+          justifyContent("xl:justify-center"),
           maxWidth("max-w-7xl"),
         )}
       >
