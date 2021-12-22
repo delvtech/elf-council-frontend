@@ -11,7 +11,7 @@ import TokenInput from "src/ui/base/Input/TokenInput";
 interface DepositInputProps {
   depositAmount: string;
   balance: string;
-  setDepositAmount: (value: string) => void;
+  onDeposit: (value: string) => void;
   className?: string;
   inputClassName?: string;
   id: string;
@@ -24,7 +24,7 @@ export function DepositInput(props: DepositInputProps): ReactElement {
   const {
     depositAmount,
     balance,
-    setDepositAmount,
+    onDeposit,
     className = "",
     inputClassName = "",
     id,
@@ -53,7 +53,7 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       value={depositAmount}
       showMaxButton
       maxValue={balance}
-      onChange={setDepositAmount}
+      onChange={onDeposit}
     />
   );
 }

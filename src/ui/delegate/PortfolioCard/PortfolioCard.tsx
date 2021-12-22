@@ -109,7 +109,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <DepositInput
             depositAmount={deposit}
             balance={walletBalance}
-            setDepositAmount={setDeposit}
+            onDeposit={setDeposit}
             id={"deposit-amount"}
             name={t`Deposit amount`}
             placeholder={t`Insert amount to deposit`}
@@ -148,7 +148,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <DepositInput
             depositAmount={withdraw}
             balance={vaultBalance}
-            setDepositAmount={setWithdraw}
+            onDeposit={setWithdraw}
             id={"withdraw-amount"}
             name={t`Withdraw amount`}
             placeholder={t`Insert amount to withdraw`}

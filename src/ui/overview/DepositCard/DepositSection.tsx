@@ -170,7 +170,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
             <DepositInput
               balance={balance}
               depositAmount={depositAmount}
-              setDepositAmount={setDepositAmount}
+              onDeposit={setDepositAmount}
               id={"deposit-amount"}
               name={t`Deposit amount`}
               placeholder={t`Insert amount to deposit`}
