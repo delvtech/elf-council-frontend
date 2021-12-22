@@ -32,7 +32,7 @@
     "elf-council-tokenlist": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-tokenlist.git",
     "elf-council-typechain": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
     "eslint-config-prettier": "^8.3.0",
-    "ethers": "^5.4.7",
+    "ethers": "^5.5.2",
     "graphql": "^15.5.3",
     "graphql-request": "^3.5.0",
     "lodash.isequal": "^4.5.0",
@@ -67,7 +67,7 @@
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-typescript": "^3.0.0",
     "eslint-plugin-flowtype": "^6.0.1",
-    "prettier": "^2.4.0",
+    "prettier": "^2.5.1",
     "typescript": "^4.4.3"
   },
   "name": "elf-council-frontend",
