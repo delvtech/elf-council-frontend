@@ -14,6 +14,7 @@ import tw, {
   margin,
   textAlign,
   justifyContent,
+  backgroundColor,
 } from "src/elf-tailwindcss-classnames";
 import { ChainId, ChainNames } from "src/ethereum";
 import Footer from "src/ui/app/Footer";
@@ -51,6 +52,7 @@ export default function PageView(props: PageViewProps): ReactElement {
           display("flex"),
           width("w-full"),
           height("h-screen"),
+          backgroundColor("bg-hackerSky"),
           justifyContent("justify-between"),
           overflow("overflow-hidden"),
           padding({ "md:pl-60": showSidebar }),
