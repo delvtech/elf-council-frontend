@@ -62,14 +62,6 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     setWithdrawAmount("");
   }, [setWithdrawAmount]);
 
-  const onSetWithdrawAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newWithdrawAmount = event.target.value;
-      setWithdrawAmount(newWithdrawAmount);
-    },
-    [setWithdrawAmount],
-  );
-
   // handler for max button
   const onSetMax = useCallback(() => {
     if (amountDeposited) {
@@ -144,7 +136,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
               className={flexGrow("grow")}
               inputClassName={tw(height("h-12"), textAlign("text-center"))}
               value={withdrawAmount}
-              onChange={onSetWithdrawAmount}
+              onChange={setWithdrawAmount}
             />
           </div>
           <WithdrawButton
