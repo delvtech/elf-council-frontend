@@ -14,7 +14,7 @@ export default function useRouterSteps(
     return parseInt(paramStep as string) || 0;
   }, [paramStep]);
 
-  const getStapPath = useCallback((step: number) => {
+  const getStepPath = useCallback((step: number) => {
     return `${pathname}?${paramName}=${step}`;
   }, [pathname]);
 
@@ -28,7 +28,7 @@ export default function useRouterSteps(
 
   const goToPreviousStep = useCallback(() => {
     if (currentStep > 0) {
-      navigate(getStapPath(currentStep - 1));
+      navigate(getStepPath(currentStep - 1));
     } else {
       // TODO: error notification?
     }
@@ -36,7 +36,7 @@ export default function useRouterSteps(
 
   const goToNextStep = useCallback(() => {
     if (canViewStep(currentStep + 1)) {
-      navigate(getStapPath(currentStep + 1));
+      navigate(getStepPath(currentStep + 1));
     } else {
       // TODO: error notification?
     }
@@ -44,7 +44,7 @@ export default function useRouterSteps(
 
   const goToStep = useCallback((step: number) => {
     if (step >= 0 && canViewStep(step)) {
-      navigate(getStapPath(step));
+      navigate(getStepPath(step));
     } else {
       // TODO: error notification?
     }
@@ -53,19 +53,19 @@ export default function useRouterSteps(
   useEffect(() => {
     if (!canViewStep(currentStep)) {
       redirect(
-        getStapPath(completedSteps + 1),
+        getStepPath(completedSteps + 1),
         undefined,
         { shallow: true }
       )
     }
-  }, [currentStep, getStapPath]);
+  }, [currentStep, getStepPath]);
 
   return {
     canViewStep,
     completedSteps,
     completeStep,
     currentStep,
-    getStapPath,
+    getStepPath,
     goToNextStep,
     goToPreviousStep,
     goToStep,
