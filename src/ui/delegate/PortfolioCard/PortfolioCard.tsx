@@ -1,10 +1,8 @@
 import { ReactElement } from "react";
 import { Signer } from "ethers";
-import { formatEther, parseEther } from "ethers/lib/utils";
+import { parseEther } from "ethers/lib/utils";
 import Link from "next/link";
 
-import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
@@ -12,7 +10,6 @@ import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLa
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
-import { useDeposits } from "src/ui/contracts/useDeposits";
 import { jt, t } from "ttag";
 import tw, {
   display,
@@ -35,12 +32,15 @@ interface PortfolioCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   currentDelegate: Delegate | undefined;
+  walletBalance: string;
+  vaultBalance: string;
 }
 
 const portfolioTooltip = t`Don’t know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 
 function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const { account, signer, currentDelegate } = props;
+  const { account, signer, currentDelegate, walletBalance, vaultBalance } =
+    props;
 
   const { value: deposit, setNumericValue: setDeposit } =
     useNumericInputValue();
@@ -49,15 +49,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
 
   const clearDepositInput = () => setDeposit("");
   const clearWithdrawInput = () => setWithdraw("");
-
-  const { data: walletBalanceBN } = useTokenBalanceOf(
-    elementTokenContract,
-    account,
-  );
-  const walletBalance = formatEther(walletBalanceBN || 0);
-
-  const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
-  const vaultBalance = formatEther(vaultBalanceBN || 0);
 
   const { mutate: onDeposit } = useDepositIntoLockingVault(
     signer,

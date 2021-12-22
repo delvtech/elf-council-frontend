@@ -18,7 +18,6 @@ import tw, {
   fontSize,
   letterSpacing,
   textAlign,
-  maxHeight,
   backgroundColor,
   lineHeight,
   position,
@@ -30,7 +29,11 @@ import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import { t } from "ttag";
 import DelegatesList from "./DelegatesList/DelegatesList";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import { elementTokenContract } from "src/elf/contracts";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
+import { formatEther } from "ethers/lib/utils";
+import { useDeposits } from "src/ui/contracts/useDeposits";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -40,7 +43,17 @@ export default function DelegatePage(): ReactElement {
     Delegate | undefined
   >();
 
-  const showWarning = !account || !currentDelegate;
+  const { data: walletBalanceBN } = useTokenBalanceOf(
+    elementTokenContract,
+    account,
+  );
+  const walletBalance = formatEther(walletBalanceBN || 0);
+
+  const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
+  const vaultBalance = formatEther(vaultBalanceBN || 0);
+
+  const showWarning =
+    !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
 
   return (
     <div className={tw(margin("mb-8", { "mt-16": !showWarning }))}>
@@ -70,7 +83,7 @@ export default function DelegatePage(): ReactElement {
               fontSize("text-sm"),
             )}
           >
-            {!account ? <NoConnection /> : <NoDelegate />}
+            {!account ? <NoConnection /> : <NoDeposit />}
           </div>
           <div className={tw(width("xl:w-7/12"))}>{/* Empty on purpose */}</div>
         </div>
@@ -108,6 +121,8 @@ export default function DelegatePage(): ReactElement {
               account={account}
               signer={signer}
               currentDelegate={currentDelegate}
+              walletBalance={walletBalance}
+              vaultBalance={vaultBalance}
             />
           </div>
         </GradientCard>
@@ -182,7 +197,7 @@ function NoConnection(): ReactElement {
   );
 }
 
-function NoDelegate(): ReactElement {
+function NoDeposit(): ReactElement {
   return (
     <p className={tw(textAlign("text-left"))}>
       <div>
