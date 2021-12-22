@@ -13,8 +13,11 @@ import tw, {
   alignItems,
   margin,
   textAlign,
+  justifyContent,
+  backgroundColor,
 } from "src/elf-tailwindcss-classnames";
 import { ChainId, ChainNames } from "src/ethereum";
+import Footer from "src/ui/app/Footer";
 import Header from "src/ui/app/Header";
 import Sidebar from "src/ui/app/Sidebar";
 import SimpleDialog from "src/ui/base/Dialog/Dialog";
@@ -29,6 +32,7 @@ interface PageViewProps {
    */
   showSidebar?: boolean;
   showHeader?: boolean;
+  showFooter?: boolean;
 }
 
 export default function PageView(props: PageViewProps): ReactElement {
@@ -36,6 +40,7 @@ export default function PageView(props: PageViewProps): ReactElement {
     children,
     showSidebar = true,
     showHeader = true,
+    showFooter = false,
     childrenContainerClassName,
   } = props;
   const { chainId } = useWeb3React();
@@ -44,8 +49,11 @@ export default function PageView(props: PageViewProps): ReactElement {
     <Fragment>
       <div
         className={tw(
+          display("flex"),
           width("w-full"),
-          height("h-full"),
+          height("h-screen"),
+          backgroundColor("bg-hackerSky"),
+          justifyContent("justify-between"),
           overflow("overflow-hidden"),
           padding({ "md:pl-60": showSidebar }),
         )}
@@ -67,12 +75,18 @@ export default function PageView(props: PageViewProps): ReactElement {
 
           <div
             className={classNames(
-              tw(margin("mt-6"), width("w-full"), height("h-full")),
+              tw(
+                margin("mt-6"),
+                width("w-full"),
+                height("h-full"),
+                flex("flex-1"),
+              ),
               childrenContainerClassName,
             )}
           >
             {children}
           </div>
+          {showFooter ? <Footer /> : null}
         </div>
       </div>
       <SimpleDialog isOpen={isWrongChain}>

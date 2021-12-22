@@ -1,10 +1,10 @@
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { formatEther } from "@ethersproject/units";
 import { OptimisticRewards } from "elf-council-typechain";
 import { BigNumber, ethers } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { rewardsContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 export function useRewardsVaultVotingPower(

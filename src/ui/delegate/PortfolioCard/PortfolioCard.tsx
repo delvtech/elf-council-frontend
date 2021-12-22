@@ -2,7 +2,6 @@ import { ReactElement } from "react";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import Link from "next/link";
-
 import { Delegate } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";

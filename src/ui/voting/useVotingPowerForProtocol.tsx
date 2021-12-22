@@ -1,8 +1,8 @@
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { BigNumber } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 import { addressesJson } from "src/elf-council-addresses";
 import { elementTokenContract, vestingContract } from "src/elf/contracts";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 const { vestingVault, lockingVault } = addressesJson.addresses;
 

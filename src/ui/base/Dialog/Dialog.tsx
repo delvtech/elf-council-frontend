@@ -98,6 +98,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
           >
             <div
               className={tw(
+                position("relative"),
                 display("inline-block"),
                 verticalAlign("align-bottom", "sm:align-middle"),
                 backgroundColor("bg-white"),

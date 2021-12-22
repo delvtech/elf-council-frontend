@@ -1,6 +1,6 @@
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { ethers } from "ethers";
 import { lockingVaultContract } from "src/elf/contracts";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 export function useDelegate(
   address: string | undefined | null

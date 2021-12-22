@@ -1,18 +1,15 @@
-import { ReactElement, useState, MouseEvent } from "react";
-import { Tooltip } from "@material-ui/core";
+import { ReactElement } from "react";
+
 import classNames from "classnames";
 import tw, {
-  height,
-  display,
   alignItems,
+  display,
   fontSize,
   margin,
   textColor,
 } from "src/elf-tailwindcss-classnames";
-import { t } from "ttag";
-import Link from "next/link";
-import { QuestionMarkCircleIcon } from "@heroicons/react/outline";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
 
 interface BalanceLabeledStatProps {
   className?: string;
@@ -26,24 +23,6 @@ export function BalanceLabeledStat(
   props: BalanceLabeledStatProps,
 ): ReactElement {
   const { className, tooltip, tooltipHref, label, balance } = props;
-  const [showTooltip, setShowTooltip] = useState(false);
-
-  const enableTooltip = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setShowTooltip(true);
-  };
-  const disableTooltip = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setShowTooltip(false);
-  };
-
-  const tooltipIcon = tooltipHref ? (
-    <Link href={tooltipHref} passHref>
-      <QuestionMarkCircleIcon className={tw(height("h-5"))} />
-    </Link>
-  ) : (
-    <QuestionMarkCircleIcon className={tw(height("h-5"))} />
-  );
 
   return (
     <div className={classNames(textColor("text-white"), className)}>
@@ -60,22 +39,12 @@ export function BalanceLabeledStat(
         <span className={tw(fontSize("text-xl"), margin("mr-2", "mb-1"))}>
           {label}
         </span>
-        {tooltip ? (
-          <Tooltip
-            arrow
-            placement="top"
-            open={showTooltip}
-            title={t`${tooltip}`}
-          >
-            <button
-              className={height("h-5")}
-              onMouseEnter={enableTooltip}
-              onMouseLeave={disableTooltip}
-            >
-              {tooltipIcon}
-            </button>
-          </Tooltip>
-        ) : null}
+        {tooltip && (
+          <InfoIconWithTooltip
+            tooltipText={tooltip}
+            tooltipHref={tooltipHref}
+          />
+        )}
       </div>
     </div>
   );

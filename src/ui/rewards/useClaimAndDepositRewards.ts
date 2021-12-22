@@ -3,7 +3,7 @@ import { UseMutationResult } from "react-query";
 import { OptimisticRewards } from "elf-council-typechain";
 import { ContractReceipt, Signer } from "ethers";
 import { rewardsContract } from "src/elf/contracts";
-import { useSmartContractTransaction } from "src/react-query-typechain/hooks/useSmartContractTransaction/useSmartContractTransaction";
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useClaimAndDepositRewards(
   signer: Signer | undefined

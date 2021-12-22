@@ -1,6 +1,6 @@
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { formatEther } from "@ethersproject/units";
 import { airdropContract } from "src/elf/contracts";
-import { useSmartContractReadCall } from "src/react-query-typechain/hooks/useSmartContractReadCall/useSmartContractReadCall";
 
 export function useClaimedAirdrop(address: string | undefined | null): string {
   const { data: claimedBN } = useSmartContractReadCall(
