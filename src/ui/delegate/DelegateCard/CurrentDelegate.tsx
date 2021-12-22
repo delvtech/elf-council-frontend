@@ -1,12 +1,4 @@
-import {
-  ReactElement,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useState,
-  useRef,
-} from "react";
-import Button from "src/ui/base/Button/Button";
+import { ReactElement, useCallback, useState, useRef } from "react";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import tw, {
   padding,
@@ -20,23 +12,21 @@ import tw, {
   fontWeight,
   alignItems,
   gap,
-  position,
   height,
   width,
 } from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
-import Image from "next/image";
 import { t } from "ttag";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Tooltip } from "@material-ui/core";
 import { DuplicateIcon } from "@heroicons/react/outline";
+import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 interface CurrentDelegateProps {
   className?: string;
   delegate: Delegate;
-  setEditDelegate: Dispatch<SetStateAction<boolean>>;
 }
 
 const defaultToolTipState = {
@@ -44,14 +34,10 @@ const defaultToolTipState = {
   address: false,
 };
 
-export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { className = "", delegate, setEditDelegate } = props;
+function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
+  const { className = "", delegate } = props;
   const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleClickEdit = useCallback(() => {
-    setEditDelegate((prevState) => !prevState);
-  }, [setEditDelegate]);
 
   // Slightly overengineered handleCopy?
   const handleCopy = useCallback(
@@ -78,9 +64,8 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       className={classNames(
         className,
         tw(
-          margin("mt-3"),
-          padding("py-6", "px-4"),
           display("flex"),
+          padding("py-4", "px-4"),
           justifyContent("justify-between"),
           backgroundColor("bg-hackerSky"),
           borderRadius("rounded-xl"),
@@ -88,64 +73,85 @@ export function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       )}
     >
       <div className={tw(display("flex"), flexDirection("flex-col"))}>
-        <span
+        <div
           className={tw(
             textColor("text-principalRoyalBlue"),
             fontWeight("font-bold"),
+            display("flex"),
+            alignItems("items-center"),
+            margin("mb-1"),
           )}
         >
-          {delegate.name}
+          <span
+            className={tw(
+              display("inline-block"),
+              height("h-5"),
+              width("w-5"),
+              borderRadius("rounded-xl"),
+              backgroundColor("bg-principalRoyalBlue"),
+              margin("mr-1.5"),
+            )}
+          ></span>
+          <span>{delegate.name}</span>
+        </div>
+        <span className={tw(textColor("text-blueGrey"))}>
+          <NumDelegatedVotes account={delegate.address} />
         </span>
         <span className={textColor("text-blueGrey")}>
           {formatWalletAddress(delegate.address)}
         </span>
-        <span
-          className={tw(
-            display("flex"),
-            alignItems("items-center"),
-            gap("gap-2"),
-            margin("mt-1.5"),
-          )}
-        >
-          <Tooltip
-            arrow
-            placement="top"
-            open={showToolTip.twitterHandle}
-            title={t`Twitter handle copied`}
-          >
-            <button
-              className={tw(position("relative"), height("h-5"), width("w-5"))}
-              onClick={handleCopyTwitterHandle}
-            >
-              <Image
-                layout="fill"
-                src="/assets/Twitter.svg"
-                alt={t`Tooltip icon`}
-              />
-            </button>
-          </Tooltip>
-          <Tooltip
-            arrow
-            placement="top"
-            open={showToolTip.address}
-            title={t`Address copied`}
-          >
-            <button onClick={handleCopyAddress}>
-              <DuplicateIcon
-                className={tw(
-                  height("h-5"),
-                  textColor("text-principalRoyalBlue"),
-                )}
-              />
-            </button>
-          </Tooltip>
-        </span>
       </div>
-      <div>
-        <Button onClick={handleClickEdit} variant={ButtonVariant.WHITE}>
-          Edit
-        </Button>
+
+      <div
+        className={tw(
+          display("flex"),
+          flexDirection("flex-col"),
+          justifyContent("justify-center"),
+          gap("gap-2"),
+        )}
+      >
+        <Tooltip
+          arrow
+          placement="top"
+          open={showToolTip.twitterHandle}
+          title={t`Twitter handle copied`}
+        >
+          <button onClick={handleCopyTwitterHandle}>
+            <AnnotationIcon
+              className={tw(
+                height("h-5"),
+                textColor("text-principalRoyalBlue"),
+              )}
+            />
+          </button>
+        </Tooltip>
+        <Tooltip
+          arrow
+          placement="top"
+          open={showToolTip.address}
+          title={t`Address copied`}
+        >
+          <button onClick={handleCopyAddress}>
+            <DuplicateIcon
+              className={tw(
+                height("h-5"),
+                textColor("text-principalRoyalBlue"),
+              )}
+            />
+          </button>
+        </Tooltip>
       </div>
     </div>
   );
 }
+
+interface NumDelegatedVotesProps {
+  account: string;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccount(account);
+  return <span>{t`${votePower} votes`}</span>;
+}
+
+export default CurrentDelegate;

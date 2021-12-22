@@ -1,43 +1,45 @@
-import { ChangeEvent, ReactElement, useCallback } from "react";
-
+import { ReactElement } from "react";
 import { Signer } from "ethers";
-import { formatEther, parseEther } from "ethers/lib/utils";
+import { parseEther } from "ethers/lib/utils";
 import Link from "next/link";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw, {
-  display,
-  flexDirection,
-  fontSize,
-  fontWeight,
-  gap,
-  justifyContent,
-  lineHeight,
-  margin,
-  textColor,
-  width,
-} from "src/elf-tailwindcss-classnames";
-import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
-import { useDeposits } from "src/ui/contracts/useDeposits";
 import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
-import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
+import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { jt, t } from "ttag";
+import tw, {
+  display,
+  margin,
+  width,
+  justifyContent,
+  gap,
+  flexDirection,
+  textColor,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  opacity,
+  textAlign,
+  cursor,
+} from "src/elf-tailwindcss-classnames";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface PortfolioCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   currentDelegate: Delegate | undefined;
+  walletBalance: string;
+  vaultBalance: string;
 }
 
 const portfolioTooltip = t`Don’t know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 
 function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const { account, signer, currentDelegate } = props;
+  const { account, signer, currentDelegate, walletBalance, vaultBalance } =
+    props;
 
   const { value: deposit, setNumericValue: setDeposit } =
     useNumericInputValue();
@@ -47,15 +49,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const clearDepositInput = () => setDeposit("");
   const clearWithdrawInput = () => setWithdraw("");
 
-  const { data: walletBalanceBN } = useTokenBalanceOf(
-    elementTokenContract,
-    account,
-  );
-  const walletBalance = formatEther(walletBalanceBN || 0);
-
-  const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
-  const vaultBalance = formatEther(vaultBalanceBN || 0);
-
   const { mutate: onDeposit } = useDepositIntoLockingVault(
     signer,
     clearDepositInput,
@@ -64,22 +57,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { mutate: onWithdraw } = useWithdrawFromLockingVault(
     signer,
     clearWithdrawInput,
-  );
-
-  const onSetDepositAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newDepositAmount = event.target.value;
-      setDeposit(newDepositAmount);
-    },
-    [setDeposit],
-  );
-
-  const onSetWithdrawalAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newWithdrawalAmount = event.target.value;
-      setWithdraw(newWithdrawalAmount);
-    },
-    [setWithdraw],
   );
 
   const depositClickHandler = () => {
@@ -92,17 +69,8 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
     onWithdraw([parseEther(withdraw)]);
   };
 
-  const setMaxDeposit = () => {
-    if (!account) return;
-    setDeposit(walletBalance);
-  };
-  const setMaxWithdraw = () => {
-    if (!account) return;
-    setWithdraw(vaultBalance);
-  };
-
   return (
-    <div>
+    <div className={tw(opacity({ "opacity-50": !account }))}>
       {/* Balance Stats */}
       <div
         className={tw(
@@ -140,7 +108,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <DepositInput
             depositAmount={deposit}
             balance={walletBalance}
-            onSetDepositAmount={onSetDepositAmount}
+            onDeposit={setDeposit}
             id={"deposit-amount"}
             name={t`Deposit amount`}
             placeholder={t`Insert amount to deposit`}
@@ -157,14 +125,10 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           )}
         >
           <Button
-            onClick={setMaxDeposit}
-            disabled={!parseInt(walletBalance)}
-            variant={ButtonVariant.GRADIENT}
-          >{t`Max`}</Button>
-          <Button
             onClick={depositClickHandler}
             disabled={!parseInt(walletBalance) || !deposit}
             variant={ButtonVariant.GRADIENT}
+            className={tw(width("w-28"), justifyContent("justify-center"))}
           >{t`Deposit`}</Button>
         </div>
       </div>
@@ -179,11 +143,11 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
               fontSize("text-sm"),
               margin("mb-2"),
             )}
-          >{jt`Tokens Eligible to Deposit: ${walletBalance}`}</div>
+          >{jt`Tokens Eligible to Withdraw: ${vaultBalance}`}</div>
           <DepositInput
             depositAmount={withdraw}
             balance={vaultBalance}
-            onSetDepositAmount={onSetWithdrawalAmount}
+            onDeposit={setWithdraw}
             id={"withdraw-amount"}
             name={t`Withdraw amount`}
             placeholder={t`Insert amount to withdraw`}
@@ -200,14 +164,10 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           )}
         >
           <Button
-            onClick={setMaxWithdraw}
-            disabled={!parseInt(vaultBalance)}
-            variant={ButtonVariant.WHITE}
-          >{t`Max`}</Button>
-          <Button
             onClick={withdrawClickHandler}
             disabled={!parseInt(vaultBalance) || !withdraw}
             variant={ButtonVariant.WHITE}
+            className={tw(width("w-28"), textAlign("text-center"))}
           >{t`Withdraw`}</Button>
         </div>
       </div>
@@ -216,6 +176,10 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
 }
 
 function PortfolioDepositText(): ReactElement {
+  const deposit = (
+    <span className={tw(fontWeight("font-bold"))}>{t`deposit`}</span>
+  );
+
   return (
     <p
       className={tw(
@@ -225,16 +189,19 @@ function PortfolioDepositText(): ReactElement {
         fontSize("text-sm"),
       )}
     >
-      To protect our governance system, we ask our users to{" "}
-      <span className={fontWeight("font-bold")}>deposit</span> their tokens when
-      they have the intention to vote and/or delegate.{" "}
-      <span className={fontWeight("font-bold")}>
-        This verifies your eligibility to vote and/or delegate.
-      </span>{" "}
+      {jt`To protect our governance system, we ask our users to ${deposit} their tokens when they have the intention to vote and/or delegate.`}{" "}
+      <span className={tw(fontWeight("font-bold"))}>
+        {t`This verifies your eligibility to vote and/or delegate.`}
+      </span>
       <div>
         <Link href="/resources" passHref>
-          <span className={tw(textColor("text-goldYellow"))}>
-            To learn more about our vaults read here.
+          <span
+            className={tw(
+              textColor("text-goldYellow"),
+              cursor("cursor-pointer"),
+            )}
+          >
+            {t`To learn more about our vaults read here.`}
           </span>
         </Link>
       </div>
@@ -252,12 +219,17 @@ function PortfolioWithdrawText(): ReactElement {
         fontSize("text-sm"),
       )}
     >
-      To remove deposited tokens from voting eligibility enter a withdrawal
-      amount.
+      {t`To remove deposited tokens from voting eligibility enter a withdrawal
+      amount.`}
       <div>
         <Link href="/resources" passHref>
-          <span className={tw(textColor("text-goldYellow"))}>
-            Read more to learn about our voting vaults.
+          <span
+            className={tw(
+              textColor("text-goldYellow"),
+              cursor("cursor-pointer"),
+            )}
+          >
+            {t`Read more to learn about our voting vaults.`}
           </span>
         </Link>
       </div>

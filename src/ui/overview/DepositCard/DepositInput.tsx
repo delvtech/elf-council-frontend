@@ -1,17 +1,19 @@
-import React, { ReactElement } from "react";
+import React, { ChangeEvent, ReactElement, useCallback } from "react";
 import { FixedNumber } from "ethers";
 import tw, {
   flexGrow,
   height,
   textAlign,
 } from "src/elf-tailwindcss-classnames";
-import NumericInput from "src/ui/base/Input/NumericInput";
-import { t } from "ttag";
+import classNames from "classnames";
+import TokenInput from "src/ui/base/Input/TokenInput";
 
 interface DepositInputProps {
   depositAmount: string;
   balance: string;
-  onSetDepositAmount: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onDeposit: (value: string) => void;
+  className?: string;
+  inputClassName?: string;
   id: string;
   name: string;
   placeholder: string;
@@ -22,7 +24,9 @@ export function DepositInput(props: DepositInputProps): ReactElement {
   const {
     depositAmount,
     balance,
-    onSetDepositAmount,
+    onDeposit,
+    className = "",
+    inputClassName = "",
     id,
     name,
     placeholder,
@@ -34,17 +38,22 @@ export function DepositInput(props: DepositInputProps): ReactElement {
     .isNegative();
 
   return (
-    <NumericInput
+    <TokenInput
       disabled={!hasBalance}
       error={!hasEnoughBalance}
       screenReaderLabel={screenReaderLabel}
       id={id}
       name={name}
       placeholder={placeholder}
-      className={flexGrow("grow")}
-      inputClassName={tw(height("h-12"), textAlign("text-center"))}
+      className={classNames(className, tw(flexGrow("grow")))}
+      inputClassName={classNames(
+        inputClassName,
+        tw(height("h-12"), textAlign("text-left")),
+      )}
       value={depositAmount}
-      onChange={onSetDepositAmount}
+      showMaxButton
+      maxValue={balance}
+      onChange={onDeposit}
     />
   );
 }

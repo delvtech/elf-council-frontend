@@ -1,8 +1,5 @@
 import { ReactElement, useState, useCallback, useRef } from "react";
-import { Delegate } from "src/elf-council-delegates/delegates";
-import Image from "next/image";
 import { Tooltip } from "@material-ui/core";
-import { copyToClipboard } from "src/base/copyToClipboard";
 import { t } from "ttag";
 import tw, {
   display,
@@ -15,13 +12,15 @@ import tw, {
   textColor,
   fontWeight,
   gap,
-  position,
   height,
   width,
+  margin,
 } from "src/elf-tailwindcss-classnames";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { DuplicateIcon } from "@heroicons/react/outline";
-
+import { AnnotationIcon } from "@heroicons/react/solid";
+import { Delegate } from "src/elf-council-delegates/delegates";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { copyToClipboard } from "src/base/copyToClipboard";
 interface DelegateProfileProps {
   delegate: Delegate;
 }
@@ -61,28 +60,43 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         display("flex"),
         alignItems("items-center"),
         justifyContent("justify-between"),
-        padding("py-3", "px-5"),
+        padding("py-3", "px-4"),
+
         backgroundColor("bg-hackerSky"),
         borderRadius("rounded-xl"),
       )}
     >
       <div className={tw(display("flex"), flexDirection("flex-col"))}>
-        <span
+        <div
           className={tw(
             textColor("text-principalRoyalBlue"),
             fontWeight("font-bold"),
+            display("flex"),
+            alignItems("items-center"),
+            margin("mb-1"),
           )}
         >
-          {delegate.name}
-        </span>
-        <span className={textColor("text-blueGrey")}>
-          {formatWalletAddress(delegate.address)}
+          {/* Blue circle placeholder for when we implement the 'avatar' for each Delegate  */}
+          <span
+            className={tw(
+              display("inline-block"),
+              height("h-5"),
+              width("w-5"),
+              borderRadius("rounded-xl"),
+              backgroundColor("bg-principalRoyalBlue"),
+              margin("mr-1.5"),
+            )}
+          />
+          <span>{delegate.name}</span>
+        </div>
+        <span className={tw(textColor("text-blueGrey"))}>
+          <NumDelegatedVotes account={delegate.address} />
         </span>
       </div>
       <div>
         <span
           className={tw(
-            display("flex"),
+            display(display("flex")),
             flexDirection("flex-col"),
             gap("gap-1"),
           )}
@@ -93,14 +107,12 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             open={showToolTip.twitterHandle}
             title={t`Twitter handle copied`}
           >
-            <button
-              className={tw(position("relative"), height("h-5"), width("w-5"))}
-              onClick={handleCopyTwitterHandle}
-            >
-              <Image
-                layout="fill"
-                src="/assets/Twitter.svg"
-                alt={t`Tooltip icon`}
+            <button onClick={handleCopyTwitterHandle}>
+              <AnnotationIcon
+                className={tw(
+                  height("h-5"),
+                  textColor("text-principalRoyalBlue"),
+                )}
               />
             </button>
           </Tooltip>
@@ -123,6 +135,15 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
       </div>
     </div>
   );
+}
+
+interface NumDelegatedVotesProps {
+  account: string;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccount(account);
+  return <span>{t`${votePower} votes`}</span>;
 }
 
 export default DelegateProfile;

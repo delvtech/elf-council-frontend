@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
@@ -31,7 +31,7 @@ import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
-import NumericInput from "src/ui/base/Input/NumericInput";
+import TokenInput from "src/ui/base/Input/TokenInput";
 import TextInput from "src/ui/base/Input/TextInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { Label } from "src/ui/base/Label/Label";
@@ -96,14 +96,6 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
-
-  const onSetDepositAmount = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newDepositAmount = event.target.value;
-      setDepositAmount(newDepositAmount);
-    },
-    [setDepositAmount],
-  );
 
   const onSetMax = useCallback(() => {
     setDepositAmount(balance);
@@ -219,9 +211,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
               padding("px-4"),
             )}
           >
-            <Label
-              className={textAlign("text-left")}
-            >{t`Unclaimed:`}</Label>
+            <Label className={textAlign("text-left")}>{t`Unclaimed:`}</Label>
             <Label className={textAlign("text-right")}>
               {unclaimed.toFixed(2)}
             </Label>
@@ -234,9 +224,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
               padding("px-4"),
             )}
           >
-            <Label
-              className={textAlign("text-left")}
-            >{t`Deposited:`}</Label>
+            <Label className={textAlign("text-left")}>{t`Deposited:`}</Label>
             <Label className={textAlign("text-right")}>
               {Number(deposited).toFixed(2)}
             </Label>
@@ -283,9 +271,9 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
                 round
                 variant={ButtonVariant.OUTLINE_WHITE}
               >{t`Max`}</Button>
-              <NumericInput
+              <TokenInput
                 value={depositAmount}
-                onChange={onSetDepositAmount}
+                onChange={setDepositAmount}
                 screenReaderLabel={t`deposit amount`}
                 id={"deposit-amount"}
                 name={"Deposit Amount"}
