@@ -3,6 +3,7 @@ import React, { ReactElement } from "react";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
+import { commify } from "ethers/lib/utils";
 import Link from "next/link";
 import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
@@ -22,20 +23,34 @@ import tw, {
   width,
 } from "src/elf-tailwindcss-classnames";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
+
+const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
+const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
 interface ProposalDetailsCardProps {
   className?: string;
+  account: string | null | undefined;
   proposal: Proposal | undefined;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement {
-  const { className, proposal } = props;
+  const { className, proposal, account } = props;
 
   const snapshotProposal = useSnapshotProposal(proposal?.snapshotId);
+
+  const amountDeposited = useDeposited(account) || "0";
+
+  const votingPower = useVotingPowerForAccount(account);
+
+  const formattedVotingPower = commify((+votingPower).toFixed(4));
 
   if (!proposal) {
     return (
@@ -148,6 +163,21 @@ export function ProposalDetailsCard(
           </button>
         </Link>
       </p>
+
+      <BalanceWithLabel
+        className={tw(width("w-full"), margin("mt-8"))}
+        balance={formattedVotingPower}
+        tooltipText={votingPowerTooltipText}
+        tooltipHref={"/resources"}
+        label={t`Voting Power`}
+      />
+      <BalanceWithLabel
+        className={tw(width("w-full"), margin("mt-8"))}
+        balance={amountDeposited}
+        tooltipText={votingBalanceTooltipText}
+        tooltipHref={"/resources"}
+        label={t`Eligible voting balance`}
+      />
     </GradientCard>
   );
 }
@@ -168,4 +198,44 @@ function truncateText(text: string, characterLimit = 250) {
   }
 
   return `${text.slice(0, 250)}...`;
+}
+
+interface BalanceWithLabelProps {
+  className?: string;
+  balance: string;
+  label: string;
+  tooltipText?: string;
+  tooltipHref?: string;
+}
+function BalanceWithLabel(props: BalanceWithLabelProps) {
+  const { className, balance, label, tooltipHref, tooltipText } = props;
+  return (
+    <div className={classNames(className, tw(textColor("text-white")))}>
+      <div className={tw(display("flex"), alignItems("items-center"))}>
+        <div
+          className={tw(fontSize("text-2xl"), fontWeight("font-extralight"))}
+        >
+          {balance}
+        </div>
+        <ElementIcon className={tw(margin("ml-2"))} size={IconSize.MEDIUM} />
+      </div>
+      <div
+        className={tw(
+          display("flex"),
+          fontSize("text-lg"),
+          fontWeight("font-light"),
+          alignItems("items-center"),
+        )}
+      >
+        {label}
+        {tooltipText && (
+          <InfoIconWithTooltip
+            className={tw(margin("ml-1"))}
+            tooltipText={tooltipText}
+            tooltipHref={tooltipHref}
+          />
+        )}
+      </div>
+    </div>
+  );
 }
