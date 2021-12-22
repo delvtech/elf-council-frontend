@@ -14,13 +14,13 @@ import tw, {
   flex,
 } from "src/elf-tailwindcss-classnames";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
+import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
 import { Step } from "src/ui/base/Card/Steps/Steps";
 import Steps2 from "src/ui/base/Card/Steps2/Steps2";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
-import { StartClaimingCard } from "./StartClaimingCard";
 
 interface StepWithContent extends Step {
   content: ReactNode;
