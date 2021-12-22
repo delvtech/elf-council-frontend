@@ -13,13 +13,10 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { useClaimedAirdrop } from "src/ui/airdrop/useClaimedAirdrop";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Button from "src/ui/base/Button/Button";
 import LinkButton from "src/ui/base/Button/LinkButton";
 
 interface DelegatedCardProps {

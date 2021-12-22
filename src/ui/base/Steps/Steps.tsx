@@ -21,7 +21,7 @@ import tw, {
   visibility,
   flexShrink,
 } from "src/elf-tailwindcss-classnames";
-import { Step } from "src/ui/base/Card/Steps2/step";
+import { Step } from "src/ui/base/Steps/step";
 
 interface StepsProps {
   activeStepIndex: number | undefined;
@@ -29,7 +29,7 @@ interface StepsProps {
   className?: string;
 }
 
-export default function Steps2({
+export default function Steps({
   steps,
   activeStepIndex,
   className,

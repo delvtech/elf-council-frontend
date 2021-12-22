@@ -16,11 +16,11 @@ import tw, {
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
-import { Step, StepStatus } from "src/ui/base/Card/Steps/Steps";
-import Steps2 from "src/ui/base/Card/Steps2/Steps2";
+import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
+import { Step, StepStatus } from "src/ui/base/Steps/step";
 
 interface StepWithContent extends Step {
   content: ReactNode;
@@ -99,7 +99,7 @@ export default function AirdropPage(): ReactElement {
       )}
     >
       <div style={{ width: 600 }}>
-        <Steps2 steps={steps} activeStepIndex={activeStepIndex} />
+        <Steps steps={steps} activeStepIndex={activeStepIndex} />
       </div>
 
       <div className={tw(width("w-full", "md:w-3/5"), height("h-full"))}>

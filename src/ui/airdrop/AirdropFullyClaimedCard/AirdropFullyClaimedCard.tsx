@@ -13,13 +13,12 @@ import tw, {
   padding,
   space,
   width,
-  flex,
 } from "src/elf-tailwindcss-classnames";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
-import { ClaimedAmountCard } from "src/ui/airdrop/AirdropFullyClaimed/ClaimedAmountCard";
-import { DelegatedCard } from "src/ui/airdrop/AirdropFullyClaimed/DelegatedCard";
+import { ClaimedAmountCard } from "src/ui/airdrop/AirdropFullyClaimedCard/ClaimedAmountCard";
+import { DelegatedCard } from "src/ui/airdrop/AirdropFullyClaimedCard/DelegatedCard";
 
 interface AirdropFullyClaimedCardProps {
   account: string | null | undefined;
