@@ -85,7 +85,16 @@ export default function DelegatePage(): ReactElement {
           >
             {!account ? <NoConnection /> : <NoDeposit />}
           </div>
-          <div className={tw(width("xl:w-7/12"))}>{/* Empty on purpose */}</div>
+
+          {/***
+           * This is just a empty placeholder to match the width of its 
+           * counterpart container: delegates list. Matches the '7/12' width. 
+           * Helps keep warning label flush with the main content of the page, 
+           * i.e. the PortfolioCard & DelegateList + DelegateCard, due to the 
+           * 'justify-center' attribute on the main content, which makes it hard
+           * to keep things flush and responsive.
+           */}
+          <div className={tw(width("xl:w-7/12"))} />
         </div>
       ) : null}
 

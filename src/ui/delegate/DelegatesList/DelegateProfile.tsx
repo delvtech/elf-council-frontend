@@ -76,6 +76,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             margin("mb-1"),
           )}
         >
+          {/* Blue circle placeholder for when we implement the 'avatar' for each Delegate  */}
           <span
             className={tw(
               display("inline-block"),
@@ -85,7 +86,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               backgroundColor("bg-principalRoyalBlue"),
               margin("mr-1.5"),
             )}
-          ></span>
+          />
           <span>{delegate.name}</span>
         </div>
         <span className={tw(textColor("text-blueGrey"))}>
