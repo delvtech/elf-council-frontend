@@ -186,6 +186,10 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
 }
 
 function PortfolioDepositText(): ReactElement {
+  const deposit = (
+    <span className={tw(fontWeight("font-bold"))}>{t`deposit`}</span>
+  );
+
   return (
     <p
       className={tw(
@@ -195,9 +199,7 @@ function PortfolioDepositText(): ReactElement {
         fontSize("text-sm"),
       )}
     >
-      {t`To protect our governance system, we ask our users to`}{" "}
-      <span className={tw(fontWeight("font-bold"))}>{t`deposit`}</span>{" "}
-      {t`their tokens when they have the intention to vote and/or delegate.`}{" "}
+      {jt`To protect our governance system, we ask our users to ${deposit} their tokens when they have the intention to vote and/or delegate.`}{" "}
       <span className={tw(fontWeight("font-bold"))}>
         {t`This verifies your eligibility to vote and/or delegate.`}
       </span>
