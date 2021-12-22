@@ -12,6 +12,7 @@ import tw, {
   lineHeight,
   textColor,
   flexShrink,
+  textAlign,
 } from "src/elf-tailwindcss-classnames";
 import classnames from "classnames";
 
@@ -34,18 +35,17 @@ export default function CardHeader({
         tw(
           display("flex"),
           justifyContent("justify-between"),
-          alignItems("items-center"),
           flexWrap("flex-wrap", "sm:flex-nowrap"),
         ),
       )}
     >
-      <div className={margin("ml-4", "mt-4")}>
+      <div className={margin("ml-4", "mt-2")}>
         <h2
           className={tw(
             fontSize("text-lg"),
             fontWeight("font-semibold", "font-medium"),
             lineHeight("leading-6"),
-            textColor("text-brandDarkBlue-dark"),
+            textColor("text-brandDarkBlue"),
           )}
         >
           {title}
@@ -54,7 +54,8 @@ export default function CardHeader({
           className={tw(
             margin("mt-1"),
             fontSize("text-sm"),
-            textColor("text-gray-500"),
+            textAlign("text-left"),
+            textColor("text-brandDarkBlue"),
           )}
         >
           {description}
