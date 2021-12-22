@@ -67,7 +67,9 @@ export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
             )}
           >
             <span className={tw(margin("mb-4"))}>
-              {formatWalletAddress(delegateAddress as string)}
+              {delegateAddress
+                ? formatWalletAddress(delegateAddress as string)
+                : null}
             </span>
             <LinkButton
               link="/delegates"

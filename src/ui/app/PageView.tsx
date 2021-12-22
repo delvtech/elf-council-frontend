@@ -52,7 +52,7 @@ export default function PageView(props: PageViewProps): ReactElement {
           display("flex"),
           width("w-full"),
           height("h-screen"),
-          backgroundColor("bg-hackerSky"),
+          backgroundColor("bg-appBackgroundLight"),
           justifyContent("justify-between"),
           overflow("overflow-hidden"),
           padding({ "md:pl-60": showSidebar }),
