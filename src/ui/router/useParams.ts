@@ -2,9 +2,11 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 
 /**
- * The query object of the Next.js useRouter hook returns an array for
- * parameters that appear more than once in a URL. This function returns only
- * the last values to ensure each parameter is a string or undefined.
+ * returns query params in the URL in an object. If a param appears more than
+ * once, it only returns the last value (e.g. ?foo=baz&foo=bar returns "bar").
+ * This makes dealing with types a bit easier since useRouter returns an array
+ * for params that appear more than once
+ * (e.g. ?foo=baz&foo=bar returns ["baz", "bar"]).
  */
 export function useParams(): { [key: string]: string | undefined } {
   const { query } = useRouter();
@@ -16,8 +18,8 @@ export function useParams(): { [key: string]: string | undefined } {
           ...reduced,
           [key]: Array.isArray(value) ? value.slice(-1)[0] : value,
         }),
-        {}
+        {},
       ),
-    [query]
+    [query],
   );
 }
