@@ -16,7 +16,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropPage/AirdropFullyClaimedCard";
+import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropFullyClaimed/AirdropFullyClaimedCard";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -51,7 +51,7 @@ export function ViewAirdropStepCard({
   // user has no airdrop if they have a merkle value but have already claimed
   // the full amount
   if (merkleInfo && parseEther(claimableBalance).isZero()) {
-    return <AirdropFullyClaimedCard />;
+    return <AirdropFullyClaimedCard account={account} />;
   }
 
   const airdropAmountLabel = getAirdropAmountLabel(merkleInfo, isLoadingMerkle);

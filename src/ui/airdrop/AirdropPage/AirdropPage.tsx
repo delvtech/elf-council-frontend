@@ -96,7 +96,6 @@ export default function AirdropPage(): ReactElement {
         width("w-full"),
         justifyContent("justify-center"),
         alignItems("items-center"),
-        margin("mt-12"),
       )}
     >
       <div style={{ width: 600 }}>
