@@ -1,4 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
+import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import React, {
   ReactElement,
@@ -10,14 +11,6 @@ import React, {
 import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
-import tw, {
-  height,
-  padding,
-  space,
-  flex,
-  textAlign,
-  display,
-} from "src/elf-tailwindcss-classnames";
 import H1 from "src/ui/base/H1";
 import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
@@ -89,20 +82,11 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId]);
 
   return (
-    <div className={tw(height("h-full"), display("flex"))}>
-      <div
-        className={tw(
-          flex("flex-1"),
-          height("h-full"),
-          padding("pt-8", "px-8"),
-          space("space-y-8"),
-        )}
-      >
-        <H1
-          className={tw(flex("flex-1"), textAlign("text-center"))}
-        >{t`Proposals`}</H1>
+    <div className="h-full flex">
+      <div className="flex-1 h-full pt-8 px-8 space-y-8">
+        <H1 className="flex-1 text-center">{t`Proposals`}</H1>
         <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
-        <div className={tw(display("flex"), space("space-x-12"))}>
+        <div className="flex space-x-12">
           <ProposalList
             account={account}
             signer={signer}
@@ -112,9 +96,9 @@ export default function ProposalsPage(): ReactElement {
           />
         </div>
       </div>
-      <div className={padding("pb-20")}>
+      <div className="pb-20">
         <ProposalDetailsCard
-          className={tw(display("hidden", "lg:flex"))}
+          className="hidden lg:flex"
           account={account}
           proposal={activeProposal}
         />

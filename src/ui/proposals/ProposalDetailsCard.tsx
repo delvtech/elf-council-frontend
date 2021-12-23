@@ -60,15 +60,8 @@ export function ProposalDetailsCard(
     return (
       <GradientCard
         className={classNames(
+          "flex w-80 h-full p-6 justify-center items-center",
           className,
-          tw(
-            display("flex"),
-            width("w-80"),
-            height("h-full"),
-            padding("p-6"),
-            justifyContent("justify-center"),
-            alignItems("items-center"),
-          ),
         )}
       >
         <span
