@@ -78,8 +78,9 @@ export function AirdropFullyClaimedCard({
         <div
           className={tw(
             display("flex"),
+            flexDirection("flex-col", "md:flex-row"),
             width("w-full"),
-            space("space-x-10"),
+            space("space-y-10", "md:space-x-10", "md:space-y-0"),
             padding("px-12"),
             margin("mb-10"),
           )}
