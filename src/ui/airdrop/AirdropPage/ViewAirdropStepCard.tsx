@@ -1,4 +1,4 @@
-import { parseEther } from "@ethersproject/units";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import React, { ReactElement } from "react";
 import tw, {
   display,
@@ -9,18 +9,18 @@ import tw, {
   fontSize,
   margin,
   fontWeight,
-  letterSpacing,
   space,
   justifyContent,
   width,
+  padding,
 } from "src/elf-tailwindcss-classnames";
-import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropFullyClaimedCard/AirdropFullyClaimedCard";
-import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
+import { RewardsInfoCard } from "src/ui/airdrop/AirdropPreview/RewardsInfoCard";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
+import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 import { LoadingAirdropCard } from "./LoadingAirdropCard";
 import { NoAirdropCard } from "./NoAirdropCard";
@@ -37,7 +37,6 @@ export function ViewAirdropStepCard({
   const merkleInfoQueryData = useMerkleInfo(account);
 
   const { data: merkleInfo, isLoading: isLoadingMerkle } = merkleInfoQueryData;
-  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
   if (isLoadingMerkle && !merkleInfo) {
     return <LoadingAirdropCard />;
@@ -47,14 +46,6 @@ export function ViewAirdropStepCard({
   if (!merkleInfo) {
     return <NoAirdropCard />;
   }
-
-  // user has no airdrop if they have a merkle value but have already claimed
-  // the full amount
-  if (merkleInfo && parseEther(claimableBalance).isZero()) {
-    return <AirdropFullyClaimedCard account={account} />;
-  }
-
-  const airdropAmountLabel = getAirdropAmountLabel(merkleInfo, isLoadingMerkle);
 
   return (
     <Card
@@ -68,70 +59,76 @@ export function ViewAirdropStepCard({
     >
       <div
         className={tw(
-          textAlign("text-center"),
-          fontSize("text-sm"),
-          margin("mb-4"),
+          display("flex"),
+          flexDirection("flex-col"),
+          padding("p-6"),
         )}
       >
+        <div className={textAlign("text-right")}>
+          <Tag intent={Intent.SUCCESS}>
+            <span
+              className={fontWeight("font-bold")}
+            >{t`Eligible for airdrop`}</span>
+            <CheckCircleIcon height={24} className={margin("ml-4")} />
+          </Tag>
+        </div>
         <div
           className={tw(
-            fontWeight("font-semibold"),
-            letterSpacing("tracking-wider"),
+            textAlign("text-left"),
+            fontSize("text-3xl"),
+            fontWeight("font-bold"),
+            margin("mb-10"),
           )}
-        >{t`Congratulations!`}</div>
-        <p className={textAlign("text-center")}>
-          {t`You have some ELFI available to claim.`}
-        </p>
-      </div>
-      <div
-        className={tw(
-          fontSize("text-2xl"),
-          textAlign("text-center"),
-          fontWeight("font-bold"),
-          textColor("text-white"),
-          margin("mb-6"),
-        )}
-      >
-        {airdropAmountLabel}
-      </div>
-      <div
-        className={tw(fontSize("text-sm"), margin("mb-6"), space("space-y-4"))}
-      >
+        >{t`Connect wallet`}</div>
         <div
-          className={tw(fontWeight("font-semibold"), textAlign("text-center"))}
-        >{t`Next, pick your delegate!`}</div>
-        <p>{t`The voting power of your ELFI tokens can be delegated to any address
-        of your choosing. You can select anyone, including yourself.`}</p>
-        <p>{t`Don't worry, you will still own your
-        tokens and you can change your delegate at any time.`}</p>
-      </div>
-      <div
-        className={tw(
-          display("flex"),
-          justifyContent("justify-end"),
-          width("w-full"),
-        )}
-      >
-        <Button
-          onClick={onNextStep}
-          variant={ButtonVariant.OUTLINE_WHITE}
-        >{t`Pick a delegate`}</Button>
+          className={tw(
+            display("flex"),
+            flexDirection("flex-col"),
+            width("w-full"),
+            justifyContent("justify-center"),
+            fontSize("text-base"),
+            margin("mb-10"),
+          )}
+        >
+          <span
+            className={tw(
+              width("w-full"),
+              fontWeight("font-bold"),
+              margin("mb-2"),
+            )}
+          >{t`Congratulations! You have some ELFI available to claim.`}</span>
+          <span
+            className={width("w-full")}
+          >{t`You have received these tokens for being an active member of the Element community.
+We hope to see you continue to contribute to the future of Element.`}</span>
+        </div>
+        <div
+          className={tw(
+            display("flex"),
+            flexDirection("flex-col", "md:flex-row"),
+            width("w-full"),
+            space("space-y-10", "md:space-x-10", "md:space-y-0"),
+            padding("px-12"),
+            margin("mb-10"),
+          )}
+        >
+          <AirdropAmountCard account={account} />
+          <RewardsInfoCard />
+        </div>
+        <div className={tw(display("flex"), justifyContent("justify-between"))}>
+          <Button
+            onClick={() => {
+              /* TODO: onPreviousStep */
+            }}
+            variant={ButtonVariant.WHITE}
+          >
+            <span className={tw(padding("px-10"))}>{t`Back`}</span>
+          </Button>
+          <Button onClick={onNextStep} variant={ButtonVariant.GRADIENT}>
+            <span className={tw(padding("px-10"))}>{t`Next`}</span>
+          </Button>
+        </div>
       </div>
     </Card>
   );
-}
-
-function getAirdropAmountLabel(
-  merkleProof: MerkleProof | undefined,
-  isLoading: boolean,
-): string {
-  if (isLoading) {
-    return t`Loading...`;
-  }
-
-  if (merkleProof) {
-    return `${merkleProof.leaf.value} ELFI`;
-  }
-
-  return "0 ELFI";
 }
