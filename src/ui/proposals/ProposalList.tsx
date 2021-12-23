@@ -125,7 +125,7 @@ function StatusButton({ proposal }: StatusButtonProps): ReactElement | null {
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
   if (isVotingOpen) {
     return (
-      <Tag intent={Intent.ERROR}>
+      <Tag intent={Intent.WARNING}>
         <div
           className={tw(
             display("flex"),
@@ -140,7 +140,7 @@ function StatusButton({ proposal }: StatusButtonProps): ReactElement | null {
           >
             <circle cx={4} cy={4} r={3} />
           </svg>
-          {t`Failing`}
+          {t`In progress`}
         </div>
       </Tag>
     );
