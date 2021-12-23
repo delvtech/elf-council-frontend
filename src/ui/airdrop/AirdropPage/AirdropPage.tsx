@@ -21,6 +21,10 @@ import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 import { Step, StepStatus } from "src/ui/base/Steps/step";
+import { parseEther } from "ethers/lib/utils";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import { MerkleProof } from "src/elf/merkle/MerkleProof";
 
 interface StepWithContent extends Step {
   content: ReactNode;
@@ -29,6 +33,10 @@ interface StepWithContent extends Step {
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
+  const merkleInfoQueryData = useMerkleInfo(account);
+
+  const { data: merkleInfo } = merkleInfoQueryData;
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
   const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>();
 
@@ -47,7 +55,14 @@ export default function AirdropPage(): ReactElement {
           <StartClaimingCard
             account={account}
             walletConnectionActive={active}
-            onNextStep={() => setActiveStepIndex(1)}
+            onNextStep={() => {
+              // user has no airdrop if they have a merkle value but have already claimed
+              // the full amount
+              if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
+                return setActiveStepIndex(2);
+              }
+              setActiveStepIndex(1);
+            }}
           />
         ),
       },
@@ -68,11 +83,17 @@ export default function AirdropPage(): ReactElement {
       },
       {
         name: t`Claim and Delegate`,
-        status: activeStepIndex === 2 ? "current" : "upcoming",
+        status:
+          activeStepIndex === 2 &&
+          hasClaimedAirdrop(merkleInfo, claimableBalance)
+            ? "complete"
+            : activeStepIndex === 2
+            ? "current"
+            : "upcoming",
         content: <DelegateStepCard signer={signer} account={account} />,
       },
     ];
-  }, [account, active, activeStepIndex, signer]);
+  }, [account, active, activeStepIndex, claimableBalance, merkleInfo, signer]);
 
   return (
     <div
@@ -107,4 +128,10 @@ export default function AirdropPage(): ReactElement {
       </div>
     </div>
   );
+}
+function hasClaimedAirdrop(
+  merkleInfo: MerkleProof | undefined,
+  claimableBalance: string,
+) {
+  return merkleInfo && parseEther(claimableBalance).isZero();
 }
