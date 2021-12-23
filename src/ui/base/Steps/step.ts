@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 
 export interface Step {
   name: ReactNode;
-  onClick?: () => void;
   status: StepStatus;
 }
 

@@ -43,9 +43,6 @@ export default function AirdropPage(): ReactElement {
       {
         name: t`Connect wallet`,
         status: connectWalletStatus,
-        onClick: () => {
-          setActiveStepIndex(0);
-        },
         content: (
           <StartClaimingCard
             account={account}
@@ -62,11 +59,6 @@ export default function AirdropPage(): ReactElement {
             : activeStepIndex === 2
             ? "complete"
             : "upcoming",
-        onClick: () => {
-          if (account) {
-            setActiveStepIndex(1);
-          }
-        },
         content: (
           <ViewAirdropStepCard
             account={account}
@@ -77,11 +69,6 @@ export default function AirdropPage(): ReactElement {
       {
         name: t`Claim and Delegate`,
         status: activeStepIndex === 2 ? "current" : "upcoming",
-        onClick: () => {
-          if (account) {
-            setActiveStepIndex(2);
-          }
-        },
         content: <DelegateStepCard signer={signer} account={account} />,
       },
     ];
