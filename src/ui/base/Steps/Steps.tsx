@@ -42,11 +42,10 @@ export default function Steps({
       )}
     >
       <div
-        className={tw(
-          display("grid"),
-          gridTemplateColumns("grid-cols-3"),
-          width("w-full"),
-        )}
+        style={{
+          gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))`,
+        }}
+        className={tw(display("grid"), width("w-full"))}
       >
         {steps.map((step, index) => {
           const prevStep = index > 0 ? steps[index - 1] : undefined;
