@@ -1,7 +1,6 @@
 import { ReactElement, ReactNode } from "react";
 import tw, {
   TBackgroundColor,
-  TBorders,
   TTextColor,
   display,
   alignItems,
