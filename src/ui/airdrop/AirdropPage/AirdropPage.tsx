@@ -43,28 +43,13 @@ export default function AirdropPage(): ReactElement {
 
   const [activeStep, setActiveStep] = useState<AirdropStep | undefined>();
 
-  let connectWalletStatus: StepStatus = StepStatus.UPCOMING;
-  if (account) {
-    connectWalletStatus = StepStatus.COMPLETE;
-  } else if (activeStep === AirdropStep.START_CLAIMING) {
-    connectWalletStatus = StepStatus.COMPLETE;
-  }
-
-  const delegateStatus =
-    activeStep === AirdropStep.DELEGATE_INFO ||
-    activeStep === AirdropStep.DELEGATE_PREVIEW
-      ? StepStatus.CURRENT
-      : activeStep === AirdropStep.START_CLAIMING
-      ? StepStatus.UPCOMING
-      : StepStatus.COMPLETE;
-
-  const claimAndDelegateStatus =
-    activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
-    hasClaimedAirdrop(merkleInfo, claimableBalance)
-      ? StepStatus.COMPLETE
-      : activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW
-      ? StepStatus.CURRENT
-      : StepStatus.UPCOMING;
+  const connectWalletStatus = getConnectWalletStatus(account, activeStep);
+  const delegateStatus = getDelegateStatus(activeStep);
+  const claimAndDelegateStatus = getClaimAndDelegateStatus(
+    activeStep,
+    merkleInfo,
+    claimableBalance,
+  );
 
   return (
     <div className="flex flex-col space-y-8 w-full justify-center items-center">
@@ -88,7 +73,8 @@ export default function AirdropPage(): ReactElement {
       </div>
 
       <div className="w-full md:w-3/5 h-full">
-        {activeStep === 0 || activeStep === undefined ? (
+        {activeStep === AirdropStep.START_CLAIMING ||
+        activeStep === undefined ? (
           <StartClaimingCard
             account={account}
             walletConnectionActive={active}
@@ -103,14 +89,14 @@ export default function AirdropPage(): ReactElement {
             }}
           />
         ) : null}
-        {activeStep === 1 ? (
+        {activeStep === AirdropStep.AIRDROP_PREVIEW ? (
           <AirdropPreview
             account={account}
-            onPrevStep={() => setActiveStep(0)}
-            onNextStep={() => setActiveStep(2)}
+            onPrevStep={() => setActiveStep(AirdropStep.START_CLAIMING)}
+            onNextStep={() => setActiveStep(AirdropStep.DELEGATE_INFO)}
           />
         ) : null}
-        {activeStep === 2 ? (
+        {activeStep === AirdropStep.CHOOSE_DELEGATE ? (
           <DelegateStepCard signer={signer} account={account} />
         ) : null}
       </div>
@@ -130,6 +116,41 @@ export default function AirdropPage(): ReactElement {
     </div>
   );
 }
+function getConnectWalletStatus(
+  account: string | null | undefined,
+  activeStep: AirdropStep | undefined,
+): StepStatus {
+  let connectWalletStatus: StepStatus = StepStatus.UPCOMING;
+  if (account) {
+    connectWalletStatus = StepStatus.COMPLETE;
+  } else if (activeStep === AirdropStep.START_CLAIMING) {
+    connectWalletStatus = StepStatus.COMPLETE;
+  }
+  return connectWalletStatus;
+}
+
+function getDelegateStatus(activeStep: AirdropStep | undefined): StepStatus {
+  return activeStep === AirdropStep.DELEGATE_INFO ||
+    activeStep === AirdropStep.DELEGATE_PREVIEW
+    ? StepStatus.CURRENT
+    : activeStep === AirdropStep.START_CLAIMING
+    ? StepStatus.UPCOMING
+    : StepStatus.COMPLETE;
+}
+
+function getClaimAndDelegateStatus(
+  activeStep: AirdropStep | undefined,
+  merkleInfo: MerkleProof | undefined,
+  claimableBalance: string,
+): StepStatus {
+  return activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
+    hasClaimedAirdrop(merkleInfo, claimableBalance)
+    ? StepStatus.COMPLETE
+    : activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW
+    ? StepStatus.CURRENT
+    : StepStatus.UPCOMING;
+}
+
 function hasClaimedAirdrop(
   merkleInfo: MerkleProof | undefined,
   claimableBalance: string,
