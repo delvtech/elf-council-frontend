@@ -3,37 +3,39 @@ import React, { ReactElement } from "react";
 import tw, {
   display,
   flexDirection,
-  textColor,
-  height,
-  textAlign,
   fontSize,
-  margin,
   fontWeight,
-  space,
+  height,
   justifyContent,
-  width,
+  margin,
   padding,
+  space,
+  textAlign,
+  textColor,
+  width,
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCard";
+import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { RewardsInfoCard } from "src/ui/airdrop/AirdropPreview/RewardsInfoCard";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { Tag, Intent } from "src/ui/base/Tag/Tag";
+import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
-import { LoadingAirdropCard } from "./LoadingAirdropCard";
-import { NoAirdropCard } from "./NoAirdropCard";
 
-interface ViewAirdropStepCardProps {
+interface AirdropPreviewProps {
   account: string | null | undefined;
   onNextStep: () => void;
+  onPrevStep: () => void;
 }
 
-export function ViewAirdropStepCard({
+export function AirdropPreview({
   onNextStep,
+  onPrevStep,
   account,
-}: ViewAirdropStepCardProps): ReactElement {
+}: AirdropPreviewProps): ReactElement {
   const merkleInfoQueryData = useMerkleInfo(account);
 
   const { data: merkleInfo, isLoading: isLoadingMerkle } = merkleInfoQueryData;
@@ -116,12 +118,7 @@ We hope to see you continue to contribute to the future of Element.`}</span>
           <RewardsInfoCard />
         </div>
         <div className={tw(display("flex"), justifyContent("justify-between"))}>
-          <Button
-            onClick={() => {
-              /* TODO: onPreviousStep */
-            }}
-            variant={ButtonVariant.WHITE}
-          >
+          <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
             <span className={tw(padding("px-10"))}>{t`Back`}</span>
           </Button>
           <Button onClick={onNextStep} variant={ButtonVariant.GRADIENT}>

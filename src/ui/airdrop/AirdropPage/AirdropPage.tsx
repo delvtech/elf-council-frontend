@@ -15,7 +15,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
-import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
+import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
 import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -105,8 +105,9 @@ export default function AirdropPage(): ReactElement {
           />
         ) : null}
         {activeStepIndex === 1 ? (
-          <ViewAirdropStepCard
+          <AirdropPreview
             account={account}
+            onPrevStep={() => setActiveStepIndex(0)}
             onNextStep={() => setActiveStepIndex(2)}
           />
         ) : null}
