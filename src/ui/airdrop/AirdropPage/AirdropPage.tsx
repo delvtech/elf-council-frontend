@@ -1,5 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
-import React, { ReactElement, ReactNode, useMemo, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import tw, {
   display,
   flexDirection,
@@ -16,76 +16,47 @@ import tw, {
 import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { ViewAirdropStepCard } from "src/ui/airdrop/AirdropPage/ViewAirdropStepCard";
-import { Step, StepStatus } from "src/ui/base/Card/Steps/Steps";
-import Steps2 from "src/ui/base/Card/Steps2/Steps2";
+import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
-
-interface StepWithContent extends Step {
-  content: ReactNode;
-}
+import { parseEther } from "ethers/lib/utils";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import { MerkleProof } from "src/elf/merkle/MerkleProof";
+import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
+import { StepDivider } from "src/ui/base/Steps/StepDivider";
 
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
+  const merkleInfoQueryData = useMerkleInfo(account);
+
+  const { data: merkleInfo } = merkleInfoQueryData;
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
   const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>();
 
-  const steps: StepWithContent[] = useMemo(() => {
-    let connectWalletStatus: StepStatus = "upcoming";
-    if (account) {
-      connectWalletStatus = "complete";
-    } else if (activeStepIndex === 0) {
-      connectWalletStatus = "current";
-    }
-    return [
-      {
-        name: t`Connect wallet`,
-        status: connectWalletStatus,
-        onClick: () => {
-          setActiveStepIndex(0);
-        },
-        content: (
-          <StartClaimingCard
-            account={account}
-            walletConnectionActive={active}
-            onNextStep={() => setActiveStepIndex(1)}
-          />
-        ),
-      },
-      {
-        name: t`Delegate`,
-        status:
-          activeStepIndex === 1
-            ? "current"
-            : activeStepIndex === 2
-            ? "complete"
-            : "upcoming",
-        onClick: () => {
-          if (account) {
-            setActiveStepIndex(1);
-          }
-        },
-        content: (
-          <ViewAirdropStepCard
-            account={account}
-            onNextStep={() => setActiveStepIndex(2)}
-          />
-        ),
-      },
-      {
-        name: t`Claim and Delegate`,
-        status: activeStepIndex === 2 ? "current" : "upcoming",
-        onClick: () => {
-          if (account) {
-            setActiveStepIndex(2);
-          }
-        },
-        content: <DelegateStepCard signer={signer} account={account} />,
-      },
-    ];
-  }, [account, active, activeStepIndex, signer]);
+  let connectWalletStatus: StepStatus = "upcoming";
+  if (account) {
+    connectWalletStatus = "complete";
+  } else if (activeStepIndex === 0) {
+    connectWalletStatus = "current";
+  }
+
+  const delegateStatus =
+    activeStepIndex === 1
+      ? "current"
+      : activeStepIndex === 2
+      ? "complete"
+      : "upcoming";
+
+  const claimAndDelegateStatus =
+    activeStepIndex === 2 && hasClaimedAirdrop(merkleInfo, claimableBalance)
+      ? "complete"
+      : activeStepIndex === 2
+      ? "current"
+      : "upcoming";
 
   return (
     <div
@@ -99,11 +70,49 @@ export default function AirdropPage(): ReactElement {
       )}
     >
       <div style={{ width: 600 }}>
-        <Steps2 steps={steps} activeStepIndex={activeStepIndex} />
+        <Steps className={width("w-full")}>
+          <StepItem
+            stepLabel="1"
+            status={connectWalletStatus}
+          >{t`Connect wallet`}</StepItem>
+          <StepDivider />
+          <StepItem
+            stepLabel="2"
+            status={delegateStatus}
+          >{t`Delegate`}</StepItem>
+          <StepDivider />
+          <StepItem
+            stepLabel="3"
+            status={claimAndDelegateStatus}
+          >{t`Claim and delegate`}</StepItem>
+        </Steps>
       </div>
 
       <div className={tw(width("w-full", "md:w-3/5"), height("h-full"))}>
-        {steps[activeStepIndex || 0].content}
+        {activeStepIndex === 0 || activeStepIndex === undefined ? (
+          <StartClaimingCard
+            account={account}
+            walletConnectionActive={active}
+            onNextStep={() => {
+              // user has no airdrop if they have a merkle value but have already claimed
+              // the full amount
+              if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
+                setActiveStepIndex(2);
+                return;
+              }
+              setActiveStepIndex(1);
+            }}
+          />
+        ) : null}
+        {activeStepIndex === 1 ? (
+          <ViewAirdropStepCard
+            account={account}
+            onNextStep={() => setActiveStepIndex(2)}
+          />
+        ) : null}
+        {activeStepIndex === 2 ? (
+          <DelegateStepCard signer={signer} account={account} />
+        ) : null}
       </div>
       <div
         className={tw(
@@ -120,4 +129,10 @@ export default function AirdropPage(): ReactElement {
       </div>
     </div>
   );
+}
+function hasClaimedAirdrop(
+  merkleInfo: MerkleProof | undefined,
+  claimableBalance: string,
+) {
+  return merkleInfo && parseEther(claimableBalance).isZero();
 }

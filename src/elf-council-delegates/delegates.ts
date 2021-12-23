@@ -15,4 +15,5 @@ export interface Delegate {
   twitterHandle: string;
 }
 
+// TODO: use delegatesJson for specified chain, for now just use testnet
 export const delegates: Delegate[] = (delegatesJson as DelegatesJson).delegates;

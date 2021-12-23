@@ -33,8 +33,10 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropFullyClaimedCard/AirdropFullyClaimedCard";
 import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -52,32 +54,39 @@ export function DelegateStepCard({
   signer,
 }: DelegateStepCardProps): ReactElement {
   const [delegateAddress, setDelegateAddress] = useState("");
-  const { data: merkleData } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account);
   const { mutate: claim } = useClaimAirdrop(signer);
+
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const onClaimOnlyClick = useCallback(() => {
-    if (account && merkleData) {
+    if (account && merkleInfo) {
       claim([
-        parseEther(merkleData.leaf.value),
-        parseEther(merkleData.leaf.value),
-        merkleData.proof,
+        parseEther(merkleInfo.leaf.value),
+        parseEther(merkleInfo.leaf.value),
+        merkleInfo.proof,
         account,
       ]);
     }
-  }, [account, claim, merkleData]);
+  }, [account, claim, merkleInfo]);
 
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
   const onClaimAndDepositClick = useCallback(() => {
-    if (account && merkleData) {
+    if (account && merkleInfo) {
       claimAndDeposit([
-        parseEther(merkleData.leaf.value),
+        parseEther(merkleInfo.leaf.value),
         delegateAddress,
-        parseEther(merkleData.leaf.value),
-        merkleData.proof,
+        parseEther(merkleInfo.leaf.value),
+        merkleInfo.proof,
         account,
       ]);
     }
-  }, [account, claimAndDeposit, delegateAddress, merkleData]);
+  }, [account, claimAndDeposit, delegateAddress, merkleInfo]);
 
+  // user has no airdrop if they have a merkle value but have already claimed
+  // the full amount
+  if (merkleInfo && parseEther(claimableBalance).isZero()) {
+    return <AirdropFullyClaimedCard account={account} />;
+  }
   return (
     <Card
       variant={CardVariant.BLUE}
@@ -135,7 +144,7 @@ export function DelegateStepCard({
               fontWeight("font-semibold"),
               textAlign("text-left"),
             )}
-          >{`${merkleData?.leaf.value} ELFI`}</div>
+          >{`${merkleInfo?.leaf.value} ELFI`}</div>
           <Button
             onClick={onClaimOnlyClick}
             className={margin("mr-4")}

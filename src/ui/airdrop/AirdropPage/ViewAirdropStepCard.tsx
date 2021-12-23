@@ -16,7 +16,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropFullyClaimed/AirdropFullyClaimedCard";
+import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropFullyClaimedCard/AirdropFullyClaimedCard";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
