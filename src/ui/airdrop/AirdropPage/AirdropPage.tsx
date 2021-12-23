@@ -3,10 +3,6 @@ import React, { ReactElement, useState } from "react";
 import tw, {
   display,
   flexDirection,
-  height,
-  space,
-  width,
-  justifyContent,
   alignItems,
   margin,
   fontSize,
@@ -27,6 +23,15 @@ import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 
+enum AirdropStep {
+  START_CLAIMING,
+  AIRDROP_PREVIEW,
+  ALREADY_CLAIMED,
+  DELEGATE_INFO,
+  CHOOSE_DELEGATE,
+  DELEGATE_PREVIEW,
+}
+
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
@@ -35,42 +40,33 @@ export default function AirdropPage(): ReactElement {
   const { data: merkleInfo } = merkleInfoQueryData;
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
-  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>();
+  const [activeStep, setActiveStep] = useState<AirdropStep | undefined>();
 
-  let connectWalletStatus: StepStatus = "upcoming";
+  let connectWalletStatus: StepStatus = StepStatus.UPCOMING;
   if (account) {
-    connectWalletStatus = "complete";
-  } else if (activeStepIndex === 0) {
-    connectWalletStatus = "current";
+    connectWalletStatus = StepStatus.COMPLETE;
+  } else if (activeStep === AirdropStep.START_CLAIMING) {
+    connectWalletStatus = StepStatus.COMPLETE;
   }
 
   const delegateStatus =
-    activeStepIndex === 1
-      ? "current"
-      : activeStepIndex === 2
-      ? "complete"
-      : "upcoming";
+    activeStep === 1
+      ? StepStatus.CURRENT
+      : activeStep === 2
+      ? StepStatus.COMPLETE
+      : StepStatus.UPCOMING;
 
   const claimAndDelegateStatus =
-    activeStepIndex === 2 && hasClaimedAirdrop(merkleInfo, claimableBalance)
-      ? "complete"
-      : activeStepIndex === 2
-      ? "current"
-      : "upcoming";
+    activeStep === 2 && hasClaimedAirdrop(merkleInfo, claimableBalance)
+      ? StepStatus.COMPLETE
+      : activeStep === 2
+      ? StepStatus.CURRENT
+      : StepStatus.UPCOMING;
 
   return (
-    <div
-      className={tw(
-        display("flex"),
-        flexDirection("flex-col"),
-        space("space-y-8"),
-        width("w-full"),
-        justifyContent("justify-center"),
-        alignItems("items-center"),
-      )}
-    >
+    <div className="flex flex-col space-y-8 w-full justify-center items-center">
       <div style={{ width: 600 }}>
-        <Steps className={width("w-full")}>
+        <Steps className="w-full">
           <StepItem
             stepLabel="1"
             status={connectWalletStatus}
@@ -88,8 +84,8 @@ export default function AirdropPage(): ReactElement {
         </Steps>
       </div>
 
-      <div className={tw(width("w-full", "md:w-3/5"), height("h-full"))}>
-        {activeStepIndex === 0 || activeStepIndex === undefined ? (
+      <div className="w-full md:w-3/5 h-full">
+        {activeStep === 0 || activeStep === undefined ? (
           <StartClaimingCard
             account={account}
             walletConnectionActive={active}
@@ -97,21 +93,21 @@ export default function AirdropPage(): ReactElement {
               // user has no airdrop if they have a merkle value but have already claimed
               // the full amount
               if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
-                setActiveStepIndex(2);
+                setActiveStep(AirdropStep.ALREADY_CLAIMED);
                 return;
               }
-              setActiveStepIndex(1);
+              setActiveStep(AirdropStep.AIRDROP_PREVIEW);
             }}
           />
         ) : null}
-        {activeStepIndex === 1 ? (
+        {activeStep === 1 ? (
           <AirdropPreview
             account={account}
-            onPrevStep={() => setActiveStepIndex(0)}
-            onNextStep={() => setActiveStepIndex(2)}
+            onPrevStep={() => setActiveStep(0)}
+            onNextStep={() => setActiveStep(2)}
           />
         ) : null}
-        {activeStepIndex === 2 ? (
+        {activeStep === 2 ? (
           <DelegateStepCard signer={signer} account={account} />
         ) : null}
       </div>
