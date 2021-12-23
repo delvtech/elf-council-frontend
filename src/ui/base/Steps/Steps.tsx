@@ -41,14 +41,11 @@ export default function Steps({
         className,
       )}
     >
-      {/* Step Count */}
       <div
         className={tw(
           display("grid"),
-          height("h-10"),
           gridTemplateColumns("grid-cols-3"),
           width("w-full"),
-          margin("mb-2"),
         )}
       >
         {steps.map((step, index) => {
@@ -66,53 +63,44 @@ export default function Steps({
           );
 
           return (
-            <div
-              key={index}
-              className={tw(
-                height("h-10"),
-                display("flex"),
-                alignItems("items-center"),
-                justifyContent("justify-center"),
-              )}
-            >
-              <Divider
-                isInvisible={index === 0}
-                isActive={isLeadingDividerActive}
-              />
-              <StepCount step={step} count={index + 1}></StepCount>
-              <Divider
-                isInvisible={index === steps.length - 1}
-                isActive={isTrailingDividerActive}
-              />
+            <div key={index}>
+              <div
+                className={tw(
+                  height("h-10"),
+                  display("flex"),
+                  alignItems("items-center"),
+                  justifyContent("justify-center"),
+                  margin("mb-2"),
+                )}
+              >
+                <Divider
+                  isInvisible={index === 0}
+                  isActive={isLeadingDividerActive}
+                />
+                <StepCount step={step} count={index + 1}></StepCount>
+                <Divider
+                  isInvisible={index === steps.length - 1}
+                  isActive={isTrailingDividerActive}
+                />
+              </div>
+              <div
+                key={`divider=${index}`}
+                className={tw(
+                  display("flex"),
+                  alignItems("items-center"),
+                  justifyContent("justify-center"),
+                  textColor("text-principalRoyalBlue"),
+                  fontWeight("font-semibold"),
+                  textOpacity({
+                    "text-opacity-50": step.status === "upcoming",
+                  }),
+                )}
+              >
+                {step.name}
+              </div>
             </div>
           );
         })}
-      </div>
-
-      {/* Step Labels */}
-      <div
-        className={tw(
-          display("grid"),
-          gridTemplateColumns("grid-cols-3"),
-          width("w-full"),
-          alignItems("items-center"),
-        )}
-      >
-        {steps.map((step, index) => (
-          <div
-            key={`divider=${index}`}
-            className={tw(
-              display("flex"),
-              alignItems("items-center"),
-              justifyContent("justify-center"),
-              textColor("text-principalRoyalBlue"),
-              fontWeight("font-semibold"),
-              textOpacity({ "text-opacity-50": step.status === "upcoming" }),
-            )}
-          >
-            {step.name}
-          </div>
-        ))}
       </div>
     </div>
   );
