@@ -30,6 +30,7 @@ enum AirdropStep {
   DELEGATE_INFO,
   CHOOSE_DELEGATE,
   DELEGATE_PREVIEW,
+  CLAIM_AND_DELEGATE_PREVIEW,
 }
 
 export default function AirdropPage(): ReactElement {
@@ -50,16 +51,18 @@ export default function AirdropPage(): ReactElement {
   }
 
   const delegateStatus =
-    activeStep === 1
+    activeStep === AirdropStep.DELEGATE_INFO ||
+    activeStep === AirdropStep.DELEGATE_PREVIEW
       ? StepStatus.CURRENT
-      : activeStep === 2
-      ? StepStatus.COMPLETE
-      : StepStatus.UPCOMING;
+      : activeStep === AirdropStep.START_CLAIMING
+      ? StepStatus.UPCOMING
+      : StepStatus.COMPLETE;
 
   const claimAndDelegateStatus =
-    activeStep === 2 && hasClaimedAirdrop(merkleInfo, claimableBalance)
+    activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
+    hasClaimedAirdrop(merkleInfo, claimableBalance)
       ? StepStatus.COMPLETE
-      : activeStep === 2
+      : activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW
       ? StepStatus.CURRENT
       : StepStatus.UPCOMING;
 
