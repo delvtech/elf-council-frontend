@@ -51,7 +51,7 @@ export default function PageView(props: PageViewProps): ReactElement {
         className={tw(
           display("flex"),
           width("w-full"),
-          height("h-screen"),
+          height("h-full"),
           backgroundColor("bg-appBackgroundLight"),
           justifyContent("justify-between"),
           overflow("overflow-hidden"),
