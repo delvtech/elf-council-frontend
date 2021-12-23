@@ -22,12 +22,13 @@ import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
+import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
 
 enum AirdropStep {
   START_CLAIMING,
   AIRDROP_PREVIEW,
   ALREADY_CLAIMED,
-  DELEGATE_INFO,
+  DELEGATE_INSTRUCTIONS,
   CHOOSE_DELEGATE,
   DELEGATE_PREVIEW,
   CLAIM_AND_DELEGATE_PREVIEW,
@@ -73,32 +74,49 @@ export default function AirdropPage(): ReactElement {
       </div>
 
       <div className="w-full md:w-3/5 h-full">
-        {activeStep === AirdropStep.START_CLAIMING ||
-        activeStep === undefined ? (
-          <StartClaimingCard
-            account={account}
-            walletConnectionActive={active}
-            onNextStep={() => {
-              // user has no airdrop if they have a merkle value but have already claimed
-              // the full amount
-              if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
-                setActiveStep(AirdropStep.ALREADY_CLAIMED);
-                return;
-              }
-              setActiveStep(AirdropStep.AIRDROP_PREVIEW);
-            }}
-          />
-        ) : null}
-        {activeStep === AirdropStep.AIRDROP_PREVIEW ? (
-          <AirdropPreview
-            account={account}
-            onPrevStep={() => setActiveStep(AirdropStep.START_CLAIMING)}
-            onNextStep={() => setActiveStep(AirdropStep.DELEGATE_INFO)}
-          />
-        ) : null}
-        {activeStep === AirdropStep.CHOOSE_DELEGATE ? (
-          <DelegateStepCard signer={signer} account={account} />
-        ) : null}
+        {(() => {
+          switch (activeStep) {
+            case AirdropStep.START_CLAIMING:
+            default:
+              return (
+                <StartClaimingCard
+                  account={account}
+                  walletConnectionActive={active}
+                  onNextStep={() => {
+                    // user has no airdrop if they have a merkle value but have already claimed
+                    // the full amount
+                    if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
+                      setActiveStep(AirdropStep.ALREADY_CLAIMED);
+                      return;
+                    }
+                    setActiveStep(AirdropStep.AIRDROP_PREVIEW);
+                  }}
+                />
+              );
+
+            case AirdropStep.AIRDROP_PREVIEW:
+              return (
+                <AirdropPreview
+                  account={account}
+                  onPrevStep={() => setActiveStep(AirdropStep.START_CLAIMING)}
+                  onNextStep={() =>
+                    setActiveStep(AirdropStep.DELEGATE_INSTRUCTIONS)
+                  }
+                />
+              );
+
+            case AirdropStep.DELEGATE_INSTRUCTIONS:
+              return (
+                <DelegateInstructions
+                  account={account}
+                  onPrevStep={() => setActiveStep(AirdropStep.AIRDROP_PREVIEW)}
+                  onNextStep={() => setActiveStep(AirdropStep.CHOOSE_DELEGATE)}
+                />
+              );
+            case AirdropStep.CHOOSE_DELEGATE:
+              return <DelegateStepCard signer={signer} account={account} />;
+          }
+        })()}
       </div>
       <div
         className={tw(
@@ -130,12 +148,26 @@ function getConnectWalletStatus(
 }
 
 function getDelegateStatus(activeStep: AirdropStep | undefined): StepStatus {
-  return activeStep === AirdropStep.DELEGATE_INFO ||
-    activeStep === AirdropStep.DELEGATE_PREVIEW
-    ? StepStatus.CURRENT
-    : activeStep === AirdropStep.START_CLAIMING
-    ? StepStatus.UPCOMING
-    : StepStatus.COMPLETE;
+  if (
+    activeStep === undefined ||
+    [AirdropStep.START_CLAIMING, AirdropStep.AIRDROP_PREVIEW].includes(
+      activeStep,
+    )
+  ) {
+    return StepStatus.UPCOMING;
+  }
+
+  if (
+    [
+      AirdropStep.DELEGATE_INSTRUCTIONS,
+      AirdropStep.DELEGATE_PREVIEW,
+      AirdropStep.CHOOSE_DELEGATE,
+    ].includes(activeStep)
+  ) {
+    return StepStatus.CURRENT;
+  }
+
+  return StepStatus.COMPLETE;
 }
 
 function getClaimAndDelegateStatus(
