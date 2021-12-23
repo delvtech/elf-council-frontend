@@ -21,7 +21,7 @@ import tw, {
   visibility,
   flexShrink,
 } from "src/elf-tailwindcss-classnames";
-import { Step } from "src/ui/base/Steps/step";
+import { Step, StepStatus } from "src/ui/base/Steps/step";
 
 interface StepsProps {
   activeStepIndex: number | undefined;
@@ -55,12 +55,12 @@ export default function Steps({
           const prevStep = index > 0 ? steps[index - 1] : undefined;
 
           const isLeadingDividerActive = getIsLeadingDividerActive(
-            prevStep,
-            step,
+            prevStep?.status,
+            step.status,
           );
 
           const isTrailingDividerActive = getIsTrailingDividerActive(
-            step,
+            step.status,
             index,
             activeStepIndex,
           );
@@ -119,21 +119,24 @@ export default function Steps({
 }
 
 function getIsTrailingDividerActive(
-  step: Step,
+  status: StepStatus,
   index: number,
   activeStepIndex: number | undefined,
 ) {
   return (
-    step.status === "complete" &&
+    status === "complete" &&
     index !== activeStepIndex &&
     activeStepIndex !== undefined
   );
 }
 
-function getIsLeadingDividerActive(prevStep: Step | undefined, step: Step) {
+function getIsLeadingDividerActive(
+  prevStepStatus: StepStatus | undefined,
+  status: StepStatus,
+) {
   return (
-    (prevStep?.status === "complete" && step.status === "current") ||
-    step.status === "complete"
+    (prevStepStatus === "complete" && status === "current") ||
+    status === "complete"
   );
 }
 
