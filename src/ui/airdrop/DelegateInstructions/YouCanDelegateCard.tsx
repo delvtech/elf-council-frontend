@@ -95,5 +95,5 @@ function getAirdropAmountLabel(
     return `${commify(merkleProof.leaf.value)}`;
   }
 
-  return "0 ELFI";
+  return "0";
 }
