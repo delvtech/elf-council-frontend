@@ -24,7 +24,11 @@ export interface Step {
   status: StepStatus;
 }
 
-export type StepStatus = "complete" | "current" | "upcoming";
+export enum StepStatus {
+  COMPLETE = "complete",
+  CURRENT = "current",
+  UPCOMING = "upcoming",
+}
 
 interface StepItemProps {
   stepLabel: string;

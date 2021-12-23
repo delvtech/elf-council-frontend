@@ -33,7 +33,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
-import { AirdropFullyClaimedCard } from "src/ui/airdrop/AirdropFullyClaimedCard/AirdropFullyClaimedCard";
+import { AirdropFullyClaimed } from "src/ui/airdrop/AirdropFullyClaimed/AirdropFullyClaimed";
 import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
@@ -85,7 +85,7 @@ export function DelegateStepCard({
   // user has no airdrop if they have a merkle value but have already claimed
   // the full amount
   if (merkleInfo && parseEther(claimableBalance).isZero()) {
-    return <AirdropFullyClaimedCard account={account} />;
+    return <AirdropFullyClaimed account={account} />;
   }
   return (
     <Card
