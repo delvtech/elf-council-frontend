@@ -1,5 +1,4 @@
 import { useWeb3React } from "@web3-react/core";
-import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import React, {
   ReactElement,
@@ -82,8 +81,8 @@ export default function ProposalsPage(): ReactElement {
   }, [activeTabId]);
 
   return (
-    <div className="h-full flex">
-      <div className="flex-1 h-full pt-8 px-8 space-y-8">
+    <div className="flex h-full">
+      <div className="flex-1 h-full px-8 pt-8 space-y-8">
         <H1 className="flex-1 text-center">{t`Proposals`}</H1>
         <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
         <div className="flex space-x-12">
