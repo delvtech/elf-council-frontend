@@ -29,7 +29,7 @@ function DelegatesList({
   };
 
   return (
-    <div className="relative">
+    <div className="relative mb-8">
       <H2
         className={tw(
           margin("mb-4"),
