@@ -7,24 +7,8 @@ import { commify } from "ethers/lib/utils";
 import Link from "next/link";
 import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
-import tw, {
-  alignItems,
-  display,
-  flex,
-  flexDirection,
-  fontSize,
-  fontWeight,
-  height,
-  justifyContent,
-  margin,
-  overflow,
-  padding,
-  textAlign,
-  textColor,
-  textOverflow,
-  width,
-} from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
@@ -32,7 +16,6 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -64,14 +47,7 @@ export function ProposalDetailsCard(
           className,
         )}
       >
-        <span
-          className={tw(
-            textColor("text-white"),
-            textAlign("text-center"),
-            fontSize("text-2xl"),
-            fontWeight("font-bold"),
-          )}
-        >
+        <span className="text-2xl font-bold text-center text-white">
           {t`Click on a proposal to learn more about it here.`}
         </span>
       </GradientCard>
@@ -82,112 +58,52 @@ export function ProposalDetailsCard(
     <GradientCard
       className={classNames(
         className,
-        tw(
-          display("flex"),
-          flexDirection("flex-col"),
-          alignItems("items-start"),
-          height("h-full"),
-          width("w-80"),
-          padding("p-6"),
-          justifyContent("justify-center"),
-        ),
+        "flex flex-col items-start h-full w-80 p-6 justify-center",
       )}
     >
-      <h1
-        className={tw(
-          textColor("text-white"),
-          fontSize("text-2xl"),
-          fontWeight("font-bold"),
-        )}
-      >
+      <h1 className="text-2xl font-bold text-white">
         {t`Proposal ${proposal.proposalId}`}
       </h1>
-      <p className={tw(textColor("text-white"), fontWeight("font-light"))}>
-        {snapshotProposal?.title}
-      </p>
-      <p
-        className={tw(
-          fontSize("text-sm"),
-          textColor("text-white"),
-          fontWeight("font-light"),
-          margin("my-3"),
-          overflow("overflow-hidden"),
-        )}
-      >
+      <p className="font-light text-white">{snapshotProposal?.title}</p>
+      <p className="my-3 overflow-hidden text-sm font-light text-white">
         {t`Proposal Description:`}
       </p>
-      <p
-        className={tw(
-          fontSize("text-sm"),
-          textColor("text-white"),
-          fontWeight("font-light"),
-          overflow("overflow-hidden"),
-          textOverflow("text-ellipsis"),
-        )}
-      >
+      <p className="overflow-hidden text-sm font-light text-white text-ellipsis">
         {truncateText(snapshotProposal?.body || "")}
       </p>
-      <p
-        className={tw(
-          display("flex"),
-          alignItems("items-center"),
-          fontSize("text-sm"),
-          textColor("text-white"),
-          fontWeight("font-light"),
-          margin("my-3"),
-          overflow("overflow-hidden"),
-        )}
-      >
+      <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
         {t`View proposal`}
         <Link passHref={true} href={snapshotProposal?.link || ""}>
           <button>
-            <ExternalLinkIcon className={tw(margin("ml-2"), height("h-4"))} />
+            <ExternalLinkIcon className="h-4 ml-2" />
           </button>
         </Link>
       </p>
-      <p
-        className={tw(
-          display("flex"),
-          alignItems("items-center"),
-          fontSize("text-sm"),
-          textColor("text-white"),
-          fontWeight("font-light"),
-          margin("my-3"),
-          overflow("overflow-hidden"),
-        )}
-      >
+      <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
         {t`View Discussion`}
         <Link passHref={true} href={"https://forum.element.fi"}>
           <button>
-            <ExternalLinkIcon className={tw(margin("ml-2"), height("h-4"))} />
+            <ExternalLinkIcon className="h-4 ml-2" />
           </button>
         </Link>
       </p>
 
       <BalanceWithLabel
-        className={tw(width("w-full"), margin("mt-8"))}
+        className="w-full mt-8"
         balance={formattedVotingPower}
         tooltipText={votingPowerTooltipText}
         tooltipHref={"/resources"}
         label={t`Voting Power`}
       />
       <BalanceWithLabel
-        className={tw(width("w-full"), margin("mt-8"))}
+        className="w-full mt-8"
         balance={amountDeposited}
         tooltipText={votingBalanceTooltipText}
         tooltipHref={"/resources"}
         label={t`Eligible voting balance`}
       />
 
-      <div
-        className={tw(
-          display("flex"),
-          flex("flex-1"),
-          width("w-full"),
-          alignItems("items-end"),
-          justifyContent("justify-between"),
-        )}
-      >
+      <div className="flex items-end justify-between flex-1 w-full">
         <Button variant={ButtonVariant.WHITE}>{t`Choice`}</Button>
         <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
       </div>
@@ -220,30 +136,20 @@ interface BalanceWithLabelProps {
   tooltipText?: string;
   tooltipHref?: string;
 }
+
 function BalanceWithLabel(props: BalanceWithLabelProps) {
   const { className, balance, label, tooltipHref, tooltipText } = props;
   return (
-    <div className={classNames(className, tw(textColor("text-white")))}>
-      <div className={tw(display("flex"), alignItems("items-center"))}>
-        <div
-          className={tw(fontSize("text-2xl"), fontWeight("font-extralight"))}
-        >
-          {balance}
-        </div>
-        <ElementIcon className={tw(margin("ml-2"))} size={IconSize.MEDIUM} />
+    <div className={classNames(className, "text-white")}>
+      <div className="flex items-center">
+        <div className="text-2xl font-extralight">{balance}</div>
+        <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
       </div>
-      <div
-        className={tw(
-          display("flex"),
-          fontSize("text-lg"),
-          fontWeight("font-light"),
-          alignItems("items-center"),
-        )}
-      >
+      <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
           <InfoIconWithTooltip
-            className={tw(margin("ml-1"))}
+            className="ml-1"
             tooltipText={tooltipText}
             tooltipHref={tooltipHref}
           />
