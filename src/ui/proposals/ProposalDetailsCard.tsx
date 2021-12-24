@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
@@ -10,13 +11,16 @@ import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import Dropdown from "src/ui/base/Dropdown/Dropdown";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
+import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
-import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
+import PopoverButton from "src/ui/base/Button/PopoverButton";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -124,7 +128,26 @@ export function ProposalDetailsCard(
       />
 
       <div className="flex items-end justify-between flex-1 w-full">
-        <Button variant={ButtonVariant.WHITE}>{t`Choice`}</Button>
+        <Dropdown />
+        <PopoverButton
+          popover={
+            <Card variant={CardVariant.BLUE}>
+              <div>choice 1</div>
+              <div>choice 1</div>
+              <div>choice 1</div>
+            </Card>
+          }
+        >
+          <div>
+            <span>{t`Choice`}</span>
+
+            <ChevronDownIcon
+              className={`${true ? "" : "text-opacity-70"}
+                  ml-2 h-5 w-5 text-orange-300 group-hover:text-opacity-80 transition ease-in-out duration-150`}
+              aria-hidden="true"
+            />
+          </div>
+        </PopoverButton>
         <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
       </div>
     </GradientCard>
