@@ -15,12 +15,15 @@ import tw, {
   height,
   width,
   margin,
+  textOverflow,
+  textAlign,
 } from "src/elf-tailwindcss-classnames";
 import { DuplicateIcon } from "@heroicons/react/outline";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { copyToClipboard } from "src/base/copyToClipboard";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 interface DelegateProfileProps {
   delegate: Delegate;
 }
@@ -61,29 +64,23 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         alignItems("items-center"),
         justifyContent("justify-between"),
         padding("py-3", "px-4"),
-
         backgroundColor("bg-hackerSky"),
         borderRadius("rounded-xl"),
       )}
     >
       <div
         className={tw(
-          display("flex"),
-          flexDirection("flex-col"),
           alignItems("items-start"),
+          textAlign("text-left"),
+          width("w-10/12"),
+          textOverflow("truncate"),
         )}
       >
-        <div
-          className={tw(
-            textColor("text-principalRoyalBlue"),
-            fontWeight("font-bold"),
-            display("flex"),
-            alignItems("items-center"),
-            margin("mb-1"),
-          )}
-        >
+        <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
           {/* Blue circle placeholder for when we implement the 'avatar' for each Delegate  */}
-          <span
+          <WalletJazzicon
+            account={delegate.address}
+            size={20}
             className={tw(
               display("inline-block"),
               height("h-5"),
