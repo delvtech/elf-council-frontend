@@ -1,18 +1,21 @@
 import { ReactElement } from "react";
-import { Signer } from "ethers";
+import { ethers, Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import Link from "next/link";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
 import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
+import { useTokenAllowance } from "src/elf/token/useTokenAllowance";
+import { useSetTokenAllowance } from "src/ui/base/token/useSetTokenAllowance";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
 import { useDepositIntoLockingVault } from "src/ui/rewards/useDepositIntoLockingVault";
 import { jt, t } from "ttag";
 import classNames from "classnames";
 import { addressesJson } from "src/elf-council-addresses";
-import { ButtonVariant } from "src/ui/base/Button/styles";
+import { elementTokenContract } from "src/elf/contracts";
 
 interface PortfolioCardProps {
   account: string | null | undefined;
@@ -46,6 +49,22 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
     signer,
     clearWithdrawInput,
   );
+
+  const { mutate: allow } = useSetTokenAllowance(signer, elementToken);
+
+  const { data: allowanceBN } = useTokenAllowance(
+    elementTokenContract,
+    account,
+    lockingVault,
+  );
+
+  const isAllowed = allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
+
+  const onSetAllowance = () => {
+    if (!account || !signer || !lockingVault) return;
+
+    allow([lockingVault, ethers.constants.MaxUint256]);
+  };
 
   const onDeposit = () => {
     if (!account || !signer || !currentDelegate) return;
@@ -94,9 +113,20 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           />
         </div>
         <div className="w-full flex justify-end mt-4 gap-4">
+          {!isAllowed && account ? (
+            <Button
+              onClick={onSetAllowance}
+              disabled={!account}
+              variant={ButtonVariant.GRADIENT}
+              className="w-28 justify-center"
+            >
+              {t`Allow`}
+            </Button>
+          ) : null}
+
           <Button
             onClick={onDeposit}
-            disabled={!parseInt(walletBalance) || !depositAmount}
+            disabled={!parseInt(walletBalance) || !depositAmount || !isAllowed}
             variant={ButtonVariant.GRADIENT}
             className="w-28 justify-center"
           >{t`Deposit`}</Button>
