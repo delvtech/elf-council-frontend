@@ -16,6 +16,7 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
+import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -42,6 +43,10 @@ export function ProposalDetailsCard(
   if (!proposal) {
     return (
       <GradientCard
+        style={
+          // hack for now, need to fix <body> height
+          { height: "85vh" }
+        }
         className={classNames(
           "flex w-80 h-full p-6 justify-center items-center",
           className,
@@ -56,6 +61,10 @@ export function ProposalDetailsCard(
 
   return (
     <GradientCard
+      style={
+        // hack for now, need to fix <body> height
+        { height: "85vh" }
+      }
       className={classNames(
         className,
         "flex flex-col items-start h-full w-80 p-6 justify-center",
@@ -64,13 +73,17 @@ export function ProposalDetailsCard(
       <h1 className="text-2xl font-bold text-white">
         {t`Proposal ${proposal.proposalId}`}
       </h1>
+
       <p className="font-light text-white">{snapshotProposal?.title}</p>
+
       <p className="my-3 overflow-hidden text-sm font-light text-white">
         {t`Proposal Description:`}
       </p>
+
       <p className="overflow-hidden text-sm font-light text-white text-ellipsis">
         {truncateText(snapshotProposal?.body || "")}
       </p>
+
       <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
         {t`View proposal`}
         <Link passHref={true} href={snapshotProposal?.link || ""}>
@@ -79,6 +92,7 @@ export function ProposalDetailsCard(
           </button>
         </Link>
       </p>
+
       <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
         {t`View Discussion`}
         <Link passHref={true} href={"https://forum.element.fi"}>
@@ -88,15 +102,21 @@ export function ProposalDetailsCard(
         </Link>
       </p>
 
+      <div className="w-full space-y-1 text-sm text-white">
+        <div>{t`1,434,234 Total votes`}</div>
+        <ProgressBar progress={0.5} />
+        <div>{t`7% quorum reached`}</div>
+        <div className="text-xs">{t`(20,000,000 vote quorum)`}</div>
+      </div>
       <BalanceWithLabel
-        className="w-full mt-8"
+        className="w-full mt-4"
         balance={formattedVotingPower}
         tooltipText={votingPowerTooltipText}
         tooltipHref={"/resources"}
         label={t`Voting Power`}
       />
       <BalanceWithLabel
-        className="w-full mt-8"
+        className="w-full mt-4"
         balance={amountDeposited}
         tooltipText={votingBalanceTooltipText}
         tooltipHref={"/resources"}
