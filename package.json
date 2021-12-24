@@ -2,7 +2,7 @@
   "dependencies": {
     "@alch/alchemy-web3": "^1.1.4",
     "@elementfi/react-query-typechain": "^1.0.5",
-    "@ethersproject/providers": "^5.4.5",
+    "@ethersproject/providers": "^5.5.1",
     "@fontsource/rubik": "^4.5.0",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
@@ -26,7 +26,7 @@
     "classnames": "^2.3.1",
     "commify": "^1.0.1",
     "d3-format": "^3.1.0",
-    "d3-time-format": "^4.0.0",
+    "d3-time-format": "^4.1.0",
     "dependency-cruiser": "^11.0.0",
     "elf-council-proposals": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
     "elf-council-tokenlist": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-tokenlist.git",
