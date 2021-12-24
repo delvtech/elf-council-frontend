@@ -113,7 +113,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
           />
         </div>
         <div className="w-full flex justify-end mt-4 gap-4">
-          {!isAllowed && account ? (
+          {!isAllowed ? (
             <Button
               onClick={onSetAllowance}
               disabled={!account}
