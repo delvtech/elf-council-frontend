@@ -15,7 +15,13 @@ import H2 from "src/ui/base/H2";
 import { t } from "ttag";
 import DetailedDelegateProfile from "./DetailedDelegateProfile";
 
-function DelegatesList(): ReactElement {
+interface DelegatesListProps {
+  setDelegateAddressInput: (address: string) => void;
+}
+
+function DelegatesList({
+  setDelegateAddressInput,
+}: DelegatesListProps): ReactElement {
   const [currentDelegate, setCurrentDelegate] = useState(-1);
 
   const onClose = () => {
@@ -61,6 +67,7 @@ function DelegatesList(): ReactElement {
         <DetailedDelegateProfile
           delegate={delegates[currentDelegate]}
           onClose={onClose}
+          setDelegateAddressInput={setDelegateAddressInput}
         />
       ) : null}
     </div>

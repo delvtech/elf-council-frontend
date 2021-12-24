@@ -12,13 +12,20 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onClose: () => void;
+  setDelegateAddressInput: (address: string) => void;
 }
 
 function DetailedDelegateProfile({
   delegate,
   onClose,
+  setDelegateAddressInput,
 }: DetailedDelegateProfileProps): ReactElement {
-    const { account } = useWeb3React();
+  const { account } = useWeb3React();
+
+  const onClickChooseDelegate = () => {
+    onClose();
+    setDelegateAddressInput(delegate.address);
+  }
 
   return (
     <Fragment>
@@ -118,6 +125,7 @@ function DetailedDelegateProfile({
               className="w-52 flex justify-center items-center ml-auto mt-4"
               variant={ButtonVariant.GRADIENT}
               disabled={!account}
+              onClick={onClickChooseDelegate}
             >
               <span className="mr-2">{t`Choose Delegate`}</span>
               <div className="relative h-5 w-5">

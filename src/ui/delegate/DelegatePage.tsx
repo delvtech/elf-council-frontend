@@ -44,6 +44,10 @@ export default function DelegatePage(): ReactElement {
     Delegate | undefined
   >();
 
+  const [delegateAddressInput, setDelegateAddressInput] = useState<
+    string | undefined
+  >();
+
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
     account,
@@ -155,7 +159,7 @@ export default function DelegatePage(): ReactElement {
           )}
         >
           {/* Delegates List */}
-          <DelegatesList />
+          <DelegatesList setDelegateAddressInput={setDelegateAddressInput} />
 
           {/* Delegate Card */}
           <div
@@ -179,6 +183,8 @@ export default function DelegatePage(): ReactElement {
               signer={signer}
               currentDelegate={currentDelegate}
               setCurrentDelegate={setCurrentDelegate}
+              delegateAddressInput={delegateAddressInput}
+              setDelegateAddressInput={setDelegateAddressInput}
             />
           </div>
         </div>
