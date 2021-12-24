@@ -23,7 +23,6 @@ import tw, {
   lineHeight,
   position,
   inset,
-  flex,
 } from "src/elf-tailwindcss-classnames";
 import H2 from "src/ui/base/H2";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
@@ -156,9 +155,7 @@ export default function DelegatePage(): ReactElement {
           )}
         >
           {/* Delegates List */}
-          <div>
-            <DelegatesList />
-          </div>
+          <DelegatesList />
 
           {/* Delegate Card */}
           <div

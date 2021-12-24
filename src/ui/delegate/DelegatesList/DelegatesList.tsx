@@ -1,11 +1,10 @@
-import { ReactElement, useState, Fragment } from "react";
+import { ReactElement, useState } from "react";
 import { delegates } from "src/elf-council-delegates/delegates";
 import tw, {
   display,
   gridTemplateColumns,
   gap,
   overflow,
-  maxHeight,
   margin,
   fontSize,
   textColor,
@@ -14,6 +13,7 @@ import tw, {
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import H2 from "src/ui/base/H2";
 import { t } from "ttag";
+import DetailedDelegateProfile from "./DetailedDelegateProfile";
 
 function DelegatesList(): ReactElement {
   const [currentDelegate, setCurrentDelegate] = useState(-1);
@@ -45,7 +45,10 @@ function DelegatesList(): ReactElement {
         {delegates.map((delegate, idx) => {
           return (
             <li key={`${delegate.address}-${idx}}`}>
-              <button className="w-full" onClick={() => setCurrentDelegate(idx)}>
+              <button
+                className="w-full"
+                onClick={() => setCurrentDelegate(idx)}
+              >
                 <DelegateProfile delegate={delegate} />
               </button>
             </li>
@@ -55,22 +58,10 @@ function DelegatesList(): ReactElement {
 
       {/* Detailed delegate profile */}
       {currentDelegate !== -1 ? (
-        <Fragment>
-          <div
-            className="absolute z-50 box-content py-2 px-3 rounded-xl top-0 
-          right-0 h-full w-full bg-hackerSky"
-          >
-            <div className="m-12">
-              <button onClick={onClose}>CLOSE DELEGATE</button>
-
-              {delegates[currentDelegate].name}
-            </div>
-          </div>
-          <div
-            onClick={onClose}
-            className="fixed z-30 inset-0 bg-black opacity-50"
-          />
-        </Fragment>
+        <DetailedDelegateProfile
+          delegate={delegates[currentDelegate]}
+          onClose={onClose}
+        />
       ) : null}
     </div>
   );
