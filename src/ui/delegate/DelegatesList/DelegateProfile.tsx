@@ -66,7 +66,13 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         borderRadius("rounded-xl"),
       )}
     >
-      <div className={tw(display("flex"), flexDirection("flex-col"))}>
+      <div
+        className={tw(
+          display("flex"),
+          flexDirection("flex-col"),
+          alignItems("items-start"),
+        )}
+      >
         <div
           className={tw(
             textColor("text-principalRoyalBlue"),
@@ -87,7 +93,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               margin("mr-1.5"),
             )}
           />
-          <span>{delegate.name}</span>
+          <span className="truncate">{delegate.name}</span>
         </div>
         <span className={tw(textColor("text-blueGrey"))}>
           <NumDelegatedVotes account={delegate.address} />

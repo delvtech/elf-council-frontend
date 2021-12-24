@@ -84,7 +84,7 @@ export default function DelegatePage(): ReactElement {
               alignItems("items-center"),
               height("h-12"),
               width("xl:w-4/12"),
-              margin("mr-8"),
+              margin("mr-16"),
               backgroundColor("bg-goldYellow"),
               borderRadius("rounded-md"),
               padding("px-6"),
@@ -99,13 +99,13 @@ export default function DelegatePage(): ReactElement {
 
           {/***
            * This is just a empty placeholder to match the width of its
-           * counterpart container: delegates list. Matches the '7/12' width.
+           * counterpart container: delegates list. Matches the '8/12' width.
            * Helps keep warning label flush with the main content of the page,
            * i.e. the PortfolioCard & DelegateList + DelegateCard, due to the
            * 'justify-center' attribute on the main content, which makes it hard
            * to keep things flush and responsive.
            */}
-          <div className={tw(width("xl:w-7/12"))} />
+          <div className={tw(width("xl:w-8/12"))} />
         </div>
       ) : null}
 
@@ -126,7 +126,7 @@ export default function DelegatePage(): ReactElement {
             height("h-full"),
             borderRadius("rounded-xl"),
             boxShadow("shadow"),
-            margin("mr-8"),
+            margin("mr-16"),
           )}
         >
           <div className={tw(padding("px-6", "py-7"))}>
@@ -152,19 +152,11 @@ export default function DelegatePage(): ReactElement {
           className={tw(
             display("flex"),
             flexDirection("flex-col"),
-            width("xl:w-7/12"),
+            width("xl:w-8/12"),
           )}
         >
           {/* Delegates List */}
           <div>
-            <H2
-              className={tw(
-                margin("mb-4"),
-                fontSize("text-2xl"),
-                textColor("text-principalRoyalBlue"),
-                letterSpacing("tracking-wide"),
-              )}
-            >{t`Explore Featured Delegates`}</H2>
             <DelegatesList />
           </div>
 
