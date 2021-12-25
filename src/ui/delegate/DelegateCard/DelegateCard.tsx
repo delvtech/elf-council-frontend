@@ -37,14 +37,19 @@ interface DelegateCardProps {
   signer: Signer | undefined;
   currentDelegate: Delegate | undefined;
   setCurrentDelegate: (delegate: Delegate) => void;
+  delegateAddressInput: string | undefined;
+  setDelegateAddressInput: (address: string) => void;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
-  const { account, signer, currentDelegate, setCurrentDelegate } = props;
-
-  const [delegateAddressInput, setDelegateAddressInput] = useState<
-    string | undefined
-  >();
+  const {
+    account,
+    signer,
+    currentDelegate,
+    setCurrentDelegate,
+    delegateAddressInput,
+    setDelegateAddressInput,
+  } = props;
 
   const { data: [delegateAddressOnChain, amountDelegated] = [] } =
     useDeposits(account);
