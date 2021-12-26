@@ -33,7 +33,7 @@ import tw, {
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { AirdropFullyClaimed } from "src/ui/airdrop/AirdropFullyClaimed/AirdropFullyClaimed";
-import { StepCard } from "src/ui/airdrop/StepCard";
+import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
@@ -43,19 +43,19 @@ import TextInput from "src/ui/base/Input/TextInput";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
-interface DelegateStepCardProps {
+interface ChooseDelegateProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   onNextStep: () => void;
   onPrevStep: () => void;
 }
 
-export function DelegateStepCard({
+export function ChooseDelegate({
   account,
   signer,
   onNextStep,
   onPrevStep,
-}: DelegateStepCardProps): ReactElement {
+}: ChooseDelegateProps): ReactElement {
   const [delegateAddress, setDelegateAddress] = useState("");
   const { data: merkleInfo } = useMerkleInfo(account);
   const { mutate: claim } = useClaimAirdrop(signer);

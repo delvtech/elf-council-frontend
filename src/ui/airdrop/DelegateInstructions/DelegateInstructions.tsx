@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { YouCanDelegateCard } from "src/ui/airdrop/DelegateInstructions/YouCanDelegateCard";
-import { StepCard } from "src/ui/airdrop/StepCard";
+import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { t } from "ttag";
 
 interface DelegateInstructionsProps {

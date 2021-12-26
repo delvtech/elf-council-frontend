@@ -17,7 +17,7 @@ import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCar
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { RewardsInfoCard } from "src/ui/airdrop/AirdropPreview/RewardsInfoCard";
-import { StepCard } from "src/ui/airdrop/StepCard";
+import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 

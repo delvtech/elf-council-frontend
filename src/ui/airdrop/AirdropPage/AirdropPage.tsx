@@ -9,7 +9,7 @@ import tw, {
   textColor,
   flex,
 } from "src/elf-tailwindcss-classnames";
-import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
+import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
 import Steps from "src/ui/base/Steps/Steps";
@@ -115,7 +115,7 @@ export default function AirdropPage(): ReactElement {
               );
             case AirdropStep.CHOOSE_DELEGATE:
               return (
-                <DelegateStepCard
+                <ChooseDelegate
                   signer={signer}
                   account={account}
                   onPrevStep={() =>
