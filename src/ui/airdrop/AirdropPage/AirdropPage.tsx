@@ -114,7 +114,16 @@ export default function AirdropPage(): ReactElement {
                 />
               );
             case AirdropStep.CHOOSE_DELEGATE:
-              return <DelegateStepCard signer={signer} account={account} />;
+              return (
+                <DelegateStepCard
+                  signer={signer}
+                  account={account}
+                  onPrevStep={() =>
+                    setActiveStep(AirdropStep.DELEGATE_INSTRUCTIONS)
+                  }
+                  onNextStep={() => {}}
+                />
+              );
           }
         })()}
       </div>

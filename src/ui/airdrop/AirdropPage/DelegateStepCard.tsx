@@ -7,39 +7,38 @@ import { copyToClipboard } from "src/base/copyToClipboard";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import tw, {
-  display,
-  flexDirection,
-  textColor,
-  textAlign,
-  fontSize,
-  margin,
-  letterSpacing,
-  space,
+  alignItems,
   backgroundColor,
   backgroundOpacity,
-  padding,
   borderRadius,
   boxShadow,
-  height,
-  overflow,
-  justifyContent,
-  alignItems,
-  width,
-  flex,
-  fontWeight,
-  whitespace,
-  divideWidth,
+  display,
   divideColor,
+  divideWidth,
+  flex,
+  fontSize,
+  fontWeight,
+  height,
+  justifyContent,
+  letterSpacing,
+  margin,
+  overflow,
+  padding,
+  space,
+  textAlign,
+  textColor,
+  whitespace,
+  width,
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { AirdropFullyClaimed } from "src/ui/airdrop/AirdropFullyClaimed/AirdropFullyClaimed";
+import { StepCard } from "src/ui/airdrop/StepCard";
 import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
 import TextInput from "src/ui/base/Input/TextInput";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
@@ -47,11 +46,15 @@ import { t } from "ttag";
 interface DelegateStepCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
+  onNextStep: () => void;
+  onPrevStep: () => void;
 }
 
 export function DelegateStepCard({
   account,
   signer,
+  onNextStep,
+  onPrevStep,
 }: DelegateStepCardProps): ReactElement {
   const [delegateAddress, setDelegateAddress] = useState("");
   const { data: merkleInfo } = useMerkleInfo(account);
@@ -88,15 +91,7 @@ export function DelegateStepCard({
     return <AirdropFullyClaimed account={account} />;
   }
   return (
-    <Card
-      variant={CardVariant.BLUE}
-      className={tw(
-        display("flex"),
-        flexDirection("flex-col"),
-        textColor("text-white"),
-        textAlign("text-center"),
-      )}
-    >
+    <StepCard onNextStep={onNextStep} onPrevStep={onPrevStep}>
       <div
         className={tw(
           textAlign("text-center"),
@@ -161,7 +156,7 @@ export function DelegateStepCard({
           >{t`Claim and delegate`}</Button>
         </div>
       </div>
-    </Card>
+    </StepCard>
   );
 }
 
