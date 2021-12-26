@@ -147,13 +147,13 @@ function getConnectWalletStatus(
   account: string | null | undefined,
   activeStep: AirdropStep | undefined,
 ): StepStatus {
-  let connectWalletStatus: StepStatus = StepStatus.UPCOMING;
   if (account) {
-    connectWalletStatus = StepStatus.COMPLETE;
-  } else if (activeStep === AirdropStep.START_CLAIMING) {
-    connectWalletStatus = StepStatus.COMPLETE;
+    return StepStatus.COMPLETE;
   }
-  return connectWalletStatus;
+  if (activeStep === AirdropStep.START_CLAIMING) {
+    return StepStatus.COMPLETE;
+  }
+  return StepStatus.UPCOMING;
 }
 
 function getDelegateStatus(activeStep: AirdropStep | undefined): StepStatus {
@@ -184,12 +184,16 @@ function getClaimAndDelegateStatus(
   merkleInfo: MerkleProof | undefined,
   claimableBalance: string,
 ): StepStatus {
-  return activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
+  if (
+    activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
     hasClaimedAirdrop(merkleInfo, claimableBalance)
-    ? StepStatus.COMPLETE
-    : activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW
-    ? StepStatus.CURRENT
-    : StepStatus.UPCOMING;
+  ) {
+    return StepStatus.COMPLETE;
+  }
+  if (activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW) {
+    return StepStatus.CURRENT;
+  }
+  return StepStatus.UPCOMING;
 }
 
 function hasClaimedAirdrop(
