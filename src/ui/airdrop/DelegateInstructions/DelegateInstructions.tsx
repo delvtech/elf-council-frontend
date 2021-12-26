@@ -15,7 +15,7 @@ export function DelegateInstructions({
   account,
 }: DelegateInstructionsProps): ReactElement {
   return (
-    <StepCard onNextStep={onNextStep} onPrevStep={onPrevStep}>
+    <StepCard onNextStep={onNextStep} onPrevStep={onPrevStep} nextStepLabel={t`Pick Delegate`}>
       <div className="text-left text-3xl font-bold mb-10">{t`Delegate`}</div>
       <div className="flex flex-col w-full justify-center text-base mb-10">
         <span

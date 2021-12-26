@@ -1,46 +1,25 @@
-import { parseEther } from "@ethersproject/units";
-import { Tooltip } from "@material-ui/core";
-import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
 import { Signer } from "ethers";
-import React, { ReactElement, useCallback, useState } from "react";
-import { copyToClipboard } from "src/base/copyToClipboard";
-import { isValidAddress } from "src/base/isValidAddress";
+import React, { ReactElement, useState } from "react";
 import { delegates } from "src/elf-council-delegates/delegates";
 import tw, {
-  alignItems,
-  backgroundColor,
-  backgroundOpacity,
   borderRadius,
   boxShadow,
   display,
-  divideColor,
-  divideWidth,
-  flex,
-  fontSize,
-  fontWeight,
+  gap,
+  gridTemplateColumns,
   height,
-  justifyContent,
-  letterSpacing,
   margin,
   overflow,
   padding,
+  placeholderColor,
   space,
   textAlign,
   textColor,
-  whitespace,
-  width,
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { formatWalletAddress } from "src/formatWalletAddress";
-import { AirdropFullyClaimed } from "src/ui/airdrop/AirdropFullyClaimed/AirdropFullyClaimed";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
-import { useClaimAirdrop } from "src/ui/airdrop/useClaimAirdrop";
-import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
-import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import TextInput from "src/ui/base/Input/TextInput";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { t } from "ttag";
 
 interface ChooseDelegateProps {
@@ -58,218 +37,103 @@ export function ChooseDelegate({
 }: ChooseDelegateProps): ReactElement {
   const [delegateAddress, setDelegateAddress] = useState("");
   const { data: merkleInfo } = useMerkleInfo(account);
-  const { mutate: claim } = useClaimAirdrop(signer);
+  // const { mutate: claim } = useClaimAirdrop(signer);
 
-  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
-  const onClaimOnlyClick = useCallback(() => {
-    if (account && merkleInfo) {
-      claim([
-        parseEther(merkleInfo.leaf.value),
-        parseEther(merkleInfo.leaf.value),
-        merkleInfo.proof,
-        account,
-      ]);
-    }
-  }, [account, claim, merkleInfo]);
+  const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
+    number | undefined
+  >();
+  // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
+  // const onClaimOnlyClick = useCallback(() => {
+  //   if (account && merkleInfo) {
+  //     claim([
+  //       parseEther(merkleInfo.leaf.value),
+  //       parseEther(merkleInfo.leaf.value),
+  //       merkleInfo.proof,
+  //       account,
+  //     ]);
+  //   }
+  // }, [account, claim, merkleInfo]);
 
-  const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
-  const onClaimAndDepositClick = useCallback(() => {
-    if (account && merkleInfo) {
-      claimAndDeposit([
-        parseEther(merkleInfo.leaf.value),
-        delegateAddress,
-        parseEther(merkleInfo.leaf.value),
-        merkleInfo.proof,
-        account,
-      ]);
-    }
-  }, [account, claimAndDeposit, delegateAddress, merkleInfo]);
+  // const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
+  // const onClaimAndDepositClick = useCallback(() => {
+  //   if (account && merkleInfo) {
+  //     claimAndDeposit([
+  //       parseEther(merkleInfo.leaf.value),
+  //       delegateAddress,
+  //       parseEther(merkleInfo.leaf.value),
+  //       merkleInfo.proof,
+  //       account,
+  //     ]);
+  //   }
+  // }, [account, claimAndDeposit, delegateAddress, merkleInfo]);
 
-  // user has no airdrop if they have a merkle value but have already claimed
-  // the full amount
-  if (merkleInfo && parseEther(claimableBalance).isZero()) {
-    return <AirdropFullyClaimed account={account} />;
-  }
   return (
-    <StepCard onNextStep={onNextStep} onPrevStep={onPrevStep}>
-      <div
-        className={tw(
-          textAlign("text-center"),
-          fontSize("text-sm"),
-          margin("mb-4"),
-        )}
-      >
-        <div
-          className={letterSpacing("tracking-wide")}
-        >{t`Delegate your voting power`}</div>
+    <StepCard
+      onNextStep={onNextStep}
+      nextStepLabel={t`Review Claim`}
+      onPrevStep={onPrevStep}
+    >
+      <div className="text-left text-2xl font-bold mb-10">{t`Choose a delegate`}</div>
+      <div className="flex flex-col w-full justify-center text-base mb-10">
+        <span
+          className={"w-full mb-4"}
+        >{t`In order to participate in governance you must select someone to
+          use the voting power associated with your tokens.  To learn more about
+          our governance system and delegating process read here.`}</span>
+        <span className="w-full font-bold mb-2">{t`You can select anyone to delegate to, including
+          yourself. You will own your tokens and you can change your delegate at
+          any time.`}</span>
       </div>
       <div className={space("space-y-4")}>
         <TextInput
-          screenReaderLabel={t`Delegate address`}
-          id={"delegate-address-input"}
-          name={""}
-          onChange={(e) => setDelegateAddress(e.target.value)}
+          screenReaderLabel={t`Enter delegate address`}
+          id={"delegate-address"}
+          name={t`Enter delegate address`}
+          placeholder={t`Enter delegate address`}
+          className={tw(
+            margin("mb-4"),
+            height("h-12"),
+            textAlign("text-left"),
+            textColor("text-principalRoyalBlue"),
+            placeholderColor("placeholder-principalRoyalBlue"),
+          )}
           value={delegateAddress}
-          placeholder={t`Copy and paste your delegate's address here`}
+          onChange={(event) => setDelegateAddress(event.target.value)}
         />
         <div
           className={tw(
-            backgroundColor("bg-white"),
-            backgroundOpacity("bg-opacity-20"),
             padding("p-1"),
             borderRadius("rounded-xl"),
             boxShadow("shadow"),
-            height("h-96"),
+            height("h-48"),
             overflow("overflow-auto"),
           )}
         >
-          <FeaturedDelegatesTable />
-        </div>
-        <div
-          className={tw(
-            display("flex"),
-            justifyContent("justify-end"),
-            alignItems("items-center"),
-            width("w-full"),
-          )}
-        >
-          <div
+          {/* List of delegates */}
+          <ul
             className={tw(
-              flex("flex-1"),
-              fontWeight("font-semibold"),
-              textAlign("text-left"),
+              display("grid"),
+              gridTemplateColumns("grid-cols-2", "lg:grid-cols-3"),
+              gap("gap-x-4", "gap-y-3"),
+              overflow("overflow-y-scroll"),
             )}
-          >{`${merkleInfo?.leaf.value} ELFI`}</div>
-          <Button
-            onClick={onClaimOnlyClick}
-            className={margin("mr-4")}
-            variant={ButtonVariant.MINIMAL}
+            style={{ maxHeight: "428px" }}
           >
-            <span
-              className={tw(textColor("text-white"), fontSize("text-xs"))}
-            >{t`Claim only`}</span>
-          </Button>
-          <Button
-            disabled={!isValidAddress(delegateAddress)}
-            onClick={onClaimAndDepositClick}
-            variant={ButtonVariant.GRADIENT}
-          >{t`Claim and delegate`}</Button>
+            {delegates.map((delegate, idx) => {
+              return (
+                <li key={`${delegate.address}-${idx}}`}>
+                  <button
+                    className="w-full"
+                    onClick={() => setSelectedDelegateIndex(idx)}
+                  >
+                    <DelegateProfile delegate={delegate} />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </StepCard>
   );
-}
-
-const headerClassName = tw(
-  padding("px-6", "py-3"),
-  textAlign("text-left"),
-  fontSize("text-xs"),
-  letterSpacing("tracking-wide"),
-);
-const cellClassName = tw(
-  padding("px-6", "py-4"),
-  whitespace("whitespace-nowrap"),
-  fontSize("text-sm"),
-  fontWeight("font-medium"),
-);
-function FeaturedDelegatesTable(): ReactElement {
-  return (
-    <table
-      className={tw(divideWidth("divide-y"), divideColor("divide-gray-200"))}
-    >
-      <thead>
-        <tr>
-          <th scope="col" className={headerClassName}>
-            {t`Delegate`}
-          </th>
-          <th
-            scope="col"
-            className={tw(headerClassName, display("hidden", "md:table-cell"))}
-          >
-            {t`Votes`}
-          </th>
-          <th
-            scope="col"
-            className={tw(headerClassName, width("w-48"), padding("pl-11"))}
-          >
-            {t`Address`}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {delegates.map((delegate) => (
-          <tr
-            key={delegate.address}
-            className={tw(
-              backgroundColor("hover:bg-white"),
-              backgroundOpacity("hover:bg-opacity-20"),
-            )}
-          >
-            <td className={cellClassName}>{delegate.name}</td>
-            <td
-              className={tw(cellClassName, display("hidden", "md:table-cell"))}
-            >
-              <NumDelegatedVotes account={delegate.address} />
-            </td>
-            <td className={tw(cellClassName, width("w-48"))}>
-              <div
-                className={tw(
-                  display("flex"),
-                  justifyContent("justify-center"),
-                )}
-              >
-                <CopyAddressButton address={delegate.address} />
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
-interface CopyAddressButtonProps {
-  address: string;
-}
-function CopyAddressButton(props: CopyAddressButtonProps) {
-  const { address } = props;
-  const [showTooltip, setShowTooltip] = useState(false);
-  const onCopyAddress = useCallback(() => {
-    setShowTooltip(true);
-    setTimeout(() => setShowTooltip(false), 1000);
-    copyToClipboard(address);
-  }, [address]);
-
-  return (
-    <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
-      <div>
-        <Button
-          className={boxShadow("shadow-none")}
-          variant={ButtonVariant.MINIMAL}
-          onClick={onCopyAddress}
-        >
-          <div
-            className={tw(
-              margin("mr-2"),
-              display("flex"),
-              alignItems("items-center"),
-              textColor("text-white"),
-            )}
-          >
-            {formatWalletAddress(address)}
-          </div>
-          <ContentCopyIcon className={textColor("text-white")} />
-        </Button>
-      </div>
-    </Tooltip>
-  );
-}
-
-interface NumDelegatedVotesProps {
-  account: string;
-}
-function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
-  const { account } = props;
-  const votePower = useVotingPowerForAccount(account);
-  return <span>{votePower}</span>;
 }
