@@ -27,7 +27,7 @@ export default function DelegatePage(): ReactElement {
   >();
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
-  const [selectedDelegate, setselectedDelegate] = useState("");
+  const [selectedDelegate, setSelectedDelegate] = useState("");
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
@@ -50,9 +50,12 @@ export default function DelegatePage(): ReactElement {
         (delegate) => delegate.address === delegateAddressInput,
       );
       if (chosenDelegate) {
-        setselectedDelegate(chosenDelegate.address);
-        console.log(`selected is now ${chosenDelegate.name}`)
+        setSelectedDelegate(chosenDelegate.address);
+      } else {
+        setSelectedDelegate("");
       }
+    } else {
+      setSelectedDelegate("");
     }
   }, [delegateAddressInput]);
 
