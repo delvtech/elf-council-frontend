@@ -1,20 +1,5 @@
 import { ReactElement, useCallback, useState, useRef } from "react";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw, {
-  padding,
-  margin,
-  display,
-  justifyContent,
-  backgroundColor,
-  borderRadius,
-  flexDirection,
-  textColor,
-  fontWeight,
-  alignItems,
-  gap,
-  height,
-  width,
-} from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { copyToClipboard } from "src/base/copyToClipboard";
@@ -23,6 +8,7 @@ import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import Image from "next/image";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 
 interface CurrentDelegateProps {
   className?: string;
@@ -68,7 +54,11 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
     >
       <div className="flex flex-col">
         <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
-          <span className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"></span>
+          <WalletJazzicon
+            account={delegate.address}
+            size={20}
+            className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
+          />
           <span>{delegate.name}</span>
         </div>
         <span className="text-blueGrey">

@@ -50,7 +50,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
     <div className="flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl">
       <div className="items-start text-left w-10/12 truncate">
         <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
-          {/* Blue circle placeholder for when we implement the 'avatar' for each Delegate  */}
           <WalletJazzicon
             account={delegate.address}
             size={20}
