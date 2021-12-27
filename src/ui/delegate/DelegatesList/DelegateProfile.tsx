@@ -1,23 +1,6 @@
 import React, { ReactElement, useState, useCallback, useRef } from "react";
 import { Tooltip } from "@material-ui/core";
 import { t } from "ttag";
-import tw, {
-  display,
-  alignItems,
-  justifyContent,
-  padding,
-  backgroundColor,
-  borderRadius,
-  flexDirection,
-  textColor,
-  fontWeight,
-  gap,
-  height,
-  width,
-  margin,
-  textOverflow,
-  textAlign,
-} from "src/elf-tailwindcss-classnames";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
@@ -64,54 +47,23 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
   };
 
   return (
-    <div
-      className={tw(
-        display("flex"),
-        alignItems("items-center"),
-        justifyContent("justify-between"),
-        padding("py-3", "px-4"),
-        backgroundColor("bg-hackerSky"),
-        borderRadius("rounded-xl"),
-      )}
-    >
-      <div
-        className={tw(
-          alignItems("items-start"),
-          textAlign("text-left"),
-          width("w-10/12"),
-          textOverflow("truncate"),
-        )}
-      >
+    <div className="flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl">
+      <div className="items-start text-left w-10/12 truncate">
         <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
           {/* Blue circle placeholder for when we implement the 'avatar' for each Delegate  */}
           <WalletJazzicon
             account={delegate.address}
             size={20}
-            className={tw(
-              display("inline-block"),
-              height("h-5"),
-              width("w-5"),
-              borderRadius("rounded-xl"),
-              backgroundColor("bg-principalRoyalBlue"),
-              margin("mr-1.5"),
-            )}
+            className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
           />
           <span className="truncate">{delegate.name}</span>
         </div>
-        <span className={tw(textColor("text-blueGrey"))}>
+        <span className="text-blueGrey">
           <NumDelegatedVotes account={delegate.address} />
         </span>
       </div>
       <div>
-        <span
-          className={tw(
-            display(display("flex")),
-            flexDirection("flex-col"),
-            gap("gap-1"),
-            alignItems("items-center"),
-            justifyContent("justify-center"),
-          )}
-        >
+        <span className="flex flex-col gap-1 items-center justify-center">
           <Tooltip
             arrow
             placement="top"
@@ -119,12 +71,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             title={t`Twitter handle copied`}
           >
             <button onClick={handleCopyTwitterHandle}>
-              <AnnotationIcon
-                className={tw(
-                  height("h-5"),
-                  textColor("text-principalRoyalBlue"),
-                )}
-              />
+              <AnnotationIcon className="h-5 text-principalRoyalBlue" />
             </button>
           </Tooltip>
           <Tooltip

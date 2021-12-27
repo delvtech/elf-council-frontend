@@ -63,48 +63,23 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
     <div
       className={classNames(
         className,
-        tw(
-          display("flex"),
-          padding("py-4", "px-4"),
-          justifyContent("justify-between"),
-          backgroundColor("bg-hackerSky"),
-          borderRadius("rounded-xl"),
-        ),
+        "flex py-4 px-4 justify-between bg-hackerSky rounded-xl",
       )}
     >
-      <div className={tw(display("flex"), flexDirection("flex-col"))}>
-        <div
-          className={tw(
-            textColor("text-principalRoyalBlue"),
-            fontWeight("font-bold"),
-            display("flex"),
-            alignItems("items-center"),
-            margin("mb-1"),
-          )}
-        >
-          <span
-            className={tw(
-              display("inline-block"),
-              height("h-5"),
-              width("w-5"),
-              borderRadius("rounded-xl"),
-              backgroundColor("bg-principalRoyalBlue"),
-              margin("mr-1.5"),
-            )}
-          ></span>
+      <div className="flex flex-col">
+        <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
+          <span className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"></span>
           <span>{delegate.name}</span>
         </div>
-        <span className={tw(textColor("text-blueGrey"))}>
+        <span className="text-blueGrey">
           <NumDelegatedVotes account={delegate.address} />
         </span>
-        <span className={textColor("text-blueGrey")}>
+        <span className="text-blueGrey">
           {formatWalletAddress(delegate.address)}
         </span>
       </div>
 
-      <div
-        className="flex flex-col justify-center items-center gap-2"
-      >
+      <div className="flex flex-col justify-center items-center gap-2">
         <Tooltip
           arrow
           placement="top"
@@ -112,12 +87,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           title={t`Twitter handle copied`}
         >
           <button onClick={handleCopyTwitterHandle}>
-            <AnnotationIcon
-              className={tw(
-                height("h-5"),
-                textColor("text-principalRoyalBlue"),
-              )}
-            />
+            <AnnotationIcon className="h-5 text-principalRoyalBlue" />
           </button>
         </Tooltip>
         <Tooltip
