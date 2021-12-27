@@ -35,6 +35,8 @@ import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
 import { formatEther } from "ethers/lib/utils";
 import { useDeposits } from "src/ui/contracts/useDeposits";
+import classNames from "classnames";
+import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -62,43 +64,16 @@ export default function DelegatePage(): ReactElement {
 
   return (
     <div
-      className={tw(
-        display("flex"),
-        flexDirection("flex-col"),
-        alignItems("items-center"),
-        padding("pb-8", { "pt-16": !showWarning }),
-      )}
+      className={classNames("flex flex-col items-center pb-8", {
+        "pt-16": !showWarning,
+      })}
     >
       {/* Warning Card */}
       {showWarning ? (
-        <div
-          className={tw(
-            display("flex"),
-            flexDirection("flex-col", "xl:flex-row"),
-            justifyContent("xl:justify-center"),
-            margin("mb-4"),
-            maxWidth("max-w-7xl"),
-            width("w-full"),
-          )}
-        >
-          <div
-            className={tw(
-              display("flex"),
-              alignItems("items-center"),
-              height("h-12"),
-              width("xl:w-4/12"),
-              margin("mr-16"),
-              backgroundColor("bg-goldYellow"),
-              borderRadius("rounded-md"),
-              padding("px-6"),
-              textColor("text-white"),
-              lineHeight("leading-4"),
-              fontWeight("font-bold"),
-              fontSize("text-sm"),
-            )}
-          >
+        <div className="flex flex-col xl:flex-row xl:justify-center mb-4 max-w-7xl w-full">
+          <WarningLabel>
             {!account ? <NoConnection /> : <NoDeposit />}
-          </div>
+          </WarningLabel>
 
           {/***
            * This is just a empty placeholder to match the width of its
@@ -108,39 +83,15 @@ export default function DelegatePage(): ReactElement {
            * 'justify-center' attribute on the main content, which makes it hard
            * to keep things flush and responsive.
            */}
-          <div className={tw(width("xl:w-8/12"))} />
+          <div className="xl:w-8/12" />
         </div>
       ) : null}
 
-      <div
-        className={tw(
-          display("flex"),
-          flexDirection("flex-col", "xl:flex-row"),
-          justifyContent("xl:justify-center"),
-          maxWidth("max-w-7xl"),
-        )}
-      >
+      <div className="flex flex-col xl:flex-row xl:justify-center max-w-7xl">
         {/* Portfolio Card */}
-        <GradientCard
-          className={tw(
-            display("flex"),
-            flexDirection("flex-col", "lg:flex-row", "xl:flex-col"),
-            width("xl:w-4/12"),
-            height("h-full"),
-            borderRadius("rounded-xl"),
-            boxShadow("shadow"),
-            margin("mr-16"),
-          )}
-        >
-          <div className={tw(padding("px-6", "py-7"))}>
-            <H2
-              className={tw(
-                margin("mb-4"),
-                textColor("text-white"),
-                fontSize("text-2xl"),
-                letterSpacing("tracking-wide"),
-              )}
-            >{t`Portfolio`}</H2>
+        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 h-full rounded-xl shadow mr-16">
+          <div className="px-6 py-7">
+            <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Portfolio`}</H2>
             <PortfolioCard
               account={account}
               signer={signer}
@@ -151,13 +102,7 @@ export default function DelegatePage(): ReactElement {
           </div>
         </GradientCard>
         {/* Delegates */}
-        <div
-          className={tw(
-            display("flex"),
-            flexDirection("flex-col"),
-            width("xl:w-8/12"),
-          )}
-        >
+        <div className="flex flex-col xl:w-8/12">
           {/* Delegates List */}
           <DelegatesList setDelegateAddressInput={setDelegateAddressInput} />
 
@@ -183,19 +128,11 @@ export default function DelegatePage(): ReactElement {
 
 function NoConnection(): ReactElement {
   return (
-    <p className={tw(textAlign("text-left"))}>
+    <p className="text-left">
       <div>{t`Unable to determine delegation eligibility`}</div>
       <div>
         {t`Please connect your wallet`}
-        <ShieldExclamationIcon
-          className={tw(
-            position("relative"),
-            inset("bottom-0.5"),
-            display("inline-block"),
-            height("h-4"),
-            margin("ml-2"),
-          )}
-        />
+        <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </div>
     </p>
   );
@@ -203,18 +140,10 @@ function NoConnection(): ReactElement {
 
 function NoDeposit(): ReactElement {
   return (
-    <p className={tw(textAlign("text-left"))}>
+    <p className="text-left">
       <div>
         {t`Please ensure you deposit your tokens to earn your delegating power`}
-        <SparklesIcon
-          className={tw(
-            position("relative"),
-            inset("bottom-0.5"),
-            display("inline-block"),
-            height("h-4"),
-            margin("ml-2"),
-          )}
-        />
+        <SparklesIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </div>
     </p>
   );
