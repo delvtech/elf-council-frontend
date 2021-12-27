@@ -19,10 +19,10 @@ import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Tooltip } from "@material-ui/core";
-import { DuplicateIcon } from "@heroicons/react/outline";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import Image from "next/image";
 
 interface CurrentDelegateProps {
   className?: string;
@@ -103,12 +103,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       </div>
 
       <div
-        className={tw(
-          display("flex"),
-          flexDirection("flex-col"),
-          justifyContent("justify-center"),
-          gap("gap-2"),
-        )}
+        className="flex flex-col justify-center items-center gap-2"
       >
         <Tooltip
           arrow
@@ -132,12 +127,13 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           title={t`Address copied`}
         >
           <button onClick={handleCopyAddress}>
-            <DuplicateIcon
-              className={tw(
-                height("h-5"),
-                textColor("text-principalRoyalBlue"),
-              )}
-            />
+            <div className="relative h-4 w-4">
+              <Image
+                layout="fill"
+                src="/assets/crown.svg"
+                alt={t`Crown icon`}
+              />
+            </div>
           </button>
         </Tooltip>
       </div>

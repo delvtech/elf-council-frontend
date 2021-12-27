@@ -23,6 +23,7 @@ import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
+import Image from "next/image";
 interface DelegateProfileProps {
   delegate: Delegate;
 }
@@ -133,26 +134,18 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             title={t`Address copied`}
           >
             <button onClick={handleCopyAddress}>
-              <CrownSvg />
+              <div className="relative h-4 w-4">
+                <Image
+                  layout="fill"
+                  src="/assets/crown.svg"
+                  alt={t`Crown icon`}
+                />
+              </div>
             </button>
           </Tooltip>
         </span>
       </div>
     </div>
-  );
-}
-
-function CrownSvg(): ReactElement {
-  return (
-    <svg
-      width="17"
-      height="17"
-      viewBox="0 0 17 17"
-      xmlns="http://www.w3.org/2000/svg"
-      className="text-principalRoyalBlue fill-current"
-    >
-      <path d="M8.33333 0C3.725 0 0 3.75 0 8.33333C0 12.9167 3.75 16.6667 8.33333 16.6667C12.9167 16.6667 16.6667 12.9167 16.6667 8.33333C16.6667 3.75 12.9167 0 8.33333 0ZM11.6667 11.2C11.6667 11.4833 11.4833 11.6667 11.2 11.6667H5.46667C5.18333 11.6667 5 11.4833 5 11.2V10.8333H11.6667V11.2ZM11.6667 10H5L4.16667 5L6.66667 6.66667L8.33333 4.16667L10 6.66667L12.5 5L11.6667 10Z" />
-    </svg>
   );
 }
 
