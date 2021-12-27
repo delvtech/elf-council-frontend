@@ -162,25 +162,13 @@ export default function DelegatePage(): ReactElement {
           <DelegatesList setDelegateAddressInput={setDelegateAddressInput} />
 
           {/* Delegate Card */}
-          <div
-            className={tw(
-              padding("px-6", "py-7"),
-              margin("mt-auto"),
-              borderRadius("rounded-xl"),
-              backgroundColor("bg-principalRoyalBlue"),
-            )}
-          >
-            <H2
-              className={tw(
-                margin("mb-4"),
-                textColor("text-white"),
-                fontSize("text-2xl"),
-                letterSpacing("tracking-wide"),
-              )}
-            >{t`Delegate`}</H2>
+          <div className="px-6 py-7 mt-auto rounded-xl bg-principalRoyalBlue">
+            <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Delegate`}</H2>
+
             <DelegateCard
               account={account}
               signer={signer}
+              vaultBalance={vaultBalance}
               currentDelegate={currentDelegate}
               setCurrentDelegate={setCurrentDelegate}
               delegateAddressInput={delegateAddressInput}

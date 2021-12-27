@@ -31,10 +31,13 @@ import tw, {
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
+import H2 from "src/ui/base/H2";
+import classNames from "classnames";
 
 interface DelegateCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
+  vaultBalance: string;
   currentDelegate: Delegate | undefined;
   setCurrentDelegate: (delegate: Delegate) => void;
   delegateAddressInput: string | undefined;
@@ -45,6 +48,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
     signer,
+    vaultBalance,
     currentDelegate,
     setCurrentDelegate,
     delegateAddressInput,
@@ -90,15 +94,15 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   }, [delegateAddressOnChain, setCurrentDelegate]);
 
   return (
-    <div className={tw(opacity({ "opacity-50": !account }))}>
-      <div
-        className={tw(
-          flex("flex-1"),
-          textColor("text-white"),
-          fontSize("text-xl"),
-        )}
-      >
-        {t`Current Delegation`}
+    <div className={classNames({ "opacity-50": !account })}>
+      <div className="flex gap-7 flex-1 text-white text-xl">
+        <div className="w-1/2">
+          <span>{t`Current Delegation`}</span>
+        </div>
+        <div className="w-1/2 leading-5">
+          <span>{t`Change Delegation`}</span>
+          <span className="inline-block text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</span>
+        </div>
       </div>
 
       <div className={tw(display("flex"), gap("gap-7"), margin("mt-2"))}>
