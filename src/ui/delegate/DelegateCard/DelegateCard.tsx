@@ -18,7 +18,7 @@ interface DelegateCardProps {
   vaultBalance: string;
   currentDelegate: Delegate | undefined;
   setCurrentDelegate: (delegate: Delegate) => void;
-  delegateAddressInput: string | undefined;
+  delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
 }
 

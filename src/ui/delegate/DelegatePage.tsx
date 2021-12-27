@@ -1,29 +1,7 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Signer } from "ethers";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw, {
-  display,
-  flexDirection,
-  alignItems,
-  height,
-  width,
-  padding,
-  borderRadius,
-  fontWeight,
-  boxShadow,
-  margin,
-  textColor,
-  justifyContent,
-  fontSize,
-  letterSpacing,
-  textAlign,
-  backgroundColor,
-  maxWidth,
-  lineHeight,
-  position,
-  inset,
-} from "src/elf-tailwindcss-classnames";
 import H2 from "src/ui/base/H2";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
@@ -37,6 +15,8 @@ import { formatEther } from "ethers/lib/utils";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import classNames from "classnames";
 import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
+import { delegates } from "src/elf-council-delegates/delegates";
+import { isValidAddress } from "src/base/isValidAddress";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -46,9 +26,8 @@ export default function DelegatePage(): ReactElement {
     Delegate | undefined
   >();
 
-  const [delegateAddressInput, setDelegateAddressInput] = useState<
-    string | undefined
-  >();
+  const [delegateAddressInput, setDelegateAddressInput] = useState("");
+  const [selectedDelegate, setselectedDelegate] = useState("");
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
@@ -61,6 +40,21 @@ export default function DelegatePage(): ReactElement {
 
   const showWarning =
     !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
+
+  useEffect(() => {
+    if (
+      delegateAddressInput.length === 42 &&
+      isValidAddress(delegateAddressInput)
+    ) {
+      const chosenDelegate = delegates.find(
+        (delegate) => delegate.address === delegateAddressInput,
+      );
+      if (chosenDelegate) {
+        setselectedDelegate(chosenDelegate.address);
+        console.log(`selected is now ${chosenDelegate.name}`)
+      }
+    }
+  }, [delegateAddressInput]);
 
   return (
     <div
@@ -104,7 +98,10 @@ export default function DelegatePage(): ReactElement {
         {/* Delegates */}
         <div className="flex flex-col xl:w-8/12">
           {/* Delegates List */}
-          <DelegatesList setDelegateAddressInput={setDelegateAddressInput} />
+          <DelegatesList
+            selectedDelegate={selectedDelegate}
+            setDelegateAddressInput={setDelegateAddressInput}
+          />
 
           {/* Delegate Card */}
           <div className="px-6 py-7 mt-auto rounded-xl bg-principalRoyalBlue">

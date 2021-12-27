@@ -7,7 +7,9 @@ import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 import Image from "next/image";
+import classNames from "classnames";
 interface DelegateProfileProps {
+  selected: boolean;
   delegate: Delegate;
 }
 
@@ -17,7 +19,7 @@ const defaultToolTipState = {
 };
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { delegate } = props;
+  const { selected = false, delegate } = props;
   const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -47,7 +49,12 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
   };
 
   return (
-    <div className="flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl">
+    <div
+      className={classNames(
+        "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
+        { "!bg-paleLily": selected },
+      )}
+    >
       <div className="items-start text-left w-10/12 truncate">
         <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
           <WalletJazzicon
