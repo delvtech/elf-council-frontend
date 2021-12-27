@@ -16,10 +16,12 @@ import { t } from "ttag";
 import DetailedDelegateProfile from "./DetailedDelegateProfile";
 
 interface DelegatesListProps {
+  selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
 }
 
 function DelegatesList({
+  selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
   const [currentDelegate, setCurrentDelegate] = useState(-1);
@@ -38,6 +40,7 @@ function DelegatesList({
           letterSpacing("tracking-wide"),
         )}
       >{t`Explore Featured Delegates`}</H2>
+
       {/* List of delegates */}
       <ul
         className={tw(
@@ -46,16 +49,20 @@ function DelegatesList({
           gap("gap-x-4", "gap-y-3"),
           overflow("overflow-y-scroll"),
         )}
+        // 428px exactly matches 5 rows of the list
         style={{ maxHeight: "428px" }}
       >
         {delegates.map((delegate, idx) => {
+          const selected = delegate.address === selectedDelegate;
+
           return (
+            // TODO: Remove -${idx} for production since addresses are always unique
             <li key={`${delegate.address}-${idx}}`}>
               <button
                 className="w-full"
                 onClick={() => setCurrentDelegate(idx)}
               >
-                <DelegateProfile delegate={delegate} />
+                <DelegateProfile selected={selected} delegate={delegate} />
               </button>
             </li>
           );

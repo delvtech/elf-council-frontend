@@ -1,28 +1,14 @@
 import { ReactElement, useCallback, useState, useRef } from "react";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import tw, {
-  padding,
-  margin,
-  display,
-  justifyContent,
-  backgroundColor,
-  borderRadius,
-  flexDirection,
-  textColor,
-  fontWeight,
-  alignItems,
-  gap,
-  height,
-  width,
-} from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Tooltip } from "@material-ui/core";
-import { DuplicateIcon } from "@heroicons/react/outline";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import Image from "next/image";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 
 interface CurrentDelegateProps {
   className?: string;
@@ -63,53 +49,27 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
     <div
       className={classNames(
         className,
-        tw(
-          display("flex"),
-          padding("py-4", "px-4"),
-          justifyContent("justify-between"),
-          backgroundColor("bg-hackerSky"),
-          borderRadius("rounded-xl"),
-        ),
+        "flex py-4 px-4 justify-between bg-hackerSky rounded-xl",
       )}
     >
-      <div className={tw(display("flex"), flexDirection("flex-col"))}>
-        <div
-          className={tw(
-            textColor("text-principalRoyalBlue"),
-            fontWeight("font-bold"),
-            display("flex"),
-            alignItems("items-center"),
-            margin("mb-1"),
-          )}
-        >
-          <span
-            className={tw(
-              display("inline-block"),
-              height("h-5"),
-              width("w-5"),
-              borderRadius("rounded-xl"),
-              backgroundColor("bg-principalRoyalBlue"),
-              margin("mr-1.5"),
-            )}
-          ></span>
+      <div className="flex flex-col">
+        <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
+          <WalletJazzicon
+            account={delegate.address}
+            size={20}
+            className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
+          />
           <span>{delegate.name}</span>
         </div>
-        <span className={tw(textColor("text-blueGrey"))}>
+        <span className="text-blueGrey">
           <NumDelegatedVotes account={delegate.address} />
         </span>
-        <span className={textColor("text-blueGrey")}>
+        <span className="text-blueGrey">
           {formatWalletAddress(delegate.address)}
         </span>
       </div>
 
-      <div
-        className={tw(
-          display("flex"),
-          flexDirection("flex-col"),
-          justifyContent("justify-center"),
-          gap("gap-2"),
-        )}
-      >
+      <div className="flex flex-col justify-center items-center gap-2">
         <Tooltip
           arrow
           placement="top"
@@ -117,12 +77,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           title={t`Twitter handle copied`}
         >
           <button onClick={handleCopyTwitterHandle}>
-            <AnnotationIcon
-              className={tw(
-                height("h-5"),
-                textColor("text-principalRoyalBlue"),
-              )}
-            />
+            <AnnotationIcon className="h-5 text-principalRoyalBlue" />
           </button>
         </Tooltip>
         <Tooltip
@@ -132,12 +87,13 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           title={t`Address copied`}
         >
           <button onClick={handleCopyAddress}>
-            <DuplicateIcon
-              className={tw(
-                height("h-5"),
-                textColor("text-principalRoyalBlue"),
-              )}
-            />
+            <div className="relative h-4 w-4">
+              <Image
+                layout="fill"
+                src="/assets/crown.svg"
+                alt={t`Crown icon`}
+              />
+            </div>
           </button>
         </Tooltip>
       </div>
