@@ -11,7 +11,6 @@ import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
-import Dropdown from "src/ui/base/Dropdown/Dropdown";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
@@ -128,7 +127,6 @@ export function ProposalDetailsCard(
       />
 
       <div className="flex items-end justify-between flex-1 w-full">
-        <Dropdown />
         <PopoverButton
           popover={
             <Card variant={CardVariant.BLUE}>

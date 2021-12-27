@@ -1,11 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, {
-  LegacyRef,
-  ReactElement,
-  ReactNode,
-  useRef,
-  useState,
-} from "react";
+import React, { LegacyRef, ReactElement, ReactNode, useState } from "react";
 import { usePopper } from "react-popper";
 
 import { Popover } from "@headlessui/react";
