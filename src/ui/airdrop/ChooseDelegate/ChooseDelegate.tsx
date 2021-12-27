@@ -126,7 +126,10 @@ export function ChooseDelegate({
                     className="w-full"
                     onClick={() => setSelectedDelegateIndex(idx)}
                   >
-                    <DelegateProfile delegate={delegate} />
+                    <DelegateProfile
+                      active={idx === selectedDelegateIndex}
+                      delegate={delegate}
+                    />
                   </button>
                 </li>
               );

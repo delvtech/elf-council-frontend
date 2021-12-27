@@ -11,6 +11,7 @@ import classNames from "classnames";
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
+  active?: boolean;
 }
 
 const defaultToolTipState = {
