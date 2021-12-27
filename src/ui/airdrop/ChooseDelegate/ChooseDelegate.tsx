@@ -1,21 +1,6 @@
 import { Signer } from "ethers";
 import React, { ReactElement, useState } from "react";
 import { delegates } from "src/elf-council-delegates/delegates";
-import tw, {
-  borderRadius,
-  boxShadow,
-  display,
-  gap,
-  gridTemplateColumns,
-  height,
-  margin,
-  overflow,
-  padding,
-  placeholderColor,
-  space,
-  textAlign,
-  textColor,
-} from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import TextInput from "src/ui/base/Input/TextInput";
@@ -84,39 +69,20 @@ export function ChooseDelegate({
           yourself. You will own your tokens and you can change your delegate at
           any time.`}</span>
       </div>
-      <div className={space("space-y-4")}>
+      <div className="space-y-4">
         <TextInput
           screenReaderLabel={t`Enter delegate address`}
           id={"delegate-address"}
           name={t`Enter delegate address`}
           placeholder={t`Enter delegate address`}
-          className={tw(
-            margin("mb-4"),
-            height("h-12"),
-            textAlign("text-left"),
-            textColor("text-principalRoyalBlue"),
-            placeholderColor("placeholder-principalRoyalBlue"),
-          )}
+          className="mb-4 h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
           value={delegateAddress}
           onChange={(event) => setDelegateAddress(event.target.value)}
         />
-        <div
-          className={tw(
-            padding("p-1"),
-            borderRadius("rounded-xl"),
-            boxShadow("shadow"),
-            height("h-48"),
-            overflow("overflow-auto"),
-          )}
-        >
+        <div className="p-1 rounded-xl shadow h-48 overflow-auto">
           {/* List of delegates */}
           <ul
-            className={tw(
-              display("grid"),
-              gridTemplateColumns("grid-cols-2", "lg:grid-cols-3"),
-              gap("gap-x-4", "gap-y-3"),
-              overflow("overflow-y-scroll"),
-            )}
+            className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll"
             style={{ maxHeight: "428px" }}
           >
             {delegates.map((delegate, idx) => {
