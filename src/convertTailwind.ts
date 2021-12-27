@@ -1,12 +1,15 @@
 import { Project, SourceFile } from "ts-morph";
 import * as ts from "typescript";
 
-// example: src/ui/proposals/ProposalList.tsx
-const FILE_PATH = "";
-const project = new Project();
-project.addSourceFilesAtPaths(FILE_PATH);
-const sourceFile = project.getSourceFileOrThrow(FILE_PATH);
+const filePath = process.argv.slice(2)[0];
 
+if (!filePath) {
+  console.error("no file specified");
+}
+
+const project = new Project();
+project.addSourceFilesAtPaths(filePath);
+const sourceFile = project.getSourceFileOrThrow(filePath);
 const convertTw = (sourceFile: SourceFile) => {
   /**
    * converts:
