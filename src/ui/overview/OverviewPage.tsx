@@ -15,9 +15,11 @@ export function OverviewPage(): ReactElement {
       <div className="px-8 py-1">
         <H1 className="text-center"> {t`Governance Overview`}</H1>
       </div>
-      <SummaryCards />
-      <div className="grid grid-cols-1 space-x-0 space-y-6 lg:grid-cols-2 lg:space-x-6 lg:space-y-0">
-        <PortfolioCard account={account} />
+      <div className="flex">
+        <SummaryCards />
+        <div className="grid grid-cols-1 ml-8 space-x-0 space-y-6 lg:grid-cols-2 lg:space-x-6 lg:space-y-0">
+          <PortfolioCard account={account} />
+        </div>
       </div>
     </div>
   );
