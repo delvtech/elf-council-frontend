@@ -19,7 +19,24 @@ const convertTw = (sourceFile: SourceFile) => {
    */
   const newSourceFile = sourceFile.transform((traversal) => {
     const node = traversal.visitChildren(); // Here travseral visits children in postorder
-    if (ts.isCallExpression(node) && node.getText().startsWith("tw")) {
+
+    // total hack here.  some classNames nodes don't have text. make sure it does otherwise calling
+    // getText() totally borks.   i'm sure there's a more elegant way to do this
+    let hasText = true;
+    if (ts.isCallExpression(node)) {
+      try {
+        console.log("node", node?.getText());
+      } catch (error) {
+        // console.log("node", node);
+        hasText = false;
+      }
+    }
+
+    if (
+      ts.isCallExpression(node) &&
+      hasText &&
+      node.getText().startsWith("tw")
+    ) {
       let twClasses: string[] = [];
       node.forEachChild((child) => {
         if (ts.isCallExpression(child)) {
@@ -55,9 +72,10 @@ const convertTw = (sourceFile: SourceFile) => {
 
         if (
           ts.isJsxExpression(node) &&
+          !!node &&
           !!node.parent &&
           ts.isJsxAttribute(node.parent) &&
-          node.parent.name.escapedText === "className"
+          node?.parent?.name?.escapedText === "className"
         ) {
           if (
             node.getChildCount() === 3 &&
