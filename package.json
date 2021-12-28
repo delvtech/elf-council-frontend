@@ -71,6 +71,7 @@
     "eslint-plugin-flowtype": "^6.0.1",
     "eslint-plugin-tailwindcss": "^1.17.2",
     "prettier": "^2.5.1",
+    "ts-morph": "^13.0.2",
     "typescript": "^4.5.4"
   },
   "name": "elf-council-frontend",
@@ -93,7 +94,8 @@
     "update-elf-council-proposals": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
     "update-elf-council-tokenlist": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-tokenlist.git",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "convert-tw": "ts-node --project tsconfig.cjs.json src/convertTailwind.ts"
   },
   "version": "0.1.0"
 }
