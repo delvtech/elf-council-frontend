@@ -5,13 +5,11 @@ import tw, {
   flexDirection,
   fontSize,
   fontWeight,
-  height,
   justifyContent,
   margin,
   padding,
   space,
   textAlign,
-  textColor,
   width,
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
@@ -19,9 +17,7 @@ import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCar
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { RewardsInfoCard } from "src/ui/airdrop/AirdropPreview/RewardsInfoCard";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
+import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 
@@ -50,22 +46,8 @@ export function AirdropPreview({
   }
 
   return (
-    <Card
-      variant={CardVariant.BLUE}
-      className={tw(
-        display("flex"),
-        flexDirection("flex-col"),
-        textColor("text-white"),
-        height("h-full"),
-      )}
-    >
-      <div
-        className={tw(
-          display("flex"),
-          flexDirection("flex-col"),
-          padding("p-6"),
-        )}
-      >
+    <StepCard onPrevStep={onPrevStep} onNextStep={onNextStep}>
+      <div className={tw(display("flex"), flexDirection("flex-col"))}>
         <div className={textAlign("text-right")}>
           <Tag intent={Intent.SUCCESS}>
             <span
@@ -117,15 +99,7 @@ We hope to see you continue to contribute to the future of Element.`}</span>
           <AirdropAmountCard account={account} />
           <RewardsInfoCard />
         </div>
-        <div className={tw(display("flex"), justifyContent("justify-between"))}>
-          <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
-            <span className={tw(padding("px-10"))}>{t`Back`}</span>
-          </Button>
-          <Button onClick={onNextStep} variant={ButtonVariant.GRADIENT}>
-            <span className={tw(padding("px-10"))}>{t`Next`}</span>
-          </Button>
-        </div>
       </div>
-    </Card>
+    </StepCard>
   );
 }

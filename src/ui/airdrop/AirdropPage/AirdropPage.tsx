@@ -9,7 +9,7 @@ import tw, {
   textColor,
   flex,
 } from "src/elf-tailwindcss-classnames";
-import { DelegateStepCard } from "src/ui/airdrop/AirdropPage/DelegateStepCard";
+import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
 import Steps from "src/ui/base/Steps/Steps";
@@ -42,8 +42,10 @@ export default function AirdropPage(): ReactElement {
   const { data: merkleInfo } = merkleInfoQueryData;
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
-  const [activeStep, setActiveStep] = useState<AirdropStep | undefined>();
+  const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
 
+  // statuses for the Steps component
+  const [activeStep, setActiveStep] = useState<AirdropStep | undefined>();
   const connectWalletStatus = getConnectWalletStatus(account, activeStep);
   const delegateStatus = getDelegateStatus(activeStep);
   const claimAndDelegateStatus = getClaimAndDelegateStatus(
@@ -114,7 +116,15 @@ export default function AirdropPage(): ReactElement {
                 />
               );
             case AirdropStep.CHOOSE_DELEGATE:
-              return <DelegateStepCard signer={signer} account={account} />;
+              return (
+                <ChooseDelegate
+                  onChooseDelegate={setDelegateAddress}
+                  onPrevStep={() =>
+                    setActiveStep(AirdropStep.DELEGATE_INSTRUCTIONS)
+                  }
+                  onNextStep={() => {}}
+                />
+              );
           }
         })()}
       </div>
@@ -138,13 +148,13 @@ function getConnectWalletStatus(
   account: string | null | undefined,
   activeStep: AirdropStep | undefined,
 ): StepStatus {
-  let connectWalletStatus: StepStatus = StepStatus.UPCOMING;
   if (account) {
-    connectWalletStatus = StepStatus.COMPLETE;
-  } else if (activeStep === AirdropStep.START_CLAIMING) {
-    connectWalletStatus = StepStatus.COMPLETE;
+    return StepStatus.COMPLETE;
   }
-  return connectWalletStatus;
+  if (activeStep === AirdropStep.START_CLAIMING) {
+    return StepStatus.COMPLETE;
+  }
+  return StepStatus.UPCOMING;
 }
 
 function getDelegateStatus(activeStep: AirdropStep | undefined): StepStatus {
@@ -175,12 +185,16 @@ function getClaimAndDelegateStatus(
   merkleInfo: MerkleProof | undefined,
   claimableBalance: string,
 ): StepStatus {
-  return activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
+  if (
+    activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW &&
     hasClaimedAirdrop(merkleInfo, claimableBalance)
-    ? StepStatus.COMPLETE
-    : activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW
-    ? StepStatus.CURRENT
-    : StepStatus.UPCOMING;
+  ) {
+    return StepStatus.COMPLETE;
+  }
+  if (activeStep === AirdropStep.CLAIM_AND_DELEGATE_PREVIEW) {
+    return StepStatus.CURRENT;
+  }
+  return StepStatus.UPCOMING;
 }
 
 function hasClaimedAirdrop(
