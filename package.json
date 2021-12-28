@@ -70,9 +70,19 @@
     "eslint-config-typescript": "^3.0.0",
     "eslint-plugin-flowtype": "^6.0.1",
     "eslint-plugin-tailwindcss": "^3.0.0-beta.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.1.4",
     "prettier": "^2.5.1",
     "ts-morph": "^13.0.2",
     "typescript": "^4.5.4"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   },
   "name": "elf-council-frontend",
   "homepage": "https://github.com/element-fi/elf-council-frontend",
@@ -95,7 +105,8 @@
     "update-elf-council-tokenlist": "npm install git+https://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:x-oauth-basic@github.com/element-fi/elf-council-tokenlist.git",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "convert-tw": "ts-node --project tsconfig.cjs.json src/convertTailwind.ts"
+    "convert-tw": "ts-node --project tsconfig.cjs.json src/convertTailwind.ts",
+    "prepare": "husky install"
   },
   "version": "0.1.0"
 }
