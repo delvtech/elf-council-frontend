@@ -52,8 +52,10 @@ const convertTw = (sourceFile: SourceFile) => {
     newSourceFile
       .transform((traversal) => {
         const node = traversal.visitChildren(); // Here travseral visits children in postorder
+
         if (
           ts.isJsxExpression(node) &&
+          !!node.parent &&
           ts.isJsxAttribute(node.parent) &&
           node.parent.name.escapedText === "className"
         ) {
