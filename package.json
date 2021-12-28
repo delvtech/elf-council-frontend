@@ -69,7 +69,7 @@
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-typescript": "^3.0.0",
     "eslint-plugin-flowtype": "^6.0.1",
-    "eslint-plugin-tailwindcss": "^3.0.0-beta.0",
+    "eslint-plugin-tailwindcss": "^3.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.1.4",
     "prettier": "^2.5.1",
