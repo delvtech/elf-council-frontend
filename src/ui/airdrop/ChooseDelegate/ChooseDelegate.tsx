@@ -1,60 +1,50 @@
-import { Signer } from "ethers";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import TextInput from "src/ui/base/Input/TextInput";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { t } from "ttag";
 
 interface ChooseDelegateProps {
-  account: string | null | undefined;
-  signer: Signer | undefined;
+  onChooseDelegate: (delegateAddress: string) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
 }
 
 export function ChooseDelegate({
-  account,
-  signer,
-  onNextStep,
+  onNextStep: onNextStepFromProps,
+  onChooseDelegate,
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
-  const [delegateAddress, setDelegateAddress] = useState("");
-  const { data: merkleInfo } = useMerkleInfo(account);
-  // const { mutate: claim } = useClaimAirdrop(signer);
+  const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
 
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
   >();
-  // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
-  // const onClaimOnlyClick = useCallback(() => {
-  //   if (account && merkleInfo) {
-  //     claim([
-  //       parseEther(merkleInfo.leaf.value),
-  //       parseEther(merkleInfo.leaf.value),
-  //       merkleInfo.proof,
-  //       account,
-  //     ]);
-  //   }
-  // }, [account, claim, merkleInfo]);
 
-  // const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
-  // const onClaimAndDepositClick = useCallback(() => {
-  //   if (account && merkleInfo) {
-  //     claimAndDeposit([
-  //       parseEther(merkleInfo.leaf.value),
-  //       delegateAddress,
-  //       parseEther(merkleInfo.leaf.value),
-  //       merkleInfo.proof,
-  //       account,
-  //     ]);
-  //   }
-  // }, [account, claimAndDeposit, delegateAddress, merkleInfo]);
+  // Unset the selected featured delegate if the user changes the text input
+  useEffect(() => {
+    if (selectedDelegateIndex === undefined) {
+      return;
+    }
+    if (delegates[selectedDelegateIndex].address !== delegateAddress) {
+      setSelectedDelegateIndex(undefined);
+    }
+  }, [delegateAddress, selectedDelegateIndex]);
+
+  const onNextStep = useCallback(() => {
+    onChooseDelegate(
+      // safe to cast because we disable the button when the delegateAddress is invalid
+      delegateAddress as string,
+    );
+    onNextStepFromProps();
+  }, [delegateAddress, onChooseDelegate, onNextStepFromProps]);
 
   return (
     <StepCard
       onNextStep={onNextStep}
+      nextStepDisabled={!isValidAddress(delegateAddress || "")}
       nextStepLabel={t`Review Claim`}
       onPrevStep={onPrevStep}
     >
@@ -62,12 +52,13 @@ export function ChooseDelegate({
       <div className="flex flex-col w-full justify-center text-base mb-10">
         <span
           className={"w-full mb-4"}
-        >{t`In order to participate in governance you must select someone to
-          use the voting power associated with your tokens.  To learn more about
-          our governance system and delegating process read here.`}</span>
-        <span className="w-full font-bold mb-2">{t`You can select anyone to delegate to, including
-          yourself. You will own your tokens and you can change your delegate at
-          any time.`}</span>
+        >{t`Select a community member to represent you in our governance system.
+        You can change this delegation at any time. If you want to learn more
+        about potential delegates, click on the x icon to learn more about them
+        or click on the y icon to view their Twitter.`}</span>
+        <span className="w-full font-bold mb-2">{t`You can delegate to someone
+        not listed or to yourself, by entering an Ethereum address with the
+        button on the right. `}</span>
       </div>
       <div className="space-y-4">
         <TextInput
@@ -90,10 +81,13 @@ export function ChooseDelegate({
                 <li key={`${delegate.address}-${idx}}`}>
                   <button
                     className="w-full"
-                    onClick={() => setSelectedDelegateIndex(idx)}
+                    onClick={() => {
+                      setSelectedDelegateIndex(idx);
+                      setDelegateAddress(delegate.address);
+                    }}
                   >
                     <DelegateProfile
-                      active={idx === selectedDelegateIndex}
+                      selected={idx === selectedDelegateIndex}
                       delegate={delegate}
                     />
                   </button>

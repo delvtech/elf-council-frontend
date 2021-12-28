@@ -6,6 +6,7 @@ import { t } from "ttag";
 
 interface StepCardProps {
   onNextStep: () => void;
+  nextStepDisabled?: boolean;
   nextStepLabel?: string;
   prevStepLabel?: string;
   onPrevStep: () => void;
@@ -15,6 +16,7 @@ interface StepCardProps {
 export function StepCard({
   onNextStep,
   onPrevStep,
+  nextStepDisabled,
   nextStepLabel = t`Next`,
   prevStepLabel = t`Back`,
   children,
@@ -31,7 +33,11 @@ export function StepCard({
           <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
             <span className="px-10">{prevStepLabel}</span>
           </Button>
-          <Button onClick={onNextStep} variant={ButtonVariant.GRADIENT}>
+          <Button
+            disabled={nextStepDisabled}
+            onClick={onNextStep}
+            variant={ButtonVariant.GRADIENT}
+          >
             <span className="px-10">{nextStepLabel}</span>
           </Button>
         </div>

@@ -42,8 +42,10 @@ export default function AirdropPage(): ReactElement {
   const { data: merkleInfo } = merkleInfoQueryData;
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
-  const [activeStep, setActiveStep] = useState<AirdropStep | undefined>();
+  const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
 
+  // statuses for the Steps component
+  const [activeStep, setActiveStep] = useState<AirdropStep | undefined>();
   const connectWalletStatus = getConnectWalletStatus(account, activeStep);
   const delegateStatus = getDelegateStatus(activeStep);
   const claimAndDelegateStatus = getClaimAndDelegateStatus(
@@ -116,8 +118,7 @@ export default function AirdropPage(): ReactElement {
             case AirdropStep.CHOOSE_DELEGATE:
               return (
                 <ChooseDelegate
-                  signer={signer}
-                  account={account}
+                  onChooseDelegate={setDelegateAddress}
                   onPrevStep={() =>
                     setActiveStep(AirdropStep.DELEGATE_INSTRUCTIONS)
                   }
