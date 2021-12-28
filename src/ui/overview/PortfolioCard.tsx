@@ -45,16 +45,18 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const formattedVotingPower = commify((+votingPower * rand3).toFixed(4));
 
   return (
-    <Card variant={CardVariant.GRADIENT} className="shadow-md">
+    <Card
+      variant={CardVariant.GRADIENT}
+      // eslint-disable-next-line tailwindcss/no-custom-classname
+      className="w-full shadow-md lg:max-w-[512px]"
+    >
       <div>
-        <span
-          className="text-white font-bold text-xl tracking-widest"
-        >{t`Portfolio`}</span>
-        <span className="ml-2 text-white font-light text-sm tracking-widest">
+        <span className="text-xl font-bold tracking-widest text-white">{t`Portfolio`}</span>
+        <span className="ml-2 text-sm font-light tracking-widest text-white">
           {account && `(${formatWalletAddress(account)})`}
         </span>
       </div>
-      <div className="flex flex-col min-h-full align-bottom mb-8">
+      <div className="flex flex-col min-h-full mb-8 align-bottom">
         <BalanceWithLabel
           className="w-full mt-8"
           balance={formattedBalance}
@@ -76,9 +78,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           tooltipHref={"/resources"}
           label={t`Voting Power`}
         />
-        <div
-          className="flex items-center justify-between border-t border-white mt-4 pt-4"
-        >
+        <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
           <BalanceWithLabel
             balance={formattedAirdrop}
             label={t`Unclaimed airdrop`}
@@ -109,7 +109,7 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
         <div className="text-2xl font-extralight">{balance}</div>
         <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
       </div>
-      <div className="flex text-lg font-light items-center">
+      <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
           <InfoIconWithTooltip

@@ -11,15 +11,13 @@ import { SummaryCards } from "./SummaryCards";
 export function OverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
-    <div className="h-full space-y-6">
+    <div className="w-full h-full space-y-6">
       <div className="px-8 py-1">
         <H1 className="text-center"> {t`Governance Overview`}</H1>
       </div>
-      <div className="flex">
+      <div className="flex flex-col justify-center w-full space-y-6 lg:space-x-6 lg:flex-row lg:space-y-0">
         <SummaryCards />
-        <div className="grid grid-cols-1 ml-8 space-x-0 space-y-6 lg:grid-cols-2 lg:space-x-6 lg:space-y-0">
-          <PortfolioCard account={account} />
-        </div>
+        <PortfolioCard account={account} />
       </div>
     </div>
   );

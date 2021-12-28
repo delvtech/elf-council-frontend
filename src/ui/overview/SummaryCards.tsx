@@ -29,7 +29,7 @@ export function SummaryCards(): ReactElement {
   const formattedTreasuryBalance = abbreviateLargeValue(+treasuryBalance);
 
   return (
-    <div className="space-y-6">
+    <div className="justify-between space-y-6 lg:space-y-0 lg:flex lg:flex-col">
       <SummaryCard title={t`Annual protocol revenue`} balance={"$180,000"} />
       <SummaryCard
         title={t`Total treasury`}
