@@ -11,6 +11,7 @@ import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
+import { CheckIcon } from "@heroicons/react/solid";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -20,6 +21,7 @@ interface DelegateCardProps {
   setCurrentDelegate: (delegate: Delegate) => void;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
+  verifiedDelegate: string;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -31,6 +33,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setCurrentDelegate,
     delegateAddressInput,
     setDelegateAddressInput,
+    verifiedDelegate,
   } = props;
 
   const { data: [delegateAddressOnChain, amountDelegated] = [] } =
@@ -89,15 +92,25 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
         {/* Delegate Input */}
         <div className="flex flex-col w-1/2">
-          <TextInput
-            screenReaderLabel={t`Enter delegate address`}
-            id={"delegate-address"}
-            name={t`Enter delegate address`}
-            placeholder={t`Enter delegate address`}
-            className="mb-4 h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
-            value={delegateAddressInput}
-            onChange={(event) => setDelegateAddressInput(event.target.value)}
-          />
+          <div className="relative mb-4">
+            <TextInput
+              screenReaderLabel={t`Enter delegate address`}
+              id={"delegate-address"}
+              name={t`Enter delegate address`}
+              placeholder={t`Enter delegate address`}
+              className={classNames(
+                "h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
+                { "pr-12": !!verifiedDelegate },
+              )}
+              value={delegateAddressInput}
+              onChange={(event) => setDelegateAddressInput(event.target.value)}
+            />
+            {!!verifiedDelegate ? (
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
+                <CheckIcon className="fill-topaz h-6" />
+              </div>
+            ) : null}
+          </div>
           <div className="text-center">
             <div className="flex justify-end items-end">
               <Button
