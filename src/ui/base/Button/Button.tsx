@@ -3,7 +3,6 @@
 import { MouseEventHandler, ReactElement, ReactNode } from "react";
 
 import classNames from "classnames";
-import tw, { width, justifyContent } from "src/elf-tailwindcss-classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
 import { Spinner } from "./Spinner";
@@ -44,7 +43,7 @@ export default function Button({
       className={classNames(buttonClassName, className)}
     >
       {loading ? (
-        <div className={tw(width("w-full"), justifyContent("justify-center"))}>
+        <div className="w-full justify-center">
           <Spinner />
         </div>
       ) : (
