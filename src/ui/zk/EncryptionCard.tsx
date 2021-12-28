@@ -8,7 +8,6 @@ import generateHash from "src/base/generateHash";
 import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import downloadFile, { DownloadType } from "src/base/downloadFile";
-import classNames from "classnames";
 import ZKData from "./ZKData";
 
 interface EncryptionCardProps {
@@ -52,15 +51,9 @@ export default function EncryptionCard({
 
   return (
     <Card variant={CardVariant.BLUE} className={className}>
-      <div className="flex flex-col gap-2 p-2 sm:p-6 text-white">
-        <h1 className="text-3xl mb-2 font-semibold">{t`Encryption`}</h1>
-        <div
-          className={classNames(
-            "rounded-lg py-4 sm:py-6 px-5 sm:px-8 flex flex-col gap-2 mb-4",
-            // eslint-disable-next-line tailwindcss/no-custom-classname
-            classNames("bg-white/10"),
-          )}
-        >
+      <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
+        <h1 className="mb-2 text-3xl font-semibold">{t`Encryption`}</h1>
+        <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
           <H2 className="text-white">{t`Drag the slider below to generate a random string`}</H2>
           <p>
             {t`Numbers are generated based on how the mouse changes horizontal or
@@ -85,7 +78,7 @@ export default function EncryptionCard({
           placeholder={"0x".padEnd(42, "0")}
           readOnly
         />
-        <div className="text-right flex gap-4 mt-6">
+        <div className="flex gap-4 mt-6 text-right">
           {onBackClick && (
             <Button
               variant={ButtonVariant.WHITE}

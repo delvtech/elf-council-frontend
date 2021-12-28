@@ -105,29 +105,14 @@ export default function HashSlider({
         "after:inset-0",
         "after:rounded-full",
         "after:shadow-white",
-        // eslint-disable-next-line tailwindcss/no-custom-classname
-        classNames("after:shadow-[inset_0_0_4px_6px]"),
+        "after:shadow-[inset_0_0_4px_6px]",
 
         className,
       )}
     >
       <div
         ref={trackerRef}
-        className={classNames(
-          "bg-gradient-to-b",
-          "from-principalBlue",
-          "to-principalRoyalBlue",
-          "rounded-full",
-          "w-8",
-          "h-8",
-          "absolute",
-          "cursor-grab",
-          "active:cursor-grabbing",
-          "shadow",
-          "flex",
-          "items-center",
-          "group",
-        )}
+        className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
         style={{
           left: `max(${containerPaddingLeft}, min(${trackerLeft}px, calc(${containerWidth}px - ${trackerWidth}px - ${containerPaddingRight})))`,
         }}

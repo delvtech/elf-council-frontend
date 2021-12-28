@@ -43,15 +43,9 @@ export default function ClaimCard({
 
   return (
     <Card variant={CardVariant.BLUE} className={className}>
-      <div className="flex flex-col gap-2 p-2 sm:p-6 text-white">
-        <h1 className="text-3xl mb-2 font-semibold">{t`Encryption`}</h1>
-        <div
-          className={classNames(
-            "rounded-lg py-4 sm:py-6 px-5 sm:px-8 flex flex-col gap-2 mb-4",
-            // eslint-disable-next-line tailwindcss/no-custom-classname
-            classNames("bg-white/10"),
-          )}
-        >
+      <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
+        <h1 className="mb-2 text-3xl font-semibold">{t`Encryption`}</h1>
+        <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
           <H2 className="text-white">{t`Unlock your Public ID`}</H2>
           <p>
             {t`To claim the airdrop, enter your Secret and your Key, so we can 
@@ -77,7 +71,7 @@ export default function ClaimCard({
           placeholder={"0x".padEnd(42, "0")}
           readOnly
         />
-        <div className="text-right flex gap-4 justify-end mt-6">
+        <div className="flex justify-end gap-4 mt-6 text-right">
           <Button
             variant={ButtonVariant.WHITE}
             onClick={openFileBrowser}
