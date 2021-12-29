@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import ZKClaimPage from "src/ui/zkclaim/ZKClaimPage";
 import PageView from "src/ui/app/PageView";
 
-export default function Proposals(): ReactElement {
+export default function ZKClaim(): ReactElement {
   return (
     <PageView
       showSidebar={false}

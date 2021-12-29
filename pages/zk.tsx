@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import ZKPage from "src/ui/zk/ZKPage";
 import PageView from "src/ui/app/PageView";
 
-export default function Proposals(): ReactElement {
+export default function ZK(): ReactElement {
   return (
     <PageView
       showSidebar={false}
