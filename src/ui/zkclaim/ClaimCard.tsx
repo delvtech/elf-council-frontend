@@ -58,17 +58,20 @@ export default function ClaimCard({
         <HashString
           className="mb-2"
           label={t`The Key`}
-          value={key}
-          placeholder={"0x".padEnd(42, "0")}
-          readOnly
+          inputProps={{
+            value: key,
+            placeholder: "0x".padEnd(42, "0"),
+            readOnly: true
+          }}
         />
         <HashString
           className="mb-2"
           label={t`The Secret`}
-          value={secret}
-          onChange={({ target }) => setSecret(target.value)}
-          placeholder={"0x".padEnd(42, "0")}
-          readOnly
+          inputProps={{
+            value: secret,
+            placeholder: "0x".padEnd(42, "0"),
+            readOnly: true,
+          }}
         />
         <div className="flex justify-end gap-4 mt-6 text-right">
           <Button

@@ -67,16 +67,20 @@ export default function EncryptionCard({
         <HashString
           className="mb-2"
           label={t`The Key`}
-          value={key}
-          placeholder={"0x".padEnd(42, "0")}
-          readOnly
+          inputProps={{
+            value: key,
+            placeholder: "0x".padEnd(42, "0"),
+            readOnly: true,
+          }}
         />
         <HashString
           className="mb-2"
           label={t`The Secret`}
-          value={secret}
-          placeholder={"0x".padEnd(42, "0")}
-          readOnly
+          inputProps={{
+            value: secret,
+            placeholder: "0x".padEnd(42, "0"),
+            readOnly: true,
+          }}
         />
         <div className="flex gap-4 mt-6 text-right">
           {onBackClick && (

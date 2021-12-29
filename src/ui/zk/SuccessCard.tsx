@@ -62,10 +62,13 @@ export default function SuccessCard({
         </div>
         <HashString
           label={t`Public ID`}
-          value={publicId}
           className="mb-10"
-          placeholder={"0x".padEnd(42, "0")}
           showCopyButton={true}
+          inputProps={{
+            value: publicId,
+            placeholder: "0x".padEnd(42, "0"),
+            readOnly: true,
+          }}
         />
         <div className="flex gap-12">
           <AnchorButton
