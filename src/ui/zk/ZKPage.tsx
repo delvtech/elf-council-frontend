@@ -27,22 +27,31 @@ export default function ZKPage(): ReactElement {
   }, [keySecretPair]);
 
   // TODO: transition styles
-  const getStepClassName = (step: number) =>
-    step > currentStep
-      ? "hidden" // upcoming step
-      : step < currentStep
-      ? "hidden" // completed step
-      : "block"; // current step
+  const getStepClassName = (step: number) => {
+    if (step > currentStep) {
+      // upcoming
+      return "hidden";
+    }
+    if (step < currentStep) {
+      // completed
+      return "hidden";
+    }
+    // current
+    return "block";
+  }
 
-  const getStepStatus = (step: number): StepStatus =>
-    step > currentStep
-      ? StepStatus.UPCOMING
-      : step < currentStep
-      ? StepStatus.COMPLETE
-      : StepStatus.CURRENT;
+  const getStepStatus = (step: number): StepStatus => {
+    if (step > currentStep) {
+      return StepStatus.UPCOMING;
+    }
+    if (step < currentStep) {
+      return StepStatus.COMPLETE;
+    }
+    return StepStatus.CURRENT;
+  }
 
   return (
-    <div className="max-w-4xl w-full flex-1 flex flex-col gap-12 items-center">
+    <div className="flex flex-col items-center flex-1 w-full max-w-4xl gap-12">
       <div style={{ width: 600, maxWidth: '100%' }}>
         <Steps className="w-full">
           <StepItem
@@ -81,7 +90,7 @@ export default function ZKPage(): ReactElement {
         publicId={publicId as string}
         className={getStepClassName(3)}
       />
-      <div className="flex flex-1 flex-col items-center mt-auto text-principalRoyalBlue">
+      <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />
       </div>
