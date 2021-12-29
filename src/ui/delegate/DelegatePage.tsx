@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Signer } from "ethers";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import H2 from "src/ui/base/H2";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
@@ -15,7 +15,6 @@ import { formatEther } from "ethers/lib/utils";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import classNames from "classnames";
 import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
-import { delegates } from "src/elf-council-delegates/delegates";
 import { isValidAddress } from "src/base/isValidAddress";
 
 export default function DelegatePage(): ReactElement {
@@ -49,6 +48,7 @@ export default function DelegatePage(): ReactElement {
       const chosenDelegate = delegates.find(
         (delegate) => delegate.address === delegateAddressInput,
       );
+
       if (chosenDelegate) {
         setVerifiedDelegate(chosenDelegate.address);
       } else {
@@ -86,7 +86,7 @@ export default function DelegatePage(): ReactElement {
 
       <div className="flex flex-col xl:flex-row xl:justify-center max-w-7xl">
         {/* Portfolio Card */}
-        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 h-full rounded-xl shadow mr-16">
+        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 rounded-xl shadow mr-16">
           <div className="px-6 py-7">
             <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Portfolio`}</H2>
             <PortfolioCard
@@ -98,6 +98,7 @@ export default function DelegatePage(): ReactElement {
             />
           </div>
         </GradientCard>
+        
         {/* Delegates */}
         <div className="flex flex-col xl:w-8/12">
           {/* Delegates List */}
