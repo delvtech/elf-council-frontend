@@ -1,12 +1,16 @@
 import React, { ReactElement } from "react";
+
 import { Signer } from "@ethersproject/abstract-signer";
 import { Proposal } from "elf-council-proposals";
+import { t } from "ttag";
+
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
+import { Ballot, useVoted } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
-import { t } from "ttag";
+
 import { StatusButton } from "./StatusButton";
 
 interface ProposalListItemProps {
@@ -36,6 +40,8 @@ export function ProposalListItem({
     proposalCreatedBlockNumber,
   );
 
+  const votedLabel = useVotedLabel(account, proposalId);
+
   return (
     <Card
       interactive
@@ -52,7 +58,7 @@ export function ProposalListItem({
           description={t`Proposal #${proposalId}`}
         />
         <div className="flex space-x-4">
-          <Tag intent={Intent.PRIMARY}>{t`No vote found`}</Tag>
+          <Tag intent={Intent.PRIMARY}>{votedLabel}</Tag>
         </div>
       </div>
       {account ? (
@@ -63,4 +69,18 @@ export function ProposalListItem({
       </div>
     </Card>
   );
+}
+
+function useVotedLabel(account: string | null | undefined, proposalId: string) {
+  const { data: voted } = useVoted(account, proposalId);
+
+  if (voted?.caseBallot === Ballot.YES) {
+    return t`Voted YES`;
+  }
+
+  if (voted?.caseBallot === Ballot.NO) {
+    return t`Voted NO`;
+  }
+
+  return t`No vote found`;
 }

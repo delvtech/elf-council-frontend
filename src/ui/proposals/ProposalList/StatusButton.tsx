@@ -15,6 +15,7 @@ export function StatusButton({
 }: StatusButtonProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+
   if (isVotingOpen) {
     return (
       <Tag intent={Intent.WARNING}>
