@@ -85,6 +85,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setDelegateAddressInput,
   ]);
 
+  const invalidAddress = !isValidAddress(delegateAddressInput);
+
   return (
     <div className={classNames({ "opacity-50": !account })}>
       <div className="flex gap-7 flex-1 text-white text-xl">
@@ -120,6 +122,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               value={delegateAddressInput}
               onChange={(event) => setDelegateAddressInput(event.target.value)}
               disabled={!account}
+              spellCheck={false}
+              error={delegateAddressInput.length !== 42 || invalidAddress}
             />
 
             {!!verifiedDelegate ? (
@@ -141,7 +145,11 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 onClick={onDelegateClick}
                 variant={ButtonVariant.GRADIENT}
                 className="w-28 justify-center"
-                disabled={!account}
+                disabled={
+                  !account ||
+                  delegateAddressInput.length !== 42 ||
+                  invalidAddress
+                }
               >{t`Delegate`}</Button>
             </div>
           </div>
