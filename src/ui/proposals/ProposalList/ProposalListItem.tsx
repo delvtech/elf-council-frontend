@@ -9,20 +9,20 @@ import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount
 import { t } from "ttag";
 import { StatusButton } from "./StatusButton";
 
-interface ProposalCardRowProps {
+interface ProposalListItemProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   proposal: Proposal;
   active: boolean;
   setActiveProposal: (proposalId: string | undefined) => void;
 }
-export function ProposalCardRow({
+export function ProposalListItem({
   account,
   signer,
   proposal,
   active,
   setActiveProposal,
-}: ProposalCardRowProps): ReactElement {
+}: ProposalListItemProps): ReactElement {
   const {
     proposalId,
     created: proposalCreatedBlockNumber,

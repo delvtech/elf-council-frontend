@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
 import { Proposal } from "elf-council-proposals";
-import { ProposalCardRow } from "./ProposalListItem";
+import { ProposalListItem } from "./ProposalListItem";
 
 interface ProposalListProps {
   account: string | null | undefined;
@@ -21,7 +21,7 @@ export function ProposalList({
   return (
     <div className="flex flex-col w-full pb-8 space-y-4">
       {proposals.map((proposal) => (
-        <ProposalCardRow
+        <ProposalListItem
           key={proposal.proposalId}
           active={proposal.proposalId === activeProposalId}
           proposal={proposal}
