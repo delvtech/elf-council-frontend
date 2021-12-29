@@ -19,7 +19,7 @@ export default function HashString({
   showCopyButton,
   ...inputProps
 }: HashStringProps): ReactElement {
-  const { value, className, placeholder = "0x0", ...rest } = inputProps;
+  const { value = "", className, placeholder = "0x0", ...rest } = inputProps;
   const [copied, setCopied] = useState(false);
 
   const handleCopyClick = () => {
@@ -27,7 +27,9 @@ export default function HashString({
     setTimeout(() => {
       setCopied(false);
     }, 1250);
-    if (value) copyToClipboard(value);
+    if (value) {
+      copyToClipboard(value);
+    }
   };
 
   const inputClassName = classNames(
@@ -38,7 +40,7 @@ export default function HashString({
   return (
     <div className="text-left">
       {label && (
-        <p className="text-white text-lg font-semibold mb-2">{label}</p>
+        <p className="mb-2 text-lg font-semibold text-white">{label}</p>
       )}
       <div className="flex gap-3 sm:gap-4">
         <div
@@ -65,7 +67,7 @@ export default function HashString({
            * width. Then since both it and the input at set to gridArea: 1/1,
            * the input will grow to the same size as this span. */}
           <span
-            className={classNames(inputClassName, "invisible", "hidden", 'sm:block')}
+            className={classNames(inputClassName, "invisible hidden sm:block")}
             aria-hidden="true"
             style={{ gridArea: "1/1" }}
           >
