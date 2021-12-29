@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Button from "src/ui/base/Button/Button";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import Image from "next/image";
 import { t } from "ttag";
@@ -19,7 +19,7 @@ export default function SuccessCard({
 }: SuccessCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
-      <div className="text-white pt-3 px-4 pb-4 md:pt-8 md:px-14 md:pb-14 text-center flex justify-center items-center flex-col gap-2">
+      <div className="flex flex-col items-center justify-center gap-2 px-4 pt-3 pb-4 text-center text-white md:pt-8 md:px-14 md:pb-14">
         <div
           className={classNames(
             "bg-opacity-10",
@@ -47,10 +47,10 @@ export default function SuccessCard({
             "after:w-16",
           )}
         >
-          <ShieldExclamationIcon className="h-10 relative z-10" />
+          <ShieldExclamationIcon className="relative z-10 h-10" />
         </div>
         <div className="flex flex-col items-stretch">
-          <h1 className="text-3xl mb-4 font-semibold">{t`Public ID Succesfully created`}</h1>
+          <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Succesfully created`}</h1>
           <p className="w-0 min-w-full">
             {t`Transmit your Public ID to the `}
             <a
@@ -68,11 +68,9 @@ export default function SuccessCard({
           showCopyButton={true}
         />
         <div className="flex gap-12">
-          <Button
+          <AnchorButton
             variant={ButtonVariant.GRADIENT}
-            onClick={() =>
-              (window.location.href = "https://discord.gg/64bxSaHr")
-            }
+            href="https://element.fi/discord"
             className="flex gap-2"
           >
             {t`Go to Discord`}
@@ -82,7 +80,7 @@ export default function SuccessCard({
               src="/assets/discordlogo--light.svg"
               alt=""
             />
-          </Button>
+          </AnchorButton>
         </div>
       </div>
     </Card>
