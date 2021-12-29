@@ -23,6 +23,7 @@ interface TextInputProps {
   value?: string | undefined;
   error?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  disabled?: boolean;
 }
 
 export default function TextInput({
@@ -34,6 +35,7 @@ export default function TextInput({
   value,
   error = false,
   onChange,
+  disabled = false,
 }: TextInputProps): ReactElement {
   const inputBorderColor = getInputBorderColor(error);
   const ringColor = getInputRingColor(error);
@@ -64,6 +66,7 @@ export default function TextInput({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        disabled={disabled}
       />
     </div>
   );

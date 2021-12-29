@@ -119,6 +119,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               )}
               value={delegateAddressInput}
               onChange={(event) => setDelegateAddressInput(event.target.value)}
+              disabled={!account}
             />
 
             {!!verifiedDelegate ? (
@@ -140,6 +141,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 onClick={onDelegateClick}
                 variant={ButtonVariant.GRADIENT}
                 className="w-28 justify-center"
+                disabled={!account}
               >{t`Delegate`}</Button>
             </div>
           </div>
