@@ -57,9 +57,11 @@ export function ProposalListItem({
           title={snapshotProposal?.title}
           description={t`Proposal #${proposalId}`}
         />
-        <div className="flex space-x-4">
-          <Tag intent={Intent.PRIMARY}>{votedLabel}</Tag>
-        </div>
+        {votedLabel && (
+          <div className="flex space-x-4">
+            <Tag intent={Intent.PRIMARY}>{votedLabel}</Tag>
+          </div>
+        )}
       </div>
       {account ? (
         <span>{t`Your voting power for this proposal: ${votePower}`}</span>
@@ -71,7 +73,10 @@ export function ProposalListItem({
   );
 }
 
-function useVotedLabel(account: string | null | undefined, proposalId: string) {
+function useVotedLabel(
+  account: string | null | undefined,
+  proposalId: string,
+): string | undefined {
   const { data: voted } = useVoted(account, proposalId);
 
   if (voted?.caseBallot === Ballot.YES) {
@@ -81,6 +86,4 @@ function useVotedLabel(account: string | null | undefined, proposalId: string) {
   if (voted?.caseBallot === Ballot.NO) {
     return t`Voted NO`;
   }
-
-  return t`No vote found`;
 }
