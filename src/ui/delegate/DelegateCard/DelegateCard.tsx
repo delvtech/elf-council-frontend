@@ -123,7 +123,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               onChange={(event) => setDelegateAddressInput(event.target.value)}
               disabled={!account}
               spellCheck={false}
-              error={delegateAddressInput.length !== 42 || invalidAddress}
+              error={
+                delegateAddressInput.length > 1 &&
+                (delegateAddressInput.length !== 42 || invalidAddress)
+              }
             />
 
             {!!verifiedDelegate ? (
