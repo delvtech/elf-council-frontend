@@ -12,6 +12,7 @@ interface TextInputProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   disabled?: boolean;
   spellCheck?: boolean;
+  autoComplete?: string;
 }
 
 export default function TextInput({
@@ -25,6 +26,7 @@ export default function TextInput({
   onChange,
   disabled = false,
   spellCheck = true,
+  autoComplete = "",
 }: TextInputProps): ReactElement {
   const inputBorderColor = getInputBorderColor(error);
   const ringColor = getInputRingColor(error);
@@ -49,6 +51,7 @@ export default function TextInput({
         onChange={onChange}
         disabled={disabled}
         spellCheck={spellCheck}
+        autoComplete={autoComplete}
       />
     </div>
   );

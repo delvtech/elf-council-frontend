@@ -127,6 +127,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 delegateAddressInput.length > 1 &&
                 (delegateAddressInput.length !== 42 || invalidAddress)
               }
+              autoComplete="off"
             />
 
             {!!verifiedDelegate ? (
