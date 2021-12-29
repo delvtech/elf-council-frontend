@@ -28,7 +28,7 @@
     "commify": "^1.0.1",
     "d3-format": "^3.1.0",
     "d3-time-format": "^4.1.0",
-    "dependency-cruiser": "^11.1.0",
+    "dependency-cruiser": "^11.2.1",
     "elf-council-proposals": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-proposals.git",
     "elf-council-tokenlist": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-tokenlist.git",
     "elf-council-typechain": "git+https://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:x-oauth-basic@github.com/element-fi/elf-council-typechain.git",
