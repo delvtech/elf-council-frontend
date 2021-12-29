@@ -36,7 +36,7 @@ export default function ClaimPage(): ReactElement {
       : "block"; // current step
 
   return (
-    <div className="max-w-4xl flex-1 flex flex-col gap-12 items-center">
+    <div className="flex flex-col items-center flex-1 max-w-4xl gap-12">
       {/* STEP 1 */}
       <ClaimCard
         className={getStepClassName(1)}
@@ -51,7 +51,7 @@ export default function ClaimPage(): ReactElement {
         <ErrorCard onTryAgain={goToPreviousStep} className={getStepClassName(2)} />
       )}
 
-      <div className="flex flex-1 flex-col items-center mt-auto text-principalRoyalBlue">
+      <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />
       </div>

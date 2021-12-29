@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import ClaimPage from "src/ui/claim/ClaimPage";
+import ZKClaimPage from "src/ui/zkclaim/ZKClaimPage";
 import PageView from "src/ui/app/PageView";
 
 export default function Proposals(): ReactElement {
@@ -8,7 +8,7 @@ export default function Proposals(): ReactElement {
       showSidebar={false}
       childrenContainerClassName="self-stretch flex justify-center"
     >
-      <ClaimPage />
+      <ZKClaimPage />
     </PageView>
   );
 }
