@@ -15,9 +15,10 @@ import tw, {
   borderRadius,
   backgroundColor,
   borderOpacity,
-  flex,
   textAlign,
 } from "src/elf-tailwindcss-classnames";
+import Link, { LinkProps } from "next/link";
+import classNames from "classnames";
 
 export interface Step {
   name: ReactNode;
@@ -34,15 +35,18 @@ interface StepItemProps {
   stepLabel: string;
   status: StepStatus;
   children: string;
+  href?: string | URL;
 }
 
 export function StepItem({
   stepLabel,
   status,
   children,
+  href,
 }: StepItemProps): ReactElement {
+  const Container = href ? StepItemAsLink : "div";
   return (
-    <div className={tw(flex("flex-1"))}>
+    <Container className="flex-1" href={href as string | URL}>
       <div
         className={tw(
           height("h-10"),
@@ -69,7 +73,25 @@ export function StepItem({
       >
         {children}
       </div>
-    </div>
+    </Container>
+  );
+}
+
+interface StepItemAsLinkProps extends LinkProps {
+  children: ReactNode;
+  className: string;
+}
+
+function StepItemAsLink({
+  href,
+  children,
+  className,
+  ...props
+}: StepItemAsLinkProps): ReactElement {
+  return (
+    <Link href={href}>
+      <a {...props} className={classNames("block", className)}>{children}</a>
+    </Link>
   );
 }
 
