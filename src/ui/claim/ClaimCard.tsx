@@ -3,9 +3,8 @@ import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2";
 import HashString from "src/ui/base/HashString";
-import { t } from "ttag";
+import { t, jt } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import classNames from "classnames";
 import Link from "next/link";
 import useFile from "src/ui/base/useFile";
 import ZKData from "src/ui/zk/ZKData";
@@ -48,12 +47,12 @@ export default function ClaimCard({
         <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
           <H2 className="text-white">{t`Unlock your Public ID`}</H2>
           <p>
-            {t`To claim the airdrop, enter your Secret and your Key, so we can 
-            check against your Public ID. If you don’t have any,`}{" "}
-            <Link href="/zk">
-              <a className="text-yieldLightBlue">{t`create a new one`}</a>
-            </Link>
-            .
+            {jt`To claim the airdrop, enter your Secret and your Key, so we can 
+            check against your Public ID. If you don’t have any, ${
+              <Link href="/zk">
+                <a className="text-yieldLightBlue">{t`create a new one`}</a>
+              </Link>
+            }.`}
           </p>
         </div>
         <HashString
