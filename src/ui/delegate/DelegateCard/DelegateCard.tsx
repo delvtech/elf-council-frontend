@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect } from "react";
+import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import TextInput from "src/ui/base/Input/TextInput";
@@ -11,7 +11,7 @@ import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
-import { CheckIcon } from "@heroicons/react/solid";
+import { BadgeCheckIcon, CheckIcon } from "@heroicons/react/solid";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -36,10 +36,12 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     verifiedDelegate,
   } = props;
 
+  const [delegateChanged, setDelegateChanged] = useState(false);
+
   const { data: [delegateAddressOnChain, amountDelegated] = [] } =
     useDeposits(account);
 
-  const { mutate: changeDelegation } = useChangeDelegation(signer);
+  const { mutate: changeDelegation, isSuccess } = useChangeDelegation(signer);
 
   const onDelegateClick = useCallback(() => {
     if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
@@ -57,18 +59,31 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     </a>
   );
 
+  const toggleDelegateChange = () => {
+    setDelegateChanged(true);
+    setTimeout(() => {
+      setDelegateChanged(false);
+    }, 2000);
+  };
+
   useEffect(() => {
-    if (
-      delegateAddressOnChain &&
-      delegates.map((d) => d.address).includes(delegateAddressOnChain)
-    ) {
+    if (delegateAddressOnChain && isSuccess) {
       const nextDelegate = delegates.find(
         (d) => d.address === delegateAddressOnChain,
       );
-      // The if conditional guarantees that nextDelegate won't be undefined
-      setCurrentDelegate(nextDelegate as Delegate);
+
+      if (nextDelegate) {
+        setDelegateAddressInput("");
+        setCurrentDelegate(nextDelegate);
+        toggleDelegateChange();
+      }
     }
-  }, [delegateAddressOnChain, setCurrentDelegate]);
+  }, [
+    isSuccess,
+    delegateAddressOnChain,
+    setCurrentDelegate,
+    setDelegateAddressInput,
+  ]);
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -92,7 +107,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
         {/* Delegate Input */}
         <div className="flex flex-col w-1/2">
-          <div className="relative mb-4">
+          <div className="relative mb-4 rounded-md overflow-hidden">
             <TextInput
               screenReaderLabel={t`Enter delegate address`}
               id={"delegate-address"}
@@ -105,9 +120,17 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               value={delegateAddressInput}
               onChange={(event) => setDelegateAddressInput(event.target.value)}
             />
+
             {!!verifiedDelegate ? (
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
                 <CheckIcon className="fill-topaz h-6" />
+              </div>
+            ) : null}
+
+            {delegateChanged ? (
+              <div className="flex absolute inset-0 bg-topaz items-center justify-center gap-2">
+                <span className="text-white">Delegate Succession</span>
+                <BadgeCheckIcon className="fill-white h-6" />
               </div>
             ) : null}
           </div>
