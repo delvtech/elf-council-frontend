@@ -16,7 +16,7 @@ import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
-import { ProposalList } from "./ProposalList";
+import { ProposalList } from "./ProposalList/ProposalList";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
