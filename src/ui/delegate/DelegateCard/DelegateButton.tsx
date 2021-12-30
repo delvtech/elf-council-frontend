@@ -11,6 +11,7 @@ interface DelegateButtonProps {
   delegateAddressInput: string;
   onDelegateClick: () => void;
   invalidAddress: boolean;
+  unverifiedAddress: boolean;
   isLoading?: boolean;
   buttonVariant?: ButtonVariant;
   buttonClassName?: string;
@@ -22,6 +23,7 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
     delegateAddressInput,
     onDelegateClick,
     invalidAddress,
+    unverifiedAddress,
     isLoading = false,
     buttonVariant = ButtonVariant.PRIMARY,
     buttonClassName = "",
@@ -30,7 +32,12 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
   const noAccount = !account;
   const noInput = delegateAddressInput.length === 0;
 
-  const tooltipTitle = getTooltipTitle(noAccount, noInput, invalidAddress);
+  const tooltipTitle = getTooltipTitle(
+    noAccount,
+    noInput,
+    invalidAddress,
+    unverifiedAddress,
+  );
 
   return (
     <Tooltip
@@ -45,7 +52,13 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
           onClick={onDelegateClick}
           variant={buttonVariant}
           className={classNames("w-full", buttonClassName)}
-          disabled={noAccount || isLoading || noInput || invalidAddress}
+          disabled={
+            noAccount ||
+            isLoading ||
+            noInput ||
+            invalidAddress ||
+            unverifiedAddress
+          }
         >{t`Delegate`}</Button>
       </div>
     </Tooltip>
@@ -56,6 +69,7 @@ function getTooltipTitle(
   noAccount: boolean,
   noInput: boolean,
   invalidAddress: boolean,
+  unverifiedAddress: boolean,
 ): string {
   if (noAccount) {
     return t`Connect wallet`;
@@ -67,6 +81,10 @@ function getTooltipTitle(
 
   if (invalidAddress) {
     return t`Enter a valid address`;
+  }
+
+  if (unverifiedAddress) {
+    return t`Enter a verified address within the list of delegates`;
   }
 
   return "";

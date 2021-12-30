@@ -105,6 +105,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const invalidAddress =
     delegateAddressInput.length !== 42 || !isValidAddress(delegateAddressInput);
 
+  // Address is valid, but not an address within our list of delegates
+  const unverifiedAddress =
+    !selectedDelegate && isValidAddress(delegateAddressInput);
+
   return (
     <div className={classNames({ "opacity-50": !account })}>
       <div className="flex gap-7 flex-1 text-white text-xl">
@@ -133,6 +137,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             setDelegateAddressInput={setDelegateAddressInput}
             selectedDelegate={selectedDelegate}
             invalidAddress={invalidAddress}
+            unverifiedAddress={unverifiedAddress}
             delegationSuccess={delegationSuccess}
             delegationFail={delegationFail}
           />
@@ -144,6 +149,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 delegateAddressInput={delegateAddressInput}
                 onDelegateClick={onDelegateClick}
                 invalidAddress={invalidAddress}
+                unverifiedAddress={unverifiedAddress}
                 isLoading={isLoading}
                 buttonVariant={ButtonVariant.GRADIENT}
                 buttonClassName="w-28 justify-center"
