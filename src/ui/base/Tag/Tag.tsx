@@ -19,6 +19,7 @@ import tw, {
 export enum Intent {
   WARNING = "warning",
   PRIMARY = "primary",
+  PRIMARY_SOLID = "primary-solid",
   SUCCESS = "success",
   ERROR = "error",
 }
@@ -32,6 +33,7 @@ interface TagProps {
 const intentTextColors: Record<Intent, TTextColor> = {
   [Intent.WARNING]: "text-orange",
   [Intent.PRIMARY]: "text-yieldBlue",
+  [Intent.PRIMARY_SOLID]: "text-white",
   [Intent.SUCCESS]: "text-statusGreen",
   [Intent.ERROR]: "text-deepRed",
 };
@@ -62,6 +64,7 @@ export function Tag({
 const intentBackgroundColors: Record<Intent, TBackgroundColor> = {
   [Intent.WARNING]: "bg-lightOrange",
   [Intent.PRIMARY]: "bg-paleLily",
+  [Intent.PRIMARY_SOLID]: "bg-principalRoyalBlue",
   [Intent.SUCCESS]: "bg-votingGreen",
   [Intent.ERROR]: "bg-statusRed",
 };
@@ -82,6 +85,7 @@ const intentBorderColors: Record<Intent, TArg> = {
     borderColor("border-yieldBlue"),
     borderWidth("border-2"),
   ),
+  [Intent.PRIMARY_SOLID]: undefined,
   [Intent.SUCCESS]: tw(
     borderColor("border-votingGreen"),
     borderWidth("border-2"),

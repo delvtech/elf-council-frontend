@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
+import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { t } from "ttag";
 
@@ -57,16 +58,18 @@ export function ProposalListItem({
           title={snapshotProposal?.title}
           description={t`Proposal #${proposalId}`}
         />
-        {votedLabel && (
-          <div className="flex space-x-4">
-            <Tag intent={Intent.PRIMARY}>{votedLabel}</Tag>
-          </div>
-        )}
+        <div
+          className={classNames("flex space-x-4", {
+            // [classNames("invisible")]: !votedLabel,
+          })}
+        >
+          <Tag intent={Intent.PRIMARY_SOLID}>{votedLabel ?? "Voted YES"}</Tag>
+        </div>
       </div>
       {account ? (
         <span>{t`Your voting power for this proposal: ${votePower}`}</span>
       ) : null}
-      <div className="flex space-x-4">
+      <div className="flex items-end h-full space-x-4">
         <StatusButton signer={signer} proposal={proposal} />
       </div>
     </Card>
