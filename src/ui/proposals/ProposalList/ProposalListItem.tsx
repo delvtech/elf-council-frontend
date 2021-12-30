@@ -60,7 +60,7 @@ export function ProposalListItem({
         />
         <div
           className={classNames("flex space-x-4", {
-            // [classNames("invisible")]: !votedLabel,
+            [classNames("invisible")]: !votedLabel,
           })}
         >
           <Tag intent={Intent.PRIMARY_SOLID}>{votedLabel ?? "Voted YES"}</Tag>
