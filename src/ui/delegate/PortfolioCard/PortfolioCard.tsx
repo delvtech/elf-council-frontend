@@ -126,7 +126,12 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
 
           <Button
             onClick={onDeposit}
-            disabled={!parseInt(walletBalance) || !depositAmount || !isAllowed}
+            disabled={
+              !parseInt(walletBalance) ||
+              !depositAmount ||
+              !isAllowed ||
+              parseFloat(depositAmount) > parseFloat(walletBalance)
+            }
             variant={ButtonVariant.GRADIENT}
             className="w-28 justify-center"
           >{t`Deposit`}</Button>
@@ -153,7 +158,11 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <div className="w-full flex justify-end mt-4 gap-4">
           <Button
             onClick={onWithdraw}
-            disabled={!parseInt(vaultBalance) || !withdrawAmount}
+            disabled={
+              !parseInt(vaultBalance) ||
+              !withdrawAmount ||
+              parseFloat(withdrawAmount) > parseFloat(vaultBalance)
+            }
             variant={ButtonVariant.WHITE}
             className="w-28 text-center"
           >{t`Withdraw`}</Button>

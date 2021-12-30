@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect } from "react";
+import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import TextInput from "src/ui/base/Input/TextInput";
@@ -11,6 +11,11 @@ import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
+import {
+  BadgeCheckIcon,
+  CheckIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/solid";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -20,6 +25,7 @@ interface DelegateCardProps {
   setCurrentDelegate: (delegate: Delegate) => void;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
+  selectedDelegate: string;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -31,12 +37,20 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setCurrentDelegate,
     delegateAddressInput,
     setDelegateAddressInput,
+    selectedDelegate,
   } = props;
+
+  const [delegationSuccess, setDelegationSuccess] = useState(false);
+  const [delegationFail, setDelegationFail] = useState(false);
 
   const { data: [delegateAddressOnChain, amountDelegated] = [] } =
     useDeposits(account);
 
-  const { mutate: changeDelegation } = useChangeDelegation(signer);
+  const {
+    mutate: changeDelegation,
+    isSuccess,
+    isError,
+  } = useChangeDelegation(signer);
 
   const onDelegateClick = useCallback(() => {
     if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
@@ -54,18 +68,43 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     </a>
   );
 
+  const toggleDelegationSuccess = () => {
+    setDelegationSuccess(true);
+    setTimeout(() => {
+      setDelegationSuccess(false);
+    }, 2000);
+  };
+
+  const toggleDelegationFail = () => {
+    setDelegationFail(true);
+    setTimeout(() => {
+      setDelegationFail(false);
+    }, 2000);
+  };
+
   useEffect(() => {
-    if (
-      delegateAddressOnChain &&
-      delegates.map((d) => d.address).includes(delegateAddressOnChain)
-    ) {
+    if (delegateAddressOnChain && isSuccess) {
       const nextDelegate = delegates.find(
         (d) => d.address === delegateAddressOnChain,
       );
-      // The if conditional guarantees that nextDelegate won't be undefined
-      setCurrentDelegate(nextDelegate as Delegate);
+
+      if (nextDelegate) {
+        setDelegateAddressInput("");
+        setCurrentDelegate(nextDelegate);
+        toggleDelegationSuccess();
+      }
+    } else if (isError) {
+      toggleDelegationFail();
     }
-  }, [delegateAddressOnChain, setCurrentDelegate]);
+  }, [
+    isSuccess,
+    delegateAddressOnChain,
+    setCurrentDelegate,
+    setDelegateAddressInput,
+    isError,
+  ]);
+
+  const invalidAddress = !isValidAddress(delegateAddressInput);
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -89,21 +128,58 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
         {/* Delegate Input */}
         <div className="flex flex-col w-1/2">
-          <TextInput
-            screenReaderLabel={t`Enter delegate address`}
-            id={"delegate-address"}
-            name={t`Enter delegate address`}
-            placeholder={t`Enter delegate address`}
-            className="mb-4 h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
-            value={delegateAddressInput}
-            onChange={(event) => setDelegateAddressInput(event.target.value)}
-          />
+          <div className="relative mb-4 rounded-md overflow-hidden">
+            <TextInput
+              screenReaderLabel={t`Enter delegate address`}
+              id={"delegate-address"}
+              name={t`Enter delegate address`}
+              placeholder={t`Enter delegate address`}
+              className={classNames(
+                "h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
+                { "pr-12": !!selectedDelegate },
+              )}
+              value={delegateAddressInput}
+              onChange={(event) => setDelegateAddressInput(event.target.value)}
+              disabled={!account}
+              spellCheck={false}
+              error={
+                delegateAddressInput.length > 1 &&
+                (delegateAddressInput.length !== 42 || invalidAddress)
+              }
+              autoComplete="off"
+            />
+
+            {!!selectedDelegate ? (
+              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
+                <CheckIcon className="fill-topaz h-6" />
+              </div>
+            ) : null}
+
+            {delegationSuccess ? (
+              <div className="flex absolute inset-0 bg-topaz items-center justify-center gap-2">
+                <span className="text-white font-bold">{t`Delegation Successful`}</span>
+                <BadgeCheckIcon className="fill-white h-6" />
+              </div>
+            ) : null}
+
+            {delegationFail ? (
+              <div className="flex absolute inset-0 bg-deepRed items-center justify-center gap-2">
+                <span className="text-white font-bold">{t`Delegation Failed`}</span>
+                <ExclamationCircleIcon className="fill-white h-6" />
+              </div>
+            ) : null}
+          </div>
           <div className="text-center">
             <div className="flex justify-end items-end">
               <Button
                 onClick={onDelegateClick}
                 variant={ButtonVariant.GRADIENT}
                 className="w-28 justify-center"
+                disabled={
+                  !account ||
+                  delegateAddressInput.length !== 42 ||
+                  invalidAddress
+                }
               >{t`Delegate`}</Button>
             </div>
           </div>

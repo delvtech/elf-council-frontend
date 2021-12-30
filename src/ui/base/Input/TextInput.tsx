@@ -1,18 +1,5 @@
 import { ChangeEventHandler, ReactElement } from "react";
-
 import classNames from "classnames";
-import tw, {
-  TTailwindString,
-  screenReaders,
-  boxShadow,
-  textColor,
-  display,
-  width,
-  fontSize,
-  borderColor,
-  borderRadius,
-  ringColor,
-} from "src/elf-tailwindcss-classnames";
 
 interface TextInputProps {
   className?: string;
@@ -23,6 +10,9 @@ interface TextInputProps {
   value?: string | undefined;
   error?: boolean;
   onChange?: ChangeEventHandler<HTMLInputElement>;
+  disabled?: boolean;
+  spellCheck?: boolean;
+  autoComplete?: string;
 }
 
 export default function TextInput({
@@ -34,13 +24,16 @@ export default function TextInput({
   value,
   error = false,
   onChange,
+  disabled = false,
+  spellCheck = true,
+  autoComplete = "",
 }: TextInputProps): ReactElement {
   const inputBorderColor = getInputBorderColor(error);
   const ringColor = getInputRingColor(error);
 
   return (
     <div>
-      <label htmlFor={id} className={screenReaders("sr-only")}>
+      <label htmlFor={id} className="sr-only">
         {screenReaderLabel}
       </label>
       <input
@@ -48,39 +41,34 @@ export default function TextInput({
         name={name}
         id={id}
         className={classNames(
-          tw(
-            inputBorderColor,
-            ringColor,
-            boxShadow("shadow-sm"),
-            textColor("text-black"),
-            display("block"),
-            width("w-full"),
-            fontSize("sm:text-sm"),
-            borderColor("border-gray-300"),
-            borderRadius("rounded-md"),
-          ),
+          inputBorderColor,
+          ringColor,
+          "shadow-sm text-black block w-full sm:text-sm border-gray-300 rounded-md",
           className,
         )}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        disabled={disabled}
+        spellCheck={spellCheck}
+        autoComplete={autoComplete}
       />
     </div>
   );
 }
 
-function getInputBorderColor(error: boolean): TTailwindString {
+function getInputBorderColor(error: boolean): string {
   const color = error
-    ? borderColor("border-red-500", "focus:border-red-500")
-    : borderColor("focus:border-brandDarkBlue");
+    ? "border-red-500 focus:border-red-500"
+    : "focus:border-brandDarkBlue";
 
   return color;
 }
 
-function getInputRingColor(error: boolean): TTailwindString {
+function getInputRingColor(error: boolean): string {
   const color = error
-    ? tw(ringColor("focus:ring-red-500"), borderColor("focus:border-red-500"))
-    : ringColor("focus:ring-brandDarkBlue");
+    ? "focus:ring-red-500 focus:border-red-500"
+    : "focus:ring-brandDarkBlue";
 
   return color;
 }
