@@ -1,17 +1,6 @@
 import { ReactElement } from "react";
-import tw, {
-  TArg,
-  textColor,
-  display,
-  borderColor,
-  borderWidth,
-  fontSize,
-  padding,
-  fontWeight,
-  borderRadius,
-  backgroundColor,
-} from "src/elf-tailwindcss-classnames";
-import classnames from "classnames";
+
+import classNames from "classnames";
 import { t } from "ttag";
 
 export interface TabInfo {
@@ -28,22 +17,13 @@ interface TabsProps {
 }
 export default function Tabs({ tabs }: TabsProps): ReactElement {
   return (
-    <nav className={classnames("-mb-px", display("flex"))} aria-label={t`Tabs`}>
+    <nav className={classNames("-mb-px flex")} aria-label={t`Tabs`}>
       {tabs.map((tab, i) => {
-        const className = tw(
+        const className = classNames(
           getTextColor(tab.current),
-          tab.current
-            ? backgroundColor("bg-paleLily")
-            : backgroundColor("bg-hackerSky"),
-          borderColor("border-gray-200", "hover:border-gray-300"),
-          borderWidth("border-b-2"),
-          fontSize("text-lg"),
-          padding("px-4", "py-2"),
-          fontWeight("font-semibold"),
-          borderRadius({
-            "rounded-l-xl": i === 0,
-            "rounded-r-xl": i === tabs.length - 1,
-          }),
+          getBackgroundColor(tab.current),
+          getBorderRadius(i, tabs.length),
+          "border-gray-200 hover:border-gray-300 border-b-2 text-lg px-4 py-2 font-semibold",
         );
         if (tab.href) {
           return (
@@ -74,12 +54,24 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
   );
 }
 
-function getTextColor(current: boolean): TArg {
+function getTextColor(current: boolean): string {
   if (current) {
-    return textColor(
-      "text-principalRoyalBlue",
-      "hover:text-principalRoyalBlue",
-    );
+    return classNames("text-white hover:text-white");
   }
-  return textColor("text-yieldBlue");
+  return classNames("text-yieldBlue");
+}
+
+function getBackgroundColor(current: boolean): string {
+  return current
+    ? classNames("bg-principalRoyalBlue")
+    : classNames("bg-hackerSky");
+}
+
+function getBorderRadius(i: number, length: number) {
+  if (i === 0) {
+    return "rounded-l-xl";
+  }
+  if (i === length - 1) {
+    return "rounded-r-xl";
+  }
 }
