@@ -1,7 +1,6 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import TextInput from "src/ui/base/Input/TextInput";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import { formatWalletAddress } from "src/formatWalletAddress";
@@ -10,11 +9,7 @@ import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
-import {
-  BadgeCheckIcon,
-  CheckIcon,
-  ExclamationCircleIcon,
-} from "@heroicons/react/solid";
+import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 
 interface DelegateCardProps {
@@ -43,8 +38,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
-  const { data: [delegateAddressOnChain, amountDelegated] = [] } =
-    useDeposits(account);
+  const { data: [delegateAddressOnChain] = [] } = useDeposits(account);
 
   const {
     mutate: changeDelegation,
@@ -109,7 +103,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   ]);
 
   const invalidAddress =
-    delegateAddressInput.length !== 42 && !isValidAddress(delegateAddressInput);
+    delegateAddressInput.length !== 42 || !isValidAddress(delegateAddressInput);
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -125,7 +119,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
       <div className="flex gap-7 mt-2">
         {/* Current Delegate Profile */}
-        {currentDelegate && amountDelegated ? (
+        {currentDelegate ? (
           <CurrentDelegate className="w-1/2" delegate={currentDelegate} />
         ) : (
           <NoDelegate />
@@ -133,44 +127,16 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
         {/* Delegate Input */}
         <div className="flex flex-col w-1/2">
-          <div className="relative mb-4 rounded-md overflow-hidden">
-            <TextInput
-              screenReaderLabel={t`Enter delegate address`}
-              id={"delegate-address"}
-              name={t`Enter delegate address`}
-              placeholder={t`Enter delegate address`}
-              className={classNames(
-                "h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
-                { "pr-12": !!selectedDelegate },
-              )}
-              value={delegateAddressInput}
-              onChange={(event) => setDelegateAddressInput(event.target.value)}
-              disabled={!account}
-              spellCheck={false}
-              error={delegateAddressInput.length > 0 && invalidAddress}
-              autoComplete="off"
-            />
+          <DelegateAddressInput
+            account={account}
+            delegateAddressInput={delegateAddressInput}
+            setDelegateAddressInput={setDelegateAddressInput}
+            selectedDelegate={selectedDelegate}
+            invalidAddress={invalidAddress}
+            delegationSuccess={delegationSuccess}
+            delegationFail={delegationFail}
+          />
 
-            {!!selectedDelegate ? (
-              <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
-                <CheckIcon className="fill-topaz h-6" />
-              </div>
-            ) : null}
-
-            {delegationSuccess ? (
-              <div className="flex absolute inset-0 bg-topaz items-center justify-center gap-2">
-                <span className="text-white font-bold">{t`Delegation Successful`}</span>
-                <BadgeCheckIcon className="fill-white h-6" />
-              </div>
-            ) : null}
-
-            {delegationFail ? (
-              <div className="flex absolute inset-0 bg-deepRed items-center justify-center gap-2">
-                <span className="text-white font-bold">{t`Delegation Failed`}</span>
-                <ExclamationCircleIcon className="fill-white h-6" />
-              </div>
-            ) : null}
-          </div>
           <div className="text-center">
             <div className="flex justify-end items-end">
               <DelegateButton
