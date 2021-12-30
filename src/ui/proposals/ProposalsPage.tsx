@@ -22,6 +22,8 @@ import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
@@ -116,16 +118,13 @@ export default function ProposalsPage(): ReactElement {
 
 function OffChainProposalsLink() {
   return (
-    <Link href={ELEMENT_FINANCE_SNAPSHOT_URL}>
-      <a
-        href={ELEMENT_FINANCE_SNAPSHOT_URL}
-        className="p-2 px-4 py-2 text-lg font-semibold border-b-2 border-gray-200 rounded-lg cursor-pointer bg-hackerSky text-principalRoyalBlue hover:border-gray-300 "
-      >
+    <Link href={ELEMENT_FINANCE_SNAPSHOT_URL} passHref>
+      <AnchorButton variant={ButtonVariant.SECONDARY}>
         <div className="flex items-center h-full">
           {t`Off-chain`}
           <ExternalLinkIcon height={24} />
         </div>
-      </a>
+      </AnchorButton>
     </Link>
   );
 }
