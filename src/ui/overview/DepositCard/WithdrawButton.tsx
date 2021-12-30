@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
 import { Tooltip } from "@material-ui/core";
 import { FixedNumber } from "ethers";
-import tw, { width } from "src/elf-tailwindcss-classnames";
-import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import classNames from "classnames";
+
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface WithdrawButtonProps {
   account: string | null | undefined;

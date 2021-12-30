@@ -7,7 +7,6 @@ import { useDeposits } from "src/ui/contracts/useDeposits";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { isValidAddress } from "src/base/isValidAddress";
 import { Delegate, delegates } from "src/elf-council-delegates/delegates";
-import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
@@ -16,6 +15,7 @@ import {
   CheckIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/solid";
+import DelegateButton from "./DelegateButton";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -50,6 +50,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     mutate: changeDelegation,
     isSuccess,
     isError,
+    isLoading,
   } = useChangeDelegation(signer);
 
   const onDelegateClick = useCallback(() => {
@@ -82,17 +83,20 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     }, 2000);
   };
 
+  // Updates the state after every click on 'Delegate' button
   useEffect(() => {
     if (delegateAddressOnChain && isSuccess) {
       const nextDelegate = delegates.find(
         (d) => d.address === delegateAddressOnChain,
       );
 
+      // Success
       if (nextDelegate) {
         setDelegateAddressInput("");
         setCurrentDelegate(nextDelegate);
         toggleDelegationSuccess();
       }
+      // Fail
     } else if (isError) {
       toggleDelegationFail();
     }
@@ -104,7 +108,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     isError,
   ]);
 
-  const invalidAddress = !isValidAddress(delegateAddressInput);
+  const invalidAddress =
+    delegateAddressInput.length !== 42 && !isValidAddress(delegateAddressInput);
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -142,10 +147,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               onChange={(event) => setDelegateAddressInput(event.target.value)}
               disabled={!account}
               spellCheck={false}
-              error={
-                delegateAddressInput.length > 1 &&
-                (delegateAddressInput.length !== 42 || invalidAddress)
-              }
+              error={delegateAddressInput.length > 0 && invalidAddress}
               autoComplete="off"
             />
 
@@ -171,16 +173,15 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
           </div>
           <div className="text-center">
             <div className="flex justify-end items-end">
-              <Button
-                onClick={onDelegateClick}
-                variant={ButtonVariant.GRADIENT}
-                className="w-28 justify-center"
-                disabled={
-                  !account ||
-                  delegateAddressInput.length !== 42 ||
-                  invalidAddress
-                }
-              >{t`Delegate`}</Button>
+              <DelegateButton
+                account={account}
+                delegateAddressInput={delegateAddressInput}
+                onDelegateClick={onDelegateClick}
+                invalidAddress={invalidAddress}
+                isLoading={isLoading}
+                buttonVariant={ButtonVariant.GRADIENT}
+                buttonClassName="w-28 justify-center"
+              />
             </div>
           </div>
         </div>
