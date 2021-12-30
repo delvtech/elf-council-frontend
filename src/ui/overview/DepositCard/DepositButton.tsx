@@ -5,6 +5,8 @@ import { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import { isValidAddress } from "src/base/isValidAddress";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import classNames from "classnames";
 
 interface DepositButtonProps {
   account: string | null | undefined;
@@ -13,9 +15,10 @@ interface DepositButtonProps {
   depositAmount: string;
   isDelegated: boolean;
   delegateAddress: string;
-
-  isLoading?: boolean;
   onDeposit: () => void;
+  isLoading?: boolean;
+  buttonVariant?: ButtonVariant;
+  buttonClassName?: string;
 }
 export function DepositButton(props: DepositButtonProps): ReactElement {
   const {
@@ -25,8 +28,10 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     depositAmount,
     isDelegated,
     delegateAddress,
-    isLoading = false,
     onDeposit,
+    isLoading = false,
+    buttonVariant = ButtonVariant.PRIMARY,
+    buttonClassName = "",
   } = props;
   const hasDepositAmount = !!Number(depositAmount);
   const hasAllowance = !!Number(allowance);
@@ -76,8 +81,9 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
             !hasDepositAmount ||
             !hasValidDelegateAddress
           }
-          className={width("w-full")}
+          className={classNames("w-full", buttonClassName)}
           onClick={onDeposit}
+          variant={buttonVariant}
         >
           <span className={width("w-full")}>{t`Deposit`}</span>
         </Button>

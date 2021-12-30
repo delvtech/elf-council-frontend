@@ -40,6 +40,7 @@ export default function DelegatePage(): ReactElement {
   const showWarning =
     !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
 
+  // Used to verify if delegate inputted is an actual delegate in our system
   useEffect(() => {
     if (
       delegateAddressInput.length === 42 &&
@@ -98,7 +99,7 @@ export default function DelegatePage(): ReactElement {
             />
           </div>
         </GradientCard>
-        
+
         {/* Delegates */}
         <div className="flex flex-col xl:w-8/12">
           {/* Delegates List */}
@@ -110,7 +111,6 @@ export default function DelegatePage(): ReactElement {
           {/* Delegate Card */}
           <div className="px-6 py-7 mt-auto rounded-xl bg-principalRoyalBlue">
             <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Delegate`}</H2>
-
             <DelegateCard
               account={account}
               signer={signer}
