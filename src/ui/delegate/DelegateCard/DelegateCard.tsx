@@ -11,7 +11,11 @@ import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
-import { BadgeCheckIcon, CheckIcon } from "@heroicons/react/solid";
+import {
+  BadgeCheckIcon,
+  CheckIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/solid";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -36,12 +40,17 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     verifiedDelegate,
   } = props;
 
-  const [delegateChanged, setDelegateChanged] = useState(false);
+  const [delegationSuccess, setDelegationSuccess] = useState(false);
+  const [delegationFail, setDelegationFail] = useState(false);
 
   const { data: [delegateAddressOnChain, amountDelegated] = [] } =
     useDeposits(account);
 
-  const { mutate: changeDelegation, isSuccess } = useChangeDelegation(signer);
+  const {
+    mutate: changeDelegation,
+    isSuccess,
+    isError,
+  } = useChangeDelegation(signer);
 
   const onDelegateClick = useCallback(() => {
     if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
@@ -59,10 +68,17 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     </a>
   );
 
-  const toggleDelegateChange = () => {
-    setDelegateChanged(true);
+  const toggleDelegationSuccess = () => {
+    setDelegationSuccess(true);
     setTimeout(() => {
-      setDelegateChanged(false);
+      setDelegationSuccess(false);
+    }, 2000);
+  };
+
+  const toggleDelegationFail = () => {
+    setDelegationFail(true);
+    setTimeout(() => {
+      setDelegationFail(false);
     }, 2000);
   };
 
@@ -75,14 +91,17 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       if (nextDelegate) {
         setDelegateAddressInput("");
         setCurrentDelegate(nextDelegate);
-        toggleDelegateChange();
+        toggleDelegationSuccess();
       }
+    } else if (isError) {
+      toggleDelegationFail();
     }
   }, [
     isSuccess,
     delegateAddressOnChain,
     setCurrentDelegate,
     setDelegateAddressInput,
+    isError,
   ]);
 
   const invalidAddress = !isValidAddress(delegateAddressInput);
@@ -136,10 +155,17 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               </div>
             ) : null}
 
-            {delegateChanged ? (
+            {!delegationSuccess ? (
               <div className="flex absolute inset-0 bg-topaz items-center justify-center gap-2">
-                <span className="text-white">Delegate Succession</span>
+                <span className="text-white font-bold">{t`Delegation Successful`}</span>
                 <BadgeCheckIcon className="fill-white h-6" />
+              </div>
+            ) : null}
+
+            {delegationFail ? (
+              <div className="flex absolute inset-0 bg-deepRed items-center justify-center gap-2">
+                <span className="text-white font-bold">{t`Delegation Failed`}</span>
+                <ExclamationCircleIcon className="fill-white h-6" />
               </div>
             ) : null}
           </div>
