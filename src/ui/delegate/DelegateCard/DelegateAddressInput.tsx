@@ -9,14 +9,12 @@ import {
 } from "@heroicons/react/solid";
 
 import TextInput from "src/ui/base/Input/TextInput";
-import { isValidAddress } from "src/base/isValidAddress";
 interface DelegateAddressInputProps {
   account: string | null | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   invalidAddress: boolean;
-  unverifiedAddress: boolean;
   delegationSuccess: boolean;
   delegationFail: boolean;
 }
@@ -28,7 +26,6 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
     setDelegateAddressInput,
     selectedDelegate,
     invalidAddress,
-    unverifiedAddress,
     delegationSuccess,
     delegationFail,
   } = props;
@@ -42,7 +39,7 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
         placeholder={t`Enter delegate address`}
         className={classNames(
           "h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
-          { "pr-12": !!selectedDelegate || unverifiedAddress },
+          { "pr-12": !!selectedDelegate },
         )}
         value={delegateAddressInput}
         onChange={(event) => setDelegateAddressInput(event.target.value)}
@@ -55,12 +52,6 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
       {!!selectedDelegate ? (
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
           <CheckIcon className="fill-topaz h-6" />
-        </div>
-      ) : null}
-
-      {unverifiedAddress ? (
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
-          <XIcon className="fill-deepRed h-6" />
         </div>
       ) : null}
 
