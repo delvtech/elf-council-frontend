@@ -31,7 +31,10 @@ module.exports = {
         goldYellow: "#FFC300",
         statusGreen: "#007F00",
         statusRed: "#FAEAEA",
-        hackerSky: "#F1F5FE",
+        hackerSky: {
+          DEFAULT: "#F1F5FE",
+          dark: "#e6edff",
+        },
         appBackgroundLight: "#FAF9F9",
 
         // Deprecated colors:
