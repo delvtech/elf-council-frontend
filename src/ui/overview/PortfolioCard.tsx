@@ -2,31 +2,11 @@ import React, { ReactElement } from "react";
 
 import classNames from "classnames";
 import { commify, formatEther } from "ethers/lib/utils";
-import tw, {
-  alignItems,
-  alignSelf,
-  borderColor,
-  borderWidth,
-  boxShadow,
-  display,
-  flexDirection,
-  fontSize,
-  fontWeight,
-  justifyContent,
-  letterSpacing,
-  margin,
-  minHeight,
-  padding,
-  textColor,
-  verticalAlign,
-  width,
-} from "src/elf-tailwindcss-classnames";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import Button from "src/ui/base/Button/Button";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -47,6 +27,7 @@ const votingPowerTooltipText = t`Don't know what your voting power is?  Click on
 interface PortfolioCardProps {
   account: string | undefined | null;
 }
+
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { account } = props;
 
@@ -64,76 +45,47 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const formattedVotingPower = commify((+votingPower * rand3).toFixed(4));
 
   return (
-    <Card variant={CardVariant.GRADIENT} className={tw(boxShadow("shadow-md"))}>
+    <Card
+      variant={CardVariant.GRADIENT}
+      // eslint-disable-next-line tailwindcss/no-custom-classname
+      className="w-full shadow-md lg:max-w-[512px]"
+    >
       <div>
-        <span
-          className={tw(
-            textColor("text-white"),
-            fontWeight("font-bold"),
-            fontSize("text-xl"),
-            letterSpacing("tracking-widest"),
-          )}
-        >{t`Portfolio`}</span>
-        <span
-          className={tw(
-            margin("ml-2"),
-            textColor("text-white"),
-            fontWeight("font-light"),
-            fontSize("text-sm"),
-            letterSpacing("tracking-widest"),
-          )}
-        >
+        <span className="text-xl font-bold tracking-widest text-white">{t`Portfolio`}</span>
+        <span className="ml-2 text-sm font-light tracking-widest text-white">
           {account && `(${formatWalletAddress(account)})`}
         </span>
       </div>
-      <div
-        className={tw(
-          display("flex"),
-          flexDirection("flex-col"),
-          minHeight("min-h-full"),
-          verticalAlign("align-bottom"),
-          margin("mb-8"),
-        )}
-      >
+      <div className="flex flex-col min-h-full mb-8 align-bottom">
         <BalanceWithLabel
-          className={tw(width("w-full"), margin("mt-8"))}
+          className="w-full mt-8"
           balance={formattedBalance}
           tooltipText={portfolioTooltipText}
           tooltipHref={"/resources"}
           label={t`Wallet balance`}
         />
         <BalanceWithLabel
-          className={tw(width("w-full"), margin("mt-8"))}
+          className="w-full mt-8"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
           tooltipHref={"/resources"}
           label={t`Eligible voting balance`}
         />
         <BalanceWithLabel
-          className={tw(width("w-full"), margin("mt-8"))}
+          className="w-full mt-8"
           balance={formattedVotingPower}
           tooltipText={votingPowerTooltipText}
           tooltipHref={"/resources"}
           label={t`Voting Power`}
         />
-        <div
-          className={tw(
-            display("flex"),
-            alignItems("items-center"),
-            justifyContent("justify-between"),
-            borderWidth("border-t"),
-            borderColor("border-white"),
-            margin("mt-4"),
-            padding("pt-4"),
-          )}
-        >
+        <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
           <BalanceWithLabel
             balance={formattedAirdrop}
             label={t`Unclaimed airdrop`}
           />
           <LinkButton
             link="/airdrop"
-            className={tw(alignSelf("self-end"), margin("mb-5"))}
+            className="self-end mb-5"
             variant={ButtonVariant.OUTLINE_WHITE}
           >{t`Claim`}</LinkButton>
         </div>
@@ -152,27 +104,16 @@ interface BalanceWithLabelProps {
 function BalanceWithLabel(props: BalanceWithLabelProps) {
   const { className, balance, label, tooltipHref, tooltipText } = props;
   return (
-    <div className={classNames(className, tw(textColor("text-white")))}>
-      <div className={tw(display("flex"), alignItems("items-center"))}>
-        <div
-          className={tw(fontSize("text-2xl"), fontWeight("font-extralight"))}
-        >
-          {balance}
-        </div>
-        <ElementIcon className={tw(margin("ml-2"))} size={IconSize.MEDIUM} />
+    <div className={classNames(className, "text-white")}>
+      <div className="flex items-center">
+        <div className="text-2xl font-extralight">{balance}</div>
+        <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
       </div>
-      <div
-        className={tw(
-          display("flex"),
-          fontSize("text-lg"),
-          fontWeight("font-light"),
-          alignItems("items-center"),
-        )}
-      >
+      <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
           <InfoIconWithTooltip
-            className={tw(margin("ml-1"))}
+            className="ml-1"
             tooltipText={tooltipText}
             tooltipHref={tooltipHref}
           />

@@ -100,7 +100,6 @@ export default function DelegatePage(): ReactElement {
             />
           </div>
         </GradientCard>
-
         {/* Delegates */}
         <div className="flex flex-col xl:w-8/12">
           {/* Delegates List */}

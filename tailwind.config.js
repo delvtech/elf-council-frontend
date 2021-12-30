@@ -13,12 +13,13 @@ module.exports = {
       colors: {
         // Colors taken from:
         // https://www.figma.com/file/SRw9lvgMAasN5JaQrK0z4t/Governance?node-id=1040%3A1303
+        yieldLightBlue: "#75C7EE",
         yieldBlue: "#1568CA",
         denimBlue: "#7FBEEA",
         principalBlue: "#6ACDE2",
         principalRoyalBlue: "#005EBE",
-        orange:"#ff4700",
-        lightOrange:"#ffe7de",
+        orange: "#ff4700",
+        lightOrange: "#ffe7de",
         clay: "#242E36",
         black: "#1B1D21",
         blueGrey: "#B2CAE3",
@@ -46,6 +47,45 @@ module.exports = {
           DEFAULT: "#005EBE",
           dark: "#00368d",
         },
+      },
+      fontFamily: {
+        mono: [
+          "Roboto Mono",
+          "source-code-pro",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Courier New",
+          "monospace",
+        ],
+      },
+      keyframes: {
+        // intended for use on white backgrounds
+        "fade-wave": {
+          from: {
+            background:
+              "linear-gradient(to right, white, white, transparent, white, white) 100%/400%",
+          },
+          to: {
+            background:
+              "linear-gradient(to right, white, white, transparent, white, white) 0%/400%",
+          },
+        },
+        // intended for use on white backgrounds
+        "fade-wave-left": {
+          from: {
+            background:
+              "linear-gradient(to right, white, white, transparent, white, white) 0%/400%",
+          },
+          to: {
+            background:
+              "linear-gradient(to right, white, white, transparent, white, white) 100%/400%",
+          },
+        },
+      },
+      animation: {
+        "fade-wave": "fade-wave 2.5s ease-in-out infinite",
+        "fade-wave-left": "fade-wave-left 2.5s ease-in-out infinite",
       },
     },
   },
