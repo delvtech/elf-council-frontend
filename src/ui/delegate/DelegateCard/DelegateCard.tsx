@@ -155,7 +155,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               </div>
             ) : null}
 
-            {!delegationSuccess ? (
+            {delegationSuccess ? (
               <div className="flex absolute inset-0 bg-topaz items-center justify-center gap-2">
                 <span className="text-white font-bold">{t`Delegation Successful`}</span>
                 <BadgeCheckIcon className="fill-white h-6" />
