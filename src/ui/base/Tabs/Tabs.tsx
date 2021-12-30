@@ -23,7 +23,9 @@ export default function Tabs({ tabs }: TabsProps): ReactElement {
           getTextColor(tab.current),
           getBackgroundColor(tab.current),
           getBorderRadius(i, tabs.length),
-          "border-gray-200 hover:border-gray-300 border-b-2 text-lg px-4 py-2 font-semibold",
+          getFocusRing(tab.current),
+          getBorderColor(tab.current),
+          "border-b-2 text-lg px-4 py-2 font-semibold",
         );
         if (tab.href) {
           return (
@@ -74,4 +76,21 @@ function getBorderRadius(i: number, length: number) {
   if (i === length - 1) {
     return "rounded-r-xl";
   }
+}
+
+function getFocusRing(current: boolean): string {
+  if (current) {
+    return classNames(
+      "focus:ring-white ring-inset focus:border-0 focus:ring-4 focus:shadow-none",
+    );
+  }
+
+  return "";
+}
+
+function getBorderColor(current: boolean): string {
+  if (current) {
+    return classNames("border-paleLily hover:border-clay");
+  }
+  return classNames("border-gray-200 hover:border-gray-300");
 }
