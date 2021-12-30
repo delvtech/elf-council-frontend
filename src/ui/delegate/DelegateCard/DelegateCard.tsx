@@ -25,7 +25,7 @@ interface DelegateCardProps {
   setCurrentDelegate: (delegate: Delegate) => void;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
-  verifiedDelegate: string;
+  selectedDelegate: string;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -37,7 +37,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setCurrentDelegate,
     delegateAddressInput,
     setDelegateAddressInput,
-    verifiedDelegate,
+    selectedDelegate,
   } = props;
 
   const [delegationSuccess, setDelegationSuccess] = useState(false);
@@ -136,7 +136,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               placeholder={t`Enter delegate address`}
               className={classNames(
                 "h-12 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
-                { "pr-12": !!verifiedDelegate },
+                { "pr-12": !!selectedDelegate },
               )}
               value={delegateAddressInput}
               onChange={(event) => setDelegateAddressInput(event.target.value)}
@@ -149,7 +149,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               autoComplete="off"
             />
 
-            {!!verifiedDelegate ? (
+            {!!selectedDelegate ? (
               <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
                 <CheckIcon className="fill-topaz h-6" />
               </div>

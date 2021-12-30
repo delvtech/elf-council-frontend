@@ -16,12 +16,12 @@ import { t } from "ttag";
 import DetailedDelegateProfile from "./DetailedDelegateProfile";
 
 interface DelegatesListProps {
-  verifiedDelegate: string;
+  selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
 }
 
 function DelegatesList({
-  verifiedDelegate,
+  selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
   const [currentDelegate, setCurrentDelegate] = useState(-1);
@@ -53,7 +53,7 @@ function DelegatesList({
         style={{ maxHeight: "428px" }}
       >
         {delegates.map((delegate, idx) => {
-          const selected = delegate.address === verifiedDelegate;
+          const selected = delegate.address === selectedDelegate;
 
           return (
             // TODO: Remove -${idx} for production since addresses are always unique

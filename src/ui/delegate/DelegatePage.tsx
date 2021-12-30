@@ -26,7 +26,7 @@ export default function DelegatePage(): ReactElement {
   >();
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
-  const [verifiedDelegate, setVerifiedDelegate] = useState("");
+  const [selectedDelegate, setSelectedDelegate] = useState("");
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
@@ -50,12 +50,12 @@ export default function DelegatePage(): ReactElement {
       );
 
       if (chosenDelegate) {
-        setVerifiedDelegate(chosenDelegate.address);
+        setSelectedDelegate(chosenDelegate.address);
       } else {
-        setVerifiedDelegate("");
+        setSelectedDelegate("");
       }
     } else {
-      setVerifiedDelegate("");
+      setSelectedDelegate("");
     }
   }, [delegateAddressInput]);
 
@@ -103,7 +103,7 @@ export default function DelegatePage(): ReactElement {
         <div className="flex flex-col xl:w-8/12">
           {/* Delegates List */}
           <DelegatesList
-            verifiedDelegate={verifiedDelegate}
+            selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
           />
 
@@ -119,7 +119,7 @@ export default function DelegatePage(): ReactElement {
               setCurrentDelegate={setCurrentDelegate}
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}
-              verifiedDelegate={verifiedDelegate}
+              selectedDelegate={selectedDelegate}
             />
           </div>
         </div>
