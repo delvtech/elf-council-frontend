@@ -111,10 +111,7 @@ function getBackground(variant: ButtonVariant, error: boolean): TArg {
         : backgroundColor("bg-red-500", "hover:bg-red-700");
 
     case ButtonVariant.SECONDARY:
-      return backgroundColor(
-        "bg-brandLightBlue",
-        "hover:bg-brandLightBlue-dark",
-      );
+      return backgroundColor("bg-hackerSky", "hover:bg-hackerSky-dark");
 
     case ButtonVariant.GRADIENT:
       return tw(
