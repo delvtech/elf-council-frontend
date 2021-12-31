@@ -72,9 +72,9 @@ interface UseTooltipProps {
   hideDelay?: number;
 }
 
-const defaultHidDelay = 200;
+const defaultHideDelay = 200;
 export function useTooltip(props?: UseTooltipProps): TooltipProviderValue {
-  const { showDelay = 100, hideDelay = defaultHidDelay } = props || {};
+  const { showDelay = 100, hideDelay = defaultHideDelay } = props || {};
   const [isShowing, setIsShowing] = useState(false);
 
   const [show, cancelShow] = useDebounceFunction(() => {
