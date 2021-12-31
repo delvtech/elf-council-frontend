@@ -61,6 +61,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
     if (!account || !signer || !currentDelegate) {
       return;
     }
+
     deposit([account, parseEther(depositAmount), currentDelegate.address]);
   };
 
