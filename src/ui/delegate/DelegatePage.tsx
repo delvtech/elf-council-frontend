@@ -1,21 +1,22 @@
 import { ReactElement, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { Signer } from "ethers";
-import { Delegate, delegates } from "src/elf-council-delegates/delegates";
+import { t } from "ttag";
+import classNames from "classnames";
+import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
+
+import { isValidAddress } from "src/base/isValidAddress";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import H2 from "src/ui/base/H2";
+import GradientCard from "src/ui/base/Card/GradientCard";
 import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
-import { t } from "ttag";
-import DelegatesList from "./DelegatesList/DelegatesList";
-import GradientCard from "src/ui/base/Card/GradientCard";
+import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
+import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
+import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
-import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
 import { formatEther } from "ethers/lib/utils";
 import { useDeposits } from "src/ui/contracts/useDeposits";
-import classNames from "classnames";
-import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
-import { isValidAddress } from "src/base/isValidAddress";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -40,11 +41,9 @@ export default function DelegatePage(): ReactElement {
   const showWarning =
     !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
 
+  // Used to verify if delegate inputted is an actual delegate in our system
   useEffect(() => {
-    if (
-      delegateAddressInput.length === 42 &&
-      isValidAddress(delegateAddressInput)
-    ) {
+    if (isValidAddress(delegateAddressInput)) {
       const chosenDelegate = delegates.find(
         (delegate) => delegate.address === delegateAddressInput,
       );
@@ -110,7 +109,6 @@ export default function DelegatePage(): ReactElement {
           {/* Delegate Card */}
           <div className="px-6 py-7 mt-auto rounded-xl bg-principalRoyalBlue">
             <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Delegate`}</H2>
-
             <DelegateCard
               account={account}
               signer={signer}

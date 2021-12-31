@@ -1,24 +1,30 @@
 import React, { ReactElement } from "react";
 import { Tooltip } from "@material-ui/core";
 import { FixedNumber } from "ethers";
-import tw, { width } from "src/elf-tailwindcss-classnames";
-import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
+import classNames from "classnames";
+
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface WithdrawButtonProps {
   account: string | null | undefined;
   amountDeposited: string;
   withdrawAmount: string;
-  isLoading?: boolean;
   onWithdraw: () => void;
+  isLoading?: boolean;
+  buttonVariant?: ButtonVariant;
+  buttonClassName?: string;
 }
 export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
   const {
     account,
     amountDeposited,
     withdrawAmount,
-    isLoading = false,
     onWithdraw,
+    isLoading = false,
+    buttonVariant = ButtonVariant.PRIMARY,
+    buttonClassName = "",
   } = props;
   const hasWithdrawAmount = !!Number(withdrawAmount);
   const hasAnyDeposited = !!Number(amountDeposited);
@@ -35,7 +41,7 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
 
   return (
     <Tooltip
-      id="withdraw-button-tooltp"
+      id="withdraw-button-tooltip"
       arrow
       title={tooltipTitle}
       placement="top"
@@ -47,10 +53,11 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
           disabled={
             isLoading || !hasEnoughDeposited || !account || !hasWithdrawAmount
           }
-          className={width("w-full")}
+          className={classNames("w-full", buttonClassName)}
           onClick={onWithdraw}
+          variant={buttonVariant}
         >
-          <span className={width("w-full")}>{t`Withdraw`}</span>
+          <span className="w-full">{t`Withdraw`}</span>
         </Button>
       </div>
     </Tooltip>
