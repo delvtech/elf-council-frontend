@@ -4,14 +4,23 @@
     "react-app",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
     "prettier"
   ],
-  "plugins": ["tailwindcss"],
+  "plugins": [
+    "tailwindcss",
+    "jsx-a11y"
+  ],
   "overrides": [
     {
-      "files": ["**/*.ts", "**/*.tsx"],
+      "files": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
       "rules": {
-        "no-undef": ["off"],
+        "no-undef": [
+          "off"
+        ],
         "react-hooks/exhaustive-deps": "error"
       }
     }
@@ -19,7 +28,12 @@
   "rules": {
     "tailwindcss/no-custom-classname": [
       "error",
-      { "callees": ["classNames", "classnames"] }
+      {
+        "callees": [
+          "classNames",
+          "classnames"
+        ]
+      }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
     "@typescript-eslint/no-empty-function": "off", // empty arrow functions are fine for noops when passed to components
@@ -34,14 +48,21 @@
     "no-console": [
       "warn",
       {
-        "allow": ["warn", "error", "info", "assert"]
+        "allow": [
+          "warn",
+          "error",
+          "info",
+          "assert"
+        ]
       }
     ],
     "no-new-func": "error", // const func = new Function()
     "no-restricted-imports": [
       "error",
       {
-        "patterns": ["\\.\\./*"]
+        "patterns": [
+          "\\.\\./*"
+        ]
       }
     ],
     "no-unused-vars": "off",
