@@ -16,6 +16,8 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { DepositButton } from "src/ui/overview/DepositCard/DepositButton";
 
+const { elementToken, lockingVault } = addressesJson.addresses;
+
 interface DepositSectionProps {
   account: string | null | undefined;
   signer: Signer | undefined;
@@ -25,7 +27,6 @@ interface DepositSectionProps {
 
 function DepositSection(props: DepositSectionProps): ReactElement {
   const { account, signer, currentDelegate, walletBalance } = props;
-  const { elementToken, lockingVault } = addressesJson.addresses;
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
@@ -106,7 +107,9 @@ function DepositSection(props: DepositSectionProps): ReactElement {
 }
 
 function PortfolioDepositText(): ReactElement {
-  const deposit = <span className="font-bold">{t`deposit`}</span>;
+  const deposit = (
+    <span key="bold-deposit" className="font-bold">{t`deposit`}</span>
+  );
 
   return (
     <p className="text-white font-light leading-5 text-sm">
@@ -115,10 +118,10 @@ function PortfolioDepositText(): ReactElement {
         {t`This verifies your eligibility to vote and/or delegate.`}
       </span>
       <div>
-        <Link href="/resources" passHref>
-          <span className="text-goldYellow cursor-pointer">
+        <Link href="/resources">
+          <a className="text-goldYellow">
             {t`To learn more about our vaults read here.`}
-          </span>
+          </a>
         </Link>
       </div>
     </p>

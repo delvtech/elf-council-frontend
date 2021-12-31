@@ -73,10 +73,10 @@ function PortfolioWithdrawText(): ReactElement {
       {t`To remove deposited tokens from voting eligibility enter a withdrawal
       amount.`}
       <div>
-        <Link href="/resources" passHref>
-          <span className="text-goldYellow cursor-pointer">
+        <Link href="/resources">
+          <a href="/resources" className="text-goldYellow cursor-pointer">
             {t`Read more to learn about our voting vaults.`}
-          </span>
+          </a>
         </Link>
       </div>
     </p>
