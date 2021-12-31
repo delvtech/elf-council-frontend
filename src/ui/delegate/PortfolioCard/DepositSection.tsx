@@ -50,13 +50,17 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const { mutate: allow } = useSetTokenAllowance(signer, elementToken);
 
   const onSetAllowance = () => {
-    if (!account || !signer || !lockingVault) return;
+    if (!account || !signer || !lockingVault) {
+      return;
+    }
 
     allow([lockingVault, ethers.constants.MaxUint256]);
   };
 
   const onDeposit = () => {
-    if (!account || !signer || !currentDelegate) return;
+    if (!account || !signer || !currentDelegate) {
+      return;
+    }
     deposit([account, parseEther(depositAmount), currentDelegate.address]);
   };
 
@@ -119,6 +123,7 @@ function PortfolioDepositText(): ReactElement {
       </span>
       <div>
         <Link href="/resources">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a className="text-goldYellow">
             {t`To learn more about our vaults read here.`}
           </a>

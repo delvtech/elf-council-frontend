@@ -8,7 +8,6 @@ import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLocki
 import { parseEther } from "ethers/lib/utils";
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
 
-import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 
 import { WithdrawButton } from "src/ui/overview/DepositCard/WithdrawButton";
@@ -32,7 +31,9 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     clearWithdrawInput,
   );
   const onWithdraw = () => {
-    if (!account) return;
+    if (!account) {
+      return;
+    }
     withdraw([parseEther(withdrawAmount)]);
   };
   return (
@@ -74,7 +75,8 @@ function PortfolioWithdrawText(): ReactElement {
       amount.`}
       <div>
         <Link href="/resources">
-          <a className="text-goldYellow cursor-pointer">
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a className="text-goldYellow">
             {t`Read more to learn about our voting vaults.`}
           </a>
         </Link>
