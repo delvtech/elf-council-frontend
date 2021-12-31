@@ -102,8 +102,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     isError,
   ]);
 
-  const invalidAddress =
-    delegateAddressInput.length !== 42 || !isValidAddress(delegateAddressInput);
+  const invalidAddress = !isValidAddress(delegateAddressInput);
 
   return (
     <div className={classNames({ "opacity-50": !account })}>

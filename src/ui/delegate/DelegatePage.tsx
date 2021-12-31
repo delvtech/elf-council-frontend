@@ -43,10 +43,7 @@ export default function DelegatePage(): ReactElement {
 
   // Used to verify if delegate inputted is an actual delegate in our system
   useEffect(() => {
-    if (
-      delegateAddressInput.length === 42 &&
-      isValidAddress(delegateAddressInput)
-    ) {
+    if (isValidAddress(delegateAddressInput)) {
       const chosenDelegate = delegates.find(
         (delegate) => delegate.address === delegateAddressInput,
       );
