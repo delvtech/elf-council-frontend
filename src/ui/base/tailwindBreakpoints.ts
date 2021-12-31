@@ -37,7 +37,7 @@ function useIsTailwindSm(): boolean {
 function useIsTailwindMd(): boolean {
   const isAtLeastMdBreakpoint = useMedia(`(min-width: ${MEDIUM_BREAKPOINT}px)`);
   const isLessThanLgBreakpoint = useMedia(
-    `(max-width: ${LARGE_BREAKPOINT - 1}px)`
+    `(max-width: ${LARGE_BREAKPOINT - 1}px)`,
   );
   return isAtLeastMdBreakpoint && isLessThanLgBreakpoint;
 }
@@ -45,7 +45,7 @@ function useIsTailwindMd(): boolean {
 function useIsTailwindLg(): boolean {
   const isAtLeastLgBreakpoint = useMedia(`(min-width: ${LARGE_BREAKPOINT}px)`);
   const isLessThanXlBreakpoint = useMedia(
-    `(max-width: ${EXTRA_LARGE_BREAKPOINT - 1}px)`
+    `(max-width: ${EXTRA_LARGE_BREAKPOINT - 1}px)`,
   );
   return isAtLeastLgBreakpoint && isLessThanXlBreakpoint;
 }

@@ -4,7 +4,7 @@ import { useClaimedRewards } from "src/ui/rewards/useClaimed";
 
 export function useUnclaimedRewards(
   account: string | undefined | null,
-  merkleInfo: MerkleProof | undefined
+  merkleInfo: MerkleProof | undefined,
 ): string {
   const claimed = useClaimedRewards(account);
   const { value: totalGrant = "0" } = merkleInfo?.leaf || {};

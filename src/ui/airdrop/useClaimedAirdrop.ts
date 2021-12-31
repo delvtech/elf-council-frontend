@@ -9,7 +9,7 @@ export function useClaimedAirdrop(address: string | undefined | null): string {
     {
       callArgs: [address as string],
       enabled: !!address,
-    }
+    },
   );
 
   return formatEther(claimedBN || 0);

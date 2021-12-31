@@ -26,9 +26,7 @@ export default function OutlinedSection({
         borderRadius("rounded-lg"),
       )}
     >
-      <div
-        className={classNames(padding("px-4", "py-5", "sm:p-6"), className)}
-      >
+      <div className={classNames(padding("px-4", "py-5", "sm:p-6"), className)}>
         {children}
       </div>
     </div>

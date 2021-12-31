@@ -4,13 +4,13 @@ import { QueryObserverResult } from "react-query";
 import { lockingVaultContract } from "src/elf/contracts";
 
 export function useDeposits(
-  account: string | null | undefined
+  account: string | null | undefined,
 ): QueryObserverResult<
   [
     // delegate
     string,
     // amount delegated
-    BigNumber
+    BigNumber,
   ]
 > {
   return useSmartContractReadCall(lockingVaultContract, "deposits", {

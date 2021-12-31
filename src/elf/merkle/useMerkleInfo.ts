@@ -20,7 +20,7 @@ export enum MerkleRewardType {
 
 export function useMerkleInfo(
   address: string | undefined | null,
-  rewardType: MerkleRewardType = MerkleRewardType.RETRO
+  rewardType: MerkleRewardType = MerkleRewardType.RETRO,
 ): QueryObserverResult<MerkleProof> {
   return useQuery({
     queryKey: ["merkleInfo", address],
@@ -31,7 +31,7 @@ export function useMerkleInfo(
 
 export async function fetchMerkleInfo(
   address: string,
-  rewardType: MerkleRewardType
+  rewardType: MerkleRewardType,
 ): Promise<MerkleProof> {
   // TODO: host this on s3 as well
   if (chainId === ChainId.LOCAL) {
@@ -41,7 +41,7 @@ export async function fetchMerkleInfo(
   }
 
   const result = await fetch(
-    `${ELEMENT_REWARDS_URL}/${chainName}/${rewardType}/${address}`
+    `${ELEMENT_REWARDS_URL}/${chainName}/${rewardType}/${address}`,
   );
 
   const merkleProofWithBN = (await result.json())[0] as MerkleProof;

@@ -9,7 +9,8 @@ import ErrorCard from "./ErrorCard";
 import generateHash from "src/base/generateHash";
 
 export default function ClaimPage(): ReactElement {
-  const { currentStep, completeStep, goToNextStep, goToPreviousStep } = useRouterSteps();
+  const { currentStep, completeStep, goToNextStep, goToPreviousStep } =
+    useRouterSteps();
   const [data, setData] = useState<ZKData>();
   const [publicId, setPublicId] = useState<string>();
 
@@ -18,7 +19,7 @@ export default function ClaimPage(): ReactElement {
     if (data?.privateKey === "0x954DdDA943D3daF8E0F7B8A6aC1fC8b7ca930150") {
       setPublicId(generateHash());
     } else {
-      setPublicId(undefined)
+      setPublicId(undefined);
     }
   }, [data]);
 
@@ -48,7 +49,10 @@ export default function ClaimPage(): ReactElement {
       {publicId ? (
         <SuccessCard className={getStepClassName(2)} />
       ) : (
-        <ErrorCard onTryAgain={goToPreviousStep} className={getStepClassName(2)} />
+        <ErrorCard
+          onTryAgain={goToPreviousStep}
+          className={getStepClassName(2)}
+        />
       )}
 
       <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">

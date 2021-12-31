@@ -24,7 +24,12 @@ export default function AnchorButton({
 }: AnchorButtonProps): ReactElement {
   const buttonClass = getButtonClass({ variant, round });
   return (
-    <a href={href} role="button" onClick={onClick} className={classNames(buttonClass, className)}>
+    <a
+      href={href}
+      role="button"
+      onClick={onClick}
+      className={classNames(buttonClass, className)}
+    >
       {children}
     </a>
   );

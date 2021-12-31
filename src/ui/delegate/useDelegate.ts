@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { lockingVaultContract } from "src/elf/contracts";
 
 export function useDelegate(
-  address: string | undefined | null
+  address: string | undefined | null,
 ): string | undefined {
   const { data: depositInfo } = useSmartContractReadCall(
     lockingVaultContract,
@@ -11,7 +11,7 @@ export function useDelegate(
     {
       callArgs: [address as string],
       enabled: !!address,
-    }
+    },
   );
 
   const [delegate] = depositInfo || [];
