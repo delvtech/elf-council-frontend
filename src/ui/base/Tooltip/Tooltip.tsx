@@ -180,6 +180,10 @@ function Popup({
         className,
       )}
       style={style}
+      onMouseOver={context.show}
+      onFocus={context.show}
+      onMouseOut={context.hide}
+      onBlur={context.hide}
     >
       <span className="block max-w-sm px-3 py-2 overflow-y-auto w-max max-h-96">
         {children}
