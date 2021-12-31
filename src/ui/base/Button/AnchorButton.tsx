@@ -4,6 +4,10 @@ import { MouseEventHandler, ReactElement, ReactNode } from "react";
 import classNames from "classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
+// TODO: download attribute? Or pass through props? Or make the base button a
+//       polymorphic component that could take passthrough props and be rendered
+//       as an achchor with `as="a"`?
+
 interface AnchorButtonProps extends ButtonStyles {
   children: ReactNode;
   className?: string;

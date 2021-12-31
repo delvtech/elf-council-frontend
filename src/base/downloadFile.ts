@@ -30,26 +30,22 @@ const MIMETypes = {
   webp: "image/webp",
 };
 
+export function getDownloadLink(
+  content: string,
+  type: DownloadType = DownloadType.TEXT,
+): string {
+  return `data:${MIMETypes[type]};charset=utf-8,${encodeURIComponent(content)}`;
+}
+
 export default function downloadFile(
   name: string,
   content: string,
   type: DownloadType = DownloadType.TEXT,
 ): void {
-  const dataStr = `data:${MIMETypes[type]};charset=utf-8,${encodeURIComponent(
-    content,
-  )}`;
   const link = document.createElement("a");
-  link.setAttribute("href", dataStr);
+  link.setAttribute("href", getDownloadLink(content, type));
   link.setAttribute("download", `${name}.${type}`);
   document.body.appendChild(link);
   link.click();
   link.remove();
-}
-
-export function getDownloadLink(
-  name: string,
-  content: string,
-  type: DownloadType = DownloadType.TEXT,
-): string {
-  return `data:${MIMETypes[type]};charset=utf-8,${encodeURIComponent(content)}`;
 }
