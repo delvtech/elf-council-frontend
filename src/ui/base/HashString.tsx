@@ -15,6 +15,7 @@ interface HashStringProps {
   inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, "style">;
 }
 
+const COPY_CLICK_TIMEOUT = 1250;
 export default function HashString({
   className,
   label,
@@ -33,7 +34,7 @@ export default function HashString({
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 1250);
+    }, COPY_CLICK_TIMEOUT);
     if (value) {
       copyToClipboard(value as string);
     }
@@ -51,7 +52,10 @@ export default function HashString({
       )}
       <div className="flex gap-3 sm:gap-4">
         <div
-          className={classNames("grid items-center relative overflow-hidden", inputClassName)}
+          className={classNames(
+            "grid items-center relative overflow-hidden",
+            inputClassName,
+          )}
           style={{
             // important to ensure children fit from edge to edge
             padding: 0,
@@ -72,7 +76,7 @@ export default function HashString({
               gridArea: "1/1",
               // important to remove margin here as it will be added to the
               // parent div
-              margin: 0
+              margin: 0,
             }}
             value={value}
             {...restOfInputProps}
@@ -89,7 +93,7 @@ export default function HashString({
               gridArea: "1/1",
               // important to remove margin here as it will be added to the
               // parent div
-              margin: 0
+              margin: 0,
             }}
           >
             {value || placeholder}

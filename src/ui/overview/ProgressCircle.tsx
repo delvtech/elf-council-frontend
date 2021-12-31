@@ -17,9 +17,10 @@ interface ProgressCircleProps {
    */
   percent: string | number;
 }
+const CIRCLE_RADIUS = 40;
 export function ProgressCircle(props: ProgressCircleProps): ReactElement {
   const { percent } = props;
-  const circumference = 40 * 2 * Math.PI;
+  const circumference = CIRCLE_RADIUS * 2 * Math.PI;
   return (
     <div
       className={tw(

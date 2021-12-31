@@ -60,7 +60,7 @@ export default function EncryptionCard({
           vertical direction. You need two strings because lorem ipsum dolor ut 
           perspiciatis, unde omnis iste natus error sit voluptatem accusantium 
           dolore.`}{" "}
-            <a href="#">{t`Learn more`}</a>
+            <a href="http://TODO">{t`Learn more`}</a>
           </p>
         </div>
         <HashSlider className="mb-2" onChange={setKey} />

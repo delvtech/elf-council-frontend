@@ -80,7 +80,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write",
+      "npm run prettier",
       "eslint --fix"
     ],
     "*.js": "eslint --cache --fix",
@@ -97,7 +97,9 @@
     "dev": "next dev",
     "dev-goerli": "NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
     "lint": "next lint",
-    "prettier:check": "prettier --check pages/**/*.ts{,x}",
+    "lint:fix": "npm run lint -- --fix",
+    "prettier": "prettier --write {pages,src}/**/*.ts{,x}",
+    "prettier:check": "prettier --check {pages,src}/**/*.ts{,x}",
     "start": "next start",
     "_copy-testnet-addresses": "cp ../elf-council-testnet/src/addresses/testnet.addresses.json src/elf-council-addresses/testnet.addresses.json",
     "_copy-testnet-tokenlist": "cp ../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json",

@@ -13,6 +13,8 @@ import { getEthereumProviderLibrary } from "src/elf/getEthereumProviderLibrary";
 import { queryClient } from "src/elf/queryClient";
 import { addressesJson } from "src/elf-council-addresses";
 
+// We want to log out addresses for sanity/debugging purposes
+// eslint-disable-next-line no-console
 console.log(addressesJson);
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
   return (
