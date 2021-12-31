@@ -1,59 +1,235 @@
-import { CSSProperties, ReactElement, ReactNode } from "react";
-
+import React, {
+  ComponentPropsWithoutRef,
+  ElementType,
+  PropsWithChildren,
+  ReactElement,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import classNames from "classnames";
+import { useDebounceFunction } from "src/ui/base/useDebounceFunction";
 
-const bottomFull: CSSProperties = {
-  bottom: "calc(100% + 4px)",
-};
-interface TooltipProps {
-  className?: string;
-  tooltipClassName?: string;
-  text: ReactNode;
-  enabled?: boolean;
-  show?: boolean;
-  position?: "top" | "botton";
-  children: ReactNode;
+/*
+Basic Usage Example:
+````````````````````````````````````````````````````````````````````````````````
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis rutrum 
+  nisi, quis ornare dui. Praesent mauris elit, luctus sit amet nunc sit amet, 
+  rhoncus consectetur erat.
+
+  <Tooltip>
+    <Tooltip.Trigger className="border-b border-dashed">
+      I have a tooltip!
+    </Tooltip.Trigger>
+    <Tooltip.Popup>I'm a toolip!</Tooltip.Popup>
+  </Tooltip>
+
+  Proin vel nunc nec neque luctus ultricies. 
+  Praesent venenatis fringilla lorem, quis scelerisque dolor sagittis sed. Donec 
+  rutrum mauris magna, quis congue augue porta eget. Curabitur ornare leo vitae 
+  cursus porttitor.
+</p>
+````````````````````````````````````````````````````````````````````````````````
+
+<Tooltip.Popup> is positioned relative to <Tooltip>.
+
+<Tooltip> and <Tooltip.Trigger> are polymorphic components which accept an 
+optional "as" prop that can be passed a:
+  - tag name as a string (e.g. as="div") (default: "span")
+  - component (e.g. as={Card})
+
+They then accept any props that the tag/component in the "as" prop accepts.
+
+Example:
+````````````````````````````````````````````````````````````````````````````````
+<Tooltip as={div}>
+  ...
+  <Tooltip.Trigger as={Button} variant={ButtonVariant.GRADIENT}>
+    ...
+  </Tooltip.Trigger>
+  ...
+</Tooltip>
+````````````````````````````````````````````````````````````````````````````````
+
+More on polymorphism: https://design-system.pluralsight.com/patterns/polymorphic
+
+If <Tooltip.Trigger> is made a block element (e.g. div), then it's important
+that <Tooltip> also be a block element to prevent misrendering in some browsers.
+
+*/
+
+interface TooltipProviderValue {
+  isShowing: boolean;
+  show: () => void;
+  hide: () => void;
 }
-export function Tooltip(props: TooltipProps): ReactElement {
-  const {
-    className,
-    tooltipClassName,
-    text,
-    enabled = false,
-    show = false,
-    position = "top",
-    children,
-  } = props;
+
+interface UseTooltipProps {
+  hideDelay?: number;
+}
+
+export function useTooltip(props?: UseTooltipProps): TooltipProviderValue {
+  const { hideDelay = 700 } = props || {};
+  const [isShowing, setIsShowing] = useState(false);
+
+  const [hide, cancel] = useDebounceFunction(() => {
+    setIsShowing(false);
+  }, hideDelay);
+
+  const show = () => {
+    cancel();
+    setIsShowing(true);
+  };
+
+  return {
+    isShowing,
+    show,
+    hide,
+  };
+}
+
+const TooltipContext = React.createContext({
+  isShowing: false,
+  show: () => {},
+  hide: () => {},
+} as TooltipProviderValue);
+
+export function TooltipProvider({
+  tooltip,
+  children,
+}: PropsWithChildren<{ tooltip: TooltipProviderValue }>): ReactElement {
   return (
-    <div
+    <TooltipContext.Provider value={tooltip}>
+      {children}
+    </TooltipContext.Provider>
+  );
+}
+
+interface TriggerProps<T extends ElementType> {
+  as?: T;
+  disabled?: boolean;
+  className?: string;
+}
+
+function Trigger<T extends ElementType = "span">({
+  as,
+  disabled,
+  className,
+  children,
+}: PropsWithChildren<
+  TriggerProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TriggerProps<T>>
+>): ReactElement {
+  const { show, hide } = useContext(TooltipContext);
+
+  const Component = as || "span";
+  return (
+    <Component
+      className={className}
+      onMouseOver={disabled ? undefined : show}
+      onMouseOut={disabled ? undefined : hide}
+    >
+      {children}
+    </Component>
+  );
+}
+
+interface PopupProps {
+  show?: boolean;
+  position?: "top" | "right" | "bottom" | "left";
+  className?: string;
+  arrowClassName?: string;
+}
+
+function Popup({
+  show,
+  position = "top",
+  className,
+  arrowClassName,
+  children,
+}: PropsWithChildren<PopupProps>): ReactElement {
+  const { current: controlled } = useRef({ isShowing: show });
+  const context = useContext(TooltipContext);
+  const isShowing = controlled.isShowing || context.isShowing;
+  return (
+    <span
       className={classNames(
-        "group cursor-pointer relative inline-block text-center",
+        "max-w-sm w-max max-h-96 block absolute opacity-0 transition-all bg-hackerSky text-principalRoyalBlue rounded drop-shadow z-20",
+        {
+          "left-1/2 -translate-x-1/2":
+            position === "top" || position === "bottom",
+          "bottom-full mb-3": position === "top",
+          "top-full mt-3": position === "bottom",
+          "top-1/2 -translate-y-1/2":
+            position === "right" || position === "left",
+          "left-full ml-3": position === "right",
+          "right-full mr-3": position === "left",
+          "!opacity-100": isShowing,
+          "pointer-events-none": !isShowing,
+        },
         className,
       )}
     >
-      {children}
-      <div
-        style={bottomFull}
+      <span className="block max-w-sm px-3 py-2 overflow-y-auto w-max max-h-96">
+        {children}
+      </span>
+      <svg
         className={classNames(
-          "opacity-0 bg-black text-white text-center text-xs rounded-lg py-2 px-3 absolute z-10 left-1/2 pointer-events-none",
+          "absolute fill-hackerSky",
           {
-            "group-hover:opacity-100": enabled,
-            "opacity-100": show,
+            "left-1/2 -translate-x-1/2":
+              position === "top" || position === "bottom",
+            "top-full": position === "top",
+            "bottom-full rotate-180": position === "bottom",
+
+            "top-1/2 -translate-y-1/2":
+              position === "right" || position === "left",
+            "right-full mt-2 rotate-90 origin-top-right": position === "right",
+            "left-full mt-2 -rotate-90 origin-top-left": position === "left",
+
+            "!opacity-100": isShowing,
+            "pointer-events-none": !isShowing,
           },
-          tooltipClassName,
+          arrowClassName,
         )}
+        width="16"
+        height="8"
+        viewBox="0 0 16 8"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
       >
-        {text}
-        <svg
-          className="absolute left-0 w-full h-2 text-black top-full"
-          x="0px"
-          y="4px"
-          viewBox="0 0 255 255"
-          xmlSpace="preserve"
-        >
-          <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
-        </svg>
-      </div>
-    </div>
+        <path d="M8 8L12.6201 1.64731C13.3728 0.612336 14.5753 0 15.8551 0H0.14492C1.42467 0 2.62716 0.612338 3.37987 1.64732L8 8Z" />
+      </svg>
+    </span>
   );
 }
+
+interface TooltipProps<T extends ElementType> extends UseTooltipProps {
+  as?: T;
+  className?: string;
+}
+
+export default function Tooltip<T extends ElementType = "span">({
+  as,
+  children,
+  className,
+  hideDelay,
+  ...props
+}: PropsWithChildren<
+  TooltipProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TooltipProps<T>>
+>): ReactElement {
+  const tooltip = useTooltip({ hideDelay });
+  const Component = as || "span";
+  return (
+    <TooltipProvider tooltip={tooltip}>
+      <Component className={classNames("relative", className)} {...props}>
+        {children}
+      </Component>
+    </TooltipProvider>
+  );
+}
+
+Tooltip.Trigger = Trigger;
+Tooltip.Popup = Popup;
