@@ -74,7 +74,7 @@ function PortfolioWithdrawText(): ReactElement {
       amount.`}
       <div>
         <Link href="/resources">
-          <a href="/resources" className="text-goldYellow cursor-pointer">
+          <a className="text-goldYellow cursor-pointer">
             {t`Read more to learn about our voting vaults.`}
           </a>
         </Link>
