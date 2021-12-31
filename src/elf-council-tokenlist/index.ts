@@ -18,7 +18,7 @@ export const tokenListJson: TokenList = require(`src/elf-council-tokenlist/${cha
 // Do not export this, use getTokenInfo<T> instead
 const tokenMetadata: Record<string, AnyTokenListInfo> = keyBy(
   tokenListJson.tokens,
-  "address"
+  "address",
 );
 
 export function getTokenInfo<T extends TokenInfo>(address: string): T {

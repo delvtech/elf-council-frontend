@@ -61,18 +61,24 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const isAllowed = allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
 
   const onSetAllowance = () => {
-    if (!account || !signer || !lockingVault) return;
+    if (!account || !signer || !lockingVault) {
+      return;
+    }
 
     allow([lockingVault, ethers.constants.MaxUint256]);
   };
 
   const onDeposit = () => {
-    if (!account || !signer || !currentDelegate) return;
+    if (!account || !signer || !currentDelegate) {
+      return;
+    }
     deposit([account, parseEther(depositAmount), currentDelegate.address]);
   };
 
   const onWithdraw = () => {
-    if (!account) return;
+    if (!account) {
+      return;
+    }
     withdraw([parseEther(withdrawAmount)]);
   };
 

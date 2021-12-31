@@ -21,7 +21,8 @@ export function isIntegerNumber(num: unknown): num is number {
 export function abbreviateLargeValue(value: number): string {
   const f = format(".2s");
 
-  if (value > 10000) {
+  const LARGE_VALUE_THRESHOLD = 10000;
+  if (value > LARGE_VALUE_THRESHOLD) {
     // use 'B' for billion, not 'G' for giga
     return f(value).replace("G", "B");
   }

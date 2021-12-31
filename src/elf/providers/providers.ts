@@ -37,23 +37,23 @@ function getProvider() {
   // this is only goerli.
   if (chainId === ChainId.GOERLI) {
     const web3Goerli = createAlchemyWeb3(
-      `wss://eth-goerli.ws.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`
+      `wss://eth-goerli.ws.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`,
     );
     const alchemyWeb3GoerliWebSocketProvider = new providers.Web3Provider(
       web3Goerli.currentProvider as ExternalProvider,
-      ChainId.GOERLI
+      ChainId.GOERLI,
     );
     return alchemyWeb3GoerliWebSocketProvider as Provider;
   }
 
   if (chainId === ChainId.MAINNET) {
     const web3Mainnet = createAlchemyWeb3(
-      `wss://eth-mainnet.ws.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`
+      `wss://eth-mainnet.ws.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`,
     );
 
     const alchemyWeb3MainnetWebSocketProvider = new providers.Web3Provider(
       web3Mainnet.currentProvider as ExternalProvider,
-      ChainId.MAINNET
+      ChainId.MAINNET,
     );
 
     return alchemyWeb3MainnetWebSocketProvider as Provider;

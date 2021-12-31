@@ -45,7 +45,7 @@ export const DEFAULT_NUMERIC_INPUT_OPTIONS: NumericValueOptions = {
 export function validateNumericInput(
   currentStringValue: string,
   newStringValue: string,
-  options = DEFAULT_NUMERIC_INPUT_OPTIONS
+  options = DEFAULT_NUMERIC_INPUT_OPTIONS,
 ): string {
   const { min, max, maxPrecision } = options;
   // set input to empty string
@@ -71,7 +71,7 @@ export function getIsValidNumericInput(
   inputString: string,
   min?: number,
   max?: number,
-  maxPrecision?: number
+  maxPrecision?: number,
 ): boolean {
   const inputValue = Number(inputString);
   if (!ANY_NUMBER_REGEX.test(inputString)) {

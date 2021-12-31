@@ -7,8 +7,8 @@ interface UseUploaderOptions {
 // TODO:
 //  - upload function to handle dropped files
 export default function useFile(options?: UseUploaderOptions): {
-  file?: string | ArrayBuffer,
-  openFileBrowser: () => void
+  file?: string | ArrayBuffer;
+  openFileBrowser: () => void;
 } {
   const [file, setFile] = useState<string | ArrayBuffer>();
   const { accept } = options || {};
@@ -25,7 +25,7 @@ export default function useFile(options?: UseUploaderOptions): {
       height: 0;
       overflow: hidden;
       pointer-events: none;
-    `
+    `;
     if (accept) {
       input.setAttribute("accept", accept.toString());
     }
@@ -38,13 +38,17 @@ export default function useFile(options?: UseUploaderOptions): {
     if (input.files && input.files.length) {
       fileReader.readAsText(input.files[0], "UTF-8");
       fileReader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target && e.target.result) setFile(e.target.result);
+        if (e.target && e.target.result) {
+          setFile(e.target.result);
+        }
       };
     }
   };
 
   const openFileBrowser = useCallback(() => {
-    if (!inputRef.current) return;
+    if (!inputRef.current) {
+      return;
+    }
     inputRef.current.value = "";
     inputRef.current = document.body.appendChild(inputRef.current);
     inputRef.current.click();

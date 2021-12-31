@@ -5,7 +5,7 @@ import { QueryObserverResult } from "react-query";
 
 export function useTokenBalanceOf(
   contract: ERC20Permit | undefined,
-  address: string | null | undefined
+  address: string | null | undefined,
 ): QueryObserverResult<BigNumber> {
   return useSmartContractReadCall(contract, "balanceOf", {
     callArgs: [address as string], // safe to cast because `enabled` is set

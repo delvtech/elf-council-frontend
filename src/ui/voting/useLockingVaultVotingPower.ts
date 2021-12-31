@@ -7,7 +7,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 export function useLockingVaultVotingPower(
   account: string | undefined | null,
-  atBlockNumber?: number
+  atBlockNumber?: number,
 ): string {
   const { data: latestBlockNumber } = useLatestBlockNumber();
   const { data: merkleInfo } = useMerkleInfo(account);
@@ -22,7 +22,7 @@ export function useLockingVaultVotingPower(
     {
       callArgs: [account as string, blockNumber as number, byteslikeProof],
       enabled: !!account && !!blockNumber && !!proof,
-    }
+    },
   );
 
   const lockingVotingPower = formatEther(lockingVotingPowerBN || 0);

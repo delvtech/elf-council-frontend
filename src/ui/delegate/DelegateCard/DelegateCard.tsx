@@ -16,6 +16,7 @@ import {
   CheckIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/solid";
+import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -72,14 +73,14 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setDelegationSuccess(true);
     setTimeout(() => {
       setDelegationSuccess(false);
-    }, 2000);
+    }, TWO_SECONDS_IN_MILLISECONDS);
   };
 
   const toggleDelegationFail = () => {
     setDelegationFail(true);
     setTimeout(() => {
       setDelegationFail(false);
-    }, 2000);
+    }, TWO_SECONDS_IN_MILLISECONDS);
   };
 
   useEffect(() => {

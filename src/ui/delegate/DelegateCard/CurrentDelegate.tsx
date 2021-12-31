@@ -9,6 +9,7 @@ import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import Image from "next/image";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
+import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 
 interface CurrentDelegateProps {
   className?: string;
@@ -28,7 +29,9 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
   // Slightly overengineered handleCopy?
   const handleCopy = useCallback(
     (type: "twitterHandle" | "address") => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
       const nextState = { ...defaultToolTipState };
       nextState[type] = true;
@@ -36,7 +39,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       timeoutRef.current = setTimeout(() => {
         setshowToolTip(defaultToolTipState);
         timeoutRef.current = null;
-      }, 1000);
+      }, ONE_SECOND_IN_MILLISECONDS);
       copyToClipboard(delegate[type]);
     },
     [delegate],

@@ -24,7 +24,7 @@ const {
 export function useVote(
   account: string | undefined | null,
   signer: Signer | undefined,
-  atBlockNumber?: number
+  atBlockNumber?: number,
 ): {
   mutate: (proposalId: string, ballot: Ballot) => void;
   isLoading: boolean;
@@ -43,17 +43,17 @@ export function useVote(
 
   const lockingVaultVotingPower = useLockingVaultVotingPower(
     account,
-    atBlockNumber
+    atBlockNumber,
   );
   const rewardsVaultVotingPower = useRewardsVaultVotingPower(
     account,
     rewardsContract,
-    atBlockNumber
+    atBlockNumber,
   );
   const nonFungibleVotingPower = useRewardsVaultVotingPower(
     account,
     nonFungibleVotingContract,
-    atBlockNumber
+    atBlockNumber,
   );
 
   const onVote = useCallback(
@@ -96,7 +96,7 @@ export function useVote(
       nonFungibleVotingPower,
       rewardsVaultVotingPower,
       vote,
-    ]
+    ],
   );
 
   return { mutate: onVote, isLoading, isSuccess, isError };
@@ -108,14 +108,14 @@ function getCallDatasForLockingVaultQueryVotePower(): string {
 }
 
 function getCallDatasForRewardsVaultQueryVotePower(
-  merkleInfo: MerkleProof
+  merkleInfo: MerkleProof,
 ): string {
   const { value: totalGrant } = merkleInfo?.leaf || {};
   const { proof = [] } = merkleInfo || {};
 
   const extraDataForRewardsVault = ethers.utils.defaultAbiCoder.encode(
     ["uint256", "bytes32[]"],
-    [parseEther(totalGrant || "0"), proof]
+    [parseEther(totalGrant || "0"), proof],
   );
 
   return extraDataForRewardsVault;

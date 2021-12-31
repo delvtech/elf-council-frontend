@@ -90,7 +90,9 @@ function StepItemAsLink({
 }: StepItemAsLinkProps): ReactElement {
   return (
     <Link href={href}>
-      <a {...props} className={classNames("block", className)}>{children}</a>
+      <a {...props} className={classNames("block", className)}>
+        {children}
+      </a>
     </Link>
   );
 }

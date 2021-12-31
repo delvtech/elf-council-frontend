@@ -31,7 +31,7 @@ export function useExecute(signer: Signer | undefined): {
       const { targets, calldatas } = proposal;
       execute([proposalId, targets, calldatas]);
     },
-    [execute]
+    [execute],
   );
 
   return { mutate: onExecute, isLoading, isSuccess, isError };

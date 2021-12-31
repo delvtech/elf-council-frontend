@@ -6,7 +6,7 @@ import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useSetTokenAllowance(
   signer: Signer | undefined,
-  tokenAddress: string
+  tokenAddress: string,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,

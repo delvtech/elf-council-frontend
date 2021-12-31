@@ -3,7 +3,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 const NODE_ENV = process.env.NODE_ENV;
 export function useBlockAtTimestamp(
-  timestampInSeconds: number
+  timestampInSeconds: number,
 ): number | undefined {
   const { data: blockNumber } = useQuery({
     queryKey: ["block-at-timestamp", timestampInSeconds],
@@ -24,10 +24,10 @@ interface EtherscanResponse {
   result: string;
 }
 async function fetchBlockAtTimestamp(
-  timestampInSeconds: number
+  timestampInSeconds: number,
 ): Promise<number> {
   const response: Response = await fetch(
-    `https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=${timestampInSeconds}&closest=before`
+    `https://api.etherscan.io/api?module=block&action=getblocknobytime&timestamp=${timestampInSeconds}&closest=before`,
   );
   const { result } = (await response.json()) as EtherscanResponse;
 

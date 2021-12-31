@@ -25,7 +25,7 @@ function DetailedDelegateProfile({
   const onClickChooseDelegate = () => {
     onClose();
     setDelegateAddressInput(delegate.address);
-  }
+  };
 
   return (
     <Fragment>
@@ -151,6 +151,11 @@ function DetailedDelegateProfile({
 
       {/* Background fade */}
       <div
+        // for a11y we need all interactive divs to have a role attribute, for
+        // button roles that requires a tabIndex and onKeyDown as well for compliance
+        role="button"
+        tabIndex={0}
+        onKeyDown={() => {}}
         onClick={onClose}
         className="fixed z-30 inset-0 bg-black opacity-50"
       />
