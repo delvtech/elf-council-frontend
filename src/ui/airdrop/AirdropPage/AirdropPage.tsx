@@ -85,8 +85,6 @@ export default function AirdropPage(): ReactElement {
                   account={account}
                   walletConnectionActive={active}
                   onNextStep={() => {
-                    // user has no airdrop if they have a merkle value but have already claimed
-                    // the full amount
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
                       setActiveStep(AirdropStep.ALREADY_CLAIMED);
                       return;
@@ -122,7 +120,9 @@ export default function AirdropPage(): ReactElement {
                   onPrevStep={() =>
                     setActiveStep(AirdropStep.DELEGATE_INSTRUCTIONS)
                   }
-                  onNextStep={() => {}}
+                  onNextStep={() => {
+                    setActiveStep(AirdropStep.CLAIM_AND_DELEGATE_PREVIEW);
+                  }}
                 />
               );
           }
