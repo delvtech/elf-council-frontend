@@ -45,6 +45,7 @@
       }
     ],
     "import/no-unused-modules": "error",
+    "curly": "error",
     "no-console": [
       "warn",
       {
