@@ -11,35 +11,35 @@ import { defaultProvider } from "src/elf/providers/providers";
 
 export const elementTokenContract = ERC20Permit__factory.connect(
   addressesJson.addresses.elementToken,
-  defaultProvider
+  defaultProvider,
 );
 
 export const lockingVaultContract = LockingVault__factory.connect(
   addressesJson.addresses.lockingVault,
-  defaultProvider
+  defaultProvider,
 );
 
 export const rewardsContract = OptimisticRewards__factory.connect(
   addressesJson.addresses.optimisticRewardsVault,
-  defaultProvider
+  defaultProvider,
 );
 
 export const nonFungibleVotingContract = OptimisticRewards__factory.connect(
   addressesJson.addresses.nonFungibleVotingVault,
-  defaultProvider
+  defaultProvider,
 );
 
 export const coreVotingContract = CoreVoting__factory.connect(
   addressesJson.addresses.coreVoting,
-  defaultProvider
+  defaultProvider,
 );
 
 export const vestingContract = VestingVault__factory.connect(
   addressesJson.addresses.vestingVault,
-  defaultProvider
+  defaultProvider,
 );
 
 export const airdropContract = Airdrop__factory.connect(
   addressesJson.addresses.airdrop,
-  defaultProvider
+  defaultProvider,
 );

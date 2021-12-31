@@ -6,21 +6,21 @@ export const proposalsJson = testnetProposals;
 
 export const proposalsBySnapShotId = keyBy(
   proposalsJson.proposals,
-  "snapshotId"
+  "snapshotId",
 );
 
 export const proposalsById = keyBy(proposalsJson.proposals, "proposalId");
 
 export function getIsVotingOpen(
   proposal: Proposal,
-  blockNumber: number
+  blockNumber: number,
 ): boolean {
   return proposal.expiration > blockNumber;
 }
 
 export function getIsExecutable(
   proposal: Proposal,
-  blockNumber: number
+  blockNumber: number,
 ): boolean {
   return proposal.unlock < blockNumber;
 }

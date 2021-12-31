@@ -17,7 +17,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 const howToParticipateLink = (
   <a
     key="how-to-participate"
-    href=""
+    href="http://TODO"
     className={tw(
       fontWeight("font-semibold"),
       textColor("text-blue-800"),
@@ -30,7 +30,7 @@ const howToParticipateLink = (
 const howVotingWorksLink = (
   <a
     key="how-voting-works"
-    href=""
+    href="http://TODO"
     className={tw(
       fontWeight("font-semibold"),
       textColor("text-blue-800"),
@@ -43,7 +43,7 @@ const howVotingWorksLink = (
 const votingWalletSetupLink = (
   <a
     key="voting-wallet-setup"
-    href=""
+    href="http://TODO"
     className={tw(
       fontWeight("font-semibold"),
       textColor("text-blue-800"),
@@ -57,7 +57,7 @@ const votingWalletSetupLink = (
 const usefulToolsLink = (
   <a
     key="useful-tools"
-    href=""
+    href="http://TODO"
     className={tw(
       fontWeight("font-semibold"),
       textColor("text-blue-800"),
@@ -70,7 +70,7 @@ const usefulToolsLink = (
 const onChainGovernanceLink = (
   <a
     key="on-chain-governance"
-    href=""
+    href="http://TODO"
     className={tw(
       fontWeight("font-semibold"),
       textColor("text-blue-800"),

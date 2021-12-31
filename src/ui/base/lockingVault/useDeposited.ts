@@ -3,7 +3,7 @@ import { formatEther } from "@ethersproject/units";
 import { lockingVaultContract } from "src/elf/contracts";
 
 export function useDeposited(
-  address: string | undefined | null
+  address: string | undefined | null,
 ): string | undefined {
   const { data: depositInfo } = useSmartContractReadCall(
     lockingVaultContract,
@@ -11,7 +11,7 @@ export function useDeposited(
     {
       callArgs: [address as string],
       enabled: !!address,
-    }
+    },
   );
 
   const [, depositBN] = depositInfo || [];

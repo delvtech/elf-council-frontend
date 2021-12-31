@@ -7,7 +7,7 @@ import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useWithdrawFromLockingVault(
   signer: Signer | undefined,
-  onSuccess?: () => void
+  onSuccess?: () => void,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,
@@ -17,7 +17,7 @@ export function useWithdrawFromLockingVault(
     lockingVaultContract,
     "withdraw",
     signer,
-    { onTransactionMined: onSuccess }
+    { onTransactionMined: onSuccess },
   );
   return withdraw;
 }

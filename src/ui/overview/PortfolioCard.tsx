@@ -16,8 +16,12 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
+// TODO: Remove these large number bois
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const rand1 = Math.random() * 100000000;
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const rand2 = Math.random() * 100000000;
+// eslint-disable-next-line @typescript-eslint/no-magic-numbers
 const rand3 = Math.random() * 100000000;
 
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;

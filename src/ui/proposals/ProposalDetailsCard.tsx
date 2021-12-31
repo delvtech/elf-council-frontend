@@ -162,12 +162,13 @@ function useSnapshotProposal(
   return snapshotProposals?.find((s) => s.id === snapshotId);
 }
 
-function truncateText(text: string, characterLimit = 250) {
+const CHARACTER_LIMIT = 250;
+function truncateText(text: string, characterLimit = CHARACTER_LIMIT) {
   if (text.length <= characterLimit) {
     return text;
   }
 
-  return `${text.slice(0, 250)}...`;
+  return `${text.slice(0, CHARACTER_LIMIT)}...`;
 }
 
 interface BalanceWithLabelProps {

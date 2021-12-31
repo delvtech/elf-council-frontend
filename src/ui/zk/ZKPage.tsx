@@ -23,7 +23,9 @@ export default function ZKPage(): ReactElement {
   } = useRouterSteps({ initialCompleted: 1 });
 
   useEffect(() => {
-    if (keySecretPair) setPublicId(generateHash(...keySecretPair));
+    if (keySecretPair) {
+      setPublicId(generateHash(...keySecretPair));
+    }
   }, [keySecretPair]);
 
   // TODO: transition styles

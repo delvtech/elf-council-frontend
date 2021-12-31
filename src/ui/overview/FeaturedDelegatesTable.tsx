@@ -36,6 +36,7 @@ import TextInput from "src/ui/base/Input/TextInput";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { t } from "ttag";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 
 const baseHeaderClassName = tw(
   padding("px-4", "py-3"),
@@ -257,7 +258,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
   const [showTooltip, setShowTooltip] = useState(false);
   const onCopyAddress = useCallback(() => {
     setShowTooltip(true);
-    setTimeout(() => setShowTooltip(false), 1000);
+    setTimeout(() => setShowTooltip(false), ONE_SECOND_IN_MILLISECONDS);
     copyToClipboard(address);
   }, [address]);
 

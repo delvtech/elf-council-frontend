@@ -4,7 +4,9 @@
  */
 export type Unpacked<T> = T extends (infer U)[]
   ? U
-  : T extends (...args: any[]) => infer U
+  : // This needs to be any for it to work
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends (...args: any[]) => infer U
   ? U
   : T extends Promise<infer U>
   ? U

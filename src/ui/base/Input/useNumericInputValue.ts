@@ -13,7 +13,7 @@ import {
  * @returns
  */
 export function useNumericInputValue(
-  options: NumericValueOptions = DEFAULT_NUMERIC_INPUT_OPTIONS
+  options: NumericValueOptions = DEFAULT_NUMERIC_INPUT_OPTIONS,
 ): {
   value: string;
   setNumericValue: (value: string) => void;
@@ -23,7 +23,7 @@ export function useNumericInputValue(
     (newValue: string) => {
       setValue(validateNumericInput(value, newValue, options));
     },
-    [options, value]
+    [options, value],
   );
 
   return { value, setNumericValue };

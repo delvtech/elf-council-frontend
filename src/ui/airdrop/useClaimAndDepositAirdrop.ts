@@ -6,7 +6,7 @@ import { airdropContract } from "src/elf/contracts";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useClaimAndDepositAirdrop(
-  signer: Signer | undefined
+  signer: Signer | undefined,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,
@@ -15,7 +15,7 @@ export function useClaimAndDepositAirdrop(
   const claimAndDeposit = useSmartContractTransaction(
     airdropContract,
     "claimAndDelegate",
-    signer
+    signer,
   );
   return claimAndDeposit;
 }

@@ -38,13 +38,17 @@ export default function useFile(options?: UseUploaderOptions): {
     if (input.files && input.files.length) {
       fileReader.readAsText(input.files[0], "UTF-8");
       fileReader.onload = (e: ProgressEvent<FileReader>) => {
-        if (e.target && e.target.result) setFile(e.target.result);
+        if (e.target && e.target.result) {
+          setFile(e.target.result);
+        }
       };
     }
   };
 
   const openFileBrowser = useCallback(() => {
-    if (!inputRef.current) return;
+    if (!inputRef.current) {
+      return;
+    }
     inputRef.current.value = "";
     inputRef.current = document.body.appendChild(inputRef.current);
     inputRef.current.click();

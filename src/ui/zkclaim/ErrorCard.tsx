@@ -29,6 +29,12 @@ export default function SuccessCard({
             >{t`Try Again`}</Button>
           )}
           <Link href="/zk">
+            {/* There's a big discussion about how awful the Link api is for
+                a11y here:
+                https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402
+                the best thing to do for now is just ignore this rule when an
+                anchor tag is the child of a Link 🙁 */
+            /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a>
               <Button
                 className="min-w-full justify-center"

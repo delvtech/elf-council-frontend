@@ -25,11 +25,15 @@ export default function ClaimCard({
   const { file, openFileBrowser } = useFile({ accept: ".json" });
 
   useEffect(() => {
-    if (key && secret) onComplete?.([key, secret]);
+    if (key && secret) {
+      onComplete?.([key, secret]);
+    }
   }, [key, secret, onComplete]);
 
   useEffect(() => {
-    if (!file) return;
+    if (!file) {
+      return;
+    }
     try {
       const data = JSON.parse(file as string) as ZKData;
       setKey(data.privateKey);
@@ -50,6 +54,12 @@ export default function ClaimCard({
             {jt`To claim the airdrop, enter your Secret and your Key, so we can 
             check against your Public ID. If you don’t have any, ${(
               <Link href="/zk">
+                {/* There's a big discussion about how awful the Link api is for
+                a11y here:
+                https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402
+                the best thing to do for now is just ignore this rule when an
+                anchor tag is the child of a Link 🙁 */
+                /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="text-yieldLightBlue">{t`create a new one`}</a>
               </Link>
             )}.`}

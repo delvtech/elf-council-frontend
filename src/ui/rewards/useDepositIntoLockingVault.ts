@@ -7,7 +7,7 @@ import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useDepositIntoLockingVault(
   signer: Signer | undefined,
-  onSuccess?: () => void
+  onSuccess?: () => void,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,
@@ -17,7 +17,7 @@ export function useDepositIntoLockingVault(
     lockingVaultContract,
     "deposit",
     signer,
-    { onTransactionMined: onSuccess }
+    { onTransactionMined: onSuccess },
   );
   return deposit;
 }

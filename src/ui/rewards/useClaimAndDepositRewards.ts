@@ -6,7 +6,7 @@ import { rewardsContract } from "src/elf/contracts";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useClaimAndDepositRewards(
-  signer: Signer | undefined
+  signer: Signer | undefined,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,
@@ -15,7 +15,7 @@ export function useClaimAndDepositRewards(
   const claimAndDeposit = useSmartContractTransaction(
     rewardsContract,
     "claimAndDelegate",
-    signer
+    signer,
   );
   return claimAndDeposit;
 }

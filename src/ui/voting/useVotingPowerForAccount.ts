@@ -5,7 +5,7 @@ import { useRewardsVaultVotingPower } from "src/ui/voting/useRewardsVaultVotingP
 
 export function useVotingPowerForAccount(
   account: string | undefined | null,
-  atBlockNumber?: number
+  atBlockNumber?: number,
 ): string {
   // The CoreVoting contract passes this parameter to the rewards contract when querying vote power,
   // so we have to pass it as well, though the rewards contract doesn't need this to calculate vote
@@ -13,13 +13,13 @@ export function useVotingPowerForAccount(
   const rewardsVotingPower = useRewardsVaultVotingPower(
     account,
     rewardsContract,
-    atBlockNumber
+    atBlockNumber,
   );
 
   const nonFungibleVotingPower = useRewardsVaultVotingPower(
     account,
     nonFungibleVotingContract,
-    atBlockNumber
+    atBlockNumber,
   );
 
   const lockingVotingPower = useLockingVaultVotingPower(account, atBlockNumber);

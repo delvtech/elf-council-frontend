@@ -4,7 +4,7 @@ import { QueryObserverResult } from "react-query";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 
 export function useElementTokenBalanceOf(
-  account: string | null | undefined
+  account: string | null | undefined,
 ): QueryObserverResult<BigNumber> {
   return useSmartContractReadCall(elementTokenContract, "balanceOf", {
     enabled: !!account,

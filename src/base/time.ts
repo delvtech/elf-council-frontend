@@ -1,3 +1,8 @@
+// This is where we specify our magic numbers to be used throughout the app.
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+
+export const ONE_SECOND_IN_MILLISECONDS = 1000;
+export const TWO_SECONDS_IN_MILLISECONDS = 2 * ONE_SECOND_IN_MILLISECONDS;
 export const ONE_MINUTE_IN_SECONDS = 60;
 export const ONE_HOUR_IN_SECONDS = 60 * ONE_MINUTE_IN_SECONDS;
 export const ONE_DAY_IN_SECONDS = 24 * ONE_HOUR_IN_SECONDS;

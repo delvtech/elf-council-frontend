@@ -20,7 +20,7 @@ import { jt, t } from "ttag";
 const retroactiveRewardsExternalLink = (
   <a
     key="retro-rewards-docs"
-    href=""
+    href="http://TODO"
     className={tw(
       textColor(
         "text-indianYellow",

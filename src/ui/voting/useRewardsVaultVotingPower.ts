@@ -10,7 +10,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 export function useRewardsVaultVotingPower(
   account: string | undefined | null,
   contract: OptimisticRewards,
-  atblockNumber?: number
+  atblockNumber?: number,
 ): string {
   const { data: latestBlockNumber } = useLatestBlockNumber();
   const { data: merkleInfo } = useMerkleInfo(account);
@@ -21,7 +21,7 @@ export function useRewardsVaultVotingPower(
 
   const extraData = ethers.utils.defaultAbiCoder.encode(
     ["uint256", "bytes32[]"],
-    [parseEther(totalGrant || "0"), proof]
+    [parseEther(totalGrant || "0"), proof],
   );
 
   // The CoreVoting contract passes this parameter to the rewards contract when querying vote power,
@@ -34,7 +34,7 @@ export function useRewardsVaultVotingPower(
     {
       callArgs: [account as string, unusedBlockNumber, extraData],
       enabled: !!account && !!blockNumber && !!totalGrant && !!proof,
-    }
+    },
   );
 
   const rewardsVotingPower = formatEther(rewardsVotingPowerBN || 0);

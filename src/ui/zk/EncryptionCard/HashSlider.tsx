@@ -26,12 +26,16 @@ export default function HashSlider({
   const trackerRef = useRef<HTMLDivElement>(null);
 
   const handleStartDrag = () => {
-    if (!slid) setSlid(true);
+    if (!slid) {
+      setSlid(true);
+    }
     startTracking().until("mouseup");
   };
 
   useEffect(() => {
-    if (slid) onChange?.(generateHash(...mousePosition, draggingTime));
+    if (slid) {
+      onChange?.(generateHash(...mousePosition, draggingTime));
+    }
   }, [slid, onChange, mousePosition, draggingTime]);
 
   const {
@@ -111,6 +115,12 @@ export default function HashSlider({
       )}
     >
       <div
+        role="slider"
+        // TODO: getting a11y errors for interactive div w/out a role attribute.
+        // Setting role="slider" requires a aria-valuenow and tabIndex to be
+        // compliant
+        aria-valuenow={0}
+        tabIndex={0}
         ref={trackerRef}
         className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
         style={{

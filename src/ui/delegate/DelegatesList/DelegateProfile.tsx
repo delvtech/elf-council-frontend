@@ -8,6 +8,7 @@ import { copyToClipboard } from "src/base/copyToClipboard";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 import Image from "next/image";
 import classNames from "classnames";
+import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
@@ -26,7 +27,9 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
   const handleCopy = useCallback(
     (type: "twitterHandle" | "address") => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
 
       const nextState = { ...defaultToolTipState };
       nextState[type] = true;
@@ -34,7 +37,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
       timeoutRef.current = setTimeout(() => {
         setshowToolTip(defaultToolTipState);
         timeoutRef.current = null;
-      }, 1000);
+      }, ONE_SECOND_IN_MILLISECONDS);
       copyToClipboard(delegate[type]);
     },
     [delegate],

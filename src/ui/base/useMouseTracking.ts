@@ -36,7 +36,9 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
       ref: MutableRefObject<NodeJS.Timeout | null>,
       onChange: (reducer: (prevState: number) => number) => void,
     ) => {
-      if (ref.current) return;
+      if (ref.current) {
+        return;
+      }
       ref.current = setInterval(() => {
         onChange((time) => time + 10);
       }, 10);
@@ -46,7 +48,9 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
 
   const stopCounter = useCallback(
     (ref: MutableRefObject<NodeJS.Timeout | null>) => {
-      if (!ref.current) return;
+      if (!ref.current) {
+        return;
+      }
       clearInterval(ref.current);
       ref.current = null;
     },

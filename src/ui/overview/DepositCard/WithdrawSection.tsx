@@ -41,9 +41,13 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const description2 = t`This will give your delegate less voting power.`;
   const learnMoreLink = (
     <Link key="learn-more-link" href="/resources">
+      {/* There's a big discussion about how awful the Link api is for a11y
+      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+      best thing to do for now is just ignore this rule when an anchor tag is
+      the child of a Link since all a tags *should* have an href 🙁 */
+      /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a
         className={tw(textColor("text-blue-500"), textDecoration("underline"))}
-        href="/resources"
       >{t`here.`}</a>
     </Link>
   );

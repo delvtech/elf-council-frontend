@@ -15,6 +15,7 @@ interface HashStringProps {
   inputProps?: Omit<InputHTMLAttributes<HTMLInputElement>, "style">;
 }
 
+const COPY_CLICK_TIMEOUT = 1250;
 export default function HashString({
   className,
   label,
@@ -33,7 +34,7 @@ export default function HashString({
     setCopied(true);
     setTimeout(() => {
       setCopied(false);
-    }, 1250);
+    }, COPY_CLICK_TIMEOUT);
     if (value) {
       copyToClipboard(value as string);
     }

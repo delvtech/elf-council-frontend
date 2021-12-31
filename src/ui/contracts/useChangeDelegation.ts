@@ -5,7 +5,7 @@ import { LockingVault } from "elf-council-typechain";
 import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 
 export function useChangeDelegation(
-  signer: Signer | undefined
+  signer: Signer | undefined,
 ): UseMutationResult<
   ContractReceipt | undefined,
   unknown,
@@ -14,6 +14,6 @@ export function useChangeDelegation(
   return useSmartContractTransaction(
     lockingVaultContract,
     "changeDelegation",
-    signer
+    signer,
   );
 }
