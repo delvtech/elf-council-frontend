@@ -146,13 +146,17 @@ export default function HashSlider({
 
   return (
     <div className={classNames("flex flex-col gap-4 relative", className)}>
-      <Tooltip className="inset-0">
+      <Tooltip
+        className="inset-0"
+        style={{
+          // TODO: Replace with !absolute class when available in
+          // eslint-plugin-tailwindcss
+          position: "absolute",
+        }}
+      >
         <Tooltip.Popup
           show={showTooltip}
           style={{
-            // TODO: Replace with !absolute class when available in
-            // eslint-plugin-tailwindcss
-            position: "absolute",
             left: popupCSSLeft,
             transitionProperty: "opacity",
           }}
