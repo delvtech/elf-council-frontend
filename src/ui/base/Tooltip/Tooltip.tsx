@@ -68,26 +68,32 @@ interface TooltipProviderValue {
 }
 
 interface UseTooltipProps {
+  showDelay?: number;
   hideDelay?: number;
 }
 
 export function useTooltip(props?: UseTooltipProps): TooltipProviderValue {
-  const { hideDelay = 700 } = props || {};
+  const { showDelay = 100, hideDelay = 200 } = props || {};
   const [isShowing, setIsShowing] = useState(false);
 
-  const [hide, cancel] = useDebounceFunction(() => {
+  const [show, cancelShow] = useDebounceFunction(() => {
+    setIsShowing(true);
+  }, showDelay);
+
+  const [hide, cancelHide] = useDebounceFunction(() => {
     setIsShowing(false);
   }, hideDelay);
 
-  const show = () => {
-    cancel();
-    setIsShowing(true);
-  };
-
   return {
     isShowing,
-    show,
-    hide,
+    show: () => {
+      cancelHide();
+      show();
+    },
+    hide: () => {
+      cancelShow();
+      hide();
+    },
   };
 }
 
@@ -184,10 +190,10 @@ function Popup({
             "top-full": position === "top",
             "bottom-full rotate-180": position === "bottom",
 
-            "top-1/2 -translate-y-1/2":
+            "top-1/2 translate-y-full":
               position === "right" || position === "left",
-            "right-full mt-2 rotate-90 origin-top-right": position === "right",
-            "left-full mt-2 -rotate-90 origin-top-left": position === "left",
+            "right-full rotate-90 origin-top-right": position === "right",
+            "left-full -rotate-90 origin-top-left": position === "left",
 
             "!opacity-100": isShowing,
             "pointer-events-none": !isShowing,
@@ -215,12 +221,13 @@ export default function Tooltip<T extends ElementType = "span">({
   as,
   children,
   className,
+  showDelay,
   hideDelay,
   ...props
 }: PropsWithChildren<
   TooltipProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TooltipProps<T>>
 >): ReactElement {
-  const tooltip = useTooltip({ hideDelay });
+  const tooltip = useTooltip({ showDelay, hideDelay });
   const Component = as || "span";
   return (
     <TooltipProvider tooltip={tooltip}>
