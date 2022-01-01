@@ -15,15 +15,17 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { formatWalletAddress } from "src/formatWalletAddress";
-import { delegates } from "src/elf-council-delegates/delegates";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import LinkButton from "src/ui/base/Button/LinkButton";
+import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
 
 interface DelegatedCardProps {
   account: string | null | undefined;
 }
 export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
   const delegateAddress = useDelegate(account);
+  const delegateLabel = formatDelegateLabel(delegateAddress);
+
   return (
     <Card
       variant={CardVariant.HACKER_SKY}
@@ -53,7 +55,7 @@ export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
               fontWeight("font-bold"),
             )}
           >
-            {delegates.find(({ address }) => delegateAddress === address)?.name}
+            {delegateLabel}
           </div>
           <div
             className={tw(
@@ -77,4 +79,17 @@ export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
       </div>
     </Card>
   );
+}
+
+function formatDelegateLabel(delegateAddress: string | undefined) {
+  if (!delegateAddress) {
+    return "N/A";
+  }
+
+  const featuredDelegate = getFeaturedDelegate(delegateAddress);
+  if (featuredDelegate) {
+    return featuredDelegate.name;
+  }
+
+  return formatWalletAddress(delegateAddress);
 }
