@@ -24,6 +24,7 @@ export function ReviewClaim({
   delegateAddress,
   signer,
   onPrevStep,
+  onNextStep,
 }: ReviewClaimProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
 
@@ -40,7 +41,11 @@ export function ReviewClaim({
   }, [delegateAddress, selectedDelegateIndex]);
 
   // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
-  const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
+  const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
+    onTransactionMined: () => {
+      onNextStep();
+    },
+  });
   const handleClaimClick = useCallback(() => {
     if (account && merkleInfo) {
       claimAndDeposit([
