@@ -15,7 +15,7 @@ import tw, {
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCard";
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
-import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
+import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { RewardsInfoCard } from "src/ui/airdrop/AirdropPreview/RewardsInfoCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
