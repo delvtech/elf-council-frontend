@@ -9,14 +9,14 @@ interface ProposalListProps {
   signer: Signer | undefined;
   proposals: Proposal[];
   activeProposalId: string | undefined;
-  setActiveProposal: (proposalId: string | undefined) => void;
+  onClickItem: (proposalId: string | undefined) => void;
 }
 export function ProposalList({
   account,
   proposals,
   signer,
   activeProposalId,
-  setActiveProposal,
+  onClickItem,
 }: ProposalListProps): ReactElement {
   return (
     <div className="flex flex-col w-full pb-8 space-y-4">
@@ -25,7 +25,7 @@ export function ProposalList({
           key={proposal.proposalId}
           active={proposal.proposalId === activeProposalId}
           proposal={proposal}
-          setActiveProposal={setActiveProposal}
+          onClick={onClickItem}
           account={account}
           signer={signer}
         />

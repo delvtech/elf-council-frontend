@@ -94,7 +94,7 @@ export default function ProposalsPage(): ReactElement {
             signer={signer}
             proposals={filteredProposals || []}
             activeProposalId={activeProposalId}
-            setActiveProposal={onSetActiveProposalId}
+            onClickItem={onSetActiveProposalId}
           />
         </div>
       </div>
