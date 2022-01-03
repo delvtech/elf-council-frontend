@@ -9,12 +9,13 @@ import React, {
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import { Proposal } from "elf-council-proposals";
-import Link from "next/link";
 import { t } from "ttag";
 
 import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1";
 import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
@@ -22,8 +23,6 @@ import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import AnchorButton from "src/ui/base/Button/AnchorButton";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
@@ -66,12 +65,6 @@ export default function ProposalsPage(): ReactElement {
 
   const proposalTabs: TabInfo[] = useMemo(() => {
     return [
-      // {
-      //   id: "off-chain-proposals",
-      //   current: false,
-      //   href: ELEMENT_FINANCE_SNAPSHOT_URL,
-      //   name: t`Off-chain`,
-      // },
       {
         id: "active-proposals-tab",
         current: activeTabId === "active-proposals-tab",
@@ -118,14 +111,15 @@ export default function ProposalsPage(): ReactElement {
 
 function OffChainProposalsLink() {
   return (
-    <Link href={ELEMENT_FINANCE_SNAPSHOT_URL} passHref>
-      <AnchorButton variant={ButtonVariant.SECONDARY}>
-        <div className="flex items-center h-full">
-          {t`Off-chain`}
-          <ExternalLinkIcon height={24} />
-        </div>
-      </AnchorButton>
-    </Link>
+    <AnchorButton
+      href={ELEMENT_FINANCE_SNAPSHOT_URL}
+      variant={ButtonVariant.SECONDARY}
+    >
+      <div className="flex items-center h-full">
+        {t`Off-chain`}
+        <ExternalLinkIcon height={24} />
+      </div>
+    </AnchorButton>
   );
 }
 

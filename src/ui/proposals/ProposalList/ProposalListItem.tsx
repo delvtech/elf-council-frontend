@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useCallback } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
 import classNames from "classnames";
@@ -19,14 +19,14 @@ interface ProposalListItemProps {
   signer: Signer | undefined;
   proposal: Proposal;
   active: boolean;
-  setActiveProposal: (proposalId: string | undefined) => void;
+  onClick: (proposalId: string | undefined) => void;
 }
 export function ProposalListItem({
   account,
   signer,
   proposal,
   active,
-  setActiveProposal,
+  onClick,
 }: ProposalListItemProps): ReactElement {
   const {
     proposalId,
@@ -43,13 +43,16 @@ export function ProposalListItem({
 
   const votedLabel = useVotedLabel(account, proposalId);
 
+  const handleClick = useCallback(
+    () => onClick(proposalId),
+    [onClick, proposalId],
+  );
+
   return (
     <Card
       interactive
       active={active}
-      onClick={() => {
-        return setActiveProposal(proposalId);
-      }}
+      onClick={handleClick}
       key={proposal.proposalId}
       className="flex items-center justify-between"
     >

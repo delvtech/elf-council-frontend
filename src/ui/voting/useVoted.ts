@@ -15,7 +15,7 @@ export enum Ballot {
 // TODO: get from typechain
 export interface Vote {
   votingPower: BigNumber;
-  caseBallot: Ballot;
+  castBallot: Ballot;
 }
 
 /**
