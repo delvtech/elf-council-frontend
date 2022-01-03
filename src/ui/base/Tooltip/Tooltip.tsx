@@ -4,11 +4,11 @@ import React, {
   PropsWithChildren,
   ReactElement,
   useContext,
-  useRef,
   useState,
 } from "react";
 import classNames from "classnames";
 import { useDebounceFunction } from "src/ui/base/useDebounceFunction";
+import { CSSProperties } from "react";
 
 /*
 Basic Usage Example:
@@ -146,6 +146,7 @@ interface PopupProps {
   show?: boolean;
   position?: "top" | "right" | "bottom" | "left";
   className?: string;
+  style?: CSSProperties;
   arrowClassName?: string;
 }
 
@@ -153,12 +154,12 @@ function Popup({
   show,
   position = "top",
   className,
+  style,
   arrowClassName,
   children,
 }: PropsWithChildren<PopupProps>): ReactElement {
-  const { current: controlled } = useRef({ isShowing: show });
   const context = useContext(TooltipContext);
-  const isShowing = controlled.isShowing || context.isShowing;
+  const isShowing = show ?? context.isShowing;
   return (
     <span
       className={classNames(
@@ -177,6 +178,7 @@ function Popup({
         },
         className,
       )}
+      style={style}
     >
       <span className="block max-w-sm px-3 py-2 overflow-y-auto w-max max-h-96">
         {children}
