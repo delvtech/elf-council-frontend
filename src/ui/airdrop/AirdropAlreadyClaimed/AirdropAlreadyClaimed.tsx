@@ -17,16 +17,16 @@ import tw, {
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
-import { ClaimedAmountCard } from "src/ui/airdrop/AirdropFullyClaimed/ClaimedAmountCard";
-import { DelegatedCard } from "src/ui/airdrop/AirdropFullyClaimed/DelegatedCard";
+import { ClaimedAmountCard } from "src/ui/airdrop/AirdropAlreadyClaimed/ClaimedAmountCard";
+import { DelegatedCard } from "src/ui/airdrop/AirdropAlreadyClaimed/DelegatedCard";
 
-interface AirdropFullyClaimedProps {
+interface AirdropAlreadyClaimedProps {
   account: string | null | undefined;
 }
 
-export function AirdropFullyClaimed({
+export function AirdropAlreadyClaimed({
   account,
-}: AirdropFullyClaimedProps): ReactElement {
+}: AirdropAlreadyClaimedProps): ReactElement {
   return (
     <Card
       variant={CardVariant.BLUE}
