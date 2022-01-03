@@ -1,16 +1,4 @@
 import React, { ReactElement } from "react";
-import tw, {
-  display,
-  flexDirection,
-  textColor,
-  height,
-  alignItems,
-  fontSize,
-  margin,
-  fontWeight,
-  width,
-  flex,
-} from "src/elf-tailwindcss-classnames";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { useDelegate } from "src/ui/delegate/useDelegate";
@@ -27,45 +15,15 @@ export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
   const delegateLabel = formatDelegateLabel(delegateAddress);
 
   return (
-    <Card
-      variant={CardVariant.HACKER_SKY}
-      className={tw(flex("flex-1"), height("h-64"))}
-    >
-      <div
-        className={tw(
-          height("h-full"),
-          width("w-full"),
-          display("flex"),
-          flexDirection("flex-col"),
-        )}
-      >
-        <div
-          className={tw(
-            fontSize("text-lg"),
-            fontWeight("font-bold"),
-            textColor("text-gray-500"),
-            margin("mb-2"),
-          )}
-        >{t`You've delegated to`}</div>
-        <div className={tw(flex("flex-1"))}>
-          <div
-            className={tw(
-              textColor("text-principalRoyalBlue"),
-              fontSize("text-lg"),
-              fontWeight("font-bold"),
-            )}
-          >
+    <Card variant={CardVariant.HACKER_SKY} className="flex-1 h-64">
+      <div className="h-full w-full flex flex-col">
+        <div className="text-lg font-bold text-gray-500 mb-2">{t`You delegated to`}</div>
+        <div className="flex-1">
+          <div className="text-principalRoyalBlue text-lg font-bold">
             {delegateLabel}
           </div>
-          <div
-            className={tw(
-              textColor("text-gray-500"),
-              display("flex"),
-              flexDirection("flex-col"),
-              alignItems("items-center"),
-            )}
-          >
-            <span className={tw(margin("mb-4"))}>
+          <div className="text-gray-500 flex flex-col items-center">
+            <span className="mb-4">
               {delegateAddress
                 ? formatWalletAddress(delegateAddress as string)
                 : null}
