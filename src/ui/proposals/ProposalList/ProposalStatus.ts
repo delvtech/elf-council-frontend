@@ -1,4 +1,4 @@
-import { VotingPower } from "src/ui/proposals/useVotingPowerForProposal";
+import { VotingPower } from "src/elf/proposals/VotingPower";
 
 export enum ProposalStatus {
   IN_PROGRESS = "IN_PROGRESS",

@@ -1,8 +1,7 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { BigNumber } from "ethers";
-import { coreVotingContract } from "src/elf/contracts";
 
-export type VotingPower = [YES: BigNumber, NO: BigNumber, MAYBE: BigNumber];
+import { coreVotingContract } from "src/elf/contracts";
+import { VotingPower } from "src/elf/proposals/VotingPower";
 
 /**
  * Returns the voting power for a given proposal.

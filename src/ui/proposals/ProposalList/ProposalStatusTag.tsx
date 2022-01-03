@@ -19,7 +19,7 @@ const StatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.FAILED]: t`Failed`,
 };
 
-const StatusTagColors: Record<ProposalStatus, Intent> = {
+const StatusTagIntents: Record<ProposalStatus, Intent> = {
   [ProposalStatus.IN_PROGRESS]: Intent.WARNING,
   [ProposalStatus.PASSING]: Intent.SUCCESS,
   [ProposalStatus.FAILING]: Intent.ERROR,
@@ -47,7 +47,7 @@ export function ProposalStatusTag({
   }
 
   return (
-    <Tag intent={StatusTagColors[status]}>
+    <Tag intent={StatusTagIntents[status]}>
       <div className="flex items-center space-x-8">
         <svg
           className="-ml-0.5 mr-1.5 h-3 w-3"

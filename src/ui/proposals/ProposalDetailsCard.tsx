@@ -28,10 +28,8 @@ import {
   ProposalStatus,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import {
-  useVotingPowerForProposal,
-  VotingPower,
-} from "src/ui/proposals/useVotingPowerForProposal";
+import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
+import { VotingPower } from "src/elf/proposals/VotingPower";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
