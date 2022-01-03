@@ -1,4 +1,5 @@
 import React, {
+  CSSProperties,
   ComponentPropsWithoutRef,
   ElementType,
   PropsWithChildren,
@@ -8,7 +9,6 @@ import React, {
 } from "react";
 import classNames from "classnames";
 import { useDebounceFunction } from "src/ui/base/useDebounceFunction";
-import { CSSProperties } from "react";
 
 /*
 Basic Usage Example:
