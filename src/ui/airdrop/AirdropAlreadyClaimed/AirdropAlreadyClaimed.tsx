@@ -46,7 +46,7 @@ export function AirdropAlreadyClaimed({
         )}
       >
         <div className={textAlign("text-right")}>
-          <Tag intent={Intent.ERROR}>
+          <Tag intent={Intent.WARNING}>
             <span
               className={fontWeight("font-bold")}
             >{t`Already claimed tokens`}</span>
@@ -94,7 +94,6 @@ export function AirdropAlreadyClaimed({
             width("w-full"),
             justifyContent("justify-center"),
             fontSize("text-base"),
-            fontWeight("font-bold"),
           )}
         >
           <span
