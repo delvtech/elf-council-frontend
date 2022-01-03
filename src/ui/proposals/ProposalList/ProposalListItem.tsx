@@ -85,11 +85,11 @@ function useVotedLabel(
 ): string | undefined {
   const { data: voted } = useVoted(account, proposalId);
 
-  if (voted?.caseBallot === Ballot.YES) {
+  if (voted?.castBallot === Ballot.YES) {
     return t`Voted YES`;
   }
 
-  if (voted?.caseBallot === Ballot.NO) {
+  if (voted?.castBallot === Ballot.NO) {
     return t`Voted NO`;
   }
 }
