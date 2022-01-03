@@ -24,6 +24,7 @@ import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
 import { ReviewClaim } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
+import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
 
 enum AirdropSteps {
   /**
@@ -124,6 +125,9 @@ export default function AirdropPage(): ReactElement {
                   }}
                 />
               );
+
+            case AirdropSteps.ALREADY_CLAIMED:
+              return <AirdropAlreadyClaimed account={account} />;
 
             case AirdropSteps.AIRDROP_PREVIEW:
               return (
