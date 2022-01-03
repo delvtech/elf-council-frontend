@@ -25,6 +25,7 @@ import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
 import { ReviewClaim } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
 import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
+import { ClaimSuccessful } from "src/ui/airdrop/ClaimSuccessful/ClaimSuccessful";
 
 enum AirdropSteps {
   /**
@@ -166,10 +167,12 @@ export default function AirdropPage(): ReactElement {
                   }
                   onPrevStep={() => setActiveStep(AirdropSteps.CHOOSE_DELEGATE)}
                   onNextStep={() => {
-                    setActiveStep(AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW);
+                    setActiveStep(AirdropSteps.CLAIM_COMPLETE);
                   }}
                 />
               );
+            case AirdropSteps.CLAIM_COMPLETE:
+              return <ClaimSuccessful account={account} />;
           }
         })()}
       </div>
