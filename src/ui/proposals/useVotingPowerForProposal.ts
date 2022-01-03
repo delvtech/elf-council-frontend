@@ -10,13 +10,14 @@ export type VotingPower = [YES: BigNumber, NO: BigNumber, MAYBE: BigNumber];
  * @returns {VotingPower} an array of BigNumbers tallying results in the format [YES, NO, MAYBE]
  */
 export function useVotingPowerForProposal(
-  proposalId: string,
+  proposalId: string | undefined,
 ): VotingPower | undefined {
   const { data: votingPower } = useSmartContractReadCall(
     coreVotingContract,
     "getProposalVotingPower",
     {
-      callArgs: [proposalId],
+      callArgs: [proposalId as string],
+      enabled: !!proposalId,
     },
   );
 
