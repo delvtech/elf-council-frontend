@@ -83,7 +83,7 @@ export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
 
 function formatDelegateLabel(delegateAddress: string | undefined) {
   if (!delegateAddress) {
-    return "N/A";
+    return t`N/A`;
   }
 
   const featuredDelegate = getFeaturedDelegate(delegateAddress);
