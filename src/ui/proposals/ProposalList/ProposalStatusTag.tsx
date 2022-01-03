@@ -12,7 +12,7 @@ import {
   VotingPower,
 } from "src/ui/proposals/useVotingPowerForProposal";
 
-enum Status {
+enum ProposalStatus {
   IN_PROGRESS = "IN_PROGRESS",
   PASSING = "PASSING",
   FAILING = "FAILING",
@@ -21,29 +21,30 @@ enum Status {
   FAILED = "FAILIED",
 }
 
-const StatusLabels: Record<Status, string> = {
-  [Status.IN_PROGRESS]: t`In progress`,
-  [Status.PASSING]: t`Passing`,
-  [Status.FAILING]: t`Failing`,
-  [Status.PASSED]: t`Passed`,
-  [Status.FAILED]: t`Failed`,
+const StatusLabels: Record<ProposalStatus, string> = {
+  [ProposalStatus.IN_PROGRESS]: t`In progress`,
+  [ProposalStatus.PASSING]: t`Passing`,
+  [ProposalStatus.FAILING]: t`Failing`,
+  [ProposalStatus.PASSED]: t`Passed`,
+  [ProposalStatus.FAILED]: t`Failed`,
 };
 
-const StatusTagColors: Record<Status, Intent> = {
-  [Status.IN_PROGRESS]: Intent.WARNING,
-  [Status.PASSING]: Intent.SUCCESS,
-  [Status.FAILING]: Intent.ERROR,
-  [Status.PASSED]: Intent.SUCCESS,
-  [Status.FAILED]: Intent.ERROR,
+const StatusTagColors: Record<ProposalStatus, Intent> = {
+  [ProposalStatus.IN_PROGRESS]: Intent.WARNING,
+  [ProposalStatus.PASSING]: Intent.SUCCESS,
+  [ProposalStatus.FAILING]: Intent.ERROR,
+  [ProposalStatus.PASSED]: Intent.SUCCESS,
+  [ProposalStatus.FAILED]: Intent.ERROR,
 };
 
-interface StatusButtonProps {
+interface ProposalStatusTagProps {
   signer: Signer | undefined;
   proposal: Proposal;
 }
-export function StatusButton({
+
+export function ProposalStatusTag({
   proposal,
-}: StatusButtonProps): ReactElement | null {
+}: ProposalStatusTagProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const { proposalId, quorum } = proposal;
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
@@ -75,7 +76,7 @@ function getStatus(
   isVotingOpen: boolean,
   quourum: number,
   votingPower: VotingPower | undefined,
-): Status | undefined {
+): ProposalStatus | undefined {
   if (!votingPower) {
     return undefined;
   }
@@ -87,21 +88,21 @@ function getStatus(
 
   if (isVotingOpen) {
     if (hasEnoughYes) {
-      return Status.PASSING;
+      return ProposalStatus.PASSING;
     }
 
     if (hasEnoughNo) {
-      return Status.FAILING;
+      return ProposalStatus.FAILING;
     }
 
-    return Status.IN_PROGRESS;
+    return ProposalStatus.IN_PROGRESS;
   }
 
   if (hasEnoughYes) {
-    return Status.PASSED;
+    return ProposalStatus.PASSED;
   }
 
   if (hasEnoughNo) {
-    return Status.FAILED;
+    return ProposalStatus.FAILED;
   }
 }
