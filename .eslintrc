@@ -1,4 +1,7 @@
 {
+  "ignorePatterns": [
+    "*.json"
+  ],
   "extends": [
     "next",
     "react-app",
