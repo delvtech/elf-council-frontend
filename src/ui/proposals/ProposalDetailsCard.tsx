@@ -6,7 +6,10 @@ import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
 import Link from "next/link";
-import { proposalsBySnapShotId } from "src/elf-council-proposals";
+import {
+  getIsVotingOpen,
+  proposalsBySnapShotId,
+} from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -20,6 +23,11 @@ import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount
 import { t } from "ttag";
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
+import {
+  useVotingPowerForProposal,
+  VotingPower,
+} from "src/ui/proposals/useVotingPowerForProposal";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -39,9 +47,12 @@ export function ProposalDetailsCard(
 
   const amountDeposited = useDeposited(account) || "0";
 
-  const votingPower = useVotingPowerForAccount(account);
+  const accountVotingPower = useVotingPowerForAccount(account);
 
-  const formattedVotingPower = commify((+votingPower).toFixed(4));
+  const proposalVotingPower = useVotingPowerForProposal(proposal?.proposalId);
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
+
+  const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
 
   if (!proposal) {
     return (
@@ -61,6 +72,15 @@ export function ProposalDetailsCard(
       </GradientCard>
     );
   }
+
+  const { quorum } = proposal;
+  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const votes = getVoteCount(proposalVotingPower);
+  const proposalStatus = getProposalStatus(
+    isVotingOpen,
+    quorum,
+    proposalVotingPower,
+  );
 
   return (
     <GradientCard
@@ -105,15 +125,10 @@ export function ProposalDetailsCard(
         </Link>
       </p>
 
-      <div className="w-full space-y-1 text-sm text-white">
-        <div>{t`1,434,234 Total votes`}</div>
-        <ProgressBar progress={0.5} />
-        <div>{t`7% quorum reached`}</div>
-        <div className="text-xs">{t`(20,000,000 vote quorum)`}</div>
-      </div>
+      <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
       <BalanceWithLabel
         className="w-full mt-4"
-        balance={formattedVotingPower}
+        balance={formattedAccountVotingPower}
         tooltipText={votingPowerTooltipText}
         tooltipHref={"/resources"}
         label={t`Voting Power`}
@@ -149,6 +164,30 @@ export function ProposalDetailsCard(
         <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
       </div>
     </GradientCard>
+  );
+}
+
+interface QuorumBarProps {
+  votes: number;
+  quorum: number;
+  status: ProposalStatus | undefined;
+}
+function QuorumBar(props: QuorumBarProps) {
+  const { votes, quorum } = props;
+  const quorumPercent = Math.round((votes / quorum) * 100);
+  return (
+    <div className="w-full space-y-1 text-sm text-white">
+      <div>
+        {votes} {t`total votes`}
+      </div>
+      <ProgressBar progress={Math.max(votes / quorum, 1)} />
+      <div>
+        {`${quorumPercent}%`} {t`quorum reached`}
+      </div>
+      <div className="text-xs">
+        {commify(quorum)} {t`(vote quorum)`}
+      </div>
+    </div>
   );
 }
 
@@ -199,4 +238,58 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
       </div>
     </div>
   );
+}
+
+function getVoteCount(votingPower: VotingPower | undefined): number {
+  if (!votingPower) {
+    return 0;
+  }
+
+  return votingPower[0].gt(votingPower[1])
+    ? votingPower[0].toNumber()
+    : votingPower[0].toNumber();
+}
+
+enum ProposalStatus {
+  IN_PROGRESS = "IN_PROGRESS",
+  PASSING = "PASSING",
+  FAILING = "FAILING",
+
+  PASSED = "PASSED",
+  FAILED = "FAILIED",
+}
+
+function getProposalStatus(
+  isVotingOpen: boolean,
+  quourum: number,
+  votingPower: VotingPower | undefined,
+): ProposalStatus | undefined {
+  if (!votingPower) {
+    return undefined;
+  }
+
+  // if there are enough yes votes to pass quorum
+  const hasEnoughYes = votingPower[0].toNumber() >= quourum;
+  // if there are enough no votes to pass quorum
+  const hasEnoughNo = votingPower[1].toNumber() >= quourum;
+
+  if (isVotingOpen) {
+    if (hasEnoughYes) {
+      return ProposalStatus.PASSING;
+    }
+
+    if (hasEnoughNo) {
+      return ProposalStatus.FAILING;
+    }
+
+    return ProposalStatus.IN_PROGRESS;
+  }
+
+  if (hasEnoughYes) {
+    return ProposalStatus.PASSED;
+  }
+
+  if (hasEnoughNo) {
+    return ProposalStatus.FAILED;
+  }
 }
