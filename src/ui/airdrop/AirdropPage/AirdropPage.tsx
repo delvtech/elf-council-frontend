@@ -80,11 +80,7 @@ export default function AirdropPage(): ReactElement {
   const [activeStep, setActiveStep] = useState<AirdropSteps | undefined>();
   const connectWalletStatus = getConnectWalletStatus(account, activeStep);
   const delegateStatus = getDelegateStatus(activeStep);
-  const claimAndDelegateStatus = getClaimAndDelegateStatus(
-    activeStep,
-    merkleInfo,
-    claimableBalance,
-  );
+  const claimAndDelegateStatus = getClaimAndDelegateStatus(activeStep);
 
   return (
     <div className="flex flex-col space-y-8 w-full justify-center items-center">
@@ -229,18 +225,24 @@ function getDelegateStatus(activeStep: AirdropSteps | undefined): StepStatus {
 
 function getClaimAndDelegateStatus(
   activeStep: AirdropSteps | undefined,
-  merkleInfo: MerkleProof | undefined,
-  claimableBalance: string,
 ): StepStatus {
+  if (!activeStep) {
+    return StepStatus.UPCOMING;
+  }
+
   if (
-    activeStep === AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW &&
-    hasClaimedAirdrop(merkleInfo, claimableBalance)
+    [
+      AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW,
+      AirdropSteps.ALREADY_CLAIMED,
+    ].includes(activeStep)
   ) {
     return StepStatus.COMPLETE;
   }
+
   if (activeStep === AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW) {
     return StepStatus.CURRENT;
   }
+
   return StepStatus.UPCOMING;
 }
 
