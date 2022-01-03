@@ -1,31 +1,5 @@
+import classNames from "classnames";
 import { assertNever } from "src/base/assertNever";
-import tw, {
-  alignItems,
-  backgroundColor,
-  backgroundImage,
-  backgroundOpacity,
-  borderColor,
-  borderRadius,
-  borderWidth,
-  boxShadow,
-  display,
-  flex,
-  fontWeight,
-  gradientColorStops,
-  height,
-  lineHeight,
-  opacity,
-  outlineStyle,
-  padding,
-  pointerEvents,
-  ringColor,
-  ringOffsetWidth,
-  ringWidth,
-  TArg,
-  textColor,
-  THeight,
-  TTailwindString,
-} from "src/elf-tailwindcss-classnames";
 
 export enum ButtonSize {
   SMALL = "SMALL",
@@ -35,11 +9,11 @@ export enum ButtonSize {
 }
 
 // TODO: include padding?
-const buttonSizes: Record<ButtonSize, THeight> = {
-  [ButtonSize.SMALL]: "h-8",
-  [ButtonSize.MEDIUM]: "h-12",
-  [ButtonSize.LARGE]: "h-16",
-  [ButtonSize.AUTO]: "h-auto",
+const buttonSizes: Record<ButtonSize, string> = {
+  [ButtonSize.SMALL]: classNames("h-8"),
+  [ButtonSize.MEDIUM]: classNames("h-12"),
+  [ButtonSize.LARGE]: classNames("h-16"),
+  [ButtonSize.AUTO]: classNames("h-auto"),
 };
 
 export interface ButtonStyles {
@@ -68,85 +42,77 @@ export function getButtonClass({
   round = false,
   disabled = false,
   error = false,
-}: ButtonStyles): TTailwindString {
-  const buttonStyle = tw(
+}: ButtonStyles): string {
+  const buttonStyle = classNames(
     getHeight(size),
     getTextColor(variant),
     getShadow(variant),
     getBackground(variant, error),
     getBorder(variant),
-    round ? borderRadius("rounded-full") : borderRadius("rounded-xl"),
-    display("inline-flex"),
-    alignItems("items-center"),
-    padding("px-4", "py-3"),
-    lineHeight("leading-4"),
-    fontWeight("font-bold"),
-    outlineStyle("focus:outline-none"),
-    ringWidth("focus:ring-2"),
-    ringOffsetWidth("focus:ring-offset-2"),
-    ringColor("focus:ring-brandDarkBlue"),
-    flex({ "flex-1": fill }),
-    pointerEvents({ "pointer-events-none": disabled }),
-    opacity({ "opacity-50": disabled }),
+    getBorderRadius(round),
+    "inline-flex",
+    "items-center",
+    "px-4",
+    "py-3",
+    "leading-4",
+    "font-bold",
+    "focus:outline-none",
+    "focus:ring-2",
+    "focus:ring-offset-2",
+    "focus:ring-brandDarkBlue",
+    { "flex-1": fill, "pointer-events-none": disabled, "opacity-50": disabled },
   );
 
   return buttonStyle;
 }
 
-function getHeight(size: ButtonSize): TArg {
-  return height(buttonSizes[size]);
+function getHeight(size: ButtonSize): string {
+  return buttonSizes[size];
 }
 
-function getShadow(variant: ButtonVariant): TArg {
+function getShadow(variant: ButtonVariant): string | undefined {
   return variant === ButtonVariant.GRADIENT
-    ? boxShadow("shadow-md", "hover:shadow-none")
-    : boxShadow("shadow", "hover:shadow-none");
+    ? classNames("shadow-md", "hover:shadow-none")
+    : classNames("shadow", "hover:shadow-none");
 }
 
-function getBackground(variant: ButtonVariant, error: boolean): TArg {
+function getBackground(
+  variant: ButtonVariant,
+  error: boolean,
+): string | undefined {
   switch (variant) {
     case ButtonVariant.PRIMARY:
       return !error
-        ? backgroundColor("bg-brandDarkBlue", "hover:bg-brandDarkBlue-dark")
-        : backgroundColor("bg-red-500", "hover:bg-red-700");
+        ? classNames("bg-brandDarkBlue", "hover:bg-brandDarkBlue-dark")
+        : classNames("bg-red-500", "hover:bg-red-700");
 
     case ButtonVariant.SECONDARY:
-      return backgroundColor(
-        "bg-brandLightBlue",
-        "hover:bg-brandLightBlue-dark",
-      );
+      return classNames("bg-hackerSky", "hover:bg-hackerSky-dark");
 
     case ButtonVariant.GRADIENT:
-      return tw(
-        backgroundImage("bg-gradient-to-br"),
-        gradientColorStops(
-          "from-principalBlue",
-          "to-yieldBlue",
-          "hover:from-principalBlue",
-          "hover:to-principalBlue",
-        ),
+      return classNames(
+        "bg-gradient-to-br",
+        "from-principalBlue",
+        "to-yieldBlue",
+        "hover:from-principalBlue",
+        "hover:to-principalBlue",
       );
 
     case ButtonVariant.MINIMAL:
-      return tw(
-        backgroundColor("hover:bg-brandLightBlue"),
-        backgroundOpacity("hover:bg-opacity-20"),
-      );
+      return classNames("hover:bg-brandLightBlue hover:bg-opacity-20");
 
     case ButtonVariant.OUTLINE_WHITE:
-      return tw(
-        backgroundColor("bg-transparent", "hover:bg-white"),
-        backgroundOpacity("hover:bg-opacity-20"),
+      return classNames(
+        "bg-transparent",
+        "hover:bg-white",
+        "hover:bg-opacity-20",
       );
 
     case ButtonVariant.OUTLINE_BLUE:
-      return backgroundColor("bg-transparent", "hover:bg-blue-100");
+      return classNames("bg-transparent", "hover:bg-blue-100");
 
     case ButtonVariant.WHITE:
-      return tw(
-        backgroundColor("bg-white"),
-        backgroundOpacity("hover:bg-opacity-80"),
-      );
+      return classNames("bg-white", "h:bg-opacity-80");
 
     default: {
       assertNever(variant);
@@ -154,36 +120,43 @@ function getBackground(variant: ButtonVariant, error: boolean): TArg {
   }
 }
 
-function getTextColor(variant: ButtonVariant): TArg {
+function getTextColor(variant: ButtonVariant): string {
   switch (variant) {
     case ButtonVariant.PRIMARY:
     case ButtonVariant.OUTLINE_WHITE:
     case ButtonVariant.GRADIENT:
-      return textColor("text-white");
+      return classNames("text-white");
 
     case ButtonVariant.SECONDARY:
     case ButtonVariant.MINIMAL:
     case ButtonVariant.OUTLINE_BLUE:
-      return textColor("text-brandDarkBlue-dark");
+      return classNames("text-brandDarkBlue-dark");
 
     case ButtonVariant.WHITE:
-      return textColor("text-principalRoyalBlue");
+      return classNames("text-principalRoyalBlue");
 
     default: {
       assertNever(variant);
-      return textColor("text-white");
+      return classNames("text-white");
     }
   }
 }
 
-function getBorder(variant: ButtonVariant): TArg {
+function getBorder(variant: ButtonVariant) {
   if (variant === ButtonVariant.OUTLINE_WHITE) {
-    tw(borderWidth("border"), borderColor("border-white"));
+    classNames("border border-white");
   }
 
   if (variant === ButtonVariant.OUTLINE_BLUE) {
-    tw(borderWidth("border"), borderColor("border-brandDarkBlue-dark"));
+    classNames("border border-brandDarkBlue-dark");
   }
 
   return null;
+}
+
+function getBorderRadius(round: boolean) {
+  if (round) {
+    return classNames("rounded-full");
+  }
+  return classNames("rounded-xl");
 }

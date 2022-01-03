@@ -1,5 +1,3 @@
-import { useWeb3React } from "@web3-react/core";
-import { Proposal } from "elf-council-proposals";
 import React, {
   ReactElement,
   useCallback,
@@ -7,16 +5,24 @@ import React, {
   useMemo,
   useState,
 } from "react";
+
+import { ExternalLinkIcon } from "@heroicons/react/solid";
+import { useWeb3React } from "@web3-react/core";
+import { Proposal } from "elf-council-proposals";
+import { t } from "ttag";
+
 import { proposalsBySnapShotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1";
 import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
-import { t } from "ttag";
-import { ProposalList } from "./ProposalList";
+
+import { ProposalList } from "./ProposalList/ProposalList";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
@@ -60,12 +66,6 @@ export default function ProposalsPage(): ReactElement {
   const proposalTabs: TabInfo[] = useMemo(() => {
     return [
       {
-        id: "off-chain-proposals",
-        current: false,
-        href: ELEMENT_FINANCE_SNAPSHOT_URL,
-        name: t`Off-chain`,
-      },
-      {
         id: "active-proposals-tab",
         current: activeTabId === "active-proposals-tab",
         onTabClick: () => setActiveTab("active-proposals-tab"),
@@ -84,14 +84,17 @@ export default function ProposalsPage(): ReactElement {
     <div className="flex h-full">
       <div className="flex-1 h-full px-8 pt-8 space-y-8">
         <H1 className="flex-1 text-center">{t`Proposals`}</H1>
-        <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
+        <div className="flex justify-between">
+          <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
+          <OffChainProposalsLink />
+        </div>
         <div className="flex space-x-12">
           <ProposalList
             account={account}
             signer={signer}
             proposals={filteredProposals || []}
             activeProposalId={activeProposalId}
-            setActiveProposal={onSetActiveProposalId}
+            onClickItem={onSetActiveProposalId}
           />
         </div>
       </div>
@@ -103,6 +106,20 @@ export default function ProposalsPage(): ReactElement {
         />
       </div>
     </div>
+  );
+}
+
+function OffChainProposalsLink() {
+  return (
+    <AnchorButton
+      href={ELEMENT_FINANCE_SNAPSHOT_URL}
+      variant={ButtonVariant.SECONDARY}
+    >
+      <div className="flex items-center h-full">
+        {t`Off-chain`}
+        <ExternalLinkIcon height={24} />
+      </div>
+    </AnchorButton>
   );
 }
 

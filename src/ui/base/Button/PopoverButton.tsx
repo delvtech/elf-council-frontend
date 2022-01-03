@@ -3,7 +3,8 @@ import React, { LegacyRef, ReactElement, ReactNode, useState } from "react";
 import { usePopper } from "react-popper";
 
 import { Popover } from "@headlessui/react";
-import tw, { position, zIndex } from "src/elf-tailwindcss-classnames";
+import classNames from "classnames";
+
 import { ButtonProps } from "src/ui/base/Button/Button";
 import { getButtonClass } from "src/ui/base/Button/styles";
 
@@ -43,7 +44,7 @@ export default function PopoverButton({
         // https://headlessui.dev/react/popover#positioning-the-panel
         ref={setReferenceElement as LegacyRef<HTMLButtonElement>}
         disabled={disabled}
-        className={tw(buttonClass, position("relative"))}
+        className={classNames(buttonClass, "relative")}
       >
         {children}
       </Popover.Button>
@@ -55,7 +56,7 @@ export default function PopoverButton({
         // do this by headless-ui.  See documentation here:
         // https://headlessui.dev/react/popover#positioning-the-panel
         ref={setPopperElement as LegacyRef<HTMLDivElement>}
-        className={tw(position("absolute"), zIndex("z-10"))}
+        className={classNames("absolute z-10")}
       >
         {popover}
       </Popover.Panel>
