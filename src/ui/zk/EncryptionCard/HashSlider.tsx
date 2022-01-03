@@ -9,7 +9,7 @@ import useMouseTracking from "src/ui/base/useMouseTracking";
 import generateHash from "src/base/generateHash";
 import classNames from "classnames";
 import { useDebounce } from "react-use";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import Tooltip from "src/ui/base/Tooltip";
 import { t } from "ttag";
 
 interface onChangePayload {
@@ -147,7 +147,6 @@ export default function HashSlider({
   return (
     <div className={classNames("flex flex-col gap-4 relative", className)}>
       <Tooltip
-        className="inset-0"
         style={{
           // TODO: Replace with !absolute class when available in
           // eslint-plugin-tailwindcss
@@ -156,6 +155,7 @@ export default function HashSlider({
       >
         <Tooltip.Popup
           show={showTooltip}
+          className="p-1"
           style={{
             left: popupCSSLeft,
             transitionProperty: "opacity",
