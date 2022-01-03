@@ -7,19 +7,9 @@ import { t } from "ttag";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
-import {
-  useVotingPowerForProposal,
-  VotingPower,
-} from "src/ui/proposals/useVotingPowerForProposal";
+import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 
-enum ProposalStatus {
-  IN_PROGRESS = "IN_PROGRESS",
-  PASSING = "PASSING",
-  FAILING = "FAILING",
-
-  PASSED = "PASSED",
-  FAILED = "FAILIED",
-}
+import { getProposalStatus, ProposalStatus } from "./ProposalStatus";
 
 const StatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.IN_PROGRESS]: t`In progress`,
@@ -50,7 +40,7 @@ export function ProposalStatusTag({
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
   const votingPower = useVotingPowerForProposal(proposalId);
 
-  const status = getStatus(isVotingOpen, quorum, votingPower);
+  const status = getProposalStatus(isVotingOpen, quorum, votingPower);
 
   if (!status) {
     return null;
@@ -70,39 +60,4 @@ export function ProposalStatusTag({
       </div>
     </Tag>
   );
-}
-
-function getStatus(
-  isVotingOpen: boolean,
-  quourum: number,
-  votingPower: VotingPower | undefined,
-): ProposalStatus | undefined {
-  if (!votingPower) {
-    return undefined;
-  }
-
-  // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower[0].toNumber() >= quourum;
-  // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower[1].toNumber() >= quourum;
-
-  if (isVotingOpen) {
-    if (hasEnoughYes) {
-      return ProposalStatus.PASSING;
-    }
-
-    if (hasEnoughNo) {
-      return ProposalStatus.FAILING;
-    }
-
-    return ProposalStatus.IN_PROGRESS;
-  }
-
-  if (hasEnoughYes) {
-    return ProposalStatus.PASSED;
-  }
-
-  if (hasEnoughNo) {
-    return ProposalStatus.FAILED;
-  }
 }

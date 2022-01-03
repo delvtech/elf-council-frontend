@@ -1,33 +1,38 @@
 import React, { ReactElement } from "react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 
 import { ExternalLinkIcon } from "@heroicons/react/outline";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
 import Link from "next/link";
+import { t } from "ttag";
+
 import {
   getIsVotingOpen,
   proposalsBySnapShotId,
 } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import Button from "src/ui/base/Button/Button";
+import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import {
+  getProposalStatus,
+  ProposalStatus,
+} from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
-import { t } from "ttag";
-import PopoverButton from "src/ui/base/Button/PopoverButton";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
 import {
   useVotingPowerForProposal,
   VotingPower,
 } from "src/ui/proposals/useVotingPowerForProposal";
-import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -248,48 +253,4 @@ function getVoteCount(votingPower: VotingPower | undefined): number {
   return votingPower[0].gt(votingPower[1])
     ? votingPower[0].toNumber()
     : votingPower[0].toNumber();
-}
-
-enum ProposalStatus {
-  IN_PROGRESS = "IN_PROGRESS",
-  PASSING = "PASSING",
-  FAILING = "FAILING",
-
-  PASSED = "PASSED",
-  FAILED = "FAILIED",
-}
-
-function getProposalStatus(
-  isVotingOpen: boolean,
-  quourum: number,
-  votingPower: VotingPower | undefined,
-): ProposalStatus | undefined {
-  if (!votingPower) {
-    return undefined;
-  }
-
-  // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower[0].toNumber() >= quourum;
-  // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower[1].toNumber() >= quourum;
-
-  if (isVotingOpen) {
-    if (hasEnoughYes) {
-      return ProposalStatus.PASSING;
-    }
-
-    if (hasEnoughNo) {
-      return ProposalStatus.FAILING;
-    }
-
-    return ProposalStatus.IN_PROGRESS;
-  }
-
-  if (hasEnoughYes) {
-    return ProposalStatus.PASSED;
-  }
-
-  if (hasEnoughNo) {
-    return ProposalStatus.FAILED;
-  }
 }
