@@ -15,21 +15,23 @@ export default function useFile(options?: UseUploaderOptions): {
   const inputRef = useRef<HTMLInputElement | null>();
 
   useEffect(() => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.onchange = handleChange;
-    input.style.cssText = `
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-      overflow: hidden;
-      pointer-events: none;
-    `;
-    if (accept) {
-      input.setAttribute("accept", accept.toString());
+    if (!inputRef.current) {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.onchange = handleChange;
+      input.style.cssText = `
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        pointer-events: none;
+      `;
+      inputRef.current = input;
     }
-    inputRef.current = input;
+    if (accept) {
+      inputRef.current.setAttribute("accept", accept.toString());
+    }
   }, [accept]);
 
   const handleChange = (e: Event) => {
@@ -50,7 +52,7 @@ export default function useFile(options?: UseUploaderOptions): {
       return;
     }
     inputRef.current.value = "";
-    inputRef.current = document.body.appendChild(inputRef.current);
+    document.body.appendChild(inputRef.current);
     inputRef.current.click();
     inputRef.current.remove();
   }, []);
