@@ -1,4 +1,5 @@
 import React, {
+  CSSProperties,
   ComponentPropsWithoutRef,
   ElementType,
   PropsWithChildren,
@@ -8,7 +9,6 @@ import React, {
 } from "react";
 import classNames from "classnames";
 import { useDebounceFunction } from "src/ui/base/useDebounceFunction";
-import { CSSProperties } from "react";
 
 /*
 Basic Usage Example:
@@ -72,9 +72,8 @@ interface UseTooltipProps {
   hideDelay?: number;
 }
 
-const defaultHideDelay = 200;
 export function useTooltip(props?: UseTooltipProps): TooltipProviderValue {
-  const { showDelay = 100, hideDelay = defaultHideDelay } = props || {};
+  const { showDelay = 100, hideDelay = 200 } = props || {};
   const [isShowing, setIsShowing] = useState(false);
 
   const [show, cancelShow] = useDebounceFunction(() => {
