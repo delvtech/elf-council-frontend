@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
@@ -31,6 +31,9 @@ import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForPro
 import { Ballot, useVoted } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { useVote } from "src/ui/voting/useVote";
+import { Signer } from "ethers";
+import { isNumber } from "lodash";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -38,13 +41,14 @@ const votingPowerTooltipText = t`Don't know what your voting power is?  Click on
 interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
+  signer: Signer | undefined;
   proposal: Proposal | undefined;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement {
-  const { className, proposal, account } = props;
+  const { className, proposal, account, signer } = props;
 
   const snapshotProposal = useSnapshotProposal(proposal?.snapshotId);
 
@@ -57,9 +61,19 @@ export function ProposalDetailsCard(
 
   const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
 
-  const [currentBallot, setCurrentBallot] = useState<Ballot>();
+  const [newBallot, setCurrentBallot] = useState<Ballot>();
 
-  const { data: vote } = useVoted(account, proposal?.proposalId);
+  const { data: currentBallot } = useVoted(account, proposal?.proposalId);
+
+  const { mutate: vote } = useVote(account, signer);
+
+  const handleVote = useCallback(() => {
+    if (!proposal || !newBallot) {
+      return;
+    }
+    const { proposalId } = proposal;
+    vote(proposalId, newBallot);
+  }, [newBallot, proposal, vote]);
 
   if (!proposal) {
     return (
@@ -88,6 +102,9 @@ export function ProposalDetailsCard(
     quorum,
     proposalVotingPower,
   );
+
+  const submitButtonDisabled =
+    !isNumber(newBallot) || !account || !isVotingOpen;
 
   return (
     <GradientCard
@@ -149,13 +166,13 @@ export function ProposalDetailsCard(
       />
 
       <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-        {vote && (
+        {isNumber(currentBallot) && (
           <div className="flex items-center justify-end w-full text-white">
-            <span>{getVoteLabel(vote.castBallot)}</span>
+            <span>{getVoteLabel(currentBallot.castBallot)}</span>
             <CheckCircleIcon className="ml-2" height={18} />
           </div>
         )}
-        {vote && (
+        {isNumber(currentBallot) && (
           <div className="flex items-center justify-end w-full text-white">
             <span>{t`View on etherscan`}</span>
             <ExternalLinkIcon className="ml-2" height={18} />
@@ -163,11 +180,15 @@ export function ProposalDetailsCard(
         )}
         <div className="flex justify-between w-full">
           <VotingBallotButton
-            currentBallot={currentBallot}
+            currentBallot={newBallot}
             onSelectBallot={setCurrentBallot}
           />
-          <Button variant={ButtonVariant.WHITE}>
-            {vote ? t`Modify vote` : t`Submit`}
+          <Button
+            disabled={submitButtonDisabled}
+            onClick={handleVote}
+            variant={ButtonVariant.WHITE}
+          >
+            {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
           </Button>
         </div>
       </div>
