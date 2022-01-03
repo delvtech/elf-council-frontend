@@ -26,10 +26,10 @@ export interface Vote {
  */
 export function useVoted(
   account: string | undefined | null,
-  proposalId: string,
+  proposalId: string | undefined,
 ): QueryObserverResult<Vote> {
   return useSmartContractReadCall(coreVotingContract, "votes", {
-    callArgs: [account as string, proposalId],
-    enabled: !!account,
+    callArgs: [account as string, proposalId as string],
+    enabled: !!account && !!proposalId,
   });
 }

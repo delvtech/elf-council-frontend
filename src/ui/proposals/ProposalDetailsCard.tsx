@@ -1,12 +1,13 @@
 import React, { ReactElement, useState } from "react";
 
-import { ExternalLinkIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
 import Link from "next/link";
 import { t } from "ttag";
 
+import { assertNever } from "src/base/assertNever";
 import {
   getIsVotingOpen,
   proposalsBySnapShotId,
@@ -27,7 +28,7 @@ import {
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { Ballot } from "src/ui/voting/useVoted";
+import { Ballot, useVoted } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
@@ -57,6 +58,8 @@ export function ProposalDetailsCard(
   const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
 
   const [currentBallot, setCurrentBallot] = useState<Ballot>();
+
+  const { data: vote } = useVoted(account, proposal?.proposalId);
 
   if (!proposal) {
     return (
@@ -145,15 +148,45 @@ export function ProposalDetailsCard(
         label={t`Eligible voting balance`}
       />
 
-      <div className="flex items-end justify-between flex-1 w-full">
-        <VotingBallotButton
-          currentBallot={currentBallot}
-          onSelectBallot={setCurrentBallot}
-        />
-        <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
+      <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
+        {vote && (
+          <div className="flex items-center justify-end w-full text-white">
+            <span>{getVoteLabel(vote.castBallot)}</span>
+            <CheckCircleIcon className="ml-2" height={18} />
+          </div>
+        )}
+        {vote && (
+          <div className="flex items-center justify-end w-full text-white">
+            <span>{t`View on etherscan`}</span>
+            <ExternalLinkIcon className="ml-2" height={18} />
+          </div>
+        )}
+        <div className="flex justify-between w-full">
+          <VotingBallotButton
+            currentBallot={currentBallot}
+            onSelectBallot={setCurrentBallot}
+          />
+          <Button variant={ButtonVariant.WHITE}>
+            {vote ? t`Modify vote` : t`Submit`}
+          </Button>
+        </div>
       </div>
     </GradientCard>
   );
+}
+
+function getVoteLabel(ballot: Ballot): string {
+  switch (ballot) {
+    case Ballot.YES:
+      return t`Voted Yes`;
+    case Ballot.NO:
+      return t`Voted No`;
+    case Ballot.MAYBE:
+      return t`Voted Abstain`;
+    default:
+      assertNever(ballot);
+      return "";
+  }
 }
 
 interface QuorumBarProps {
