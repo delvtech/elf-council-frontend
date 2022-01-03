@@ -1,7 +1,6 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 
 import { ExternalLinkIcon } from "@heroicons/react/outline";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
@@ -13,10 +12,9 @@ import {
   proposalsBySnapShotId,
 } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
+import { VotingPower } from "src/elf/proposals/VotingPower";
 import Button from "src/ui/base/Button/Button";
-import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
@@ -29,8 +27,9 @@ import {
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { VotingPower } from "src/elf/proposals/VotingPower";
+import { Ballot } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -56,6 +55,8 @@ export function ProposalDetailsCard(
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
   const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
+
+  const [currentBallot, setCurrentBallot] = useState<Ballot>();
 
   if (!proposal) {
     return (
@@ -145,25 +146,10 @@ export function ProposalDetailsCard(
       />
 
       <div className="flex items-end justify-between flex-1 w-full">
-        <PopoverButton
-          popover={
-            <Card variant={CardVariant.BLUE}>
-              <div>choice 1</div>
-              <div>choice 1</div>
-              <div>choice 1</div>
-            </Card>
-          }
-        >
-          <div>
-            <span>{t`Choice`}</span>
-
-            <ChevronDownIcon
-              className={`${true ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-orange-300 group-hover:text-opacity-80 transition ease-in-out duration-150`}
-              aria-hidden="true"
-            />
-          </div>
-        </PopoverButton>
+        <VotingBallotButton
+          currentBallot={currentBallot}
+          onSelectBallot={setCurrentBallot}
+        />
         <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
       </div>
     </GradientCard>
