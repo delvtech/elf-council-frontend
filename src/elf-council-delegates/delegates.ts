@@ -12,6 +12,9 @@ export interface Delegate {
   description: string;
   numDelegatedVotes: number;
   numProposalsVoted: number;
+  /**
+   * Twitter handle w/out the @ symbol, eg: "CharlieStLouis" (not "@CharlieStLouis")
+   */
   twitterHandle: string;
 }
 

@@ -1,4 +1,7 @@
 {
+  "ignorePatterns": [
+    "*.json"
+  ],
   "extends": [
     "next",
     "react-app",
@@ -60,6 +63,8 @@
           42,
           100
         ],
+        "ignoreArrayIndexes": true,
+        "ignoreDefaultValues": true,
         "ignoreNumericLiteralTypes": true,
         "ignoreReadonlyClassProperties": true,
         "ignoreEnums": true
