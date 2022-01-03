@@ -39,19 +39,21 @@ export function ReviewClaim({
     }
   }, [delegateAddress, selectedDelegateIndex]);
 
-  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
+  // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer);
   const handleClaimClick = useCallback(() => {
     if (account && merkleInfo) {
       claimAndDeposit([
-        parseEther(claimableBalance),
+        parseEther("1"),
+        // use the full claimable balance when not in development
+        // parseEther(claimableBalance),
         delegateAddress,
         parseEther(merkleInfo.leaf.value),
         merkleInfo.proof,
         account,
       ]);
     }
-  }, [account, claimAndDeposit, claimableBalance, delegateAddress, merkleInfo]);
+  }, [account, claimAndDeposit, delegateAddress, merkleInfo]);
 
   return (
     <StepCard
