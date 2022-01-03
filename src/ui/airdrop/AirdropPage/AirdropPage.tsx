@@ -23,6 +23,7 @@ import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
+import { ReviewClaim } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
 
 enum AirdropSteps {
   /**
@@ -150,6 +151,20 @@ export default function AirdropPage(): ReactElement {
                   onPrevStep={() =>
                     setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)
                   }
+                  onNextStep={() => {
+                    setActiveStep(AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW);
+                  }}
+                />
+              );
+            case AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW:
+              return (
+                <ReviewClaim
+                  account={account}
+                  signer={signer}
+                  delegateAddress={
+                    delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */
+                  }
+                  onPrevStep={() => setActiveStep(AirdropSteps.CHOOSE_DELEGATE)}
                   onNextStep={() => {
                     setActiveStep(AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW);
                   }}
