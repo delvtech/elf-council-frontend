@@ -1,14 +1,14 @@
-import { ReactElement, Fragment } from "react";
+import { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import Image from "next/image";
+import { t } from "ttag";
+import { Popover } from "@headlessui/react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2";
-import Image from "next/image";
-import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
-import { t } from "ttag";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { Popover } from "@headlessui/react";
+import { Delegate } from "src/elf-council-delegates/delegates";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
