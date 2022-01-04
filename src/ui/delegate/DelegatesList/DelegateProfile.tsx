@@ -15,7 +15,7 @@ import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDeleg
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
-  setDelegateAddressInput: (address: string) => void;
+  setDelegateAddressInput?: (address: string) => void;
   active?: boolean;
 }
 

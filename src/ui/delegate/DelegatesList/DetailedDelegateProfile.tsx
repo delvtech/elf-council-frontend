@@ -13,7 +13,7 @@ import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onClose: () => void;
-  setDelegateAddressInput: (address: string) => void;
+  setDelegateAddressInput?: (address: string) => void;
 }
 
 function DetailedDelegateProfile({
@@ -25,7 +25,9 @@ function DetailedDelegateProfile({
 
   const onClickChooseDelegate = () => {
     onClose();
-    setDelegateAddressInput(delegate.address);
+    if (setDelegateAddressInput) {
+      setDelegateAddressInput(delegate.address);
+    }
   };
 
   return (
@@ -119,21 +121,23 @@ function DetailedDelegateProfile({
 
         {/* Choose Delegate & Close Button */}
         <div className="flex flex-col gap-4 mt-auto">
-          <Button
-            className="w-52 flex justify-center items-center ml-auto mt-4"
-            variant={ButtonVariant.GRADIENT}
-            disabled={!account}
-            onClick={onClickChooseDelegate}
-          >
-            <span className="mr-2">{t`Choose Delegate`}</span>
-            <div className="relative h-5 w-5">
-              <Image
-                layout="fill"
-                src="/assets/radio-button.svg"
-                alt={t`Radio icon`}
-              />
-            </div>
-          </Button>
+          {setDelegateAddressInput ? (
+            <Button
+              className="w-52 flex justify-center items-center ml-auto mt-4"
+              variant={ButtonVariant.GRADIENT}
+              disabled={!account}
+              onClick={onClickChooseDelegate}
+            >
+              <span className="mr-2">{t`Choose Delegate`}</span>
+              <div className="relative h-5 w-5">
+                <Image
+                  layout="fill"
+                  src="/assets/radio-button.svg"
+                  alt={t`Radio icon`}
+                />
+              </div>
+            </Button>
+          ) : null}
 
           <Popover.Button className="bg-paleLily hover:bg-[#aadce5] rounded-xl h-12">
             <span className="text-principalRoyalBlue font-bold text-lg">
