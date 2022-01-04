@@ -14,7 +14,7 @@ import Popup from "./TooltipPopup";
 interface TooltipContainerProps<T extends ElementType> extends UseTooltipProps {
   as?: T;
   className?: string;
-  children?: ReactNode | ((props: TooltipProviderValue) => ReactNode);
+  children?: ReactNode | ((props: TooltipProviderValue) => JSX.Element);
 }
 
 export default function TooltipContainer<T extends ElementType = "span">({
