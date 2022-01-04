@@ -36,7 +36,7 @@ function DetailedDelegateProfile({
       <div className="flex flex-col relative p-5 h-full">
         <div className="flex gap-8">
           {/* Left Hand Column */}
-          <div style={{ width: "72.5%" }}>
+          <div className="w-[72.5%]">
             {/* Name */}
             <div className="flex justify-between items-center">
               <div className="flex items-center">
@@ -73,7 +73,7 @@ function DetailedDelegateProfile({
           </div>
 
           {/* Right Hand Column */}
-          <div className="flex flex-col" style={{ width: "27.5%" }}>
+          <div className="flex flex-col w-[27.5%]">
             {/* Some handle/username */}
             <div>
               <span className="font-bold text-xl text-principalRoyalBlue">
