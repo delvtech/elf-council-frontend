@@ -30,7 +30,10 @@ export default function TooltipTrigger<T extends ElementType = "span">({
       className={className}
       {...props}
       onMouseOver={disabled ? undefined : show}
+      onFocus={disabled ? undefined : show}
       onMouseOut={disabled ? undefined : hide}
+      onBlur={disabled ? undefined : hide}
+      tabIndex={0}
     >
       {children}
     </Component>
