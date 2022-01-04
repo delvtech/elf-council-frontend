@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { Fragment, ReactElement, useState } from "react";
 import { delegates } from "src/elf-council-delegates/delegates";
 import tw, {
   display,
@@ -14,6 +14,7 @@ import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import H2 from "src/ui/base/H2";
 import { t } from "ttag";
 import DetailedDelegateProfile from "./DetailedDelegateProfile";
+import { Popover, Transition } from "@headlessui/react";
 
 interface DelegatesListProps {
   selectedDelegate: string;
@@ -24,12 +25,6 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
-  const [currentDelegate, setCurrentDelegate] = useState(-1);
-
-  const onClose = () => {
-    setCurrentDelegate(-1);
-  };
-
   return (
     <div className="relative mb-8">
       <H2
@@ -58,25 +53,55 @@ function DelegatesList({
           return (
             // TODO: Remove -${idx} for production since addresses are always unique
             <li key={`${delegate.address}-${idx}}`}>
-              <button
-                className="w-full"
-                onClick={() => setCurrentDelegate(idx)}
-              >
-                <DelegateProfile selected={selected} delegate={delegate} />
-              </button>
+              <Popover>
+                <Popover.Button className="w-full">
+                  <DelegateProfile selected={selected} delegate={delegate} />
+                </Popover.Button>
+
+                <Transition>
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
+                  >
+                    {/* z-30 in order to overlap sidebar z-index */}
+                    <Popover.Overlay className="fixed inset-0 z-30 bg-black bg-opacity-50 transition-opacity" />
+                  </Transition.Child>
+
+                  <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                    enterTo="opacity-100 translate-y-0 sm:scale-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                    leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  >
+                    <Popover.Panel
+                      className="absolute z-50 box-content rounded-xl top-0 
+          right-0 h-full w-full bg-hackerSky"
+                    >
+                      {({ close }) => (
+                        <DetailedDelegateProfile
+                          delegate={delegates[idx]}
+                          onClose={close}
+                          setDelegateAddressInput={setDelegateAddressInput}
+                        />
+                      )}
+                    </Popover.Panel>
+                  </Transition.Child>
+                </Transition>
+              </Popover>
             </li>
           );
         })}
       </ul>
 
       {/* Detailed delegate profile */}
-      {currentDelegate !== -1 ? (
-        <DetailedDelegateProfile
-          delegate={delegates[currentDelegate]}
-          onClose={onClose}
-          setDelegateAddressInput={setDelegateAddressInput}
-        />
-      ) : null}
     </div>
   );
 }
