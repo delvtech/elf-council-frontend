@@ -1,33 +1,24 @@
-import React, {
-  ComponentPropsWithoutRef,
-  ElementType,
-  PropsWithChildren,
-  ReactElement,
-  ReactNode,
-} from "react";
-import classNames from "classnames";
+import React, { ElementType, ReactElement, ReactNode } from "react";
+import { PolymorphicComponentProps } from "src/@types/helper";
 import useTooltip, { UseTooltipProps } from "./useTooltip";
 import TooltipProvider, { TooltipProviderValue } from "./TooltipProvider";
 import Trigger from "./TooltipTrigger";
 import Popup from "./TooltipPopup";
+import classNames from "classnames";
 
-interface TooltipContainerProps<T extends ElementType> extends UseTooltipProps {
-  as?: T;
+interface TooltipContainerProps extends UseTooltipProps {
   className?: string;
   children?: ReactNode | ((props: TooltipProviderValue) => JSX.Element);
 }
 
-export default function TooltipContainer<T extends ElementType = "span">({
+export default function TooltipContainer<C extends ElementType = "span">({
   as,
   children,
   className,
   showDelay,
   hideDelay,
   ...props
-}: PropsWithChildren<
-  TooltipContainerProps<T> &
-    Omit<ComponentPropsWithoutRef<T>, keyof TooltipContainerProps<T>>
->): ReactElement {
+}: PolymorphicComponentProps<C, TooltipContainerProps>): ReactElement {
   const tooltip = useTooltip({ showDelay, hideDelay });
   const Component = as || "span";
   return (

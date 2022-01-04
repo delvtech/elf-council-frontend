@@ -1,41 +1,46 @@
-import React, {
-  ComponentPropsWithoutRef,
-  ElementType,
-  PropsWithChildren,
-  ReactElement,
-  useContext,
-} from "react";
+import React, { ElementType, ReactElement, useContext } from "react";
+import {
+  PolymorphicComponentPropsWithRef,
+  PolymorphicRef,
+} from "src/@types/helper";
 import { TooltipContext } from "./TooltipProvider";
 
-interface TriggerProps<T extends ElementType> {
-  as?: T;
+interface Props {
   disabled?: boolean;
   className?: string;
 }
 
-export default function TooltipTrigger<T extends ElementType = "span">({
-  as,
-  disabled,
-  className,
-  children,
-  ...props
-}: PropsWithChildren<
-  TriggerProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TriggerProps<T>>
->): ReactElement {
-  const { show, hide } = useContext(TooltipContext);
+type TriggerProps<C extends ElementType> = PolymorphicComponentPropsWithRef<
+  C,
+  Props
+>;
 
-  const Component = as || "span";
-  return (
-    <Component
-      className={className}
-      {...props}
-      onMouseOver={disabled ? undefined : show}
-      onFocus={disabled ? undefined : show}
-      onMouseOut={disabled ? undefined : hide}
-      onBlur={disabled ? undefined : hide}
-      tabIndex={0}
-    >
-      {children}
-    </Component>
-  );
-}
+type TriggerComponent = <C extends ElementType = "span">(
+  props: TriggerProps<C>,
+) => ReactElement | null;
+
+const TooltipTrigger: TriggerComponent = React.forwardRef(
+  function TooltipTrigger<C extends ElementType = "span">(
+    { as, disabled, className, children, ...props }: TriggerProps<C>,
+    ref?: PolymorphicRef<C>,
+  ) {
+    const { show, hide } = useContext(TooltipContext);
+    const Component = as || "span";
+    return (
+      <Component
+        className={className}
+        {...props}
+        onMouseOver={disabled ? undefined : show}
+        onFocus={disabled ? undefined : show}
+        onMouseOut={disabled ? undefined : hide}
+        onBlur={disabled ? undefined : hide}
+        tabIndex={0}
+        ref={ref}
+      >
+        {children}
+      </Component>
+    );
+  },
+);
+
+export default TooltipTrigger;
