@@ -51,6 +51,7 @@ export default function TooltipPopup({
       onFocus={context.show}
       onMouseOut={context.hide}
       onBlur={context.hide}
+      role="tooltip"
     >
       <span className="block max-w-sm px-2 py-1 overflow-y-auto w-max max-h-96">
         {children}
