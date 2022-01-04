@@ -3,16 +3,18 @@ import React, {
   ElementType,
   PropsWithChildren,
   ReactElement,
+  ReactNode,
 } from "react";
 import classNames from "classnames";
 import useTooltip, { UseTooltipProps } from "./useTooltip";
-import TooltipProvider from "./TooltipProvider";
+import TooltipProvider, { TooltipProviderValue } from "./TooltipProvider";
 import Trigger from "./TooltipTrigger";
 import Popup from "./TooltipPopup";
 
 interface TooltipContainerProps<T extends ElementType> extends UseTooltipProps {
   as?: T;
   className?: string;
+  children?: ReactNode | ((props: TooltipProviderValue) => ReactNode);
 }
 
 export default function TooltipContainer<T extends ElementType = "span">({
@@ -31,7 +33,7 @@ export default function TooltipContainer<T extends ElementType = "span">({
   return (
     <TooltipProvider tooltip={tooltip}>
       <Component className={classNames("relative", className)} {...props}>
-        {children}
+        {typeof children === "function" ? children(tooltip) : children}
       </Component>
     </TooltipProvider>
   );
