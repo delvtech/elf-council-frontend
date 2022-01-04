@@ -110,21 +110,31 @@ export function ProposalDetailsCard(
         {truncateText(snapshotProposal?.body || "")}
       </p>
 
-      <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
-        {t`View proposal`}
-        <Link passHref={true} href={snapshotProposal?.link || ""}>
-          <button>
+      <p className="my-3 overflow-hidden">
+        <Link href={snapshotProposal?.link || ""}>
+          {/* There's a big discussion about how awful the Link api is for a11y
+          here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+          best thing to do for now is just ignore this rule when an anchor tag is
+          the child of a Link since all a tags *should* have an href 🙁 */
+          /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a className="flex items-center text-sm font-light text-white">
+            {t`View proposal`}
             <ExternalLinkIcon className="h-4 ml-2" />
-          </button>
+          </a>
         </Link>
       </p>
 
-      <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
-        {t`View Discussion`}
-        <Link passHref={true} href={"https://forum.element.fi"}>
-          <button>
+      <p className="my-3 overflow-hidden">
+        <Link href={"https://forum.element.fi"}>
+          {/* There's a big discussion about how awful the Link api is for a11y
+          here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+          best thing to do for now is just ignore this rule when an anchor tag is
+          the child of a Link since all a tags *should* have an href 🙁 */
+          /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+          <a className="flex items-center text-sm font-light text-white">
+            {t`View Discussion`}
             <ExternalLinkIcon className="h-4 ml-2" />
-          </button>
+          </a>
         </Link>
       </p>
 
