@@ -59,6 +59,7 @@ function DelegatesList({
                 </Popover.Button>
 
                 <Transition>
+                  {/* Greyed out background overlay */}
                   <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -72,6 +73,7 @@ function DelegatesList({
                     <Popover.Overlay className="fixed inset-0 z-30 bg-black bg-opacity-50 transition-opacity" />
                   </Transition.Child>
 
+                  {/* Detailed delegate profile */}
                   <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -100,8 +102,6 @@ function DelegatesList({
           );
         })}
       </ul>
-
-      {/* Detailed delegate profile */}
     </div>
   );
 }
