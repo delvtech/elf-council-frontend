@@ -5,7 +5,6 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
-import Link from "next/link";
 import { t } from "ttag";
 
 import {
@@ -112,31 +111,23 @@ export function ProposalDetailsCard(
       </p>
 
       <p className="my-3 overflow-hidden">
-        <Link href={snapshotProposal?.link || ""}>
-          {/* There's a big discussion about how awful the Link api is for a11y
-          here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-          best thing to do for now is just ignore this rule when an anchor tag is
-          the child of a Link since all a tags *should* have an href 🙁 */
-          /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a className="flex items-center text-sm font-light text-white">
-            {t`View proposal`}
-            <ExternalLinkIcon className="h-4 ml-2" />
-          </a>
-        </Link>
+        <a
+          href={snapshotProposal?.link || ""}
+          className="flex items-center text-sm font-light text-white"
+        >
+          {t`View proposal`}
+          <ExternalLinkIcon className="h-4 ml-2" />
+        </a>
       </p>
 
       <p className="my-3 overflow-hidden">
-        <Link href={"https://forum.element.fi"}>
-          {/* There's a big discussion about how awful the Link api is for a11y
-          here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-          best thing to do for now is just ignore this rule when an anchor tag is
-          the child of a Link since all a tags *should* have an href 🙁 */
-          /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a className="flex items-center text-sm font-light text-white">
-            {t`View Discussion`}
-            <ExternalLinkIcon className="h-4 ml-2" />
-          </a>
-        </Link>
+        <a
+          href="https://forum.element.fi"
+          className="flex items-center text-sm font-light text-white"
+        >
+          {t`View Discussion`}
+          <ExternalLinkIcon className="h-4 ml-2" />
+        </a>
       </p>
 
       <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
@@ -245,12 +236,9 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
         {tooltipText && (
           <Tooltip content={tooltipText} className="ml-1">
             {tooltipHref ? (
-              <Link href={tooltipHref}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>
-                  <InformationCircleIcon className="h-4" />
-                </a>
-              </Link>
+              <a href={tooltipHref}>
+                <InformationCircleIcon className="h-4" />
+              </a>
             ) : (
               <InformationCircleIcon className="h-4" />
             )}

@@ -13,7 +13,6 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { InformationCircleIcon } from "@heroicons/react/solid";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
-import Link from "next/link";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
@@ -120,12 +119,9 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
         {tooltipText && (
           <Tooltip content={tooltipText} className="ml-1">
             {tooltipHref ? (
-              <Link href={tooltipHref}>
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a>
-                  <InformationCircleIcon className="h-4" />
-                </a>
-              </Link>
+              <a href={tooltipHref}>
+                <InformationCircleIcon className="h-4" />
+              </a>
             ) : (
               <InformationCircleIcon className="h-4" />
             )}
