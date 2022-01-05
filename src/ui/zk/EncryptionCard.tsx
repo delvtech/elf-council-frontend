@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2";
@@ -12,8 +12,8 @@ import ZKData from "./ZKData";
 
 interface EncryptionCardProps {
   className?: string;
-  onComplete?: () => void;
-  onGenerated?: ([key, secret]: [string, string]) => void;
+  onComplete: () => void;
+  onGenerated: ([key, secret]: [string, string]) => void;
   onBackClick?: () => void;
   onNextClick: () => void;
 }
@@ -27,6 +27,7 @@ export default function EncryptionCard({
 }: EncryptionCardProps): ReactElement {
   const [key, setKey] = useState("");
   const [secret, setSecret] = useState("");
+  const [progress, setProgress] = useState(0);
   const [downloaded, setDownloaded] = useState(false);
 
   // reset downloaded if the key is changed
@@ -35,9 +36,14 @@ export default function EncryptionCard({
     if (key) {
       const newSecret = generateHash(key.split("").reverse().join(""));
       setSecret(newSecret);
-      onGenerated?.([key, newSecret]);
+      onGenerated([key, newSecret]);
     }
   }, [key, onGenerated]);
+
+  const handleHashChange = useCallback(({ hash, progress }) => {
+    setKey(hash);
+    setProgress(progress);
+  }, []);
 
   const handleDownloadClick = () => {
     downloadFile(
@@ -46,7 +52,7 @@ export default function EncryptionCard({
       DownloadType.JSON,
     );
     setDownloaded(true);
-    onComplete?.();
+    onComplete();
   };
 
   return (
@@ -63,7 +69,11 @@ export default function EncryptionCard({
             <a href="http://TODO">{t`Learn more`}</a>
           </p>
         </div>
-        <HashSlider className="mb-2" onChange={setKey} />
+        <HashSlider
+          className="mb-2"
+          distanceRequirement={2000}
+          onChange={handleHashChange}
+        />
         <HashString
           className="mb-2"
           label={t`The Key`}
@@ -91,7 +101,7 @@ export default function EncryptionCard({
           )}
           <div className="flex gap-4 ml-auto">
             <Button
-              disabled={!key || !secret}
+              disabled={!key || !secret || progress < 100}
               variant={ButtonVariant.WHITE}
               onClick={handleDownloadClick}
             >{t`Download JSON`}</Button>
