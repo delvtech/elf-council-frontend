@@ -26,10 +26,8 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
     useNumericInputValue();
   const clearWithdrawInput = () => setWithdrawAmount("");
 
-  const { mutate: withdraw, isLoading } = useWithdrawFromLockingVault(
-    signer,
-    clearWithdrawInput,
-  );
+  const { mutate: withdraw, isLoading: withdrawLoading } =
+    useWithdrawFromLockingVault(signer, clearWithdrawInput);
   const onWithdraw = () => {
     if (!account) {
       return;
@@ -59,7 +57,7 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
           amountDeposited={vaultBalance}
           withdrawAmount={withdrawAmount}
           onWithdraw={onWithdraw}
-          isLoading={isLoading}
+          isLoading={withdrawLoading}
           buttonVariant={ButtonVariant.WHITE}
           buttonClassName="w-28 justify-center"
         />
