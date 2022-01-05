@@ -1,0 +1,7 @@
+.popover :global(.bp3-popover2-content) {
+  @apply px-3 py-2 bg-hackerSky text-principalRoyalBlue;
+}
+
+.popover :global(.bp3-popover2-arrow-fill) {
+  @apply fill-hackerSky;
+}
