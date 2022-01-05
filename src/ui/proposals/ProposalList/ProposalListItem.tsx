@@ -10,7 +10,7 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { ProposalStatusTag } from "src/ui/proposals/ProposalList/ProposalStatusTag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { Ballot, useVoted } from "src/ui/voting/useVoted";
+import { Ballot, useBallot } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
 interface ProposalListItemProps {
@@ -41,7 +41,7 @@ export function ProposalListItem({
     proposalCreatedBlockNumber,
   );
 
-  const votedLabel = useVotedLabel(account, proposalId);
+  const ballotLabel = useBallotLabel(account, proposalId);
 
   const handleClick = useCallback(
     () => onClick(proposalId),
@@ -63,10 +63,10 @@ export function ProposalListItem({
         />
         <div
           className={classNames("flex space-x-4", {
-            [classNames("invisible")]: !votedLabel,
+            [classNames("invisible")]: !ballotLabel,
           })}
         >
-          <Tag intent={Intent.PRIMARY_SOLID}>{votedLabel ?? "Voted YES"}</Tag>
+          <Tag intent={Intent.PRIMARY_SOLID}>{ballotLabel ?? "Voted YES"}</Tag>
         </div>
       </div>
       {account ? (
@@ -79,17 +79,17 @@ export function ProposalListItem({
   );
 }
 
-function useVotedLabel(
+function useBallotLabel(
   account: string | null | undefined,
   proposalId: string,
 ): string | undefined {
-  const { data: voted } = useVoted(account, proposalId);
+  const { data: ballot } = useBallot(account, proposalId);
 
-  if (voted?.castBallot === Ballot.YES) {
+  if (ballot?.castBallot === Ballot.YES) {
     return t`Voted YES`;
   }
 
-  if (voted?.castBallot === Ballot.NO) {
+  if (ballot?.castBallot === Ballot.NO) {
     return t`Voted NO`;
   }
 }
