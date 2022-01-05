@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@alch/alchemy-web3": "^1.1.9",
+    "@blueprintjs/popover2": "^0.12.9",
     "@elementfi/react-query-typechain": "^1.0.5",
     "@ethersproject/providers": "^5.5.1",
     "@fontsource/roboto-mono": "^4.5.0",
@@ -75,15 +76,18 @@
     "husky": "^7.0.4",
     "lint-staged": "^12.1.4",
     "prettier": "^2.5.1",
+    "stylelint": "^14.2.0",
+    "stylelint-config-recommended": "^6.0.0",
     "ts-morph": "^13.0.2",
     "typescript": "^4.5.4"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "src/**/*.{js,jsx,ts,tsx,json,md}": [
       "npm run prettier",
       "eslint --fix"
     ],
     "*.js": "eslint --cache --fix",
+    "src/**/*.{css,scss}": "stylelint",
     "*.{js,css,md}": "prettier --write"
   },
   "name": "elf-council-frontend",
@@ -100,6 +104,7 @@
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --write \"{pages,src}/**/*.ts{,x}\"",
     "prettier:check": "prettier --check \"{pages,src}/**/*.ts{,x}\"",
+    "stylelint": "stylelint \"src/**/*.{css,scss}\"",
     "start": "next start",
     "_copy-testnet-addresses": "cp ../elf-council-testnet/src/addresses/testnet.addresses.json src/elf-council-addresses/testnet.addresses.json",
     "_copy-testnet-tokenlist": "cp ../elf-council-testnet/src/tokenlist/testnet.tokenlist.json src/elf-council-tokenlist/testnet.tokenlist.json",
