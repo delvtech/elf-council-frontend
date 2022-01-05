@@ -167,8 +167,9 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
 function NoDelegate(): ReactElement {
   return (
-    <div className="grid place-items-center w-full sm:w-1/2 md:w-full lg:w-1/2 bg-white rounded-md font-bold text-principalRoyalBlue">
-      <span className="inline-block my-10">{t`No current delegation`}</span>
+    // 112px is the height CurrentDelegate; this is a placeholder for CurrentDelegate
+    <div className="grid place-items-center w-full h-[112px] sm:w-1/2 md:w-full lg:w-1/2 bg-white rounded-md font-bold text-principalRoyalBlue">
+      <span>{t`No current delegation`}</span>
     </div>
   );
 }
