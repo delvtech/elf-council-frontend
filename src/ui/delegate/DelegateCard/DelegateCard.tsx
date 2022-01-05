@@ -111,22 +111,31 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         <div className="w-1/2">
           <span>{t`Current Delegation`}</span>
         </div>
-        <div className="w-1/2 leading-5">
+        <div className="w-1/2 leading-5 md:hidden lg:block">
           <span>{t`Change Delegation`}</span>
           <span className="inline-block text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</span>
         </div>
       </div>
 
-      <div className="flex gap-7 mt-2">
+      <div className="flex md:flex-col lg:flex-row gap-7 md:gap-0 lg:gap-7 mt-2">
         {/* Current Delegate Profile */}
         {currentDelegate ? (
-          <CurrentDelegate className="w-1/2" delegate={currentDelegate} />
+          <CurrentDelegate
+            className="w-1/2 md:w-full lg:w-1/2"
+            delegate={currentDelegate}
+          />
         ) : (
           <NoDelegate />
         )}
 
+        <div className="hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
+          <div className="w-1/2 leading-5 ">
+            <span>{t`Change Delegation`}</span>
+            <span className="inline-block text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</span>
+          </div>
+        </div>
         {/* Delegate Input */}
-        <div className="flex flex-col w-1/2">
+        <div className="flex flex-col w-1/2 md:w-full lg:w-1/2">
           <DelegateAddressInput
             account={account}
             delegateAddressInput={delegateAddressInput}
@@ -158,8 +167,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
 function NoDelegate(): ReactElement {
   return (
-    <div className="grid place-items-center w-1/2 bg-white rounded-md font-bold text-principalRoyalBlue">
-      <span>{t`No current delegation`}</span>
+    <div className="grid place-items-center w-1/2 md:w-full lg:w-1/2 bg-white rounded-md font-bold text-principalRoyalBlue">
+      <span className="inline-block my-10">{t`No current delegation`}</span>
     </div>
   );
 }
