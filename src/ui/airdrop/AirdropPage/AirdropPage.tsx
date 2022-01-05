@@ -24,6 +24,7 @@ import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
 import { ReviewClaim } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
+import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
 
 enum AirdropSteps {
   /**
@@ -79,11 +80,7 @@ export default function AirdropPage(): ReactElement {
   const [activeStep, setActiveStep] = useState<AirdropSteps | undefined>();
   const connectWalletStatus = getConnectWalletStatus(account, activeStep);
   const delegateStatus = getDelegateStatus(activeStep);
-  const claimAndDelegateStatus = getClaimAndDelegateStatus(
-    activeStep,
-    merkleInfo,
-    claimableBalance,
-  );
+  const claimAndDelegateStatus = getClaimAndDelegateStatus(activeStep);
 
   return (
     <div className="flex flex-col space-y-8 w-full justify-center items-center">
@@ -124,6 +121,9 @@ export default function AirdropPage(): ReactElement {
                   }}
                 />
               );
+
+            case AirdropSteps.ALREADY_CLAIMED:
+              return <AirdropAlreadyClaimed account={account} />;
 
             case AirdropSteps.AIRDROP_PREVIEW:
               return (
@@ -225,18 +225,24 @@ function getDelegateStatus(activeStep: AirdropSteps | undefined): StepStatus {
 
 function getClaimAndDelegateStatus(
   activeStep: AirdropSteps | undefined,
-  merkleInfo: MerkleProof | undefined,
-  claimableBalance: string,
 ): StepStatus {
+  if (!activeStep) {
+    return StepStatus.UPCOMING;
+  }
+
   if (
-    activeStep === AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW &&
-    hasClaimedAirdrop(merkleInfo, claimableBalance)
+    [
+      AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW,
+      AirdropSteps.ALREADY_CLAIMED,
+    ].includes(activeStep)
   ) {
     return StepStatus.COMPLETE;
   }
+
   if (activeStep === AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW) {
     return StepStatus.CURRENT;
   }
+
   return StepStatus.UPCOMING;
 }
 

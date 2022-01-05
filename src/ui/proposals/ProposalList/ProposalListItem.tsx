@@ -8,11 +8,10 @@ import { t } from "ttag";
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
+import { ProposalStatusTag } from "src/ui/proposals/ProposalList/ProposalStatusTag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { Ballot, useVoted } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
-
-import { StatusButton } from "./StatusButton";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -21,6 +20,7 @@ interface ProposalListItemProps {
   active: boolean;
   onClick: (proposalId: string | undefined) => void;
 }
+
 export function ProposalListItem({
   account,
   signer,
@@ -73,7 +73,7 @@ export function ProposalListItem({
         <span>{t`Your voting power for this proposal: ${votePower}`}</span>
       ) : null}
       <div className="flex items-end h-full space-x-4">
-        <StatusButton signer={signer} proposal={proposal} />
+        <ProposalStatusTag signer={signer} proposal={proposal} />
       </div>
     </Card>
   );

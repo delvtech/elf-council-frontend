@@ -49,7 +49,7 @@ export default function ProposalsPage(): ReactElement {
   // set the active proposal when the user switches between Active and Past
   // tabs.
   useEffect(() => {
-    setActiveProposalId(filteredProposals?.[0].proposalId);
+    setActiveProposalId(filteredProposals?.[0]?.proposalId);
     setActiveProposal(filteredProposals?.[0]);
   }, [activeTabId, filteredProposals]);
 
