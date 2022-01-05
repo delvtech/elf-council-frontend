@@ -130,7 +130,7 @@ function NoConnection(): ReactElement {
   return (
     <p className="text-left">
       <div>{t`Unable to determine delegation eligibility`}</div>
-      <div>
+      <div className="mt-1">
         {t`Please connect your wallet`}
         <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </div>
