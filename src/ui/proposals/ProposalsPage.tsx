@@ -102,6 +102,7 @@ export default function ProposalsPage(): ReactElement {
         <ProposalDetailsCard
           className="hidden lg:flex"
           account={account}
+          signer={signer}
           proposal={activeProposal}
         />
       </div>
