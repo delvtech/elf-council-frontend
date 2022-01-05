@@ -27,9 +27,8 @@ import tw, {
   space,
   textColor,
   fontSize,
-  fontWeight,
 } from "src/elf-tailwindcss-classnames";
-import classnames from "classnames";
+import classNames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
 import { ElementLogo } from "src/ui/base/ElementLogo";
@@ -65,7 +64,7 @@ export default function Sidebar(): ReactElement {
         <MenuIcon className={tw(height("h-16"), width("w-16"))} />
       </button>
       <div
-        className={classnames(
+        className={classNames(
           { "-translate-x-full": !isOpen },
           tw(
             display("flex"),
@@ -168,20 +167,22 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 
   return (
     <div>
-      <Link href={link} passHref>
-        <div
-          className={tw(
-            display("flex"),
-            justifyContent("justify-center"),
-            padding("p-3"),
-            backgroundColor("hover:bg-blue-50"),
-            cursor("cursor-pointer"),
-            textColor("text-brandDarkBlue-dark"),
-            fontWeight({ "font-bold": isActive }),
-          )}
-        >
-          <p>{label}</p>
-        </div>
+      <Link href={link}>
+        {/* There's a big discussion about how awful the Link api is for a11y
+      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+      best thing to do for now is just ignore this rule when an anchor tag is
+      the child of a Link since all a tags *should* have an href 🙁 */
+        /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a>
+          <div
+            className={classNames(
+              "flex justify-center p-3 hover:bg-blue-50 cursor-pointer text-brandDarkBlue-dark",
+              { "font-bold": isActive },
+            )}
+          >
+            <p>{label}</p>
+          </div>
+        </a>
       </Link>
     </div>
   );

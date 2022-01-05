@@ -22,8 +22,15 @@ export function InfoIconWithTooltip(props: InfoIconProps): ReactElement {
   }, []);
 
   const tooltipIcon = tooltipHref ? (
-    <Link href={tooltipHref} passHref>
-      <InformationCircleIcon className={tw(height("h-4"))} />
+    <Link href={tooltipHref}>
+      {/* There's a big discussion about how awful the Link api is for a11y
+      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+      best thing to do for now is just ignore this rule when an anchor tag is
+      the child of a Link since all a tags *should* have an href 🙁 */
+      /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a>
+        <InformationCircleIcon className={tw(height("h-4"))} />
+      </a>
     </Link>
   ) : (
     <InformationCircleIcon className={tw(height("h-4"))} />
