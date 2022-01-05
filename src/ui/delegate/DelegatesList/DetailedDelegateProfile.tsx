@@ -13,20 +13,20 @@ import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onClose: () => void;
-  setDelegateAddressInput?: (address: string) => void;
+  onChooseDelegate?: (address: string) => void;
 }
 
 function DetailedDelegateProfile({
   delegate,
   onClose,
-  setDelegateAddressInput,
+  onChooseDelegate,
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
 
   const onClickChooseDelegate = () => {
     onClose();
-    if (setDelegateAddressInput) {
-      setDelegateAddressInput(delegate.address);
+    if (onChooseDelegate) {
+      onChooseDelegate(delegate.address);
     }
   };
 
@@ -121,7 +121,7 @@ function DetailedDelegateProfile({
 
         {/* Choose Delegate & Close Button */}
         <div className="flex flex-col gap-4 mt-auto">
-          {setDelegateAddressInput ? (
+          {onChooseDelegate ? (
             <Button
               className="w-52 flex justify-center items-center ml-auto mt-4"
               variant={ButtonVariant.GRADIENT}

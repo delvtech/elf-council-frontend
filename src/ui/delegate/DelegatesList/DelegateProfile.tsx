@@ -15,31 +15,31 @@ import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDeleg
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
-  setDelegateAddressInput?: (address: string) => void;
+  onChooseDelegate?: (address: string) => void;
   active?: boolean;
 }
 
-const defaultToolTipState = {
+const defaultTooltipState = {
   twitterHandle: false,
   address: false,
 };
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate, setDelegateAddressInput } = props;
-  const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
+  const { selected = false, delegate, onChooseDelegate } = props;
+  const [showTooltip, setShowTooltip] = useState(defaultTooltipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleCopy = useCallback(
+  const onCopy = useCallback(
     (type: "twitterHandle" | "address") => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
 
-      const nextState = { ...defaultToolTipState };
+      const nextState = { ...defaultTooltipState };
       nextState[type] = true;
-      setshowToolTip(nextState);
+      setShowTooltip(nextState);
       timeoutRef.current = setTimeout(() => {
-        setshowToolTip(defaultToolTipState);
+        setShowTooltip(defaultTooltipState);
         timeoutRef.current = null;
       }, ONE_SECOND_IN_MILLISECONDS);
       copyToClipboard(delegate[type]);
@@ -47,13 +47,14 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
     [delegate],
   );
 
-  const handleCopyTwitterHandle = (e: React.MouseEvent) => {
+  const onCopyTwitterHandle = (e: React.MouseEvent) => {
     e.stopPropagation();
-    handleCopy("twitterHandle");
+    onCopy("twitterHandle");
   };
-  const handleCopyAddress = (e: React.MouseEvent) => {
+
+  const onCopyAddress = (e: React.MouseEvent) => {
     e.stopPropagation();
-    handleCopy("address");
+    onCopy("address");
   };
 
   return (
@@ -83,20 +84,20 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               <Tooltip
                 arrow
                 placement="top"
-                open={showToolTip.twitterHandle}
+                open={showTooltip.twitterHandle}
                 title={t`Twitter handle copied`}
               >
-                <button onClick={handleCopyTwitterHandle}>
+                <button onClick={onCopyTwitterHandle}>
                   <AnnotationIcon className="h-5 text-principalRoyalBlue" />
                 </button>
               </Tooltip>
               <Tooltip
                 arrow
                 placement="top"
-                open={showToolTip.address}
+                open={showTooltip.address}
                 title={t`Address copied`}
               >
-                <button onClick={handleCopyAddress}>
+                <button onClick={onCopyAddress}>
                   <div className="relative h-4 w-4">
                     <Image
                       layout="fill"
@@ -144,7 +145,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               <DetailedDelegateProfile
                 delegate={delegate}
                 onClose={close}
-                setDelegateAddressInput={setDelegateAddressInput}
+                onChooseDelegate={onChooseDelegate}
               />
             )}
           </Popover.Panel>

@@ -32,7 +32,7 @@ function DelegatesList({
               <DelegateProfile
                 selected={selected}
                 delegate={delegate}
-                setDelegateAddressInput={setDelegateAddressInput}
+                onChooseDelegate={setDelegateAddressInput}
               />
             </li>
           );
