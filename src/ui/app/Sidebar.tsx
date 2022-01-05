@@ -3,7 +3,6 @@ import { MenuAlt4Icon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
-import { fontSize } from "src/elf-tailwindcss-classnames";
 import classNames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
@@ -61,7 +60,7 @@ export default function Sidebar(): ReactElement {
           <SidebarLink link="/resources" label={t`Resources`} router={router} />
         </div>
         <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
-          <span className={fontSize("text-sm")}>Powered by</span>
+          <span className="text-sm">Powered by</span>
           <ElementLogo height={"40"} />
         </div>
       </div>
