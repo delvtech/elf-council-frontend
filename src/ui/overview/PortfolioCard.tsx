@@ -11,7 +11,8 @@ import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { InformationCircleIcon } from "@heroicons/react/solid";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
@@ -116,11 +117,15 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
       <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
-          <InfoIconWithTooltip
-            className="ml-1"
-            tooltipText={tooltipText}
-            tooltipHref={tooltipHref}
-          />
+          <Tooltip content={tooltipText} className="ml-1">
+            {tooltipHref ? (
+              <a href={tooltipHref}>
+                <InformationCircleIcon className="h-4" />
+              </a>
+            ) : (
+              <InformationCircleIcon className="h-4" />
+            )}
+          </Tooltip>
         )}
       </div>
     </div>

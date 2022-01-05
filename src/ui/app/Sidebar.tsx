@@ -1,33 +1,8 @@
 import React, { Fragment, ReactElement, useCallback, useState } from "react";
-import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
+import { MenuAlt4Icon } from "@heroicons/react/solid";
+import { XIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
-import tw, {
-  position,
-  height,
-  width,
-  inset,
-  cursor,
-  padding,
-  display,
-  borderRadius,
-  boxShadow,
-  flexDirection,
-  alignItems,
-  transitionTimingFunction,
-  transitionProperty,
-  transitionDuration,
-  zIndex,
-  backgroundColor,
-  hardwareAcceleration,
-  translate,
-  margin,
-  justifyContent,
-  space,
-  textColor,
-  fontSize,
-} from "src/elf-tailwindcss-classnames";
 import classNames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
@@ -48,55 +23,19 @@ export default function Sidebar(): ReactElement {
   return (
     <Fragment>
       <button
-        className={tw(
-          position("fixed"),
-          height("h-12"),
-          width("w-12"),
-          inset("top-0", "left-0"),
-          cursor("cursor-pointer"),
-          padding("p-0"),
-          display("md:hidden"),
-          borderRadius("rounded-md"),
-          boxShadow("hover:shadow"),
-        )}
+        className="fixed top-0 left-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
         onClick={onOpen}
       >
-        <MenuIcon className={tw(height("h-16"), width("w-16"))} />
+        <MenuAlt4Icon className="w-6 h-6" />
       </button>
       <div
         className={classNames(
           { "-translate-x-full": !isOpen },
-          tw(
-            display("flex"),
-            flexDirection("flex-col"),
-            alignItems("items-center"),
-            width("w-full", "md:w-60"),
-            height("h-full"),
-            padding("py-14"),
-            transitionTimingFunction("ease-in-out"),
-            transitionProperty("transition-all"),
-            transitionDuration("duration-300"),
-            zIndex("z-30"),
-            position("fixed"),
-            inset("top-0", "left-0"),
-            backgroundColor("bg-white"),
-            hardwareAcceleration("transform-gpu"),
-            translate("md:translate-x-0"),
-            translate({ "translate-x-0": isOpen }),
-          ),
+          "flex flex-col items-center w-full md:w-60 h-full py-14 ease-in-out transition-all duration-300 z-30 fixed top-0 left-0 bg-white transform-gpu md:translate-x-0",
         )}
       >
-        <div
-          className={tw(
-            padding("py-3"),
-            margin("mt-1"),
-            display("flex"),
-            justifyContent("justify-around"),
-          )}
-        >
-          <div
-            className={tw(position("relative"), height("h-24"), width("w-24"))}
-          >
+        <div className="flex justify-around py-3 mt-1">
+          <div className="relative w-24 h-24">
             <Image
               layout="fill"
               src="/assets/CouncilLogo.svg"
@@ -105,24 +44,12 @@ export default function Sidebar(): ReactElement {
           </div>
           <button
             onClick={onClose}
-            className={tw(
-              position("absolute"),
-              height("h-12"),
-              width("w-12"),
-              inset("top-0", "right-0"),
-              cursor("cursor-pointer"),
-              padding("p-0"),
-              display("md:hidden"),
-              borderRadius("rounded-md"),
-              boxShadow("hover:shadow"),
-            )}
+            className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
           >
-            <CloseIcon className={tw(height("h-16"), width("w-16"))} />
+            <XIcon className="w-6 h-6" />
           </button>
         </div>
-        <div
-          className={tw(width("w-full"), space("space-y-6"), margin("mt-8"))}
-        >
+        <div className="w-full mt-8 space-y-6">
           <SidebarLink link="/" label={t`Overview`} router={router} />
           <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
           <SidebarLink link="/delegates" label={t`Delegate`} router={router} />
@@ -132,16 +59,8 @@ export default function Sidebar(): ReactElement {
           />
           <SidebarLink link="/resources" label={t`Resources`} router={router} />
         </div>
-        <div
-          className={tw(
-            display("flex"),
-            flexDirection("flex-col"),
-            alignItems("items-center"),
-            margin("mt-auto"),
-            textColor("text-principalRoyalBlue"),
-          )}
-        >
-          <span className={fontSize("text-sm")}>Powered by</span>
+        <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
+          <span className="text-sm">Powered by</span>
           <ElementLogo height={"40"} />
         </div>
       </div>
@@ -193,16 +112,7 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   return (
     <div>
       <a href={link}>
-        <div
-          className={tw(
-            display("flex"),
-            justifyContent("justify-center"),
-            padding("p-3"),
-            backgroundColor("hover:bg-blue-50"),
-            cursor("cursor-pointer"),
-            textColor("text-brandDarkBlue-dark"),
-          )}
-        >
+        <div className="flex justify-center p-3 cursor-pointer hover:bg-blue-50 text-brandDarkBlue-dark">
           <p>{label}</p>
         </div>
       </a>
