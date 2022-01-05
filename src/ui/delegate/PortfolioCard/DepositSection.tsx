@@ -3,7 +3,6 @@ import { jt, t } from "ttag";
 import { ethers, Signer } from "ethers";
 import { parseEther, formatEther } from "ethers/lib/utils";
 import Link from "next/link";
-
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { addressesJson } from "src/elf-council-addresses";
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
@@ -33,10 +32,8 @@ function DepositSection(props: DepositSectionProps): ReactElement {
 
   const clearDepositInput = () => setDepositAmount("");
 
-  const { mutate: deposit, isLoading } = useDepositIntoLockingVault(
-    signer,
-    clearDepositInput,
-  );
+  const { mutate: deposit, isLoading: depositLoading } =
+    useDepositIntoLockingVault(signer, clearDepositInput);
 
   const { data: allowanceBN } = useTokenAllowance(
     elementTokenContract,
@@ -47,7 +44,10 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const isAllowed = allowanceBN?.gt(parseEther(depositAmount || "0")) || false;
   const allowance = formatEther(allowanceBN || 0);
 
-  const { mutate: allow } = useSetTokenAllowance(signer, elementToken);
+  const { mutate: allow, isLoading: allowanceLoading } = useSetTokenAllowance(
+    signer,
+    elementToken,
+  );
 
   const onSetAllowance = () => {
     if (!account || !signer || !lockingVault) {
@@ -87,6 +87,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
           <Button
             onClick={onSetAllowance}
             disabled={!account}
+            loading={allowanceLoading}
             variant={ButtonVariant.GRADIENT}
             className="w-28 justify-center"
           >
@@ -102,7 +103,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
           isDelegated={!!currentDelegate}
           delegateAddress={currentDelegate?.address || ""}
           onDeposit={onDeposit}
-          isLoading={isLoading}
+          isLoading={depositLoading}
           buttonVariant={ButtonVariant.GRADIENT}
           buttonClassName="w-28 justify-center"
         />
