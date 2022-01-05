@@ -19,7 +19,8 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { InformationCircleIcon } from "@heroicons/react/solid";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
@@ -242,11 +243,18 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
       <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
-          <InfoIconWithTooltip
-            className="ml-1"
-            tooltipText={tooltipText}
-            tooltipHref={tooltipHref}
-          />
+          <Tooltip content={tooltipText} className="ml-1">
+            {tooltipHref ? (
+              <Link href={tooltipHref}>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a>
+                  <InformationCircleIcon className="h-4" />
+                </a>
+              </Link>
+            ) : (
+              <InformationCircleIcon className="h-4" />
+            )}
+          </Tooltip>
         )}
       </div>
     </div>

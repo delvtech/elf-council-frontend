@@ -21,7 +21,11 @@ export default function Tooltip(
       {...props}
       {...propsWithDefaults}
       placement={placement}
-      popoverClassName={classNames(styles.popover, popoverClassName)}
+      popoverClassName={classNames(
+        styles.popover,
+        popoverClassName,
+        "max-w-sm",
+      )}
     >
       {children}
     </Tooltip2>

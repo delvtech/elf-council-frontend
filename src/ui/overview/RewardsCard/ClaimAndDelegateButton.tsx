@@ -3,7 +3,7 @@ import { isValidAddress } from "src/base/isValidAddress";
 import { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface ClaimAndDelegateButtonProps {
   account: string | null | undefined;
@@ -29,7 +29,7 @@ export function ClaimAndDelegateButton(
   const hasAnyBalance = !!Number(balance);
   const hasValidDelegateAddress =
     isDelegated || isValidAddress(delegateAddress);
-  const tooltipTitle = getTooltipTitle(
+  const tooltipContent = getTooltipContent(
     account,
     hasAnyBalance,
     hasValidDelegateAddress,
@@ -40,12 +40,7 @@ export function ClaimAndDelegateButton(
   const error = disableWithoutError ? false : !hasValidDelegateAddress;
 
   return (
-    <Tooltip
-      id="claim-and-delegate-button-tooltp"
-      arrow
-      title={tooltipTitle}
-      placement="top"
-    >
+    <Tooltip content={tooltipContent}>
       <div>
         <Button
           loading={isLoading}
@@ -62,7 +57,7 @@ export function ClaimAndDelegateButton(
     </Tooltip>
   );
 }
-function getTooltipTitle(
+function getTooltipContent(
   account: string | null | undefined,
   hasAnyBalance: boolean,
   hasValidDelegateAddress: boolean,

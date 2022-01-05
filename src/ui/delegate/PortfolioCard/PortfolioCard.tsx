@@ -16,7 +16,7 @@ interface PortfolioCardProps {
   vaultBalance: string;
 }
 
-const portfolioTooltip = t`Don’t know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
+const portfolioTooltip = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 
 function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { account, signer, currentDelegate, walletBalance, vaultBalance } =
