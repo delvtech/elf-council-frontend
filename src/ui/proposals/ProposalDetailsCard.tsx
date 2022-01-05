@@ -28,7 +28,7 @@ import {
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { Ballot, useVoted } from "src/ui/voting/useVoted";
+import { Ballot, useBallot } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { useVote } from "src/ui/voting/useVote";
@@ -63,7 +63,7 @@ export function ProposalDetailsCard(
 
   const [newBallot, setCurrentBallot] = useState<Ballot>();
 
-  const { data: currentBallot } = useVoted(account, proposal?.proposalId);
+  const { data: currentBallot } = useBallot(account, proposal?.proposalId);
 
   const { mutate: vote } = useVote(account, signer);
 
@@ -168,7 +168,7 @@ export function ProposalDetailsCard(
       <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
         {isNumber(currentBallot) && (
           <div className="flex items-center justify-end w-full text-white">
-            <span>{getVoteLabel(currentBallot.castBallot)}</span>
+            <span>{getBallotLabel(currentBallot.castBallot)}</span>
             <CheckCircleIcon className="ml-2" height={18} />
           </div>
         )}
@@ -196,7 +196,7 @@ export function ProposalDetailsCard(
   );
 }
 
-function getVoteLabel(ballot: Ballot): string {
+function getBallotLabel(ballot: Ballot): string {
   switch (ballot) {
     case Ballot.YES:
       return t`Voted Yes`;

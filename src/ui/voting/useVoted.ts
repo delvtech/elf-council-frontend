@@ -24,7 +24,7 @@ export interface Vote {
  * @param {string} proposalId id the proposal
  * @returns {Vote} an object containing the vote power and direction of the vote.
  */
-export function useVoted(
+export function useBallot(
   account: string | undefined | null,
   proposalId: string | undefined,
 ): QueryObserverResult<Vote> {
