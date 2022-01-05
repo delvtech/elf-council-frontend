@@ -85,7 +85,7 @@ export default function DelegatePage(): ReactElement {
 
       <div className="flex flex-col xl:flex-row xl:justify-center max-w-7xl">
         {/* Portfolio Card */}
-        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 rounded-xl shadow mr-16">
+        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 rounded-xl shadow xl:mr-16">
           <div className="px-6 py-7">
             <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Portfolio`}</H2>
             <PortfolioCard
