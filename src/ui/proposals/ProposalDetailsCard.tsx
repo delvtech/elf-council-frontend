@@ -4,7 +4,6 @@ import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
-import Link from "next/link";
 import { t } from "ttag";
 
 import { assertNever } from "src/base/assertNever";
@@ -18,7 +17,8 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { InformationCircleIcon } from "@heroicons/react/solid";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
@@ -132,31 +132,23 @@ export function ProposalDetailsCard(
       </p>
 
       <p className="my-3 overflow-hidden">
-        <Link href={snapshotProposal?.link || ""}>
-          {/* There's a big discussion about how awful the Link api is for a11y
-          here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-          best thing to do for now is just ignore this rule when an anchor tag is
-          the child of a Link since all a tags *should* have an href 🙁 */
-          /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a className="flex items-center text-sm font-light text-white">
-            {t`View proposal`}
-            <ExternalLinkIcon className="h-4 ml-2" />
-          </a>
-        </Link>
+        <a
+          href={snapshotProposal?.link || ""}
+          className="flex items-center text-sm font-light text-white"
+        >
+          {t`View proposal`}
+          <ExternalLinkIcon className="h-4 ml-2" />
+        </a>
       </p>
 
       <p className="my-3 overflow-hidden">
-        <Link href={"https://forum.element.fi"}>
-          {/* There's a big discussion about how awful the Link api is for a11y
-          here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-          best thing to do for now is just ignore this rule when an anchor tag is
-          the child of a Link since all a tags *should* have an href 🙁 */
-          /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a className="flex items-center text-sm font-light text-white">
-            {t`View Discussion`}
-            <ExternalLinkIcon className="h-4 ml-2" />
-          </a>
-        </Link>
+        <a
+          href="https://forum.element.fi"
+          className="flex items-center text-sm font-light text-white"
+        >
+          {t`View Discussion`}
+          <ExternalLinkIcon className="h-4 ml-2" />
+        </a>
       </p>
 
       <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
@@ -282,11 +274,15 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
       <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
-          <InfoIconWithTooltip
-            className="ml-1"
-            tooltipText={tooltipText}
-            tooltipHref={tooltipHref}
-          />
+          <Tooltip content={tooltipText} className="ml-1">
+            {tooltipHref ? (
+              <a href={tooltipHref}>
+                <InformationCircleIcon className="h-4" />
+              </a>
+            ) : (
+              <InformationCircleIcon className="h-4" />
+            )}
+          </Tooltip>
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Delegate } from "src/elf-council-delegates/delegates";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { copyToClipboard } from "src/base/copyToClipboard";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
@@ -56,7 +56,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       )}
     >
       <div className="flex flex-col">
-        <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
+        <div className="flex items-center mb-1 font-bold text-principalRoyalBlue">
           <WalletJazzicon
             account={delegate.address}
             size={20}
@@ -72,25 +72,18 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         </span>
       </div>
 
-      <div className="flex flex-col justify-center items-center gap-2">
+      <div className="flex flex-col items-center justify-center gap-2">
         <Tooltip
-          arrow
-          placement="top"
-          open={showToolTip.twitterHandle}
-          title={t`Twitter handle copied`}
+          isOpen={showToolTip.twitterHandle}
+          content={t`Twitter handle copied`}
         >
           <button onClick={handleCopyTwitterHandle}>
             <AnnotationIcon className="h-5 text-principalRoyalBlue" />
           </button>
         </Tooltip>
-        <Tooltip
-          arrow
-          placement="top"
-          open={showToolTip.address}
-          title={t`Address copied`}
-        >
+        <Tooltip isOpen={showToolTip.address} content={t`Address copied`}>
           <button onClick={handleCopyAddress}>
-            <div className="relative h-4 w-4">
+            <div className="relative w-4 h-4">
               <Image
                 layout="fill"
                 src="/assets/crown.svg"

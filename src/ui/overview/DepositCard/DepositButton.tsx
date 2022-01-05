@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { FixedNumber } from "ethers";
 import { t } from "ttag";
 import classNames from "classnames";
@@ -42,7 +42,7 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     .subUnsafe(FixedNumber.from(depositAmount || "0"))
     .isNegative();
 
-  const tooltipTitle = getTooltipTitle(
+  const tooltipContent = getTooltipContent(
     account,
     hasAllowance,
     hasAnyBalance,
@@ -62,12 +62,7 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     : !hasEnoughBalance || !hasValidDelegateAddress;
 
   return (
-    <Tooltip
-      id="deposit-button-tooltp"
-      arrow
-      title={tooltipTitle}
-      placement="top"
-    >
+    <Tooltip content={tooltipContent}>
       <div>
         <Button
           loading={isLoading}
@@ -91,7 +86,7 @@ export function DepositButton(props: DepositButtonProps): ReactElement {
     </Tooltip>
   );
 }
-function getTooltipTitle(
+function getTooltipContent(
   account: string | null | undefined,
   hasAllowance: boolean,
   hasAnyBalance: boolean,
