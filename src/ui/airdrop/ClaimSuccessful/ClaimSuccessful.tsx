@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-import { width } from "src/elf-tailwindcss-classnames";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { jt, t } from "ttag";
 import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
@@ -25,9 +24,7 @@ export function ClaimSuccessful(): ReactElement {
           <div
             className={"w-full md:w-1/2 flex justify-center"}
           >{jt`Congratulations on claiming your ${elfiLogoElement} $ELFI tokens.`}</div>
-          <span
-            className={width("w-full", "md:w-1/2")}
-          >{t`Share your airdrop experience on Twitter and join the Element discord 
+          <span className="w-full md:w-1/2">{t`Share your airdrop experience on Twitter and join the Element discord 
 	  to get more involved in our community and governance system.`}</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-5/6 mb-10">
@@ -73,9 +70,7 @@ export function ClaimSuccessful(): ReactElement {
           </Link>
         </div>
         <div className="flex w-full justify-center text-base">
-          <span
-            className={width("w-full", "md:w-1/2")}
-          >{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</span>
+          <span className="w-full md:w-1/2">{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</span>
         </div>
       </div>
     </Card>
