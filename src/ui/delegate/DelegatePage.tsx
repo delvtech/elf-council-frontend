@@ -29,19 +29,15 @@ export default function DelegatePage(): ReactElement {
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
 
-  const { data: walletBalanceBN, refetch: refetchWalletBalance } =
-    useTokenBalanceOf(elementTokenContract, account);
+  const { data: walletBalanceBN } = useTokenBalanceOf(
+    elementTokenContract,
+    account,
+  );
 
   const walletBalance = formatEther(walletBalanceBN || 0);
 
-  const { data: [, vaultBalanceBN] = [], refetch: refetchVaultBalance } =
-    useDeposits(account);
+  const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
   const vaultBalance = formatEther(vaultBalanceBN || 0);
-
-  const refetchBalances = () => {
-    refetchWalletBalance();
-    refetchVaultBalance();
-  };
 
   const showWarning =
     !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
@@ -99,7 +95,6 @@ export default function DelegatePage(): ReactElement {
               currentDelegate={currentDelegate}
               walletBalance={walletBalance}
               vaultBalance={vaultBalance}
-              refetchBalances={refetchBalances}
             />
           </div>
         </GradientCard>

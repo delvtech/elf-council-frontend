@@ -22,12 +22,10 @@ interface DepositSectionProps {
   signer: Signer | undefined;
   currentDelegate: Delegate | undefined;
   walletBalance: string;
-  refetchBalances: () => void;
 }
 
 function DepositSection(props: DepositSectionProps): ReactElement {
-  const { account, signer, currentDelegate, walletBalance, refetchBalances } =
-    props;
+  const { account, signer, currentDelegate, walletBalance } = props;
   const [depositInProgress, setDepositInProgress] = useState(false);
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
@@ -38,7 +36,6 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   const onDepositSuccess = () => {
     clearDepositInput();
     setDepositInProgress(false);
-    refetchBalances();
   };
 
   const { mutate: deposit, isLoading: depositLoading } =

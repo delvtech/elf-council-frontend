@@ -14,20 +14,13 @@ interface PortfolioCardProps {
   currentDelegate: Delegate | undefined;
   walletBalance: string;
   vaultBalance: string;
-  refetchBalances: () => void;
 }
 
 const portfolioTooltip = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 
 function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const {
-    account,
-    signer,
-    currentDelegate,
-    walletBalance,
-    vaultBalance,
-    refetchBalances,
-  } = props;
+  const { account, signer, currentDelegate, walletBalance, vaultBalance } =
+    props;
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -54,7 +47,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
         signer={signer}
         currentDelegate={currentDelegate}
         walletBalance={walletBalance}
-        refetchBalances={refetchBalances}
       />
 
       {/* Withdraw Section */}
@@ -63,7 +55,6 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
         signer={signer}
         className="mt-7"
         vaultBalance={vaultBalance}
-        refetchBalances={refetchBalances}
       />
     </div>
   );

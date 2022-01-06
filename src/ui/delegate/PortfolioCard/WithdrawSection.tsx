@@ -17,11 +17,10 @@ interface WithdrawSectionProps {
   signer: Signer | undefined;
   className?: string;
   vaultBalance: string;
-  refetchBalances: () => void;
 }
 
 function WithdrawSection(props: WithdrawSectionProps): ReactElement {
-  const { account, signer, className, vaultBalance, refetchBalances } = props;
+  const { account, signer, className, vaultBalance } = props;
   const [withdrawInProgress, setWithdrawInProgress] = useState(false);
 
   const { value: withdrawAmount, setNumericValue: setWithdrawAmount } =
@@ -34,7 +33,6 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const onWithdrawSuccess = () => {
     clearWithdrawInput();
     setWithdrawInProgress(false);
-    refetchBalances();
   };
 
   const { mutate: withdraw, isLoading: withdrawLoading } =
