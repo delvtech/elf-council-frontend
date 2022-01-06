@@ -9,6 +9,7 @@ import { DelegatePreviewCard } from "src/ui/airdrop/DelegatePreviewCard/Delegate
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import { Spinner } from "src/ui/base/Button/Spinner";
 import { t } from "ttag";
 
 interface ReviewClaimProps {
@@ -27,6 +28,7 @@ export function ReviewClaim({
   onNextStep,
 }: ReviewClaimProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
+  const [isTransactionPending, setIsTransactionPending] = useState(false);
 
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
@@ -42,7 +44,11 @@ export function ReviewClaim({
 
   // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
+    onTransactionSubmitted: () => {
+      setIsTransactionPending(true);
+    },
     onTransactionMined: () => {
+      setIsTransactionPending(false);
       onNextStep();
     },
   });
@@ -63,8 +69,10 @@ export function ReviewClaim({
   return (
     <StepCard
       onNextStep={handleClaimClick}
-      nextStepDisabled={!isValidAddress(delegateAddress)}
-      nextStepLabel={t`Claim`}
+      nextStepDisabled={
+        isTransactionPending || !isValidAddress(delegateAddress)
+      }
+      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim`}
       onPrevStep={onPrevStep}
     >
       <div className="text-left text-2xl font-bold mb-10">{t`Review Claim`}</div>
