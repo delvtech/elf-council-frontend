@@ -11,7 +11,7 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { ProposalStatusTag } from "src/ui/proposals/ProposalList/ProposalStatusTag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { Ballot, useBallot } from "src/ui/voting/useVoted";
+import { Ballot, useBallot } from "src/ui/voting/useBallot";
 
 interface ProposalListItemProps {
   account: string | null | undefined;

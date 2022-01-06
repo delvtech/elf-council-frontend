@@ -31,7 +31,7 @@ import {
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 import { useVote } from "src/ui/voting/useVote";
-import { Ballot, useBallot } from "src/ui/voting/useVoted";
+import { Ballot, useBallot } from "src/ui/voting/useBallot";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 

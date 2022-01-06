@@ -7,7 +7,7 @@ import { t } from "ttag";
 
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { Ballot } from "src/ui/voting/useVoted";
+import { Ballot } from "src/ui/voting/useBallot";
 
 const BallotChoices: Record<Ballot, string> = {
   [Ballot.YES]: t`Yes`,
