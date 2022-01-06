@@ -64,11 +64,12 @@ export function ProposalDetailsCard(
   const [newBallot, setCurrentBallot] = useState<Ballot>();
 
   const { data: currentBallot } = useBallot(account, proposal?.proposalId);
+  const [ballotVotePower, ballotChoice] = currentBallot || [];
 
-  const { mutate: vote } = useVote(account, signer);
+  const { mutate: vote } = useVote(account, signer, proposal?.created);
 
   const handleVote = useCallback(() => {
-    if (!proposal || !newBallot) {
+    if (!proposal || !isNumber(newBallot)) {
       return;
     }
     const { proposalId } = proposal;
@@ -168,13 +169,13 @@ export function ProposalDetailsCard(
       />
 
       <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-        {isNumber(currentBallot) && (
+        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
           <div className="flex items-center justify-end w-full text-white">
-            <span>{getBallotLabel(currentBallot.castBallot)}</span>
+            <span>{getBallotLabel(ballotChoice)}</span>
             <CheckCircleIcon className="ml-2" height={18} />
           </div>
         )}
-        {isNumber(currentBallot) && (
+        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
           <div className="flex items-center justify-end w-full text-white">
             <span>{t`View on etherscan`}</span>
             <ExternalLinkIcon className="ml-2" height={18} />
