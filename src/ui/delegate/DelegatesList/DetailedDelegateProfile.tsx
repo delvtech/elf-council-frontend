@@ -9,17 +9,20 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
+import classNames from "classnames";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onClose: () => void;
   onChooseDelegate?: (address: string) => void;
+  className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
   onClose,
   onChooseDelegate,
+  className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
 
@@ -31,14 +34,11 @@ function DetailedDelegateProfile({
   };
 
   return (
-    <div
-      className="absolute z-50 box-content py-2 px-3 rounded-xl top-0 
-          right-0 h-full w-full bg-hackerSky"
-    >
+    <div className={classNames(className, "h-full")}>
       <div className="flex flex-col relative p-5 h-full">
-        <div className="flex gap-8">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           {/* Left Hand Column */}
-          <div className="w-[72.5%]">
+          <div className="w-full md:w-[72.5%]">
             {/* Name */}
             <div className="flex justify-between items-center">
               <div className="flex items-center">
@@ -75,7 +75,7 @@ function DetailedDelegateProfile({
           </div>
 
           {/* Right Hand Column */}
-          <div className="flex flex-col w-[27.5%]">
+          <div className="flex flex-col w-full md:w-[27.5%]">
             {/* Some handle/username */}
             <div>
               <span className="font-bold text-xl text-principalRoyalBlue">

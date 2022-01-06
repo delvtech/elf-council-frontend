@@ -85,7 +85,7 @@ export default function DelegatePage(): ReactElement {
 
       <div className="flex flex-col xl:flex-row xl:justify-center max-w-7xl">
         {/* Portfolio Card */}
-        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 rounded-xl shadow mr-16">
+        <GradientCard className="flex flex-col lg:flex-row xl:flex-col xl:w-4/12 rounded-xl shadow xl:mr-16">
           <div className="px-6 py-7">
             <H2 className="mb-4 text-white text-2xl tracking-wide">{t`Portfolio`}</H2>
             <PortfolioCard
@@ -99,7 +99,7 @@ export default function DelegatePage(): ReactElement {
         </GradientCard>
 
         {/* Delegates */}
-        <div className="flex flex-col xl:w-8/12">
+        <div className="flex flex-col xl:w-8/12 mt-8 xl:mt-0">
           {/* Delegates List */}
           <DelegatesList
             selectedDelegate={selectedDelegate}
@@ -130,7 +130,7 @@ function NoConnection(): ReactElement {
   return (
     <p className="text-left">
       <div>{t`Unable to determine delegation eligibility`}</div>
-      <div>
+      <div className="mt-1">
         {t`Please connect your wallet`}
         <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </div>
