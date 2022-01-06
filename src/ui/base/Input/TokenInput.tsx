@@ -60,7 +60,7 @@ export default function TokenInput({
         />
         {showMaxButton && maxValue ? (
           <button
-            className="absolute bg-principalRoyalBlue rounded-md px-2 py-1 top-1/2 right-3"
+            className="absolute bg-principalRoyalBlue rounded-md px-2 py-1 top-1/2 right-3 -translate-y-1/2"
             onClick={() => onChange(maxValue)}
             disabled={disabled}
           >
