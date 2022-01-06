@@ -39,7 +39,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   };
 
   const { mutate: deposit, isLoading: depositLoading } =
-    useDepositIntoLockingVault(signer, onDepositSuccess);
+    useDepositIntoLockingVault(signer, account, onDepositSuccess);
 
   const { data: allowanceBN } = useTokenAllowance(
     elementTokenContract,

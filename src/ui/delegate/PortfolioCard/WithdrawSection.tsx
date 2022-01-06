@@ -36,7 +36,7 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   };
 
   const { mutate: withdraw, isLoading: withdrawLoading } =
-    useWithdrawFromLockingVault(signer, onWithdrawSuccess);
+    useWithdrawFromLockingVault(signer, account, onWithdrawSuccess);
 
   const onWithdraw = () => {
     if (!account) {
