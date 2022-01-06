@@ -1,0 +1,81 @@
+{
+  "proposals": [
+    {
+      "calldatas": [
+        "0x88b49b834dbdd3e053743c5483a6f5f453200c2c9201e1330e5e5f99997aafcbe4389a2a"
+      ],
+      "created": 11853418,
+      "createdTimestamp": 1613286452,
+      "expiration": 11853443,
+      "lastCall": 11911881,
+      "proposalHash": "0x403e9f45397eef3a39f1933f3b15ec86f5f18c7325126f876d95f6d70b4a245e",
+      "proposalId": "0",
+      "quorum": 50,
+      "snapshotId": "QmZSURBMfMh2qSTPSSjjaL2qPdqTMJsfpkvwxuKe72bH3y",
+      "targets": ["0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"],
+      "unlock": 11853428
+    },
+    {
+      "calldatas": [
+        "0x88b49b834dbdd3e053743c5483a6f5f453200c2c9201e1330e5e5f99997aafcbe4389a2a"
+      ],
+      "created": 11853422,
+      "createdTimestamp": 1613286462,
+      "expiration": 11853447,
+      "lastCall": 11911885,
+      "proposalHash": "0x403e9f45397eef3a39f1933f3b15ec86f5f18c7325126f876d95f6d70b4a245e",
+      "proposalId": "1",
+      "quorum": 50,
+      "snapshotId": "0x46b4c3dbdb4b8b84fe42660ac5b5a41b9026c472c22e8a8d4a76ba71bf3dd825",
+      "targets": ["0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"],
+      "unlock": 11853432
+    },
+    {
+      "calldatas": [
+        "0x88b49b834dbdd3e053743c5483a6f5f453200c2c9201e1330e5e5f99997aafcbe4389a2a"
+      ],
+      "created": 11853426,
+      "createdTimestamp": 1613286470,
+      "expiration": 11853451,
+      "lastCall": 11911889,
+      "proposalHash": "0x403e9f45397eef3a39f1933f3b15ec86f5f18c7325126f876d95f6d70b4a245e",
+      "proposalId": "2",
+      "quorum": 50,
+      "snapshotId": "0x0527654d3f94d4798d34ac8ec574da9203f7efe4b4a7a87092fa316abde25932",
+      "targets": ["0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"],
+      "unlock": 11853436
+    },
+    {
+      "calldatas": [
+        "0x88b49b834dbdd3e053743c5483a6f5f453200c2c9201e1330e5e5f99997aafcbe4389a2a"
+      ],
+      "created": 11853430,
+      "createdTimestamp": 1613286477,
+      "expiration": 11853455,
+      "lastCall": 11911893,
+      "proposalHash": "0x403e9f45397eef3a39f1933f3b15ec86f5f18c7325126f876d95f6d70b4a245e",
+      "proposalId": "3",
+      "quorum": 50,
+      "snapshotId": "0x7c0bea7eb9340c9bbfcce5ba6b9ca3cbf46e214a7a8f113ab27472378a77aff5",
+      "targets": ["0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"],
+      "unlock": 11853440
+    },
+    {
+      "calldatas": [
+        "0x88b49b834dbdd3e053743c5483a6f5f453200c2c9201e1330e5e5f99997aafcbe4389a2a"
+      ],
+      "created": 11853434,
+      "createdTimestamp": 1613286485,
+      "expiration": 11853459,
+      "lastCall": 11911897,
+      "proposalHash": "0x403e9f45397eef3a39f1933f3b15ec86f5f18c7325126f876d95f6d70b4a245e",
+      "proposalId": "4",
+      "quorum": 50,
+      "snapshotId": "0x45bdb2351a21da73162ba018a7b448231945b7754abec0ecdc66c3778e9e7720",
+      "targets": ["0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1"],
+      "unlock": 11853444
+    }
+  ],
+  "snapshotSpace": "element-finance.eth",
+  "version": "0.0.0"
+}
