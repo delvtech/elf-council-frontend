@@ -59,8 +59,8 @@ export function ClaimSuccessful(): ReactElement {
                 label={t`Launch dashboard`}
                 icon={
                   <Image
-                    height="26px"
-                    width="26px"
+                    height="24px"
+                    width="24px"
                     src="/assets/CouncilLogo.svg"
                     alt={t`Element Council logo`}
                   />
