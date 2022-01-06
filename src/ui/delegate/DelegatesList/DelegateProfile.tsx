@@ -131,16 +131,16 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
-          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          enterTo="opacity-100 translate-y-0 sm:scale-100"
+          enterFrom="opacity-0 sm:scale-95"
+          enterTo="opacity-100 sm:scale-100"
           leave="ease-in duration-200"
-          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          leaveFrom="opacity-100 sm:scale-100"
+          leaveTo="opacity-0 sm:scale-95"
         >
           {/* WIP: Make modal centered when less than lg, make modal full screen when < small */}
           <Popover.Panel
-            className="fixed lg:absolute z-50 box-content rounded-xl top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
-          lg:right-0 lg:left-0 h-[500px] w-[700px] lg:h-full lg:w-full bg-hackerSky"
+            className="fixed lg:absolute z-50 box-content rounded-xl md:top-[50%] md:left-[50%] md:transform md:translate-x-[-50%] md:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
+          lg:right-0 h-full w-full lg:left-0 md:h-[500px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
           >
             {({ close }) => (
               <DetailedDelegateProfile

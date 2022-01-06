@@ -14,12 +14,14 @@ interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onClose: () => void;
   onChooseDelegate?: (address: string) => void;
+  className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
   onClose,
   onChooseDelegate,
+  className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
 
@@ -31,10 +33,7 @@ function DetailedDelegateProfile({
   };
 
   return (
-    <div
-      className="absolute z-50 box-content py-2 px-3 rounded-xl top-0 
-          right-0 h-full w-full bg-hackerSky"
-    >
+    <div className={className}>
       <div className="flex flex-col relative p-5 h-full">
         <div className="flex gap-8">
           {/* Left Hand Column */}
