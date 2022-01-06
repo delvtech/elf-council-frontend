@@ -68,7 +68,7 @@ export default function DelegatePage(): ReactElement {
       {/* Warning Card */}
       {showWarning ? (
         <div className="flex flex-col xl:flex-row xl:justify-center mb-4 max-w-7xl w-full">
-          <WarningLabel>
+          <WarningLabel className="xl:w-4/12 xl:mr-16 px-6 p-2">
             {!account ? <NoConnection /> : <NoDeposit />}
           </WarningLabel>
 
