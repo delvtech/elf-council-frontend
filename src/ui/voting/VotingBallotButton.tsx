@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback } from "react";
 
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { isNumber } from "lodash";
 import { t } from "ttag";
@@ -90,11 +90,10 @@ function BallotDropdownItem(props: BallotDropdownItemProps) {
       onClick={handleSelectItem}
     >
       <span>{ballotLabel}</span>
-      <input
-        className="ml-2 bg-transparent border-2 border-white border-solid cursor-pointer checked:bg-white"
-        type="radio"
-        checked={active}
-      ></input>
+      {active && <CheckCircleIcon className="ml-2" height="24" />}
+      {!active && (
+        <div className="w-5 h-5 ml-2 mr-1 bg-transparent border-2 border-white rounded-full" />
+      )}
     </button>
   );
 }
