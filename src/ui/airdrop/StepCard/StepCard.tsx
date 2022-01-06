@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { ReactElement, ReactNode } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -11,6 +12,7 @@ interface StepCardProps {
   prevStepLabel?: string;
   onPrevStep: () => void;
   children?: ReactNode;
+  className?: string;
 }
 
 export function StepCard({
@@ -20,11 +22,12 @@ export function StepCard({
   nextStepLabel = t`Next`,
   prevStepLabel = t`Back`,
   children,
+  className,
 }: StepCardProps): ReactElement {
   return (
     <Card
       variant={CardVariant.BLUE}
-      className="flex flex-col text-white h-full"
+      className={classNames("flex flex-col text-white h-full", className)}
     >
       {/* Extra div because we can't override padding set by Card */}
       <div className="p-6">
