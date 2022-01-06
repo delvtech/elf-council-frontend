@@ -73,6 +73,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   // handler for withdraw button
   const withdrawFromLockingVault = useWithdrawFromLockingVault(
     signer,
+    account,
     clearWithdrawInput,
   );
   const { mutate: withdraw, isLoading } = withdrawFromLockingVault;

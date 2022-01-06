@@ -34,6 +34,7 @@ export default function DelegatePage(): ReactElement {
     elementTokenContract,
     account,
   );
+
   const walletBalance = formatEther(walletBalanceBN || 0);
 
   const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
