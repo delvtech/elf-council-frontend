@@ -22,6 +22,7 @@ export function useChangeDelegation(
     signer,
     {
       onTransactionMined: () => {
+        // Invalidate `deposits` so that consumers of `useDelegate` refresh
         queryClient.invalidateQueries(
           makeSmartContractReadCallQueryKey(
             lockingVaultContract.address,
