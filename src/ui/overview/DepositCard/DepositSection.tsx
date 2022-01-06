@@ -98,6 +98,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   // handler for deposit button
   const { mutate: deposit, isLoading } = useDepositIntoLockingVault(
     signer,
+    account,
     clearDepositAmount,
   );
   const onDeposit = useCallback(() => {
