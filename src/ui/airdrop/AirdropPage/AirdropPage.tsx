@@ -237,6 +237,7 @@ function getClaimAndDelegateStatus(
     [
       AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW,
       AirdropSteps.ALREADY_CLAIMED,
+      AirdropSteps.CLAIM_COMPLETE,
     ].includes(activeStep)
   ) {
     return StepStatus.COMPLETE;
