@@ -16,7 +16,7 @@ import H3 from "src/ui/base/H3";
 import { useClaimRewards } from "src/ui/rewards/useClaimRewards";
 import { useUnclaimedRewards } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface ClaimSectionProps {
   account: string | undefined | null;
@@ -41,7 +41,7 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
     claim([ethers.constants.WeiPerEther, valueBN, proof, account]);
   }, [account, claim, merkleInfo]);
 
-  const tooltipTitle = getTooltipTitle(account, hasUnclaimedRewards);
+  const tooltipContent = getTooltipContent(account, hasUnclaimedRewards);
   return (
     <div>
       <H3
@@ -61,12 +61,7 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
         </div>
 
         <div>
-          <Tooltip
-            id="claim-button-tooltp"
-            arrow
-            title={tooltipTitle}
-            placement="top"
-          >
+          <Tooltip content={tooltipContent}>
             <div>
               <Button
                 loading={isLoading}
@@ -83,7 +78,7 @@ export function ClaimSection(props: ClaimSectionProps): ReactElement {
     </div>
   );
 }
-function getTooltipTitle(
+function getTooltipContent(
   account: string | null | undefined,
   hasAnyBalance: boolean,
 ): string {

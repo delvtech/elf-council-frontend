@@ -1,5 +1,5 @@
 import { Fragment, ReactElement, useState, useCallback, useRef } from "react";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
 import { AnnotationIcon } from "@heroicons/react/solid";
 import { Delegate } from "src/elf-council-delegates/delegates";
@@ -66,8 +66,8 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             { "!bg-paleLily": selected },
           )}
         >
-          <div className="items-start text-left w-10/12 truncate">
-            <div className="text-principalRoyalBlue font-bold flex items-center mb-1">
+          <div className="items-start w-10/12 text-left truncate">
+            <div className="flex items-center mb-1 font-bold text-principalRoyalBlue">
               <WalletJazzicon
                 account={delegate.address}
                 size={20}
@@ -80,31 +80,27 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             </span>
           </div>
           <div>
-            <span className="flex flex-col gap-1 items-center justify-center">
+            <span className="flex flex-col items-center justify-center gap-1">
               <Tooltip
-                arrow
-                placement="top"
-                open={showTooltip.twitterHandle}
-                title={t`Twitter handle copied`}
+                className="!flex"
+                isOpen={showTooltip.twitterHandle}
+                content={t`Twitter handle copied`}
               >
                 <button onClick={onCopyTwitterHandle}>
                   <AnnotationIcon className="h-5 text-principalRoyalBlue" />
                 </button>
               </Tooltip>
               <Tooltip
-                arrow
-                placement="top"
-                open={showTooltip.address}
-                title={t`Address copied`}
+                className="!flex relative w-4 h-4"
+                isOpen={showTooltip.address}
+                content={t`Address copied`}
               >
                 <button onClick={onCopyAddress}>
-                  <div className="relative h-4 w-4">
-                    <Image
-                      layout="fill"
-                      src="/assets/crown.svg"
-                      alt={t`Crown icon`}
-                    />
-                  </div>
+                  <Image
+                    layout="fill"
+                    src="/assets/crown.svg"
+                    alt={t`Crown icon`}
+                  />
                 </button>
               </Tooltip>
             </span>
@@ -124,7 +120,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveTo="opacity-0"
         >
           {/* z-30 in order to overlap sidebar z-index */}
-          <Popover.Overlay className="fixed inset-0 z-30 bg-black bg-opacity-50 transition-opacity" />
+          <Popover.Overlay className="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50" />
         </Transition.Child>
 
         {/* Detailed delegate profile */}
@@ -137,7 +133,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveFrom="opacity-100 sm:scale-100"
           leaveTo="opacity-0 sm:scale-95"
         >
-          {/* WIP: Make modal centered when less than lg, make modal full screen when < small */}
           <Popover.Panel
             className="fixed lg:absolute z-50 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
           lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"

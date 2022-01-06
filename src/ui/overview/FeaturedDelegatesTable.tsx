@@ -1,7 +1,7 @@
 import { ReactElement, useCallback, useState, useEffect } from "react";
 
-import { Tooltip } from "@material-ui/core";
-import ContentCopyIcon from "@material-ui/icons/FileCopyOutlined";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { DuplicateIcon } from "@heroicons/react/outline";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { Delegate, delegates } from "src/elf-council-delegates/delegates";
 import tw, {
@@ -263,7 +263,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
   }, [address]);
 
   return (
-    <Tooltip arrow placement="top" open={showTooltip} title={t`Address copied`}>
+    <Tooltip isOpen={showTooltip} content={t`Address copied`}>
       <div>
         <Button
           className={boxShadow("shadow-none")}
@@ -279,7 +279,7 @@ function CopyAddressButton(props: CopyAddressButtonProps) {
           >
             {formatWalletAddress(address)}
           </div>
-          <ContentCopyIcon />
+          <DuplicateIcon />
         </Button>
       </div>
     </Tooltip>

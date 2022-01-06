@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { FixedNumber } from "ethers";
 import { t } from "ttag";
 import classNames from "classnames";
@@ -32,7 +32,7 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
     .subUnsafe(FixedNumber.from(withdrawAmount || "0"))
     .isNegative();
 
-  const tooltipTitle = getTooltipTitle(
+  const tooltipContent = getTooltipContent(
     account,
     hasAnyDeposited,
     hasWithdrawAmount,
@@ -40,12 +40,7 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
   );
 
   return (
-    <Tooltip
-      id="withdraw-button-tooltip"
-      arrow
-      title={tooltipTitle}
-      placement="top"
-    >
+    <Tooltip content={tooltipContent}>
       <div>
         <Button
           loading={isLoading}
@@ -63,7 +58,7 @@ export function WithdrawButton(props: WithdrawButtonProps): ReactElement {
     </Tooltip>
   );
 }
-function getTooltipTitle(
+function getTooltipContent(
   account: string | null | undefined,
   hasAnyDeposited: boolean,
   hasWithdrawAmount: boolean,
