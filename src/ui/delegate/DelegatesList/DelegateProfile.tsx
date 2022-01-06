@@ -11,6 +11,7 @@ import classNames from "classnames";
 import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
+import dynamic from "next/dynamic";
 
 interface DelegateProfileProps {
   selected: boolean;
@@ -160,4 +161,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   return <span>{t`${votePower} votes`}</span>;
 }
 
-export default DelegateProfile;
+export default dynamic(() => Promise.resolve(DelegateProfile), {
+  // we cant server side render the Popover component, so we turn this off for DelegateProfile
+  ssr: false,
+});
