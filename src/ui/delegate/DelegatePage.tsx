@@ -42,11 +42,9 @@ export default function DelegatePage(): ReactElement {
   const vaultBalance = formatEther(vaultBalanceBN || 0);
 
   const noConnection = !account;
-  const noDelegation = parseInt(walletBalance) > 0 && !currentDelegateAddress;
+  const noDelegation = +walletBalance > 0 && !currentDelegateAddress;
   const noDeposit =
-    parseInt(walletBalance) > 0 &&
-    parseInt(vaultBalance) === 0 &&
-    currentDelegateAddress;
+    +walletBalance > 0 && +vaultBalance === 0 && currentDelegateAddress;
   const showWarning = [noConnection, noDelegation, noDeposit].some((x) => x);
 
   const renderWarning = () => {
