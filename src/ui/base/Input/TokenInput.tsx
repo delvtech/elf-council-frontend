@@ -26,6 +26,7 @@ export default function TokenInput({
   name,
   placeholder,
   value,
+  error = false,
   disabled = false,
   showMaxButton = false,
   maxValue,
@@ -52,6 +53,13 @@ export default function TokenInput({
           id={id}
           className={classNames(
             "shadow-sm text-black block w-full sm:text-sm border-gray-300 rounded-md",
+            {
+              "focus:border-brandDarkBlue": !error,
+              "focus:border-red-500": error,
+              "border-red-500": error,
+              "focus:ring-brandDarkBlue": !error,
+              "focus:ring-red-500": error,
+            },
             inputClassName,
           )}
           placeholder={placeholder}
