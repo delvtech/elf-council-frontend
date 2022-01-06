@@ -1,0 +1,132 @@
+{
+  "chainId": 5,
+  "delegates": [
+    {
+      "address": "0x004dfC2dBA6573fa4dFb1E86e3723e1070C0CfdE",
+      "description": "Well, I'm going to be a famous jazz musician. I've got it all figured out. I'll be unappreciated in my own country, but my gutsy blues stylings will electrify the French. I'll avoid the horrors of drug abuse, but I do plan to have several torrid love affairs, and I may or may not die young. I haven't decided.",
+      "name": "Lisa Simpson",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x005182C62DA59Ff202D53d6E42Cef6585eBF9617",
+      "description": "They say stress is the silent killer. But poison darts are also pretty damn quiet.",
+      "name": "Sterling Archer",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x005BB73FddB8CE049eE366b50d2f48763E9Dc0De",
+      "description": "Normally, if given the choice between doing something and nothing, I’d choose to do nothing. But I will do something if it helps someone else do nothing. I’d work all night, if it meant nothing got done.",
+      "name": "Ron Swanson",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x005f86cDD33555fE619946a008aDd389e41a75B6",
+      "description": "Spearows! Do you know who I am? I'm Ash, from the town﻿ of Pallet. I'm destined to be the world's number one Pokémon master! I can't be defeated by the likes of you. I'm going to capture and defeat you all!",
+      "name": "Ash Ketchum",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x0065291E64E40FF740aE833BE2F68F536A742b70",
+      "description": "I can do this all day.",
+      "name": "Captain America",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x006B9a91162b1eeeCEd54d8757a06F4088A61F54",
+      "description": "My wish is to stay always like this, living quietly in a corner of nature.",
+      "name": "Claude Monet",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x0076b154e60BF0E9088FcebAAbd4A778deC5ce2c",
+      "description": "Call her.",
+      "name": "Your mom",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00846297137C3F38EFE716092dcE7c3c4DD64a8D",
+      "description": "I love what I do for a living, it's the greatest job in the world, but you have to survive an awful lot of attention that you don't truly deserve and you have to live up to your professional responsibilities and I'm always trying to balance that with what is really important.",
+      "name": "Tom Hanks",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00860d89A40a5B4835a3d498fC1052De04996de6",
+      "description": "I'm a dog. Vote for me if you want, but I'm mostly retired and just wanna lay around all day.",
+      "name": "Tripoli (dog)",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00905A77Dc202e618d15d1a04Bc340820F99d7C4",
+      "description": "You almost had me? You never had me - you never had your car... Granny shiftin' not double clutchin' like you should. You're lucky that hundred shot of NOS didn't blow the welds on the intake! You almost had me? Ask any racer, any real racer. It doesn't matter if you win by an inch or a mile; winning's winning.",
+      "name": "Vin Diesel",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x009ef846DcbaA903464635B0dF2574CBEE66caDd",
+      "description": "We're here to say goodbye to our brothers and sisters. To our fathers and mothers. To our friends. Our fellow men and women who set aside their differences... to fight together... and die together so that others might live. Everyone in this world owes them a debt that can never be repaid. It is our duty and our honor to keep them alive in memory... for those who come after us... and those who come after them... for as long as men draw breath. They were the shields that guarded the realms of men. And we shall never see their like again.",
+      "name": "Jon Snow",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00C766b7DBB64E946Bf720f5220E5bF4ea2adc83",
+      "description": "The only rule is don't be boring and dress cute wherever you go. Life is too short to blend in.",
+      "name": "Paris Hilton",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00D5E029aFCE62738fa01EdCA21c9A4bAeabd434",
+      "description": "I do not know what I may appear to the world; but to myself, I seem to have been only like a boy playing on the seashore, and diverting myself now and then in finding a smoother pebble or prettier shell than ordinary, while the great ocean of truth lay all undiscovered before me.",
+      "name": "Isaac Newton",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00F452e89003c5205A0a34876feb762BD39ca0a1",
+      "description": "PleasrDAO is a collective of DeFi leaders, early NFT collectors and digital artists who have built a formidable yet benevolent reputation for acquiring culturally significant pieces with a charitable twist.",
+      "name": "PleasrDAO",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00FF5Fb9c6463c62edd773d8c89cC2174985E0f1",
+      "description": "Today's scientists have substituted mathematics for experiments, and they wander off through equation after equation, and eventually build a structure which has no relation to reality.",
+      "name": "Nikola Tesla",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00a2D36A8db278B195933680D35B10f3b26bbeca",
+      "description": "The opposite of a fact is falsehood, but the opposite of one profound truth may very well be another profound truth.",
+      "name": "Niels Bohr",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00a3b47f00106f65c0BA767eDDf47e338126f43a",
+      "description": "Success isn't always about greatness. It's about consistency. Consistent hard work leads to success. Greatness will come.",
+      "name": "Dwayne Johnson",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00a4F743B554C6b02ED0176ACa9A6298E5C6E50D",
+      "description": "The kind of knowledge which is supported only by observations and is not yet proved must be carefully distinguished from the truth; it is gained by induction, as we usually say. Yet we have seen cases in which mere induction led to error.",
+      "name": "Leonard Euler",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00a66BEC66ED5a6B52c095280f03c79bBBe8ae0E",
+      "description": "Truth is so obscure in these times, and falsehood so established, that, unless we love the truth, we cannot know it.",
+      "name": "Blaise Pascal",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x00f318fb06A05cB0F1FB20d1e3e688f166c04610",
+      "description": "I love doing great entertainment, but I like the joke to be on me. I don't want to take advantage of some poor person and dog 'em out and let the chips fall.",
+      "name": "Terry Crews",
+      "twitterHandle": "annonymous"
+    },
+    {
+      "address": "0x0101c009CD4df4492D3E0DDCEAb0997dEeEe7dEf",
+      "description": "Oh Yeah!",
+      "name": "Koolaid Man",
+      "twitterHandle": "annonymous"
+    }
+  ],
+  "version": "0.0.0"
+}
