@@ -3,7 +3,7 @@ import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
 import SuccessCard from "./SuccessCard";
 import useRouterSteps from "src/ui/router/useRouterSteps";
-import generateHash from "src/base/generateHash";
+import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
@@ -24,7 +24,8 @@ export default function ZKPage(): ReactElement {
 
   useEffect(() => {
     if (keySecretPair) {
-      setPublicId(generateHash(...keySecretPair));
+      // TODO: Integrate a16z zk lib's petersonHash fn
+      setPublicId(utils.id(keySecretPair.join("")));
     }
   }, [keySecretPair]);
 

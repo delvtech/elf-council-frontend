@@ -15,6 +15,9 @@ interface ClaimCardProps {
   onNextClick: () => void;
 }
 
+// TODO: save somewhere to be shared with ../zk/EncryptionCard
+const HASH_LENGTH = 66;
+
 export default function ClaimCard({
   className,
   onComplete,
@@ -52,7 +55,7 @@ export default function ClaimCard({
           <H2 className="text-white">{t`Unlock your Public ID`}</H2>
           <p>
             {jt`To claim the airdrop, enter your Secret and your Key, so we can 
-            check against your Public ID. If you don’t have any, ${(
+            check against your Public ID. If you don't have any, ${(
               <Link href="/zk">
                 {/* There's a big discussion about how awful the Link api is for
                 a11y here:
@@ -70,7 +73,7 @@ export default function ClaimCard({
           label={t`The Key`}
           inputProps={{
             value: key,
-            placeholder: "0x".padEnd(42, "0"),
+            placeholder: "0x".padEnd(HASH_LENGTH, "0"),
             readOnly: true,
           }}
         />
@@ -79,7 +82,7 @@ export default function ClaimCard({
           label={t`The Secret`}
           inputProps={{
             value: secret,
-            placeholder: "0x".padEnd(42, "0"),
+            placeholder: "0x".padEnd(HASH_LENGTH, "0"),
             readOnly: true,
           }}
         />
