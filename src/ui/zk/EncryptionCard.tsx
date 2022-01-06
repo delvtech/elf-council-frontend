@@ -1,10 +1,10 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2";
 import HashSlider from "./EncryptionCard/HashSlider";
 import HashString from "src/ui/base/HashString";
-import generateHash from "src/base/generateHash";
+import { utils } from "ethers";
 import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import downloadFile, { DownloadType } from "src/base/downloadFile";
@@ -18,6 +18,8 @@ interface EncryptionCardProps {
   onNextClick: () => void;
 }
 
+const HASH_LENGTH = 66;
+
 export default function EncryptionCard({
   className,
   onComplete,
@@ -25,19 +27,25 @@ export default function EncryptionCard({
   onBackClick,
   onNextClick,
 }: EncryptionCardProps): ReactElement {
-  const [key, setKey] = useState("");
-  const [secret, setSecret] = useState("");
+  const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
+  const key = keySecretPair?.[0];
+  const secret = keySecretPair?.[1];
   const [downloaded, setDownloaded] = useState(false);
 
-  // reset downloaded if the key is changed
+  // reset downloaded if the keySecretPair change
   useEffect(() => {
     setDownloaded(false);
-    if (key) {
-      const newSecret = generateHash(key.split("").reverse().join(""));
-      setSecret(newSecret);
-      onGenerated?.([key, newSecret]);
-    }
-  }, [key, onGenerated]);
+  }, [key, secret]);
+
+  const handleHashChange = useCallback(
+    ({ hash: newKey, mouseInput }: { hash: string; mouseInput: string }) => {
+      const secretInput = [newKey, ...mouseInput.split("").reverse()].join("");
+      const newSecret = utils.id(secretInput);
+      setKeySecretPair([newKey, newSecret]);
+      onGenerated?.([newKey, newSecret]);
+    },
+    [onGenerated],
+  );
 
   const handleDownloadClick = () => {
     downloadFile(
@@ -63,13 +71,14 @@ export default function EncryptionCard({
             <a href="http://TODO">{t`Learn more`}</a>
           </p>
         </div>
-        <HashSlider className="mb-2" onChange={setKey} />
+        <HashSlider className="mb-2" onChange={handleHashChange} />
         <HashString
           className="mb-2"
           label={t`The Key`}
           inputProps={{
+            className: "flex-1",
             value: key,
-            placeholder: "0x".padEnd(42, "0"),
+            placeholder: "0x".padEnd(HASH_LENGTH, "0"),
             readOnly: true,
           }}
         />
@@ -77,8 +86,9 @@ export default function EncryptionCard({
           className="mb-2"
           label={t`The Secret`}
           inputProps={{
+            className: "flex-1",
             value: secret,
-            placeholder: "0x".padEnd(42, "0"),
+            placeholder: "0x".padEnd(HASH_LENGTH, "0"),
             readOnly: true,
           }}
         />
@@ -91,14 +101,14 @@ export default function EncryptionCard({
           )}
           <div className="flex gap-4 ml-auto">
             <Button
-              disabled={!key || !secret}
               variant={ButtonVariant.WHITE}
               onClick={handleDownloadClick}
+              disabled={!keySecretPair}
             >{t`Download JSON`}</Button>
             <Button
               variant={ButtonVariant.GRADIENT}
-              disabled={!downloaded}
               onClick={onNextClick}
+              disabled={!downloaded}
             >{t`Next`}</Button>
           </div>
         </div>

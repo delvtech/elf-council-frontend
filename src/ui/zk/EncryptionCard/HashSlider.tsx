@@ -6,12 +6,18 @@ import React, {
   useState,
 } from "react";
 import useMouseTracking from "src/ui/base/useMouseTracking";
-import generateHash from "src/base/generateHash";
+import { utils } from "ethers";
 import classNames from "classnames";
 
 interface HashSliderProps {
   className?: string;
-  onChange?: (hash: string) => void;
+  onChange?: ({
+    hash,
+    mouseInput,
+  }: {
+    hash: string;
+    mouseInput: string;
+  }) => void;
 }
 
 export default function HashSlider({
@@ -19,6 +25,7 @@ export default function HashSlider({
   onChange,
 }: HashSliderProps): ReactElement {
   const [slid, setSlid] = useState(false);
+  const [hash, setHash] = useState("");
   const { mousePosition, startTracking, draggingTime } = useMouseTracking({
     trackDragTime: true,
   });
@@ -34,9 +41,21 @@ export default function HashSlider({
 
   useEffect(() => {
     if (slid) {
-      onChange?.(generateHash(...mousePosition, draggingTime));
+      setHash((oldHash) => {
+        const input = [oldHash, ...mousePosition, draggingTime].join("");
+        return utils.id(input);
+      });
     }
-  }, [slid, onChange, mousePosition, draggingTime]);
+  }, [slid, mousePosition, draggingTime]);
+
+  useEffect(() => {
+    if (hash) {
+      onChange?.({
+        hash,
+        mouseInput: [...mousePosition, draggingTime].join(""),
+      });
+    }
+  }, [hash, onChange, mousePosition, draggingTime]);
 
   const {
     trackerLeft,
