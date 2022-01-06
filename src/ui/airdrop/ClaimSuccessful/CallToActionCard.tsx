@@ -1,11 +1,14 @@
 import React, { ReactElement, ReactNode } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 
-interface CTACardProps {
+interface CallToActionCardProps {
   label: ReactNode;
   icon: ReactNode;
 }
-export function CTACard({ label, icon }: CTACardProps): ReactElement {
+export function CallToActionCard({
+  label,
+  icon,
+}: CallToActionCardProps): ReactElement {
   return (
     <Card interactive variant={CardVariant.HACKER_SKY} className="w-full">
       <div className="flex flex-col">

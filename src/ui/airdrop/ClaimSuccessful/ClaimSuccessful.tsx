@@ -4,7 +4,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { jt, t } from "ttag";
 import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
 import Image from "next/image";
-import { CTACard } from "./CTACard";
+import { CallToActionCard } from "./CallToActionCard";
 import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
 import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
@@ -38,19 +38,19 @@ export function ClaimSuccessful(): ReactElement {
               t`I just claimed my $ELFI airdrop!`,
             )}`}
           >
-            <CTACard
+            <CallToActionCard
               label={t`Tweet @element_fi`}
               icon={<TwitterIconFromFigma />}
             />
           </a>
           <a target="_blank" rel="noreferrer" href="https://element.fi/discord">
-            <CTACard
+            <CallToActionCard
               label={t`Join #ELFArmy Discord`}
               icon={<DiscordIconFromFigma />}
             />
           </a>
           <a href="https://forum.element.fi">
-            <CTACard
+            <CallToActionCard
               label={t`Join the discussion`}
               icon={<CommonwealthIcon />}
             />
@@ -58,7 +58,7 @@ export function ClaimSuccessful(): ReactElement {
           <Link href="/">
             {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
             <a>
-              <CTACard
+              <CallToActionCard
                 label={t`Launch dashboard`}
                 icon={
                   <Image
