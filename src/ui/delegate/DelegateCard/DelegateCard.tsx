@@ -2,7 +2,6 @@ import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
-import { useDeposits } from "src/ui/contracts/useDeposits";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { isValidAddress } from "src/base/isValidAddress";
 import { Delegate, delegates } from "src/elf-council-delegates/delegates";
@@ -19,7 +18,6 @@ interface DelegateCardProps {
   signer: Signer | undefined;
   vaultBalance: string;
   currentDelegate: Delegate | undefined;
-  setCurrentDelegate: (delegate: Delegate) => void;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
@@ -31,7 +29,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     signer,
     vaultBalance,
     currentDelegate,
-    setCurrentDelegate,
     delegateAddressInput,
     setDelegateAddressInput,
     selectedDelegate,
@@ -47,7 +44,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     isSuccess,
     isError,
     isLoading,
-  } = useChangeDelegation(signer);
+  } = useChangeDelegation(account, signer);
 
   const onDelegateClick = useCallback(() => {
     if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
@@ -89,20 +86,13 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       // Success
       if (nextDelegate) {
         setDelegateAddressInput("");
-        setCurrentDelegate(nextDelegate);
         toggleDelegationSuccess();
       }
       // Fail
     } else if (isError) {
       toggleDelegationFail();
     }
-  }, [
-    isSuccess,
-    delegateAddressOnChain,
-    setCurrentDelegate,
-    setDelegateAddressInput,
-    isError,
-  ]);
+  }, [isSuccess, delegateAddressOnChain, setDelegateAddressInput, isError]);
 
   const invalidAddress = !isValidAddress(delegateAddressInput);
 
