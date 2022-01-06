@@ -9,23 +9,30 @@ import {
 import { useDebounce } from "react-use";
 
 interface UseMouseTrackingOptions {
+  trackDistance?: boolean;
   trackTime?: boolean;
   trackDragTime?: boolean;
 }
 
 export default function useMouseTracking(options?: UseMouseTrackingOptions): {
-  mousePosition: [number, number];
   startTracking: () => {
     until: (event: string, target?: EventTarget) => void;
   };
   stopTracking: () => void;
-  trackingTime: number;
   isTracking: boolean;
+  mousePosition: [number, number] | undefined;
+  distanceTraveled: number;
+  trackingTime: number;
   draggingTime: number;
 } {
-  const { trackTime = false, trackDragTime = false } = options || {};
-  const [mousePosition, setMousePosition] = useState<[number, number]>([0, 0]);
+  const {
+    trackDistance = false,
+    trackTime = false,
+    trackDragTime = false,
+  } = options || {};
   const [isTracking, setIsTracking] = useState(false);
+  const [mousePosition, setMousePosition] = useState<[number, number]>();
+  const [distanceTraveled, setDistanceTraveled] = useState(0);
   const [trackingTime, setTrackingTime] = useState(0);
   const trackingIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const [draggingTime, setDraggingTime] = useState(0);
@@ -62,13 +69,31 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
       if (trackDragTime) {
         startCounter(draggingIntervalRef, setDraggingTime);
       }
-      e.preventDefault();
-      setMousePosition([e.clientX, e.clientY]);
+      let startingPosition: [number, number] | undefined = undefined;
+      setMousePosition((state) => {
+        startingPosition = state;
+        return [e.clientX, e.clientY];
+      });
+      if (trackDistance && startingPosition) {
+        setDistanceTraveled((distance) => {
+          if (!startingPosition) {
+            return distance;
+          }
+          return (
+            distance +
+            Math.sqrt(
+              Math.pow(e.clientX - startingPosition[0], 2) +
+                Math.pow(e.clientY - startingPosition[1], 2),
+            )
+          );
+        });
+      }
     },
-    [trackDragTime, startCounter],
+    [trackDragTime, trackDistance, startCounter],
   );
 
-  useDebounce(() => stopCounter(draggingIntervalRef), 10, [
+  const mouseMovementDelay = 20;
+  useDebounce(() => stopCounter(draggingIntervalRef), mouseMovementDelay, [
     stopCounter,
     draggingIntervalRef.current,
   ]);
@@ -117,11 +142,12 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
   );
 
   return {
-    mousePosition,
     startTracking,
     stopTracking,
-    trackingTime,
     isTracking,
+    mousePosition,
+    distanceTraveled,
+    trackingTime,
     draggingTime,
   };
 }

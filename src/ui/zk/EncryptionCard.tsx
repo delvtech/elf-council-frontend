@@ -2,7 +2,9 @@ import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2";
-import HashSlider from "./EncryptionCard/HashSlider";
+import HashSlider, {
+  onChangePayload as onHashChangePayload,
+} from "./EncryptionCard/HashSlider";
 import HashString from "src/ui/base/HashString";
 import { utils } from "ethers";
 import { t } from "ttag";
@@ -12,8 +14,8 @@ import ZKData from "./ZKData";
 
 interface EncryptionCardProps {
   className?: string;
-  onComplete?: () => void;
-  onGenerated?: ([key, secret]: [string, string]) => void;
+  onComplete: () => void;
+  onGenerated: ([key, secret]: [string, string]) => void;
   onBackClick?: () => void;
   onNextClick: () => void;
 }
@@ -30,6 +32,7 @@ export default function EncryptionCard({
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
   const secret = keySecretPair?.[1];
+  const [progress, setProgress] = useState(0);
   const [downloaded, setDownloaded] = useState(false);
 
   // reset downloaded if the keySecretPair change
@@ -38,10 +41,11 @@ export default function EncryptionCard({
   }, [key, secret]);
 
   const handleHashChange = useCallback(
-    ({ hash: newKey, mouseInput }: { hash: string; mouseInput: string }) => {
+    ({ hash: newKey, mouseInput, progress }: onHashChangePayload) => {
       const secretInput = [newKey, ...mouseInput.split("").reverse()].join("");
       const newSecret = utils.id(secretInput);
       setKeySecretPair([newKey, newSecret]);
+      setProgress(progress);
       onGenerated?.([newKey, newSecret]);
     },
     [onGenerated],
@@ -54,7 +58,7 @@ export default function EncryptionCard({
       DownloadType.JSON,
     );
     setDownloaded(true);
-    onComplete?.();
+    onComplete();
   };
 
   return (
@@ -71,7 +75,11 @@ export default function EncryptionCard({
             <a href="http://TODO">{t`Learn more`}</a>
           </p>
         </div>
-        <HashSlider className="mb-2" onChange={handleHashChange} />
+        <HashSlider
+          className="mb-2"
+          distanceRequirement={2000}
+          onChange={handleHashChange}
+        />
         <HashString
           className="mb-2"
           label={t`The Key`}
@@ -103,7 +111,7 @@ export default function EncryptionCard({
             <Button
               variant={ButtonVariant.WHITE}
               onClick={handleDownloadClick}
-              disabled={!keySecretPair}
+              disabled={!keySecretPair || progress < 100}
             >{t`Download JSON`}</Button>
             <Button
               variant={ButtonVariant.GRADIENT}

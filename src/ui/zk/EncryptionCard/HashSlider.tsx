@@ -8,27 +8,36 @@ import React, {
 import useMouseTracking from "src/ui/base/useMouseTracking";
 import { utils } from "ethers";
 import classNames from "classnames";
+import { useDebounce } from "react-use";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { t } from "ttag";
+
+export interface onChangePayload {
+  hash: string;
+  mouseInput: string;
+  progress: number; // 0-100 (%)
+}
 
 interface HashSliderProps {
   className?: string;
-  onChange?: ({
-    hash,
-    mouseInput,
-  }: {
-    hash: string;
-    mouseInput: string;
-  }) => void;
+  distanceRequirement?: number;
+  onChange?: ({ hash, mouseInput, progress }: onChangePayload) => void;
 }
 
 export default function HashSlider({
   className,
+  distanceRequirement,
   onChange,
 }: HashSliderProps): ReactElement {
   const [slid, setSlid] = useState(false);
+  const { mousePosition, startTracking, draggingTime, distanceTraveled } =
+    useMouseTracking({
+      trackDragTime: true,
+      trackDistance: true,
+    });
+  const [progress, setProgress] = useState(0);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [hash, setHash] = useState("");
-  const { mousePosition, startTracking, draggingTime } = useMouseTracking({
-    trackDragTime: true,
-  });
   const containerRef = useRef<HTMLDivElement>(null);
   const trackerRef = useRef<HTMLDivElement>(null);
 
@@ -40,22 +49,55 @@ export default function HashSlider({
   };
 
   useEffect(() => {
-    if (slid) {
+    if (slid && mousePosition) {
+      const newProgress = Math.min(
+        (distanceTraveled * 100) / (distanceRequirement || 0),
+        100,
+      );
       setHash((oldHash) => {
-        const input = [oldHash, ...mousePosition, draggingTime].join("");
+        const input = [
+          oldHash,
+          ...mousePosition,
+          draggingTime,
+          distanceTraveled,
+        ].join("");
         return utils.id(input);
       });
+      setProgress(newProgress);
     }
-  }, [slid, mousePosition, draggingTime]);
+  }, [
+    slid,
+    mousePosition,
+    draggingTime,
+    distanceRequirement,
+    distanceTraveled,
+  ]);
 
   useEffect(() => {
-    if (hash) {
+    if (hash && mousePosition) {
       onChange?.({
         hash,
-        mouseInput: [...mousePosition, draggingTime].join(""),
+        mouseInput: [...mousePosition, draggingTime, distanceTraveled].join(""),
+        progress,
       });
     }
-  }, [hash, onChange, mousePosition, draggingTime]);
+  }, [hash, onChange, mousePosition, draggingTime, distanceTraveled, progress]);
+
+  const tooltipDelay = 1000;
+  useDebounce(
+    () => {
+      if (slid && progress < 100 && !showTooltip) {
+        setShowTooltip(true);
+      } else {
+        setShowTooltip(false);
+      }
+    },
+    tooltipDelay,
+    [slid, progress],
+  );
+  useEffect(() => {
+    setShowTooltip(false);
+  }, [progress]);
 
   const {
     trackerLeft,
@@ -79,13 +121,15 @@ export default function HashSlider({
       containerStyles.getPropertyValue("padding-right");
     const trackerWidth = trackerRef.current.getBoundingClientRect().width;
     return {
-      trackerLeft: Math.max(
-        0,
-        Math.min(
-          mousePosition[0] - containerClientRect.left - trackerWidth / 2,
-          containerClientRect.width - trackerWidth,
-        ),
-      ),
+      trackerLeft: mousePosition
+        ? Math.max(
+            0,
+            Math.min(
+              mousePosition[0] - containerClientRect.left - trackerWidth / 2,
+              containerClientRect.width - trackerWidth,
+            ),
+          )
+        : 0,
       trackerWidth,
       containerWidth: containerClientRect.width,
       containerPaddingLeft,
@@ -110,74 +154,114 @@ export default function HashSlider({
     "group-active:after:to-white",
   );
 
+  const trackerCSSLeft = `max(${containerPaddingLeft}, min(${trackerLeft}px, calc(${containerWidth}px - ${trackerWidth}px - ${containerPaddingRight})))`;
+
   return (
-    <div
-      ref={containerRef}
-      className={classNames(
-        "relative",
-        "bg-white",
-        "rounded-full",
-        "p-2",
-        "h-12",
-        "overflow-hidden",
-
-        // inner white shadow to make arrows fade out at the edges
-        "after:absolute",
-        "after:pointer-events-none",
-        "after:z-10",
-        "after:inset-0",
-        "after:rounded-full",
-        "after:shadow-white",
-        "after:shadow-[inset_0_0_4px_6px]",
-
-        className,
-      )}
-    >
+    <div className={classNames("flex flex-col gap-4 relative", className)}>
       <div
-        role="slider"
-        // TODO: getting a11y errors for interactive div w/out a role attribute.
-        // Setting role="slider" requires a aria-valuenow and tabIndex to be
-        // compliant
-        aria-valuenow={0}
-        tabIndex={0}
-        ref={trackerRef}
-        className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
-        style={{
-          left: `max(${containerPaddingLeft}, min(${trackerLeft}px, calc(${containerWidth}px - ${trackerWidth}px - ${containerPaddingRight})))`,
-        }}
-        onMouseDown={handleStartDrag}
+        ref={containerRef}
+        className={classNames(
+          "relative",
+          "bg-white",
+          "rounded-full",
+          "p-2",
+          "h-12",
+          "overflow-hidden",
+
+          // inner white shadow to make arrows fade out at the edges
+          "after:absolute",
+          "after:pointer-events-none",
+          "after:z-10",
+          "after:inset-0",
+          "after:rounded-full",
+          "after:shadow-white",
+          "after:shadow-[inset_0_0_4px_6px]",
+        )}
       >
         <div
-          className={classNames(
-            "right-full",
-            "mr-2",
-            "group-active:mr-4",
-            "after:bg-gradient-to-l",
-            "after:animate-fade-wave-left",
-            arrowContainerClassName,
-          )}
+          role="slider"
+          // TODO: getting a11y errors for interactive div w/out a role attribute.
+          // Setting role="slider" requires a aria-valuenow and tabIndex to be
+          // compliant
+          aria-valuenow={0}
+          tabIndex={0}
+          ref={trackerRef}
+          className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
+          style={{
+            left: trackerCSSLeft,
+          }}
+          onMouseDown={handleStartDrag}
         >
-          {[...Array(8)]
-            .map((_, i) => (
+          <div
+            className={classNames(
+              "right-full",
+              "mr-2",
+              "group-active:mr-4",
+              "after:bg-gradient-to-l",
+              "after:animate-fade-wave-left",
+              arrowContainerClassName,
+            )}
+          >
+            {[...Array(8)].map((_, i) => (
               <RightArrow key={i} className="rotate-180 stroke-blueGrey" />
-            ))
-            .reverse()}
-        </div>
-        <div
-          className={classNames(
-            "left-full",
-            "ml-2",
-            "group-active:ml-4",
-            "after:bg-gradient-to-r",
-            "after:animate-fade-wave",
-            arrowContainerClassName,
-          )}
-        >
-          {[...Array(8)].map((_, i) => (
-            <RightArrow key={i} className="stroke-blueGrey" />
-          ))}
+            ))}
+          </div>
+          <Tooltip
+            className="absolute left-0 right-0 -top-3"
+            content={t`Keep sliding`}
+            isOpen={showTooltip}
+          >
+            <span></span>
+          </Tooltip>
+          <div
+            className={classNames(
+              "left-full",
+              "ml-2",
+              "group-active:ml-4",
+              "after:bg-gradient-to-r",
+              "after:animate-fade-wave",
+              arrowContainerClassName,
+            )}
+          >
+            {[...Array(8)].map((_, i) => (
+              <RightArrow key={i} className="stroke-blueGrey" />
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* progress bar */}
+      {distanceRequirement && (
+        <div className="relative h-2 rounded-full">
+          {/* semi-opaque white bg and pulse effect on finish */}
+          <div
+            className={classNames(
+              "absolute w-full h-full box-content top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50 p-0 opacity-100 transition-all duration-1000",
+              progress === 100 && "p-2 !opacity-0 !bg-topaz",
+            )}
+          ></div>
+          {/* overflow container for gradient bg and green bg */}
+          <div className="absolute inset-0 overflow-hidden rounded-full">
+            {/* gradient bg */}
+            <div
+              className={classNames(
+                "absolute inset-0 transition-transform duration-700 ease-in bg-gradient-to-r from-deepRed via-goldYellow to-topaz",
+                progress === 100 && "-translate-x-full",
+              )}
+              style={{
+                clipPath: `inset(0 ${100 - progress}% 0 0)`,
+              }}
+            ></div>
+            {/* green bg */}
+            <div
+              className={classNames(
+                "absolute inset-0 transition-transform duration-700 ease-in bg-topaz translate-x-full",
+                progress === 100 && "!translate-x-0",
+              )}
+            ></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

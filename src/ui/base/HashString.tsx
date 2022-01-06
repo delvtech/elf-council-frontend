@@ -86,7 +86,10 @@ export default function HashString({
           Then since both it and the input at set to gridArea: 1/1, the input
           will grow to the same size as this span. */}
           <span
-            className={classNames(inputClassName, "invisible hidden sm:block")}
+            className={classNames(
+              inputClassName,
+              "invisible hidden sm:block whitespace-pre",
+            )}
             aria-hidden="true"
             style={{
               // important to ensure the input and span takeup the same space
