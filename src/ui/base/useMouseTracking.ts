@@ -78,15 +78,14 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
         setDistanceTraveled((distance) => {
           if (!startingPosition) {
             return distance;
-          } else {
-            return (
-              distance +
-              Math.sqrt(
-                Math.pow(e.clientX - startingPosition[0], 2) +
-                  Math.pow(e.clientY - startingPosition[1], 2),
-              )
-            );
           }
+          return (
+            distance +
+            Math.sqrt(
+              Math.pow(e.clientX - startingPosition[0], 2) +
+                Math.pow(e.clientY - startingPosition[1], 2),
+            )
+          );
         });
       }
     },
