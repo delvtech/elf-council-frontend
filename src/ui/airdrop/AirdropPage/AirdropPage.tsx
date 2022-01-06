@@ -1,14 +1,5 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, useState } from "react";
-import tw, {
-  display,
-  flexDirection,
-  alignItems,
-  margin,
-  fontSize,
-  textColor,
-  flex,
-} from "src/elf-tailwindcss-classnames";
 import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
 import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
@@ -84,8 +75,8 @@ export default function AirdropPage(): ReactElement {
   const claimAndDelegateStatus = getClaimAndDelegateStatus(activeStep);
 
   return (
-    <div className="flex flex-col space-y-8 w-full justify-center items-center">
-      <div className="w-[600px]">
+    <div className="flex flex-col items-center flex-1 w-full max-w-4xl gap-12">
+      <div className="w-[600px] max-w-full">
         <Steps className="w-full">
           <StepItem
             stepLabel="1"
@@ -104,7 +95,7 @@ export default function AirdropPage(): ReactElement {
         </Steps>
       </div>
 
-      <div className="w-full md:w-3/5 h-full">
+      <div>
         {(() => {
           switch (activeStep) {
             case AirdropSteps.START_CLAIMING:
@@ -176,18 +167,9 @@ export default function AirdropPage(): ReactElement {
           }
         })()}
       </div>
-      <div
-        className={tw(
-          display("flex"),
-          flex("flex-1"),
-          flexDirection("flex-col"),
-          alignItems("items-center"),
-          margin("mt-auto"),
-          textColor("text-principalRoyalBlue"),
-        )}
-      >
-        <span className={fontSize("text-sm")}>{t`Powered by`}</span>
-        <ElementLogo height={"40"} />
+      <div className="flex flex-1 flex-col items-center mt-auto text-principalRoyalBlue">
+        <span className="text-sm">{t`Powered by`}</span>
+        <ElementLogo height="40" />
       </div>
     </div>
   );
@@ -234,11 +216,9 @@ function getClaimAndDelegateStatus(
   }
 
   if (
-    [
-      AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW,
-      AirdropSteps.ALREADY_CLAIMED,
-      AirdropSteps.CLAIM_COMPLETE,
-    ].includes(activeStep)
+    [AirdropSteps.ALREADY_CLAIMED, AirdropSteps.CLAIM_COMPLETE].includes(
+      activeStep,
+    )
   ) {
     return StepStatus.COMPLETE;
   }
