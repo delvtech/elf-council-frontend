@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
+// SSR: false? -- https://stackoverflow.com/a/64119607
 const DynamicDepositSection = dynamic(
   () => import("src/ui/delegate/PortfolioCard/DepositSection"),
   { ssr: false },
