@@ -18,7 +18,7 @@ module.exports = {
         denimBlue: "#7FBEEA",
         principalBlue: "#6ACDE2",
         principalRoyalBlue: "#005EBE",
-        orange: "#ff4700",
+        orange: "#f6851b",
         lightOrange: "#ffe7de",
         clay: "#242E36",
         black: "#1B1D21",
