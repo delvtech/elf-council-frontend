@@ -74,7 +74,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   };
 
   useEffect(() => {
-    // If the withdraw failed
+    // If the deposit failed
     if (!depositLoading && depositInProgress) {
       setDepositInProgress(false);
     }
