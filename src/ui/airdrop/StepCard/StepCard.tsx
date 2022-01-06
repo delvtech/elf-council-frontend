@@ -8,7 +8,7 @@ import { t } from "ttag";
 interface StepCardProps {
   onNextStep: () => void;
   nextStepDisabled?: boolean;
-  nextStepLabel?: string;
+  nextStepLabel?: string | ReactNode;
   prevStepLabel?: string;
   onPrevStep: () => void;
   children?: ReactNode;

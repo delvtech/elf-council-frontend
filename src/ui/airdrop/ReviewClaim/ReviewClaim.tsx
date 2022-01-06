@@ -1,3 +1,4 @@
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
@@ -9,6 +10,8 @@ import { DelegatePreviewCard } from "src/ui/airdrop/DelegatePreviewCard/Delegate
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import { Spinner } from "src/ui/base/Button/Spinner";
+import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 
 interface ReviewClaimProps {
@@ -27,6 +30,7 @@ export function ReviewClaim({
   onNextStep,
 }: ReviewClaimProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
+  const [isTransactionPending, setIsTransactionPending] = useState(false);
 
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
@@ -42,7 +46,11 @@ export function ReviewClaim({
 
   // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
+    onTransactionSubmitted: () => {
+      setIsTransactionPending(true);
+    },
     onTransactionMined: () => {
+      setIsTransactionPending(false);
       onNextStep();
     },
   });
@@ -63,10 +71,18 @@ export function ReviewClaim({
   return (
     <StepCard
       onNextStep={handleClaimClick}
-      nextStepDisabled={!isValidAddress(delegateAddress)}
-      nextStepLabel={t`Claim`}
+      nextStepDisabled={
+        isTransactionPending || !isValidAddress(delegateAddress)
+      }
+      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim`}
       onPrevStep={onPrevStep}
     >
+      <div className="text-right">
+        <Tag intent={Intent.SUCCESS}>
+          <span className="font-bold">{t`Delegation valid`}</span>
+          <CheckCircleIcon height={24} className="ml-4" />
+        </Tag>
+      </div>
       <div className="text-left text-2xl font-bold mb-10">{t`Review Claim`}</div>
       <div className="flex flex-col w-full justify-center text-base mb-10">
         <span
