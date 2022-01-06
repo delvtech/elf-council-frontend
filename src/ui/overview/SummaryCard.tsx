@@ -13,7 +13,8 @@ import tw, {
   alignItems,
 } from "src/elf-tailwindcss-classnames";
 import classnames from "classnames";
-import { TextWithTooltip } from "src/ui/base/TextWithTooltip";
+import Link from "next/link";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
 
 interface SummaryCardProps {
@@ -36,11 +37,12 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
           ),
         )}
       >
-        <TextWithTooltip
-          textHref={"/resources"}
-          tooltipText={t`Click to find out more.`}
-          text={title}
-        />
+        <Tooltip content={t`Click to find out more.`}>
+          <Link href="/resources">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a>{title}</a>
+          </Link>
+        </Tooltip>
       </div>
       <div
         className={tw(

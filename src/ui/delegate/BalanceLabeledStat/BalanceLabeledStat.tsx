@@ -9,7 +9,10 @@ import tw, {
   textColor,
 } from "src/elf-tailwindcss-classnames";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { InformationCircleIcon } from "@heroicons/react/solid";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import Link from "next/link";
+import { t } from "ttag";
 
 interface BalanceLabeledStatProps {
   className?: string;
@@ -40,10 +43,14 @@ export function BalanceLabeledStat(
           {label}
         </span>
         {tooltip && (
-          <InfoIconWithTooltip
-            tooltipText={tooltip}
-            tooltipHref={tooltipHref}
-          />
+          <Tooltip content={t`Click to find out more.`}>
+            <Link href="/resources">
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <a>
+                <InformationCircleIcon className="h-4" />
+              </a>
+            </Link>
+          </Tooltip>
         )}
       </div>
     </div>

@@ -6,7 +6,6 @@ import { isValidAddress } from "src/base/isValidAddress";
 import { addressesJson } from "src/elf-council-addresses";
 import tw, {
   textColor,
-  textDecoration,
   display,
   gridTemplateColumns,
   gap,
@@ -62,10 +61,12 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   const description2 = t`This will give your delegate more voting power.`;
   const learnMoreLink = (
     <Link key="learn-more-link" href="/resources">
-      <a
-        className={tw(textColor("text-blue-500"), textDecoration("underline"))}
-        href="/resources"
-      >{t`here.`}</a>
+      {/* There's a big discussion about how awful the Link api is for a11y
+      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+      best thing to do for now is just ignore this rule when an anchor tag is
+      the child of a Link since all a tags *should* have an href 🙁 */
+      /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a className="text-blue-500 underline">{t`here.`}</a>
     </Link>
   );
   const learnMore = jt`Learn more ${learnMoreLink}`;
@@ -97,6 +98,7 @@ export function DepositSection(props: DepositSectionProps): ReactElement {
   // handler for deposit button
   const { mutate: deposit, isLoading } = useDepositIntoLockingVault(
     signer,
+    account,
     clearDepositAmount,
   );
   const onDeposit = useCallback(() => {

@@ -11,18 +11,11 @@ import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { InformationCircleIcon } from "@heroicons/react/solid";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
-
-// TODO: Remove these large number bois
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const rand1 = Math.random() * 100000000;
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const rand2 = Math.random() * 100000000;
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const rand3 = Math.random() * 100000000;
 
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
@@ -44,9 +37,9 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccount(account);
 
-  const formattedBalance = commify((+balance * rand1).toFixed(4));
-  const formattedAirdrop = commify((+unclaimedAirdrop * rand2).toFixed(4));
-  const formattedVotingPower = commify((+votingPower * rand3).toFixed(4));
+  const formattedBalance = commify((+balance).toFixed(4));
+  const formattedAirdrop = commify((+unclaimedAirdrop).toFixed(4));
+  const formattedVotingPower = commify((+votingPower).toFixed(4));
 
   return (
     <Card
@@ -116,11 +109,15 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
       <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
-          <InfoIconWithTooltip
-            className="ml-1"
-            tooltipText={tooltipText}
-            tooltipHref={tooltipHref}
-          />
+          <Tooltip content={tooltipText} className="ml-1">
+            {tooltipHref ? (
+              <a href={tooltipHref}>
+                <InformationCircleIcon className="h-4" />
+              </a>
+            ) : (
+              <InformationCircleIcon className="h-4" />
+            )}
+          </Tooltip>
         )}
       </div>
     </div>

@@ -101,7 +101,7 @@ export function RewardsPage(unusedProps: RewardsPageProps): ReactElement {
     setDepositAmount(balance);
   }, [balance, setDepositAmount]);
 
-  const { mutate: deposit } = useDepositIntoLockingVault(signer);
+  const { mutate: deposit } = useDepositIntoLockingVault(signer, account);
   const onDeposit = useCallback(() => {
     if (!account) {
       return;

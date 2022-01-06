@@ -6,21 +6,22 @@ import React, {
   useState,
 } from "react";
 import useMouseTracking from "src/ui/base/useMouseTracking";
-import generateHash from "src/base/generateHash";
+import { utils } from "ethers";
 import classNames from "classnames";
 import { useDebounce } from "react-use";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
 
-interface onChangePayload {
+export interface onChangePayload {
   hash: string;
+  mouseInput: string;
   progress: number; // 0-100 (%)
 }
 
 interface HashSliderProps {
   className?: string;
   distanceRequirement?: number;
-  onChange?: ({ hash, progress }: onChangePayload) => void;
+  onChange?: ({ hash, mouseInput, progress }: onChangePayload) => void;
 }
 
 export default function HashSlider({
@@ -36,6 +37,7 @@ export default function HashSlider({
     });
   const [progress, setProgress] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [hash, setHash] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const trackerRef = useRef<HTMLDivElement>(null);
 
@@ -52,21 +54,34 @@ export default function HashSlider({
         (distanceTraveled * 100) / (distanceRequirement || 0),
         100,
       );
-      const payload: onChangePayload = {
-        hash: generateHash(...mousePosition, draggingTime, distanceTraveled),
-        progress: newProgress,
-      };
-      onChange?.(payload);
+      setHash((oldHash) => {
+        const input = [
+          oldHash,
+          ...mousePosition,
+          draggingTime,
+          distanceTraveled,
+        ].join("");
+        return utils.id(input);
+      });
       setProgress(newProgress);
     }
   }, [
     slid,
-    onChange,
     mousePosition,
     draggingTime,
     distanceRequirement,
     distanceTraveled,
   ]);
+
+  useEffect(() => {
+    if (hash && mousePosition) {
+      onChange?.({
+        hash,
+        mouseInput: [...mousePosition, draggingTime, distanceTraveled].join(""),
+        progress,
+      });
+    }
+  }, [hash, onChange, mousePosition, draggingTime, distanceTraveled, progress]);
 
   const tooltipDelay = 1000;
   useDebounce(

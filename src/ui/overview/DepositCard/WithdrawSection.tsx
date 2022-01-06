@@ -1,11 +1,10 @@
-import React, { ChangeEvent, ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback } from "react";
 
 import { parseEther } from "@ethersproject/units";
 import { FixedNumber, Signer } from "ethers";
 import Link from "next/link";
 import tw, {
   textColor,
-  textDecoration,
   display,
   gridTemplateColumns,
   gap,
@@ -46,9 +45,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
       best thing to do for now is just ignore this rule when an anchor tag is
       the child of a Link since all a tags *should* have an href 🙁 */
       /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a
-        className={tw(textColor("text-blue-500"), textDecoration("underline"))}
-      >{t`here.`}</a>
+      <a className="text-blue-500 underline">{t`here.`}</a>
     </Link>
   );
   const learnMore = jt`Learn more ${learnMoreLink}`;
@@ -76,6 +73,7 @@ export function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   // handler for withdraw button
   const withdrawFromLockingVault = useWithdrawFromLockingVault(
     signer,
+    account,
     clearWithdrawInput,
   );
   const { mutate: withdraw, isLoading } = withdrawFromLockingVault;

@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Tooltip } from "@material-ui/core";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
 import classNames from "classnames";
 
@@ -30,29 +30,20 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
   const noAccount = !account;
   const noInput = delegateAddressInput.length === 0;
 
-  const tooltipTitle = getTooltipTitle(noAccount, noInput, invalidAddress);
-
   return (
-    <Tooltip
-      id="delegate-button-tooltip"
-      arrow
-      placement="top"
-      title={tooltipTitle}
-    >
-      <div>
-        <Button
-          loading={isLoading}
-          onClick={onDelegateClick}
-          variant={buttonVariant}
-          className={classNames("w-full", buttonClassName)}
-          disabled={noAccount || isLoading || noInput || invalidAddress}
-        >{t`Delegate`}</Button>
-      </div>
+    <Tooltip content={getTooltipContent(noAccount, noInput, invalidAddress)}>
+      <Button
+        loading={isLoading}
+        onClick={onDelegateClick}
+        variant={buttonVariant}
+        className={classNames("w-full", buttonClassName)}
+        disabled={noAccount || isLoading || noInput || invalidAddress}
+      >{t`Delegate`}</Button>
     </Tooltip>
   );
 }
 
-function getTooltipTitle(
+function getTooltipContent(
   noAccount: boolean,
   noInput: boolean,
   invalidAddress: boolean,

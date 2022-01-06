@@ -17,8 +17,8 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { commify } from "ethers/lib/utils";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 
 interface AirdropAmountCardProps {
   account: string | null | undefined;
@@ -26,10 +26,11 @@ interface AirdropAmountCardProps {
 export function AirdropAmountCard({
   account,
 }: AirdropAmountCardProps): ReactElement {
-  const merkleInfoQueryData = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account);
 
-  const { data: merkleInfo, isLoading: isLoadingMerkle } = merkleInfoQueryData;
-  const airdropAmountLabel = getAirdropAmountLabel(merkleInfo, isLoadingMerkle);
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
+
+  const airdropAmountLabel = getAirdropAmountLabel(claimableBalance);
   return (
     <Card
       variant={CardVariant.HACKER_SKY}
@@ -83,17 +84,10 @@ export function AirdropAmountCard({
   );
 }
 
-function getAirdropAmountLabel(
-  merkleProof: MerkleProof | undefined,
-  isLoading: boolean,
-): string {
-  if (isLoading) {
-    return t`Loading...`;
+function getAirdropAmountLabel(claimableBalance: string): string {
+  if (claimableBalance) {
+    return commify(claimableBalance);
   }
 
-  if (merkleProof) {
-    return `${commify(merkleProof.leaf.value)}`;
-  }
-
-  return "0 ELFI";
+  return "0";
 }

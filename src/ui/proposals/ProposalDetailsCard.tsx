@@ -1,25 +1,24 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 
-import { ExternalLinkIcon } from "@heroicons/react/outline";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { commify } from "ethers/lib/utils";
-import Link from "next/link";
 import { t } from "ttag";
 
+import { assertNever } from "src/base/assertNever";
 import {
   getIsVotingOpen,
   proposalsBySnapShotId,
 } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
+import { VotingPower } from "src/elf/proposals/VotingPower";
 import Button from "src/ui/base/Button/Button";
-import PopoverButton from "src/ui/base/Button/PopoverButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Card, { CardVariant } from "src/ui/base/Card/Card";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InfoIconWithTooltip } from "src/ui/base/InfoIconWithTooltip";
+import { InformationCircleIcon } from "@heroicons/react/solid";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
@@ -29,8 +28,12 @@ import {
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { VotingPower } from "src/elf/proposals/VotingPower";
+import { Ballot, useBallot } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { useVote } from "src/ui/voting/useVote";
+import { Signer } from "ethers";
+import { isNumber } from "lodash";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -38,13 +41,14 @@ const votingPowerTooltipText = t`Don't know what your voting power is?  Click on
 interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
+  signer: Signer | undefined;
   proposal: Proposal | undefined;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement {
-  const { className, proposal, account } = props;
+  const { className, proposal, account, signer } = props;
 
   const snapshotProposal = useSnapshotProposal(proposal?.snapshotId);
 
@@ -56,6 +60,20 @@ export function ProposalDetailsCard(
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
   const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
+
+  const [newBallot, setCurrentBallot] = useState<Ballot>();
+
+  const { data: currentBallot } = useBallot(account, proposal?.proposalId);
+
+  const { mutate: vote } = useVote(account, signer);
+
+  const handleVote = useCallback(() => {
+    if (!proposal || !newBallot) {
+      return;
+    }
+    const { proposalId } = proposal;
+    vote(proposalId, newBallot);
+  }, [newBallot, proposal, vote]);
 
   if (!proposal) {
     return (
@@ -85,6 +103,9 @@ export function ProposalDetailsCard(
     proposalVotingPower,
   );
 
+  const submitButtonDisabled =
+    !isNumber(newBallot) || !account || !isVotingOpen;
+
   return (
     <GradientCard
       style={
@@ -110,22 +131,24 @@ export function ProposalDetailsCard(
         {truncateText(snapshotProposal?.body || "")}
       </p>
 
-      <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
-        {t`View proposal`}
-        <Link passHref={true} href={snapshotProposal?.link || ""}>
-          <button>
-            <ExternalLinkIcon className="h-4 ml-2" />
-          </button>
-        </Link>
+      <p className="my-3 overflow-hidden">
+        <a
+          href={snapshotProposal?.link || ""}
+          className="flex items-center text-sm font-light text-white"
+        >
+          {t`View proposal`}
+          <ExternalLinkIcon className="h-4 ml-2" />
+        </a>
       </p>
 
-      <p className="flex items-center my-3 overflow-hidden text-sm font-light text-white">
-        {t`View Discussion`}
-        <Link passHref={true} href={"https://forum.element.fi"}>
-          <button>
-            <ExternalLinkIcon className="h-4 ml-2" />
-          </button>
-        </Link>
+      <p className="my-3 overflow-hidden">
+        <a
+          href="https://forum.element.fi"
+          className="flex items-center text-sm font-light text-white"
+        >
+          {t`View Discussion`}
+          <ExternalLinkIcon className="h-4 ml-2" />
+        </a>
       </p>
 
       <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
@@ -144,30 +167,49 @@ export function ProposalDetailsCard(
         label={t`Eligible voting balance`}
       />
 
-      <div className="flex items-end justify-between flex-1 w-full">
-        <PopoverButton
-          popover={
-            <Card variant={CardVariant.BLUE}>
-              <div>choice 1</div>
-              <div>choice 1</div>
-              <div>choice 1</div>
-            </Card>
-          }
-        >
-          <div>
-            <span>{t`Choice`}</span>
-
-            <ChevronDownIcon
-              className={`${true ? "" : "text-opacity-70"}
-                  ml-2 h-5 w-5 text-orange-300 group-hover:text-opacity-80 transition ease-in-out duration-150`}
-              aria-hidden="true"
-            />
+      <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
+        {isNumber(currentBallot) && (
+          <div className="flex items-center justify-end w-full text-white">
+            <span>{getBallotLabel(currentBallot.castBallot)}</span>
+            <CheckCircleIcon className="ml-2" height={18} />
           </div>
-        </PopoverButton>
-        <Button variant={ButtonVariant.WHITE}>{t`Submit`}</Button>
+        )}
+        {isNumber(currentBallot) && (
+          <div className="flex items-center justify-end w-full text-white">
+            <span>{t`View on etherscan`}</span>
+            <ExternalLinkIcon className="ml-2" height={18} />
+          </div>
+        )}
+        <div className="flex justify-between w-full">
+          <VotingBallotButton
+            currentBallot={newBallot}
+            onSelectBallot={setCurrentBallot}
+          />
+          <Button
+            disabled={submitButtonDisabled}
+            onClick={handleVote}
+            variant={ButtonVariant.WHITE}
+          >
+            {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
+          </Button>
+        </div>
       </div>
     </GradientCard>
   );
+}
+
+function getBallotLabel(ballot: Ballot): string {
+  switch (ballot) {
+    case Ballot.YES:
+      return t`Voted Yes`;
+    case Ballot.NO:
+      return t`Voted No`;
+    case Ballot.MAYBE:
+      return t`Voted Abstain`;
+    default:
+      assertNever(ballot);
+      return "";
+  }
 }
 
 interface QuorumBarProps {
@@ -232,11 +274,15 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
       <div className="flex items-center text-lg font-light">
         {label}
         {tooltipText && (
-          <InfoIconWithTooltip
-            className="ml-1"
-            tooltipText={tooltipText}
-            tooltipHref={tooltipHref}
-          />
+          <Tooltip content={tooltipText} className="ml-1">
+            {tooltipHref ? (
+              <a href={tooltipHref}>
+                <InformationCircleIcon className="h-4" />
+              </a>
+            ) : (
+              <InformationCircleIcon className="h-4" />
+            )}
+          </Tooltip>
         )}
       </div>
     </div>

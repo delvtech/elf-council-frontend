@@ -20,12 +20,23 @@ export default function LinkButton(props: LinkButtonProps): ReactElement {
   const { link, variant, round, className, children } = props;
   const buttonClass = getButtonClass({ variant, round });
   return (
-    <Link href={link} passHref>
-      <div
-        className={classNames(buttonClass, cursor("cursor-pointer"), className)}
-      >
-        {children}
-      </div>
+    <Link href={link}>
+      {/* There's a big discussion about how awful the Link api is for a11y
+      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+      best thing to do for now is just ignore this rule when an anchor tag is
+      the child of a Link since all a tags *should* have an href 🙁 */
+      /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a>
+        <div
+          className={classNames(
+            buttonClass,
+            cursor("cursor-pointer"),
+            className,
+          )}
+        >
+          {children}
+        </div>
+      </a>
     </Link>
   );
 }
