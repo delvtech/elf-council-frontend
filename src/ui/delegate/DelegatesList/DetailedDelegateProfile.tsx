@@ -60,16 +60,7 @@ function DetailedDelegateProfile({
               <h3 className="text-principalRoyalBlue">{t`Personal Delegate Mission`}</h3>
 
               <p className="mt-2 text-sm text-principalRoyalBlue">
-                This is a small change, but a big move for us. 140 was an
-                arbitrary choice based on the 160 character SMS limit. Proud of
-                how thoughtful the team has been in solving a real problem
-                people have when trying to tweet. And at the same time
-                maintaining our brevity, speed, and essence! This is a small
-                change, but a big move for us. 140 was an arbitrary choice based
-                on the 160 character SMS limit. Proud of how thoughtful the team
-                has been in solving a real problem people have when trying to
-                tweet. And at the same time maintaining our brevity, speed, and
-                essence.
+                {delegate.description}
               </p>
             </div>
           </div>
