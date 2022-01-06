@@ -12,6 +12,7 @@ import classNames from "classnames";
 import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
+import { useDelegate } from "src/ui/delegate/useDelegate";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -39,7 +40,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
-  const { data: [delegateAddressOnChain] = [] } = useDeposits(account);
+  const delegateAddressOnChain = useDelegate(account);
 
   const {
     mutate: changeDelegation,
