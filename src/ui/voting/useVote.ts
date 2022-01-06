@@ -1,24 +1,22 @@
 import { useCallback } from "react";
 
+import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
+
 import { addressesJson } from "src/elf-council-addresses";
-import {
-  coreVotingContract,
-  nonFungibleVotingContract,
-  rewardsContract,
-} from "src/elf/contracts";
+import { coreVotingContract } from "src/elf/contracts";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
-import { useRewardsVaultVotingPower } from "src/ui/voting/useRewardsVaultVotingPower";
-import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
+import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingPower";
 
 const {
-  optimisticRewardsVault: optimisticRewardsVaultAddress,
+  // optimisticRewardsVault: optimisticRewardsVaultAddress,
   lockingVault: lockingVaultAddress,
+  vestingVault: vestingVaultAddress,
 } = addressesJson.addresses;
 
 export function useVote(
@@ -45,16 +43,23 @@ export function useVote(
     account,
     atBlockNumber,
   );
-  const rewardsVaultVotingPower = useRewardsVaultVotingPower(
+
+  const vestingVaultVotingPower = useVestingVaultVotingPower(
     account,
-    rewardsContract,
     atBlockNumber,
   );
-  const nonFungibleVotingPower = useRewardsVaultVotingPower(
-    account,
-    nonFungibleVotingContract,
-    atBlockNumber,
-  );
+
+  // Commented for now, but we'll need to activate these soon
+  // const rewardsVaultVotingPower = useRewardsVaultVotingPower(
+  //   account,
+  //   rewardsContract,
+  //   atBlockNumber,
+  // );
+  // const nonFungibleVotingPower = useRewardsVaultVotingPower(
+  //   account,
+  //   nonFungibleVotingContract,
+  //   atBlockNumber,
+  // );
 
   const onVote = useCallback(
     (proposalId: string, ballot: Ballot) => {
@@ -69,23 +74,31 @@ export function useVote(
       const votingVaults: string[] = [];
       const extraDatas: string[] = [];
 
-      if (+rewardsVaultVotingPower > 0) {
-        votingVaults.push(optimisticRewardsVaultAddress);
-        const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
-        extraDatas.push(extraData);
-      }
-      if (+nonFungibleVotingPower > 0) {
-        votingVaults.push(nonFungibleVotingContract.address);
-        const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
-        extraDatas.push(extraData);
-      }
+      // Commented for now, but we'll need to activate these soon
+      // if (+rewardsVaultVotingPower > 0) {
+      //   votingVaults.push(optimisticRewardsVaultAddress);
+      //   const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
+      //   extraDatas.push(extraData);
+      // }
+      // if (+nonFungibleVotingPower > 0) {
+      //   votingVaults.push(nonFungibleVotingContract.address);
+      //   const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
+      //   extraDatas.push(extraData);
+      // }
+
       if (+lockingVaultVotingPower > 0) {
         votingVaults.push(lockingVaultAddress);
         const extraData = getCallDatasForLockingVaultQueryVotePower();
         extraDatas.push(extraData);
       }
 
-      vote([votingVaults, extraDatas, proposalId, ballot]);
+      if (+vestingVaultVotingPower > 0) {
+        votingVaults.push(vestingVaultAddress);
+        const extraData = getCallDatasForLockingVaultQueryVotePower();
+        extraDatas.push(extraData);
+      }
+
+      vote([votingVaults, extraDatas, Number(proposalId), ballot]);
     },
     [
       account,
@@ -93,8 +106,7 @@ export function useVote(
       latestBlockNumber,
       lockingVaultVotingPower,
       merkleInfo,
-      nonFungibleVotingPower,
-      rewardsVaultVotingPower,
+      vestingVaultVotingPower,
       vote,
     ],
   );
@@ -107,6 +119,8 @@ function getCallDatasForLockingVaultQueryVotePower(): string {
   return "0x00";
 }
 
+// not used right now, but we'll need to when we add optimistic rewards
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getCallDatasForRewardsVaultQueryVotePower(
   merkleInfo: MerkleProof,
 ): string {
