@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Signer } from "ethers";
 import { t } from "ttag";
 import Link from "next/link";
@@ -17,23 +17,44 @@ interface WithdrawSectionProps {
   signer: Signer | undefined;
   className?: string;
   vaultBalance: string;
+  refetchBalances: () => void;
 }
 
 function WithdrawSection(props: WithdrawSectionProps): ReactElement {
-  const { account, signer, className, vaultBalance } = props;
+  const { account, signer, className, vaultBalance, refetchBalances } = props;
+  const [withdrawInProgress, setWithdrawInProgress] = useState(false);
 
   const { value: withdrawAmount, setNumericValue: setWithdrawAmount } =
     useNumericInputValue();
-  const clearWithdrawInput = () => setWithdrawAmount("");
+
+  const clearWithdrawInput = () => {
+    setWithdrawAmount("");
+  };
+
+  const onWithdrawSuccess = () => {
+    clearWithdrawInput();
+    setWithdrawInProgress(false);
+    refetchBalances();
+  };
 
   const { mutate: withdraw, isLoading: withdrawLoading } =
-    useWithdrawFromLockingVault(signer, clearWithdrawInput);
+    useWithdrawFromLockingVault(signer, onWithdrawSuccess);
+
   const onWithdraw = () => {
     if (!account) {
       return;
     }
+    setWithdrawInProgress(true);
     withdraw([parseEther(withdrawAmount)]);
   };
+
+  useEffect(() => {
+    // If the withdraw failed
+    if (!withdrawLoading && withdrawInProgress) {
+      setWithdrawInProgress(false);
+    }
+  }, [withdrawInProgress, withdrawLoading]);
+
   return (
     <div className={className}>
       <PortfolioWithdrawText />
@@ -57,7 +78,7 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
           amountDeposited={vaultBalance}
           withdrawAmount={withdrawAmount}
           onWithdraw={onWithdraw}
-          isLoading={withdrawLoading}
+          isLoading={withdrawLoading || withdrawInProgress}
           buttonVariant={ButtonVariant.WHITE}
           buttonClassName="w-28 justify-center"
         />

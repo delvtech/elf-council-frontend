@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { jt, t } from "ttag";
 import { ethers, Signer } from "ethers";
 import { parseEther, formatEther } from "ethers/lib/utils";
@@ -22,18 +22,27 @@ interface DepositSectionProps {
   signer: Signer | undefined;
   currentDelegate: Delegate | undefined;
   walletBalance: string;
+  refetchBalances: () => void;
 }
 
 function DepositSection(props: DepositSectionProps): ReactElement {
-  const { account, signer, currentDelegate, walletBalance } = props;
+  const { account, signer, currentDelegate, walletBalance, refetchBalances } =
+    props;
+  const [depositInProgress, setDepositInProgress] = useState(false);
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
     useNumericInputValue();
 
   const clearDepositInput = () => setDepositAmount("");
 
+  const onDepositSuccess = () => {
+    clearDepositInput();
+    setDepositInProgress(false);
+    refetchBalances();
+  };
+
   const { mutate: deposit, isLoading: depositLoading } =
-    useDepositIntoLockingVault(signer, clearDepositInput);
+    useDepositIntoLockingVault(signer, onDepositSuccess);
 
   const { data: allowanceBN } = useTokenAllowance(
     elementTokenContract,
@@ -53,7 +62,6 @@ function DepositSection(props: DepositSectionProps): ReactElement {
     if (!account || !signer || !lockingVault) {
       return;
     }
-
     allow([lockingVault, ethers.constants.MaxUint256]);
   };
 
@@ -61,9 +69,16 @@ function DepositSection(props: DepositSectionProps): ReactElement {
     if (!account || !signer || !currentDelegate) {
       return;
     }
-
+    setDepositInProgress(true);
     deposit([account, parseEther(depositAmount), currentDelegate.address]);
   };
+
+  useEffect(() => {
+    // If the withdraw failed
+    if (!depositLoading && depositInProgress) {
+      setDepositInProgress(false);
+    }
+  }, [depositInProgress, depositLoading]);
 
   return (
     <div>
