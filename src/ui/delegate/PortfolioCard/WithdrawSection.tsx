@@ -19,12 +19,15 @@ interface WithdrawSectionProps {
   vaultBalance: string;
 }
 
+const MAX_INPUT = 1000000000;
+const MAX_PRECISION = 18;
+
 function WithdrawSection(props: WithdrawSectionProps): ReactElement {
   const { account, signer, className, vaultBalance } = props;
   const [withdrawInProgress, setWithdrawInProgress] = useState(false);
 
   const { value: withdrawAmount, setNumericValue: setWithdrawAmount } =
-    useNumericInputValue();
+    useNumericInputValue({ max: MAX_INPUT, maxPrecision: MAX_PRECISION });
 
   const clearWithdrawInput = () => {
     setWithdrawAmount("");

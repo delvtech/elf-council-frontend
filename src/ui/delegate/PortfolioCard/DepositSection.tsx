@@ -24,12 +24,15 @@ interface DepositSectionProps {
   walletBalance: string;
 }
 
+const MAX_INPUT = 1000000000;
+const MAX_PRECISION = 18;
+
 function DepositSection(props: DepositSectionProps): ReactElement {
   const { account, signer, currentDelegate, walletBalance } = props;
   const [depositInProgress, setDepositInProgress] = useState(false);
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
-    useNumericInputValue();
+    useNumericInputValue({ max: MAX_INPUT, maxPrecision: MAX_PRECISION });
 
   const clearDepositInput = () => setDepositAmount("");
 
