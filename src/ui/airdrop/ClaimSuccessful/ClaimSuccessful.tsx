@@ -19,7 +19,7 @@ export function ClaimSuccessful(): ReactElement {
       className="flex flex-col text-white text-center h-full"
     >
       <div className="flex flex-col p-6 justify-center items-center">
-        <div className="text-3xl font-bold my-6">{t`Claim Successful!`}</div>
+        <h2 className="text-3xl font-bold my-6">{t`Claim Successful!`}</h2>
         <div className="flex flex-col w-full items-center text-base space-y-3 mb-10">
           <div
             className={"w-full md:w-1/2 flex justify-center"}
