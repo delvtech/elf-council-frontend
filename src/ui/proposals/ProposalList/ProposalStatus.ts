@@ -15,6 +15,14 @@ export function getProposalStatus(
   quourum: string,
   votingPower: VotingPower | undefined,
 ): ProposalStatus | undefined {
+  // special case here.  if no one ever voted on the proposal and voting is closed, it failed.
+  // NOTE: we should remove this before mainnet as it could cause a flash of FAILED before SUCCESS
+  // if votingPower just hasn't loaded yet. leaving in for demonstration purposes right now
+  if (!votingPower && !isVotingOpen) {
+    return ProposalStatus.FAILED;
+  }
+
+  // otherwise let's assume that the votingPower response is still loading
   if (!votingPower) {
     return undefined;
   }
@@ -40,7 +48,6 @@ export function getProposalStatus(
     return ProposalStatus.PASSED;
   }
 
-  if (hasEnoughNo) {
-    return ProposalStatus.FAILED;
-  }
+  // voting is closed and there weren't enough yes votes means it failed.
+  return ProposalStatus.FAILED;
 }
