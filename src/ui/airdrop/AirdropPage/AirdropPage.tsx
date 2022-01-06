@@ -172,7 +172,7 @@ export default function AirdropPage(): ReactElement {
                 />
               );
             case AirdropSteps.CLAIM_COMPLETE:
-              return <ClaimSuccessful account={account} />;
+              return <ClaimSuccessful />;
           }
         })()}
       </div>
