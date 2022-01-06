@@ -13,18 +13,19 @@ import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
-import { Delegate, delegates } from "src/elf-council-delegates/delegates";
+import { delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
 import { formatEther } from "ethers/lib/utils";
 import { useDeposits } from "src/ui/contracts/useDeposits";
+import { useDelegate } from "src/ui/delegate/useDelegate";
+import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
   const signer = account ? (library?.getSigner(account) as Signer) : undefined;
 
-  const [currentDelegate, setCurrentDelegate] = useState<
-    Delegate | undefined
-  >();
+  const currentDelegateAddress = useDelegate(account);
+  const currentDelegate = getFeaturedDelegate(currentDelegateAddress || "");
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
@@ -114,7 +115,6 @@ export default function DelegatePage(): ReactElement {
               signer={signer}
               vaultBalance={vaultBalance}
               currentDelegate={currentDelegate}
-              setCurrentDelegate={setCurrentDelegate}
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
