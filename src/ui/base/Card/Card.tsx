@@ -46,7 +46,7 @@ export default function Card(props: CardProps): ReactElement {
 
   const cardClassName = classNames(
     tw(
-      getBackgroundColor(variant, active),
+      getBackgroundColor(variant, active, interactive),
       boxShadow(active ? "shadow-md" : "shadow"),
       overflow("overflow-hidden"),
       borderRadius("rounded-xl"),
@@ -73,7 +73,11 @@ export default function Card(props: CardProps): ReactElement {
   );
 }
 
-function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
+function getBackgroundColor(
+  variant: CardVariant,
+  active: boolean,
+  interactive: boolean,
+): TArg {
   if (active) {
     return backgroundColor("bg-hackerSky");
   }
@@ -100,7 +104,7 @@ function getBackgroundColor(variant: CardVariant, active: boolean): TArg {
     case CardVariant.WHITE:
       return backgroundColor("bg-white");
     case CardVariant.HACKER_SKY:
-      return backgroundColor("bg-hackerSky");
+      return backgroundColor("bg-hackerSky", { "hover:bg-white": interactive });
     default:
       assertNever(variant);
   }

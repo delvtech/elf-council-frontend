@@ -11,6 +11,7 @@ import classNames from "classnames";
 import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
+import dynamic from "next/dynamic";
 
 interface DelegateProfileProps {
   selected: boolean;
@@ -127,13 +128,16 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
-          enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          enterTo="opacity-100 translate-y-0 sm:scale-100"
+          enterFrom="opacity-0 sm:scale-95"
+          enterTo="opacity-100 sm:scale-100"
           leave="ease-in duration-200"
-          leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-          leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          leaveFrom="opacity-100 sm:scale-100"
+          leaveTo="opacity-0 sm:scale-95"
         >
-          <Popover.Panel className="box-content absolute top-0 right-0 z-50 w-full h-full rounded-xl bg-hackerSky">
+          <Popover.Panel
+            className="fixed lg:absolute z-50 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
+          lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
+          >
             {({ close }) => (
               <DetailedDelegateProfile
                 delegate={delegate}
@@ -157,4 +161,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   return <span>{t`${votePower} votes`}</span>;
 }
 
-export default DelegateProfile;
+export default dynamic(() => Promise.resolve(DelegateProfile), {
+  // we cant server side render the Popover component, so we turn this off for DelegateProfile
+  ssr: false,
+});
