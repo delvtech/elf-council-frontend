@@ -1,20 +1,4 @@
 import React, { ReactElement } from "react";
-import tw, {
-  alignItems,
-  display,
-  flexDirection,
-  fontSize,
-  fontWeight,
-  height,
-  justifyContent,
-  letterSpacing,
-  minHeight,
-  padding,
-  space,
-  textAlign,
-  textColor,
-  width,
-} from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -38,23 +22,9 @@ export function StartClaimingCard({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className={tw(
-        display("flex"),
-        flexDirection("flex-col"),
-        height("h-full"),
-        minHeight("min-h-full"),
-        textAlign("text-center"),
-        textColor("text-white"),
-        width("w-full"),
-      )}
+      className="flex flex-col h-full min-h-full text-center text-white w-full"
     >
-      <div
-        className={tw(
-          display("flex"),
-          padding("p-4"),
-          justifyContent("justify-end"),
-        )}
-      >
+      <div className="flex p-2 justify-end">
         {!account ? (
           <ConnectWalletButton
             label={t`Connect wallet`}
@@ -68,61 +38,18 @@ export function StartClaimingCard({
           />
         )}
       </div>
-      <div
-        className={tw(
-          padding("p-12"),
-          display("flex"),
-          flexDirection("flex-col"),
-          alignItems("items-center"),
-          justifyContent("justify-center"),
-          height("h-full"),
-          space("space-y-5"),
-        )}
-      >
-        <div
-          className={tw(
-            width("w-full", "md:w-1/2"),
-            display("flex"),
-            flexDirection("flex-col"),
-            alignItems("items-center"),
-            justifyContent("justify-center"),
-            space("space-y-8"),
-          )}
-        >
-          <div
-            className={tw(
-              textAlign("text-center"),
-              fontWeight("font-semibold"),
-              letterSpacing("tracking-wider"),
-              fontSize("text-base"),
-            )}
-          >{t`Introducing $ELFI`}</div>
-          <div
-            className={tw(fontSize("text-3xl"), fontWeight("font-bold"))}
-          >{t`Help contribute to the next wave of Element`}</div>
-          <div
-            className={tw(
-              fontSize("text-base"),
-              textAlign("text-center"),
-              space("space-y-4"),
-              padding("px-4"),
-            )}
-          >
+      <div className="p-12 flex flex-col items-center justify-center h-full space-y-5">
+        <div className="w-full md:w-1/2 flex flex-col items-center justify-center space-y-8">
+          <div className="text-center font-semibold tracking-wider text-base">{t`Introducing $ELFI`}</div>
+          <div className="text-3xl font-bold">{t`Help contribute to the next wave of Element`}</div>
+          <div className="text-base text-center space-y-4 px-4">
             <p>
               {t`With the launch of $ELFI and the DAO, the community now leads the future of the protocol. `}{" "}
             </p>
           </div>
         </div>
 
-        <div
-          className={tw(
-            display("flex"),
-            justifyContent("justify-center"),
-            width("w-full"),
-            space("space-x-4"),
-            padding("pt-12"),
-          )}
-        >
+        <div className="flex justify-center w-full space-x-4 pt-12">
           <Button
             disabled={!account}
             variant={ButtonVariant.GRADIENT}

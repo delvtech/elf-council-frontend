@@ -43,6 +43,8 @@ export function ChooseDelegate({
 
   return (
     <StepCard
+      // relative so the delegate profile popover stays contained within the card
+      className="relative"
       onNextStep={onNextStep}
       nextStepDisabled={!isValidAddress(delegateAddress || "")}
       nextStepLabel={t`Review Claim`}
@@ -57,8 +59,7 @@ export function ChooseDelegate({
         about potential delegates, click on the x icon to learn more about them
         or click on the y icon to view their Twitter.`}</span>
         <span className="w-full font-bold mb-2">{t`You can delegate to someone
-        not listed or to yourself, by entering an Ethereum address with the
-        button on the right. `}</span>
+        not listed or to yourself, by entering an Ethereum address.`}</span>
       </div>
       <div className="space-y-4">
         <TextInput
@@ -72,10 +73,7 @@ export function ChooseDelegate({
         />
         <div className="p-1 rounded-xl shadow h-48 overflow-auto">
           {/* List of delegates */}
-          <ul
-            className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll"
-            style={{ maxHeight: "428px" }}
-          >
+          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll max-h-[428px]">
             {delegates.map((delegate, idx) => {
               return (
                 <li key={`${delegate.address}-${idx}}`}>

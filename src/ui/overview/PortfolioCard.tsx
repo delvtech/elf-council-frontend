@@ -17,14 +17,6 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 
-// TODO: Remove these large number bois
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const rand1 = Math.random() * 100000000;
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const rand2 = Math.random() * 100000000;
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers
-const rand3 = Math.random() * 100000000;
-
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -45,9 +37,9 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccount(account);
 
-  const formattedBalance = commify((+balance * rand1).toFixed(4));
-  const formattedAirdrop = commify((+unclaimedAirdrop * rand2).toFixed(4));
-  const formattedVotingPower = commify((+votingPower * rand3).toFixed(4));
+  const formattedBalance = commify((+balance).toFixed(4));
+  const formattedAirdrop = commify((+unclaimedAirdrop).toFixed(4));
+  const formattedVotingPower = commify((+votingPower).toFixed(4));
 
   return (
     <Card

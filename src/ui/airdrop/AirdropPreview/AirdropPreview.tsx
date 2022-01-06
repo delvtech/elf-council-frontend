@@ -1,17 +1,5 @@
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import React, { ReactElement } from "react";
-import tw, {
-  display,
-  flexDirection,
-  fontSize,
-  fontWeight,
-  justifyContent,
-  margin,
-  padding,
-  space,
-  textAlign,
-  width,
-} from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCard";
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
@@ -47,55 +35,20 @@ export function AirdropPreview({
 
   return (
     <StepCard onPrevStep={onPrevStep} onNextStep={onNextStep}>
-      <div className={tw(display("flex"), flexDirection("flex-col"))}>
-        <div className={textAlign("text-right")}>
+      <div className="flex flex-col">
+        <div className="text-right">
           <Tag intent={Intent.SUCCESS}>
-            <span
-              className={fontWeight("font-bold")}
-            >{t`Eligible for airdrop`}</span>
-            <CheckCircleIcon height={24} className={margin("ml-4")} />
+            <span className="font-bold">{t`Eligible for airdrop`}</span>
+            <CheckCircleIcon height={24} className="ml-4" />
           </Tag>
         </div>
-        <div
-          className={tw(
-            textAlign("text-left"),
-            fontSize("text-3xl"),
-            fontWeight("font-bold"),
-            margin("mb-10"),
-          )}
-        >{t`Connect wallet`}</div>
-        <div
-          className={tw(
-            display("flex"),
-            flexDirection("flex-col"),
-            width("w-full"),
-            justifyContent("justify-center"),
-            fontSize("text-base"),
-            margin("mb-10"),
-          )}
-        >
-          <span
-            className={tw(
-              width("w-full"),
-              fontWeight("font-bold"),
-              margin("mb-2"),
-            )}
-          >{t`Congratulations! You have some ELFI available to claim.`}</span>
-          <span
-            className={width("w-full")}
-          >{t`You have received these tokens for being an active member of the Element community.
+        <div className="text-left text-3xl font-bold mb-10">{t`Connect wallet`}</div>
+        <div className="flex flex-col w-full justify-center text-base mb-10">
+          <span className="w-full font-bold mb-2">{t`Congratulations! You have some ELFI available to claim.`}</span>
+          <span className="w-full">{t`You have received these tokens for being an active member of the Element community.
 We hope to see you continue to contribute to the future of Element.`}</span>
         </div>
-        <div
-          className={tw(
-            display("flex"),
-            flexDirection("flex-col", "md:flex-row"),
-            width("w-full"),
-            space("space-y-10", "md:space-x-10", "md:space-y-0"),
-            padding("px-12"),
-            margin("mb-10"),
-          )}
-        >
+        <div className="flex flex-col md:flex-row w-full space-y-10 md:space-x-10 md:space-y-0 px-12 mb-10">
           <AirdropAmountCard account={account} />
           <RewardsInfoCard />
         </div>
