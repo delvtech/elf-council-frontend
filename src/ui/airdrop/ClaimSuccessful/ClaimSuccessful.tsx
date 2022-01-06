@@ -21,11 +21,11 @@ export function ClaimSuccessful(): ReactElement {
       <div className="flex flex-col p-6 justify-center items-center">
         <h2 className="text-3xl font-bold my-6">{t`Claim Successful!`}</h2>
         <div className="flex flex-col w-full items-center text-base space-y-3 mb-10">
-          <div
-            className={"w-full md:w-1/2 flex justify-center"}
-          >{jt`Congratulations on claiming your ${elfiLogoElement} $ELFI tokens.`}</div>
-          <span className="w-full md:w-1/2">{t`Share your airdrop experience on Twitter and join the Element discord 
-	  to get more involved in our community and governance system.`}</span>
+          <div className={"w-full md:w-1/2"}>
+            <p className="flex justify-center">{jt`Congratulations on claiming your ${elfiLogoElement} $ELFI tokens.`}</p>
+          </div>
+          <p className="w-full md:w-1/2">{t`Share your airdrop experience on Twitter and join the Element discord 
+	  to get more involved in our community and governance system.`}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-5/6 mb-10">
           <a
@@ -70,7 +70,7 @@ export function ClaimSuccessful(): ReactElement {
           </Link>
         </div>
         <div className="flex w-full justify-center text-base">
-          <span className="w-full md:w-1/2">{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</span>
+          <p className="w-full md:w-1/2">{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</p>
         </div>
       </div>
     </Card>
