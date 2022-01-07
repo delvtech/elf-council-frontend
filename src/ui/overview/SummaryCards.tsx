@@ -29,7 +29,7 @@ export function SummaryCards(): ReactElement {
   const formattedTreasuryBalance = abbreviateLargeValue(+treasuryBalance);
 
   return (
-    <div className="justify-between space-y-6 lg:space-y-0 lg:flex lg:flex-col">
+    <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
       <SummaryCard title={t`Annual protocol revenue`} balance={"$180,000"} />
       <SummaryCard
         title={t`Total treasury`}
@@ -37,7 +37,7 @@ export function SummaryCards(): ReactElement {
       />
       <SummaryCard
         title={t`Total Voting Power`}
-        balance={commify(votingPower)}
+        balance={commify(Math.round(votingPower))}
       />
     </div>
   );
