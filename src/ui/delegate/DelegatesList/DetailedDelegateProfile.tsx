@@ -1,38 +1,22 @@
 import { ReactElement } from "react";
-import { useWeb3React } from "@web3-react/core";
 import Image from "next/image";
 import { t } from "ttag";
 import { Popover } from "@headlessui/react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 import classNames from "classnames";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
-  onClose: () => void;
-  onChooseDelegate?: (address: string) => void;
   className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
-  onClose,
-  onChooseDelegate,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
-  const { account } = useWeb3React();
-
-  const onClickChooseDelegate = () => {
-    onClose();
-    if (onChooseDelegate) {
-      onChooseDelegate(delegate.address);
-    }
-  };
-
   return (
     <div className={classNames(className, "h-full")}>
       <div className="flex flex-col relative p-5 h-full">
@@ -110,27 +94,9 @@ function DetailedDelegateProfile({
           </div>
         </div>
 
-        {/* Choose Delegate & Close Button */}
-        <div className="flex flex-col gap-4 mt-auto">
-          {onChooseDelegate ? (
-            <Button
-              className="w-52 flex justify-center items-center ml-auto mt-4"
-              variant={ButtonVariant.GRADIENT}
-              disabled={!account}
-              onClick={onClickChooseDelegate}
-            >
-              <span className="mr-2">{t`Choose Delegate`}</span>
-              <div className="relative h-5 w-5">
-                <Image
-                  layout="fill"
-                  src="/assets/radio-button.svg"
-                  alt={t`Radio icon`}
-                />
-              </div>
-            </Button>
-          ) : null}
-
-          <Popover.Button className="bg-paleLily hover:bg-[#aadce5] rounded-xl h-12">
+        {/* Close Button */}
+        <div className="mt-auto sm:mt-14 lg:mt-auto">
+          <Popover.Button className="w-full bg-paleLily hover:bg-[#aadce5] rounded-xl h-12">
             <span className="text-principalRoyalBlue font-bold text-lg">
               {t`Close Delegate Profile`}
             </span>
