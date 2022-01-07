@@ -180,10 +180,10 @@ export default function HashSlider({
       >
         <div
           role="slider"
-          // TODO: getting a11y errors for interactive div w/out a role attribute.
-          // Setting role="slider" requires a aria-valuenow and tabIndex to be
-          // compliant
-          aria-valuenow={0}
+          aria-valuemin={0}
+          aria-valuemax={(containerWidth ?? 0) - (trackerWidth ?? 0)}
+          aria-valuenow={trackerLeft}
+          aria-valuetext={hash}
           tabIndex={0}
           ref={trackerRef}
           className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
