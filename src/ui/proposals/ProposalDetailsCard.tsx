@@ -1,9 +1,12 @@
 import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
+import { InformationCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
-import { commify } from "ethers/lib/utils";
+import { Signer } from "ethers";
+import { commify, formatEther } from "ethers/lib/utils";
+import { isNumber } from "lodash";
 import { t } from "ttag";
 
 import { assertNever } from "src/base/assertNever";
@@ -17,10 +20,9 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InformationCircleIcon } from "@heroicons/react/solid";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
@@ -28,12 +30,10 @@ import {
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
+import { useVote } from "src/ui/voting/useVote";
 import { Ballot, useBallot } from "src/ui/voting/useVoted";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { useVote } from "src/ui/voting/useVote";
-import { Signer } from "ethers";
-import { isNumber } from "lodash";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -213,19 +213,23 @@ function getBallotLabel(ballot: Ballot): string {
 }
 
 interface QuorumBarProps {
-  votes: number;
-  quorum: number;
+  // votes in X * 1e18 format, i.e. '50' = 50 Eth
+  votes: string;
+
+  // quorum in X * 1e18 format, i.e. '50' = 50 Eth
+  quorum: string;
   status: ProposalStatus | undefined;
 }
+
 function QuorumBar(props: QuorumBarProps) {
   const { votes, quorum } = props;
-  const quorumPercent = Math.round((votes / quorum) * 100);
+  const quorumPercent = Math.round((+votes / +quorum) * 100);
   return (
     <div className="w-full space-y-1 text-sm text-white">
       <div>
         {votes} {t`total votes`}
       </div>
-      <ProgressBar progress={Math.max(votes / quorum, 1)} />
+      <ProgressBar progress={Math.max(+votes / +quorum, 1)} />
       <div>
         {`${quorumPercent}%`} {t`quorum reached`}
       </div>
@@ -289,12 +293,12 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
   );
 }
 
-function getVoteCount(votingPower: VotingPower | undefined): number {
+function getVoteCount(votingPower: VotingPower | undefined): string {
   if (!votingPower) {
-    return 0;
+    return "0";
   }
 
   return votingPower[0].gt(votingPower[1])
-    ? votingPower[0].toNumber()
-    : votingPower[0].toNumber();
+    ? formatEther(votingPower[0])
+    : formatEther(votingPower[1]);
 }

@@ -1,3 +1,4 @@
+import { parseEther } from "ethers/lib/utils";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 
 export enum ProposalStatus {
@@ -11,7 +12,7 @@ export enum ProposalStatus {
 
 export function getProposalStatus(
   isVotingOpen: boolean,
-  quourum: number,
+  quourum: string,
   votingPower: VotingPower | undefined,
 ): ProposalStatus | undefined {
   if (!votingPower) {
@@ -19,9 +20,9 @@ export function getProposalStatus(
   }
 
   // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower[0].toNumber() >= quourum;
+  const hasEnoughYes = votingPower[0].gte(parseEther(quourum));
   // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower[1].toNumber() >= quourum;
+  const hasEnoughNo = votingPower[1].gte(parseEther(quourum));
 
   if (isVotingOpen) {
     if (hasEnoughYes) {
