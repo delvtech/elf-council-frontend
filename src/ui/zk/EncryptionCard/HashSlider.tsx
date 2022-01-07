@@ -30,22 +30,34 @@ export default function HashSlider({
   onChange,
 }: HashSliderProps): ReactElement {
   const [slid, setSlid] = useState(false);
-  const { mousePosition, startTracking, draggingTime, distanceTraveled } =
-    useMouseTracking({
-      trackDragTime: true,
-      trackDistance: true,
-    });
+  const {
+    mousePosition,
+    startTracking,
+    startTrackingTouch,
+    draggingTime,
+    distanceTraveled,
+  } = useMouseTracking({
+    trackDragTime: true,
+    trackDistance: true,
+  });
   const [progress, setProgress] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
   const [hash, setHash] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const trackerRef = useRef<HTMLDivElement>(null);
 
-  const handleStartDrag = () => {
+  const handleSliderMouseDown = () => {
     if (!slid) {
       setSlid(true);
     }
     startTracking().until("mouseup");
+  };
+
+  const handleSliderTouchStart = () => {
+    if (!slid) {
+      setSlid(true);
+    }
+    startTrackingTouch().until("touchend");
   };
 
   useEffect(() => {
@@ -180,17 +192,18 @@ export default function HashSlider({
       >
         <div
           role="slider"
-          // TODO: getting a11y errors for interactive div w/out a role attribute.
-          // Setting role="slider" requires a aria-valuenow and tabIndex to be
-          // compliant
-          aria-valuenow={0}
+          aria-valuemin={0}
+          aria-valuemax={(containerWidth ?? 0) - (trackerWidth ?? 0)}
+          aria-valuenow={trackerLeft}
+          aria-valuetext={hash}
           tabIndex={0}
           ref={trackerRef}
           className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
           style={{
             left: trackerCSSLeft,
           }}
-          onMouseDown={handleStartDrag}
+          onMouseDown={handleSliderMouseDown}
+          onTouchStart={handleSliderTouchStart}
         >
           <div
             className={classNames(
