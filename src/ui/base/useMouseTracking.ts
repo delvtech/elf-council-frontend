@@ -14,8 +14,21 @@ interface UseMouseTrackingOptions {
   trackDragTime?: boolean;
 }
 
+function getDistance(
+  startPosition: [number, number],
+  endPosition: [number, number],
+): number {
+  return Math.sqrt(
+    Math.pow(endPosition[0] - startPosition[0], 2) +
+      Math.pow(endPosition[1] - startPosition[1], 2),
+  );
+}
+
 export default function useMouseTracking(options?: UseMouseTrackingOptions): {
   startTracking: () => {
+    until: (event: string, target?: EventTarget) => void;
+  };
+  startTrackingTouch: () => {
     until: (event: string, target?: EventTarget) => void;
   };
   stopTracking: () => void;
@@ -69,22 +82,44 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
       if (trackDragTime) {
         startCounter(draggingIntervalRef, setDraggingTime);
       }
-      let startingPosition: [number, number] | undefined = undefined;
+      let startPosition: [number, number] | undefined = undefined;
       setMousePosition((state) => {
-        startingPosition = state;
+        startPosition = state;
         return [e.clientX, e.clientY];
       });
-      if (trackDistance && startingPosition) {
+      if (trackDistance && startPosition) {
         setDistanceTraveled((distance) => {
-          if (!startingPosition) {
+          if (!startPosition) {
+            return distance;
+          }
+          return distance + getDistance(startPosition, [e.clientX, e.clientY]);
+        });
+      }
+    },
+    [trackDragTime, trackDistance, startCounter],
+  );
+
+  const handleTouchMove = useCallback(
+    (e: TouchEvent) => {
+      if (trackDragTime) {
+        startCounter(draggingIntervalRef, setDraggingTime);
+      }
+      let startPosition: [number, number] | undefined = undefined;
+      setMousePosition((state) => {
+        startPosition = state;
+        return [e.touches[0].clientX, e.touches[0].clientY];
+      });
+      if (trackDistance && startPosition) {
+        setDistanceTraveled((distance) => {
+          if (!startPosition) {
             return distance;
           }
           return (
             distance +
-            Math.sqrt(
-              Math.pow(e.clientX - startingPosition[0], 2) +
-                Math.pow(e.clientY - startingPosition[1], 2),
-            )
+            getDistance(startPosition, [
+              e.touches[0].clientX,
+              e.touches[0].clientY,
+            ])
           );
         });
       }
@@ -131,6 +166,16 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
     return { until };
   }, [trackTime, startCounter, handleMouseMove, until]);
 
+  const startTrackingTouch = useCallback(() => {
+    if (trackTime) {
+      setTrackingTime(0);
+      startCounter(trackingIntervalRef, setTrackingTime);
+    }
+    window.addEventListener("touchmove", handleTouchMove);
+    setIsTracking(true);
+    return { until };
+  }, [trackTime, startCounter, handleTouchMove, until]);
+
   // handle unmount
   useEffect(
     () => () => {
@@ -143,6 +188,7 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
 
   return {
     startTracking,
+    startTrackingTouch,
     stopTracking,
     isTracking,
     mousePosition,

@@ -30,22 +30,34 @@ export default function HashSlider({
   onChange,
 }: HashSliderProps): ReactElement {
   const [slid, setSlid] = useState(false);
-  const { mousePosition, startTracking, draggingTime, distanceTraveled } =
-    useMouseTracking({
-      trackDragTime: true,
-      trackDistance: true,
-    });
+  const {
+    mousePosition,
+    startTracking,
+    startTrackingTouch,
+    draggingTime,
+    distanceTraveled,
+  } = useMouseTracking({
+    trackDragTime: true,
+    trackDistance: true,
+  });
   const [progress, setProgress] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
   const [hash, setHash] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
   const trackerRef = useRef<HTMLDivElement>(null);
 
-  const handleStartDrag = () => {
+  const handleSliderMouseDown = () => {
     if (!slid) {
       setSlid(true);
     }
     startTracking().until("mouseup");
+  };
+
+  const handleSliderTouchStart = () => {
+    if (!slid) {
+      setSlid(true);
+    }
+    startTrackingTouch().until("touchend");
   };
 
   useEffect(() => {
@@ -190,7 +202,8 @@ export default function HashSlider({
           style={{
             left: trackerCSSLeft,
           }}
-          onMouseDown={handleStartDrag}
+          onMouseDown={handleSliderMouseDown}
+          onTouchStart={handleSliderTouchStart}
         >
           <div
             className={classNames(
