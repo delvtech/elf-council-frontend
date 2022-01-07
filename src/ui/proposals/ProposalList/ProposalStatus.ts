@@ -28,9 +28,9 @@ export function getProposalStatus(
   }
 
   // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower[0].gte(parseEther(quourum));
+  const hasEnoughYes = votingPower[0].gte(parseEther(quourum || "0"));
   // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower[1].gte(parseEther(quourum));
+  const hasEnoughNo = votingPower[1].gte(parseEther(quourum || "0"));
 
   if (isVotingOpen) {
     if (hasEnoughYes) {
