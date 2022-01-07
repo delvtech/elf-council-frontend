@@ -8,10 +8,10 @@ import React, {
 
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import { Proposal } from "elf-council-proposals";
+import { Proposal, ProposalsJson } from "elf-council-proposals";
 import { t } from "ttag";
 
-import { proposalsBySnapShotId } from "src/elf-council-proposals";
+import { getProposalsBySnapshotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
@@ -26,7 +26,13 @@ import { ProposalList } from "./ProposalList/ProposalList";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
-export default function ProposalsPage(): ReactElement {
+interface ProposalsPageProps {
+  proposalsJson: ProposalsJson;
+}
+
+export default function ProposalsPage({
+  proposalsJson,
+}: ProposalsPageProps): ReactElement {
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
@@ -37,13 +43,19 @@ export default function ProposalsPage(): ReactElement {
   >();
   const [activeProposal, setActiveProposal] = useState<Proposal | undefined>();
 
+  const proposalsBySnapshotId = useMemo(
+    () => getProposalsBySnapshotId(proposalsJson.proposals),
+    [proposalsJson.proposals],
+  );
+
   const { data: snapshotProposals } = useSnapshotProposals(
-    Object.keys(proposalsBySnapShotId),
+    Object.keys(proposalsBySnapshotId),
   );
 
   const filteredProposals = useOnChainProposalsWithSnapshotInfo(
     activeTabId,
     snapshotProposals,
+    proposalsBySnapshotId,
   );
 
   // set the active proposal when the user switches between Active and Past
@@ -55,9 +67,10 @@ export default function ProposalsPage(): ReactElement {
 
   const onSetActiveProposalId = useCallback(
     (proposalId: string | undefined) => {
-      setActiveProposal(
-        filteredProposals?.find((p) => p.proposalId === proposalId),
+      const proposal = filteredProposals?.find(
+        (p) => p.proposalId === proposalId,
       );
+      setActiveProposal(proposal);
       setActiveProposalId(proposalId);
     },
     [filteredProposals],
@@ -104,6 +117,7 @@ export default function ProposalsPage(): ReactElement {
           account={account}
           signer={signer}
           proposal={activeProposal}
+          proposalsBySnapshotId={proposalsBySnapshotId}
         />
       </div>
     </div>
@@ -136,6 +150,7 @@ function OffChainProposalsLink() {
 function useOnChainProposalsWithSnapshotInfo(
   activeTabId: string,
   snapshotProposals: SnapshotProposal[] | undefined,
+  proposalsBySnapshotId: Record<string, Proposal>,
 ): Proposal[] | undefined {
   return useMemo(() => {
     if (activeTabId === "active-proposals-tab") {
@@ -143,17 +158,18 @@ function useOnChainProposalsWithSnapshotInfo(
         ?.filter((snapshotProposal) =>
           ["active", "pending"].includes(snapshotProposal.state),
         )
-        .map((snapshotProposal) => proposalsBySnapShotId[snapshotProposal.id]);
+        .map((snapshotProposal) => proposalsBySnapshotId[snapshotProposal.id]);
     }
 
     if (activeTabId === "past-proposals-tab") {
-      return snapshotProposals
+      const result = snapshotProposals
         ?.filter((snapshotProposal) =>
           ["closed"].includes(snapshotProposal.state),
         )
-        .map((snapshotProposal) => proposalsBySnapShotId[snapshotProposal.id]);
+        .map((snapshotProposal) => proposalsBySnapshotId[snapshotProposal.id]);
+      return result;
     }
 
     return [];
-  }, [activeTabId, snapshotProposals]);
+  }, [activeTabId, proposalsBySnapshotId, snapshotProposals]);
 }

@@ -1,15 +1,27 @@
-import { Proposal, testnetProposals } from "elf-council-proposals";
+import { Proposal } from "elf-council-proposals";
 import keyBy from "lodash.keyby";
+import { addressesJson } from "src/elf-council-addresses";
+import { ChainId } from "src/ethereum";
 
-// TODO: Choose the right proposalsJson based on environment
-export const proposalsJson = testnetProposals;
+export const PROPOSALS_JSON_URL = getProposalsJsonUrl();
+console.log("proposals", PROPOSALS_JSON_URL);
 
-export const proposalsBySnapShotId = keyBy(
-  proposalsJson.proposals,
-  "snapshotId",
-);
+function getProposalsJsonUrl() {
+  switch (addressesJson.chainId) {
+    case ChainId.GOERLI:
+      return "https://elementfi.s3.us-east-2.amazonaws.com/goerli.proposals.json";
 
-export const proposalsById = keyBy(proposalsJson.proposals, "proposalId");
+    case ChainId.LOCAL:
+    default:
+      return "https://elementfi.s3.us-east-2.amazonaws.com/testnet.proposals.json";
+  }
+}
+
+export function getProposalsBySnapshotId(
+  proposals: Proposal[],
+): Record<string, Proposal> {
+  return keyBy(proposals, "snapshotId");
+}
 
 export function getIsVotingOpen(
   proposal: Proposal,
