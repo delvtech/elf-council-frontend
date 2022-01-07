@@ -31,9 +31,10 @@ import {
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 import { useVote } from "src/ui/voting/useVote";
-import { Ballot, useBallot } from "src/ui/voting/useVoted";
+import { useBallot } from "src/ui/voting/useBallot";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { Ballot } from "src/ui/voting/Ballot";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -64,11 +65,12 @@ export function ProposalDetailsCard(
   const [newBallot, setCurrentBallot] = useState<Ballot>();
 
   const { data: currentBallot } = useBallot(account, proposal?.proposalId);
+  const [ballotVotePower, ballotChoice] = currentBallot || [];
 
-  const { mutate: vote } = useVote(account, signer);
+  const { mutate: vote } = useVote(account, signer, proposal?.created);
 
   const handleVote = useCallback(() => {
-    if (!proposal || !newBallot) {
+    if (!proposal || !isNumber(newBallot)) {
       return;
     }
     const { proposalId } = proposal;
@@ -168,13 +170,13 @@ export function ProposalDetailsCard(
       />
 
       <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-        {isNumber(currentBallot) && (
+        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
           <div className="flex items-center justify-end w-full text-white">
-            <span>{getBallotLabel(currentBallot.castBallot)}</span>
+            <span>{getBallotLabel(ballotChoice)}</span>
             <CheckCircleIcon className="ml-2" height={18} />
           </div>
         )}
-        {isNumber(currentBallot) && (
+        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
           <div className="flex items-center justify-end w-full text-white">
             <span>{t`View on etherscan`}</span>
             <ExternalLinkIcon className="ml-2" height={18} />

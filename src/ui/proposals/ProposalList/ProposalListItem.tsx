@@ -3,6 +3,7 @@ import React, { ReactElement, useCallback } from "react";
 import { Signer } from "@ethersproject/abstract-signer";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
+import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
 import Card from "src/ui/base/Card/Card";
@@ -10,8 +11,8 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { ProposalStatusTag } from "src/ui/proposals/ProposalList/ProposalStatusTag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { Ballot, useBallot } from "src/ui/voting/useVoted";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { useBallot } from "src/ui/voting/useBallot";
+import { Ballot } from "src/ui/voting/Ballot";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -28,19 +29,8 @@ export function ProposalListItem({
   active,
   onClick,
 }: ProposalListItemProps): ReactElement {
-  const {
-    proposalId,
-    created: proposalCreatedBlockNumber,
-    snapshotId,
-  } = proposal;
-
+  const { proposalId, snapshotId } = proposal;
   const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
-
-  const votePower = useVotingPowerForAccount(
-    account,
-    proposalCreatedBlockNumber,
-  );
-
   const ballotLabel = useBallotLabel(account, proposalId);
 
   const handleClick = useCallback(
@@ -66,12 +56,9 @@ export function ProposalListItem({
             [classNames("invisible")]: !ballotLabel,
           })}
         >
-          <Tag intent={Intent.PRIMARY_SOLID}>{ballotLabel ?? "Voted YES"}</Tag>
+          <Tag intent={Intent.PRIMARY_SOLID}>{ballotLabel}</Tag>
         </div>
       </div>
-      {account ? (
-        <span>{t`Your voting power for this proposal: ${votePower}`}</span>
-      ) : null}
       <div className="flex items-end h-full space-x-4">
         <ProposalStatusTag signer={signer} proposal={proposal} />
       </div>
@@ -84,12 +71,18 @@ function useBallotLabel(
   proposalId: string,
 ): string | undefined {
   const { data: ballot } = useBallot(account, proposalId);
+  if (ballot === undefined) {
+    return;
+  }
 
-  if (ballot?.castBallot === Ballot.YES) {
+  const [votingPowerBN, castBallot] = ballot;
+  const votingPower = Number(formatEther(votingPowerBN || 0));
+
+  if (votingPower && castBallot === Ballot.YES) {
     return t`Voted YES`;
   }
 
-  if (ballot?.castBallot === Ballot.NO) {
+  if (votingPower && castBallot === Ballot.NO) {
     return t`Voted NO`;
   }
 }

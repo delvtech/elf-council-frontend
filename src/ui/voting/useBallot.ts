@@ -4,19 +4,10 @@ import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { BigNumber } from "ethers";
 
 import { coreVotingContract } from "src/elf/contracts";
+import { Ballot } from "src/ui/voting/Ballot";
 
 // TODO: get from typechain
-export enum Ballot {
-  YES,
-  NO,
-  MAYBE,
-}
-
-// TODO: get from typechain
-export interface Vote {
-  votingPower: BigNumber;
-  castBallot: Ballot;
-}
+export type Vote = [votingPower: BigNumber, castBallot: Ballot];
 
 /**
  * Returns how a user voted on a proposal

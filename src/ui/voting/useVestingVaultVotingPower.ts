@@ -1,10 +1,10 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { formatEther } from "@ethersproject/units";
 
-import { lockingVaultContract } from "src/elf/contracts";
+import { vestingContract } from "src/elf/contracts";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
-export function useLockingVaultVotingPower(
+export function useVestingVaultVotingPower(
   account: string | undefined | null,
   atBlockNumber?: number,
 ): string {
@@ -13,7 +13,7 @@ export function useLockingVaultVotingPower(
   const blockNumber = atBlockNumber || latestBlockNumber;
 
   const { data: lockingVotingPowerBN } = useSmartContractReadCall(
-    lockingVaultContract,
+    vestingContract,
     "queryVotePower",
     {
       callArgs: [account as string, blockNumber as number, "0x00"],
