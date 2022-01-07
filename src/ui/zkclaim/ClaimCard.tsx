@@ -1,102 +1,38 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import H2 from "src/ui/base/H2";
-import HashString from "src/ui/base/HashString";
-import { t, jt } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Link from "next/link";
-import useFile from "src/ui/base/useFile";
-import ZKData from "src/ui/zk/ZKData";
+import H2 from "src/ui/base/H2";
+import ClaimAmountCard from "./ClaimAmountCard";
+import { t } from "ttag";
 
 interface ClaimCardProps {
   className?: string;
-  onComplete?: ([key, secret]: [string, string]) => void;
-  onNextClick: () => void;
 }
 
-// TODO: save somewhere to be shared with ../zk/EncryptionCard
-const HASH_LENGTH = 66;
+// PLACEHOLDER
+const ELFI_TOKEN_AMOUNT = "208.9291341";
 
-export default function ClaimCard({
-  className,
-  onComplete,
-  onNextClick,
-}: ClaimCardProps): ReactElement {
-  const [key, setKey] = useState("");
-  const [secret, setSecret] = useState("");
-  const { file, openFileBrowser } = useFile({ accept: ".json" });
-
-  useEffect(() => {
-    if (key && secret) {
-      onComplete?.([key, secret]);
-    }
-  }, [key, secret, onComplete]);
-
-  useEffect(() => {
-    if (!file) {
-      return;
-    }
-    try {
-      const data = JSON.parse(file as string) as ZKData;
-      setKey(data.privateKey);
-      setSecret(data.secret);
-    } catch (err) {
-      console.error(err);
-      // TODO: show invalid file error
-    }
-  }, [file]);
-
+export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
   return (
-    <Card variant={CardVariant.BLUE} className={className}>
-      <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
-        <h1 className="mb-2 text-3xl font-semibold">{t`Encryption`}</h1>
-        <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
-          <H2 className="text-white">{t`Unlock your Public ID`}</H2>
-          <p>
-            {jt`To claim the airdrop, enter your Secret and your Key, so we can 
-            check against your Public ID. If you don't have any, ${(
-              <Link href="/zk">
-                {/* There's a big discussion about how awful the Link api is for
-                a11y here:
-                https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402
-                the best thing to do for now is just ignore this rule when an
-                anchor tag is the child of a Link 🙁 */
-                /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <a className="text-yieldLightBlue">{t`create a new one`}</a>
-              </Link>
-            )}.`}
-          </p>
-        </div>
-        <HashString
-          className="mb-2"
-          label={t`The Key`}
-          inputProps={{
-            value: key,
-            placeholder: "0x".padEnd(HASH_LENGTH, "0"),
-            readOnly: true,
-          }}
-        />
-        <HashString
-          className="mb-2"
-          label={t`The Secret`}
-          inputProps={{
-            value: secret,
-            placeholder: "0x".padEnd(HASH_LENGTH, "0"),
-            readOnly: true,
-          }}
-        />
-        <div className="flex justify-end gap-4 mt-6 text-right">
-          <Button
-            variant={ButtonVariant.WHITE}
-            onClick={openFileBrowser}
-          >{t`Upload JSON`}</Button>
-          <Button
-            variant={ButtonVariant.GRADIENT}
-            disabled={!key || !secret}
-            onClick={onNextClick}
-          >{t`Check Airdrop`}</Button>
-        </div>
+    <Card className={className} variant={CardVariant.BLUE}>
+      <div className="flex flex-col justify-center gap-2 px-8 pt-2 pb-4 text-white sm:pt-6 sm:px-16 md:px-60 sm:pb-14 sm:text-center sm:items-center">
+        <h1 className="mb-5 text-3xl font-semibold">{t`Congratulations`}</h1>
+        <H2 className="text-2xl text-votingGreen mb-9">{t`You're eligible for this Airdrop`}</H2>
+        <ClaimAmountCard amount={ELFI_TOKEN_AMOUNT} />
+        <label className="flex items-center gap-3 mb-6 text-blueGrey group">
+          <input
+            id="add-elfi-to-metamask"
+            type="checkbox"
+            className="box-content w-4 h-4 text-current transition-all bg-transparent bg-center border-2 border-current rounded group:hover:border-white hover:border-white checked:border-white checked:focus:border-white checked:hover:border-white checked:text-principalRoyalBlue peer"
+            style={{ backgroundSize: "80%" }}
+          />
+          <span className="transition-all peer-checked:text-white">{t`Add $ELFI to my Metamask`}</span>
+        </label>
+        <Button
+          className="justify-center min-w-full"
+          variant={ButtonVariant.GRADIENT}
+        >{t`Claim my $ELFI`}</Button>
       </div>
     </Card>
   );

@@ -3,9 +3,9 @@ import useRouterSteps from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { t } from "ttag";
 import { utils } from "ethers";
-import ClaimCard from "./ClaimCard";
+import LookupCard from "./LookupCard";
 import ZKData from "src/ui/zk/ZKData";
-import SuccessCard from "./SuccessCard";
+import ClaimCard from "./ClaimCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
 import ErrorCard from "./ErrorCard";
 
@@ -52,7 +52,7 @@ export default function ClaimPage(): ReactElement {
   return (
     <div className="flex flex-col items-center flex-1 max-w-4xl gap-12">
       {/* STEP 1 */}
-      <ClaimCard
+      <LookupCard
         className={getStepClassName(1)}
         onComplete={handleStep1Complete}
         onNextClick={goToNextStep}
@@ -60,7 +60,7 @@ export default function ClaimPage(): ReactElement {
 
       {/* STEP 2 */}
       {publicId && !alreadyClaimed && (
-        <SuccessCard className={getStepClassName(2)} />
+        <ClaimCard className={getStepClassName(2)} />
       )}
       {publicId && alreadyClaimed && (
         <AlreadyClaimedCard className={getStepClassName(2)} />
