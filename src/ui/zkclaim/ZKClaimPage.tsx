@@ -6,6 +6,7 @@ import { utils } from "ethers";
 import ClaimCard from "./ClaimCard";
 import ZKData from "src/ui/zk/ZKData";
 import SuccessCard from "./SuccessCard";
+import AlreadyClaimedCard from "./AlreadyClaimedCard";
 import ErrorCard from "./ErrorCard";
 
 export default function ClaimPage(): ReactElement {
@@ -13,16 +14,25 @@ export default function ClaimPage(): ReactElement {
     useRouterSteps();
   const [data, setData] = useState<ZKData>();
   const [publicId, setPublicId] = useState<string>();
+  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
 
   useEffect(() => {
     // TODO: get public ID with data
-    if (
-      data?.privateKey ===
-      "0x321718eb3db448ca864758c7cc54fd72e7a88b982a308f07b16d156fe6592e37"
-    ) {
+    const placeholderSuccessKey =
+      "0x321718eb3db448ca864758c7cc54fd72e7a88b982a308f07b16d156fe6592e37";
+    if (data?.privateKey === placeholderSuccessKey) {
       setPublicId(utils.id(`${data.privateKey}${data.secret}`));
+      setAlreadyClaimed(false);
     } else {
       setPublicId(undefined);
+    }
+
+    // TODO: check if already claimed
+    const placeholderClaimedKey =
+      "0x181a6585d99fdd4a22d02d1609d4d2a5498777523560905a3c069fd6f61feb1a";
+    if (data?.privateKey === placeholderClaimedKey) {
+      setPublicId(utils.id(`${data.privateKey}${data.secret}`));
+      setAlreadyClaimed(true);
     }
   }, [data]);
 
@@ -49,9 +59,13 @@ export default function ClaimPage(): ReactElement {
       />
 
       {/* STEP 2 */}
-      {publicId ? (
+      {publicId && !alreadyClaimed && (
         <SuccessCard className={getStepClassName(2)} />
-      ) : (
+      )}
+      {publicId && alreadyClaimed && (
+        <AlreadyClaimedCard className={getStepClassName(2)} />
+      )}
+      {!publicId && (
         <ErrorCard
           onTryAgain={goToPreviousStep}
           className={getStepClassName(2)}
