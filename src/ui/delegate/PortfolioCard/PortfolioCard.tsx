@@ -1,12 +1,20 @@
 import { ReactElement } from "react";
 import { Signer } from "ethers";
+import classNames from "classnames";
+import { t } from "ttag";
+import dynamic from "next/dynamic";
+
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
-
-import { t } from "ttag";
-import classNames from "classnames";
-import DepositSection from "src/ui/delegate/PortfolioCard/DepositSection";
-import WithdrawSection from "src/ui/delegate/PortfolioCard/WithdrawSection";
+// SSR: false? -- https://stackoverflow.com/a/64119607
+const DynamicDepositSection = dynamic(
+  () => import("src/ui/delegate/PortfolioCard/DepositSection"),
+  { ssr: false },
+);
+const DynamicWithdrawSection = dynamic(
+  () => import("src/ui/delegate/PortfolioCard/WithdrawSection"),
+  { ssr: false },
+);
 
 interface PortfolioCardProps {
   account: string | null | undefined;
@@ -42,7 +50,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
       </div>
 
       {/* Deposit Section */}
-      <DepositSection
+      <DynamicDepositSection
         account={account}
         signer={signer}
         currentDelegate={currentDelegate}
@@ -50,7 +58,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
       />
 
       {/* Withdraw Section */}
-      <WithdrawSection
+      <DynamicWithdrawSection
         account={account}
         signer={signer}
         className="mt-7"
