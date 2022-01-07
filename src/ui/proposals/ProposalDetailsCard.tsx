@@ -10,10 +10,7 @@ import { isNumber } from "lodash";
 import { t } from "ttag";
 
 import { assertNever } from "src/base/assertNever";
-import {
-  getIsVotingOpen,
-  proposalsBySnapShotId,
-} from "src/elf-council-proposals";
+import { getIsVotingOpen } from "src/elf-council-proposals";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 import Button from "src/ui/base/Button/Button";
@@ -43,14 +40,18 @@ interface ProposalDetailsCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   proposal: Proposal | undefined;
+  proposalsBySnapshotId: Record<string, Proposal>;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement {
-  const { className, proposal, account, signer } = props;
+  const { className, proposal, account, signer, proposalsBySnapshotId } = props;
 
-  const snapshotProposal = useSnapshotProposal(proposal?.snapshotId);
+  const snapshotProposal = useSnapshotProposal(
+    proposal?.snapshotId,
+    proposalsBySnapshotId,
+  );
 
   const amountDeposited = useDeposited(account) || "0";
 
@@ -242,9 +243,10 @@ function QuorumBar(props: QuorumBarProps) {
 
 function useSnapshotProposal(
   snapshotId: string | undefined,
+  proposalsBySnapshotId: Record<string, Proposal>,
 ): SnapshotProposal | undefined {
   const { data: snapshotProposals } = useSnapshotProposals(
-    Object.keys(proposalsBySnapShotId),
+    Object.keys(proposalsBySnapshotId),
   );
 
   return snapshotProposals?.find((s) => s.id === snapshotId);
