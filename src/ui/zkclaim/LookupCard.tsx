@@ -66,6 +66,8 @@ export default function LookupCard({
             onChange: (e: ChangeEvent<HTMLInputElement>) =>
               setKey(e.target?.value),
             placeholder: "0x".padEnd(HASH_LENGTH, "0"),
+            minLength: HASH_LENGTH,
+            maxLength: HASH_LENGTH,
           }}
         />
         <HashString
@@ -76,6 +78,8 @@ export default function LookupCard({
             onChange: (e: ChangeEvent<HTMLInputElement>) =>
               setSecret(e.target?.value),
             placeholder: "0x".padEnd(HASH_LENGTH, "0"),
+            minLength: HASH_LENGTH,
+            maxLength: HASH_LENGTH,
           }}
         />
         <div className="flex justify-end gap-4 mt-6 text-right">
