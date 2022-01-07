@@ -4,6 +4,7 @@ import { addressesJson } from "src/elf-council-addresses";
 import { ChainId } from "src/ethereum";
 
 export const PROPOSALS_JSON_URL = getProposalsJsonUrl();
+console.log("proposals", PROPOSALS_JSON_URL);
 
 function getProposalsJsonUrl() {
   switch (addressesJson.chainId) {
