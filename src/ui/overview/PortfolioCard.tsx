@@ -16,6 +16,7 @@ import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
+import { format } from "d3-format";
 
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
@@ -103,7 +104,9 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
   return (
     <div className={classNames(className, "text-white")}>
       <div className="flex items-center">
-        <div className="text-2xl font-extralight">{balance}</div>
+        <div className="text-2xl font-extralight">
+          {format(".4~f")(+balance)}
+        </div>
         <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
       </div>
       <div className="flex items-center text-lg font-light">
