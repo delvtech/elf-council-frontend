@@ -7,6 +7,7 @@ import { elementTokenContract, vestingContract } from "src/elf/contracts";
 const { vestingVault, lockingVault } = addressesJson.addresses;
 
 export function useVotingPowerForProtocol(): number {
+  // value in Eth
   const vestingVaultVotingPower = useVestingVaultVotingPower();
 
   const { data: lockingVaultBalanceBN = BigNumber.from(0) } =

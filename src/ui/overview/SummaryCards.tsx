@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 
-import { commify, formatEther } from "ethers/lib/utils";
+import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
 import { abbreviateLargeValue } from "src/base/numbers";
@@ -14,6 +14,7 @@ const { treasury } = addressesJson.addresses;
 
 export function SummaryCards(): ReactElement {
   const votingPower = useVotingPowerForProtocol();
+  console.log("votingPower", votingPower);
   const { data: treasuryBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
     treasury,
@@ -21,6 +22,9 @@ export function SummaryCards(): ReactElement {
 
   const treasuryBalance = formatEther(treasuryBalanceBN || 0);
   const formattedTreasuryBalance = abbreviateLargeValue(+treasuryBalance);
+  const formattedTotalVotingPower = abbreviateLargeValue(
+    Math.round(votingPower),
+  );
 
   return (
     <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
@@ -31,7 +35,7 @@ export function SummaryCards(): ReactElement {
       />
       <SummaryCard
         title={t`Total Voting Power`}
-        balance={commify(Math.round(votingPower))}
+        balance={`${formattedTotalVotingPower} ELFI`}
       />
     </div>
   );
