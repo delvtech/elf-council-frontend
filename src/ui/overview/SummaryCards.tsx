@@ -1,20 +1,14 @@
 import React, { ReactElement } from "react";
 
 import { commify, formatEther } from "ethers/lib/utils";
-import tw, {
-  display,
-  flexDirection,
-  space,
-  gridTemplateColumns,
-  gap,
-} from "src/elf-tailwindcss-classnames";
-import SummaryCard from "src/ui/overview/SummaryCard";
-import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 import { t } from "ttag";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+
+import { abbreviateLargeValue } from "src/base/numbers";
 import { addressesJson } from "src/elf-council-addresses";
 import { elementTokenContract } from "src/elf/contracts";
-import { abbreviateLargeValue } from "src/base/numbers";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import SummaryCard from "src/ui/overview/SummaryCard";
+import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 
 const { treasury } = addressesJson.addresses;
 
@@ -29,7 +23,7 @@ export function SummaryCards(): ReactElement {
   const formattedTreasuryBalance = abbreviateLargeValue(+treasuryBalance);
 
   return (
-    <div className="justify-between space-y-6 lg:space-y-0 lg:flex lg:flex-col">
+    <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
       <SummaryCard title={t`Annual protocol revenue`} balance={"$180,000"} />
       <SummaryCard
         title={t`Total treasury`}
@@ -37,7 +31,7 @@ export function SummaryCards(): ReactElement {
       />
       <SummaryCard
         title={t`Total Voting Power`}
-        balance={commify(votingPower)}
+        balance={commify(Math.round(votingPower))}
       />
     </div>
   );
