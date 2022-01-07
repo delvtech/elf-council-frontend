@@ -5,7 +5,7 @@ import { MouseEventHandler, ReactElement, ReactNode } from "react";
 import classNames from "classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
-import { Spinner } from "./Spinner";
+import { Spinner } from "src/ui/base/Spinner/Spinner";
 
 export interface ButtonProps extends ButtonStyles {
   children: ReactNode;

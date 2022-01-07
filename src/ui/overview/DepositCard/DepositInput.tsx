@@ -1,10 +1,5 @@
-import React, { ChangeEvent, ReactElement, useCallback } from "react";
+import React, { ReactElement } from "react";
 import { FixedNumber } from "ethers";
-import tw, {
-  flexGrow,
-  height,
-  textAlign,
-} from "src/elf-tailwindcss-classnames";
 import classNames from "classnames";
 import TokenInput from "src/ui/base/Input/TokenInput";
 
@@ -45,11 +40,8 @@ export function DepositInput(props: DepositInputProps): ReactElement {
       id={id}
       name={name}
       placeholder={placeholder}
-      className={classNames(className, tw(flexGrow("grow")))}
-      inputClassName={classNames(
-        inputClassName,
-        tw(height("h-12"), textAlign("text-left")),
-      )}
+      className={classNames(className, "grow")}
+      inputClassName={classNames(inputClassName, "h-12 text-left")}
       value={depositAmount}
       showMaxButton
       maxValue={balance}

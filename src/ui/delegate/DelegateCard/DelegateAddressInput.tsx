@@ -4,7 +4,6 @@ import { t } from "ttag";
 import {
   BadgeCheckIcon,
   CheckIcon,
-  XIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/solid";
 

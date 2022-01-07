@@ -10,7 +10,7 @@ import { DelegatePreviewCard } from "src/ui/airdrop/DelegatePreviewCard/Delegate
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import { Spinner } from "src/ui/base/Button/Spinner";
+import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 

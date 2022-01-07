@@ -1,24 +1,6 @@
 import { ChangeEvent, ReactElement, useCallback } from "react";
 
 import classNames from "classnames";
-import tw, {
-  TTailwindString,
-  screenReaders,
-  boxShadow,
-  textColor,
-  display,
-  width,
-  fontSize,
-  borderColor,
-  borderRadius,
-  ringColor,
-  pointerEvents,
-  opacity,
-  position,
-  backgroundColor,
-  padding,
-  inset,
-} from "src/elf-tailwindcss-classnames";
 import { t } from "ttag";
 
 interface TokenInputProps {
@@ -60,15 +42,14 @@ export default function TokenInput({
 
   return (
     <div className={className}>
-      <label htmlFor={id} className={screenReaders("sr-only")}>
+      <label htmlFor={id} className="sr-only">
         {screenReaderLabel}
       </label>
       <div
-        className={tw(
-          position("relative"),
-          pointerEvents({ "pointer-events-none": disabled }),
-          opacity({ "opacity-50": disabled }),
-        )}
+        className={classNames("relative", {
+          "pointer-events-none": disabled,
+          "opacity-50": disabled,
+        })}
       >
         <input
           disabled={disabled}
@@ -76,23 +57,14 @@ export default function TokenInput({
           name={name}
           id={id}
           className={classNames(
-            tw(
-              boxShadow("shadow-sm"),
-              textColor("text-black"),
-              display("block"),
-              width("w-full"),
-              fontSize("sm:text-sm"),
-              borderColor("border-gray-300", {
-                "focus:border-brandDarkBlue": !error,
-                "focus:border-red-500": error,
-                "border-red-500": error,
-              }),
-              borderRadius("rounded-md"),
-              ringColor({
-                "focus:ring-brandDarkBlue": !error,
-                "focus:ring-red-500": error,
-              }),
-            ),
+            "shadow-sm text-black block w-full sm:text-sm border-gray-300 rounded-md",
+            {
+              "focus:border-brandDarkBlue": !error,
+              "focus:border-red-500": error,
+              "border-red-500": error,
+              "focus:ring-brandDarkBlue": !error,
+              "focus:ring-red-500": error,
+            },
             inputClassName,
           )}
           placeholder={placeholder}
@@ -101,23 +73,11 @@ export default function TokenInput({
         />
         {showMaxButton && maxValue ? (
           <button
-            className={tw(
-              position("absolute"),
-              backgroundColor("bg-principalRoyalBlue"),
-              borderRadius("rounded-md"),
-              padding("px-2", "py-1"),
-              inset("top-1/2"),
-              inset("right-3"),
-              // TODO: Convert these to TW3.0
-              "transform" as TTailwindString,
-              "-translate-y-1/2" as TTailwindString,
-            )}
+            className="absolute bg-principalRoyalBlue rounded-md px-2 py-1 top-1/2 right-3 -translate-y-1/2"
             onClick={() => onChange(maxValue)}
             disabled={disabled}
           >
-            <span
-              className={tw(textColor("text-white"), fontSize("text-xs"))}
-            >{t`MAX`}</span>
+            <span className="text-white text-xs">{t`MAX`}</span>
           </button>
         ) : null}
       </div>
