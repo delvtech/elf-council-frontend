@@ -78,7 +78,7 @@ export function ChooseDelegate({
               return (
                 <li key={`${delegate.address}-${idx}}`}>
                   <button
-                    className="w-full"
+                    className="w-full text-left"
                     onClick={() => {
                       setSelectedDelegateIndex(idx);
                       setDelegateAddress(delegate.address);
