@@ -14,7 +14,6 @@ interface Proposal {
 /**
  * Returns the voting power for a given proposal.
  * @param {string} proposalId the id of the proposal
- * @returns {VotingPower} an array of BigNumbers tallying results in the format [YES, NO, MAYBE]
  */
 export function useProposal(
   proposalId: string | undefined,

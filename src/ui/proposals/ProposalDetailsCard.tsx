@@ -31,9 +31,10 @@ import {
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 import { useVote } from "src/ui/voting/useVote";
-import { Ballot, useBallot } from "src/ui/voting/useBallot";
+import { useBallot } from "src/ui/voting/useBallot";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { Ballot } from "src/ui/voting/Ballot";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;

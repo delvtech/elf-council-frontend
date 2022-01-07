@@ -7,13 +7,7 @@ import { t } from "ttag";
 
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { Ballot } from "src/ui/voting/useBallot";
-
-const BallotChoices: Record<Ballot, string> = {
-  [Ballot.YES]: t`Yes`,
-  [Ballot.NO]: t`No`,
-  [Ballot.MAYBE]: t`Abstain`,
-};
+import { Ballot, BallotChoices } from "src/ui/voting/Ballot";
 
 interface VotingBallotButtonProps {
   currentBallot: Ballot | undefined;
@@ -90,8 +84,9 @@ function BallotDropdownItem(props: BallotDropdownItemProps) {
       onClick={handleSelectItem}
     >
       <span>{ballotLabel}</span>
-      {active && <CheckCircleIcon className="ml-2" height="24" />}
-      {!active && (
+      {active ? (
+        <CheckCircleIcon className="ml-2" height="24" />
+      ) : (
         <div className="w-5 h-5 ml-2 mr-1 bg-transparent border-2 border-white rounded-full" />
       )}
     </button>

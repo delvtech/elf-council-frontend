@@ -11,7 +11,8 @@ import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { ProposalStatusTag } from "src/ui/proposals/ProposalList/ProposalStatusTag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { Ballot, useBallot } from "src/ui/voting/useBallot";
+import { useBallot } from "src/ui/voting/useBallot";
+import { Ballot } from "src/ui/voting/Ballot";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -58,9 +59,6 @@ export function ProposalListItem({
           <Tag intent={Intent.PRIMARY_SOLID}>{ballotLabel}</Tag>
         </div>
       </div>
-      {/* {account ? (
-        <span>{t`Your voting power for this proposal: ${votePower}`}</span>
-      ) : null} */}
       <div className="flex items-end h-full space-x-4">
         <ProposalStatusTag signer={signer} proposal={proposal} />
       </div>

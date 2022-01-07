@@ -88,13 +88,13 @@ export function useVote(
 
       if (+lockingVaultVotingPower > 0) {
         votingVaults.push(lockingVaultAddress);
-        const extraData = getCallDatasForLockingVaultQueryVotePower();
+        const extraData = getEmptyCallDatas();
         extraDatas.push(extraData);
       }
 
       if (+vestingVaultVotingPower > 0) {
         votingVaults.push(vestingVaultAddress);
-        const extraData = getCallDatasForLockingVaultQueryVotePower();
+        const extraData = getEmptyCallDatas();
         extraDatas.push(extraData);
       }
 
@@ -114,8 +114,8 @@ export function useVote(
   return { mutate: onVote, isLoading, isSuccess, isError };
 }
 
-function getCallDatasForLockingVaultQueryVotePower(): string {
-  // extra data is not needed for the locking vault to query vote power, stub with empty value
+// extra data is not needed for locking/vesting vaults to query vote power, stub with empty value
+function getEmptyCallDatas(): string {
   return "0x00";
 }
 
