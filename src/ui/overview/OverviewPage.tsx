@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
-import { Disclosure, Transition } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/solid";
+import { Disclosure } from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { t } from "ttag";
@@ -43,7 +43,7 @@ function FAQ() {
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`What is your refund policy?`}</span>
 
-                  <ChevronUpIcon
+                  <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
                       "ml-2 h-5 w-5 transition ease-in-out duration-150",
@@ -51,19 +51,10 @@ function FAQ() {
                     aria-hidden="true"
                   />
                 </Disclosure.Button>
-                <Transition
-                  enter="transition duration-150 ease-out"
-                  enterFrom="transform scale-95 opacity-0"
-                  enterTo="transform scale-100 opacity-100"
-                  leave="transition duration-75 ease-out"
-                  leaveFrom="transform scale-100 opacity-100"
-                  leaveTo="transform scale-95 opacity-0"
-                >
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                    {t`If you're unhappy with your purchase for any reason, email us
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                  {t`If you're unhappy with your purchase for any reason, email us
                 within 90 days and we'll refund you in full, no questions asked.`}
-                  </Disclosure.Panel>
-                </Transition>
+                </Disclosure.Panel>
               </>
             )}
           </Disclosure>
@@ -72,7 +63,7 @@ function FAQ() {
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`Do you offer technical support?`}</span>
-                  <ChevronUpIcon
+                  <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
                       "ml-2 h-5 w-5 transition ease-in-out duration-150",
@@ -80,18 +71,9 @@ function FAQ() {
                     aria-hidden="true"
                   />
                 </Disclosure.Button>
-                <Transition
-                  enter="transition duration-150 ease-out"
-                  enterFrom="transform scale-95 opacity-0"
-                  enterTo="transform scale-100 opacity-100"
-                  leave="transition duration-75 ease-out"
-                  leaveFrom="transform scale-100 opacity-100"
-                  leaveTo="transform scale-95 opacity-0"
-                >
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                    No.
-                  </Disclosure.Panel>
-                </Transition>
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                  No.
+                </Disclosure.Panel>
               </>
             )}
           </Disclosure>
@@ -100,7 +82,7 @@ function FAQ() {
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`What is your refund policy?`}</span>
-                  <ChevronUpIcon
+                  <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
                       "ml-2 h-5 w-5 transition ease-in-out duration-150",
@@ -108,19 +90,10 @@ function FAQ() {
                     aria-hidden="true"
                   />
                 </Disclosure.Button>
-                <Transition
-                  enter="transition duration-150 ease-out"
-                  enterFrom="transform scale-95 opacity-0"
-                  enterTo="transform scale-100 opacity-100"
-                  leave="transition duration-75 ease-out"
-                  leaveFrom="transform scale-100 opacity-100"
-                  leaveTo="transform scale-95 opacity-0"
-                >
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                    {t`If you're unhappy with your purchase for any reason, email us
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                  {t`If you're unhappy with your purchase for any reason, email us
                 within 90 days and we'll refund you in full, no questions asked.`}
-                  </Disclosure.Panel>
-                </Transition>
+                </Disclosure.Panel>
               </>
             )}
           </Disclosure>
@@ -129,7 +102,7 @@ function FAQ() {
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`Do you offer technical support?`}</span>
-                  <ChevronUpIcon
+                  <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
                       "ml-2 h-5 w-5 transition ease-in-out duration-150",
@@ -137,18 +110,9 @@ function FAQ() {
                     aria-hidden="true"
                   />
                 </Disclosure.Button>
-                <Transition
-                  enter="transition duration-100 ease-out"
-                  enterFrom="transform scale-95 opacity-0"
-                  enterTo="transform scale-100 opacity-100"
-                  leave="transition duration-75 ease-out"
-                  leaveFrom="transform scale-100 opacity-100"
-                  leaveTo="transform scale-95 opacity-0"
-                >
-                  <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                    No.
-                  </Disclosure.Panel>
-                </Transition>
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                  No.
+                </Disclosure.Panel>
               </>
             )}
           </Disclosure>

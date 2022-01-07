@@ -24,7 +24,7 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
           </Link>
         </Tooltip>
       </div>
-      <div className="flex items-center justify-center flex-1 py-4 text-5xl font-extralight text-principalRoyalBlue">
+      <div className="flex items-center justify-center flex-1 py-4 text-5xl text-center font-extralight text-principalRoyalBlue">
         {balance}
       </div>
       {children}
