@@ -226,13 +226,13 @@ interface QuorumBarProps {
 
 function QuorumBar(props: QuorumBarProps) {
   const { votes, quorum } = props;
-  const quorumPercent = Math.round((+votes / +quorum) * 100);
+  const quorumPercent = Math.floor((+votes / +quorum) * 100);
   return (
     <div className="w-full space-y-1 text-sm text-white">
       <div>
         {votes} {t`total votes`}
       </div>
-      <ProgressBar progress={Math.max(+votes / +quorum, 1)} />
+      <ProgressBar progress={+votes / +quorum} />
       <div>
         {`${quorumPercent}%`} {t`quorum reached`}
       </div>
