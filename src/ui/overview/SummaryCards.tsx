@@ -1,20 +1,14 @@
 import React, { ReactElement } from "react";
 
 import { commify, formatEther } from "ethers/lib/utils";
-import tw, {
-  display,
-  flexDirection,
-  space,
-  gridTemplateColumns,
-  gap,
-} from "src/elf-tailwindcss-classnames";
-import SummaryCard from "src/ui/overview/SummaryCard";
-import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 import { t } from "ttag";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+
+import { abbreviateLargeValue } from "src/base/numbers";
 import { addressesJson } from "src/elf-council-addresses";
 import { elementTokenContract } from "src/elf/contracts";
-import { abbreviateLargeValue } from "src/base/numbers";
+import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import SummaryCard from "src/ui/overview/SummaryCard";
+import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 
 const { treasury } = addressesJson.addresses;
 

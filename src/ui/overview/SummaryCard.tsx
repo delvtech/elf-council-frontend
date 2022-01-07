@@ -1,10 +1,10 @@
 import React, { ReactElement, ReactNode } from "react";
-import Card from "src/ui/base/Card/Card";
 
-import classnames from "classnames";
 import Link from "next/link";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
+
+import Card from "src/ui/base/Card/Card";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface SummaryCardProps {
   title: string;
