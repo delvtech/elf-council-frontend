@@ -117,7 +117,7 @@ function getTooltipContent(
   }
 
   if (!hasValidDelegateAddress) {
-    return t`Must have valid delegation to another party or yourself`;
+    return t`Enter a valid address to delegate to`;
   }
 
   // not disabled, no error, so don't show tooltip

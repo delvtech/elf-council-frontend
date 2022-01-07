@@ -4,8 +4,6 @@ import { Signer } from "ethers";
 import { t } from "ttag";
 import classNames from "classnames";
 import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
-import Link from "next/link";
-import { formatEther } from "ethers/lib/utils";
 
 import { isValidAddress } from "src/base/isValidAddress";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -17,6 +15,7 @@ import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
+import { formatEther } from "ethers/lib/utils";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
@@ -41,21 +40,8 @@ export default function DelegatePage(): ReactElement {
   const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
   const vaultBalance = formatEther(vaultBalanceBN || 0);
 
-  const noConnection = !account;
-  const noDelegation = +walletBalance > 0 && !currentDelegateAddress;
-  const noDeposit =
-    +walletBalance > 0 && +vaultBalance === 0 && currentDelegateAddress;
-  const showWarning = [noConnection, noDelegation, noDeposit].some((x) => x);
-
-  const renderWarning = () => {
-    if (noConnection) {
-      return <NoConnection />;
-    } else if (noDelegation) {
-      return <NoDelegation />;
-    } else if (noDeposit) {
-      return <NoDeposit />;
-    }
-  };
+  const showWarning =
+    !account || (parseInt(walletBalance) > 0 && parseInt(vaultBalance) === 0);
 
   // Used to verify if delegate inputted is an actual delegate in our system
   useEffect(() => {
@@ -83,8 +69,8 @@ export default function DelegatePage(): ReactElement {
       {/* Warning Card */}
       {showWarning ? (
         <div className="flex flex-col xl:flex-row xl:justify-center mb-4 max-w-7xl w-full">
-          <WarningLabel className="xl:w-4/12 xl:mr-16 px-6 p-2">
-            {renderWarning()}
+          <WarningLabel>
+            {!account ? <NoConnection /> : <NoDeposit />}
           </WarningLabel>
 
           {/***
@@ -160,22 +146,6 @@ function NoDeposit(): ReactElement {
         {t`Please ensure you deposit your tokens to earn your delegating power`}
         <SparklesIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </div>
-    </p>
-  );
-}
-
-function NoDelegation(): ReactElement {
-  return (
-    <p className="text-left">
-      <div>{t`Please set a delegation in order to deposit.`}</div>
-      <Link key="learn-more-link" href="/resources">
-        {/* There's a big discussion about how awful the Link api is for a11y
-      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-      best thing to do for now is just ignore this rule when an anchor tag is
-      the child of a Link since all a tags *should* have an href 🙁 */
-        /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="underline">{t`To learn more about delegations click here.`}</a>
-      </Link>
     </p>
   );
 }
