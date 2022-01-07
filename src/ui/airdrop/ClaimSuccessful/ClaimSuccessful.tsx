@@ -32,7 +32,7 @@ export function ClaimSuccessful(): ReactElement {
             target="_blank"
             rel="noreferrer"
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              t`I just claimed my $ELFI airdrop!`,
+              t`🧝‍♂️`,
             )}`}
           >
             <CallToActionCard
