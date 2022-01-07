@@ -45,7 +45,12 @@ export default function TokenInput({
       <label htmlFor={id} className="sr-only">
         {screenReaderLabel}
       </label>
-      <div className="relative">
+      <div
+        className={classNames("relative", {
+          "pointer-events-none": disabled,
+          "opacity-50": disabled,
+        })}
+      >
         <input
           disabled={disabled}
           type="text"
