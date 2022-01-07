@@ -137,8 +137,9 @@ export default function useMouseTracking(options?: UseMouseTrackingOptions): {
     stopCounter(trackingIntervalRef);
     stopCounter(draggingIntervalRef);
     window.removeEventListener("mousemove", handleMouseMove);
+    window.removeEventListener("touchmove", handleTouchMove);
     setIsTracking(false);
-  }, [stopCounter, handleMouseMove]);
+  }, [stopCounter, handleMouseMove, handleTouchMove]);
 
   const until = useMemo(() => {
     let memoTarget: EventTarget | null = null;
