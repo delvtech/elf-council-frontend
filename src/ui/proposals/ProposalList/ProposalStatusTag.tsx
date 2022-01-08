@@ -10,6 +10,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 
 import { getProposalStatus, ProposalStatus } from "./ProposalStatus";
+import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 
 const StatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.IN_PROGRESS]: t`In progress`,
@@ -38,9 +39,15 @@ export function ProposalStatusTag({
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const { proposalId, quorum } = proposal;
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const isExecuted = useProposalExecuted(proposalId);
   const votingPower = useVotingPowerForProposal(proposalId);
 
-  const status = getProposalStatus(isVotingOpen, quorum, votingPower);
+  const status = getProposalStatus(
+    isVotingOpen,
+    isExecuted,
+    quorum,
+    votingPower,
+  );
 
   if (!status) {
     return null;

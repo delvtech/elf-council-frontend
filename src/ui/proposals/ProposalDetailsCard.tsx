@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
-import { InformationCircleIcon } from "@heroicons/react/solid";
+import { CheckIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { Signer } from "ethers";
@@ -32,6 +32,8 @@ import { useBallot } from "src/ui/voting/useBallot";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { Ballot } from "src/ui/voting/Ballot";
+import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
+import { Intent, Tag } from "src/ui/base/Tag/Tag";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -63,6 +65,7 @@ export function ProposalDetailsCard(
 
   const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
 
+  const isExecuted = useProposalExecuted(proposal?.proposalId);
   const [newBallot, setCurrentBallot] = useState<Ballot>();
 
   const { data: currentBallot } = useBallot(account, proposal?.proposalId);
@@ -102,6 +105,7 @@ export function ProposalDetailsCard(
   const votes = getVoteCount(proposalVotingPower);
   const proposalStatus = getProposalStatus(
     isVotingOpen,
+    isExecuted,
     quorum,
     proposalVotingPower,
   );
@@ -154,7 +158,14 @@ export function ProposalDetailsCard(
         </a>
       </p>
 
-      <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+      {isExecuted ? (
+        <Tag className="w-full" intent={Intent.SUCCESS}>
+          <span>{t`Executed`}</span>
+          <CheckCircleIcon className="ml-2" height="24" />
+        </Tag>
+      ) : (
+        <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+      )}
       <BalanceWithLabel
         className="w-full mt-4"
         balance={formattedAccountVotingPower}
