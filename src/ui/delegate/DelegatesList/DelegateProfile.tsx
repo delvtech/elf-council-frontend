@@ -81,7 +81,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               isOpen={showTooltip.address}
               content={t`Address copied`}
             >
-              <button className="" onClick={onCopyAddress}>
+              <button onClick={onCopyAddress}>
                 <AnnotationIcon className="h-5 text-principalRoyalBlue hover:text-principalBlue" />
               </button>
             </Tooltip>
