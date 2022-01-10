@@ -13,5 +13,9 @@ export function useUnclaimedAirdrop(
     .subUnsafe(FixedNumber.from(claimed))
     .toString();
 
+  if (Number(unclaimed) <= 0) {
+    return "0";
+  }
+
   return unclaimed;
 }
