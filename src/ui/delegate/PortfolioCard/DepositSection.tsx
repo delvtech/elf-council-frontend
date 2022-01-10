@@ -138,14 +138,14 @@ function PortfolioDepositText(): ReactElement {
       <span className="font-bold">
         {t`This verifies your eligibility to vote and/or delegate.`}
       </span>
-      <div>
+      <span className="inline-block">
         <Link href="/resources">
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a className="text-goldYellow">
             {t`To learn more about our vaults read here.`}
           </a>
         </Link>
-      </div>
+      </span>
     </p>
   );
 }
