@@ -115,7 +115,11 @@ export function ProposalDetailsCard(
   );
 
   const submitButtonDisabled =
-    !isNumber(newBallot) || !account || !isVotingOpen || isVoteTxPending;
+    !isNumber(newBallot) ||
+    !account ||
+    !isVotingOpen ||
+    isVoteTxPending ||
+    !+accountVotingPower;
 
   return (
     <GradientCard
