@@ -5,15 +5,15 @@ import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H2 from "src/ui/base/H2";
 
-interface SuccessCardProps {
+interface ErrorCardProps {
   className?: string;
   onTryAgain?: () => void;
 }
 
-export default function SuccessCard({
+export default function ErrorCard({
   className,
   onTryAgain,
-}: SuccessCardProps): ReactElement {
+}: ErrorCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
       <div className="flex flex-col justify-center gap-2 px-6 pt-6 pb-4 text-white sm:pt-20 sm:px-20 sm:pb-14 sm:text-center sm:items-center">
