@@ -1,6 +1,9 @@
 import { useCallback } from "react";
 
-import { useSmartContractTransaction } from "@elementfi/react-query-typechain";
+import {
+  useSmartContractTransaction,
+  UseSmartContractTransactionOptions,
+} from "@elementfi/react-query-typechain";
 import { parseEther } from "@ethersproject/units";
 import { ethers, Signer } from "ethers";
 
@@ -12,6 +15,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
 import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingPower";
+import { CoreVoting } from "elf-council-typechain";
 
 const {
   // optimisticRewardsVault: optimisticRewardsVaultAddress,
@@ -23,6 +27,7 @@ export function useVote(
   account: string | undefined | null,
   signer: Signer | undefined,
   atBlockNumber?: number,
+  options?: UseSmartContractTransactionOptions<CoreVoting, "vote">,
 ): {
   mutate: (proposalId: string, ballot: Ballot) => void;
   isLoading: boolean;
@@ -37,7 +42,7 @@ export function useVote(
     isLoading,
     isSuccess,
     isError,
-  } = useSmartContractTransaction(coreVotingContract, "vote", signer);
+  } = useSmartContractTransaction(coreVotingContract, "vote", signer, options);
 
   const lockingVaultVotingPower = useLockingVaultVotingPower(
     account,
