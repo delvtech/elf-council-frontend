@@ -1,7 +1,7 @@
 import { PropsWithChildren, ReactElement } from "react";
 import { Tooltip2, Tooltip2Props } from "@blueprintjs/popover2";
 import classNames from "classnames";
-import styles from "./Tooltip.module.css";
+import styles from "src/ui/base/Tooltip/Tooltip.module.css";
 
 export default function Tooltip(
   props: PropsWithChildren<Tooltip2Props>,

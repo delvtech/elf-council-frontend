@@ -93,14 +93,14 @@ function PortfolioWithdrawText(): ReactElement {
     <p className="text-white font-light leading-5 text-sm">
       {t`To remove deposited tokens from voting eligibility enter a withdrawal
       amount.`}
-      <div>
+      <span className="inline-block">
         <Link href="/resources">
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a className="text-goldYellow">
             {t`Read more to learn about our voting vaults.`}
           </a>
         </Link>
-      </div>
+      </span>
     </p>
   );
 }

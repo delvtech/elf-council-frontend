@@ -54,7 +54,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
   return (
     <Popover>
-      <Popover.Button className="w-full">
+      <Popover.Button as="div" className="w-full">
         <div
           className={classNames(
             "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",

@@ -149,11 +149,11 @@ export default function DelegatePage(): ReactElement {
 function NoConnection(): ReactElement {
   return (
     <p className="text-left">
-      <div>{t`Unable to determine delegation eligibility`}</div>
-      <div className="mt-1">
+      <span className="inline-block">{t`Unable to determine delegation eligibility`}</span>
+      <span className="inline-block">
         {t`Please connect your wallet`}
         <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
-      </div>
+      </span>
     </p>
   );
 }
@@ -161,10 +161,10 @@ function NoConnection(): ReactElement {
 function NoDeposit(): ReactElement {
   return (
     <p className="text-left">
-      <div>
+      <span className="inline-block">
         {t`Please ensure you deposit your tokens to earn your delegating power`}
         <SparklesIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
-      </div>
+      </span>
     </p>
   );
 }
@@ -172,7 +172,7 @@ function NoDeposit(): ReactElement {
 function NoDelegation(): ReactElement {
   return (
     <p className="text-left">
-      <div>{t`Please set a delegation in order to deposit.`}</div>
+      <span className="inline-block">{t`Please set a delegation in order to deposit.`}</span>
       <Link key="learn-more-link" href="/resources">
         {/* There's a big discussion about how awful the Link api is for a11y
       here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
