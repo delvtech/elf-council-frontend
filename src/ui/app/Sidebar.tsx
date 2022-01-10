@@ -57,7 +57,10 @@ export default function Sidebar(): ReactElement {
             link="https://forum.element.fi"
             label={t`Forum`}
           />
-          <SidebarLink link="/resources" label={t`Resources`} router={router} />
+          <SidebarLinkExternal
+            link="https://devops-32.gitbook.io/element-council"
+            label={t`Resources`}
+          />
         </div>
         <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
           <span className="text-sm">Powered by</span>
