@@ -1,4 +1,4 @@
-import { AddressesJsonFile, goerliAddressList } from "elf-council-tokenlist";
+import { AddressesJsonFile } from "elf-council-tokenlist";
 
 import testnetAddressList from "./testnet.addresses.json";
 const localGoerliAddressList = {
