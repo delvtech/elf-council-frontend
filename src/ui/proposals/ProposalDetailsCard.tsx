@@ -71,7 +71,11 @@ export function ProposalDetailsCard(
   const { data: currentBallot } = useBallot(account, proposal?.proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
-  const { mutate: vote } = useVote(account, signer, proposal?.created);
+  const [isVoteTxPending, setIsVoteTxPending] = useState(false);
+  const { mutate: vote } = useVote(account, signer, proposal?.created, {
+    onTransactionSubmitted: () => setIsVoteTxPending(true),
+    onTransactionMined: () => setIsVoteTxPending(false),
+  });
 
   const handleVote = useCallback(() => {
     if (!proposal || !isNumber(newBallot)) {
@@ -111,7 +115,7 @@ export function ProposalDetailsCard(
   );
 
   const submitButtonDisabled =
-    !isNumber(newBallot) || !account || !isVotingOpen;
+    !isNumber(newBallot) || !account || !isVotingOpen || isVoteTxPending;
 
   return (
     <GradientCard
