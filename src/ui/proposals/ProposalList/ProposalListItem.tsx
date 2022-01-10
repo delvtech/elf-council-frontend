@@ -64,11 +64,6 @@ export function ProposalListItem({
         <div className={classNames("flex space-x-4")}>
           <Tag
             intent={active ? Intent.BLANK : Intent.PRIMARY}
-          >{t`created ${formatAbbreviatedDate(
-            new Date(Number(proposal.createdTimestamp) * MS_PER_S),
-          )}`}</Tag>
-          <Tag
-            intent={active ? Intent.BLANK : Intent.PRIMARY}
           >{t`voting ends ${votingPeriodEndsDate}`}</Tag>
         </div>
       </div>

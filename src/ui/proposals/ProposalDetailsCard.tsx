@@ -29,8 +29,9 @@ import {
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
+import { RESOURCES_URL } from "src/ui/resources";
 import { Ballot } from "src/ui/voting/Ballot";
-import { useBallot, Vote } from "src/ui/voting/useBallot";
+import { useBallot } from "src/ui/voting/useBallot";
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
@@ -178,14 +179,14 @@ export function ProposalDetailsCard(
         className="w-full mt-4"
         balance={formattedAccountVotingPower}
         tooltipText={votingPowerTooltipText}
-        tooltipHref={"/resources"}
+        tooltipHref={RESOURCES_URL}
         label={t`Voting Power`}
       />
       <BalanceWithLabel
         className="w-full mt-4"
         balance={amountDeposited}
         tooltipText={votingBalanceTooltipText}
-        tooltipHref={"/resources"}
+        tooltipHref={RESOURCES_URL}
         label={t`Eligible voting balance`}
       />
 
