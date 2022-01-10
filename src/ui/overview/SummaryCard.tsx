@@ -12,7 +12,7 @@ interface SummaryCardProps {
   children?: ReactNode;
 }
 export function SummaryCard(props: SummaryCardProps): ReactElement {
-  const { balance, children } = props;
+  const { title, balance, children } = props;
 
   return (
     <Card className="flex flex-col lg:flex-1">
@@ -23,7 +23,9 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
             rel="noreferrer"
             href={RESOURCES_URL}
             className="underline"
-          >{t`To learn more about delegations click here.`}</a>
+          >
+            {title}
+          </a>
         </Tooltip>
       </div>
       <div className="flex items-center justify-center flex-1 py-4 text-5xl text-center font-extralight text-principalRoyalBlue">
