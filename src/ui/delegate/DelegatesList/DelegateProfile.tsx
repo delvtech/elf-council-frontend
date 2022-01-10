@@ -47,11 +47,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
     [delegate],
   );
 
-  const onCopyTwitterHandle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onCopy("twitterHandle");
-  };
-
   const onCopyAddress = (e: React.MouseEvent) => {
     e.stopPropagation();
     onCopy("address");
@@ -79,31 +74,26 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               <NumDelegatedVotes account={delegate.address} />
             </span>
           </div>
-          <div>
-            <span className="flex flex-col items-center justify-center gap-1">
-              <Tooltip
-                className="!flex"
-                isOpen={showTooltip.twitterHandle}
-                content={t`Twitter handle copied`}
-              >
-                <button onClick={onCopyTwitterHandle}>
-                  <AnnotationIcon className="h-5 text-principalRoyalBlue" />
-                </button>
-              </Tooltip>
-              <Tooltip
-                className="!flex relative w-4 h-4"
-                isOpen={showTooltip.address}
-                content={t`Address copied`}
-              >
-                <button onClick={onCopyAddress}>
-                  <Image
-                    layout="fill"
-                    src="/assets/crown.svg"
-                    alt={t`Crown icon`}
-                  />
-                </button>
-              </Tooltip>
-            </span>
+          <div className="flex flex-col items-center justify-center gap-1">
+            {/* Copy address button */}
+            <Tooltip
+              className="!flex"
+              isOpen={showTooltip.address}
+              content={t`Address copied`}
+            >
+              <button className="" onClick={onCopyAddress}>
+                <AnnotationIcon className="h-5 text-principalRoyalBlue hover:text-principalBlue" />
+              </button>
+            </Tooltip>
+
+            {/* Element member verified delegate icon */}
+            <div className="!flex relative w-4 h-4">
+              <Image
+                layout="fill"
+                src="/assets/crown.svg"
+                alt={t`Crown icon`}
+              />
+            </div>
           </div>
         </div>
       </Popover.Button>
