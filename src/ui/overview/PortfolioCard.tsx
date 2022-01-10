@@ -17,6 +17,7 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 import { format } from "d3-format";
+import { RESOURCES_URL } from "src/ui/resources";
 
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
@@ -56,21 +57,21 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           className="w-full mt-8"
           balance={balance}
           tooltipText={portfolioTooltipText}
-          tooltipHref={"/resources"}
+          tooltipHref={RESOURCES_URL}
           label={t`Wallet balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
-          tooltipHref={"/resources"}
+          tooltipHref={RESOURCES_URL}
           label={t`Eligible voting balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={votingPower}
           tooltipText={votingPowerTooltipText}
-          tooltipHref={"/resources"}
+          tooltipHref={RESOURCES_URL}
           label={t`Voting Power`}
         />
         {!!Number(unclaimedAirdrop) && (

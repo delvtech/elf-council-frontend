@@ -1,10 +1,10 @@
 import React, { ReactElement, ReactNode } from "react";
 
-import Link from "next/link";
 import { t } from "ttag";
 
 import Card from "src/ui/base/Card/Card";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { RESOURCES_URL } from "src/ui/resources";
 
 interface SummaryCardProps {
   title: string;
@@ -12,16 +12,18 @@ interface SummaryCardProps {
   children?: ReactNode;
 }
 export function SummaryCard(props: SummaryCardProps): ReactElement {
-  const { balance, title, children } = props;
+  const { balance, children } = props;
 
   return (
     <Card className="flex flex-col lg:flex-1">
       <div className="-mt-2 text-sm font-light text-principalRoyalBlue">
         <Tooltip content={t`Click to find out more.`}>
-          <Link href="/resources">
-            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-            <a>{title}</a>
-          </Link>
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href={RESOURCES_URL}
+            className="underline"
+          >{t`To learn more about delegations click here.`}</a>
         </Tooltip>
       </div>
       <div className="flex items-center justify-center flex-1 py-4 text-5xl text-center font-extralight text-principalRoyalBlue">
