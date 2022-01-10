@@ -40,7 +40,6 @@ export function BalanceLabeledStat(
               href={RESOURCES_URL}
               className="underline"
             >
-              {" "}
               <InformationCircleIcon className="h-4" />
             </a>
           </Tooltip>
