@@ -33,6 +33,7 @@ export enum ButtonVariant {
   OUTLINE_WHITE = "outlineWhite",
   OUTLINE_BLUE = "outlineBlue",
   MINIMAL = "minimal",
+  PALE = "paleLily",
 }
 
 export function getButtonClass({
@@ -112,7 +113,10 @@ function getBackground(
       return classNames("bg-transparent", "hover:bg-blue-100");
 
     case ButtonVariant.WHITE:
-      return classNames("bg-white", "h:bg-opacity-80");
+      return classNames("bg-white", "hover:bg-opacity-80");
+
+    case ButtonVariant.PALE:
+      return classNames("bg-paleLily", "hover:bg-paleLily-dark");
 
     default: {
       assertNever(variant);
@@ -133,6 +137,7 @@ function getTextColor(variant: ButtonVariant): string {
       return classNames("text-brandDarkBlue-dark");
 
     case ButtonVariant.WHITE:
+    case ButtonVariant.PALE:
       return classNames("text-principalRoyalBlue");
 
     default: {
