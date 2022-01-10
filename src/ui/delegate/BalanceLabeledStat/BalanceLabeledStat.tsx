@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 import classNames from "classnames";
 import { t } from "ttag";
+import { InformationCircleIcon } from "@heroicons/react/solid";
 
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
@@ -38,7 +39,10 @@ export function BalanceLabeledStat(
               rel="noreferrer"
               href={RESOURCES_URL}
               className="underline"
-            >{t`To learn more about delegations click here.`}</a>
+            >
+              {" "}
+              <InformationCircleIcon className="h-4" />
+            </a>
           </Tooltip>
         )}
       </div>
