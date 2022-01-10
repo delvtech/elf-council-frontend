@@ -30,7 +30,7 @@ import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 import { Ballot } from "src/ui/voting/Ballot";
-import { useBallot } from "src/ui/voting/useBallot";
+import { useBallot, Vote } from "src/ui/voting/useBallot";
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
@@ -71,7 +71,11 @@ export function ProposalDetailsCard(
   const { data: currentBallot } = useBallot(account, proposal?.proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
-  const { mutate: vote } = useVote(account, signer, proposal?.created);
+  const [isVoteTxPending, setIsVoteTxPending] = useState(false);
+  const { mutate: vote } = useVote(account, signer, proposal?.created, {
+    onTransactionSubmitted: () => setIsVoteTxPending(true),
+    onTransactionMined: () => setIsVoteTxPending(false),
+  });
 
   const handleVote = useCallback(() => {
     if (!proposal || !isNumber(newBallot)) {
@@ -111,7 +115,11 @@ export function ProposalDetailsCard(
   );
 
   const submitButtonDisabled =
-    !isNumber(newBallot) || !account || !isVotingOpen;
+    !isNumber(newBallot) ||
+    !account ||
+    !isVotingOpen ||
+    isVoteTxPending ||
+    !+accountVotingPower;
 
   return (
     <GradientCard
@@ -202,6 +210,7 @@ export function ProposalDetailsCard(
           <Button
             disabled={submitButtonDisabled}
             onClick={handleVote}
+            loading={isVoteTxPending}
             variant={ButtonVariant.WHITE}
           >
             {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}

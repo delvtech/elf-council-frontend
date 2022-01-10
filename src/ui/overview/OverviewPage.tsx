@@ -41,7 +41,7 @@ function FAQ() {
             {({ open }) => (
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`What is your refund policy?`}</span>
+                  <span>{t`What is Element Council?`}</span>
 
                   <ChevronDownIcon
                     className={classNames(
@@ -52,8 +52,7 @@ function FAQ() {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {t`If you're unhappy with your purchase for any reason, email us
-                within 90 days and we'll refund you in full, no questions asked.`}
+                  {t`The goal of vibrations is to plant the seeds of interconnectedness rather than pain. Energy is a constant.`}
                 </Disclosure.Panel>
               </>
             )}
@@ -62,7 +61,7 @@ function FAQ() {
             {({ open }) => (
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`Do you offer technical support?`}</span>
+                  <span>{t`How does delegated voting work?`}</span>
                   <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
@@ -72,7 +71,8 @@ function FAQ() {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  No.
+                  Inspiration requires exploration. To traverse the circuit is
+                  to become one with it.
                 </Disclosure.Panel>
               </>
             )}
@@ -81,7 +81,7 @@ function FAQ() {
             {({ open }) => (
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`What is your refund policy?`}</span>
+                  <span>{t`Who are the GSC (Governance Steering Council)?`}</span>
                   <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
@@ -91,8 +91,7 @@ function FAQ() {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {t`If you're unhappy with your purchase for any reason, email us
-                within 90 days and we'll refund you in full, no questions asked.`}
+                  {t`To wander the vision quest is to become one with it. We exist as electromagnetic forces.`}
                 </Disclosure.Panel>
               </>
             )}
@@ -101,7 +100,7 @@ function FAQ() {
             {({ open }) => (
               <>
                 <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                  <span>{t`Do you offer technical support?`}</span>
+                  <span>{t`What is a voting vault?`}</span>
                   <ChevronDownIcon
                     className={classNames(
                       open ? classNames("transform rotate-180") : "",
@@ -111,7 +110,8 @@ function FAQ() {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  No.
+                  The dreamscape is beaming with sub-atomic particles.
+                  Aspiration is a constant.
                 </Disclosure.Panel>
               </>
             )}
