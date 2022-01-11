@@ -96,11 +96,14 @@ function DetailedDelegateProfile({
         </div>
 
         {/* Close Button */}
-        <div className="mt-auto sm:mt-14 lg:mt-auto">
-          <Popover.Button as="div">
+        <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
+          <Button className="grid place-items-center w-1/2">
+            <span>{t`Choose delegate`}</span>
+          </Button>
+          <Popover.Button as="div" className="w-1/2">
             <Button
-              variant={ButtonVariant.PALE}
-              className="w-full justify-center"
+              variant={ButtonVariant.WHITE}
+              className="grid place-items-center w-full"
             >
               <div className="font-bold text-lg">
                 {t`Close Delegate Profile`}

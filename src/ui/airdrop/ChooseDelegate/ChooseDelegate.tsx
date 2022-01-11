@@ -77,18 +77,18 @@ export function ChooseDelegate({
             {delegates.map((delegate, idx) => {
               return (
                 <li key={`${delegate.address}-${idx}}`}>
-                  <button
+                  {/* <button
                     className="w-full text-left"
                     onClick={() => {
                       setSelectedDelegateIndex(idx);
                       setDelegateAddress(delegate.address);
                     }}
-                  >
-                    <DelegateProfile
-                      selected={idx === selectedDelegateIndex}
-                      delegate={delegate}
-                    />
-                  </button>
+                  > */}
+                  <DelegateProfile
+                    selected={idx === selectedDelegateIndex}
+                    delegate={delegate}
+                  />
+                  {/* </button> */}
                 </li>
               );
             })}

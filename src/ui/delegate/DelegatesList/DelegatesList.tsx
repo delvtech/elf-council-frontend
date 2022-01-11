@@ -28,19 +28,10 @@ function DelegatesList({
         {delegates.map((delegate, idx) => (
           // TODO: Remove -${idx} for production since addresses are always unique
           <li key={`${delegate.address}-${idx}}`}>
-            <button
-              className="w-full text-left"
-              onClick={() => {
-                if (account) {
-                  setDelegateAddressInput(delegate.address);
-                }
-              }}
-            >
-              <DelegateProfile
-                selected={delegate.address === selectedDelegate}
-                delegate={delegate}
-              />
-            </button>
+            <DelegateProfile
+              selected={delegate.address === selectedDelegate}
+              delegate={delegate}
+            />
           </li>
         ))}
       </ul>
