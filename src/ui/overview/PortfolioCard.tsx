@@ -17,6 +17,7 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
 import { format } from "d3-format";
+import { RESOURCES_URL } from "src/ui/resources";
 
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
@@ -30,6 +31,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { account } = props;
 
   const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, account);
+
   const balance = formatEther(balanceBN || 0);
 
   const amountDeposited = useDeposited(account) || "0";
@@ -37,10 +39,6 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccount(account);
-
-  const formattedBalance = commify((+balance).toFixed(4));
-  const formattedAirdrop = commify((+unclaimedAirdrop).toFixed(4));
-  const formattedVotingPower = commify((+votingPower).toFixed(4));
 
   return (
     <Card
@@ -57,36 +55,38 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
       <div className="flex flex-col min-h-full mb-8 align-bottom">
         <BalanceWithLabel
           className="w-full mt-8"
-          balance={formattedBalance}
+          balance={balance}
           tooltipText={portfolioTooltipText}
-          tooltipHref={"/resources"}
+          tooltipHref={RESOURCES_URL}
           label={t`Wallet balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
-          tooltipHref={"/resources"}
+          tooltipHref={RESOURCES_URL}
           label={t`Eligible voting balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
-          balance={formattedVotingPower}
+          balance={votingPower}
           tooltipText={votingPowerTooltipText}
-          tooltipHref={"/resources"}
+          tooltipHref={RESOURCES_URL}
           label={t`Voting Power`}
         />
-        <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
-          <BalanceWithLabel
-            balance={formattedAirdrop}
-            label={t`Unclaimed airdrop`}
-          />
-          <LinkButton
-            link="/airdrop"
-            className="self-end mb-5"
-            variant={ButtonVariant.OUTLINE_WHITE}
-          >{t`Claim`}</LinkButton>
-        </div>
+        {!!Number(unclaimedAirdrop) && (
+          <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
+            <BalanceWithLabel
+              balance={unclaimedAirdrop}
+              label={t`Unclaimed airdrop`}
+            />
+            <LinkButton
+              link="/airdrop"
+              className="self-end mb-5"
+              variant={ButtonVariant.OUTLINE_WHITE}
+            >{t`Claim`}</LinkButton>
+          </div>
+        )}
       </div>
     </Card>
   );
@@ -105,7 +105,7 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
     <div className={classNames(className, "text-white")}>
       <div className="flex items-center">
         <div className="text-2xl font-extralight">
-          {format(".4~f")(+balance)}
+          {commify(format(".4~f")(+balance))}
         </div>
         <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
       </div>

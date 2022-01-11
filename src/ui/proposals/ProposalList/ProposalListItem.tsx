@@ -6,13 +6,15 @@ import { Proposal } from "elf-council-proposals";
 import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
+import { formatAbbreviatedDate } from "src/base/dates";
+import { MS_PER_S, SECONDS_PER_BLOCK } from "src/base/time";
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { ProposalStatusTag } from "src/ui/proposals/ProposalList/ProposalStatusTag";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
-import { useBallot } from "src/ui/voting/useBallot";
 import { Ballot } from "src/ui/voting/Ballot";
+import { useBallot } from "src/ui/voting/useBallot";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -33,6 +35,14 @@ export function ProposalListItem({
   const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
   const ballotLabel = useBallotLabel(account, proposalId);
 
+  const votingPeriodEndsTimestampMS =
+    proposal.createdTimestamp * MS_PER_S +
+    Math.round(proposal.expiration * SECONDS_PER_BLOCK * MS_PER_S);
+
+  const votingPeriodEndsDate = formatAbbreviatedDate(
+    new Date(votingPeriodEndsTimestampMS),
+  );
+
   const handleClick = useCallback(
     () => onClick(proposalId),
     [onClick, proposalId],
@@ -51,15 +61,18 @@ export function ProposalListItem({
           title={snapshotProposal?.title}
           description={t`Proposal #${proposalId}`}
         />
-        <div
-          className={classNames("flex space-x-4", {
-            [classNames("invisible")]: !ballotLabel,
-          })}
-        >
-          <Tag intent={Intent.PRIMARY_SOLID}>{ballotLabel}</Tag>
+        <div className={classNames("flex space-x-4")}>
+          <Tag
+            intent={active ? Intent.BLANK : Intent.PRIMARY}
+          >{t`voting ends ${votingPeriodEndsDate}`}</Tag>
         </div>
       </div>
       <div className="flex items-end h-full space-x-4">
+        {ballotLabel && (
+          <Tag intent={active ? Intent.BLANK : Intent.PRIMARY}>
+            {ballotLabel}
+          </Tag>
+        )}
         <ProposalStatusTag signer={signer} proposal={proposal} />
       </div>
     </Card>
@@ -84,5 +97,9 @@ function useBallotLabel(
 
   if (votingPower && castBallot === Ballot.NO) {
     return t`Voted NO`;
+  }
+
+  if (votingPower && castBallot === Ballot.MAYBE) {
+    return t`Voted ABSTAIN`;
   }
 }

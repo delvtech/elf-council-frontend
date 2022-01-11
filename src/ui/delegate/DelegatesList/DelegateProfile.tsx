@@ -16,7 +16,6 @@ import dynamic from "next/dynamic";
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
-  onChooseDelegate?: (address: string) => void;
   active?: boolean;
 }
 
@@ -26,7 +25,7 @@ const defaultTooltipState = {
 };
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate, onChooseDelegate } = props;
+  const { selected = false, delegate } = props;
   const [showTooltip, setShowTooltip] = useState(defaultTooltipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -48,11 +47,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
     [delegate],
   );
 
-  const onCopyTwitterHandle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onCopy("twitterHandle");
-  };
-
   const onCopyAddress = (e: React.MouseEvent) => {
     e.stopPropagation();
     onCopy("address");
@@ -60,7 +54,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
   return (
     <Popover>
-      <Popover.Button className="w-full">
+      <Popover.Button as="div" className="w-full">
         <div
           className={classNames(
             "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
@@ -80,31 +74,26 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               <NumDelegatedVotes account={delegate.address} />
             </span>
           </div>
-          <div>
-            <span className="flex flex-col items-center justify-center gap-1">
-              <Tooltip
-                className="!flex"
-                isOpen={showTooltip.twitterHandle}
-                content={t`Twitter handle copied`}
-              >
-                <button onClick={onCopyTwitterHandle}>
-                  <AnnotationIcon className="h-5 text-principalRoyalBlue" />
-                </button>
-              </Tooltip>
-              <Tooltip
-                className="!flex relative w-4 h-4"
-                isOpen={showTooltip.address}
-                content={t`Address copied`}
-              >
-                <button onClick={onCopyAddress}>
-                  <Image
-                    layout="fill"
-                    src="/assets/crown.svg"
-                    alt={t`Crown icon`}
-                  />
-                </button>
-              </Tooltip>
-            </span>
+          <div className="flex flex-col items-center justify-center gap-1">
+            {/* Copy address button */}
+            <Tooltip
+              className="!flex"
+              isOpen={showTooltip.address}
+              content={t`Address copied`}
+            >
+              <button onClick={onCopyAddress}>
+                <AnnotationIcon className="h-5 text-principalRoyalBlue hover:text-principalBlue" />
+              </button>
+            </Tooltip>
+
+            {/* Element member verified delegate icon */}
+            <div className="!flex relative w-4 h-4">
+              <Image
+                layout="fill"
+                src="/assets/crown.svg"
+                alt={t`Crown icon`}
+              />
+            </div>
           </div>
         </div>
       </Popover.Button>
@@ -138,13 +127,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             className="fixed lg:absolute z-50 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
           lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
           >
-            {({ close }) => (
-              <DetailedDelegateProfile
-                delegate={delegate}
-                onClose={close}
-                onChooseDelegate={onChooseDelegate}
-              />
-            )}
+            <DetailedDelegateProfile delegate={delegate} />
           </Popover.Panel>
         </Transition.Child>
       </Transition>

@@ -26,7 +26,7 @@ function getProvider() {
       // always use localhostProvider for tests
       "test",
       // for now while we don't have mainnet or goerli, use localnet for development as well
-      "development",
+      // "development",
     ].includes(process.env.NODE_ENV || "")
   ) {
     const localhostProvider = new providers.JsonRpcProvider(LOCAL_RPC_HOST);

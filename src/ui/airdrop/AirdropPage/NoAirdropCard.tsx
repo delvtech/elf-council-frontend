@@ -1,17 +1,16 @@
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
+import H2 from "src/ui/base/H2";
 import { t } from "ttag";
 
 export function NoAirdropCard(): ReactElement {
   return (
-    <Card
-      variant={CardVariant.BLUE}
-      className="flex flex-col text-white text-center h-full justify-center items-center"
-    >
-      <div className="text-center text-sm mb-4">
-        <div className="font-semibold tracking-wider">{t`Sorry, no airdrop found for this wallet.`}</div>
+    <Card variant={CardVariant.BLUE}>
+      <div className="flex flex-col justify-center gap-2 px-6 pt-6 pb-4 text-white sm:pt-20 sm:px-20 sm:pb-14 sm:text-center sm:items-center">
+        <h1 className="mb-5 text-3xl font-semibold">{t`No airdrop found`}</h1>
+        <H2 className="text-2xl text-goldYellow">{t`This wallet is not eligible for the airdrop`}</H2>
+        <p className="mb-12 sm:mb-24">{t`Please make sure you are connected with the right account`}</p>
       </div>
-      <div className="text-2xl font-bold text-white mb-6">{t`0 ELFI`}</div>
     </Card>
   );
 }

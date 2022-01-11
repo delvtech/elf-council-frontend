@@ -7,5 +7,6 @@ node_modules/
 .next
 
 storybook-static/
+.env.local
 
 .eslintcache/

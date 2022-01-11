@@ -19,19 +19,22 @@ import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
+import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
   ProposalStatus,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
+import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { useVote } from "src/ui/voting/useVote";
+import { RESOURCES_URL } from "src/ui/resources";
+import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
+import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { Ballot } from "src/ui/voting/Ballot";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -63,12 +66,17 @@ export function ProposalDetailsCard(
 
   const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
 
+  const isExecuted = useProposalExecuted(proposal?.proposalId);
   const [newBallot, setCurrentBallot] = useState<Ballot>();
 
   const { data: currentBallot } = useBallot(account, proposal?.proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
-  const { mutate: vote } = useVote(account, signer, proposal?.created);
+  const [isVoteTxPending, setIsVoteTxPending] = useState(false);
+  const { mutate: vote } = useVote(account, signer, proposal?.created, {
+    onTransactionSubmitted: () => setIsVoteTxPending(true),
+    onTransactionMined: () => setIsVoteTxPending(false),
+  });
 
   const handleVote = useCallback(() => {
     if (!proposal || !isNumber(newBallot)) {
@@ -102,12 +110,17 @@ export function ProposalDetailsCard(
   const votes = getVoteCount(proposalVotingPower);
   const proposalStatus = getProposalStatus(
     isVotingOpen,
+    isExecuted,
     quorum,
     proposalVotingPower,
   );
 
   const submitButtonDisabled =
-    !isNumber(newBallot) || !account || !isVotingOpen;
+    !isNumber(newBallot) ||
+    !account ||
+    !isVotingOpen ||
+    isVoteTxPending ||
+    !+accountVotingPower;
 
   return (
     <GradientCard
@@ -154,19 +167,26 @@ export function ProposalDetailsCard(
         </a>
       </p>
 
-      <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+      {isExecuted ? (
+        <Tag className="w-full" intent={Intent.SUCCESS}>
+          <span>{t`Executed`}</span>
+          <CheckCircleIcon className="ml-2" height="24" />
+        </Tag>
+      ) : (
+        <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+      )}
       <BalanceWithLabel
         className="w-full mt-4"
         balance={formattedAccountVotingPower}
         tooltipText={votingPowerTooltipText}
-        tooltipHref={"/resources"}
+        tooltipHref={RESOURCES_URL}
         label={t`Voting Power`}
       />
       <BalanceWithLabel
         className="w-full mt-4"
         balance={amountDeposited}
         tooltipText={votingBalanceTooltipText}
-        tooltipHref={"/resources"}
+        tooltipHref={RESOURCES_URL}
         label={t`Eligible voting balance`}
       />
 
@@ -191,6 +211,7 @@ export function ProposalDetailsCard(
           <Button
             disabled={submitButtonDisabled}
             onClick={handleVote}
+            loading={isVoteTxPending}
             variant={ButtonVariant.WHITE}
           >
             {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
