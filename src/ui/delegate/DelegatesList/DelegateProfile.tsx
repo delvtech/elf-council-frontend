@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
+  onSelectDelegate: () => void;
   active?: boolean;
 }
 
@@ -25,7 +26,7 @@ const defaultTooltipState = {
 };
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate } = props;
+  const { selected = false, delegate, onSelectDelegate } = props;
   const [showTooltip, setShowTooltip] = useState(defaultTooltipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -127,7 +128,10 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             className="fixed lg:absolute z-50 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
           lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky cursor-default"
           >
-            <DetailedDelegateProfile delegate={delegate} />
+            <DetailedDelegateProfile
+              delegate={delegate}
+              onSelectDelegate={onSelectDelegate}
+            />
           </Popover.Panel>
         </Transition.Child>
       </Transition>
