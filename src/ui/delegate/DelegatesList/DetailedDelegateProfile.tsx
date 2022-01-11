@@ -12,14 +12,21 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onSelectDelegate: () => void;
+  closePopover: () => void;
   className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
   onSelectDelegate,
+  closePopover,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
+  const onClickChooseDelegate = () => {
+    onSelectDelegate();
+    closePopover();
+  };
+
   return (
     <div className={classNames(className, "h-full")}>
       <div className="flex flex-col relative p-5 h-full">
@@ -101,7 +108,7 @@ function DetailedDelegateProfile({
         <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
           <Button
             className="grid place-items-center w-1/2"
-            onClick={onSelectDelegate}
+            onClick={onClickChooseDelegate}
           >
             <span className="font-bold text-lg">{t`Choose Delegate`}</span>
           </Button>
