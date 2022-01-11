@@ -9,6 +9,8 @@ import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 import classNames from "classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { useWeb3React } from "@web3-react/core";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onSelectDelegate: () => void;
@@ -22,10 +24,14 @@ function DetailedDelegateProfile({
   closePopover,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
+  const { account } = useWeb3React();
+
   const onClickChooseDelegate = () => {
     onSelectDelegate();
     closePopover();
   };
+
+  const chooseDelegateTooltip = !account ? "Connect wallet" : "";
 
   return (
     <div className={classNames(className, "h-full")}>
@@ -52,7 +58,6 @@ function DetailedDelegateProfile({
             {/* Body */}
             <div className="mt-5">
               <h3 className="text-principalRoyalBlue">{t`Personal Delegate Mission`}</h3>
-
               <p className="mt-2 text-sm text-principalRoyalBlue">
                 {delegate.description}
               </p>
@@ -106,19 +111,26 @@ function DetailedDelegateProfile({
 
         {/* Close Button */}
         <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
-          <Button
-            className="grid place-items-center w-1/2"
-            onClick={onClickChooseDelegate}
-          >
-            <span className="font-bold text-lg">{t`Choose Delegate`}</span>
-          </Button>
+          <Tooltip content={chooseDelegateTooltip} className="w-1/2">
+            <Button
+              className="grid place-items-center w-full !p-0"
+              onClick={onClickChooseDelegate}
+              disabled={!account}
+            >
+              <span className="font-bold text-lg">{t`Choose Delegate`}</span>
+            </Button>
+          </Tooltip>
+
           <Popover.Button as="div" className="w-1/2">
             <Button
               variant={ButtonVariant.WHITE}
               className="grid place-items-center w-full"
             >
-              <span className="font-bold text-lg">
+              <span className="font-bold text-lg hidden md:block">
                 {t`Close Delegate Profile`}
+              </span>
+              <span className="font-bold text-lg md:hidden">
+                {t`Close Profile`}
               </span>
             </Button>
           </Popover.Button>
