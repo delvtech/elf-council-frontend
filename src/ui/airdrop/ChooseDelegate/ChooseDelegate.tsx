@@ -87,7 +87,6 @@ export function ChooseDelegate({
                     delegate={delegate}
                     onSelectDelegate={onSelectDelegate}
                   />
-                  {/* </button> */}
                 </li>
               );
             })}
