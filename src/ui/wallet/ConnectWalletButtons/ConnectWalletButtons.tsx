@@ -56,10 +56,10 @@ export function ConnectWalletButtons({
           className="grid place-items-center hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white shadow-none"
         >
           <div className="grid place-items-center">
-            <div className="relative h-20 w-20">
+            <div className="relative h-16 w-16">
               <Image layout="fill" src="/assets/metamask.svg" alt="MetaMask" />
             </div>
-            <span className="text-base">MetaMask</span>
+            <span className="mt-2 text-base">MetaMask</span>
           </div>
         </Button>
         <Button
@@ -69,14 +69,14 @@ export function ConnectWalletButtons({
           className="grid place-items-center hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white shadow-none"
         >
           <div className="h-full w-full grid place-items-center">
-            <div className="relative h-20 w-20">
+            <div className="relative h-16 w-16">
               <Image
                 layout="fill"
                 src="/assets/walletConnectIcon.svg"
                 alt="MetaMask"
               />
             </div>
-            <span className="text-base">WalletConnect</span>
+            <span className="mt-2 text-base">WalletConnect</span>
           </div>
         </Button>
       </div>
