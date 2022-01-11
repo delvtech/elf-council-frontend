@@ -5,7 +5,7 @@ import { AnnotationIcon } from "@heroicons/react/solid";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { copyToClipboard } from "src/base/copyToClipboard";
-import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import Image from "next/image";
 import classNames from "classnames";
 import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";

@@ -8,7 +8,7 @@ import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import Image from "next/image";
-import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 
 interface CurrentDelegateProps {

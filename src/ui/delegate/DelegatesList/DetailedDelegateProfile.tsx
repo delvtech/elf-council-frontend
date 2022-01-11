@@ -5,7 +5,7 @@ import { Popover } from "@headlessui/react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
+import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
