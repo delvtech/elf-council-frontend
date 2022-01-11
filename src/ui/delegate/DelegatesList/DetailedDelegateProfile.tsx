@@ -7,7 +7,8 @@ import H2 from "src/ui/base/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
 import classNames from "classnames";
-
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   className?: string;
@@ -94,19 +95,18 @@ function DetailedDelegateProfile({
           </div>
         </div>
 
-          {/* Close Button */ }
-          <div className="mt-auto sm:mt-14 lg:mt-auto">
-           <Popover.Button as="div">
-              <Button
-                variant={ButtonVariant.PALE}
-                className="w-full justify-center"
-              >
-                <div className="font-bold text-lg">
-                  {t`Close Delegate Profile`}
-                </div>
-              </Button>
-            </Popover.Button>
-          </div>
+        {/* Close Button */}
+        <div className="mt-auto sm:mt-14 lg:mt-auto">
+          <Popover.Button as="div">
+            <Button
+              variant={ButtonVariant.PALE}
+              className="w-full justify-center"
+            >
+              <div className="font-bold text-lg">
+                {t`Close Delegate Profile`}
+              </div>
+            </Button>
+          </Popover.Button>
         </div>
       </div>
     </div>
