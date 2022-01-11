@@ -2,23 +2,6 @@ import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
 import Image from "next/image";
 import React, { ReactElement, useCallback } from "react";
-import tw, {
-  display,
-  flexDirection,
-  justifyContent,
-  overflow,
-  padding,
-  textColor,
-  textAlign,
-  margin,
-  gap,
-  height,
-  width,
-  space,
-  alignItems,
-  position,
-  fontSize,
-} from "src/elf-tailwindcss-classnames";
 import {
   getWalletConnectConnector,
   injectedConnector,
@@ -35,11 +18,16 @@ interface ConnectWalletButtonsProps {
 export function ConnectWalletButtons({
   onClick,
 }: ConnectWalletButtonsProps): ReactElement {
-  const { activate, deactivate } = useWeb3React<Web3Provider>();
+  const { activate, deactivate, active } = useWeb3React<Web3Provider>();
 
   const deactivateActiveConnector = useCallback(async () => {
     await deactivate();
   }, [deactivate]);
+
+  const onClickClose = async () => {
+    await deactivateActiveConnector();
+    onClick?.();
+  };
 
   const connectToMetaMask = useCallback(async () => {
     await deactivateActiveConnector();
@@ -57,89 +45,55 @@ export function ConnectWalletButtons({
   return (
     <div
       data-testid="connect-wallet-buttons"
-      className={tw(
-        display("flex"),
-        flexDirection("flex-col"),
-        justifyContent("justify-center"),
-        overflow("overflow-auto"),
-        padding("p-8"),
-      )}
+      className="flex flex-col justify-center overflow-auto p-2"
     >
-      <H3
-        className={tw(
-          textColor("text-brandDarkBlue-dark"),
-          textAlign("text-center"),
-          margin("mb-8"),
-        )}
-      >{t`Select Wallet`}</H3>
-      <div
-        className={tw(
-          display("flex"),
-          gap("gap-6"),
-          justifyContent("justify-center"),
-        )}
-      >
+      <H3 className="text-brandDarkBlue-dark text-center mb-8">{t`Select Wallet`}</H3>
+      <div className="grid grid-cols-3">
         <Button
-          className={height("h-auto")}
+          size={ButtonSize.AUTO}
           variant={ButtonVariant.MINIMAL}
           onClick={connectToMetaMask}
+          className="grid place-items-center hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white shadow-none"
         >
-          <div
-            className={tw(
-              display("flex"),
-              flexDirection("flex-col"),
-              width("w-32"),
-              space("space-y-2"),
-              padding("p-6"),
-              justifyContent("justify-center"),
-              alignItems("items-center"),
-            )}
-          >
-            <div
-              className={tw(
-                position("relative"),
-                height("h-12"),
-                width("w-12"),
-              )}
-            >
+          <div className="grid place-items-center">
+            <div className="relative h-16 w-16">
               <Image layout="fill" src="/assets/metamask.svg" alt="MetaMask" />
             </div>
-            <span className={fontSize("text-base")}>MetaMask</span>
+            <span className="mt-2 text-base">MetaMask</span>
           </div>
         </Button>
         <Button
           size={ButtonSize.AUTO}
           variant={ButtonVariant.MINIMAL}
           onClick={connectToWalletConnect}
+          className="grid place-items-center hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white shadow-none"
         >
-          <div
-            className={tw(
-              display("flex"),
-              flexDirection("flex-col"),
-              width("w-32"),
-              space("space-y-2"),
-              padding("p-6"),
-              justifyContent("justify-center"),
-              alignItems("items-center"),
-            )}
-          >
-            <div
-              className={tw(
-                position("relative"),
-                height("h-12"),
-                width("w-12"),
-              )}
-            >
+          <div className="h-full w-full grid place-items-center">
+            <div className="relative h-16 w-16">
               <Image
                 layout="fill"
                 src="/assets/walletConnectIcon.svg"
                 alt="MetaMask"
               />
             </div>
-            <span className={fontSize("text-base")}>WalletConnect</span>
+            <span className="mt-2 text-base">WalletConnect</span>
           </div>
         </Button>
       </div>
+      <div className="mt-12">
+        <p className="text-center text-principalRoyalBlue">
+          {t`Note: Some connectors can only disconnect wallets from their app. Some connectors may also cause a page refresh.`}
+        </p>
+      </div>
+      {active && onClick ? (
+        <Button
+          variant={ButtonVariant.PALE}
+          onClick={onClickClose}
+          className="grid place-items-center mt-4"
+        >
+          <span>{t`Close Wallet Connection`}</span>
+        </Button>
+      ) : null}
     </div>
   );
 }

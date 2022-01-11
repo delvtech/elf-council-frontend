@@ -24,7 +24,10 @@ module.exports = {
         clay: "#242E36",
         black: "#1B1D21",
         blueGrey: "#B2CAE3",
-        paleLily: "#D1ECF1",
+        paleLily: {
+          DEFAULT: "#D1ECF1",
+          dark: "#AADCE5",
+        },
         votingGreen: "#CDFFCD",
         deepRed: "#F73030",
         indianYellow: "#E1AF55",

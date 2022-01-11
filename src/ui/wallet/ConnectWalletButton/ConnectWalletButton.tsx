@@ -4,12 +4,6 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog/ConnectWalletDialog";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon/WalletJazzicon";
-import tw, {
-  display,
-  space,
-  alignItems,
-  margin,
-} from "src/elf-tailwindcss-classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 
@@ -29,22 +23,13 @@ export function WalletProfileButton(
   const onOpenWalletDialog = useCallback(() => setWalletDialogOpen(true), []);
 
   return (
-    <div
-      className={classNames(
-        className,
-        tw(display("flex"), space("space-x-8"), alignItems("items-center")),
-      )}
-    >
+    <div className={classNames(className, "flex space-x-8 items-center")}>
       {!account ? (
         <ConnectWalletButton />
       ) : (
         <div>
           <Button variant={variant} onClick={onOpenWalletDialog}>
-            <WalletJazzicon
-              size={28}
-              account={account}
-              className={margin("mr-4")}
-            />
+            <WalletJazzicon size={28} account={account} className="mr-4" />
             {formatWalletAddress(account)}
           </Button>
         </div>
