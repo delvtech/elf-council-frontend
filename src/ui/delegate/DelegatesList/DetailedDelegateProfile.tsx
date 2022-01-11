@@ -11,6 +11,7 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useWeb3React } from "@web3-react/core";
+
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onSelectDelegate: () => void;
@@ -31,7 +32,7 @@ function DetailedDelegateProfile({
     closePopover();
   };
 
-  const chooseDelegateTooltip = !account ? "Connect wallet" : "";
+  const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
 
   return (
     <div className={classNames(className, "h-full")}>
