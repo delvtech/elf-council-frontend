@@ -13,7 +13,7 @@ import tw, {
   position,
   fontWeight,
 } from "src/elf-tailwindcss-classnames";
-import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
+import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import Image from "next/image";
 import { t } from "ttag";

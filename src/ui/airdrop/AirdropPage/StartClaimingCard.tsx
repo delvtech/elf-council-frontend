@@ -5,7 +5,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import {
   ConnectWalletButton,
   WalletProfileButton,
-} from "src/ui/wallet/ConnectWalletButton/ConnectWalletButton";
+} from "src/ui/wallet/ConnectWalletButton";
 import { t } from "ttag";
 
 interface StartClaimingCardProps {
