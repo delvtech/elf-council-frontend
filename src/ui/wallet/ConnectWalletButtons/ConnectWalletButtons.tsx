@@ -82,6 +82,7 @@ export function ConnectWalletButtons({
       </div>
       <div className="mt-12">
         <p className="text-center text-principalRoyalBlue">
+          {/* TODO: Update to new, correct text once something is finalized for this */}
           Note: Some connectors can only wallets from their app. Some connectors
           may also cause a page refresh.
         </p>
