@@ -55,6 +55,8 @@ export default function SuccessCard({
             {t`Transmit your Public ID to the `}
             <a
               href="https://discord.gg/64bxSaHr"
+              target="_blank"
+              rel="noreferrer"
               className="text-yieldLightBlue"
             >{t`Discord channel`}</a>
             {t` and keep your Key and Secret private.`}
