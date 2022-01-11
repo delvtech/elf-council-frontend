@@ -130,10 +130,15 @@ function DetailedDelegateProfile({
             </Button>
           ) : null}
 
-          <Popover.Button className="bg-paleLily hover:bg-[#aadce5] rounded-xl h-12">
-            <span className="text-principalRoyalBlue font-bold text-lg">
-              {t`Close Delegate Profile`}
-            </span>
+          <Popover.Button as="div">
+            <Button
+              variant={ButtonVariant.PALE}
+              className="w-full justify-center"
+            >
+              <div className="font-bold text-lg">
+                {t`Close Delegate Profile`}
+              </div>
+            </Button>
           </Popover.Button>
         </div>
       </div>
