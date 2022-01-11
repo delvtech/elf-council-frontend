@@ -1,1 +1,2 @@
-export const RESOURCES_URL = "https://devops-32.gitbook.io/element-council";
+export const RESOURCES_URL =
+  "https://docs-element-finance.gitbook.io/element-council";
