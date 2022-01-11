@@ -82,9 +82,7 @@ export function ConnectWalletButtons({
       </div>
       <div className="mt-12">
         <p className="text-center text-principalRoyalBlue">
-          {/* TODO: Update to new, correct text once something is finalized for this */}
-          Note: Some connectors can only wallets from their app. Some connectors
-          may also cause a page refresh.
+          {t`Note: Some connectors can only disconnect wallets from their app. Some connectors may also cause a page refresh.`}
         </p>
       </div>
       {active && onClick ? (
@@ -93,7 +91,7 @@ export function ConnectWalletButtons({
           onClick={onClickClose}
           className="grid place-items-center mt-4"
         >
-          <span>Close Wallet Connection</span>
+          <span>{t`Close Wallet Connection`}</span>
         </Button>
       ) : null}
     </div>
