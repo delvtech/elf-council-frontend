@@ -110,7 +110,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveTo="opacity-0"
         >
           {/* z-30 in order to overlap sidebar z-index */}
-          <Popover.Overlay className="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50" />
+          <Popover.Overlay className="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50 cursor-default" />
         </Transition.Child>
 
         {/* Detailed delegate profile */}
@@ -125,7 +125,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         >
           <Popover.Panel
             className="fixed lg:absolute z-50 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
-          lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
+          lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky cursor-default"
           >
             <DetailedDelegateProfile delegate={delegate} />
           </Popover.Panel>
