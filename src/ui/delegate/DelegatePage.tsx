@@ -178,7 +178,7 @@ function NoDelegation(): ReactElement {
         target="_blank"
         rel="noreferrer"
         href={RESOURCES_URL}
-        className="underline"
+        className="inline-block underline"
       >{t`To learn more about delegations click here.`}</a>
     </p>
   );
