@@ -131,8 +131,11 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             {({ close }) => (
               <DetailedDelegateProfile
                 delegate={delegate}
-                handleSelectDelegate={handleSelectDelegate}
-                closePopover={close}
+                handleSelectDelegate={() => {
+                  handleSelectDelegate();
+                  close();
+                }}
+                onCloseProfileClick={close}
               />
             )}
           </Popover.Panel>

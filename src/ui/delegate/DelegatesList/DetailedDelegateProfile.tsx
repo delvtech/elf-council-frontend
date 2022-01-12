@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import Image from "next/image";
 import { t } from "ttag";
-import { Popover } from "@headlessui/react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
@@ -15,22 +14,17 @@ import { useWeb3React } from "@web3-react/core";
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
   handleSelectDelegate: () => void;
-  closePopover: () => void;
+  onCloseProfileClick: () => void;
   className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
   handleSelectDelegate,
-  closePopover,
+  onCloseProfileClick,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
-
-  const handleClickChooseDelegate = () => {
-    handleSelectDelegate();
-    closePopover();
-  };
 
   const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
 
@@ -115,26 +109,25 @@ function DetailedDelegateProfile({
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             <Button
               className="grid place-items-center w-full !p-0"
-              onClick={handleClickChooseDelegate}
+              onClick={handleSelectDelegate}
               disabled={!account}
             >
               <span className="font-bold text-lg">{t`Choose Delegate`}</span>
             </Button>
           </Tooltip>
 
-          <Popover.Button as="div" className="w-1/2">
-            <Button
-              variant={ButtonVariant.WHITE}
-              className="grid place-items-center w-full"
-            >
-              <span className="font-bold text-lg hidden md:block">
-                {t`Close Delegate Profile`}
-              </span>
-              <span className="font-bold text-lg md:hidden">
-                {t`Close Profile`}
-              </span>
-            </Button>
-          </Popover.Button>
+          <Button
+            variant={ButtonVariant.WHITE}
+            className="grid place-items-center w-1/2"
+            onClick={onCloseProfileClick}
+          >
+            <span className="font-bold text-lg hidden md:block">
+              {t`Close Delegate Profile`}
+            </span>
+            <span className="font-bold text-lg md:hidden">
+              {t`Close Profile`}
+            </span>
+          </Button>
         </div>
       </div>
     </div>
