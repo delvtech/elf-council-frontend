@@ -24,7 +24,7 @@ function DelegatesList({
         style={{ maxHeight: "428px" }}
       >
         {delegates.map((delegate, idx) => {
-          const onSelectDelegate = () => {
+          const handleSelectDelegate = () => {
             setDelegateAddressInput(delegate.address);
           };
           // TODO: Remove -${idx} for production since addresses are always unique
@@ -33,7 +33,7 @@ function DelegatesList({
               <DelegateProfile
                 selected={delegate.address === selectedDelegate}
                 delegate={delegate}
-                onSelectDelegate={onSelectDelegate}
+                handleSelectDelegate={handleSelectDelegate}
               />
             </li>
           );

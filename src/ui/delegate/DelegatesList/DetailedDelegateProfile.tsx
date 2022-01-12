@@ -14,21 +14,21 @@ import { useWeb3React } from "@web3-react/core";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
-  onSelectDelegate: () => void;
+  handleSelectDelegate: () => void;
   closePopover: () => void;
   className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
-  onSelectDelegate,
+  handleSelectDelegate,
   closePopover,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
 
-  const onClickChooseDelegate = () => {
-    onSelectDelegate();
+  const handleClickChooseDelegate = () => {
+    handleSelectDelegate();
     closePopover();
   };
 
@@ -115,7 +115,7 @@ function DetailedDelegateProfile({
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             <Button
               className="grid place-items-center w-full !p-0"
-              onClick={onClickChooseDelegate}
+              onClick={handleClickChooseDelegate}
               disabled={!account}
             >
               <span className="font-bold text-lg">{t`Choose Delegate`}</span>

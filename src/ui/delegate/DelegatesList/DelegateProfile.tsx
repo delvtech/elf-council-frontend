@@ -16,7 +16,7 @@ import dynamic from "next/dynamic";
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
-  onSelectDelegate: () => void;
+  handleSelectDelegate: () => void;
   active?: boolean;
 }
 
@@ -26,7 +26,7 @@ const defaultTooltipState = {
 };
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate, onSelectDelegate } = props;
+  const { selected = false, delegate, handleSelectDelegate } = props;
   const [showTooltip, setShowTooltip] = useState(defaultTooltipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -131,7 +131,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             {({ close }) => (
               <DetailedDelegateProfile
                 delegate={delegate}
-                onSelectDelegate={onSelectDelegate}
+                handleSelectDelegate={handleSelectDelegate}
                 closePopover={close}
               />
             )}

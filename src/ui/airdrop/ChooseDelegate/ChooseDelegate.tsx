@@ -75,7 +75,7 @@ export function ChooseDelegate({
           {/* List of delegates */}
           <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll max-h-[428px]">
             {delegates.map((delegate, idx) => {
-              const onSelectDelegate = () => {
+              const handleSelectDelegate = () => {
                 setSelectedDelegateIndex(idx);
                 setDelegateAddress(delegate.address);
               };
@@ -85,7 +85,7 @@ export function ChooseDelegate({
                   <DelegateProfile
                     selected={idx === selectedDelegateIndex}
                     delegate={delegate}
-                    onSelectDelegate={onSelectDelegate}
+                    handleSelectDelegate={handleSelectDelegate}
                   />
                 </li>
               );
