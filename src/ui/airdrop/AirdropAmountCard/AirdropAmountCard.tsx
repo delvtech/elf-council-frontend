@@ -16,7 +16,6 @@ export function AirdropAmountCard({
 
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
-  const airdropAmountLabel = getAirdropAmountLabel(claimableBalance);
   return (
     <Card variant={CardVariant.HACKER_SKY} className="flex-1 h-64 text-center">
       <div className="flex flex-col w-full h-full">
@@ -28,7 +27,7 @@ export function AirdropAmountCard({
               className="ml-2"
               size={IconSize.MEDIUM}
             />
-            {airdropAmountLabel}
+            {t`${claimableBalance ? commify(claimableBalance) : 0} ELFI`}
           </div>
           <div className="flex flex-col items-center text-gray-500">
             <span className="mb-4">{t`$ELFI tokens`}</span>
@@ -37,12 +36,4 @@ export function AirdropAmountCard({
       </div>
     </Card>
   );
-}
-
-function getAirdropAmountLabel(claimableBalance: string): string {
-  if (claimableBalance) {
-    return commify(claimableBalance);
-  }
-
-  return "0";
 }
