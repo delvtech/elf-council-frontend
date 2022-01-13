@@ -3,8 +3,7 @@ import React, { ReactElement } from "react";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCard";
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
-import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
-import { RewardsInfoCard } from "src/ui/airdrop/AirdropPreview/RewardsInfoCard";
+import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
@@ -42,15 +41,14 @@ export function AirdropPreview({
             <CheckCircleIcon height={24} className="ml-4" />
           </Tag>
         </div>
-        <div className="text-left text-3xl font-bold mb-10">{t`Connect wallet`}</div>
-        <div className="flex flex-col w-full justify-center text-base mb-10">
-          <span className="w-full font-bold mb-2">{t`Congratulations! You have some ELFI available to claim.`}</span>
+        <div className="mb-10 text-3xl font-bold text-left">{t`Congratulations!`}</div>
+        <div className="flex flex-col justify-center w-full mb-10 text-base">
+          <span className="w-full mb-2 font-bold">{t`Congratulations! You have some ELFI available to claim.`}</span>
           <span className="w-full">{t`You have received these tokens for being an active member of the Element community.
 We hope to see you continue to contribute to the future of Element.`}</span>
         </div>
-        <div className="flex flex-col md:flex-row w-full space-y-10 md:space-x-10 md:space-y-0 px-12 mb-10">
+        <div className="flex flex-col justify-center px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard account={account} />
-          <RewardsInfoCard />
         </div>
       </div>
     </StepCard>
