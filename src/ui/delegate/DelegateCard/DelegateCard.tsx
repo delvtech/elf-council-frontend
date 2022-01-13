@@ -141,6 +141,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             <div className="flex justify-end items-end">
               <DelegateButton
                 account={account}
+                currentDelegate={currentDelegate}
                 delegateAddressInput={delegateAddressInput}
                 onDelegateClick={onDelegateClick}
                 invalidAddress={invalidAddress}
