@@ -1,10 +1,11 @@
 import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
-import { useGasPrice } from "src/ui/ethereum/useGasPrice";
+import { ExternalLinkIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import { t } from "ttag";
-import { QuestionMarkCircleIcon } from "@heroicons/react/solid";
+import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
+import { useGasPrice } from "src/ui/ethereum/useGasPrice";
+import { RESOURCES_URL } from "src/ui/resources";
 
 function Header(): ReactElement {
   const { account, active } = useWeb3React();
@@ -17,8 +18,15 @@ function Header(): ReactElement {
         {account ? (
           <div className="flex items-center">
             <div className="flex items-center gap-1 mr-8">
-              <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
-              <QuestionMarkCircleIcon className="h-4 text-principalRoyalBlue" />
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={RESOURCES_URL}
+                className="flex items-center gap-2"
+              >
+                <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
+                <ExternalLinkIcon className="h-4 text-principalRoyalBlue" />
+              </a>
             </div>
             <div className="flex items-center mr-8">
               <div className="relative h-5 w-5">
