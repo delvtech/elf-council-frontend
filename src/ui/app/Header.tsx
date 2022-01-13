@@ -1,18 +1,5 @@
 import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
-import tw, {
-  display,
-  justifyContent,
-  width,
-  space,
-  alignItems,
-  textColor,
-  margin,
-  gap,
-  height,
-  position,
-  fontWeight,
-} from "src/elf-tailwindcss-classnames";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import Image from "next/image";
@@ -21,75 +8,27 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/solid";
 
 function Header(): ReactElement {
   const { account, active } = useWeb3React();
-  const { data: gasPrice, isLoading } = useGasPrice();
+  const { data: gasPrice } = useGasPrice();
 
   return (
-    <div
-      className={tw(
-        display("flex"),
-        justifyContent("justify-between"),
-        width("w-full"),
-      )}
-    >
-      <div className={tw(display("flex"), space("space-x-3"))}></div>
-      <div
-        className={tw(
-          display("flex"),
-          alignItems("items-center"),
-          space("space-x-4"),
-          textColor("text-gray-400"),
-          margin("mr-3"),
-        )}
-      >
+    <div className="flex justify-between w-full">
+      <div className="flex space-x-3"></div>
+      <div className="flex items-center space-x-4 text-gray-400 mr-3">
         {account ? (
-          <div className={tw(display("flex"), alignItems("items-center"))}>
-            <div
-              className={tw(
-                display("flex"),
-                alignItems("items-center"),
-                gap("gap-1"),
-                margin("mr-8"),
-              )}
-            >
-              <span
-                className={textColor("text-principalRoyalBlue")}
-              >{t`Learn how to vote`}</span>
-              <button>
-                <QuestionMarkCircleIcon
-                  className={tw(
-                    height("h-4"),
-                    textColor("text-principalRoyalBlue"),
-                  )}
-                />
-              </button>
+          <div className="flex items-center">
+            <div className="flex items-center gap-1 mr-8">
+              <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
+              <QuestionMarkCircleIcon className="h-4 text-principalRoyalBlue" />
             </div>
-            <div
-              className={tw(
-                display("flex"),
-                alignItems("items-center"),
-                margin("mr-8"),
-              )}
-            >
-              <div
-                className={tw(
-                  position("relative"),
-                  height("h-5"),
-                  width("w-5"),
-                )}
-              >
+            <div className="flex items-center mr-8">
+              <div className="relative h-5 w-5">
                 <Image
                   layout="fill"
                   src="/assets/gas.svg"
                   alt={t`Gas pump icon`}
                 />
               </div>
-              <span
-                className={tw(
-                  textColor("text-principalRoyalBlue"),
-                  fontWeight("font-bold"),
-                  margin("ml-2", "mr-1"),
-                )}
-              >
+              <span className="text-principalRoyalBlue font-bold ml-2 mr-1">
                 {gasPrice?.recommendedBaseFee}
               </span>
             </div>
