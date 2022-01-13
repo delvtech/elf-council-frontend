@@ -32,7 +32,7 @@ export function StepCard({
       {/* Extra div because we can't override padding set by Card */}
       <div className="p-2">
         {children}
-        <div className="flex pt-6 justify-between">
+        <div className="flex justify-between pt-6">
           <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
             <span className="px-10">{prevStepLabel}</span>
           </Button>
