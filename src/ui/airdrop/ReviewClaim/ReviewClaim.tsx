@@ -91,10 +91,8 @@ export function ReviewClaim({
         voting vault. You can withdraw them at any time.`}</span>
       </div>
       <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
-        <AirdropAmountCard
-          account={account}
-          delegateAddress={delegateAddress}
-        />
+        <AirdropAmountCard account={account} />
+        <DelegatePreviewCard delegateAddress={delegateAddress} />
       </div>
     </StepCard>
   );
