@@ -74,26 +74,14 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               <NumDelegatedVotes account={delegate.address} />
             </span>
           </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            {/* Copy address button */}
-            <Tooltip
-              className="!flex"
-              isOpen={showTooltip.address}
-              content={t`Address copied`}
-            >
-              <button onClick={onCopyAddress}>
-                <AnnotationIcon className="h-5 text-principalRoyalBlue hover:text-principalBlue" />
-              </button>
-            </Tooltip>
 
-            {/* Element member verified delegate icon */}
-            <div className="!flex relative w-4 h-4">
-              <Image
-                layout="fill"
-                src="/assets/crown.svg"
-                alt={t`Crown icon`}
-              />
-            </div>
+          {/* Element member verified delegate icon */}
+          <div className="flex relative w-4 h-4">
+            <Image
+              layout="fill"
+              src="/assets/crown.svg"
+              alt={t`Affiliated with Element Finance`}
+            />
           </div>
         </div>
       </Popover.Button>
