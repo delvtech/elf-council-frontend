@@ -27,13 +27,14 @@ function DelegatesList({
           const handleSelectDelegate = () => {
             setDelegateAddressInput(delegate.address);
           };
+
           // TODO: Remove -${idx} for production since addresses are always unique
           return (
             <li key={`${delegate.address}-${idx}}`}>
               <DelegateProfile
                 selected={delegate.address === selectedDelegate}
                 delegate={delegate}
-                handleSelectDelegate={handleSelectDelegate}
+                onSelectDelegate={handleSelectDelegate}
               />
             </li>
           );

@@ -13,14 +13,14 @@ import { useWeb3React } from "@web3-react/core";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
-  handleSelectDelegate: () => void;
+  onSelectDelegate: () => void;
   onCloseProfileClick: () => void;
   className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
-  handleSelectDelegate,
+  onSelectDelegate,
   onCloseProfileClick,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
@@ -109,7 +109,7 @@ function DetailedDelegateProfile({
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             <Button
               className="grid place-items-center w-full !p-0"
-              onClick={handleSelectDelegate}
+              onClick={onSelectDelegate}
               disabled={!account}
             >
               <span className="font-bold text-lg">{t`Choose Delegate`}</span>

@@ -85,7 +85,7 @@ export function ChooseDelegate({
                   <DelegateProfile
                     selected={idx === selectedDelegateIndex}
                     delegate={delegate}
-                    handleSelectDelegate={handleSelectDelegate}
+                    onSelectDelegate={handleSelectDelegate}
                   />
                 </li>
               );
