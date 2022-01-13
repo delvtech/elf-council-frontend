@@ -31,7 +31,7 @@ export default function Sidebar(): ReactElement {
       <div
         className={classNames(
           { "-translate-x-full": !isOpen },
-          "flex flex-col items-center w-full md:w-60 h-full py-14 ease-in-out transition-all duration-300 z-30 fixed top-0 left-0 bg-white transform-gpu md:translate-x-0",
+          "flex flex-col items-center w-full md:w-60 h-full py-14 ease-in-out transition-all duration-300 z-10 fixed top-0 left-0 bg-white transform-gpu md:translate-x-0",
         )}
       >
         <div className="flex justify-around py-3 mt-1">

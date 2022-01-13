@@ -123,7 +123,6 @@ export default function DelegatePage(): ReactElement {
         <div className="flex flex-col mt-8 xl:w-8/12 xl:mt-0">
           {/* Delegates List */}
           <DelegatesList
-            account={account}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
           />

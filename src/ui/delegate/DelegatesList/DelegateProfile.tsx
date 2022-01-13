@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 interface DelegateProfileProps {
   selected: boolean;
   delegate: Delegate;
+  onSelectDelegate: () => void;
   active?: boolean;
 }
 
@@ -25,7 +26,7 @@ const defaultTooltipState = {
 };
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate } = props;
+  const { selected = false, delegate, onSelectDelegate } = props;
   const [showTooltip, setShowTooltip] = useState(defaultTooltipState);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -54,7 +55,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
   return (
     <Popover>
-      <Popover.Button as="div" className="w-full">
+      <Popover.Button className="w-full">
         <div
           className={classNames(
             "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
@@ -110,7 +111,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveTo="opacity-0"
         >
           {/* z-30 in order to overlap sidebar z-index */}
-          <Popover.Overlay className="fixed inset-0 z-30 transition-opacity bg-black bg-opacity-50" />
+          <Popover.Overlay className="fixed inset-0 z-10 transition-opacity bg-black bg-opacity-50 cursor-default" />
         </Transition.Child>
 
         {/* Detailed delegate profile */}
@@ -124,10 +125,19 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveTo="opacity-0 sm:scale-95"
         >
           <Popover.Panel
-            className="fixed lg:absolute z-50 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
-          lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
+            className="fixed lg:absolute z-20 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
+          lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky cursor-default"
           >
-            <DetailedDelegateProfile delegate={delegate} />
+            {({ close }) => (
+              <DetailedDelegateProfile
+                delegate={delegate}
+                onSelectDelegate={() => {
+                  onSelectDelegate();
+                  close();
+                }}
+                onCloseProfileClick={close}
+              />
+            )}
           </Popover.Panel>
         </Transition.Child>
       </Transition>

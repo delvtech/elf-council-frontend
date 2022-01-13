@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import Image from "next/image";
 import { t } from "ttag";
-import { Popover } from "@headlessui/react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
@@ -9,15 +8,26 @@ import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { useWeb3React } from "@web3-react/core";
+
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
+  onSelectDelegate: () => void;
+  onCloseProfileClick: () => void;
   className?: string;
 }
 
 function DetailedDelegateProfile({
   delegate,
+  onSelectDelegate,
+  onCloseProfileClick,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
+  const { account } = useWeb3React();
+
+  const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
+
   return (
     <div className={classNames(className, "h-full")}>
       <div className="flex flex-col relative p-5 h-full">
@@ -43,7 +53,6 @@ function DetailedDelegateProfile({
             {/* Body */}
             <div className="mt-5">
               <h3 className="text-principalRoyalBlue">{t`Personal Delegate Mission`}</h3>
-
               <p className="mt-2 text-sm text-principalRoyalBlue">
                 {delegate.description}
               </p>
@@ -96,17 +105,24 @@ function DetailedDelegateProfile({
         </div>
 
         {/* Close Button */}
-        <div className="mt-auto sm:mt-14 lg:mt-auto">
-          <Popover.Button as="div">
+        <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
+          <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             <Button
-              variant={ButtonVariant.PALE}
-              className="w-full justify-center"
+              className="grid place-items-center w-full !p-0"
+              onClick={onSelectDelegate}
+              disabled={!account}
             >
-              <div className="font-bold text-lg">
-                {t`Close Delegate Profile`}
-              </div>
+              <span className="font-bold text-lg">{t`Choose Delegate`}</span>
             </Button>
-          </Popover.Button>
+          </Tooltip>
+
+          <Button
+            variant={ButtonVariant.WHITE}
+            className="grid place-items-center w-1/2"
+            onClick={onCloseProfileClick}
+          >
+            <span className="font-bold text-lg">{t`Close`}</span>
+          </Button>
         </div>
       </div>
     </div>
