@@ -121,12 +121,7 @@ function DetailedDelegateProfile({
             className="grid place-items-center w-1/2"
             onClick={onCloseProfileClick}
           >
-            <span className="font-bold text-lg hidden md:block">
-              {t`Close Delegate Profile`}
-            </span>
-            <span className="font-bold text-lg md:hidden">
-              {t`Close Profile`}
-            </span>
+            <span className="font-bold text-lg">{t`Close`}</span>
           </Button>
         </div>
       </div>
