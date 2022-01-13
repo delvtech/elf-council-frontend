@@ -74,7 +74,7 @@ export function ReviewClaim({
       nextStepDisabled={
         isTransactionPending || !isValidAddress(delegateAddress)
       }
-      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim`}
+      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim & Deposit`}
       onPrevStep={onPrevStep}
     >
       <div className="text-right">
@@ -83,16 +83,18 @@ export function ReviewClaim({
           <CheckCircleIcon height={24} className="ml-4" />
         </Tag>
       </div>
-      <div className="mb-10 text-2xl font-bold text-left">{t`Review Claim`}</div>
+      <div className="mb-10 text-2xl font-bold text-left">{t`Review Deposit`}</div>
       <div className="flex flex-col justify-center w-full mb-10 text-base">
         <span
           className={"w-full mb-4"}
-        >{t`Thank you! These tokens will be deposited into the voting vault. 
-	You can withdraw them at any time.`}</span>
+        >{t`These tokens will be claimed to your address and deposited into the
+        voting vault. You can withdraw them at any time.`}</span>
       </div>
       <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
-        <AirdropAmountCard account={account} />
-        <DelegatePreviewCard delegateAddress={delegateAddress} />
+        <AirdropAmountCard
+          account={account}
+          delegateAddress={delegateAddress}
+        />
       </div>
     </StepCard>
   );
