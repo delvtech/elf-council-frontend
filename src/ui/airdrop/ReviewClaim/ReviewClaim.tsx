@@ -83,14 +83,14 @@ export function ReviewClaim({
           <CheckCircleIcon height={24} className="ml-4" />
         </Tag>
       </div>
-      <div className="text-left text-2xl font-bold mb-10">{t`Review Claim`}</div>
-      <div className="flex flex-col w-full justify-center text-base mb-10">
+      <div className="mb-10 text-2xl font-bold text-left">{t`Review Claim`}</div>
+      <div className="flex flex-col justify-center w-full mb-10 text-base">
         <span
           className={"w-full mb-4"}
         >{t`Thank you! These tokens will be deposited into the voting vault. 
 	You can withdraw them at any time.`}</span>
       </div>
-      <div className="flex flex-col md:flex-row w-full space-y-10 md:space-x-10 md:space-y-0 px-12 mb-10">
+      <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
         <AirdropAmountCard account={account} />
         <DelegatePreviewCard delegateAddress={delegateAddress} />
       </div>
