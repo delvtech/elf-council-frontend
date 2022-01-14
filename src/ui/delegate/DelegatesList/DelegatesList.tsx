@@ -5,13 +5,11 @@ import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
 
 interface DelegatesListProps {
-  account: string | null | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
 }
 
 function DelegatesList({
-  account,
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
@@ -25,24 +23,22 @@ function DelegatesList({
         // 428px exactly matches 5 rows of the list
         style={{ maxHeight: "428px" }}
       >
-        {delegates.map((delegate, idx) => (
+        {delegates.map((delegate, idx) => {
+          const handleSelectDelegate = () => {
+            setDelegateAddressInput(delegate.address);
+          };
+
           // TODO: Remove -${idx} for production since addresses are always unique
-          <li key={`${delegate.address}-${idx}}`}>
-            <button
-              className="w-full text-left"
-              onClick={() => {
-                if (account) {
-                  setDelegateAddressInput(delegate.address);
-                }
-              }}
-            >
+          return (
+            <li key={`${delegate.address}-${idx}}`}>
               <DelegateProfile
                 selected={delegate.address === selectedDelegate}
                 delegate={delegate}
+                onSelectDelegate={handleSelectDelegate}
               />
-            </button>
-          </li>
-        ))}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

@@ -9,7 +9,6 @@ import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmoun
 import { DelegatePreviewCard } from "src/ui/airdrop/DelegatePreviewCard/DelegatePreviewCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
-import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
@@ -74,7 +73,7 @@ export function ReviewClaim({
       nextStepDisabled={
         isTransactionPending || !isValidAddress(delegateAddress)
       }
-      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim`}
+      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim & Deposit`}
       onPrevStep={onPrevStep}
     >
       <div className="text-right">
@@ -83,14 +82,14 @@ export function ReviewClaim({
           <CheckCircleIcon height={24} className="ml-4" />
         </Tag>
       </div>
-      <div className="text-left text-2xl font-bold mb-10">{t`Review Claim`}</div>
-      <div className="flex flex-col w-full justify-center text-base mb-10">
+      <div className="mb-10 text-2xl font-bold text-left">{t`Review Deposit`}</div>
+      <div className="flex flex-col justify-center w-full mb-10 text-base">
         <span
           className={"w-full mb-4"}
-        >{t`Thank you! These tokens will be deposited into the voting vault. 
-	You can withdraw them at any time.`}</span>
+        >{t`These tokens will be claimed to your address and deposited into the
+        voting vault. You can withdraw them at any time.`}</span>
       </div>
-      <div className="flex flex-col md:flex-row w-full space-y-10 md:space-x-10 md:space-y-0 px-12 mb-10">
+      <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
         <AirdropAmountCard account={account} />
         <DelegatePreviewCard delegateAddress={delegateAddress} />
       </div>

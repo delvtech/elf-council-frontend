@@ -2,20 +2,6 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import React, { Fragment, ReactElement, ReactNode } from "react";
 import { addressesJson } from "src/elf-council-addresses";
-import tw, {
-  width,
-  height,
-  padding,
-  overflow,
-  display,
-  flexDirection,
-  flex,
-  alignItems,
-  margin,
-  textAlign,
-  justifyContent,
-  backgroundColor,
-} from "src/elf-tailwindcss-classnames";
 import { ChainId, ChainNames } from "src/ethereum";
 import Footer from "src/ui/app/Footer";
 import Header from "src/ui/app/Header";
@@ -48,39 +34,20 @@ export default function PageView(props: PageViewProps): ReactElement {
   return (
     <Fragment>
       <div
-        className={tw(
-          display("flex"),
-          width("w-full"),
-          height("h-full"),
-          backgroundColor("bg-appBackgroundLight"),
-          justifyContent("justify-between"),
-          overflow("overflow-hidden"),
-          padding({ "md:pl-60": showSidebar }),
+        className={classNames(
+          "flex w-full h-full bg-appBackgroundLight justify-between overflow-hidden",
+          {
+            "md:pl-60": showSidebar,
+          },
         )}
       >
         {showSidebar ? <Sidebar /> : null}
-        <div
-          className={tw(
-            width("w-full"),
-            height("h-full"),
-            padding("p-6"),
-            display("flex"),
-            flexDirection("flex-col"),
-            flex("flex-1"),
-            overflow("overflow-auto"),
-            alignItems("items-center"),
-          )}
-        >
+        <div className="w-full h-full p-6 flex flex-col flex-1 overflow-auto items-center">
           {showHeader ? <Header /> : null}
 
           <div
             className={classNames(
-              tw(
-                margin("mt-6"),
-                width("w-full"),
-                height("h-full"),
-                flex("flex-1"),
-              ),
+              "mt-6 w-full h-full flex-1",
               childrenContainerClassName,
             )}
           >
@@ -90,7 +57,7 @@ export default function PageView(props: PageViewProps): ReactElement {
         </div>
       </div>
       <SimpleDialog isOpen={isWrongChain}>
-        <div className={textAlign("text-center")}>
+        <div className="text-center">
           <H3>{t`Please connect to ${
             ChainNames[addressesJson.chainId as ChainId]
           }`}</H3>

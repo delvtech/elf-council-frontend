@@ -73,25 +73,14 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2">
-        <Tooltip
-          isOpen={showToolTip.twitterHandle}
-          content={t`Twitter handle copied`}
-        >
-          <button onClick={handleCopyTwitterHandle}>
+        <Tooltip isOpen={showToolTip.address} content={t`Address copied`}>
+          <button onClick={handleCopyAddress}>
             <AnnotationIcon className="h-5 text-principalRoyalBlue" />
           </button>
         </Tooltip>
-        <Tooltip isOpen={showToolTip.address} content={t`Address copied`}>
-          <button onClick={handleCopyAddress}>
-            <div className="relative w-4 h-4">
-              <Image
-                layout="fill"
-                src="/assets/crown.svg"
-                alt={t`Crown icon`}
-              />
-            </div>
-          </button>
-        </Tooltip>
+        <div className="relative w-4 h-4">
+          <Image layout="fill" src="/assets/crown.svg" alt={t`Crown icon`} />
+        </div>
       </div>
     </div>
   );
