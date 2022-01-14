@@ -11,13 +11,14 @@ import { parseEther } from "ethers/lib/utils";
 
 import { testProvider } from "src/elf/providers/providers";
 
-import { deployGovernanace } from "./deployGovernance";
+import { GovernanceContracts } from "./deployGovernance";
 
-export async function main(): Promise<void> {
+export async function initializeGovernance(
+  governanceContracts: GovernanceContracts,
+): Promise<void> {
   const signers: Wallet[] = await testProvider.getWallets();
   const [owner, signer1] = signers;
   const accounts = signers.map((s) => s.address);
-  const governanceContracts = await deployGovernanace(owner, signers);
   const { elementToken, lockingVault, vestingVault, treasury } =
     governanceContracts;
 
