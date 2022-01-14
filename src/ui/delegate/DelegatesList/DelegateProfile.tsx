@@ -17,7 +17,7 @@ interface DelegateProfileProps {
 }
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate } = props;
+  const { selected = false, delegate, onSelectDelegate } = props;
 
   return (
     <Popover>
