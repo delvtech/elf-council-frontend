@@ -54,7 +54,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               src="/assets/crown.svg"
               alt={t`Affiliated with Element Finance`}
               className={classNames({
-                "filter brightness-0 invert-[100]": selected,
+                "filter brightness-0 invert-[1]": selected,
               })}
             />
           </div>
