@@ -131,7 +131,8 @@
     "build-storybook": "build-storybook",
     "convert-tw": "ts-node --project tsconfig.cjs.json src/convertTailwind.ts",
     "prepare": "husky install",
-    "test": "jest"
+    "test": "jest",
+    "test-watch": "jest --watch"
   },
   "version": "0.1.0"
 }
