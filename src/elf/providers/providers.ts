@@ -22,14 +22,7 @@ export var defaultProvider = getProvider();
 // Default rpc host to local, but check the chain id in the addresses.json for
 // final say
 function getProvider() {
-  if (
-    [
-      // always use localhostProvider for tests
-      "test",
-      // for now while we don't have mainnet or goerli, use localnet for development as well
-      // "development",
-    ].includes(process.env.NODE_ENV || "")
-  ) {
+  if (process.env.NODE_ENV === "test") {
     return testProvider;
   }
 

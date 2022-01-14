@@ -1,6 +1,8 @@
 import { AddressesJsonFile } from "elf-council-tokenlist";
 
 import testnetAddressList from "./testnet.addresses.json";
+import waffleAddressList from "./waffle.addresses.json";
+
 const localGoerliAddressList = {
   addresses: {
     airdrop: "0xb7920477F7A39c3DffA925076857eB1585503e1B",
@@ -25,5 +27,15 @@ const localGoerliAddressList = {
 // TODO: Add this env variable (ie: "mainnet") to .env file when we're ready
 const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";
 
-export const addressesJson: AddressesJsonFile =
-  chainName === "testnet" ? testnetAddressList : localGoerliAddressList;
+export const addressesJson = getAddressesList();
+
+function getAddressesList() {
+  if (process.env.NODE_ENV === "test") {
+    return waffleAddressList;
+  }
+
+  const addressesList: AddressesJsonFile =
+    chainName === "testnet" ? testnetAddressList : localGoerliAddressList;
+
+  return addressesList;
+}
