@@ -1,14 +1,10 @@
-import { Fragment, ReactElement, useState, useCallback, useRef } from "react";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { Fragment, ReactElement } from "react";
 import { t } from "ttag";
-import { AnnotationIcon } from "@heroicons/react/solid";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
-import { copyToClipboard } from "src/base/copyToClipboard";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import Image from "next/image";
 import classNames from "classnames";
-import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
@@ -20,38 +16,8 @@ interface DelegateProfileProps {
   active?: boolean;
 }
 
-const defaultTooltipState = {
-  twitterHandle: false,
-  address: false,
-};
-
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
   const { selected = false, delegate, onSelectDelegate } = props;
-  const [showTooltip, setShowTooltip] = useState(defaultTooltipState);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const onCopy = useCallback(
-    (type: "twitterHandle" | "address") => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      const nextState = { ...defaultTooltipState };
-      nextState[type] = true;
-      setShowTooltip(nextState);
-      timeoutRef.current = setTimeout(() => {
-        setShowTooltip(defaultTooltipState);
-        timeoutRef.current = null;
-      }, ONE_SECOND_IN_MILLISECONDS);
-      copyToClipboard(delegate[type]);
-    },
-    [delegate],
-  );
-
-  const onCopyAddress = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    onCopy("address");
-  };
 
   return (
     <Popover>
@@ -75,26 +41,14 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               <NumDelegatedVotes account={delegate.address} />
             </span>
           </div>
-          <div className="flex flex-col items-center justify-center gap-1">
-            {/* Copy address button */}
-            <Tooltip
-              className="!flex"
-              isOpen={showTooltip.address}
-              content={t`Address copied`}
-            >
-              <button onClick={onCopyAddress}>
-                <AnnotationIcon className="h-5 text-principalRoyalBlue hover:text-principalBlue" />
-              </button>
-            </Tooltip>
 
-            {/* Element member verified delegate icon */}
-            <div className="!flex relative w-4 h-4">
-              <Image
-                layout="fill"
-                src="/assets/crown.svg"
-                alt={t`Crown icon`}
-              />
-            </div>
+          {/* Element member verified delegate icon */}
+          <div className="flex relative w-4 h-4">
+            <Image
+              layout="fill"
+              src="/assets/crown.svg"
+              alt={t`Affiliated with Element Finance`}
+            />
           </div>
         </div>
       </Popover.Button>
