@@ -10,6 +10,7 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useWeb3React } from "@web3-react/core";
+import { XIcon } from "@heroicons/react/solid";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
@@ -29,7 +30,14 @@ function DetailedDelegateProfile({
   const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
 
   return (
-    <div className={classNames(className, "h-full")}>
+    <div className={classNames(className, "h-full", "relative", "pt-7")}>
+      <button
+        className="z-10 absolute top-0 right-0 m-5"
+        onClick={onCloseProfileClick}
+      >
+        <XIcon className="h-6" />
+      </button>
+
       <div className="flex flex-col relative p-5 h-full">
         <div className="flex flex-col md:flex-row gap-4 md:gap-8">
           {/* Left Hand Column */}
