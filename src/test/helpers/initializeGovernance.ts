@@ -1,5 +1,3 @@
-import "hardhat-ethernal";
-
 import {
   LockingVault__factory,
   MockERC20__factory,
@@ -24,9 +22,9 @@ export async function initializeGovernance(
 
   await giveVotingPowerToAccount(owner, elementToken, lockingVault);
   await giveVotingPowerToAccount(signer1, elementToken, lockingVault);
-  await giveAccountsVotingTokens(owner, accounts, elementToken);
-  await giveTreasuryVotingTokens(owner, treasury, elementToken);
-  await allocateGrants(testProvider, elementToken, vestingVault, signers);
+  // await giveAccountsVotingTokens(owner, accounts, elementToken);
+  // await giveTreasuryVotingTokens(owner, treasury, elementToken);
+  // await allocateGrants(testProvider, elementToken, vestingVault, signers);
 }
 
 async function giveAccountsVotingTokens(
