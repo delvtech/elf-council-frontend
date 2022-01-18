@@ -5,7 +5,6 @@ import classNames from "classnames";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import CurrentDelegate from "./CurrentDelegate";
 
 interface DelegateButtonProps {
   account: string | null | undefined;
