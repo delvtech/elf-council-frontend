@@ -1,5 +1,7 @@
 import { Fragment, ReactElement } from "react";
 import { t } from "ttag";
+import { commify } from "ethers/lib/utils";
+import { format } from "d3-format";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
@@ -113,7 +115,10 @@ interface NumDelegatedVotesProps {
 function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const { account } = props;
   const votePower = useVotingPowerForAccount(account);
-  return <span>{t`${votePower} votes`}</span>;
+  return (
+    <span>{t`${commify(format(".4~f")(+votePower))}
+ votes`}</span>
+  );
 }
 
 export default dynamic(() => Promise.resolve(DelegateProfile), {
