@@ -1,5 +1,7 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
+import { commify } from "ethers/lib/utils";
+import { format } from "d3-format";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { formatWalletAddress } from "src/formatWalletAddress";
@@ -104,7 +106,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         </div>
         <div className="w-full leading-5 hidden sm:block md:hidden lg:block">
           <p>{t`Change Delegation`}</p>
-          <p className="text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</p>
+          <p className="text-sm">{t`Tokens Eligible to Delegate: ${commify(
+            format(".4~f")(+vaultBalance),
+          )}
+`}</p>
         </div>
       </div>
 
@@ -122,7 +127,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         <div className="block sm:hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
           <div className="w-full leading-5 ">
             <span className="block">{t`Change Delegation`}</span>
-            <span className="block text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</span>
+            <span className="block text-sm">{t`Tokens Eligible to Delegate: ${commify(
+              format(".4~f")(+vaultBalance),
+            )}
+`}</span>
           </div>
         </div>
         {/* Delegate Input */}

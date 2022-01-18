@@ -65,7 +65,7 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
           {t`Tokens Eligible to Withdraw: ${commify(
             format(".4~f")(+vaultBalance),
           )}
-`}
+          `}
         </div>
         <DepositInput
           depositAmount={withdrawAmount}
