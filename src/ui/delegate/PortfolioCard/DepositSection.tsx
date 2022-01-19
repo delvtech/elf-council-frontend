@@ -1,9 +1,9 @@
 import { ReactElement, useState, useEffect } from "react";
 import { jt, t } from "ttag";
 import { ethers, Signer } from "ethers";
-import { commify, parseEther, formatEther } from "ethers/lib/utils";
-import { format } from "d3-format";
+import { parseEther, formatEther } from "ethers/lib/utils";
 import Link from "next/link";
+import { formatBalance } from "src/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { addressesJson } from "src/elf-council-addresses";
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
@@ -86,10 +86,7 @@ function DepositSection(props: DepositSectionProps): ReactElement {
       <PortfolioDepositText />
       <div className="mt-3">
         <div className="text-white text-sm mb-2">
-          {t`Tokens Eligible to Deposit: ${commify(
-            format(".4~f")(+walletBalance),
-          )}
-`}
+          {t`Tokens Eligible to Deposit: ${formatBalance(walletBalance)}`}
         </div>
         <DepositInput
           depositAmount={depositAmount}

@@ -3,8 +3,7 @@ import { ReactElement } from "react";
 import classNames from "classnames";
 import { t } from "ttag";
 import { InformationCircleIcon } from "@heroicons/react/solid";
-import { commify } from "ethers/lib/utils";
-import { format } from "d3-format";
+import { formatBalance } from "src/formatBalance";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { RESOURCES_URL } from "src/ui/resources";
@@ -26,9 +25,7 @@ export function BalanceLabeledStat(
     <div className={classNames("text-white", className)}>
       {/* Balance */}
       <div className="flex items-center">
-        <span className="mr-2 text-2xl">
-          {commify(format(".4~f")(+balance))}
-        </span>
+        <span className="mr-2 text-2xl">{formatBalance(balance)}</span>
         <ElementIcon size={IconSize.MEDIUM} />
       </div>
 

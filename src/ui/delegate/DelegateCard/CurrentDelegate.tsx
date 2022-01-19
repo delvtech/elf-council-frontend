@@ -2,6 +2,7 @@ import { ReactElement, useCallback, useState, useRef } from "react";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
+import { formatBalance } from "src/formatBalance";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { AnnotationIcon } from "@heroicons/react/solid";
@@ -92,7 +93,7 @@ interface NumDelegatedVotesProps {
 function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const { account } = props;
   const votePower = useVotingPowerForAccount(account);
-  return <span>{t`${votePower} votes`}</span>;
+  return <span>{t`${formatBalance(votePower)} votes`}</span>;
 }
 
 export default CurrentDelegate;

@@ -2,11 +2,11 @@ import { ReactElement, useEffect, useState } from "react";
 import { Signer } from "ethers";
 import { t } from "ttag";
 import Link from "next/link";
+import { parseEther } from "ethers/lib/utils";
 
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { useWithdrawFromLockingVault } from "src/ui/rewards/useWithdrawFromLockingVault";
-import { commify, parseEther } from "ethers/lib/utils";
-import { format } from "d3-format";
+import { formatBalance } from "src/formatBalance";
 import { DepositInput } from "src/ui/overview/DepositCard/DepositInput";
 
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -62,10 +62,7 @@ function WithdrawSection(props: WithdrawSectionProps): ReactElement {
       <PortfolioWithdrawText />
       <div className="mt-3">
         <div className="text-white text-sm mb-2">
-          {t`Tokens Eligible to Withdraw: ${commify(
-            format(".4~f")(+vaultBalance),
-          )}
-          `}
+          {t`Tokens Eligible to Withdraw: ${formatBalance(vaultBalance)}`}
         </div>
         <DepositInput
           depositAmount={withdrawAmount}
