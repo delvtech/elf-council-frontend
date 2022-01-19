@@ -16,9 +16,8 @@ export async function initializeGovernance(
 ): Promise<void> {
   const signers: Wallet[] = await testProvider.getWallets();
   const [owner, signer1] = signers;
-  const accounts = signers.map((s) => s.address);
-  const { elementToken, lockingVault, vestingVault, treasury } =
-    governanceContracts;
+  // const accounts = signers.map((s) => s.address);
+  const { elementToken, lockingVault } = governanceContracts;
 
   await giveVotingPowerToAccount(owner, elementToken, lockingVault);
   await giveVotingPowerToAccount(signer1, elementToken, lockingVault);

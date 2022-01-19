@@ -16,8 +16,9 @@ export const ALCHEMY_GOERLI_HTTP_URL = `https://eth-goerli.alchemyapi.io/v2/${AL
 export const ALCHEMY_MAINNET_HTTP_URL = `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`;
 
 export const testProvider = new MockProvider();
-// eslint-disable-next-line no-var
-export var defaultProvider = getProvider();
+
+const provider = getProvider();
+export const defaultProvider = provider;
 
 // Default rpc host to local, but check the chain id in the addresses.json for
 // final say
