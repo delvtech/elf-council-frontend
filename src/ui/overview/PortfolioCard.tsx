@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
 
 import classNames from "classnames";
-import { commify, formatEther } from "ethers/lib/utils";
+import { formatEther } from "ethers/lib/utils";
+import { formatBalance } from "src/formatBalance";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -16,7 +17,6 @@ import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
-import { format } from "d3-format";
 import { RESOURCES_URL } from "src/ui/resources";
 
 const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
@@ -104,9 +104,7 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
   return (
     <div className={classNames(className, "text-white")}>
       <div className="flex items-center">
-        <div className="text-2xl font-extralight">
-          {commify(format(".4~f")(+balance))}
-        </div>
+        <div className="text-2xl font-extralight">{formatBalance(balance)}</div>
         <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
       </div>
       <div className="flex items-center text-lg font-light">

@@ -1,5 +1,6 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
+import { formatBalance } from "src/formatBalance";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { formatWalletAddress } from "src/formatWalletAddress";
@@ -103,8 +104,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
           <span>{t`Current Delegation`}</span>
         </div>
         <div className="w-full leading-5 hidden sm:block md:hidden lg:block">
-          <p>{t`Change Delegation`}</p>
-          <p className="text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</p>
+          <div>{t`Change Delegation`}</div>
+          <div className="text-sm">
+            {t`Tokens Eligible to Delegate: ${formatBalance(vaultBalance)}`}
+          </div>
         </div>
       </div>
 
@@ -121,8 +124,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
         <div className="block sm:hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
           <div className="w-full leading-5 ">
-            <span className="block">{t`Change Delegation`}</span>
-            <span className="block text-sm">{t`Tokens Eligible to Delegate: ${vaultBalance}`}</span>
+            <div className="block">{t`Change Delegation`}</div>
+            <div className="text-sm">
+              {t`Tokens Eligible to Delegate: ${formatBalance(vaultBalance)}`}
+            </div>
           </div>
         </div>
         {/* Delegate Input */}
