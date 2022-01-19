@@ -1,6 +1,6 @@
 import { createAlchemyWeb3 } from "@alch/alchemy-web3";
 import { ExternalProvider, Provider } from "@ethersproject/providers";
-import { MockProvider } from "ethereum-waffle";
+import type { MockProvider } from "ethereum-waffle";
 import { providers } from "ethers";
 
 import { addressesJson } from "src/elf-council-addresses";
@@ -15,7 +15,15 @@ const { chainId } = addressesJson;
 export const ALCHEMY_GOERLI_HTTP_URL = `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`;
 export const ALCHEMY_MAINNET_HTTP_URL = `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`;
 
-export const testProvider = new MockProvider();
+// vercel won't build with ethereum-waffle as a production dependency.  only import it if we are testing.
+let mockProvider: MockProvider | undefined;
+if (process.env.NODE_ENV === "test") {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { MockProvider } = require("ethereum-waffle");
+  mockProvider = new MockProvider();
+}
+// safe to cast since this should only ever be used in 'test' environment anyway.
+export const testProvider = mockProvider as MockProvider;
 
 const provider = getProvider();
 export const defaultProvider = provider;
