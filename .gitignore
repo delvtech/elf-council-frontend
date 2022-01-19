@@ -7,6 +7,12 @@ node_modules/
 .next
 
 storybook-static/
+
+# local environment that may have private keys
 .env.local
 
-.eslintcache/
+# Es-lint cache
+.eslintcache
+
+# coverage files created by Jest
+coverage/

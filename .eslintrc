@@ -1,29 +1,21 @@
 {
-  "ignorePatterns": [
-    "*.json"
-  ],
+  "ignorePatterns": ["*.json"],
   "extends": [
     "next",
     "react-app",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended",
     "plugin:jsx-a11y/recommended",
     "prettier"
   ],
-  "plugins": [
-    "tailwindcss",
-    "jsx-a11y"
-  ],
+  "plugins": ["tailwindcss", "jsx-a11y", "testing-library", "jest-dom"],
   "overrides": [
     {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx"
-      ],
+      "files": ["**/*.ts", "**/*.tsx"],
       "rules": {
-        "no-undef": [
-          "off"
-        ],
+        "no-undef": ["off"],
         "react-hooks/exhaustive-deps": "error"
       }
     }
@@ -32,10 +24,7 @@
     "tailwindcss/no-custom-classname": [
       "error",
       {
-        "callees": [
-          "classNames",
-          "classnames"
-        ]
+        "callees": ["classNames", "classnames"]
       }
     ],
     "@typescript-eslint/explicit-module-boundary-types": "error", // exported functions must have return types
@@ -51,17 +40,9 @@
       "error",
       {
         "ignore": [
-          -1,
-          0,
-          1,
-          2,
-          3,
-          4,
-          8,
-          10,
+          -1, 0, 1, 2, 3, 4, 8, 10,
           // the length of a wallet address
-          42,
-          100
+          42, 100
         ],
         "ignoreArrayIndexes": true,
         "ignoreDefaultValues": true,
@@ -75,21 +56,14 @@
     "no-console": [
       "warn",
       {
-        "allow": [
-          "warn",
-          "error",
-          "info",
-          "assert"
-        ]
+        "allow": ["warn", "error", "info", "assert"]
       }
     ],
     "no-new-func": "error", // const func = new Function()
     "no-restricted-imports": [
       "error",
       {
-        "patterns": [
-          "\\.\\./*"
-        ]
+        "patterns": ["\\.\\./*"]
       }
     ],
     "no-unused-vars": "off",
