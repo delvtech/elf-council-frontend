@@ -1,9 +1,10 @@
+import { Config } from "@jest/types";
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
 
-const customJestConfig = {
+const customJestConfig: Config.InitialOptions = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
