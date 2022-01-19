@@ -45,7 +45,7 @@
     "lodash.isplainobject": "^4.0.6",
     "lodash.keyby": "^4.6.0",
     "lodash.zip": "^4.2.0",
-    "next": "^12.0.7",
+    "next": "^12.0.8",
     "postcss": "^8.4.5",
     "react": "17.0.2",
     "react-chartjs-2": "^2.11.1",
