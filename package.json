@@ -63,7 +63,7 @@
     "@babel/core": "^7.16.7",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-essentials": "^6.4.13",
-    "@storybook/addon-links": "^6.4.9",
+    "@storybook/addon-links": "^6.4.13",
     "@storybook/react": "^6.4.9",
     "@types/d3-format": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
