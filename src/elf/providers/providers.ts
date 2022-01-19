@@ -15,7 +15,9 @@ const { chainId } = addressesJson;
 export const ALCHEMY_GOERLI_HTTP_URL = `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`;
 export const ALCHEMY_MAINNET_HTTP_URL = `https://eth-mainnet.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`;
 
-// vercel won't build with ethereum-waffle as a production dependency.  only import it if we are testing.
+// vercel can't create a production build with ethereum-waffle as a dependency.  ethereum-waffle
+// expects to run in a node environment and vercel builds for a broweser environment, so things like
+// 'fs' are not available to ethereum-waffle.  only import it if we are testing.
 let mockProvider: MockProvider | undefined;
 if (process.env.NODE_ENV === "test") {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
