@@ -48,7 +48,7 @@ export function ConnectWalletButtons({
       className="flex flex-col justify-center overflow-auto p-2"
     >
       <H3 className="text-brandDarkBlue-dark text-center mb-8">{t`Select Wallet`}</H3>
-      <div className="grid grid-cols-3">
+      <div className="grid grid-cols-3 gap-2">
         <Button
           size={ButtonSize.AUTO}
           variant={ButtonVariant.MINIMAL}

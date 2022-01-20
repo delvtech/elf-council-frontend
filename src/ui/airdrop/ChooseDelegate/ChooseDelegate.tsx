@@ -71,9 +71,9 @@ export function ChooseDelegate({
           value={delegateAddress}
           onChange={(event) => setDelegateAddress(event.target.value)}
         />
-        <div className="p-1 rounded-xl shadow h-48 overflow-auto">
+        <div className="pr-1 rounded-xl shadow h-48 overflow-auto">
           {/* List of delegates */}
-          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll max-h-[428px]">
+          <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
             {delegates.map((delegate, idx) => {
               const handleSelectDelegate = () => {
                 setSelectedDelegateIndex(idx);

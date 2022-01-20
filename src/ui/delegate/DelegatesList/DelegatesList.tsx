@@ -19,7 +19,7 @@ function DelegatesList({
 
       {/* List of delegates */}
       <ul
-        className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll"
+        className="grid pr-1 grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll"
         // 428px exactly matches 5 rows of the list
         style={{ maxHeight: "428px" }}
       >
