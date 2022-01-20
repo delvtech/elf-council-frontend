@@ -26,7 +26,10 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
         <div
           className={classNames(
             "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
-            { "!bg-principalRoyalBlue": selected },
+            {
+              "!bg-principalRoyalBlue": selected,
+              "ring-4": selected,
+            },
           )}
         >
           <div className="items-start w-10/12 text-left truncate">
