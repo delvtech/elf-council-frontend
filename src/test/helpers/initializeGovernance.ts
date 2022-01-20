@@ -26,11 +26,11 @@ export async function initializeGovernance(
   // await allocateGrants(testProvider, elementToken, vestingVault, signers);
 }
 
-async function giveAccountsVotingTokens(
+export async function giveAccountsVotingTokens(
   tokenOwner: Signer,
   accounts: string[],
   votingTokenAddress: string,
-) {
+): Promise<void> {
   const tokenContract = MockERC20__factory.connect(
     votingTokenAddress,
     tokenOwner,
@@ -43,11 +43,11 @@ async function giveAccountsVotingTokens(
   );
 }
 
-async function giveTreasuryVotingTokens(
+export async function giveTreasuryVotingTokens(
   tokenOwner: Signer,
   treasuryAddress: string,
   votingTokenAddress: string,
-) {
+): Promise<void> {
   const tokenContract = MockERC20__factory.connect(
     votingTokenAddress,
     tokenOwner,
@@ -56,12 +56,12 @@ async function giveTreasuryVotingTokens(
 }
 
 // give grants to signer[2] and signer[3]
-async function allocateGrants(
+export async function allocateGrants(
   provider: MockProvider,
   grantTokenAddress: string,
   vestingVault: string,
   signers: Wallet[],
-) {
+): Promise<void> {
   const tokenContract = MockERC20__factory.connect(
     grantTokenAddress,
     signers[0],

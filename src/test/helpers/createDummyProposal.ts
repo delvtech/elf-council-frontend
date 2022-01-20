@@ -16,7 +16,7 @@ interface ProposalOptions {
   expired?: boolean;
 }
 
-export async function testProposal(
+export async function createDummyProposal(
   owner: Wallet,
   provider: MockProvider,
   addressesJson: AddressesJsonFile,
