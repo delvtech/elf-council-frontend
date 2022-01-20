@@ -20,14 +20,19 @@ import { coreVotingContract } from "src/elf/contracts";
 export function useVotedEvents(
   voterAddress: string | null | undefined,
   proposalId: string | undefined,
-  options?: UseSmartContractEventsCallOptions<CoreVoting, "Voted">,
+  options?: Omit<
+    UseSmartContractEventsCallOptions<CoreVoting, "Voted">,
+    "callArgs"
+  >,
 ): QueryObserverResult<Event[], unknown> {
+  // allow consumer to pass enabled logic still
+  const enabled = options?.enabled ?? true;
+
   return useSmartContractEvents(coreVotingContract, "Voted", {
     ...options,
     // Note: a BigNumber must be passed for proposalId, not a string value, despite the fact that
     // the interface allows BigNumberish!
     callArgs: [voterAddress, proposalId && BigNumber.from(proposalId)],
-    enabled: !!voterAddress && !!proposalId,
-    staleTime: 1000,
+    enabled: !!voterAddress && !!proposalId && enabled,
   });
 }
