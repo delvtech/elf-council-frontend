@@ -38,6 +38,8 @@ const customJestConfig: Config.InitialOptions = {
     "@testing-library/react",
   ],
 
+  // globalSetup: "<rootDir>/src/test/setup.ts",
+
   // The test environment that will be used for testing
   testEnvironment: "<rootDir>/jest-environment-jsdom.js",
 
