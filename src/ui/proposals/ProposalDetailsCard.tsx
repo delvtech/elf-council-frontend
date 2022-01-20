@@ -38,7 +38,6 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
-const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
 interface ProposalDetailsCardProps {
@@ -197,13 +196,6 @@ export function ProposalDetailsCard(
         tooltipText={votingPowerTooltipText}
         tooltipHref={RESOURCES_URL}
         label={t`Voting Power`}
-      />
-      <BalanceWithLabel
-        className="w-full mt-4"
-        balance={amountDeposited}
-        tooltipText={votingBalanceTooltipText}
-        tooltipHref={RESOURCES_URL}
-        label={t`Eligible voting balance`}
       />
 
       <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
