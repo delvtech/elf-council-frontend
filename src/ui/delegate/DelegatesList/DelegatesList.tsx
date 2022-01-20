@@ -19,9 +19,9 @@ function DelegatesList({
 
       {/* List of delegates */}
       <ul
-        className="grid p-1 grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll"
-        // 436px exactly matches 5 rows of the list
-        style={{ maxHeight: "436px" }}
+        className="grid pr-1 grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3 overflow-y-scroll"
+        // 428px exactly matches 5 rows of the list
+        style={{ maxHeight: "428px" }}
       >
         {delegates.map((delegate, idx) => {
           const handleSelectDelegate = () => {
