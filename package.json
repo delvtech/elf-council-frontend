@@ -55,7 +55,7 @@
     "react-query": "^3.34.8",
     "react-use": "^17.3.2",
     "storybook-color-picker": "^2.3.0",
-    "tailwindcss": "^3.0.12",
+    "tailwindcss": "^3.0.15",
     "tailwindcss-classnames": "^3.0.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "ttag": "^1.7.24"
@@ -88,7 +88,7 @@
     "jest": "^26.6.3",
     "jest-css-modules-transform": "^4.3.0",
     "jest-environment-jsdom": "^26.6.2",
-    "lint-staged": "^12.2.0",
+    "lint-staged": "^12.2.2",
     "merkletreejs": "^0.2.27",
     "prettier": "^2.5.1",
     "stylelint": "^14.2.0",
