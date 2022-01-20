@@ -13,6 +13,7 @@ function getDomain() {
   return "https://etherscan.io";
 }
 
-const TX_PATH = addressesJson.chainId === ChainId.LOCAL ? "transaction" : "tx";
-
-export const ETHERSCAN_TRANSACTION_DOMAIN = `${ETHERSCAN_DOMAIN}/${TX_PATH}`;
+export const ETHERSCAN_TRANSACTION_DOMAIN =
+  addressesJson.chainId === ChainId.LOCAL
+    ? `${ETHERSCAN_DOMAIN}/transaction`
+    : `${ETHERSCAN_DOMAIN}/tx`;
