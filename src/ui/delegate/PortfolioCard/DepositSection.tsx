@@ -21,7 +21,7 @@ const { elementToken, lockingVault } = addressesJson.addresses;
 interface DepositSectionProps {
   account: string | null | undefined;
   signer: Signer | undefined;
-  currentDelegate: Delegate | undefined;
+  currentDelegateAddress: string | undefined;
   walletBalance: string;
 }
 
@@ -29,7 +29,7 @@ const MAX_INPUT = 1000000000;
 const MAX_PRECISION = 18;
 
 function DepositSection(props: DepositSectionProps): ReactElement {
-  const { account, signer, currentDelegate, walletBalance } = props;
+  const { account, signer, currentDelegateAddress, walletBalance } = props;
   const [depositInProgress, setDepositInProgress] = useState(false);
 
   const { value: depositAmount, setNumericValue: setDepositAmount } =
@@ -67,11 +67,11 @@ function DepositSection(props: DepositSectionProps): ReactElement {
   };
 
   const onDeposit = () => {
-    if (!account || !signer || !currentDelegate) {
+    if (!currentDelegateAddress || !account || !signer) {
       return;
     }
     setDepositInProgress(true);
-    deposit([account, parseEther(depositAmount), currentDelegate.address]);
+    deposit([account, parseEther(depositAmount), currentDelegateAddress]);
   };
 
   useEffect(() => {
@@ -116,8 +116,8 @@ function DepositSection(props: DepositSectionProps): ReactElement {
           allowance={allowance}
           balance={walletBalance}
           depositAmount={depositAmount}
-          isDelegated={!!currentDelegate}
-          delegateAddress={currentDelegate?.address || ""}
+          isDelegated={!!currentDelegateAddress}
+          delegateAddress={currentDelegateAddress || ""}
           onDeposit={onDeposit}
           isLoading={depositLoading}
           buttonVariant={ButtonVariant.GRADIENT}

@@ -5,7 +5,6 @@ import { Signer } from "ethers";
 import dynamic from "next/dynamic";
 import { t } from "ttag";
 
-import { Delegate } from "src/elf-council-delegates/delegates";
 import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
 import { RESOURCES_URL } from "src/ui/resources";
 
@@ -22,7 +21,7 @@ const DynamicWithdrawSection = dynamic(
 interface PortfolioCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
-  currentDelegate: Delegate | undefined;
+  currentDelegateAddress: string | undefined;
   walletBalance: string;
   vaultBalance: string;
 }
@@ -30,8 +29,13 @@ interface PortfolioCardProps {
 const portfolioTooltip = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 
 function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const { account, signer, currentDelegate, walletBalance, vaultBalance } =
-    props;
+  const {
+    account,
+    signer,
+    currentDelegateAddress,
+    walletBalance,
+    vaultBalance,
+  } = props;
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -56,7 +60,7 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
       <DynamicDepositSection
         account={account}
         signer={signer}
-        currentDelegate={currentDelegate}
+        currentDelegateAddress={currentDelegateAddress}
         walletBalance={walletBalance}
       />
 

@@ -10,7 +10,6 @@ import { t } from "ttag";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
-import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import H2 from "src/ui/base/H2";
@@ -27,7 +26,6 @@ export default function DelegatePage(): ReactElement {
   const signer = account ? (library?.getSigner(account) as Signer) : undefined;
 
   const currentDelegateAddress = useDelegate(account);
-  const currentDelegate = getFeaturedDelegate(currentDelegateAddress || "");
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
@@ -112,7 +110,7 @@ export default function DelegatePage(): ReactElement {
             <PortfolioCard
               account={account}
               signer={signer}
-              currentDelegate={currentDelegate}
+              currentDelegateAddress={currentDelegateAddress}
               walletBalance={walletBalance}
               vaultBalance={vaultBalance}
             />
@@ -134,7 +132,7 @@ export default function DelegatePage(): ReactElement {
               account={account}
               signer={signer}
               vaultBalance={vaultBalance}
-              currentDelegate={currentDelegate}
+              currentDelegateAddress={currentDelegateAddress}
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
