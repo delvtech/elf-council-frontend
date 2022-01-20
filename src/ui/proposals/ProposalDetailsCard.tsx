@@ -161,6 +161,7 @@ export function ProposalDetailsCard(
 
       <p className="my-3 overflow-hidden">
         <a
+          target="_blank"
           href={snapshotProposal?.link || ""}
           className="flex items-center text-sm font-light text-white"
           rel="noreferrer"
@@ -172,6 +173,7 @@ export function ProposalDetailsCard(
 
       <p className="my-3 overflow-hidden">
         <a
+          target="_blank"
           href="https://forum.element.fi"
           className="flex items-center text-sm font-light text-white"
           rel="noreferrer"
