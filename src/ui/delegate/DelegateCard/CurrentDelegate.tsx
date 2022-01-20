@@ -1,5 +1,4 @@
-import { ReactElement } from "react";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { ReactElement, useState, useCallback, useRef } from "react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
@@ -8,6 +7,9 @@ import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount
 import Image from "next/image";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
+import { copyToClipboard } from "src/base/browser/copyToClipboard";
 
 interface CurrentDelegateProps {
   className?: string;
@@ -17,6 +19,21 @@ interface CurrentDelegateProps {
 function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
   const { className = "", currentDelegateAddress } = props;
   const delegate = getFeaturedDelegate(currentDelegateAddress);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleCopyAddress = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setShowTooltip(true);
+    timeoutRef.current = setTimeout(() => {
+      setShowTooltip(false);
+      timeoutRef.current = null;
+    }, ONE_SECOND_IN_MILLISECONDS);
+    copyToClipboard(currentDelegateAddress);
+  }, [currentDelegateAddress]);
 
   return (
     <div
@@ -39,11 +56,17 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         <span className="text-blueGrey">
           <NumDelegatedVotes account={currentDelegateAddress} />
         </span>
-        {delegate ? (
-          <span className="text-blueGrey">
-            {formatWalletAddress(delegate.address)}
-          </span>
-        ) : null}
+        <Tooltip
+          isOpen={showTooltip}
+          content="Address copied"
+          className="w-fit"
+        >
+          <button onClick={handleCopyAddress}>
+            <span className="text-blueGrey hover:text-principalRoyalBlue">
+              {formatWalletAddress(currentDelegateAddress)}
+            </span>
+          </button>
+        </Tooltip>
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2">
