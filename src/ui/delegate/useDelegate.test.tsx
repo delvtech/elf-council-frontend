@@ -1,45 +1,23 @@
-import React, { ReactElement, ReactNode } from "react";
-import { QueryClientProvider } from "react-query";
-
-import { renderHook } from "@testing-library/react-hooks";
 import { waitFor } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
 
 import { testProvider } from "src/elf/providers/providers";
-import { queryClient } from "src/elf/queryClient";
-import {
-  deployGovernanace,
-  GovernanceContracts,
-} from "src/test/helpers/deployGovernance";
-import { initializeGovernance } from "src/test/helpers/initializeGovernance";
+import { DEFAULT_TEST_TIMEOUT } from "src/test/constants";
 import { createSnapshot, restoreSnapshot } from "src/test/snapshots";
 import { useDelegate } from "src/ui/delegate/useDelegate";
-
-const DEFAULT_TIMEOUT = 20000;
-
-interface WrapperProps {
-  children: ReactNode;
-}
-
-function wrapper({ children }: WrapperProps): ReactElement {
-  return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
-}
+import { queryClientWrapper } from "src/test/helpers/queryClientWrapper";
+import setup from "src/test/setup";
 
 describe("useDelegate", () => {
-  let governanceContracts: GovernanceContracts = {} as GovernanceContracts;
   beforeAll(async () => {
-    const wallets = testProvider.getWallets();
-    const [owner] = wallets;
-    governanceContracts = await deployGovernanace(owner, wallets);
-    await initializeGovernance(governanceContracts);
-  }, DEFAULT_TIMEOUT);
+    await setup();
+  });
   beforeEach(async () => {
     await createSnapshot(testProvider);
-  }, DEFAULT_TIMEOUT);
+  }, DEFAULT_TEST_TIMEOUT);
   afterEach(async () => {
     await restoreSnapshot(testProvider);
-  }, DEFAULT_TIMEOUT);
+  }, DEFAULT_TEST_TIMEOUT);
 
   test("should return undefined if no delegate", () => {
     const wallets = testProvider.getWallets();
@@ -47,7 +25,7 @@ describe("useDelegate", () => {
 
     //render the hook
     const { result } = renderHook(() => useDelegate(user2.address), {
-      wrapper,
+      wrapper: queryClientWrapper,
     });
     expect(result.current).toBe(undefined);
   });
@@ -58,7 +36,7 @@ describe("useDelegate", () => {
 
     //render the hook
     const { result } = renderHook(() => useDelegate(user1.address), {
-      wrapper,
+      wrapper: queryClientWrapper,
     });
 
     await waitFor(() => {
