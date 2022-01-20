@@ -76,22 +76,24 @@ export function ReviewClaim({
       nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim & Deposit`}
       onPrevStep={onPrevStep}
     >
-      <div className="text-right">
-        <Tag intent={Intent.SUCCESS}>
-          <span className="font-bold">{t`Delegation valid`}</span>
-          <CheckCircleIcon height={24} className="ml-4" />
-        </Tag>
-      </div>
-      <div className="mb-10 text-2xl font-bold text-left">{t`Review Deposit`}</div>
-      <div className="flex flex-col justify-center w-full mb-10 text-base">
-        <span
-          className={"w-full mb-4"}
-        >{t`These tokens will be claimed to your address and deposited into the
+      <div className="flex flex-col">
+        <div className="text-right">
+          <Tag intent={Intent.SUCCESS}>
+            <span className="font-bold">{t`Delegation valid`}</span>
+            <CheckCircleIcon height={24} className="ml-4" />
+          </Tag>
+        </div>
+        <div className="flex items-center justify-center mb-4 text-3xl font-bold">
+          <span className="text-center">{t`Review Deposit`}</span>
+        </div>
+        <div className="flex flex-col items-center justify-center w-full mb-10 text-base text-center">
+          <span className="w-3/4 text-justify">{t`These tokens will be claimed to your address and deposited into the
         voting vault. You can withdraw them at any time.`}</span>
-      </div>
-      <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
-        <AirdropAmountCard account={account} />
-        <DelegatePreviewCard delegateAddress={delegateAddress} />
+        </div>
+        <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
+          <AirdropAmountCard account={account} />
+          <DelegatePreviewCard delegateAddress={delegateAddress} />
+        </div>
       </div>
     </StepCard>
   );

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
@@ -20,14 +20,14 @@ export function AirdropAmountCard({
   return (
     <Card
       variant={CardVariant.HACKER_SKY}
-      className="h-64 text-center w-96  shadow-[0_0_52px_rgba(143,216,231,.7)]"
+      className="h-64 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]"
     >
-      <div className="flex flex-col items-center justify-center w-full h-full">
+      <div className="flex flex-col items-center justify-center w-full h-full p-6">
         <div className="mb-3 text-lg font-bold text-principalRoyalBlue text-opacity-60">{t`You will receive`}</div>
         <div className="flex justify-center gap-2 text-5xl font-bold text-center text-principalRoyalBlue">
           <ElementIcon
             bgColorClassName="bg-paleLily"
-            className="ml-2"
+            className="mr-2"
             size={IconSize.LARGE}
           />
           <span>{airdropAmountLabel}</span>

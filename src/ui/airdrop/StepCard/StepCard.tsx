@@ -27,10 +27,10 @@ export function StepCard({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className={classNames("flex flex-col text-white h-full", className)}
+      className={classNames("flex flex-col text-white", className)}
     >
       {/* Extra div because we can't override padding set by Card */}
-      <div className="p-2">
+      <div className="flex flex-col justify-between h-full p-2">
         {children}
         <div className="flex justify-between pt-6">
           <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
