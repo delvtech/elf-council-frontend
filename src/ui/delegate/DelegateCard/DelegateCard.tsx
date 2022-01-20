@@ -79,13 +79,13 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
-    if (delegateAddressOnChain && isSuccess) {
+    if (isSuccess) {
       const nextDelegate = delegates.find(
         (d) => d.address === delegateAddressOnChain,
       );
 
       // Success
-      if (nextDelegate) {
+      if (nextDelegate || delegateAddressOnChain) {
         setDelegateAddressInput("");
         toggleDelegationSuccess();
       }
