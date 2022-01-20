@@ -11,13 +11,13 @@ import { t } from "ttag";
 
 import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
@@ -32,11 +32,11 @@ import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForPro
 import { RESOURCES_URL } from "src/ui/resources";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
+import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
-const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
 interface ProposalDetailsCardProps {
@@ -57,8 +57,6 @@ export function ProposalDetailsCard(
     proposalsBySnapshotId,
   );
 
-  const amountDeposited = useDeposited(account) || "0";
-
   const accountVotingPower = useVotingPowerForAccount(account);
 
   const proposalVotingPower = useVotingPowerForProposal(proposal?.proposalId);
@@ -73,8 +71,18 @@ export function ProposalDetailsCard(
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
   const [isVoteTxPending, setIsVoteTxPending] = useState(false);
+
+  const { data: voteTransacation } = useLastVoteTransactionForAccount(
+    account,
+    proposal?.proposalId,
+  );
+
+  const etherscanLink = `${ETHERSCAN_TRANSACTION_DOMAIN}/${voteTransacation?.hash}`;
+
   const { mutate: vote } = useVote(account, signer, proposal?.created, {
-    onTransactionSubmitted: () => setIsVoteTxPending(true),
+    onTransactionSubmitted: () => {
+      setIsVoteTxPending(true);
+    },
     onTransactionMined: () => setIsVoteTxPending(false),
   });
 
@@ -149,8 +157,10 @@ export function ProposalDetailsCard(
 
       <p className="my-3 overflow-hidden">
         <a
+          target="_blank"
           href={snapshotProposal?.link || ""}
           className="flex items-center text-sm font-light text-white"
+          rel="noreferrer"
         >
           {t`View proposal`}
           <ExternalLinkIcon className="h-4 ml-2" />
@@ -159,8 +169,10 @@ export function ProposalDetailsCard(
 
       <p className="my-3 overflow-hidden">
         <a
+          target="_blank"
           href="https://forum.element.fi"
           className="flex items-center text-sm font-light text-white"
+          rel="noreferrer"
         >
           {t`View Discussion`}
           <ExternalLinkIcon className="h-4 ml-2" />
@@ -182,13 +194,6 @@ export function ProposalDetailsCard(
         tooltipHref={RESOURCES_URL}
         label={t`Voting Power`}
       />
-      <BalanceWithLabel
-        className="w-full mt-4"
-        balance={amountDeposited}
-        tooltipText={votingBalanceTooltipText}
-        tooltipHref={RESOURCES_URL}
-        label={t`Eligible voting balance`}
-      />
 
       <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
         {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
@@ -197,11 +202,16 @@ export function ProposalDetailsCard(
             <CheckCircleIcon className="ml-2" height={18} />
           </div>
         )}
-        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-          <div className="flex items-center justify-end w-full text-white">
+        {voteTransacation && (
+          <a
+            target="_blank"
+            href={etherscanLink}
+            className="flex items-center justify-end w-full text-white"
+            rel="noreferrer"
+          >
             <span>{t`View on etherscan`}</span>
             <ExternalLinkIcon className="ml-2" height={18} />
-          </div>
+          </a>
         )}
         <div className="flex justify-between w-full">
           <VotingBallotButton

@@ -127,6 +127,7 @@ export default function ProposalsPage({
 function OffChainProposalsLink() {
   return (
     <AnchorButton
+      target="_blank"
       href={ELEMENT_FINANCE_SNAPSHOT_URL}
       variant={ButtonVariant.SECONDARY}
     >

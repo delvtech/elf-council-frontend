@@ -7,6 +7,7 @@ import classNames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
 import { ElementLogo } from "src/ui/base/ElementLogo";
+import { RESOURCES_URL } from "src/ui/resources";
 
 export default function Sidebar(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,10 +58,7 @@ export default function Sidebar(): ReactElement {
             link="https://forum.element.fi"
             label={t`Forum`}
           />
-          <SidebarLinkExternal
-            link="https://devops-32.gitbook.io/element-council"
-            label={t`Resources`}
-          />
+          <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
         </div>
         <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
           <span className="text-sm">Powered by</span>
