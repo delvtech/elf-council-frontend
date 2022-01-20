@@ -18,7 +18,6 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
@@ -57,8 +56,6 @@ export function ProposalDetailsCard(
     proposal?.snapshotId,
     proposalsBySnapshotId,
   );
-
-  const amountDeposited = useDeposited(account) || "0";
 
   const accountVotingPower = useVotingPowerForAccount(account);
 

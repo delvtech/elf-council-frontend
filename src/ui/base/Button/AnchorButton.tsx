@@ -1,6 +1,11 @@
 // See: https://tailwindui.com/components/application-ui/elements/buttons
 
-import { MouseEventHandler, ReactElement, ReactNode } from "react";
+import {
+  AnchorHTMLAttributes,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from "react";
 import classNames from "classnames";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
 
@@ -9,6 +14,7 @@ interface AnchorButtonProps extends ButtonStyles {
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   href?: string;
+  target?: AnchorHTMLAttributes<unknown>["target"];
 }
 
 /**
@@ -17,6 +23,7 @@ interface AnchorButtonProps extends ButtonStyles {
 export default function AnchorButton({
   onClick,
   href,
+  target,
   children,
   className,
   variant,
@@ -25,6 +32,7 @@ export default function AnchorButton({
   const buttonClass = getButtonClass({ variant, round });
   return (
     <a
+      target={target}
       href={href}
       role="button"
       onClick={onClick}
