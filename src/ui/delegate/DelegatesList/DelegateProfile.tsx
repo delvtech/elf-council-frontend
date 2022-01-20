@@ -27,8 +27,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           className={classNames(
             "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
             {
-              "!bg-principalRoyalBlue": selected,
-              "ring-4": selected,
+              "!bg-paleLily": selected,
             },
           )}
         >
@@ -36,7 +35,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             <div
               className={classNames(
                 "flex items-center mb-1 font-bold text-principalRoyalBlue",
-                { "!text-white": selected },
               )}
             >
               <WalletJazzicon
@@ -57,9 +55,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               layout="fill"
               src="/assets/crown.svg"
               alt={t`Affiliated with Element Finance`}
-              className={classNames({
-                "filter brightness-0 invert": selected,
-              })}
             />
           </div>
         </div>
