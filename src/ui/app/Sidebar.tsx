@@ -58,7 +58,7 @@ export default function Sidebar(): ReactElement {
             label={t`Forum`}
           />
           <SidebarLinkExternal
-            link="https://devops-32.gitbook.io/element-council"
+            link="https://docs-element-finance.gitbook.io/element-council/"
             label={t`Resources`}
           />
         </div>
