@@ -41,7 +41,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         </span>
         {delegate ? (
           <span className="text-blueGrey">
-            {formatWalletAddress(currentDelegateAddress)}
+            {formatWalletAddress(delegate.address)}
           </span>
         ) : null}
       </div>
