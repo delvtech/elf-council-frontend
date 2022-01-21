@@ -57,14 +57,9 @@ export default function useRouterSteps(options?: UseRouterStepsOptions): {
     [completedSteps],
   );
 
-  const completeStep = useCallback(
-    (step: number) => {
-      if (step > completedSteps) {
-        setCompletedSteps(step);
-      }
-    },
-    [completedSteps],
-  );
+  const completeStep = useCallback((step: number) => {
+    setCompletedSteps((completedSteps) => Math.max(completedSteps, step));
+  }, []);
 
   const goToPreviousStep = useCallback(() => {
     if (currentStep > 0) {
