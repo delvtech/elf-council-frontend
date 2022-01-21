@@ -1,53 +1,39 @@
-import { ReactElement, useCallback, useState, useRef } from "react";
-import { Delegate } from "src/elf-council-delegates/delegates";
+import { ReactElement, useState, useCallback, useRef } from "react";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
-import { copyToClipboard } from "src/base/copyToClipboard";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
-import { AnnotationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import Image from "next/image";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
+import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
+import { copyToClipboard } from "src/base/browser/copyToClipboard";
 
 interface CurrentDelegateProps {
   className?: string;
-  delegate: Delegate;
+  currentDelegateAddress: string;
 }
 
-const defaultToolTipState = {
-  twitterHandle: false,
-  address: false,
-};
-
 function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { className = "", delegate } = props;
-  const [showToolTip, setshowToolTip] = useState(defaultToolTipState);
+  const { className = "", currentDelegateAddress } = props;
+  const delegate = getFeaturedDelegate(currentDelegateAddress);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
 
-  // Slightly overengineered handleCopy?
-  const handleCopy = useCallback(
-    (type: "twitterHandle" | "address") => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const handleCopyAddress = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
 
-      const nextState = { ...defaultToolTipState };
-      nextState[type] = true;
-      setshowToolTip(nextState);
-      timeoutRef.current = setTimeout(() => {
-        setshowToolTip(defaultToolTipState);
-        timeoutRef.current = null;
-      }, ONE_SECOND_IN_MILLISECONDS);
-      copyToClipboard(delegate[type]);
-    },
-    [delegate],
-  );
-
-  const handleCopyTwitterHandle = () => handleCopy("twitterHandle");
-  const handleCopyAddress = () => handleCopy("address");
+    setShowTooltip(true);
+    timeoutRef.current = setTimeout(() => {
+      setShowTooltip(false);
+      timeoutRef.current = null;
+    }, ONE_SECOND_IN_MILLISECONDS);
+    copyToClipboard(currentDelegateAddress);
+  }, [currentDelegateAddress]);
 
   return (
     <div
@@ -59,26 +45,31 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       <div className="flex flex-col">
         <div className="flex items-center mb-1 font-bold text-principalRoyalBlue">
           <WalletJazzicon
-            account={delegate.address}
+            account={currentDelegateAddress}
             size={20}
             className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
           />
-          <span>{delegate.name}</span>
+          <span>
+            {delegate?.name || formatWalletAddress(currentDelegateAddress)}
+          </span>
         </div>
         <span className="text-blueGrey">
-          <NumDelegatedVotes account={delegate.address} />
+          <NumDelegatedVotes account={currentDelegateAddress} />
         </span>
-        <span className="text-blueGrey">
-          {formatWalletAddress(delegate.address)}
-        </span>
+        <Tooltip
+          isOpen={showTooltip}
+          content="Address copied"
+          className="w-fit"
+        >
+          <button onClick={handleCopyAddress}>
+            <span className="text-blueGrey hover:text-principalRoyalBlue">
+              {formatWalletAddress(currentDelegateAddress)}
+            </span>
+          </button>
+        </Tooltip>
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2">
-        <Tooltip isOpen={showToolTip.address} content={t`Address copied`}>
-          <button onClick={handleCopyAddress}>
-            <AnnotationIcon className="h-5 text-principalRoyalBlue" />
-          </button>
-        </Tooltip>
         <div className="relative w-4 h-4">
           <Image layout="fill" src="/assets/crown.svg" alt={t`Crown icon`} />
         </div>

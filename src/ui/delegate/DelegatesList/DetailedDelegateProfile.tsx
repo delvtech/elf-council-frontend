@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { t } from "ttag";
 import { formatWalletAddress } from "src/formatWalletAddress";
@@ -11,6 +11,8 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useWeb3React } from "@web3-react/core";
 import { XIcon } from "@heroicons/react/solid";
+import { ONE_SECOND_IN_MILLISECONDS } from "src/base/time";
+import { copyToClipboard } from "src/base/browser/copyToClipboard";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
@@ -26,6 +28,22 @@ function DetailedDelegateProfile({
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  const handleCopyAddress = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setShowTooltip(true);
+    timeoutRef.current = setTimeout(() => {
+      setShowTooltip(false);
+      timeoutRef.current = null;
+    }, ONE_SECOND_IN_MILLISECONDS);
+    copyToClipboard(delegate.address);
+  }, [delegate.address]);
 
   const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
 
@@ -53,9 +71,17 @@ function DetailedDelegateProfile({
                 <H2 className="text-principalRoyalBlue">{delegate.name}</H2>
               </div>
 
-              <span className="text-blueGrey">
-                {formatWalletAddress(delegate.address)}
-              </span>
+              <Tooltip
+                isOpen={showTooltip}
+                content="Address copied"
+                className="w-fit"
+              >
+                <button onClick={handleCopyAddress}>
+                  <span className="text-blueGrey hover:text-principalRoyalBlue">
+                    {formatWalletAddress(delegate.address)}
+                  </span>
+                </button>
+              </Tooltip>
             </div>
 
             {/* Body */}

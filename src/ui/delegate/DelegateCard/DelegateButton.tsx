@@ -2,13 +2,12 @@ import { ReactElement } from "react";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { t } from "ttag";
 import classNames from "classnames";
-import { Delegate } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface DelegateButtonProps {
   account: string | null | undefined;
-  currentDelegate: Delegate | undefined;
+  currentDelegateAddress: string | undefined;
   delegateAddressInput: string;
   onDelegateClick: () => void;
   invalidAddress: boolean;
@@ -20,7 +19,7 @@ interface DelegateButtonProps {
 function DelegateButton(props: DelegateButtonProps): ReactElement {
   const {
     account,
-    currentDelegate,
+    currentDelegateAddress,
     delegateAddressInput,
     onDelegateClick,
     invalidAddress,
@@ -31,7 +30,9 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
 
   const noAccount = !account;
   const noInput = delegateAddressInput.length === 0;
-  const sameDelegate = currentDelegate?.address === delegateAddressInput;
+  const sameDelegate =
+    currentDelegateAddress?.toLowerCase() ===
+    delegateAddressInput.toLowerCase();
 
   return (
     <Tooltip

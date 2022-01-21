@@ -18,7 +18,7 @@ interface DelegateCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   vaultBalance: string;
-  currentDelegate: Delegate | undefined;
+  currentDelegateAddress: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
@@ -29,7 +29,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     account,
     signer,
     vaultBalance,
-    currentDelegate,
+    currentDelegateAddress,
     delegateAddressInput,
     setDelegateAddressInput,
     selectedDelegate,
@@ -79,13 +79,13 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
-    if (delegateAddressOnChain && isSuccess) {
+    if (isSuccess) {
       const nextDelegate = delegates.find(
         (d) => d.address === delegateAddressOnChain,
       );
 
       // Success
-      if (nextDelegate) {
+      if (nextDelegate || delegateAddressOnChain) {
         setDelegateAddressInput("");
         toggleDelegationSuccess();
       }
@@ -113,10 +113,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-0 sm:gap-7 md:gap-0 lg:gap-7 mt-2">
         {/* Current Delegate Profile */}
-        {currentDelegate ? (
+        {currentDelegateAddress ? (
           <CurrentDelegate
             className="w-full sm:w-1/2 md:w-full lg:w-1/2"
-            delegate={currentDelegate}
+            currentDelegateAddress={currentDelegateAddress}
           />
         ) : (
           <NoDelegate />
@@ -146,7 +146,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             <div className="flex justify-end items-end">
               <DelegateButton
                 account={account}
-                currentDelegate={currentDelegate}
+                currentDelegateAddress={currentDelegateAddress}
                 delegateAddressInput={delegateAddressInput}
                 onDelegateClick={onDelegateClick}
                 invalidAddress={invalidAddress}

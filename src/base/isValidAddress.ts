@@ -1,4 +1,10 @@
-const ETHEREUM_ADDRESS_REGEX = /^0x[a-fA-F0-9]{40}$/;
+import { getAddress } from "ethers/lib/utils";
+
 export function isValidAddress(address: string): boolean {
-  return ETHEREUM_ADDRESS_REGEX.test(address);
+  try {
+    const convertedAddress = getAddress(address);
+    return !!convertedAddress;
+  } catch (e) {
+    return false;
+  }
 }
