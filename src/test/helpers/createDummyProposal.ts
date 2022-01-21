@@ -1,3 +1,4 @@
+import { TransactionResponse } from "@ethersproject/providers";
 import { parseEther } from "@ethersproject/units";
 import { AddressesJsonFile } from "elf-council-tokenlist";
 import { CoreVoting__factory } from "elf-council-typechain";
@@ -6,7 +7,7 @@ import { BytesLike, ethers, Wallet } from "ethers";
 
 import timelockInterface from "src/test/interfaces/Timelock.json";
 
-const ONE_WEEK = 7;
+const ONE_WEEK_IN_DAYS = 7;
 interface ProposalOptions {
   ballot?: number;
 
@@ -21,7 +22,7 @@ export async function createDummyProposal(
   provider: MockProvider,
   addressesJson: AddressesJsonFile,
   options: ProposalOptions,
-): Promise<void> {
+): Promise<TransactionResponse | undefined> {
   // 2 is abstain
   const { quorum, ballot = 2, expired } = options;
 
@@ -60,7 +61,7 @@ export async function createDummyProposal(
   const callDatas = [calldataCoreVoting];
   const currentBlock = await provider.getBlockNumber();
   const oneDayInBlocks = await coreVotingContract.DAY_IN_BLOCKS();
-  const lastCall = oneDayInBlocks.toNumber() * ONE_WEEK + currentBlock;
+  const lastCall = oneDayInBlocks.toNumber() * ONE_WEEK_IN_DAYS + currentBlock;
 
   // record base quorum and set custom quorum if provided
   const baseQuorum = await coreVotingContract.baseQuorum();
@@ -76,25 +77,38 @@ export async function createDummyProposal(
     (await coreVotingContract.changeExtraVotingTime(1)).wait(1);
   }
 
-  const tx = await coreVotingContract.proposal(
-    votingVaults,
-    extraVaultData,
-    targets,
-    callDatas,
-    lastCall,
-    ballot,
-  );
-  await tx.wait(1);
+  const blockNumber = await provider.getBlockNumber();
+  const block = await provider.getBlock(blockNumber);
+  const { gasLimit } = block;
+  try {
+    const proposalTransaction = await coreVotingContract.proposal(
+      votingVaults,
+      extraVaultData,
+      targets,
+      callDatas,
+      lastCall,
+      ballot,
+      {
+        gasLimit,
+      },
+    );
+    await proposalTransaction.wait(1);
 
-  // reset quorum to original value
-  if (quorum) {
-    (await coreVotingContract.setDefaultQuorum(baseQuorum)).wait(1);
-  }
+    // reset quorum to original value
+    if (quorum) {
+      (await coreVotingContract.setDefaultQuorum(baseQuorum)).wait(1);
+    }
 
-  // reset lock duration and extra vote time to to original values
-  if (expired) {
-    (await coreVotingContract.setLockDuration(baseLockDuration)).wait(1);
-    (await coreVotingContract.changeExtraVotingTime(baseVoteTime)).wait(1);
+    // reset lock duration and extra vote time to to original values
+    if (expired) {
+      (await coreVotingContract.setLockDuration(baseLockDuration)).wait(1);
+      (await coreVotingContract.changeExtraVotingTime(baseVoteTime)).wait(1);
+    }
+
+    return proposalTransaction;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log("error creating proposal", error);
   }
 }
 

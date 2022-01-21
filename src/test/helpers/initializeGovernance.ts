@@ -16,12 +16,12 @@ export async function initializeGovernance(
 ): Promise<void> {
   const signers: Wallet[] = await testProvider.getWallets();
   const [owner, signer1] = signers;
-  // const accounts = signers.map((s) => s.address);
   const { elementToken, lockingVault } = governanceContracts;
 
   await giveVotingPowerToAccount(owner, elementToken, lockingVault);
   await giveVotingPowerToAccount(signer1, elementToken, lockingVault);
-  // await giveAccountsVotingTokens(owner, accounts, elementToken);
+  // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+  // await giveAccountsVotingTokens(owner, accounts.slice(0, 5), elementToken);
   // await giveTreasuryVotingTokens(owner, treasury, elementToken);
   // await allocateGrants(testProvider, elementToken, vestingVault, signers);
 }
