@@ -3,14 +3,14 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { testProvider } from "src/elf/providers/providers";
 import { DEFAULT_TEST_TIMEOUT } from "src/test/constants";
+import { renderHookWrapper } from "src/test/helpers/renderHookWrapper";
+import setupFixture from "src/test/setupFixture";
 import { createSnapshot, restoreSnapshot } from "src/test/snapshots";
 import { useDelegate } from "src/ui/delegate/useDelegate";
-import { queryClientWrapper } from "src/test/helpers/queryClientWrapper";
-import setup from "src/test/setup";
 
 describe("useDelegate", () => {
   beforeAll(async () => {
-    await setup();
+    await setupFixture();
   });
   beforeEach(async () => {
     await createSnapshot(testProvider);
@@ -25,7 +25,7 @@ describe("useDelegate", () => {
 
     //render the hook
     const { result } = renderHook(() => useDelegate(user2.address), {
-      wrapper: queryClientWrapper,
+      wrapper: renderHookWrapper,
     });
     expect(result.current).toBe(undefined);
   });
@@ -36,7 +36,7 @@ describe("useDelegate", () => {
 
     //render the hook
     const { result } = renderHook(() => useDelegate(user1.address), {
-      wrapper: queryClientWrapper,
+      wrapper: renderHookWrapper,
     });
 
     await waitFor(() => {

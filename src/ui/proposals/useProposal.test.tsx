@@ -5,15 +5,11 @@ import { addressesJson } from "src/elf-council-addresses";
 import { testProvider } from "src/elf/providers/providers";
 import { DEFAULT_TEST_TIMEOUT } from "src/test/constants";
 import { createDummyProposal } from "src/test/helpers/createDummyProposal";
-import { queryClientWrapper } from "src/test/helpers/queryClientWrapper";
-import setup from "src/test/setup";
+import { renderHookWrapper } from "src/test/helpers/renderHookWrapper";
 import { createSnapshot, restoreSnapshot } from "src/test/snapshots";
 import { useProposal } from "src/ui/proposals/useProposal";
 
 describe("useProposal", () => {
-  beforeAll(async () => {
-    await setup();
-  });
   beforeEach(async () => {
     await createSnapshot(testProvider);
   }, DEFAULT_TEST_TIMEOUT);
@@ -24,7 +20,7 @@ describe("useProposal", () => {
   test("should return undefined if no proposal", () => {
     //render the hook
     const { result } = renderHook(() => useProposal("0"), {
-      wrapper: queryClientWrapper,
+      wrapper: renderHookWrapper,
     });
     expect(result.current).toBe(undefined);
   });
@@ -37,7 +33,7 @@ describe("useProposal", () => {
     await createDummyProposal(owner, testProvider, addressesJson, {});
     //render the hook
     const { result } = renderHook(() => useProposal(user1.address), {
-      wrapper: queryClientWrapper,
+      wrapper: renderHookWrapper,
     });
 
     await waitFor(() => {
