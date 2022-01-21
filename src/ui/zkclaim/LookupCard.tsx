@@ -5,13 +5,12 @@ import H2 from "src/ui/base/H2";
 import HashString from "src/ui/base/HashString";
 import { t, jt } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Link from "next/link";
 import useFile from "src/ui/base/useFile";
 import ZKData from "src/ui/zk/ZKData";
 
 interface LookupCardProps {
   className?: string;
-  onComplete?: ([key, secret]: [string, string]) => void;
+  onComplete?: (data: ZKData) => void;
   onNextClick: () => void;
 }
 
@@ -29,7 +28,7 @@ export default function LookupCard({
 
   useEffect(() => {
     if (key && secret) {
-      onComplete?.([key, secret]);
+      onComplete?.({ privateKey: key, secret });
     }
   }, [key, secret, onComplete]);
 
@@ -38,9 +37,9 @@ export default function LookupCard({
       return;
     }
     try {
-      const data = JSON.parse(file as string) as ZKData;
-      setKey(data.privateKey);
-      setSecret(data.secret);
+      const { privateKey, secret } = JSON.parse(file as string) as ZKData;
+      setKey(privateKey);
+      setSecret(secret);
     } catch (err) {
       console.error(err);
       // TODO: show invalid file error
