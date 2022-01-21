@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -17,16 +13,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    // this is necessary for jest to transpile correctly
+    "jsx": "react",
     "rootDir": ".",
     "baseUrl": ".",
     "incremental": true
   },
-  "include": [
-    "pages",
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["pages", "src"],
+  "exclude": ["node_modules"]
 }
