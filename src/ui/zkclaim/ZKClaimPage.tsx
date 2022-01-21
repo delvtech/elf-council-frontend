@@ -1,4 +1,6 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
+// import { useQuery } from "react-query";
+// import useWorker from "src/ui/base/useWorker";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { t } from "ttag";
@@ -15,9 +17,31 @@ export default function ClaimPage(): ReactElement {
   const [data, setData] = useState<ZKData>();
   const [publicId, setPublicId] = useState<string>();
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
+  // TODO
+  // const [generateProofCallDataInWorker, { result: proofCallData, loading }] =
+  //   useWorker(a16zLibrary.generateProofCallData);
+  // TODO: fetch leafs from aws and generate merkletree
+  // const { data: merkleTree, isLoading: merkleLeafsLoading } = useQuery({
+  //   queryKey: ["zk-merkle-tree-from-leafs"],
+  //   queryFn: async () => {
+  //     const leafs = await fetch(`${awsUrl}/zk-leafs.txt`).then((res) =>
+  //       res.text(),
+  //     );
+  //     return a16zLibrary.queryMerkleTree(ethersProvider, address);
+  //   },
+  // });
 
   useEffect(() => {
-    // TODO: get public ID with data
+    // TODO
+    // if (data && merkleTree) {
+    //   generateProofCallDataInWorker(
+    //     merkleTree,
+    //     data.privateKey,
+    //     data.secret,
+    //     redeemerAddress,
+    //   );
+    // }
+
     const placeholderSuccessKey =
       "0x321718eb3db448ca864758c7cc54fd72e7a88b982a308f07b16d156fe6592e37";
     if (data?.privateKey === placeholderSuccessKey) {
@@ -34,7 +58,7 @@ export default function ClaimPage(): ReactElement {
       setPublicId(utils.id(`${data.privateKey}${data.secret}`));
       setAlreadyClaimed(true);
     }
-  }, [data]);
+  }, [data /*, merkleTree */]);
 
   const handleStep1Complete = useCallback(
     (data: ZKData): void => {
