@@ -31,8 +31,8 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
   const noAccount = !account;
   const noInput = delegateAddressInput.length === 0;
   const sameDelegate =
-    currentDelegateAddress?.toLocaleLowerCase() ===
-    delegateAddressInput.toLocaleLowerCase();
+    currentDelegateAddress?.toLowerCase() ===
+    delegateAddressInput.toLowerCase();
 
   return (
     <Tooltip
