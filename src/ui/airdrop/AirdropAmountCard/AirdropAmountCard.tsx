@@ -32,7 +32,7 @@ export function AirdropAmountCard({
       className="h-64 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]"
     >
       <div className="flex flex-col justify-center w-full h-full px-8 ">
-        <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
+        <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop deposit`}</div>
         <div className="mb-10">
           <div className="flex items-center justify-center gap-2 font-bold md:text-3xl text-principalRoyalBlue">
             <ElementIcon
