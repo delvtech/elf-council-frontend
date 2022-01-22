@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";

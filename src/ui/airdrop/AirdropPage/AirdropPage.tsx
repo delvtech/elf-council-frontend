@@ -86,16 +86,16 @@ export default function AirdropPage(): ReactElement {
           <StepItem
             stepLabel="2"
             status={delegateStatus}
-          >{t`Delegate`}</StepItem>
+          >{t`Choose delegate`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="3"
             status={claimAndDelegateStatus}
-          >{t`Claim and delegate`}</StepItem>
+          >{t`Review Deposit`}</StepItem>
         </Steps>
       </div>
 
-      <div>
+      <div className="w-full">
         {(() => {
           switch (activeStep) {
             case AirdropSteps.START_CLAIMING:
@@ -167,7 +167,7 @@ export default function AirdropPage(): ReactElement {
           }
         })()}
       </div>
-      <div className="flex flex-1 flex-col items-center mt-auto text-principalRoyalBlue">
+      <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height="40" />
       </div>

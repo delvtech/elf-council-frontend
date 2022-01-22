@@ -6,7 +6,6 @@ import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
-import { DelegatePreviewCard } from "src/ui/airdrop/DelegatePreviewCard/DelegatePreviewCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
@@ -73,7 +72,7 @@ export function ReviewClaim({
       nextStepDisabled={
         isTransactionPending || !isValidAddress(delegateAddress)
       }
-      nextStepLabel={isTransactionPending ? <Spinner /> : t`Claim & Deposit`}
+      nextStepLabel={isTransactionPending ? <Spinner /> : t`Deposit airdrop`}
       onPrevStep={onPrevStep}
     >
       <div className="flex flex-col">
@@ -84,15 +83,17 @@ export function ReviewClaim({
           </Tag>
         </div>
         <div className="flex items-center justify-center mb-4 text-3xl font-bold">
-          <span className="text-center">{t`Review Deposit`}</span>
+          <span className="text-center">{t`Review Transaction`}</span>
         </div>
         <div className="flex flex-col items-center justify-center w-full mb-10 text-base text-center">
-          <span className="w-3/4 text-justify">{t`These tokens will be claimed to your address and deposited into the
+          <span className="w-3/4 text-justify">{t`Your ELFI tokens will be deposited into the
         voting vault. You can withdraw them at any time.`}</span>
         </div>
-        <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
-          <AirdropAmountCard account={account} />
-          <DelegatePreviewCard delegateAddress={delegateAddress} />
+        <div className="flex flex-col justify-center w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
+          <AirdropAmountCard
+            account={account}
+            delegateAddress={delegateAddress}
+          />
         </div>
       </div>
     </StepCard>
