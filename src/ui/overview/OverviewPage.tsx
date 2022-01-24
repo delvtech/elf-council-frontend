@@ -18,7 +18,10 @@ export function OverviewPage(): ReactElement {
   return (
     <div className="w-full h-full space-y-6 lg:max-w-[1024px]">
       <div className="px-8 py-1">
-        <H1 className="text-center"> {t`Governance Overview`}</H1>
+        <H1 className="text-center text-principalRoyalBlue">
+          {" "}
+          {t`Governance Overview`}
+        </H1>
       </div>
       <SummaryCards />
       <div className="flex flex-col justify-center w-full space-y-6 lg:space-x-6 lg:flex-row lg:space-y-0">

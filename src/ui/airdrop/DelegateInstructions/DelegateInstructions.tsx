@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
+import H1 from "src/ui/base/H1";
 import { t } from "ttag";
 
 interface DelegateInstructionsProps {
@@ -16,21 +17,19 @@ export function DelegateInstructions({
     <StepCard
       onNextStep={onNextStep}
       onPrevStep={onPrevStep}
-      className="h-96"
+      className="md:h-[624px]"
       nextStepLabel={t`Pick Delegate`}
     >
-      <div className="flex items-center justify-center mb-4 text-3xl font-bold">
-        {t`What is delegation?`}
-      </div>
-      <div className="flex flex-col justify-center w-full mb-10 text-base">
-        <span
-          className={"w-full mb-4"}
+      <div className="flex flex-col items-center justify-center w-full h-full space-y-8">
+        <H1>{t`What is delegation?`}</H1>
+        <p
+          className={"w-2/3 mb-8"}
         >{t`In order to participate in governance you must select someone to
           use the voting power associated with your tokens.  To learn more about
-          our governance system and delegating process read here.`}</span>
-        <span className="w-full mb-2 font-bold">{t`You can select anyone to delegate to, including
+          our governance system and delegating process read here.`}</p>
+        <p className="w-2/3 mb-2 font-bold">{t`You can select anyone to delegate to, including
           yourself. You will own your tokens and you can change your delegate at
-          any time.`}</span>
+          any time.`}</p>
       </div>
     </StepCard>
   );
