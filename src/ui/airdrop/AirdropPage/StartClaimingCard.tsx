@@ -22,9 +22,9 @@ export function StartClaimingCard({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className="flex flex-col h-full min-h-full text-center text-white w-full"
+      className="flex h-[600px] flex-col min-h-full text-center text-white w-full"
     >
-      <div className="flex p-2 justify-end">
+      <div className="flex justify-end p-2">
         {!account ? (
           <ConnectWalletButton
             label={t`Connect wallet`}
@@ -38,18 +38,18 @@ export function StartClaimingCard({
           />
         )}
       </div>
-      <div className="p-12 flex flex-col items-center justify-center h-full space-y-5">
-        <div className="w-full md:w-1/2 flex flex-col items-center justify-center space-y-8">
-          <div className="text-center font-semibold tracking-wider text-base">{t`Introducing $ELFI`}</div>
+      <div className="flex flex-col items-center justify-center h-full p-12 space-y-5">
+        <div className="flex flex-col items-center justify-center w-full space-y-8 md:w-1/2">
+          <div className="text-base font-semibold tracking-wider text-center">{t`Introducing $ELFI`}</div>
           <div className="text-3xl font-bold">{t`Help contribute to the next wave of Element`}</div>
-          <div className="text-base text-center space-y-4 px-4">
+          <div className="px-4 space-y-4 text-base text-center">
             <p>
               {t`With the launch of $ELFI and the DAO, the community now leads the future of the protocol. `}{" "}
             </p>
           </div>
         </div>
 
-        <div className="flex justify-center w-full space-x-4 pt-12">
+        <div className="flex justify-center w-full pt-12 space-x-4">
           <Button
             disabled={!account}
             variant={ButtonVariant.GRADIENT}

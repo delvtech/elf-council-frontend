@@ -85,9 +85,10 @@ export function ReviewClaim({
         <div className="flex items-center justify-center mb-4 text-3xl font-bold">
           <span className="text-center">{t`Review Transaction`}</span>
         </div>
-        <div className="flex flex-col items-center justify-center w-full mb-10 text-base text-center">
-          <span className="w-3/4 text-justify">{t`Your ELFI tokens will be deposited into the
-        voting vault. You can withdraw them at any time.`}</span>
+        <div className="flex flex-col items-center justify-center w-full mb-10 text-base font-bold text-center">
+          <p>{t`Your ELFI tokens will be deposited into the
+        voting vault.`}</p>
+          <p>{t`You can withdraw them at any time.`}</p>
         </div>
         <div className="flex flex-col justify-center w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard
