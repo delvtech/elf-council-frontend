@@ -35,7 +35,7 @@ export function AirdropPreview({
   return (
     <StepCard onPrevStep={onPrevStep} onNextStep={onNextStep}>
       <div className="flex flex-col">
-        <div className="text-right">
+        <div className="mb-4 text-right md:mb-0">
           <Tag intent={Intent.SUCCESS}>
             <span className="font-bold">{t`Eligible for airdrop`}</span>
             <CheckCircleIcon height={24} className="ml-4" />
