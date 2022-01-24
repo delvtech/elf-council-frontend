@@ -7,13 +7,6 @@ interface H1Props {
 }
 export default function H1({ className, children }: H1Props): ReactElement {
   return (
-    <h1
-      className={classNames(
-        "text-principalRoyalBlue text-2xl font-bold",
-        className,
-      )}
-    >
-      {children}
-    </h1>
+    <h1 className={classNames("text-2xl font-bold", className)}>{children}</h1>
   );
 }
