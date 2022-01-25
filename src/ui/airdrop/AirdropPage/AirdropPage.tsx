@@ -139,6 +139,7 @@ export default function AirdropPage(): ReactElement {
             case AirdropSteps.CHOOSE_DELEGATE:
               return (
                 <ChooseDelegate
+                  account={account as string}
                   onChooseDelegate={setDelegateAddress}
                   onPrevStep={() =>
                     setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)
