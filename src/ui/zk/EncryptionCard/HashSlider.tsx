@@ -5,11 +5,13 @@ import React, {
   useRef,
   useState,
 } from "react";
+import generateHashSeed from "./generateHashSeed";
 import useMouseTracking from "src/ui/base/useMouseTracking";
 import { utils } from "ethers";
 import classNames from "classnames";
 import { useDebounce } from "react-use";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { t } from "ttag";
 
 export interface onChangePayload {
@@ -42,9 +44,13 @@ export default function HashSlider({
   });
   const [progress, setProgress] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [hash, setHash] = useState("");
+  const [hash, setHash] = useState<string>();
   const containerRef = useRef<HTMLDivElement>(null);
   const trackerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    generateHashSeed().then(setHash);
+  }, []);
 
   const handleSliderMouseDown = () => {
     if (!slid) {
@@ -190,57 +196,61 @@ export default function HashSlider({
           "after:shadow-[inset_0_0_4px_6px]",
         )}
       >
-        <div
-          role="slider"
-          aria-valuemin={0}
-          aria-valuemax={(containerWidth ?? 0) - (trackerWidth ?? 0)}
-          aria-valuenow={trackerLeft}
-          aria-valuetext={hash}
-          tabIndex={0}
-          ref={trackerRef}
-          className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
-          style={{
-            left: trackerCSSLeft,
-          }}
-          onMouseDown={handleSliderMouseDown}
-          onTouchStart={handleSliderTouchStart}
-        >
+        {hash ? (
           <div
-            className={classNames(
-              "right-full",
-              "mr-2",
-              "group-active:mr-4",
-              "after:bg-gradient-to-l",
-              "after:animate-fade-wave-left",
-              arrowContainerClassName,
-            )}
+            role="slider"
+            aria-valuemin={0}
+            aria-valuemax={(containerWidth ?? 0) - (trackerWidth ?? 0)}
+            aria-valuenow={trackerLeft}
+            aria-valuetext={hash}
+            tabIndex={0}
+            ref={trackerRef}
+            className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
+            style={{
+              left: trackerCSSLeft,
+            }}
+            onMouseDown={handleSliderMouseDown}
+            onTouchStart={handleSliderTouchStart}
           >
-            {[...Array(8)].map((_, i) => (
-              <RightArrow key={i} className="rotate-180 stroke-blueGrey" />
-            ))}
+            <div
+              className={classNames(
+                "right-full",
+                "mr-2",
+                "group-active:mr-4",
+                "after:bg-gradient-to-l",
+                "after:animate-fade-wave-left",
+                arrowContainerClassName,
+              )}
+            >
+              {[...Array(8)].map((_, i) => (
+                <RightArrow key={i} className="rotate-180 stroke-blueGrey" />
+              ))}
+            </div>
+            <Tooltip
+              className="absolute left-0 right-0 -top-3"
+              content={t`Keep sliding`}
+              isOpen={showTooltip}
+            >
+              <span></span>
+            </Tooltip>
+            <div
+              className={classNames(
+                "left-full",
+                "ml-2",
+                "group-active:ml-4",
+                "after:bg-gradient-to-r",
+                "after:animate-fade-wave",
+                arrowContainerClassName,
+              )}
+            >
+              {[...Array(8)].map((_, i) => (
+                <RightArrow key={i} className="stroke-blueGrey" />
+              ))}
+            </div>
           </div>
-          <Tooltip
-            className="absolute left-0 right-0 -top-3"
-            content={t`Keep sliding`}
-            isOpen={showTooltip}
-          >
-            <span></span>
-          </Tooltip>
-          <div
-            className={classNames(
-              "left-full",
-              "ml-2",
-              "group-active:ml-4",
-              "after:bg-gradient-to-r",
-              "after:animate-fade-wave",
-              arrowContainerClassName,
-            )}
-          >
-            {[...Array(8)].map((_, i) => (
-              <RightArrow key={i} className="stroke-blueGrey" />
-            ))}
-          </div>
-        </div>
+        ) : (
+          <Spinner />
+        )}
       </div>
 
       {/* progress bar */}
