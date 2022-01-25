@@ -14,7 +14,7 @@ const { treasury } = addressesJson.addresses;
 
 export function SummaryCards(): ReactElement {
   const votingPower = useVotingPowerForProtocol();
-  console.log("votingPower", votingPower);
+
   const { data: treasuryBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
     treasury,
