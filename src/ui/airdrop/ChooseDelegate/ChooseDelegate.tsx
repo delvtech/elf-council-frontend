@@ -58,14 +58,6 @@ export function ChooseDelegate({
       nextStepLabel={t`Review deposit`}
       onPrevStep={onPrevStep}
     >
-      {/* {isValidAddress(delegateAddress || "") ? (
-        <div className={classNames("text-right mb-8")}>
-          <Tag intent={Intent.SUCCESS}>
-            <span className="font-bold">{t`Delegation valid: ${delegateAddress}`}</span>
-            <CheckCircleIcon height={24} className="ml-4" />
-          </Tag>
-        </div>
-      ) : null} */}
       <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
         <H2>{t`Choose a delegate from the list below`}</H2>
         <div className="space-y-8">
