@@ -8,6 +8,8 @@ import { t } from "ttag";
 import Image from "next/image";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { RESOURCES_URL } from "src/ui/resources";
+import AnchorButton from "src/ui/base/Button/AnchorButton";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 export default function Sidebar(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +61,7 @@ export default function Sidebar(): ReactElement {
             label={t`Forum`}
           />
           <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
+          <AirdropLink link="/airdrop" />
         </div>
         <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
           <span className="text-sm">{t`Powered by`}</span>
@@ -80,6 +83,29 @@ interface SidebarLinkExternalProps {
   label: string;
 }
 
+interface AirdropLinkProps {
+  link: string;
+}
+function AirdropLink(props: AirdropLinkProps): ReactElement {
+  const { link } = props;
+
+  return (
+    <div className="text-center">
+      <Link href={link}>
+        {/* There's a big discussion about how awful the Link api is for a11y
+      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
+      best thing to do for now is just ignore this rule when an anchor tag is
+      the child of a Link since all a tags *should* have an href 🙁 */
+        /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a>
+          <AnchorButton variant={ButtonVariant.GRADIENT}>
+            {t`Claim airdrop`}
+          </AnchorButton>
+        </a>
+      </Link>
+    </div>
+  );
+}
 function SidebarLink(props: SidebarLinkProps): ReactElement {
   const { link, label, router } = props;
 
