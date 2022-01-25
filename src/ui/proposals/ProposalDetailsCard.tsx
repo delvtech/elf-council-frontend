@@ -315,7 +315,7 @@ function BalanceWithLabel(props: BalanceWithLabelProps) {
         {tooltipText && (
           <Tooltip content={tooltipText} className="ml-1">
             {tooltipHref ? (
-              <a href={tooltipHref}>
+              <a target="_blank" rel="noreferrer" href={tooltipHref}>
                 <InformationCircleIcon className="h-4" />
               </a>
             ) : (
