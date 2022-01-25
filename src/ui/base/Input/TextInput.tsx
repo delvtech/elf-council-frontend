@@ -2,6 +2,7 @@ import { ChangeEventHandler, ReactElement } from "react";
 import classNames from "classnames";
 
 interface TextInputProps {
+  containerClassName?: string;
   className?: string;
   screenReaderLabel: string;
   id: string;
@@ -17,6 +18,7 @@ interface TextInputProps {
 
 export default function TextInput({
   className,
+  containerClassName,
   screenReaderLabel,
   id,
   name,
@@ -32,7 +34,7 @@ export default function TextInput({
   const ringColor = getInputRingColor(error);
 
   return (
-    <div>
+    <div className={containerClassName}>
       <label htmlFor={id} className="sr-only">
         {screenReaderLabel}
       </label>
