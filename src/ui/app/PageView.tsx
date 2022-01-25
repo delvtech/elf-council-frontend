@@ -35,14 +35,14 @@ export default function PageView(props: PageViewProps): ReactElement {
     <Fragment>
       <div
         className={classNames(
-          "flex w-full h-full bg-appBackgroundLight justify-between overflow-hidden",
+          "flex w-full h-full bg-appBackgroundLight justify-between",
           {
             "md:pl-60": showSidebar,
           },
         )}
       >
         {showSidebar ? <Sidebar /> : null}
-        <div className="w-full h-full p-6 flex flex-col flex-1 overflow-auto items-center">
+        <div className="w-full h-full p-6 flex flex-col flex-1 items-center">
           {showHeader ? <Header /> : null}
 
           <div
