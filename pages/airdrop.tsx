@@ -4,10 +4,7 @@ import PageView from "src/ui/app/PageView";
 
 export default function Proposals(): ReactElement {
   return (
-    <PageView
-      showSidebar={false}
-      childrenContainerClassName="flex justify-center"
-    >
+    <PageView showSidebar childrenContainerClassName="flex justify-center">
       <AirdropPage />
     </PageView>
   );
