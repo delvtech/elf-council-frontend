@@ -36,6 +36,9 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { queryClient } from "src/elf/queryClient";
+import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain";
+import { coreVotingContract } from "src/elf/contracts";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -83,7 +86,18 @@ export function ProposalDetailsCard(
     onTransactionSubmitted: () => {
       setIsVoteTxPending(true);
     },
-    onTransactionMined: () => setIsVoteTxPending(false),
+    onTransactionMined: () => {
+      setIsVoteTxPending(false);
+
+      // Refetch the voting power for this proposal
+      queryClient.invalidateQueries(
+        makeSmartContractReadCallQueryKey(
+          coreVotingContract.address,
+          "getProposalVotingPower",
+          [proposal?.proposalId],
+        ),
+      );
+    },
   });
 
   const handleVote = useCallback(() => {
