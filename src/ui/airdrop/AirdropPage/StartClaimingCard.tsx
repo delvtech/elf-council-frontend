@@ -2,17 +2,35 @@ import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import {
   ConnectWalletButton,
   WalletProfileButton,
 } from "src/ui/wallet/ConnectWalletButton";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 interface StartClaimingCardProps {
   account: string | null | undefined;
   walletConnectionActive: boolean | undefined;
   onNextStep: () => void;
 }
+
+const elementIconInSubtitle = (
+  <ElementIcon
+    key="element-icon-in-subtitle"
+    bgColorClassName="bg-paleLily"
+    className="inline-block mx-1"
+    size={IconSize.MEDIUM}
+  />
+);
+const elementIconInBodyText = (
+  <ElementIcon
+    key="element-icon-in-body-text"
+    bgColorClassName="bg-paleLily"
+    className="inline-block ml-1 mr-1 -mb-1.5"
+    size={IconSize.MEDIUM}
+  />
+);
 
 export function StartClaimingCard({
   walletConnectionActive,
@@ -22,7 +40,7 @@ export function StartClaimingCard({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className="flex h-[600px] flex-col min-h-full text-center text-white w-full"
+      className="flex flex-col w-full h-full min-h-full text-center text-white"
     >
       <div className="flex justify-end p-2">
         {!account ? (
@@ -40,11 +58,18 @@ export function StartClaimingCard({
       </div>
       <div className="flex flex-col items-center justify-center h-full p-12 space-y-5">
         <div className="flex flex-col items-center justify-center w-full space-y-8 md:w-1/2">
-          <div className="text-base font-semibold tracking-wider text-center">{t`Introducing $ELFI`}</div>
+          <span className="flex items-center text-base font-semibold tracking-wider text-center">{jt`Introducing ${elementIconInSubtitle} ELFI`}</span>
           <div className="text-3xl font-bold">{t`Help contribute to the next wave of Element`}</div>
-          <div className="px-4 space-y-4 text-base text-center">
-            <p>
-              {t`With the launch of $ELFI and the DAO, the community now leads the future of the protocol. `}{" "}
+          <div className="flex flex-col px-4 space-y-8 text-base text-justify">
+            <p className="inline">
+              {jt`With the launch of the ${elementIconInBodyText}ELFI token and
+              the Element DAO, the community now leads the future of the
+              protocol.`}
+            </p>
+            <p className="inline">
+              {jt`${elementIconInBodyText}ELFI token depositors can choose to
+              directly participate in governance or delegate their votes to
+              another member.`}
             </p>
           </div>
         </div>
