@@ -138,7 +138,7 @@ export function ProposalDetailsCard(
       }
       className={classNames(
         className,
-        "flex flex-col items-start h-full w-80 p-6 justify-center",
+        "sticky top-10 flex flex-col items-start w-80 p-6 justify-center",
       )}
     >
       <h1 className="text-2xl font-bold text-white">

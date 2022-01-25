@@ -111,7 +111,7 @@ export default function ProposalsPage({
           />
         </div>
       </div>
-      <div className="pb-20">
+      <div>
         <ProposalDetailsCard
           className="hidden lg:flex"
           account={account}
