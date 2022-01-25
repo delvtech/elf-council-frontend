@@ -1,7 +1,6 @@
 import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
-import { InformationCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { Signer } from "ethers";
@@ -9,6 +8,7 @@ import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
 import { t } from "ttag";
 
+import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
@@ -17,10 +17,8 @@ import { VotingPower } from "src/elf/proposals/VotingPower";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
@@ -292,40 +290,6 @@ function truncateText(text: string, characterLimit = CHARACTER_LIMIT) {
   }
 
   return `${text.slice(0, CHARACTER_LIMIT)}...`;
-}
-
-interface BalanceWithLabelProps {
-  className?: string;
-  balance: string;
-  label: string;
-  tooltipText?: string;
-  tooltipHref?: string;
-}
-
-function BalanceWithLabel(props: BalanceWithLabelProps) {
-  const { className, balance, label, tooltipHref, tooltipText } = props;
-  return (
-    <div className={classNames(className, "text-white")}>
-      <div className="flex items-center">
-        <div className="text-2xl font-extralight">{balance}</div>
-        <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
-      </div>
-      <div className="flex items-center text-lg font-light">
-        {label}
-        {tooltipText && (
-          <Tooltip content={tooltipText} className="ml-1">
-            {tooltipHref ? (
-              <a target="_blank" rel="noreferrer" href={tooltipHref}>
-                <InformationCircleIcon className="h-4" />
-              </a>
-            ) : (
-              <InformationCircleIcon className="h-4" />
-            )}
-          </Tooltip>
-        )}
-      </div>
-    </div>
-  );
 }
 
 function getVoteCount(votingPower: VotingPower | undefined): string {
