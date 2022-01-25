@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { t } from "ttag";
@@ -36,10 +36,13 @@ export default function ClaimPage(): ReactElement {
     }
   }, [data]);
 
-  const handleStep1Complete = ([privateKey, secret]: string[]): void => {
-    setData({ privateKey, secret });
-    completeStep(1);
-  };
+  const handleStep1Complete = useCallback(
+    (data: ZKData): void => {
+      setData(data);
+      completeStep(1);
+    },
+    [completeStep],
+  );
 
   // TODO: transition styles
   const getStepClassName = (step: number) =>
