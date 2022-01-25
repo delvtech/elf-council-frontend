@@ -60,7 +60,7 @@ export function ChooseDelegate({
     >
       <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
         <H2>{t`Choose a delegate from the list below`}</H2>
-        <div className="space-y-8">
+        <div className="w-full space-y-8">
           <div className="pr-1 overflow-auto shadow h-72 rounded-xl">
             {/* List of delegates */}
             <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
