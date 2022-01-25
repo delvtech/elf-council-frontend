@@ -61,7 +61,7 @@ export default function Sidebar(): ReactElement {
           <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
         </div>
         <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
-          <span className="text-sm">Powered by</span>
+          <span className="text-sm">{t`Powered by`}</span>
           <ElementLogo height={"40"} />
         </div>
       </div>
