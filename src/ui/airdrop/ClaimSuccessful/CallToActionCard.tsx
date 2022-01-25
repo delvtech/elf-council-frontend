@@ -10,10 +10,14 @@ export function CallToActionCard({
   icon,
 }: CallToActionCardProps): ReactElement {
   return (
-    <Card interactive variant={CardVariant.HACKER_SKY} className="w-full">
+    <Card
+      interactive
+      variant={CardVariant.HACKER_SKY}
+      className="w-full h-full"
+    >
       <div className="flex flex-col">
         <div className="flex-1">
-          <div className="text-principalRoyalBlue text-lg font-bold mb-2">
+          <div className="mb-2 text-lg font-bold text-principalRoyalBlue">
             {label}
           </div>
           <div className="flex flex-col items-center">{icon}</div>
