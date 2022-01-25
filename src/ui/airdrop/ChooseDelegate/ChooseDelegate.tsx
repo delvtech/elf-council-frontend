@@ -4,7 +4,7 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import H1 from "src/ui/base/H1";
+import H2 from "src/ui/base/H2";
 import TextInput from "src/ui/base/Input/TextInput";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { t } from "ttag";
@@ -53,10 +53,10 @@ export function ChooseDelegate({
       nextStepLabel={t`Review deposit`}
       onPrevStep={onPrevStep}
     >
-      <div className="flex flex-col items-center justify-center w-full h-full space-y-8">
-        <H1>{t`Choose a delegate`}</H1>
-        <div className="space-y-4">
-          <div className="pr-1 overflow-auto shadow h-80 rounded-xl">
+      <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
+        <H2>{t`Choose a delegate`}</H2>
+        <div className="space-y-8">
+          <div className="pr-1 overflow-auto shadow h-72 rounded-xl">
             {/* List of delegates */}
             <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
               {delegates.map((delegate, idx) => {
@@ -77,22 +77,29 @@ export function ChooseDelegate({
               })}
             </ul>
           </div>
-          <div className="flex flex-col">
-            <span>{t`Or type in an address of your choice`}</span>
-            <div className="flex space-x-4">
-              <Button
-                variant={ButtonVariant.OUTLINE_WHITE}
-              >{t`Self-delegate`}</Button>
-              <TextInput
-                screenReaderLabel={t`Enter delegate address`}
-                id={"delegate-address"}
-                name={t`Enter delegate address`}
-                placeholder={t`Enter delegate address`}
-                containerClassName="flex-1"
-                className="flex-1 h-12 mb-4 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
-                value={delegateAddress}
-                onChange={(event) => setDelegateAddress(event.target.value)}
-              />
+          <div className="flex">
+            <div className="flex flex-col flex-1 space-y-2">
+              <H2 className="text-center">{t`or`}</H2>
+              <div className="flex justify-center space-x-4">
+                <Button
+                  variant={ButtonVariant.OUTLINE_WHITE}
+                >{t`Self-delegate`}</Button>
+              </div>
+            </div>
+            <div className="flex flex-col flex-1 space-y-2">
+              <H2 className="text-center">{t`or manually enter an address`}</H2>
+              <div className="flex space-x-4 ">
+                <TextInput
+                  screenReaderLabel={t`Enter delegate address`}
+                  id={"delegate-address"}
+                  name={t`Enter delegate address`}
+                  placeholder={t`Enter delegate address`}
+                  containerClassName="flex-1"
+                  className="flex-1 h-12 mb-4 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
+                  value={delegateAddress}
+                  onChange={(event) => setDelegateAddress(event.target.value)}
+                />
+              </div>
             </div>
           </div>
         </div>
