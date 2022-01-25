@@ -53,7 +53,7 @@ export default function Sidebar(): ReactElement {
         <div className="w-full mt-8 space-y-6">
           <SidebarLink link="/" label={t`Overview`} router={router} />
           <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
-          <SidebarLink link="/delegates" label={t`Delegate`} router={router} />
+          <SidebarLink link="/delegate" label={t`Delegate`} router={router} />
           <SidebarLinkExternal
             link="https://forum.element.fi"
             label={t`Forum`}
