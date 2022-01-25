@@ -23,7 +23,7 @@ export function AirdropAmountCard({
       className="h-64 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]"
     >
       <div className="flex flex-col items-center justify-center w-full h-full p-6">
-        <div className="mb-3 text-lg font-bold text-principalRoyalBlue text-opacity-60">{t`You will receive`}</div>
+        <div className="mb-3 text-lg font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
         <div className="flex justify-center gap-2 text-5xl font-bold text-center text-principalRoyalBlue">
           <ElementIcon
             bgColorClassName="bg-paleLily"

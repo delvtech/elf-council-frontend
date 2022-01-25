@@ -1,4 +1,3 @@
-import { CheckCircleIcon } from "@heroicons/react/solid";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
@@ -8,8 +7,8 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
+import H1 from "src/ui/base/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
-import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 
 interface ReviewClaimProps {
@@ -76,19 +75,9 @@ export function ReviewClaim({
       onPrevStep={onPrevStep}
     >
       <div className="flex flex-col">
-        <div className="text-right">
-          <Tag intent={Intent.SUCCESS}>
-            <span className="font-bold">{t`Delegation valid`}</span>
-            <CheckCircleIcon height={24} className="ml-4" />
-          </Tag>
-        </div>
-        <div className="flex items-center justify-center mb-4 text-3xl font-bold">
-          <span className="text-center">{t`Review Transaction`}</span>
-        </div>
+        <H1 className="mt-8 mb-4 text-center">{t`Review Transaction`}</H1>
         <div className="flex flex-col items-center justify-center w-full mb-10 text-base font-bold text-center">
-          <p>{t`Your ELFI tokens will be deposited into the
-        voting vault.`}</p>
-          <p>{t`You can withdraw them at any time.`}</p>
+          <p>{t`Your ELFI tokens will be deposited into the voting vault.`}</p>
         </div>
         <div className="flex flex-col justify-center w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard

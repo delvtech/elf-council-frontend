@@ -81,7 +81,7 @@ export default function AirdropPage(): ReactElement {
           <StepItem
             stepLabel="1"
             status={connectWalletStatus}
-          >{t`Connect wallet`}</StepItem>
+          >{t`View airdrop`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="2"
@@ -91,7 +91,7 @@ export default function AirdropPage(): ReactElement {
           <StepItem
             stepLabel="3"
             status={claimAndDelegateStatus}
-          >{t`Review Deposit`}</StepItem>
+          >{t`Review deposit`}</StepItem>
         </Steps>
       </div>
 
@@ -139,6 +139,7 @@ export default function AirdropPage(): ReactElement {
             case AirdropSteps.CHOOSE_DELEGATE:
               return (
                 <ChooseDelegate
+                  account={account as string}
                   onChooseDelegate={setDelegateAddress}
                   onPrevStep={() =>
                     setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)

@@ -27,7 +27,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           className={classNames(
             "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
             {
-              "!bg-paleLily": selected,
+              "!bg-votingGreen": selected,
             },
           )}
         >
@@ -44,13 +44,13 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               />
               <span className="truncate">{delegate.name}</span>
             </div>
-            <span className="text-blueGrey">
+            <span className={selected ? "text-gray-400" : "text-blueGrey"}>
               <NumDelegatedVotes account={delegate.address} />
             </span>
           </div>
 
           {/* Element member verified delegate icon */}
-          <div className="flex relative w-4 h-4">
+          <div className="relative flex w-4 h-4">
             <Image
               layout="fill"
               src="/assets/crown.svg"

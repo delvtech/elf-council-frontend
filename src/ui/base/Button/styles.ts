@@ -149,11 +149,11 @@ function getTextColor(variant: ButtonVariant): string {
 
 function getBorder(variant: ButtonVariant) {
   if (variant === ButtonVariant.OUTLINE_WHITE) {
-    classNames("border border-white");
+    return "border border-white";
   }
 
   if (variant === ButtonVariant.OUTLINE_BLUE) {
-    classNames("border border-brandDarkBlue-dark");
+    return "border border-brandDarkBlue-dark";
   }
 
   return null;

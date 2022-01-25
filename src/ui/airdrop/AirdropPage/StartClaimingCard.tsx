@@ -54,7 +54,7 @@ export function StartClaimingCard({
             disabled={!account}
             variant={ButtonVariant.GRADIENT}
             onClick={onNextStep}
-          >{t`Start claiming`}</Button>
+          >{t`Check for airdrop`}</Button>
         </div>
       </div>
     </Card>
