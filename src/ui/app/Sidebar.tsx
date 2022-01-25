@@ -24,7 +24,7 @@ export default function Sidebar(): ReactElement {
   return (
     <Fragment>
       <button
-        className="fixed top-0 left-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
+        className="z-20 fixed top-0 left-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
         onClick={onOpen}
       >
         <MenuAlt4Icon className="w-6 h-6" />
