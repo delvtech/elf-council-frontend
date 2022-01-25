@@ -1,4 +1,3 @@
-import { CheckCircleIcon } from "@heroicons/react/solid";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
@@ -10,7 +9,6 @@ import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import H1 from "src/ui/base/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
-import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import { t } from "ttag";
 
 interface ReviewClaimProps {
@@ -79,9 +77,7 @@ export function ReviewClaim({
       <div className="flex flex-col">
         <H1 className="mt-8 mb-4 text-center">{t`Review Transaction`}</H1>
         <div className="flex flex-col items-center justify-center w-full mb-10 text-base font-bold text-center">
-          <p>{t`Your ELFI tokens will be deposited into the
-        voting vault.`}</p>
-          <p>{t`You can withdraw them at any time.`}</p>
+          <p>{t`Your ELFI tokens will be deposited into the voting vault.`}</p>
         </div>
         <div className="flex flex-col justify-center w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard
