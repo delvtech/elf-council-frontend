@@ -57,10 +57,10 @@ export function StartClaimingCard({
         )}
       </div>
       <div className="flex flex-col items-center justify-center h-full p-12 space-y-5">
-        <div className="flex flex-col items-center justify-center w-full space-y-8 md:w-1/2">
+        <div className="flex flex-col items-center justify-center w-full space-y-8 md:w-7/12">
           <span className="flex items-center text-base font-semibold tracking-wider text-center">{jt`Introducing ${elementIconInSubtitle} ELFI`}</span>
           <div className="text-3xl font-bold">{t`Help contribute to the next wave of Element`}</div>
-          <div className="flex flex-col px-4 space-y-8 text-base text-justify">
+          <div className="flex flex-col px-2 space-y-8 text-base text-justify">
             <p className="inline">
               {jt`With the launch of the ${elementIconInBodyText}ELFI token and
               the Element DAO, the community now leads the future of the
