@@ -28,9 +28,9 @@ export function SummaryCards(): ReactElement {
 
   return (
     <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
-      <SummaryCard title={t`Annual protocol revenue`} balance={"$180,000"} />
+      <SummaryCard title={t`Annual Protocol Revenue`} balance={"$180,000"} />
       <SummaryCard
-        title={t`Total treasury`}
+        title={t`Total Treasury`}
         balance={`${formattedTreasuryBalance} ELFI`}
       />
       <SummaryCard

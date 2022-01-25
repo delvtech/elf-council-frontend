@@ -53,14 +53,14 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           balance={balance}
           tooltipText={portfolioTooltipText}
           tooltipHref={RESOURCES_URL}
-          label={t`Wallet balance`}
+          label={t`Wallet Balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
           tooltipHref={RESOURCES_URL}
-          label={t`Eligible voting balance`}
+          label={t`Eligible Voting Balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
@@ -73,7 +73,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
             <BalanceWithLabel
               balance={unclaimedAirdrop}
-              label={t`Unclaimed airdrop`}
+              label={t`Unclaimed Airdrop`}
             />
             <LinkButton
               link="/airdrop"
