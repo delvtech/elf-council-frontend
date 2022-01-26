@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@alch/alchemy-web3": "^1.1.9",
+    "@alch/alchemy-web3": "^1.1.10",
     "@blueprintjs/popover2": "^0.12.9",
     "@elementfi/react-query-typechain": "^1.0.5",
     "@ethersproject/providers": "^5.5.2",
@@ -55,7 +55,7 @@
     "react-query": "^3.34.8",
     "react-use": "^17.3.2",
     "storybook-color-picker": "^2.3.0",
-    "tailwindcss": "^3.0.15",
+    "tailwindcss": "^3.0.17",
     "tailwindcss-classnames": "^3.0.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "ttag": "^1.7.24"
@@ -63,7 +63,7 @@
   "devDependencies": {
     "@babel/core": "^7.16.10",
     "@storybook/addon-actions": "^6.4.14",
-    "@storybook/addon-essentials": "^6.4.13",
+    "@storybook/addon-essentials": "^6.4.14",
     "@storybook/addon-links": "^6.4.14",
     "@storybook/react": "^6.4.14",
     "@testing-library/jest-dom": "^5.16.1",
@@ -94,7 +94,7 @@
     "stylelint": "^14.2.0",
     "stylelint-config-recommended": "^6.0.0",
     "ts-jest": "^26.5.6",
-    "ts-morph": "^13.0.2",
+    "ts-morph": "^13.0.3",
     "typescript": "^4.5.5"
   },
   "lint-staged": {
