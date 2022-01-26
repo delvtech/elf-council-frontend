@@ -60,7 +60,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
           tooltipHref={RESOURCES_URL}
-          label={t`Eligible Voting Balance`}
+          label={t`Voting Vault Balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
