@@ -68,17 +68,17 @@ export function ProposalListItem({
           />
           <div
             className={classNames(
-              "h-full items-start justify-start flex space-x-4 text-principalRoyalBlue",
+              "h-full items-center justify-between flex space-x-4 text-principalRoyalBlue",
             )}
           >
-            <span className="text-sm">{t`voting ends ${votingPeriodEndsDate}`}</span>
+            <div className="text-sm">{t`voting ends ${votingPeriodEndsDate}`}</div>
+            <div className="flex items-center space-x-4">
+              <div className="pb-0.5">
+                <BallotIcon account={account} proposalId={proposalId} />
+              </div>
+              <ProposalStatusIcon signer={signer} proposal={proposal} />
+            </div>
           </div>
-        </div>
-        <div className="flex items-center justify-end w-full h-full space-x-4">
-          <div className="pb-0.5">
-            <BallotIcon account={account} proposalId={proposalId} />
-          </div>
-          <ProposalStatusIcon signer={signer} proposal={proposal} />
         </div>
       </div>
     </Card>
