@@ -11,6 +11,8 @@ import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForPro
 
 import { getProposalStatus, ProposalStatus } from "./ProposalStatus";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
+import classNames from "classnames";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 const StatusLabels: Record<ProposalStatus, string> = {
   [ProposalStatus.IN_PROGRESS]: t`In progress`,
@@ -55,7 +57,7 @@ export function ProposalStatusTag({
 
   return (
     <Tag intent={StatusTagIntents[status]}>
-      <div className="flex items-center space-x-8">
+      <div className={classNames("flex items-center space-x-8")}>
         <svg
           className="-ml-0.5 mr-1.5 h-3 w-3"
           fill="currentColor"
@@ -68,3 +70,48 @@ export function ProposalStatusTag({
     </Tag>
   );
 }
+
+export function ProposalStatusCircle({
+  proposal,
+}: ProposalStatusTagProps): ReactElement | null {
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
+  const { proposalId, quorum } = proposal;
+  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const isExecuted = useProposalExecuted(proposalId);
+  const votingPower = useVotingPowerForProposal(proposalId);
+
+  const status = getProposalStatus(
+    isVotingOpen,
+    isExecuted,
+    quorum,
+    votingPower,
+  );
+
+  if (!status) {
+    return null;
+  }
+
+  return (
+    <Tooltip content={StatusLabels[status]}>
+      <div
+        className={classNames(
+          "flex items-center space-x-8",
+          intentTextColors[StatusTagIntents[status]],
+        )}
+      >
+        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 8 8">
+          <circle cx={4} cy={4} r={3} />
+        </svg>
+      </div>
+    </Tooltip>
+  );
+}
+
+const intentTextColors: Record<Intent, string> = {
+  [Intent.WARNING]: classNames("text-orange"),
+  [Intent.PRIMARY]: classNames("text-principalRoyalBlue"),
+  [Intent.PRIMARY_SOLID]: classNames("text-white"),
+  [Intent.SUCCESS]: classNames("text-green-500"),
+  [Intent.ERROR]: classNames("text-red-500"),
+  [Intent.BLANK]: classNames("text-principalRoyalBlue"),
+};
