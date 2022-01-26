@@ -11,6 +11,7 @@ import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import Card, { CardVariant } from "src/ui/base/Card/Card";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import H2 from "src/ui/base/H2";
 import { useDeposits } from "src/ui/contracts/useDeposits";
@@ -126,7 +127,10 @@ export default function DelegatePage(): ReactElement {
           />
 
           {/* Delegate Card */}
-          <div className="px-6 mt-auto py-7 rounded-xl bg-principalRoyalBlue">
+          <Card
+            variant={CardVariant.BLUE}
+            className="px-6 mt-auto py-7 rounded-xl"
+          >
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`Delegate`}</H2>
             <DelegateCard
               account={account}
@@ -137,7 +141,7 @@ export default function DelegatePage(): ReactElement {
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
             />
-          </div>
+          </Card>
         </div>
       </div>
     </div>
