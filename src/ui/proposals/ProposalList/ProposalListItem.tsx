@@ -1,6 +1,11 @@
 import React, { ReactElement, useCallback } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
+import {
+  ThumbDownIcon,
+  ThumbUpIcon,
+  XCircleIcon,
+} from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { formatEther } from "ethers/lib/utils";
@@ -10,21 +15,11 @@ import { formatAbbreviatedDate } from "src/base/dates";
 import { MS_PER_S, SECONDS_PER_BLOCK } from "src/base/time";
 import Card from "src/ui/base/Card/Card";
 import CardHeader from "src/ui/base/Card/CardHeader";
-import { Intent, Tag } from "src/ui/base/Tag/Tag";
-import {
-  ProposalStatusCircle,
-  ProposalStatusTag,
-} from "src/ui/proposals/ProposalList/ProposalStatusTag";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
-import {
-  CheckCircleIcon,
-  ThumbDownIcon,
-  ThumbUpIcon,
-  XCircleIcon,
-} from "@heroicons/react/solid";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -43,7 +38,6 @@ export function ProposalListItem({
 }: ProposalListItemProps): ReactElement {
   const { proposalId, snapshotId } = proposal;
   const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
-  const ballotSymbol = useBallotSymbol(account, proposalId);
 
   const votingPeriodEndsTimestampMS =
     proposal.createdTimestamp * MS_PER_S +
@@ -81,43 +75,24 @@ export function ProposalListItem({
           </div>
         </div>
         <div className="flex items-center justify-end w-full h-full space-x-4">
-          <div className="pb-0.5">{ballotSymbol}</div>
-          <ProposalStatusCircle signer={signer} proposal={proposal} />
+          <div className="pb-0.5">
+            <BallotIcon account={account} proposalId={proposalId} />
+          </div>
+          <ProposalStatusIcon signer={signer} proposal={proposal} />
         </div>
       </div>
     </Card>
   );
 }
 
-function useBallotLabel(
-  account: string | null | undefined,
-  proposalId: string,
-): string | undefined {
-  const { data: ballot } = useBallot(account, proposalId);
-  if (ballot === undefined) {
-    return;
-  }
-
-  const [votingPowerBN, castBallot] = ballot;
-  const votingPower = Number(formatEther(votingPowerBN || 0));
-
-  if (votingPower && castBallot === Ballot.YES) {
-    return t`Voted YES`;
-  }
-
-  if (votingPower && castBallot === Ballot.NO) {
-    return t`Voted NO`;
-  }
-
-  if (votingPower && castBallot === Ballot.MAYBE) {
-    return t`Voted ABSTAIN`;
-  }
+interface BallotIconProps {
+  account: string | null | undefined;
+  proposalId: string;
 }
-
-function useBallotSymbol(
-  account: string | null | undefined,
-  proposalId: string,
-): ReactElement | null {
+function BallotIcon({
+  account,
+  proposalId,
+}: BallotIconProps): ReactElement | null {
   const { data: ballot } = useBallot(account, proposalId);
   if (ballot === undefined) {
     return null;
@@ -148,7 +123,7 @@ function useBallotSymbol(
 
   if (votingPower && castBallot === Ballot.MAYBE) {
     return (
-      <div className="w-4 h-4 text-gray-500">
+      <div className="w-4 h-4 text-principalRoyalBlue">
         <Tooltip content={t`Voted abstain`}>
           <XCircleIcon height="18" />
         </Tooltip>

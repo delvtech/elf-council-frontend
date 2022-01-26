@@ -5,7 +5,7 @@ import { Proposal } from "elf-council-proposals";
 import { t } from "ttag";
 
 import { getIsVotingOpen } from "src/elf-council-proposals";
-import { Intent, Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 
@@ -30,50 +30,14 @@ const StatusTagIntents: Record<ProposalStatus, Intent> = {
   [ProposalStatus.FAILED]: Intent.ERROR,
 };
 
-interface ProposalStatusTagProps {
+interface ProposalStatusIconProps {
   signer: Signer | undefined;
   proposal: Proposal;
 }
 
-export function ProposalStatusTag({
+export function ProposalStatusIcon({
   proposal,
-}: ProposalStatusTagProps): ReactElement | null {
-  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
-  const { proposalId, quorum } = proposal;
-  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
-  const isExecuted = useProposalExecuted(proposalId);
-  const votingPower = useVotingPowerForProposal(proposalId);
-
-  const status = getProposalStatus(
-    isVotingOpen,
-    isExecuted,
-    quorum,
-    votingPower,
-  );
-
-  if (!status) {
-    return null;
-  }
-
-  return (
-    <Tag intent={StatusTagIntents[status]}>
-      <div className={classNames("flex items-center space-x-8")}>
-        <svg
-          className="-ml-0.5 mr-1.5 h-3 w-3"
-          fill="currentColor"
-          viewBox="0 0 8 8"
-        >
-          <circle cx={4} cy={4} r={3} />
-        </svg>
-        {StatusLabels[status]}
-      </div>
-    </Tag>
-  );
-}
-
-export function ProposalStatusCircle({
-  proposal,
-}: ProposalStatusTagProps): ReactElement | null {
+}: ProposalStatusIconProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const { proposalId, quorum } = proposal;
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
