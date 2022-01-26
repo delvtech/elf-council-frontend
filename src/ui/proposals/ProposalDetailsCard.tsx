@@ -217,6 +217,7 @@ export function ProposalDetailsCard(
         )}
         <div className="flex justify-between w-full">
           <VotingBallotButton
+            proposal={proposal}
             currentBallot={newBallot}
             onSelectBallot={setCurrentBallot}
           />
