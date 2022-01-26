@@ -134,7 +134,7 @@ export function ProposalDetailsCard(
         className,
         isSmallScreen && "!rounded-none",
         !isOpen && "translate-x-full",
-        "z-10 top-0 right-0 fixed md:static flex flex-col items-start w-full md:w-80 p-6 justify-center h-full md:h-[85vh]",
+        "z-10 top-0 right-0 fixed md:static flex flex-col items-start w-full md:w-80 p-6 justify-center h-full md:min-h-[85vh]",
       )}
     >
       <button
@@ -149,7 +149,7 @@ export function ProposalDetailsCard(
 
       <p className="font-light text-white">{snapshotProposal?.title}</p>
 
-      <p className="my-3 overflow-hidden text-sm font-light text-white">
+      <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
         {t`Proposal Description:`}
       </p>
 
@@ -157,7 +157,7 @@ export function ProposalDetailsCard(
         {truncateText(snapshotProposal?.body || "")}
       </p>
 
-      <p className="my-3 overflow-hidden">
+      <p className="my-3 overflow-hidden shrink-0">
         <a
           target="_blank"
           href={snapshotProposal?.link || ""}
@@ -169,7 +169,7 @@ export function ProposalDetailsCard(
         </a>
       </p>
 
-      <p className="my-3 overflow-hidden">
+      <p className="my-3 overflow-hidden shrink-0">
         <a
           target="_blank"
           href="https://forum.element.fi"
