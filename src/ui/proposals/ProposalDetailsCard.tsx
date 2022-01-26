@@ -35,7 +35,6 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -61,8 +60,6 @@ export function ProposalDetailsCard(
     isOpen,
     onClose,
   } = props;
-
-  const isSmallScreen = useIsTailwindSmallScreen();
 
   const snapshotProposal = useSnapshotProposal(
     proposal?.snapshotId,
@@ -131,103 +128,106 @@ export function ProposalDetailsCard(
     <GradientCard
       className={classNames(
         className,
-        isSmallScreen && "!rounded-none",
         !isOpen && "translate-x-full",
-        "z-10 top-0 right-0 fixed md:static flex flex-col items-start w-full md:w-80 p-6 justify-center h-full md:min-h-[85vh]",
+        "z-10 top-0 right-0 fixed lg:static flex flex-1 flex-col items-start w-full lg:max-w-[36rem] overflow-scroll h-full min-h-[85vh]",
       )}
     >
-      <button
-        onClick={onClose}
-        className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
-      >
-        <XIcon className="w-6 h-6 text-white" />
-      </button>
-      <h1 className="text-2xl font-bold text-white">
-        {t`Proposal ${proposal.proposalId}`}
-      </h1>
-
-      <p className="font-light text-white">{snapshotProposal?.title}</p>
-
-      <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
-        {t`Proposal Description:`}
-      </p>
-
-      <p className="overflow-hidden text-sm font-light text-white text-ellipsis">
-        {truncateText(snapshotProposal?.body || "")}
-      </p>
-
-      <p className="my-3 overflow-hidden shrink-0">
-        <a
-          target="_blank"
-          href={snapshotProposal?.link || ""}
-          className="flex items-center text-sm font-light text-white"
-          rel="noreferrer"
+      <div className="flex flex-col flex-1 p-6">
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer lg:hidden hover:shadow"
         >
-          {t`View proposal`}
-          <ExternalLinkIcon className="h-4 ml-2" />
-        </a>
-      </p>
+          <XIcon className="w-6 h-6 text-white" />
+        </button>
+        <h1 className="text-2xl font-bold text-white shrink-0">
+          {t`Proposal ${proposal.proposalId}`}
+        </h1>
 
-      <p className="my-3 overflow-hidden shrink-0">
-        <a
-          target="_blank"
-          href="https://forum.element.fi"
-          className="flex items-center text-sm font-light text-white"
-          rel="noreferrer"
-        >
-          {t`View Discussion`}
-          <ExternalLinkIcon className="h-4 ml-2" />
-        </a>
-      </p>
+        <p className="font-light text-white shrink-0">
+          {snapshotProposal?.title}
+        </p>
 
-      {isExecuted ? (
-        <Tag className="w-full" intent={Intent.SUCCESS}>
-          <span>{t`Executed`}</span>
-          <CheckCircleIcon className="ml-2" height="24" />
-        </Tag>
-      ) : (
-        <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
-      )}
-      <BalanceWithLabel
-        className="w-full mt-4"
-        balance={formattedAccountVotingPower}
-        tooltipText={votingPowerTooltipText}
-        tooltipHref={RESOURCES_URL}
-        label={t`Voting Power`}
-      />
+        <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
+          {t`Proposal Description:`}
+        </p>
 
-      <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-          <div className="flex items-center justify-end w-full text-white">
-            <span>{getBallotLabel(ballotChoice)}</span>
-            <CheckCircleIcon className="ml-2" height={18} />
-          </div>
-        )}
-        {voteTransacation && (
+        <p className="overflow-hidden text-sm font-light text-white shrink-0 text-ellipsis">
+          {truncateText(snapshotProposal?.body || "")}
+        </p>
+
+        <p className="my-3 overflow-hidden shrink-0">
           <a
             target="_blank"
-            href={etherscanLink}
-            className="flex items-center justify-end w-full text-white"
+            href={snapshotProposal?.link || ""}
+            className="flex items-center text-sm font-light text-white"
             rel="noreferrer"
           >
-            <span>{t`View on etherscan`}</span>
-            <ExternalLinkIcon className="ml-2" height={18} />
+            {t`View proposal`}
+            <ExternalLinkIcon className="h-4 ml-2" />
           </a>
-        )}
-        <div className="flex justify-between w-full">
-          <VotingBallotButton
-            proposal={proposal}
-            currentBallot={newBallot}
-            onSelectBallot={setCurrentBallot}
-          />
-          <Button
-            disabled={submitButtonDisabled}
-            onClick={handleVote}
-            loading={isVoteTxPending}
-            variant={ButtonVariant.WHITE}
+        </p>
+
+        <p className="my-3 overflow-hidden shrink-0">
+          <a
+            target="_blank"
+            href="https://forum.element.fi"
+            className="flex items-center text-sm font-light text-white"
+            rel="noreferrer"
           >
-            {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
-          </Button>
+            {t`View Discussion`}
+            <ExternalLinkIcon className="h-4 ml-2" />
+          </a>
+        </p>
+
+        {isExecuted ? (
+          <Tag className="w-full" intent={Intent.SUCCESS}>
+            <span>{t`Executed`}</span>
+            <CheckCircleIcon className="ml-2" height="24" />
+          </Tag>
+        ) : (
+          <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+        )}
+        <BalanceWithLabel
+          className="w-full mt-4"
+          balance={formattedAccountVotingPower}
+          tooltipText={votingPowerTooltipText}
+          tooltipHref={RESOURCES_URL}
+          label={t`Voting Power`}
+        />
+
+        <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
+          {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
+            <div className="flex items-center justify-end w-full text-white">
+              <span>{getBallotLabel(ballotChoice)}</span>
+              <CheckCircleIcon className="ml-2" height={18} />
+            </div>
+          )}
+          {voteTransacation && (
+            <a
+              target="_blank"
+              href={etherscanLink}
+              className="flex items-center justify-end w-full text-white"
+              rel="noreferrer"
+            >
+              <span>{t`View on etherscan`}</span>
+              <ExternalLinkIcon className="ml-2" height={18} />
+            </a>
+          )}
+          <div className="flex justify-between w-full">
+            <VotingBallotButton
+              proposal={proposal}
+              currentBallot={newBallot}
+              onSelectBallot={setCurrentBallot}
+            />
+            <Button
+              disabled={submitButtonDisabled}
+              onClick={handleVote}
+              loading={isVoteTxPending}
+              variant={ButtonVariant.WHITE}
+            >
+              {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
+            </Button>
+          </div>
         </div>
       </div>
     </GradientCard>
@@ -287,7 +287,7 @@ function useSnapshotProposal(
   return snapshotProposals?.find((s) => s.id === snapshotId);
 }
 
-const CHARACTER_LIMIT = 250;
+const CHARACTER_LIMIT = 750;
 function truncateText(text: string, characterLimit = CHARACTER_LIMIT) {
   if (text.length <= characterLimit) {
     return text;

@@ -103,7 +103,7 @@ export default function ProposalsPage({
 
   return (
     <div className="flex h-full">
-      <div className="flex-1 h-full px-8 pt-8 space-y-8">
+      <div className="flex-1 w-full h-full px-8 pt-8 space-y-8 ">
         <H1 className="flex-1 text-center text-principalRoyalBlue">{t`Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
@@ -119,19 +119,17 @@ export default function ProposalsPage({
           />
         </div>
       </div>
-      <div className="pb-20">
-        <ProposalDetailsCard
-          isOpen={!!activeProposal}
-          onClose={() => {
-            setActiveProposal(undefined);
-            setActiveProposalId(undefined);
-          }}
-          account={account}
-          signer={signer}
-          proposal={activeProposal}
-          proposalsBySnapshotId={proposalsBySnapshotId}
-        />
-      </div>
+      <ProposalDetailsCard
+        isOpen={!!activeProposal}
+        onClose={() => {
+          setActiveProposal(undefined);
+          setActiveProposalId(undefined);
+        }}
+        account={account}
+        signer={signer}
+        proposal={activeProposal}
+        proposalsBySnapshotId={proposalsBySnapshotId}
+      />
     </div>
   );
 }
