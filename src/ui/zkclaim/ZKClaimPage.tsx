@@ -18,7 +18,7 @@ export default function ClaimPage(): ReactElement {
   const [publicId, setPublicId] = useState<string>();
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
   // TODO
-  // const [generateProofCallDataInWorker, { result: proofCallData, loading }] =
+  // const proofCallResult =
   //   useWorker(a16zLibrary.generateProofCallData);
   // TODO: fetch leafs from aws and generate merkletree
   // const { data: merkleTree, isLoading: merkleLeafsLoading } = useQuery({
@@ -34,7 +34,7 @@ export default function ClaimPage(): ReactElement {
   useEffect(() => {
     // TODO
     // if (data && merkleTree) {
-    //   generateProofCallDataInWorker(
+    //   proofCallResult.run(
     //     merkleTree,
     //     data.privateKey,
     //     data.secret,
