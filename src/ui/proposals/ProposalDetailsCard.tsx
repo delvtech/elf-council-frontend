@@ -136,7 +136,7 @@ export function ProposalDetailsCard(
       className={classNames(
         className,
         !isOpen && "translate-x-full",
-        "z-10 top-0 right-0 fixed lg:static flex flex-1 flex-col items-start w-full lg:max-w-[36rem] overflow-scroll h-full min-h-[85vh]",
+        "z-10 top-0 right-0 fixed lg:static flex flex-1 flex-col items-start w-full lg:max-w-[48rem] overflow-scroll h-full min-h-[85vh]",
       )}
     >
       <div className="flex flex-col flex-1 w-full p-6">
