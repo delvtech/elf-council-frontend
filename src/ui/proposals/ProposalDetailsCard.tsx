@@ -1,7 +1,12 @@
 import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
-import { XIcon } from "@heroicons/react/solid";
+import {
+  ThumbDownIcon,
+  ThumbUpIcon,
+  XCircleIcon,
+  XIcon,
+} from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { Signer } from "ethers";
@@ -24,6 +29,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
   ProposalStatus,
+  ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
@@ -35,6 +41,7 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -142,10 +149,24 @@ export function ProposalDetailsCard(
         <h1 className="text-2xl font-bold text-white shrink-0">
           {t`Proposal ${proposal.proposalId}`}
         </h1>
-
-        <p className="font-light text-white shrink-0">
-          {snapshotProposal?.title}
-        </p>
+        <div className="flex justify-between w-full">
+          <div className="flex-1 font-light text-white text-ellipsis shrink-0">
+            {snapshotProposal?.title}
+          </div>
+          <div className="lg:-mt-6">
+            {proposalStatus && (
+              <div className="flex items-center justify-end w-full space-x-2 text-white">
+                <div>{ProposalStatusLabels[proposalStatus]}</div>
+                <ProposalStatusIcon signer={signer} proposal={proposal} />
+              </div>
+            )}
+            {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
+              <div className="flex items-center justify-end w-full text-white">
+                <BallotLabel ballot={ballotChoice} />
+              </div>
+            )}
+          </div>
+        </div>
 
         <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
           {t`Proposal Description:`}
@@ -196,12 +217,6 @@ export function ProposalDetailsCard(
         />
 
         <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-          {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-            <div className="flex items-center justify-end w-full text-white">
-              <span>{getBallotLabel(ballotChoice)}</span>
-              <CheckCircleIcon className="ml-2" height={18} />
-            </div>
-          )}
           {voteTransacation && (
             <a
               target="_blank"
@@ -234,17 +249,41 @@ export function ProposalDetailsCard(
   );
 }
 
-function getBallotLabel(ballot: Ballot): string {
+interface BallotLabelProps {
+  ballot: Ballot;
+}
+function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
   switch (ballot) {
     case Ballot.YES:
-      return t`Voted Yes`;
+      return (
+        <div className="flex items-center space-x-2">
+          <div>{t`Voted yes`}</div>
+          <div className="flex h-full pb-1 text-green-500">
+            <ThumbUpIcon height="18" />
+          </div>
+        </div>
+      );
     case Ballot.NO:
-      return t`Voted No`;
+      return (
+        <div className="flex items-center space-x-2">
+          <div>{t`Voted no`}</div>
+          <div className="flex h-full pt-1 text-green-500">
+            <ThumbDownIcon height="18" />
+          </div>
+        </div>
+      );
     case Ballot.MAYBE:
-      return t`Voted Abstain`;
+      return (
+        <div className="flex items-center space-x-2">
+          <div>{t`Voted abstain`}</div>
+          <div className="flex h-full text-white">
+            <XCircleIcon height="18" />
+          </div>
+        </div>
+      );
     default:
       assertNever(ballot);
-      return "";
+      return null;
   }
 }
 
