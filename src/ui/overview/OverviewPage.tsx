@@ -24,9 +24,13 @@ export function OverviewPage(): ReactElement {
         </H1>
       </div>
       <SummaryCards />
-      <div className="flex flex-col justify-center w-full space-y-6 lg:space-x-6 lg:flex-row lg:space-y-0">
-        <PortfolioCard account={account} />
-        <FAQ />
+      <div className="flex flex-col justify-center w-full grid-cols-2 space-y-6 lg:space-x-6 lg:flex-row lg:space-y-0">
+        <div className="w-full">
+          <PortfolioCard account={account} />
+        </div>
+        <div className="w-full">
+          <FAQ />
+        </div>
       </div>
     </div>
   );
