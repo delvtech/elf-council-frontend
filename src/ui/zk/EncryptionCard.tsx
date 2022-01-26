@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2";
+import generateHashSeed from "./EncryptionCard/generateHashSeed";
 import HashSlider, {
   onChangePayload as onHashChangePayload,
 } from "./EncryptionCard/HashSlider";
@@ -32,8 +33,13 @@ export default function EncryptionCard({
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
   const secret = keySecretPair?.[1];
+  const [secretHashSeed, setSecretHashSeed] = useState<string>();
   const [progress, setProgress] = useState(0);
   const [downloaded, setDownloaded] = useState(false);
+
+  useEffect(() => {
+    generateHashSeed().then(setSecretHashSeed);
+  }, []);
 
   // reset downloaded if the keySecretPair change
   useEffect(() => {
@@ -42,13 +48,18 @@ export default function EncryptionCard({
 
   const handleHashChange = useCallback(
     ({ hash: newKey, mouseInput, progress }: onHashChangePayload) => {
-      const secretInput = [newKey, ...mouseInput.split("").reverse()].join("");
+      const secretInput = [
+        secretHashSeed || newKey,
+        ...mouseInput.split("").reverse(),
+      ].join("");
+      // reset to avoid reuse
+      setSecretHashSeed(undefined);
       const newSecret = utils.id(secretInput);
       setKeySecretPair([newKey, newSecret]);
       setProgress(progress);
       onGenerated?.([newKey, newSecret]);
     },
-    [onGenerated],
+    [onGenerated, secretHashSeed],
   );
 
   const handleDownloadClick = () => {

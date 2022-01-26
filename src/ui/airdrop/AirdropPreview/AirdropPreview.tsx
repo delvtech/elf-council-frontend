@@ -5,8 +5,9 @@ import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCar
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 
 interface AirdropPreviewProps {
   account: string | null | undefined;
@@ -14,6 +15,14 @@ interface AirdropPreviewProps {
   onPrevStep: () => void;
 }
 
+const elementIconInBodyText = (
+  <ElementIcon
+    key="element-icon-in-body-text"
+    bgColorClassName="bg-paleLily"
+    className="inline-block ml-0.5 mr-1 -mb-1.5"
+    size={IconSize.MEDIUM}
+  />
+);
 export function AirdropPreview({
   onNextStep,
   onPrevStep,
@@ -45,7 +54,7 @@ export function AirdropPreview({
           <span className="text-center">{t`Congratulations!`}</span>
         </div>
         <div className="flex flex-col items-center justify-center w-full mb-10 text-base text-center">
-          <span className="w-full mb-6 font-bold ">{t`You have some ELFI available to deposit.`}</span>
+          <span className="w-full mb-6 font-bold ">{jt`You have some ${elementIconInBodyText}ELFI available to deposit.`}</span>
           <span className="w-3/4 text-justify">{t`You have received these tokens for being an active member of the Element community.
 We hope to see you continue to contribute to the future of Element.`}</span>
         </div>

@@ -1,7 +1,7 @@
 import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
-import { InformationCircleIcon } from "@heroicons/react/solid";
+import { InformationCircleIcon, XIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { Signer } from "ethers";
@@ -39,6 +39,7 @@ import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { queryClient } from "src/elf/queryClient";
 import { makeSmartContractReadCallQueryKey } from "@elementfi/react-query-typechain";
 import { coreVotingContract } from "src/elf/contracts";
+import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -48,12 +49,24 @@ interface ProposalDetailsCardProps {
   signer: Signer | undefined;
   proposal: Proposal | undefined;
   proposalsBySnapshotId: Record<string, Proposal>;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
-): ReactElement {
-  const { className, proposal, account, signer, proposalsBySnapshotId } = props;
+): ReactElement | null {
+  const {
+    className,
+    proposal,
+    account,
+    signer,
+    proposalsBySnapshotId,
+    isOpen,
+    onClose,
+  } = props;
+
+  const isSmallScreen = useIsTailwindSmallScreen();
 
   const snapshotProposal = useSnapshotProposal(
     proposal?.snapshotId,
@@ -109,22 +122,7 @@ export function ProposalDetailsCard(
   }, [newBallot, proposal, vote]);
 
   if (!proposal) {
-    return (
-      <GradientCard
-        style={
-          // hack for now, need to fix <body> height
-          { height: "85vh" }
-        }
-        className={classNames(
-          "flex w-80 h-full p-6 justify-center items-center",
-          className,
-        )}
-      >
-        <span className="text-2xl font-bold text-center text-white">
-          {t`Click on a proposal to learn more about it here.`}
-        </span>
-      </GradientCard>
-    );
+    return null;
   }
 
   const { quorum } = proposal;
@@ -146,22 +144,26 @@ export function ProposalDetailsCard(
 
   return (
     <GradientCard
-      style={
-        // hack for now, need to fix <body> height
-        { height: "85vh" }
-      }
       className={classNames(
         className,
-        "sticky top-10 flex flex-col items-start w-80 p-6 justify-center",
+        isSmallScreen && "!rounded-none",
+        !isOpen && "translate-x-full",
+        "z-10 top-0 right-0 fixed md:sticky md:top-10 flex flex-col items-start w-full md:w-80 p-6 justify-center h-full md:min-h-[85vh]",
       )}
     >
+      <button
+        onClick={onClose}
+        className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
+      >
+        <XIcon className="w-6 h-6 text-white" />
+      </button>
       <h1 className="text-2xl font-bold text-white">
         {t`Proposal ${proposal.proposalId}`}
       </h1>
 
       <p className="font-light text-white">{snapshotProposal?.title}</p>
 
-      <p className="my-3 overflow-hidden text-sm font-light text-white">
+      <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
         {t`Proposal Description:`}
       </p>
 
@@ -169,7 +171,7 @@ export function ProposalDetailsCard(
         {truncateText(snapshotProposal?.body || "")}
       </p>
 
-      <p className="my-3 overflow-hidden">
+      <p className="my-3 overflow-hidden shrink-0">
         <a
           target="_blank"
           href={snapshotProposal?.link || ""}
@@ -181,7 +183,7 @@ export function ProposalDetailsCard(
         </a>
       </p>
 
-      <p className="my-3 overflow-hidden">
+      <p className="my-3 overflow-hidden shrink-0">
         <a
           target="_blank"
           href="https://forum.element.fi"
@@ -229,6 +231,7 @@ export function ProposalDetailsCard(
         )}
         <div className="flex justify-between w-full">
           <VotingBallotButton
+            proposal={proposal}
             currentBallot={newBallot}
             onSelectBallot={setCurrentBallot}
           />

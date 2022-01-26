@@ -23,6 +23,7 @@ import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
+import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
@@ -35,6 +36,8 @@ export default function ProposalsPage({
 }: ProposalsPageProps): ReactElement {
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
+
+  const isSmallScreen = useIsTailwindSmallScreen();
 
   // TODO: Move these into the route so people can link to a proposal easily
   const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
@@ -61,9 +64,14 @@ export default function ProposalsPage({
   // set the active proposal when the user switches between Active and Past
   // tabs.
   useEffect(() => {
+    if (isSmallScreen) {
+      setActiveProposalId(undefined);
+      setActiveProposal(undefined);
+      return;
+    }
     setActiveProposalId(filteredProposals?.[0]?.proposalId);
     setActiveProposal(filteredProposals?.[0]);
-  }, [activeTabId, filteredProposals]);
+  }, [activeTabId, filteredProposals, isSmallScreen]);
 
   const onSetActiveProposalId = useCallback(
     (proposalId: string | undefined) => {
@@ -113,7 +121,11 @@ export default function ProposalsPage({
       </div>
       <div>
         <ProposalDetailsCard
-          className="hidden lg:flex"
+          isOpen={!!activeProposal}
+          onClose={() => {
+            setActiveProposal(undefined);
+            setActiveProposalId(undefined);
+          }}
           account={account}
           signer={signer}
           proposal={activeProposal}

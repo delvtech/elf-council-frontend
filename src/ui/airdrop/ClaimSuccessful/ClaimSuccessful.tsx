@@ -23,9 +23,9 @@ export function ClaimSuccessful(): ReactElement {
       className="flex flex-col h-full text-center text-white"
     >
       <div className="flex flex-col items-center justify-center p-6">
-        <h2 className="mb-6 text-3xl font-bold">{t`Claim Successful!`}</h2>
+        <h2 className="mb-6 text-3xl font-bold">{t`Deposit Successful!`}</h2>
         <div className="flex flex-col items-center w-full mb-10 space-y-3 text-base">
-          <p className="flex justify-center font-bold">{jt`Congratulations on claiming your ${elfiLogoElement} $ELFI tokens.`}</p>
+          <p className="flex justify-center font-bold">{jt`Congratulations on depositing your ${elfiLogoElement} $ELFI tokens.`}</p>
         </div>
         <Link href="/">
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}

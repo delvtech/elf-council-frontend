@@ -43,7 +43,7 @@ export function Tag({
     <span
       className={classNames(
         className,
-        "inline-flex justify-center items-center px-4 py-3 rounded-xl text-sm font-medium",
+        "inline-flex justify-center items-center px-2 md:px-4 py-3 rounded-xl text-sm font-medium",
         intentTextColors[intent],
         intentBackgroundColors[intent],
       )}
