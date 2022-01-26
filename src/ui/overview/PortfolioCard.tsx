@@ -1,19 +1,14 @@
 import React, { ReactElement } from "react";
-
-import classNames from "classnames";
 import { formatEther } from "ethers/lib/utils";
-import { formatBalance } from "src/formatBalance";
 import { elementTokenContract } from "src/elf/contracts";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
-import { InformationCircleIcon } from "@heroicons/react/solid";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { t } from "ttag";
@@ -58,14 +53,14 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           balance={balance}
           tooltipText={portfolioTooltipText}
           tooltipHref={RESOURCES_URL}
-          label={t`Wallet balance`}
+          label={t`Wallet Balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
           tooltipHref={RESOURCES_URL}
-          label={t`Eligible voting balance`}
+          label={t`Voting Vault Balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
@@ -78,7 +73,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
             <BalanceWithLabel
               balance={unclaimedAirdrop}
-              label={t`Unclaimed airdrop`}
+              label={t`Unclaimed Airdrop`}
             />
             <LinkButton
               link="/airdrop"
@@ -89,38 +84,5 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         )}
       </div>
     </Card>
-  );
-}
-
-interface BalanceWithLabelProps {
-  className?: string;
-  balance: string;
-  label: string;
-  tooltipText?: string;
-  tooltipHref?: string;
-}
-function BalanceWithLabel(props: BalanceWithLabelProps) {
-  const { className, balance, label, tooltipHref, tooltipText } = props;
-  return (
-    <div className={classNames(className, "text-white")}>
-      <div className="flex items-center">
-        <div className="text-2xl font-extralight">{formatBalance(balance)}</div>
-        <ElementIcon className="ml-2" size={IconSize.MEDIUM} />
-      </div>
-      <div className="flex items-center text-lg font-light">
-        {label}
-        {tooltipText && (
-          <Tooltip content={tooltipText} className="ml-1">
-            {tooltipHref ? (
-              <a href={tooltipHref}>
-                <InformationCircleIcon className="h-4" />
-              </a>
-            ) : (
-              <InformationCircleIcon className="h-4" />
-            )}
-          </Tooltip>
-        )}
-      </div>
-    </div>
   );
 }

@@ -5,7 +5,7 @@ import { Signer } from "ethers";
 import dynamic from "next/dynamic";
 import { t } from "ttag";
 
-import { BalanceLabeledStat } from "src/ui/delegate/BalanceLabeledStat/BalanceLabeledStat";
+import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { RESOURCES_URL } from "src/ui/resources";
 
 // SSR: false? -- https://stackoverflow.com/a/64119607
@@ -41,15 +41,15 @@ function PortfolioCard(props: PortfolioCardProps): ReactElement {
     <div className={classNames({ "opacity-50": !account })}>
       {/* Balance Stats */}
       <div className="flex flex-col mb-4">
-        <BalanceLabeledStat
-          tooltip={portfolioTooltip}
+        <BalanceWithLabel
+          tooltipText={portfolioTooltip}
           tooltipHref={RESOURCES_URL}
           label={t`Wallet Balance`}
           balance={walletBalance}
           className="mb-2"
         />
-        <BalanceLabeledStat
-          tooltip={portfolioTooltip}
+        <BalanceWithLabel
+          tooltipText={portfolioTooltip}
           tooltipHref={RESOURCES_URL}
           label={t`Deposited Balance`}
           balance={vaultBalance}

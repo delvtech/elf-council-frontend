@@ -29,7 +29,7 @@ export function DelegatedCard({ account }: DelegatedCardProps): ReactElement {
                 : null}
             </span>
             <LinkButton
-              link="/delegates"
+              link="/delegate"
               variant={ButtonVariant.WHITE}
             >{t`Visit dashboard`}</LinkButton>
           </div>
