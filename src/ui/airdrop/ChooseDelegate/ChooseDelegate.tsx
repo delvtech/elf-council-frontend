@@ -40,11 +40,14 @@ export function ChooseDelegate({
 
   // disable the button when the user has no featured delegate, or
   // self-delegate, or valid custom address selected.
+  const isValidCustomDelegateAddress =
+    customDelegateAddress !== undefined &&
+    isValidAddress(customDelegateAddress);
+
   const isNextStepDisabled =
     selectedDelegateIndex === undefined &&
     !isSelfDelegated &&
-    customDelegateAddress !== undefined &&
-    !isValidAddress(customDelegateAddress);
+    !isValidCustomDelegateAddress;
 
   const onNextStep = useCallback(() => {
     if (isSelfDelegated) {
@@ -148,7 +151,7 @@ export function ChooseDelegate({
               })}
             </ul>
           </div>
-          <div className="flex w-11/12">
+          <div className="flex px-4">
             <div className="flex flex-col flex-1 space-y-2">
               <H2 className="text-center">{t`or`}</H2>
               <div className="flex items-center justify-center space-x-4">
@@ -171,17 +174,27 @@ export function ChooseDelegate({
             </div>
             <div className="flex flex-col flex-1 space-y-2">
               <H2 className="text-center">{t`or enter an address`}</H2>
-              <div className="flex space-x-4 ">
+              <div className="relative flex items-center justify-center space-x-4">
                 <TextInput
                   screenReaderLabel={t`Enter delegate address`}
                   id={"delegate-address"}
                   name={t`Enter delegate address`}
                   placeholder={t`Enter delegate address`}
                   containerClassName="flex-1"
-                  className="flex-1 h-12 mb-4 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
+                  className={classNames(
+                    "flex-1 h-12 mb-4 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
+                    {
+                      "pr-12": isValidCustomDelegateAddress,
+                    },
+                  )}
                   value={customDelegateAddress}
                   onChange={handleCustomDelegateInputChange}
                 />
+                {isValidCustomDelegateAddress ? (
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none bottom-4">
+                    <CheckCircleIcon className="w-8 h-8 text-statusGreen" />
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
