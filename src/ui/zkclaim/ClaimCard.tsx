@@ -4,9 +4,11 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H2 from "src/ui/base/H2";
 import ClaimAmountCard from "./ClaimAmountCard";
+import { useWeb3React } from "@web3-react/core";
 import { t } from "ttag";
 
-const TOEKEN_ADDRESS = "0xd00981105e61274c8a5cd5a88fe7e037d935b513";
+// TODO: reference real values
+const TOKEN_ADDRESS = "0xd00981105e61274c8a5cd5a88fe7e037d935b513";
 const TOKEN_SYMBOL = "ELFI";
 const TOKEN_DECIMALS = 18;
 const TOKEN_IMAGE = "http://placekitten.com/200/300";
@@ -19,6 +21,8 @@ interface ClaimCardProps {
 const ELFI_TOKEN_AMOUNT = "208.9291341";
 
 export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
+  const { library } = useWeb3React();
+
   const [addToWallet, setAddToWallet] = useState(false);
   const handleAddToWalletChange = (e: ChangeEvent<HTMLInputElement>) => {
     setAddToWallet(e.target.checked);
@@ -27,12 +31,12 @@ export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
     if (addToWallet) {
       try {
         // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-        const wasAdded = await window.ethereum.request({
+        const wasAdded = await library.provider.request({
           method: "wallet_watchAsset",
           params: {
             type: "ERC20", // Initially only supports ERC20, but eventually more!
             options: {
-              address: TOEKEN_ADDRESS, // The address that the token is at.
+              address: TOKEN_ADDRESS, // The address that the token is at.
               symbol: TOKEN_SYMBOL, // A ticker symbol or shorthand, up to 5 chars.
               decimals: TOKEN_DECIMALS, // The number of decimals in the token
               image: TOKEN_IMAGE, // A string url of the token logo
