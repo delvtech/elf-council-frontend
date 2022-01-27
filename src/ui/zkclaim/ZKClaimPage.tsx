@@ -6,7 +6,7 @@ import { ElementLogo } from "src/ui/base/ElementLogo";
 import { t } from "ttag";
 import { utils } from "ethers";
 import LookupCard from "./LookupCard";
-import ZKData from "src/ui/zk/ZKData";
+import { ZKData } from "src/ui/zk/types";
 import ClaimCard from "./ClaimCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
 import ErrorCard from "./ErrorCard";

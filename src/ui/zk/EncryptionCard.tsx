@@ -11,7 +11,7 @@ import { utils } from "ethers";
 import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import downloadFile, { DownloadType } from "src/base/downloadFile";
-import ZKData from "./ZKData";
+import { ZKData } from "./types";
 
 interface EncryptionCardProps {
   className?: string;

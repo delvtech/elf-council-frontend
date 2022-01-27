@@ -1,7 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
-import SuccessCard from "./SuccessCard";
+import ShareCard from "./ShareCard";
+import { Platform } from "./types";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
@@ -10,7 +11,11 @@ import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
 import { t } from "ttag";
 
-export default function ZKPage(): ReactElement {
+interface ZKPageProps {
+  platform: Platform;
+}
+
+export default function ZKPage({ platform }: ZKPageProps): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const [publicId, setPublicId] = useState<string>();
   const {
@@ -89,10 +94,12 @@ export default function ZKPage(): ReactElement {
       />
 
       {/* STEP 3 */}
-      <SuccessCard
+      <ShareCard
         publicId={publicId as string}
         className={getStepClassName(3)}
+        platform={platform}
       />
+
       <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />
