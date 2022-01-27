@@ -6,7 +6,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: "Button",
+  title: "Button/Button",
   component: ButtonComponent,
 } as ComponentMeta<typeof ButtonComponent>;
 
