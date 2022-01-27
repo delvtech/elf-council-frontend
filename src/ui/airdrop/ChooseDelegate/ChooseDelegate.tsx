@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
@@ -25,36 +25,94 @@ export function ChooseDelegate({
   onChooseDelegate,
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
-  const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
-
+  // Holds state for the Featured delegate selection
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
   >();
 
-  // Unset the selected featured delegate if the user changes the text input
-  useEffect(() => {
-    if (selectedDelegateIndex === undefined) {
-      return;
-    }
-    if (delegates[selectedDelegateIndex].address !== delegateAddress) {
-      setSelectedDelegateIndex(undefined);
-    }
-  }, [delegateAddress, selectedDelegateIndex]);
+  // Holds state for self-delegate option
+  const [isSelfDelegated, setIsSelfDelegated] = useState(false);
+
+  // Holds state for the custom delegate input
+  const [customDelegateAddress, setCustomDelegateAddress] = useState<
+    string | undefined
+  >();
+
+  // disable the button when the user has no featured delegate, or
+  // self-delegate, or valid custom address selected.
+  const isNextStepDisabled =
+    selectedDelegateIndex === undefined &&
+    !isSelfDelegated &&
+    customDelegateAddress !== undefined &&
+    !isValidAddress(customDelegateAddress);
 
   const onNextStep = useCallback(() => {
-    onChooseDelegate(
-      // safe to cast because we disable the button when the delegateAddress is invalid
-      delegateAddress as string,
-    );
+    if (isSelfDelegated) {
+      onChooseDelegate(account);
+    } else if (customDelegateAddress && isValidAddress(customDelegateAddress)) {
+      onChooseDelegate(customDelegateAddress);
+    } else if (
+      selectedDelegateIndex !== undefined &&
+      delegates[selectedDelegateIndex].address
+    ) {
+      onChooseDelegate(delegates[selectedDelegateIndex].address);
+    }
+
     onNextStepFromProps();
-  }, [delegateAddress, onChooseDelegate, onNextStepFromProps]);
+  }, [
+    account,
+    customDelegateAddress,
+    isSelfDelegated,
+    onChooseDelegate,
+    onNextStepFromProps,
+    selectedDelegateIndex,
+  ]);
+
+  const handleSelfDelegateButtonClick = useCallback(() => {
+    setIsSelfDelegated(true);
+
+    // Somewhat of a hack to clear all other selections when the
+    // user self-delegates
+    const indexOfAccountInDelegatesList = delegates.findIndex(
+      ({ address }) => address === account,
+    );
+    setSelectedDelegateIndex(
+      indexOfAccountInDelegatesList === -1
+        ? undefined
+        : indexOfAccountInDelegatesList,
+    );
+    setCustomDelegateAddress("");
+  }, [account]);
+
+  const handleCustomDelegateInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setCustomDelegateAddress(event.target.value);
+
+      // Somewhat of a hack to clear all other selections when the
+      // user provides a custom address
+      const indexOfAccountInDelegatesList = delegates.findIndex(
+        ({ address }) => address === event.target.value,
+      );
+      setSelectedDelegateIndex(
+        indexOfAccountInDelegatesList === -1
+          ? undefined
+          : indexOfAccountInDelegatesList,
+      );
+      if (account === event.target.value) {
+        setIsSelfDelegated(true);
+      } else {
+        setIsSelfDelegated(false);
+      }
+    },
+    [account],
+  );
 
   return (
     <StepCard
       // relative so the delegate profile popover stays contained within the card
       className="relative"
       onNextStep={onNextStep}
-      nextStepDisabled={!isValidAddress(delegateAddress || "")}
+      nextStepDisabled={isNextStepDisabled}
       nextStepLabel={t`Review deposit`}
       onPrevStep={onPrevStep}
     >
@@ -67,7 +125,15 @@ export function ChooseDelegate({
               {delegates.map((delegate, idx) => {
                 const handleSelectDelegate = () => {
                   setSelectedDelegateIndex(idx);
-                  setDelegateAddress(delegate.address);
+
+                  // Somewhat of a hack to clear all other selections when the
+                  // user selects a featured delegate
+                  setCustomDelegateAddress("");
+                  if (account === delegate.address) {
+                    setIsSelfDelegated(true);
+                  } else {
+                    setIsSelfDelegated(false);
+                  }
                 };
 
                 return (
@@ -86,12 +152,9 @@ export function ChooseDelegate({
             <div className="flex flex-col flex-1 space-y-2">
               <H2 className="text-center">{t`or`}</H2>
               <div className="flex items-center justify-center space-x-4">
-                {delegateAddress !== account ? (
+                {!isSelfDelegated ? (
                   <Button
-                    onClick={() => {
-                      setDelegateAddress(account);
-                      onChooseDelegate(account);
-                    }}
+                    onClick={handleSelfDelegateButtonClick}
                     variant={ButtonVariant.OUTLINE_WHITE}
                   >
                     {t`Self-delegate`}
@@ -116,8 +179,8 @@ export function ChooseDelegate({
                   placeholder={t`Enter delegate address`}
                   containerClassName="flex-1"
                   className="flex-1 h-12 mb-4 text-left text-principalRoyalBlue placeholder-principalRoyalBlue"
-                  value={delegateAddress}
-                  onChange={(event) => setDelegateAddress(event.target.value)}
+                  value={customDelegateAddress}
+                  onChange={handleCustomDelegateInputChange}
                 />
               </div>
             </div>
