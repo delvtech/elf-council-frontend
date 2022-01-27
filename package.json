@@ -5,7 +5,7 @@
     "@elementfi/react-query-typechain": "^1.0.5",
     "@ethersproject/providers": "^5.5.2",
     "@fontsource/roboto-mono": "^4.5.0",
-    "@fontsource/rubik": "^4.5.0",
+    "@fontsource/rubik": "^4.5.1",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
     "@metamask/jazzicon": "^2.0.0",
