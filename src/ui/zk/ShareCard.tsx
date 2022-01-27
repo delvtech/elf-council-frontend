@@ -82,7 +82,7 @@ export default function SuccessCard({
               <>
                 {t`Share your new Public ID in a comment on our `}
                 <a
-                  href="https://github.com/element-fi/elf-council-frontend/issues/382"
+                  href="https://github.com/element-fi/elf-council-frontend/issues/384"
                   target="_blank"
                   rel="noreferrer"
                   className="text-yieldLightBlue"
@@ -121,7 +121,7 @@ export default function SuccessCard({
           {platform === Platform.GITHUB && (
             <AnchorButton
               variant={ButtonVariant.GRADIENT}
-              href="https://github.com/element-fi/elf-council-frontend/issues/382"
+              href="https://github.com/element-fi/elf-council-frontend/issues/384"
               className="flex gap-2"
             >
               {t`Go to GitHub`}
