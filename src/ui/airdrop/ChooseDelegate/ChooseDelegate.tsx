@@ -8,7 +8,8 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H2 from "src/ui/base/H2";
 import TextInput from "src/ui/base/Input/TextInput";
-import { Tag, Intent } from "src/ui/base/Tag/Tag";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { t } from "ttag";
 

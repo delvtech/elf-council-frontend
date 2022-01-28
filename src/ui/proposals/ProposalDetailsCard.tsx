@@ -24,7 +24,8 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
-import { Intent, Tag } from "src/ui/base/Tag/Tag";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,

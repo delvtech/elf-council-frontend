@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { Intent, Tag } from "src/ui/base/Tag/Tag";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 import { t } from "ttag";
 import { ClaimedAmountCard } from "src/ui/airdrop/AirdropAlreadyClaimed/ClaimedAmountCard";
 import { DelegatedCard } from "src/ui/airdrop/AirdropAlreadyClaimed/DelegatedCard";

@@ -1,15 +1,7 @@
 import { ReactElement, ReactNode } from "react";
 
 import classNames from "classnames";
-
-export enum Intent {
-  WARNING = "warning",
-  PRIMARY = "primary",
-  PRIMARY_SOLID = "primary-solid",
-  SUCCESS = "success",
-  ERROR = "error",
-  BLANK = "blank",
-}
+import { Intent } from "src/ui/base/Intent";
 
 interface TagProps {
   intent?: Intent;
