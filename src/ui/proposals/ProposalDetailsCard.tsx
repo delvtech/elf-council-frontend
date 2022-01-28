@@ -1,7 +1,12 @@
 import React, { ReactElement, useCallback, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
-import { XIcon } from "@heroicons/react/solid";
+import {
+  ThumbDownIcon,
+  ThumbUpIcon,
+  XCircleIcon,
+  XIcon,
+} from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
 import { Signer } from "ethers";
@@ -24,6 +29,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
   ProposalStatus,
+  ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
@@ -35,7 +41,7 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
+import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -61,8 +67,6 @@ export function ProposalDetailsCard(
     isOpen,
     onClose,
   } = props;
-
-  const isSmallScreen = useIsTailwindSmallScreen();
 
   const snapshotProposal = useSnapshotProposal(
     proposal?.snapshotId,
@@ -129,122 +133,161 @@ export function ProposalDetailsCard(
 
   return (
     <GradientCard
+      style={
+        // don't scroll app behind popover, makes a double scroll bar
+        { overscrollBehavior: "none" }
+      }
       className={classNames(
         className,
-        isSmallScreen && "!rounded-none",
         !isOpen && "translate-x-full",
-        "z-10 top-0 right-0 fixed md:static flex flex-col items-start w-full md:w-80 p-6 justify-center h-full md:min-h-[85vh]",
+        "z-10 top-0 right-0 fixed lg:static flex flex-1 flex-col items-start w-full lg:max-w-[48rem] overflow-scroll h-full min-h-[85vh]",
       )}
     >
-      <button
-        onClick={onClose}
-        className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
-      >
-        <XIcon className="w-6 h-6 text-white" />
-      </button>
-      <h1 className="text-2xl font-bold text-white">
-        {t`Proposal ${proposal.proposalId}`}
-      </h1>
-
-      <p className="font-light text-white">{snapshotProposal?.title}</p>
-
-      <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
-        {t`Proposal Description:`}
-      </p>
-
-      <p className="overflow-hidden text-sm font-light text-white text-ellipsis">
-        {truncateText(snapshotProposal?.body || "")}
-      </p>
-
-      <p className="my-3 overflow-hidden shrink-0">
-        <a
-          target="_blank"
-          href={snapshotProposal?.link || ""}
-          className="flex items-center text-sm font-light text-white"
-          rel="noreferrer"
+      <div className="flex flex-col flex-1 w-full p-6">
+        <button
+          onClick={onClose}
+          className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer lg:hidden hover:shadow"
         >
-          {t`View proposal`}
-          <ExternalLinkIcon className="h-4 ml-2" />
-        </a>
-      </p>
-
-      <p className="my-3 overflow-hidden shrink-0">
-        <a
-          target="_blank"
-          href="https://forum.element.fi"
-          className="flex items-center text-sm font-light text-white"
-          rel="noreferrer"
-        >
-          {t`View Discussion`}
-          <ExternalLinkIcon className="h-4 ml-2" />
-        </a>
-      </p>
-
-      {isExecuted ? (
-        <Tag className="w-full" intent={Intent.SUCCESS}>
-          <span>{t`Executed`}</span>
-          <CheckCircleIcon className="ml-2" height="24" />
-        </Tag>
-      ) : (
-        <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
-      )}
-      <BalanceWithLabel
-        className="w-full mt-4"
-        balance={formattedAccountVotingPower}
-        tooltipText={votingPowerTooltipText}
-        tooltipHref={RESOURCES_URL}
-        label={t`Voting Power`}
-      />
-
-      <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-        {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-          <div className="flex items-center justify-end w-full text-white">
-            <span>{getBallotLabel(ballotChoice)}</span>
-            <CheckCircleIcon className="ml-2" height={18} />
+          <XIcon className="w-6 h-6 text-white" />
+        </button>
+        <h1 className="text-2xl font-bold text-white shrink-0">
+          {t`Proposal ${proposal.proposalId}`}
+        </h1>
+        <div className="flex justify-between w-full">
+          <div className="flex-1 font-light text-white text-ellipsis shrink-0">
+            {snapshotProposal?.title}
           </div>
-        )}
-        {voteTransacation && (
+          <div className="lg:-mt-6">
+            {proposalStatus && (
+              <div className="flex items-center justify-end w-full space-x-2 text-white">
+                <div>{ProposalStatusLabels[proposalStatus]}</div>
+                <ProposalStatusIcon signer={signer} proposal={proposal} />
+              </div>
+            )}
+            {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
+              <div className="flex items-center justify-end w-full text-white">
+                <BallotLabel ballot={ballotChoice} />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
+          {t`Proposal Description:`}
+        </p>
+
+        <p className="overflow-hidden text-sm font-light text-white shrink-0 text-ellipsis">
+          {truncateText(snapshotProposal?.body || "")}
+        </p>
+
+        <p className="my-3 overflow-hidden shrink-0">
           <a
             target="_blank"
-            href={etherscanLink}
-            className="flex items-center justify-end w-full text-white"
+            href={snapshotProposal?.link || ""}
+            className="flex items-center text-sm font-light text-white"
             rel="noreferrer"
           >
-            <span>{t`View on etherscan`}</span>
-            <ExternalLinkIcon className="ml-2" height={18} />
+            {t`View proposal`}
+            <ExternalLinkIcon className="h-4 ml-2" />
           </a>
-        )}
-        <div className="flex justify-between w-full">
-          <VotingBallotButton
-            proposal={proposal}
-            currentBallot={newBallot}
-            onSelectBallot={setCurrentBallot}
-          />
-          <Button
-            disabled={submitButtonDisabled}
-            onClick={handleVote}
-            loading={isVoteTxPending}
-            variant={ButtonVariant.WHITE}
+        </p>
+
+        <p className="my-3 overflow-hidden shrink-0">
+          <a
+            target="_blank"
+            href="https://forum.element.fi"
+            className="flex items-center text-sm font-light text-white"
+            rel="noreferrer"
           >
-            {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
-          </Button>
+            {t`View Discussion`}
+            <ExternalLinkIcon className="h-4 ml-2" />
+          </a>
+        </p>
+
+        {isExecuted ? (
+          <Tag className="w-full" intent={Intent.SUCCESS}>
+            <span>{t`Executed`}</span>
+            <CheckCircleIcon className="ml-2" height="24" />
+          </Tag>
+        ) : (
+          <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+        )}
+        <BalanceWithLabel
+          className="w-full mt-4"
+          balance={formattedAccountVotingPower}
+          tooltipText={votingPowerTooltipText}
+          tooltipHref={RESOURCES_URL}
+          label={t`Voting Power`}
+        />
+
+        <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
+          {voteTransacation && (
+            <a
+              target="_blank"
+              href={etherscanLink}
+              className="flex items-center justify-end w-full text-white"
+              rel="noreferrer"
+            >
+              <span>{t`View on etherscan`}</span>
+              <ExternalLinkIcon className="ml-2" height={18} />
+            </a>
+          )}
+          <div className="flex justify-between w-full">
+            <VotingBallotButton
+              proposal={proposal}
+              currentBallot={newBallot}
+              onSelectBallot={setCurrentBallot}
+            />
+            <Button
+              disabled={submitButtonDisabled}
+              onClick={handleVote}
+              loading={isVoteTxPending}
+              variant={ButtonVariant.WHITE}
+            >
+              {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
+            </Button>
+          </div>
         </div>
       </div>
     </GradientCard>
   );
 }
 
-function getBallotLabel(ballot: Ballot): string {
+interface BallotLabelProps {
+  ballot: Ballot;
+}
+function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
   switch (ballot) {
     case Ballot.YES:
-      return t`Voted Yes`;
+      return (
+        <div className="flex items-center space-x-2">
+          <div>{t`Voted yes`}</div>
+          <div className="flex h-full pb-1 text-green-500">
+            <ThumbUpIcon height="18" />
+          </div>
+        </div>
+      );
     case Ballot.NO:
-      return t`Voted No`;
+      return (
+        <div className="flex items-center space-x-2">
+          <div>{t`Voted no`}</div>
+          <div className="flex h-full pt-1 text-green-500">
+            <ThumbDownIcon height="18" />
+          </div>
+        </div>
+      );
     case Ballot.MAYBE:
-      return t`Voted Abstain`;
+      return (
+        <div className="flex items-center space-x-2">
+          <div>{t`Voted abstain`}</div>
+          <div className="flex h-full text-white">
+            <XCircleIcon height="18" />
+          </div>
+        </div>
+      );
     default:
       assertNever(ballot);
-      return "";
+      return null;
   }
 }
 
@@ -287,7 +330,7 @@ function useSnapshotProposal(
   return snapshotProposals?.find((s) => s.id === snapshotId);
 }
 
-const CHARACTER_LIMIT = 250;
+const CHARACTER_LIMIT = 750;
 function truncateText(text: string, characterLimit = CHARACTER_LIMIT) {
   if (text.length <= characterLimit) {
     return text;

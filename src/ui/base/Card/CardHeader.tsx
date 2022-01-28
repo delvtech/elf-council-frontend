@@ -4,7 +4,6 @@ import React, { ReactElement, ReactNode } from "react";
 import tw, {
   display,
   justifyContent,
-  alignItems,
   flexWrap,
   margin,
   fontSize,
