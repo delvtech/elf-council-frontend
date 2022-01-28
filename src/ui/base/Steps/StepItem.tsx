@@ -1,22 +1,4 @@
 import { ReactElement, ReactNode } from "react";
-import tw, {
-  height,
-  display,
-  alignItems,
-  justifyContent,
-  margin,
-  textColor,
-  fontWeight,
-  textOpacity,
-  flexShrink,
-  width,
-  borderWidth,
-  borderColor,
-  borderRadius,
-  backgroundColor,
-  borderOpacity,
-  textAlign,
-} from "src/elf-tailwindcss-classnames";
 import Link, { LinkProps } from "next/link";
 import classNames from "classnames";
 
@@ -47,28 +29,15 @@ export function StepItem({
   const Container = href ? StepItemAsLink : "div";
   return (
     <Container className="flex-1" href={href as string | URL}>
-      <div
-        className={tw(
-          height("h-10"),
-          display("flex"),
-          alignItems("items-center"),
-          justifyContent("justify-center"),
-          margin("mb-2"),
-        )}
-      >
+      <div className="flex items-center justify-center h-10 mb-2">
         <StepLabel status={status} label={stepLabel}></StepLabel>
       </div>
       <div
-        className={tw(
-          display("flex"),
-          alignItems("items-center"),
-          justifyContent("justify-center"),
-          textAlign("text-center"),
-          textColor("text-principalRoyalBlue"),
-          fontWeight("font-semibold"),
-          textOpacity({
+        className={classNames(
+          "flex items-center justify-center text-center text-principalRoyalBlue font-semibold",
+          {
             "text-opacity-50": status === "upcoming",
-          }),
+          },
         )}
       >
         {children}
@@ -105,29 +74,19 @@ interface StepLabelProps {
 function StepLabel({ status, label }: StepLabelProps) {
   return (
     <div
-      className={tw(
-        flexShrink("shrink-0"),
-        width("w-10"),
-        height("h-10"),
-        display("flex"),
-        alignItems("items-center"),
-        justifyContent("justify-center"),
-        borderWidth("border-2"),
-        borderColor("border-principalRoyalBlue"),
-        borderRadius("rounded-full"),
-        backgroundColor({
+      className={classNames(
+        "shrink-0  w-10 h-10 flex items-center justify-center border-2 border-principalRoyalBlue rounded-full",
+        {
           "bg-principalRoyalBlue": status === "complete",
-        }),
-        borderOpacity({ "border-opacity-50": status === "upcoming" }),
+          "border-opacity-50": status === "upcoming",
+        },
       )}
     >
       <span
-        className={tw(
-          status === "complete"
-            ? textColor("text-white")
-            : textColor("text-principalRoyalBlue"),
-          fontWeight("font-semibold"),
-          textOpacity({ "text-opacity-50": status === "upcoming" }),
+        className={classNames(
+          "font-semibold",
+          status === "complete" ? "text-white" : "text-principalRoyalBlue",
+          { "text-opacity-50": status === "upcoming" },
         )}
       >
         {label}
