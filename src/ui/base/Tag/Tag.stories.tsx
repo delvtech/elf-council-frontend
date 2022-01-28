@@ -1,7 +1,8 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Intent, Tag } from "./Tag";
+import { Tag } from "./Tag";
+import { Intent } from "src/ui/base/Intent";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {

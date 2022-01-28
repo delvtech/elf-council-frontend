@@ -5,7 +5,7 @@ import { Proposal } from "elf-council-proposals";
 import { t } from "ttag";
 
 import { getIsVotingOpen } from "src/elf-council-proposals";
-import { Intent } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
 
