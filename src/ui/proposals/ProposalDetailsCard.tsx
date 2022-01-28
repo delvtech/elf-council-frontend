@@ -133,6 +133,10 @@ export function ProposalDetailsCard(
 
   return (
     <GradientCard
+      style={
+        // don't scroll app behind popover, makes a double scroll bar
+        { overscrollBehavior: "none" }
+      }
       className={classNames(
         className,
         !isOpen && "translate-x-full",
