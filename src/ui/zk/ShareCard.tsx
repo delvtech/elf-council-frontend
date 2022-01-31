@@ -1,5 +1,4 @@
 import React, { ReactElement } from "react";
-import { Platform } from "./types";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import Image from "next/image";
@@ -9,27 +8,22 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 
-function getLabel(platform: Platform) {
-  switch (platform) {
-    case Platform.DISCORD:
-      return t`Discord Public ID`;
-    case Platform.GITHUB:
-      return t`GitHub Public ID`;
-    default:
-      return t`Public ID`;
-  }
-}
-
 interface ShareCardProps {
   className?: string;
   publicId: string;
-  platform: Platform;
+  label: string;
+  url: string;
+  icon?: string | ReactElement;
+  description: string | ReactElement;
 }
 
 export default function ShareCard({
   className,
   publicId,
-  platform,
+  label,
+  url,
+  icon,
+  description,
 }: ShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -65,35 +59,10 @@ export default function ShareCard({
         </div>
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Succesfully created`}</h1>
-          <p className="w-0 min-w-full">
-            {platform === Platform.DISCORD && (
-              <>
-                {t`Send your new Public ID in our `}
-                <a
-                  href="https://element.fi/discord"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-yieldLightBlue"
-                >{t`Discord channel`}</a>
-                {t` to associate it with your Discord username.`}
-              </>
-            )}
-            {platform === Platform.GITHUB && (
-              <>
-                {t`Share your new Public ID in a comment on our `}
-                <a
-                  href="https://github.com/element-fi/elf-council-frontend/issues/384"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-yieldLightBlue"
-                >{t`GitHub issue`}</a>
-                {t` to associate it with your GitHub username.`}
-              </>
-            )}
-          </p>
+          <p className="w-0 min-w-full">{description}</p>
         </div>
         <HashString
-          label={getLabel(platform)}
+          label={`${label} Public ID`}
           className="mb-10"
           showCopyButton={true}
           inputProps={{
@@ -103,36 +72,18 @@ export default function ShareCard({
           }}
         />
         <div className="flex gap-12">
-          {platform === Platform.DISCORD && (
-            <AnchorButton
-              variant={ButtonVariant.GRADIENT}
-              href="https://element.fi/discord"
-              className="flex gap-2"
-            >
-              {t`Go to Discord`}
-              <Image
-                width={24}
-                height={24}
-                src="/assets/discordlogo--light.svg"
-                alt=""
-              />
-            </AnchorButton>
-          )}
-          {platform === Platform.GITHUB && (
-            <AnchorButton
-              variant={ButtonVariant.GRADIENT}
-              href="https://github.com/element-fi/elf-council-frontend/issues/384"
-              className="flex gap-2"
-            >
-              {t`Go to GitHub`}
-              <Image
-                width={24}
-                height={24}
-                src="/assets/githublogo--light.svg"
-                alt=""
-              />
-            </AnchorButton>
-          )}
+          <AnchorButton
+            variant={ButtonVariant.GRADIENT}
+            href={url}
+            className="flex gap-2"
+          >
+            {t`Go to ${label}`}
+            {typeof icon === "string" ? (
+              <Image width={24} height={24} src={icon} alt="" />
+            ) : (
+              icon
+            )}
+          </AnchorButton>
         </div>
       </div>
     </Card>
