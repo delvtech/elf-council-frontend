@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { t } from "ttag";
 import { InformationCircleIcon } from "@heroicons/react/solid";
 import { formatBalance } from "src/formatBalance";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface BalanceWithLabelProps {

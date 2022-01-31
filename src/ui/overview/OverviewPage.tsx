@@ -8,7 +8,7 @@ import classNames from "classnames";
 import { t } from "ttag";
 
 import Card from "src/ui/base/Card/Card";
-import H1 from "src/ui/base/H1";
+import H1 from "src/ui/base/H1/H1";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 
 import { SummaryCards } from "./SummaryCards";

@@ -20,3 +20,5 @@ GradientCard.args = {
   children: <span>This is a gradient card.</span>,
   className: "text-white w-96 h-96 flex justify-center items-center",
 };
+
+GradientCard.storyName = "GradientCard";

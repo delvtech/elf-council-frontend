@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import { t } from "ttag";
 
 export function NoAirdropCard(): ReactElement {

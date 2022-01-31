@@ -8,7 +8,7 @@ import {
 } from "src/elf/wallets/connectors";
 import Button from "src/ui/base/Button/Button";
 import { ButtonSize, ButtonVariant } from "src/ui/base/Button/styles";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import { t } from "ttag";
 
 interface ConnectWalletButtonsProps {

@@ -3,7 +3,7 @@ import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 
 interface ErrorCardProps {
   className?: string;

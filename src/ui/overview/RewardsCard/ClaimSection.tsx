@@ -12,7 +12,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import Button from "src/ui/base/Button/Button";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import { useClaimRewards } from "src/ui/rewards/useClaimRewards";
 import { useUnclaimedRewards } from "src/ui/rewards/useUnclaimed";
 import { t } from "ttag";

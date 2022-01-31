@@ -1,7 +1,7 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import HashString from "src/ui/base/HashString";
 import { t, jt } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";

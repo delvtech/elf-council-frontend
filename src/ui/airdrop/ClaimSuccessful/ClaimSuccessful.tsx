@@ -6,7 +6,7 @@ import Image from "next/image";
 import { CallToActionCard } from "./CallToActionCard";
 import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
 import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import Link from "next/link";
 
 const elfiLogoElement = (

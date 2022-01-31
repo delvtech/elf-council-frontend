@@ -2,7 +2,7 @@ import { ReactElement, useState, useCallback, useRef } from "react";
 import Image from "next/image";
 import { t } from "ttag";
 import { formatWalletAddress } from "src/formatWalletAddress";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import classNames from "classnames";

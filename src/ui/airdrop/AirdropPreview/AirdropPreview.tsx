@@ -5,7 +5,7 @@ import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCar
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import { Intent, Tag } from "src/ui/base/Tag/Tag";
 import { jt, t } from "ttag";
 

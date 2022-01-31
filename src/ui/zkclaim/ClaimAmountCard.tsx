@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import { t } from "ttag";
 
 interface ClaimAmountCardProps {

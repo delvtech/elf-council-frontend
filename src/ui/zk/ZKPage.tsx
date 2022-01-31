@@ -7,7 +7,7 @@ import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
-import { ElementLogo } from "src/ui/base/ElementLogo";
+import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import { t } from "ttag";
 
 export default function ZKPage(): ReactElement {

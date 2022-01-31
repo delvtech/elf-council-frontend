@@ -7,7 +7,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
-import H1 from "src/ui/base/H1";
+import H1 from "src/ui/base/H1/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { t } from "ttag";
 

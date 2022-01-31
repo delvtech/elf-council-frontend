@@ -6,7 +6,7 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import TextInput from "src/ui/base/Input/TextInput";
 import { Tag, Intent } from "src/ui/base/Tag/Tag";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
