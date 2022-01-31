@@ -17,7 +17,15 @@ export function Label({
   children,
 }: LabelProps): ReactElement {
   return (
-    <span className={classNames(small ? "text-sm" : "text-base", className)}>
+    <span
+      className={classNames(
+        {
+          "text-sm": small,
+          "text-base": !small,
+        },
+        className,
+      )}
+    >
       {children}
     </span>
   );

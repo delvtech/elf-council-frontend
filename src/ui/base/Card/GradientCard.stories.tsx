@@ -2,14 +2,6 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import GradientCardComponent from "./GradientCard";
-import tw, {
-  textColor,
-  width,
-  height,
-  display,
-  justifyContent,
-  alignItems,
-} from "src/elf-tailwindcss-classnames";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -26,12 +18,7 @@ export const GradientCard = Story.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 GradientCard.args = {
   children: <span>This is a gradient card.</span>,
-  className: tw(
-    textColor("text-white"),
-    width("w-96"),
-    height("h-96"),
-    display("flex"),
-    justifyContent("justify-center"),
-    alignItems("items-center"),
-  ),
+  className: "text-white w-96 h-96 flex justify-center items-center",
 };
+
+GradientCard.storyName = "GradientCard";

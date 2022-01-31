@@ -18,7 +18,7 @@ import tw, {
   textAlign,
 } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import TokenInput from "src/ui/base/Input/TokenInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";

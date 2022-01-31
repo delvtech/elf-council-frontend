@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
-import H1 from "src/ui/base/H1";
+import H1 from "src/ui/base/H1/H1";
 import { t } from "ttag";
 
 interface DelegateInstructionsProps {

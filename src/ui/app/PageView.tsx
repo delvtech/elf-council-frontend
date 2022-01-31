@@ -7,7 +7,7 @@ import Footer from "src/ui/app/Footer";
 import Header from "src/ui/app/Header";
 import Sidebar from "src/ui/app/Sidebar";
 import SimpleDialog from "src/ui/base/Dialog/Dialog";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import { t } from "ttag";
 
 interface PageViewProps {

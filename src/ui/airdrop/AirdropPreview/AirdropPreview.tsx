@@ -5,7 +5,7 @@ import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCar
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { jt, t } from "ttag";
@@ -19,8 +19,7 @@ interface AirdropPreviewProps {
 const elementIconInBodyText = (
   <ElementIcon
     key="element-icon-in-body-text"
-    bgColorClassName="bg-paleLily"
-    className="inline-block ml-0.5 mr-1 -mb-1.5"
+    className="bg-paleLily inline-block ml-0.5 mr-1 -mb-1.5"
     size={IconSize.MEDIUM}
   />
 );

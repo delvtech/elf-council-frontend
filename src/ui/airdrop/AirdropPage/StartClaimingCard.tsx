@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import {
   ConnectWalletButton,
   WalletProfileButton,
@@ -18,16 +18,14 @@ interface StartClaimingCardProps {
 const elementIconInSubtitle = (
   <ElementIcon
     key="element-icon-in-subtitle"
-    bgColorClassName="bg-paleLily"
-    className="inline-block mx-1"
+    className="bg-paleLily inline-block mx-1"
     size={IconSize.MEDIUM}
   />
 );
 const elementIconInBodyText = (
   <ElementIcon
     key="element-icon-in-body-text"
-    bgColorClassName="bg-paleLily"
-    className="inline-block ml-0.5 mr-2 -mb-1.5"
+    className="bg-paleLily inline-block ml-0.5 mr-2 -mb-1.5"
     size={IconSize.MEDIUM}
   />
 );

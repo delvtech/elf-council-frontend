@@ -24,7 +24,7 @@ import { useTokenAllowance } from "src/elf/token/useTokenAllowance";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import TextInput from "src/ui/base/Input/TextInput";
 import { useNumericInputValue } from "src/ui/base/Input/useNumericInputValue";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";

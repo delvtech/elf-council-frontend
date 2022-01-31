@@ -1,8 +1,7 @@
+import React, { ReactElement, ReactNode } from "react";
 import classNames from "classnames";
 import Link from "next/link";
-import React, { ReactElement, ReactNode } from "react";
 import { ButtonStyles, getButtonClass } from "src/ui/base/Button/styles";
-import { cursor } from "src/elf-tailwindcss-classnames";
 
 interface LinkButtonProps extends ButtonStyles {
   /**
@@ -27,13 +26,7 @@ export default function LinkButton(props: LinkButtonProps): ReactElement {
       the child of a Link since all a tags *should* have an href 🙁 */
       /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a>
-        <div
-          className={classNames(
-            buttonClass,
-            cursor("cursor-pointer"),
-            className,
-          )}
-        >
+        <div className={classNames(buttonClass, "cursor-pointer", className)}>
           {children}
         </div>
       </a>

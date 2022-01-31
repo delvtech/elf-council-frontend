@@ -2,7 +2,7 @@ import React, { ReactElement, useCallback, useEffect, useState } from "react";
 // import { useQuery } from "react-query";
 // import useWorker from "src/ui/base/useWorker";
 import useRouterSteps from "src/ui/router/useRouterSteps";
-import { ElementLogo } from "src/ui/base/ElementLogo";
+import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import { t } from "ttag";
 import { utils } from "ethers";
 import LookupCard from "./LookupCard";
