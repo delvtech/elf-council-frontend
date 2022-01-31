@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import React, { ReactElement, ReactNode } from "react";
-import tw, { fontSize } from "src/elf-tailwindcss-classnames";
 
 interface LabelProps {
   /**
@@ -20,7 +19,10 @@ export function Label({
   return (
     <span
       className={classNames(
-        tw(small ? fontSize("text-sm") : fontSize("text-base")),
+        {
+          "text-sm": small,
+          "text-base": !small,
+        },
         className,
       )}
     >
