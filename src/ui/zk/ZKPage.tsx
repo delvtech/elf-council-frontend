@@ -3,6 +3,7 @@ import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
 import ShareCard from "./ShareCard";
 import { Platform } from "./types";
+import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "./zkURLs";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
@@ -100,7 +101,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
           publicId={publicId as string}
           className={getStepClassName(3)}
           label="Discord"
-          url="https://element.fi/discord"
+          url={DISCORD_ZK_URL}
           icon={
             <Image
               width={24}
@@ -113,7 +114,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
             <>
               {t`Send your new Public ID in our `}
               <a
-                href="https://element.fi/discord"
+                href={DISCORD_ZK_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="text-yieldLightBlue"
@@ -128,7 +129,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
           publicId={publicId as string}
           className={getStepClassName(3)}
           label="GitHub"
-          url="https://github.com/element-fi/elf-council-frontend/issues/384"
+          url={GITHUB_ZK_URL}
           icon={
             <Image
               width={24}
@@ -141,7 +142,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
             <>
               {t`Share your new Public ID in a comment on our `}
               <a
-                href="https://github.com/element-fi/elf-council-frontend/issues/384"
+                href={GITHUB_ZK_URL}
                 target="_blank"
                 rel="noreferrer"
                 className="text-yieldLightBlue"
