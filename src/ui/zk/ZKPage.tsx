@@ -1,16 +1,22 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
-import SuccessCard from "./SuccessCard";
+import ShareCard from "./ShareCard";
+import { Platform } from "./types";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo";
+import Image from "next/image";
 import { t } from "ttag";
 
-export default function ZKPage(): ReactElement {
+interface ZKPageProps {
+  platform: Platform;
+}
+
+export default function ZKPage({ platform }: ZKPageProps): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const [publicId, setPublicId] = useState<string>();
   const {
@@ -89,10 +95,63 @@ export default function ZKPage(): ReactElement {
       />
 
       {/* STEP 3 */}
-      <SuccessCard
-        publicId={publicId as string}
-        className={getStepClassName(3)}
-      />
+      {platform === Platform.DISCORD && (
+        <ShareCard
+          publicId={publicId as string}
+          className={getStepClassName(3)}
+          label="Discord"
+          url="https://element.fi/discord"
+          icon={
+            <Image
+              width={24}
+              height={24}
+              src="/assets/discordlogo--light.svg"
+              alt=""
+            />
+          }
+          description={
+            <>
+              {t`Send your new Public ID in our `}
+              <a
+                href="https://element.fi/discord"
+                target="_blank"
+                rel="noreferrer"
+                className="text-yieldLightBlue"
+              >{t`Discord channel`}</a>
+              {t` to associate it with your Discord username.`}
+            </>
+          }
+        />
+      )}
+      {platform === Platform.GITHUB && (
+        <ShareCard
+          publicId={publicId as string}
+          className={getStepClassName(3)}
+          label="GitHub"
+          url="https://github.com/element-fi/elf-council-frontend/issues/384"
+          icon={
+            <Image
+              width={24}
+              height={24}
+              src="/assets/githublogo--light.svg"
+              alt=""
+            />
+          }
+          description={
+            <>
+              {t`Share your new Public ID in a comment on our `}
+              <a
+                href="https://github.com/element-fi/elf-council-frontend/issues/384"
+                target="_blank"
+                rel="noreferrer"
+                className="text-yieldLightBlue"
+              >{t`GitHub issue`}</a>
+              {t` to associate it with your GitHub username.`}
+            </>
+          }
+        />
+      )}
+
       <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />

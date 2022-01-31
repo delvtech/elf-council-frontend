@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import ZKPage from "src/ui/zk/ZKPage";
+import { Platform } from "src/ui/zk/types";
 import PageView from "src/ui/app/PageView";
 
 export default function ZK(): ReactElement {
@@ -8,7 +9,7 @@ export default function ZK(): ReactElement {
       showSidebar={false}
       childrenContainerClassName="self-stretch flex justify-center"
     >
-      <ZKPage />
+      <ZKPage platform={Platform.DISCORD} />
     </PageView>
   );
 }
