@@ -1,25 +1,10 @@
 import React, { ReactElement } from "react";
-import tw, {
-  display,
-  justifyContent,
-  width,
-  space,
-  padding,
-} from "src/elf-tailwindcss-classnames";
 import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
 import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
 
 function Footer(): ReactElement {
   return (
-    <div
-      className={tw(
-        display("flex"),
-        justifyContent("justify-end"),
-        space("space-x-3"),
-        padding("px-16", "pb-8"),
-        width("w-full"),
-      )}
-    >
+    <div className="flex justify-end w-full px-16 pb-8 space-x-3">
       <a href="https://twitter.com/element_fi">
         <TwitterIconFromFigma />
       </a>

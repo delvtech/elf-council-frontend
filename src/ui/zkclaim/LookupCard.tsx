@@ -6,7 +6,7 @@ import HashString from "src/ui/base/HashString";
 import { t, jt } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import useFile from "src/ui/base/useFile";
-import ZKData from "src/ui/zk/ZKData";
+import { ZKData } from "src/ui/zk/types";
 
 interface LookupCardProps {
   className?: string;

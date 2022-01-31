@@ -1,42 +1,72 @@
 import React, { ReactElement } from "react";
 
-import { formatEther } from "ethers/lib/utils";
+import { useSmartContractEvents } from "@elementfi/react-query-typechain";
+import { ProposalsJson } from "elf-council-proposals";
+import { BigNumber } from "ethers";
 import { t } from "ttag";
 
 import { abbreviateLargeValue } from "src/base/numbers";
-import { addressesJson } from "src/elf-council-addresses";
-import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+import { lockingVaultContract } from "src/elf/contracts";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import SummaryCard from "src/ui/overview/SummaryCard";
 import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 
-const { treasury } = addressesJson.addresses;
+interface SummaryCardsProps {
+  proposalsJson: ProposalsJson;
+}
+export function SummaryCards({
+  proposalsJson,
+}: SummaryCardsProps): ReactElement {
+  const { data: currentBlock } = useLatestBlockNumber();
+  const numActiveProposals = currentBlock
+    ? proposalsJson.proposals.filter(
+        ({ expiration }) => expiration > currentBlock,
+      ).length
+    : 0;
 
-export function SummaryCards(): ReactElement {
+  const numDelegates = useNumDelegates();
+
   const votingPower = useVotingPowerForProtocol();
 
-  const { data: treasuryBalanceBN } = useTokenBalanceOf(
-    elementTokenContract,
-    treasury,
-  );
-
-  const treasuryBalance = formatEther(treasuryBalanceBN || 0);
-  const formattedTreasuryBalance = abbreviateLargeValue(+treasuryBalance);
   const formattedTotalVotingPower = abbreviateLargeValue(
     Math.round(votingPower),
   );
 
   return (
     <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
-      <SummaryCard title={t`Annual Protocol Revenue`} balance={"$180,000"} />
+      <SummaryCard title={t`Active Proposals`} balance={numActiveProposals} />
+      <SummaryCard title={t`Total Delegates`} balance={numDelegates} />
       <SummaryCard
-        title={t`Total Treasury`}
-        balance={`${formattedTreasuryBalance} ELFI`}
-      />
-      <SummaryCard
-        title={t`Total Voting Power`}
+        title={t`Circulating Voting Power`}
         balance={`${formattedTotalVotingPower} ELFI`}
       />
     </div>
   );
+}
+
+function useNumDelegates() {
+  const { data: events } = useSmartContractEvents(
+    lockingVaultContract,
+    "VoteChange",
+  );
+
+  // tally of vote power by delegate
+  const votePowerByDelegates: Record<string, BigNumber> = {};
+  events?.forEach((event) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [unusedAccount, delegate, amount]: [string, string, BigNumber] =
+      event.args as [string, string, BigNumber];
+    if (delegate in votePowerByDelegates) {
+      votePowerByDelegates[delegate] =
+        votePowerByDelegates[delegate].add(amount);
+    }
+
+    votePowerByDelegates[delegate] = amount;
+  });
+
+  const delegatedVotes = Object.values(votePowerByDelegates);
+
+  delegatedVotes.filter((votePower) => !votePower.isZero());
+
+  return delegatedVotes.length;
 }

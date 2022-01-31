@@ -3,18 +3,6 @@
 import classNames from "classnames";
 import { CSSProperties, ReactElement, ReactNode } from "react";
 import { assertNever } from "src/base/assertNever";
-import tw, {
-  backgroundColor,
-  backgroundImage,
-  gradientColorStops,
-  boxShadow,
-  overflow,
-  borderRadius,
-  padding,
-  ringColor,
-  ringWidth,
-  TArg,
-} from "src/elf-tailwindcss-classnames";
 
 export enum CardVariant {
   GRADIENT = "gradient",
@@ -45,16 +33,14 @@ export default function Card(props: CardProps): ReactElement {
   } = props;
 
   const cardClassName = classNames(
-    tw(
-      getBackgroundColor(variant, active, interactive),
-      boxShadow(active ? "shadow-md" : "shadow"),
-      overflow("overflow-hidden"),
-      borderRadius("rounded-xl"),
-      padding("px-4", "py-5", "sm:p-6"),
-      boxShadow({ "hover:shadow-md": interactive }),
-      ringColor({ "focus:ring-principalRoyalBlue": interactive }),
-      ringWidth({ "focus:ring-2": interactive }),
-    ),
+    getBackgroundColor(variant, active, interactive),
+    "overflow-hidden rounded-xl px-4 py-5 sm:p-6",
+    active ? "shadow-md" : "shadow",
+    {
+      "hover:shadow-md": interactive,
+      "focus:ring-principalRoyalBlue": interactive,
+      "focus:ring-2": interactive,
+    },
     className,
   );
 
@@ -77,35 +63,22 @@ function getBackgroundColor(
   variant: CardVariant,
   active: boolean,
   interactive: boolean,
-): TArg {
+): string {
   if (active) {
-    return backgroundColor("bg-hackerSky");
+    return "bg-hackerSky";
   }
 
   switch (variant) {
     case CardVariant.BLUE:
-      return tw(
-        backgroundImage("bg-gradient-to-br"),
-        gradientColorStops(
-          "from-principalRoyalBlue",
-          "via-yieldBlue",
-          "to-principalRoyalBlue",
-        ),
-      );
+      return "bg-gradient-to-br from-principalRoyalBlue via-yieldBlue to-principalRoyalBlue";
     case CardVariant.GRADIENT:
-      return tw(
-        backgroundImage("bg-gradient-to-br"),
-        gradientColorStops(
-          "from-principalRoyalBlue",
-          "via-principalRoyalBlue",
-          "to-principalBlue",
-        ),
-      );
+      return "bg-gradient-to-br from-principalRoyalBlue via-principalRoyalBlue to-principalBlue";
     case CardVariant.WHITE:
-      return backgroundColor("bg-white");
+      return "bg-white";
     case CardVariant.HACKER_SKY:
-      return backgroundColor("bg-hackerSky", { "hover:bg-white": interactive });
+      return classNames("bg-hackerSky", { "hover:bg-white": interactive });
     default:
       assertNever(variant);
+      return "";
   }
 }

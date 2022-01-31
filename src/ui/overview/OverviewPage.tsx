@@ -12,8 +12,14 @@ import H1 from "src/ui/base/H1/H1";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 
 import { SummaryCards } from "./SummaryCards";
+import { ProposalsJson } from "elf-council-proposals";
 
-export function OverviewPage(): ReactElement {
+interface OverviewPageProps {
+  proposalsJson: ProposalsJson;
+}
+export function OverviewPage({
+  proposalsJson,
+}: OverviewPageProps): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
     <div className="w-full h-full space-y-6 lg:max-w-[1024px]">
@@ -23,7 +29,7 @@ export function OverviewPage(): ReactElement {
           {t`Governance Overview`}
         </H1>
       </div>
-      <SummaryCards />
+      <SummaryCards proposalsJson={proposalsJson} />
       <div className="flex flex-col justify-center w-full grid-cols-2 space-y-6 lg:space-x-6 lg:flex-row lg:space-y-0">
         <div className="w-full">
           <PortfolioCard account={account} />

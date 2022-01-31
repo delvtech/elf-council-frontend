@@ -6,7 +6,8 @@ import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
-import { Intent, Tag } from "src/ui/base/Tag/Tag";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 import { jt, t } from "ttag";
 
 interface AirdropPreviewProps {

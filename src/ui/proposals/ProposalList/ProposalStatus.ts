@@ -1,5 +1,6 @@
 import { parseEther } from "ethers/lib/utils";
 import { VotingPower } from "src/elf/proposals/VotingPower";
+import { t } from "ttag";
 
 export enum ProposalStatus {
   IN_PROGRESS = "IN_PROGRESS",
@@ -9,6 +10,14 @@ export enum ProposalStatus {
   PASSED = "PASSED",
   FAILED = "FAILIED",
 }
+
+export const ProposalStatusLabels: Record<ProposalStatus, string> = {
+  [ProposalStatus.IN_PROGRESS]: t`In progress`,
+  [ProposalStatus.PASSING]: t`Passing`,
+  [ProposalStatus.FAILING]: t`Failing`,
+  [ProposalStatus.PASSED]: t`Passed`,
+  [ProposalStatus.FAILED]: t`Failed`,
+};
 
 export function getProposalStatus(
   isVotingOpen: boolean,

@@ -2,13 +2,6 @@
 
 import classNames from "classnames";
 import { CSSProperties, ReactElement, ReactNode } from "react";
-import tw, {
-  backgroundImage,
-  gradientColorStops,
-  overflow,
-  boxShadow,
-  borderRadius,
-} from "src/elf-tailwindcss-classnames";
 
 interface GradientCardProps {
   children: ReactNode;
@@ -21,17 +14,7 @@ export default function GradientCard(props: GradientCardProps): ReactElement {
   return (
     <div
       className={classNames(
-        tw(
-          backgroundImage("bg-gradient-to-br"),
-          gradientColorStops(
-            "from-principalRoyalBlue",
-            "via-principalRoyalBlue",
-            "to-principalBlue",
-          ),
-          overflow("overflow-hidden"),
-          boxShadow("shadow"),
-          borderRadius("rounded-xl"),
-        ),
+        "bg-gradient-to-br from-principalRoyalBlue via-principalRoyalBlue to-principalBlue overflow-hidden shadow rounded-xl",
         className,
       )}
       style={style}

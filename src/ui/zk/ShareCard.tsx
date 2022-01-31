@@ -8,15 +8,23 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 
-interface SuccessCardProps {
+interface ShareCardProps {
   className?: string;
   publicId: string;
+  label: string;
+  url: string;
+  icon?: string | ReactElement;
+  description: string | ReactElement;
 }
 
-export default function SuccessCard({
+export default function ShareCard({
   className,
   publicId,
-}: SuccessCardProps): ReactElement {
+  label,
+  url,
+  icon,
+  description,
+}: ShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
       <div className="flex flex-col items-center justify-center gap-2 px-4 pt-3 pb-4 text-center text-white md:pt-8 md:px-14 md:pb-14">
@@ -51,19 +59,10 @@ export default function SuccessCard({
         </div>
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Succesfully created`}</h1>
-          <p className="w-0 min-w-full">
-            {t`Transmit your Public ID to the `}
-            <a
-              href="https://discord.gg/64bxSaHr"
-              target="_blank"
-              rel="noreferrer"
-              className="text-yieldLightBlue"
-            >{t`Discord channel`}</a>
-            {t` and keep your Key and Secret private.`}
-          </p>
+          <p className="w-0 min-w-full">{description}</p>
         </div>
         <HashString
-          label={t`Public ID`}
+          label={`${label} Public ID`}
           className="mb-10"
           showCopyButton={true}
           inputProps={{
@@ -75,16 +74,15 @@ export default function SuccessCard({
         <div className="flex gap-12">
           <AnchorButton
             variant={ButtonVariant.GRADIENT}
-            href="https://element.fi/discord"
+            href={url}
             className="flex gap-2"
           >
-            {t`Go to Discord`}
-            <Image
-              width={24}
-              height={24}
-              src="/assets/discordlogo--light.svg"
-              alt=""
-            />
+            {t`Go to ${label}`}
+            {typeof icon === "string" ? (
+              <Image width={24} height={24} src={icon} alt="" />
+            ) : (
+              icon
+            )}
           </AnchorButton>
         </div>
       </div>

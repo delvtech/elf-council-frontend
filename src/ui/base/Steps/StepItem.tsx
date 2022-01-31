@@ -29,7 +29,7 @@ export function StepItem({
   const Container = href ? StepItemAsLink : "div";
   return (
     <Container className="flex-1" href={href as string | URL}>
-      <div className="h-10 flex items-center justify-center mb-2">
+      <div className="flex items-center justify-center h-10 mb-2">
         <StepLabel status={status} label={stepLabel}></StepLabel>
       </div>
       <div
@@ -83,11 +83,11 @@ function StepLabel({ label, status }: StepLabelProps) {
       )}
     >
       <span
-        className={classNames("font-semibold", {
-          "text-white": status === StepStatus.COMPLETE,
-          "text-principalRoyalBlue": status !== StepStatus.COMPLETE,
-          "text-opacity-50": status === StepStatus.UPCOMING,
-        })}
+        className={classNames(
+          "font-semibold",
+          status === "complete" ? "text-white" : "text-principalRoyalBlue",
+          { "text-opacity-50": status === StepStatus.UPCOMING },
+        )}
       >
         {label}
       </span>
