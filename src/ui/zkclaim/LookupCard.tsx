@@ -1,12 +1,12 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import H2 from "src/ui/base/H2";
 import HashString from "src/ui/base/HashString";
-import { t, jt } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import useFile from "src/ui/base/useFile";
 import { ZKData } from "src/ui/zk/types";
+import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "src/ui/zk/zkURLs";
+import { t, jt } from "ttag";
 
 interface LookupCardProps {
   className?: string;
@@ -50,13 +50,30 @@ export default function LookupCard({
     <Card variant={CardVariant.BLUE} className={className}>
       <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
         <h1 className="mb-2 text-3xl font-semibold">{t`Claim Airdrop`}</h1>
-        <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
-          <H2 className="text-white">{t`Unlock your Public ID`}</H2>
-          <p>
-            {jt`To claim the airdrop, enter your Secret and your Key, so we can 
-            check against your Public ID.`}
-          </p>
-        </div>
+        <p>
+          {jt`To check your elligibility for this airdrop, upload or enter the Key and Secret generated while creating the Public ID you shared in ${(
+            <a
+              href={DISCORD_ZK_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="text-yieldLightBlue"
+            >
+              Discord
+            </a>
+          )} or on ${(
+            <a
+              href={GITHUB_ZK_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="text-yieldLightBlue"
+            >
+              GitHub
+            </a>
+          )}.`}
+        </p>
+        <p className="mb-6">
+          {t`Element cannot retrieve your Key and Secret for you.`}
+        </p>
         <HashString
           className="mb-2"
           label={t`The Key`}
