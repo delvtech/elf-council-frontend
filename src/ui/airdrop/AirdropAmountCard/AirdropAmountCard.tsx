@@ -35,11 +35,7 @@ export function AirdropAmountCard({
         <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
         <div className="mb-10">
           <div className="flex items-center justify-center gap-2 font-bold md:text-3xl text-principalRoyalBlue">
-            <ElementIcon
-              bgColorClassName="bg-paleLily"
-              className="ml-1"
-              size={IconSize.MEDIUM}
-            />
+            <ElementIcon className="bg-paleLily ml-1" size={IconSize.MEDIUM} />
             {t`${claimableBalance ? commify(claimableBalance) : 0} ELFI`}
           </div>
         </div>

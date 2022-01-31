@@ -21,11 +21,7 @@ export function ClaimedAmountCard({
           </div>
           <div className="text-gray-500 flex flex-col items-center">
             <span className="mb-4">{t`$ELFI tokens`}</span>
-            <ElementIcon
-              bgColorClassName="bg-paleLily"
-              className="ml-2"
-              size={IconSize.LARGE}
-            />
+            <ElementIcon className="bg-paleLily ml-2" size={IconSize.LARGE} />
           </div>
         </div>
       </div>

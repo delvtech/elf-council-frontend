@@ -19,8 +19,7 @@ interface AirdropPreviewProps {
 const elementIconInBodyText = (
   <ElementIcon
     key="element-icon-in-body-text"
-    bgColorClassName="bg-paleLily"
-    className="inline-block ml-0.5 mr-1 -mb-1.5"
+    className="bg-paleLily inline-block ml-0.5 mr-1 -mb-1.5"
     size={IconSize.MEDIUM}
   />
 );
