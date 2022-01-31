@@ -5,7 +5,11 @@ import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import useFile from "src/ui/base/useFile";
 import { ZKData } from "src/ui/zk/types";
-import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "src/ui/zk/zkURLs";
+import {
+  DISCORD_ZK_URL,
+  GITHUB_ZK_URL,
+  HASH_LENGTH,
+} from "src/ui/zk/constants";
 import { t, jt } from "ttag";
 
 interface LookupCardProps {
@@ -13,9 +17,6 @@ interface LookupCardProps {
   onComplete?: (data: ZKData) => void;
   onNextClick: () => void;
 }
-
-// TODO: save somewhere to be shared with ../zk/EncryptionCard
-const HASH_LENGTH = 66;
 
 export default function LookupCard({
   className,

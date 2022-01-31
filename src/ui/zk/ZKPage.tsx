@@ -3,7 +3,7 @@ import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
 import ShareCard from "./ShareCard";
 import { Platform } from "./types";
-import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "./zkURLs";
+import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "./constants";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
