@@ -20,17 +20,17 @@ function getLabel(platform: Platform) {
   }
 }
 
-interface SuccessCardProps {
+interface ShareCardProps {
   className?: string;
   publicId: string;
   platform: Platform;
 }
 
-export default function SuccessCard({
+export default function ShareCard({
   className,
   publicId,
   platform,
-}: SuccessCardProps): ReactElement {
+}: ShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
       <div className="flex flex-col items-center justify-center gap-2 px-4 pt-3 pb-4 text-center text-white md:pt-8 md:px-14 md:pb-14">

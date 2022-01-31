@@ -4,16 +4,16 @@ import H2 from "src/ui/base/H2";
 import ClaimAmountCard from "./ClaimAmountCard";
 import { t } from "ttag";
 
-interface SuccessCardProps {
+interface AlreadyClaimedCardProps {
   className?: string;
 }
 
 // PLACEHOLDER
 const ELFI_TOKEN_AMOUNT = "208.9291341";
 
-export default function SuccessCard({
+export default function AlreadyClaimedCard({
   className,
-}: SuccessCardProps): ReactElement {
+}: AlreadyClaimedCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
       <div className="flex flex-col justify-center gap-2 px-8 pt-2 pb-4 text-white sm:pt-6 sm:px-16 md:px-40 sm:pb-14 sm:text-center sm:items-center">
