@@ -16,7 +16,7 @@ import H2 from "src/ui/base/H2/H2";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
-import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
+import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { RESOURCES_URL } from "src/ui/resources";
 
