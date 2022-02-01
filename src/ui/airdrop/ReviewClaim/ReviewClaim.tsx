@@ -11,7 +11,7 @@ import H1 from "src/ui/base/H1/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { t } from "ttag";
 
-interface ReviewClaimProps {
+interface ReviewTransactionProps {
   account: string | null | undefined;
   delegateAddress: string;
   signer: Signer | undefined;
@@ -19,13 +19,13 @@ interface ReviewClaimProps {
   onNextStep: () => void;
 }
 
-export function ReviewClaim({
+export function ReviewTransaction({
   account,
   delegateAddress,
   signer,
   onPrevStep,
   onNextStep,
-}: ReviewClaimProps): ReactElement {
+}: ReviewTransactionProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
 

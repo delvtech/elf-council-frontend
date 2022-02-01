@@ -9,7 +9,7 @@ import {
 } from "src/ui/wallet/ConnectWalletButton";
 import { jt, t } from "ttag";
 
-interface StartClaimingCardProps {
+interface StartAirdropCardProps {
   account: string | null | undefined;
   walletConnectionActive: boolean | undefined;
   onNextStep: () => void;
@@ -18,7 +18,7 @@ interface StartClaimingCardProps {
 const elementIconInSubtitle = (
   <ElementIcon
     key="element-icon-in-subtitle"
-    className="bg-paleLily inline-block mx-1"
+    className="inline-block mx-1 bg-paleLily"
     size={IconSize.MEDIUM}
   />
 );
@@ -30,11 +30,11 @@ const elementIconInBodyText = (
   />
 );
 
-export function StartClaimingCard({
+export function StartAirdropCard({
   walletConnectionActive,
   account,
   onNextStep,
-}: StartClaimingCardProps): ReactElement {
+}: StartAirdropCardProps): ReactElement {
   return (
     <Card
       variant={CardVariant.BLUE}

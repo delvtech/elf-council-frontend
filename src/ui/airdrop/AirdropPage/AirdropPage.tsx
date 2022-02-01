@@ -1,7 +1,7 @@
 import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, useState } from "react";
 import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
-import { StartClaimingCard } from "src/ui/airdrop/AirdropPage/StartClaimingCard";
+import { StartAirdropCard } from "src/ui/airdrop/StartAirdropCard/StartAirdropCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
 import Steps from "src/ui/base/Steps/Steps";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -13,7 +13,7 @@ import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
-import { ReviewClaim } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
+import { ReviewTransaction } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
 import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
 import { ClaimSuccessful } from "src/ui/airdrop/ClaimSuccessful/ClaimSuccessful";
 
@@ -22,7 +22,7 @@ enum AirdropSteps {
    * The greeting screen, user is prompted to connect their wallet before they
    * can continue.
    */
-  START_CLAIMING,
+  START_AIRDROP,
 
   /**
    * User sees their airdrop amount and can continue to learn about delegation.
@@ -44,12 +44,12 @@ enum AirdropSteps {
    * User can see their tokens and delegate side-by-side then click CLAIM to
    * create the transaction.
    */
-  CLAIM_AND_DELEGATE_PREVIEW,
+  REVIEW_TRANSACTION,
 
   /**
    * The final screen where users can then go to governance UI or socials.
    */
-  CLAIM_COMPLETE,
+  DELEGATE_COMPLETE,
 
   /**
    * A returning user sees the amount of airdrop they already claimed.
@@ -97,10 +97,10 @@ export default function AirdropPage(): ReactElement {
       <div className="w-full">
         {(() => {
           switch (activeStep) {
-            case AirdropSteps.START_CLAIMING:
+            case AirdropSteps.START_AIRDROP:
             default:
               return (
-                <StartClaimingCard
+                <StartAirdropCard
                   account={account}
                   walletConnectionActive={active}
                   onNextStep={() => {
@@ -120,7 +120,7 @@ export default function AirdropPage(): ReactElement {
               return (
                 <AirdropPreview
                   account={account}
-                  onPrevStep={() => setActiveStep(AirdropSteps.START_CLAIMING)}
+                  onPrevStep={() => setActiveStep(AirdropSteps.START_AIRDROP)}
                   onNextStep={() =>
                     setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)
                   }
@@ -144,13 +144,13 @@ export default function AirdropPage(): ReactElement {
                     setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)
                   }
                   onNextStep={() => {
-                    setActiveStep(AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW);
+                    setActiveStep(AirdropSteps.REVIEW_TRANSACTION);
                   }}
                 />
               );
-            case AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW:
+            case AirdropSteps.REVIEW_TRANSACTION:
               return (
-                <ReviewClaim
+                <ReviewTransaction
                   account={account}
                   signer={signer}
                   delegateAddress={
@@ -158,11 +158,11 @@ export default function AirdropPage(): ReactElement {
                   }
                   onPrevStep={() => setActiveStep(AirdropSteps.CHOOSE_DELEGATE)}
                   onNextStep={() => {
-                    setActiveStep(AirdropSteps.CLAIM_COMPLETE);
+                    setActiveStep(AirdropSteps.DELEGATE_COMPLETE);
                   }}
                 />
               );
-            case AirdropSteps.CLAIM_COMPLETE:
+            case AirdropSteps.DELEGATE_COMPLETE:
               return <ClaimSuccessful />;
           }
         })()}
@@ -177,7 +177,7 @@ function getConnectWalletStatus(
   if (account) {
     return StepStatus.COMPLETE;
   }
-  if (activeStep === AirdropSteps.START_CLAIMING) {
+  if (activeStep === AirdropSteps.START_AIRDROP) {
     return StepStatus.COMPLETE;
   }
   return StepStatus.UPCOMING;
@@ -186,7 +186,7 @@ function getConnectWalletStatus(
 function getDelegateStatus(activeStep: AirdropSteps | undefined): StepStatus {
   if (
     activeStep === undefined ||
-    [AirdropSteps.START_CLAIMING, AirdropSteps.AIRDROP_PREVIEW].includes(
+    [AirdropSteps.START_AIRDROP, AirdropSteps.AIRDROP_PREVIEW].includes(
       activeStep,
     )
   ) {
@@ -212,14 +212,14 @@ function getClaimAndDelegateStatus(
   }
 
   if (
-    [AirdropSteps.ALREADY_CLAIMED, AirdropSteps.CLAIM_COMPLETE].includes(
+    [AirdropSteps.ALREADY_CLAIMED, AirdropSteps.DELEGATE_COMPLETE].includes(
       activeStep,
     )
   ) {
     return StepStatus.COMPLETE;
   }
 
-  if (activeStep === AirdropSteps.CLAIM_AND_DELEGATE_PREVIEW) {
+  if (activeStep === AirdropSteps.REVIEW_TRANSACTION) {
     return StepStatus.CURRENT;
   }
 
