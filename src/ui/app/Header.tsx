@@ -14,7 +14,7 @@ function Header(): ReactElement {
   return (
     <div className="flex justify-between w-full">
       <div className="flex space-x-3"></div>
-      <div className="flex items-center space-x-4 text-gray-400 mr-3">
+      <div className="flex items-center mr-3 space-x-4 text-gray-400">
         {account ? (
           <div className="flex items-center">
             <div className="flex items-center gap-1 mr-8">
@@ -22,21 +22,21 @@ function Header(): ReactElement {
                 target="_blank"
                 rel="noreferrer"
                 href={RESOURCES_URL}
-                className="flex items-center gap-2"
+                className="items-center hidden gap-2 md:flex"
               >
                 <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
-                <ExternalLinkIcon className="h-4 text-principalRoyalBlue" />
+                <ExternalLinkIcon className="h-4 shrink-0 text-principalRoyalBlue" />
               </a>
             </div>
             <div className="flex items-center mr-8">
-              <div className="relative h-5 w-5">
+              <div className="relative w-5 h-5">
                 <Image
                   layout="fill"
                   src="/assets/gas.svg"
                   alt={t`Gas pump icon`}
                 />
               </div>
-              <span className="text-principalRoyalBlue font-bold ml-2 mr-1">
+              <span className="ml-2 mr-1 font-bold text-principalRoyalBlue">
                 {gasPrice?.recommendedBaseFee}
               </span>
             </div>
