@@ -12,6 +12,7 @@ import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import downloadFile, { DownloadType } from "src/base/downloadFile";
 import { ZKData } from "./types";
+import { HASH_LENGTH } from "./constants";
 
 interface EncryptionCardProps {
   className?: string;
@@ -20,8 +21,6 @@ interface EncryptionCardProps {
   onBackClick?: () => void;
   onNextClick: () => void;
 }
-
-const HASH_LENGTH = 66;
 
 export default function EncryptionCard({
   className,
