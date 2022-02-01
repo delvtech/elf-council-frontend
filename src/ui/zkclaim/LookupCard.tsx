@@ -47,30 +47,36 @@ export default function LookupCard({
     }
   }, [file]);
 
+  const discordLink = (
+    <a
+      key="discordLink"
+      href={DISCORD_ZK_URL}
+      target="_blank"
+      rel="noreferrer"
+      className="text-yieldLightBlue"
+    >
+      {t`Discord`}
+    </a>
+  );
+
+  const githubLink = (
+    <a
+      key="githubLink"
+      href={GITHUB_ZK_URL}
+      target="_blank"
+      rel="noreferrer"
+      className="text-yieldLightBlue"
+    >
+      {t`GitHub`}
+    </a>
+  );
+
   return (
     <Card variant={CardVariant.BLUE} className={className}>
       <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
         <h1 className="mb-2 text-3xl font-semibold">{t`Claim Airdrop`}</h1>
         <p>
-          {jt`To check your elligibility for this airdrop, upload or enter the Key and Secret generated while creating the Public ID you shared in ${(
-            <a
-              href={DISCORD_ZK_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="text-yieldLightBlue"
-            >
-              Discord
-            </a>
-          )} or on ${(
-            <a
-              href={GITHUB_ZK_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="text-yieldLightBlue"
-            >
-              GitHub
-            </a>
-          )}.`}
+          {jt`To check your elligibility for this airdrop, upload or enter the Key and Secret generated while creating the Public ID you shared in ${discordLink} or on ${githubLink}.`}
         </p>
         <p className="mb-6">
           {t`Element cannot retrieve your Key and Secret for you.`}
