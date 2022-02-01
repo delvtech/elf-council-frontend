@@ -87,7 +87,7 @@ export function ProposalDetailsCard(
   const proposalStatus = getProposalStatus(
     isVotingOpen,
     isExecuted,
-    quorum,
+    `${quorum}`,
     proposalVotingResults,
   );
 
@@ -280,7 +280,7 @@ interface QuorumBarProps {
   proposalId: string;
 
   // quorum in X * 1e18 format, i.e. '50' = 50 Eth
-  quorum: string;
+  quorum: number;
   status: ProposalStatus | undefined;
 }
 
