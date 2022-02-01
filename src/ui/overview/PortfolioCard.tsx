@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import { formatEther } from "ethers/lib/utils";
-import { elementTokenContract } from "src/elf/contracts";
+
+import { t } from "ttag";
+
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
@@ -10,11 +10,9 @@ import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
-import { t } from "ttag";
 import { RESOURCES_URL } from "src/ui/resources";
+import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 
-const portfolioTooltipText = t`Don't know what the difference between your wallet balance and eligible voting balance is? Click this icon to learn more`;
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -24,10 +22,6 @@ interface PortfolioCardProps {
 
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { account } = props;
-
-  const { data: balanceBN } = useTokenBalanceOf(elementTokenContract, account);
-
-  const balance = formatEther(balanceBN || 0);
 
   const amountDeposited = useDeposited(account) || "0";
 
@@ -48,13 +42,6 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         </span>
       </div>
       <div className="flex flex-col min-h-full mb-8 align-bottom">
-        <BalanceWithLabel
-          className="w-full mt-8"
-          balance={balance}
-          tooltipText={portfolioTooltipText}
-          tooltipHref={RESOURCES_URL}
-          label={t`Wallet Balance`}
-        />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={amountDeposited}
