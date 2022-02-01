@@ -5,13 +5,13 @@ import ShareCard from "./ShareCard";
 import { Platform } from "./types";
 import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "./constants";
 import useRouterSteps from "src/ui/router/useRouterSteps";
-import { utils } from "ethers";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import Image from "next/image";
 import { t } from "ttag";
+import { pedersenHashConcat, toHex } from "zkp-merkle-airdrop-lib";
 
 interface ZKPageProps {
   platform: Platform;
@@ -19,6 +19,8 @@ interface ZKPageProps {
 
 export default function ZKPage({ platform }: ZKPageProps): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
+  const key = keySecretPair?.[0];
+  const secret = keySecretPair?.[1];
   const [publicId, setPublicId] = useState<string>();
   const {
     currentStep,
@@ -28,13 +30,6 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
     getStepPath,
     canViewStep,
   } = useRouterSteps({ initialCompleted: 1 });
-
-  useEffect(() => {
-    if (keySecretPair) {
-      // TODO: Integrate a16z zk lib's petersonHash fn
-      setPublicId(utils.id(keySecretPair.join("")));
-    }
-  }, [keySecretPair]);
 
   // TODO: transition styles
   const getStepClassName = (step: number) => {
@@ -58,6 +53,14 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
       return StepStatus.COMPLETE;
     }
     return StepStatus.CURRENT;
+  };
+
+  const handleEncryptionStepComplete = () => {
+    if (key && secret) {
+      const commit = pedersenHashConcat(BigInt(key), BigInt(secret));
+      setPublicId(toHex(commit));
+      completeStep(2);
+    }
   };
 
   return (
@@ -89,7 +92,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
       {/* STEP 2 */}
       <EncryptionCard
         className={getStepClassName(2)}
-        onComplete={() => completeStep(2)}
+        onComplete={handleEncryptionStepComplete}
         onGenerated={setKeySecretPair}
         onBackClick={goToPreviousStep}
         onNextClick={goToNextStep}
