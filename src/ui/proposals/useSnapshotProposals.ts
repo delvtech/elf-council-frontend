@@ -6,14 +6,13 @@ import {
 } from "src/elf-snapshot/queries/proposals";
 
 export function useSnapshotProposals(
-  snapshotIds: string[] | undefined,
+  snapshotIds: string[],
 ): UseQueryResult<SnapshotProposal[]> {
   return useQuery({
     queryKey: ["snapshot-proposals", snapshotIds],
     queryFn: async () => {
-      const proposals = await fetchSnapshotProposals(snapshotIds as string[]);
+      const proposals = await fetchSnapshotProposals(snapshotIds);
       return proposals;
     },
-    enabled: !!snapshotIds,
   });
 }

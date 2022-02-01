@@ -99,9 +99,7 @@ export function ProposalDetailsCard(
     !+accountVotingPower;
 
   const { mutate: vote } = useVote(account, signer, proposal?.created, {
-    onTransactionSubmitted: () => {
-      setIsVoteTxPending(true);
-    },
+    onTransactionSubmitted: () => setIsVoteTxPending(true),
     onTransactionMined: () => setIsVoteTxPending(false),
   });
 
