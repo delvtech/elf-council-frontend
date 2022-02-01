@@ -6,7 +6,7 @@ import { useRouter, NextRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
-import { ElementLogo } from "src/ui/base/ElementLogo";
+import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import { RESOURCES_URL } from "src/ui/resources";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";

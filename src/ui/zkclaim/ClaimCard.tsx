@@ -1,17 +1,11 @@
-import React, { ChangeEvent, ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import ClaimAmountCard from "./ClaimAmountCard";
-import { useWeb3React } from "@web3-react/core";
+// import { useWeb3React } from "@web3-react/core";
 import { t } from "ttag";
-
-// TODO: reference real values
-const TOKEN_ADDRESS = "0xd00981105e61274c8a5cd5a88fe7e037d935b513";
-const TOKEN_SYMBOL = "ELFI";
-const TOKEN_DECIMALS = 18;
-const TOKEN_IMAGE = "http://placekitten.com/200/300";
 
 interface ClaimCardProps {
   className?: string;
@@ -21,38 +15,38 @@ interface ClaimCardProps {
 const ELFI_TOKEN_AMOUNT = "208.9291341";
 
 export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
-  const { library } = useWeb3React();
+  // const { library } = useWeb3React();
 
-  const [addToWallet, setAddToWallet] = useState(false);
-  const handleAddToWalletChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAddToWallet(e.target.checked);
-  };
+  // const [addToWallet, setAddToWallet] = useState(false);
+  // const handleAddToWalletChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setAddToWallet(e.target.checked);
+  // };
+
   const handleClaimClick = async () => {
-    if (addToWallet) {
-      try {
-        // wasAdded is a boolean. Like any RPC method, an error may be thrown.
-        const wasAdded = await library.provider.request({
-          method: "wallet_watchAsset",
-          params: {
-            type: "ERC20", // Initially only supports ERC20, but eventually more!
-            options: {
-              address: TOKEN_ADDRESS, // The address that the token is at.
-              symbol: TOKEN_SYMBOL, // A ticker symbol or shorthand, up to 5 chars.
-              decimals: TOKEN_DECIMALS, // The number of decimals in the token
-              image: TOKEN_IMAGE, // A string url of the token logo
-            },
-          },
-        });
-
-        if (wasAdded) {
-          console.log("Thanks for your interest!");
-        } else {
-          console.log("Your loss!");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    // if (addToWallet) {
+    //   try {
+    //     // wasAdded is a boolean. Like any RPC method, an error may be thrown.
+    //     const wasAdded = await library.provider.request({
+    //       method: "wallet_watchAsset",
+    //       params: {
+    //         type: "ERC20", // Initially only supports ERC20, but eventually more!
+    //         options: {
+    //           address: TOKEN_ADDRESS, // The address that the token is at.
+    //           symbol: TOKEN_SYMBOL, // A ticker symbol or shorthand, up to 5 chars.
+    //           decimals: TOKEN_DECIMALS, // The number of decimals in the token
+    //           image: TOKEN_IMAGE, // A string url of the token logo
+    //         },
+    //       },
+    //     });
+    //     if (wasAdded) {
+    //       console.log("Thanks for your interest!");
+    //     } else {
+    //       console.log("Your loss!");
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
   };
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -60,7 +54,7 @@ export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
         <h1 className="mb-5 text-3xl font-semibold">{t`Congratulations`}</h1>
         <H2 className="text-2xl text-votingGreen mb-9">{t`You're eligible for this Airdrop`}</H2>
         <ClaimAmountCard amount={ELFI_TOKEN_AMOUNT} />
-        <label className="flex items-center gap-3 mb-6 text-blueGrey group">
+        {/* <label className="flex items-center gap-3 mb-6 text-blueGrey group">
           <input
             id="add-elfi-to-metamask"
             type="checkbox"
@@ -70,7 +64,7 @@ export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
             onChange={handleAddToWalletChange}
           />
           <span className="transition-all peer-checked:text-white">{t`Add $ELFI to my Metamask`}</span>
-        </label>
+        </label> */}
         <Button
           className="justify-center min-w-full"
           variant={ButtonVariant.GRADIENT}

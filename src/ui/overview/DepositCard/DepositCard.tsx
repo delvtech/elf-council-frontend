@@ -9,7 +9,7 @@ import tw, {
   space,
 } from "src/elf-tailwindcss-classnames";
 import Card from "src/ui/base/Card/Card";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import { t } from "ttag";
 import { DepositSection } from "./DepositSection";
 import { WithdrawSection } from "./WithdrawSection";

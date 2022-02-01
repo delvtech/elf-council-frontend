@@ -17,7 +17,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import TextInput from "src/ui/base/Input/TextInput";
 import { LabeledStat } from "src/ui/base/LabeledStat/LabeledStat";
 import { useDelegate } from "src/ui/delegate/useDelegate";

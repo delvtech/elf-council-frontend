@@ -36,7 +36,7 @@ export function StepItem({
         className={classNames(
           "flex items-center justify-center text-center text-principalRoyalBlue font-semibold",
           {
-            "text-opacity-50": status === "upcoming",
+            "text-opacity-50": status === StepStatus.UPCOMING,
           },
         )}
       >
@@ -71,14 +71,14 @@ interface StepLabelProps {
   label: string;
 }
 
-function StepLabel({ status, label }: StepLabelProps) {
+function StepLabel({ label, status }: StepLabelProps) {
   return (
     <div
       className={classNames(
-        "shrink-0  w-10 h-10 flex items-center justify-center border-2 border-principalRoyalBlue rounded-full",
+        "shrink-0 w-10 h-10 flex items-center justify-center border-2 border-principalRoyalBlue rounded-full",
         {
-          "bg-principalRoyalBlue": status === "complete",
-          "border-opacity-50": status === "upcoming",
+          "bg-principalRoyalBlue": status === StepStatus.COMPLETE,
+          "border-opacity-50": status === StepStatus.UPCOMING,
         },
       )}
     >
@@ -86,7 +86,7 @@ function StepLabel({ status, label }: StepLabelProps) {
         className={classNames(
           "font-semibold",
           status === "complete" ? "text-white" : "text-principalRoyalBlue",
-          { "text-opacity-50": status === "upcoming" },
+          { "text-opacity-50": status === StepStatus.UPCOMING },
         )}
       >
         {label}

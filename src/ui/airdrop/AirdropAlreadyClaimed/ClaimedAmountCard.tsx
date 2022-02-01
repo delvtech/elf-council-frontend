@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import { useClaimedAirdrop } from "src/ui/airdrop/useClaimedAirdrop";
 
 interface ClaimedAmountCardProps {
@@ -21,11 +21,7 @@ export function ClaimedAmountCard({
           </div>
           <div className="text-gray-500 flex flex-col items-center">
             <span className="mb-4">{t`$ELFI tokens`}</span>
-            <ElementIcon
-              bgColorClassName="bg-paleLily"
-              className="ml-2"
-              size={IconSize.LARGE}
-            />
+            <ElementIcon className="bg-paleLily ml-2" size={IconSize.LARGE} />
           </div>
         </div>
       </div>

@@ -13,7 +13,7 @@ import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import GradientCard from "src/ui/base/Card/GradientCard";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";

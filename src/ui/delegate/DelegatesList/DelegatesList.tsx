@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { t } from "ttag";
-import H2 from "src/ui/base/H2";
+import H2 from "src/ui/base/H2/H2";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
 

@@ -30,7 +30,7 @@ import tw, {
 } from "src/elf-tailwindcss-classnames";
 import classnames from "classnames";
 import { formatWalletAddress } from "src/formatWalletAddress";
-import H3 from "src/ui/base/H3";
+import H3 from "src/ui/base/H3/H3";
 import Button from "src/ui/base/Button/Button";
 import TextInput from "src/ui/base/Input/TextInput";
 import { ButtonVariant } from "src/ui/base/Button/styles";
