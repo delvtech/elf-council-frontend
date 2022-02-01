@@ -119,17 +119,18 @@ export default function ProposalsPage({
           />
         </div>
       </div>
-      <ProposalDetailsCard
-        isOpen={!!activeProposal}
-        onClose={() => {
-          setActiveProposal(undefined);
-          setActiveProposalId(undefined);
-        }}
-        account={account}
-        signer={signer}
-        proposal={activeProposal}
-        proposalsBySnapshotId={proposalsBySnapshotId}
-      />
+      {activeProposal && (
+        <ProposalDetailsCard
+          isOpen={!!activeProposal}
+          onClose={() => {
+            setActiveProposal(undefined);
+            setActiveProposalId(undefined);
+          }}
+          account={account}
+          signer={signer}
+          proposal={activeProposal}
+        />
+      )}
     </div>
   );
 }
