@@ -11,19 +11,17 @@ import { useWeb3React } from "@web3-react/core";
 import { Proposal, ProposalsJson } from "elf-council-proposals";
 import { t } from "ttag";
 
-import { getProposalsBySnapshotId } from "src/elf-council-proposals";
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
-import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
 import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
+import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
-import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
 
 type TabId = "active-proposals-tab" | "past-proposals-tab";
 
@@ -36,29 +34,20 @@ export default function ProposalsPage({
 }: ProposalsPageProps): ReactElement {
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
   const isSmallScreen = useIsTailwindSmallScreen();
 
-  // TODO: Move these into the route so people can link to a proposal easily
   const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
   const [activeProposalId, setActiveProposalId] = useState<
     string | undefined
   >();
   const [activeProposal, setActiveProposal] = useState<Proposal | undefined>();
 
-  const proposalsBySnapshotId = useMemo(
-    () => getProposalsBySnapshotId(proposalsJson.proposals),
-    [proposalsJson.proposals],
-  );
-
-  const { data: snapshotProposals } = useSnapshotProposals(
-    Object.keys(proposalsBySnapshotId),
-  );
-
-  const filteredProposals = useOnChainProposalsWithSnapshotInfo(
+  const filteredProposals = useFilteredProposals(
     activeTabId,
-    snapshotProposals,
-    proposalsBySnapshotId,
+    proposalsJson.proposals,
+    currentBlockNumber,
   );
 
   // set the active proposal when the user switches between Active and Past
@@ -159,29 +148,24 @@ function OffChainProposalsLink() {
  * @param snapshotProposals
  * @returns
  */
-function useOnChainProposalsWithSnapshotInfo(
+function useFilteredProposals(
   activeTabId: string,
-  snapshotProposals: SnapshotProposal[] | undefined,
-  proposalsBySnapshotId: Record<string, Proposal>,
-): Proposal[] | undefined {
+  proposals: Proposal[],
+  currentBlockNumber: number,
+): Proposal[] {
   return useMemo(() => {
     if (activeTabId === "active-proposals-tab") {
-      return snapshotProposals
-        ?.filter((snapshotProposal) =>
-          ["active", "pending"].includes(snapshotProposal.state),
-        )
-        .map((snapshotProposal) => proposalsBySnapshotId[snapshotProposal.id]);
+      return proposals?.filter(
+        (proposal) => proposal.expiration > currentBlockNumber,
+      );
     }
 
     if (activeTabId === "past-proposals-tab") {
-      const result = snapshotProposals
-        ?.filter((snapshotProposal) =>
-          ["closed"].includes(snapshotProposal.state),
-        )
-        .map((snapshotProposal) => proposalsBySnapshotId[snapshotProposal.id]);
-      return result;
+      return proposals?.filter(
+        (proposal) => proposal.expiration <= currentBlockNumber,
+      );
     }
 
     return [];
-  }, [activeTabId, proposalsBySnapshotId, snapshotProposals]);
+  }, [activeTabId, currentBlockNumber, proposals]);
 }
