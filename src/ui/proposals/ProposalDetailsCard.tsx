@@ -14,23 +14,24 @@ import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
 import { t } from "ttag";
 
-import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
+import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import { Intent } from "src/ui/base/Intent";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Tag } from "src/ui/base/Tag/Tag";
-import { Intent } from "src/ui/base/Intent";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
   ProposalStatus,
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
+import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
@@ -41,7 +42,6 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -67,7 +67,6 @@ export function ProposalDetailsCard(
   const snapshotProposal = snapshotProposals && snapshotProposals[0];
 
   const accountVotingPower = useVotingPowerForAccount(account);
-  const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
 
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
@@ -200,7 +199,7 @@ export function ProposalDetailsCard(
         )}
         <BalanceWithLabel
           className="w-full mt-4"
-          balance={formattedAccountVotingPower}
+          balance={accountVotingPower}
           tooltipText={votingPowerTooltipText}
           tooltipHref={RESOURCES_URL}
           label={t`Voting Power`}
