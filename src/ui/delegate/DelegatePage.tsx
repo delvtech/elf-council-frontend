@@ -124,10 +124,10 @@ export default function DelegatePage(): ReactElement {
 function NoConnection(): ReactElement {
   return (
     <p className="text-center w-full">
-      <span className="block">
-        {t`Unable to determine delegation eligibility.`}
+      <span className="inline-block">
+        {t`Unable to determine delegation eligibility.`}&nbsp;
       </span>
-      <span className="block">
+      <span className="inline-block">
         {t`Please connect your wallet`}
         <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </span>
@@ -138,7 +138,7 @@ function NoConnection(): ReactElement {
 function NoDeposit(): ReactElement {
   return (
     <p className="text-center w-full">
-      <span className="block">
+      <span className="inline-block">
         {t`Please ensure you deposit your tokens to earn your delegating power`}
         <SparklesIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
       </span>
@@ -149,14 +149,16 @@ function NoDeposit(): ReactElement {
 function NoDelegation(): ReactElement {
   return (
     <p className="text-center w-full">
-      <span className="block">{t`Please set a delegation in order to deposit.`}</span>
-      <span className="block">
+      <span className="inline-block">
+        {t`Please set a delegation in order to deposit.`}&nbsp;
+      </span>
+      <span className="inline-block">
         <a
           target="_blank"
           rel="noreferrer"
           href={RESOURCES_URL}
           className="underline"
-        >{t`To learn more about delegations click here.`}</a>
+        >{t`To learn more about delegations click here`}</a>
       </span>
     </p>
   );
