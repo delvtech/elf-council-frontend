@@ -13,7 +13,7 @@ import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
-import { ReviewTransaction } from "src/ui/airdrop/ReviewClaim/ReviewClaim";
+import { ReviewTransaction } from "src/ui/airdrop/ReviewClaim/ReviewTransaction";
 import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
 import { ClaimSuccessful } from "src/ui/airdrop/ClaimSuccessful/ClaimSuccessful";
 
@@ -90,7 +90,7 @@ export default function AirdropPage(): ReactElement {
           <StepItem
             stepLabel="3"
             status={claimAndDelegateStatus}
-          >{t`Review deposit`}</StepItem>
+          >{t`Review transaction`}</StepItem>
         </Steps>
       </div>
 

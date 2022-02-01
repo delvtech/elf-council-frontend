@@ -71,13 +71,13 @@ export function ReviewTransaction({
       nextStepDisabled={
         isTransactionPending || !isValidAddress(delegateAddress)
       }
-      nextStepLabel={isTransactionPending ? <Spinner /> : t`Deposit airdrop`}
+      nextStepLabel={isTransactionPending ? <Spinner /> : t`Delegate airdrop`}
       onPrevStep={onPrevStep}
     >
       <div className="flex flex-col">
         <H1 className="mt-8 mb-4 text-center">{t`Review Transaction`}</H1>
         <div className="flex flex-col items-center justify-center w-full mb-10 text-base font-bold text-center">
-          <p>{t`Your ELFI tokens will be deposited into the voting vault.`}</p>
+          <p>{t`Your ELFI tokens will be deposited into the Voting Vault.`}</p>
         </div>
         <div className="flex flex-col justify-center w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard
