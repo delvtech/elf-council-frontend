@@ -190,7 +190,7 @@ export function ProposalDetailsCard(
           </Tag>
         ) : (
           <QuorumBar
-            quorum={quorum}
+            quorum={Number(quorum)}
             proposalId={proposalId}
             status={proposalStatus}
           />
