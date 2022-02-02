@@ -1,6 +1,6 @@
 import React, { Fragment, ReactElement, useCallback, useState } from "react";
 import { MenuAlt4Icon } from "@heroicons/react/solid";
-import { XIcon } from "@heroicons/react/solid";
+import { ExternalLinkIcon, XIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
 import classNames from "classnames";
@@ -148,12 +148,15 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
-    <div>
-      <a href={link}>
-        <div className="flex justify-center p-3 cursor-pointer hover:bg-blue-50 text-brandDarkBlue-dark">
+    <div className="flex justify-center items-center hover:bg-blue-50 cursor-pointer">
+      {/* Empty span w/ same width as icon to center the label text */}
+      <span className="w-4" />
+      <a href={link} target="_blank" rel="noreferrer">
+        <div className="flex justify-center p-3 cursor-pointer text-brandDarkBlue-dark">
           <p>{label}</p>
         </div>
       </a>
+      <ExternalLinkIcon className="w-4 h-4 text-principalRoyalBlue" />
     </div>
   );
 }
