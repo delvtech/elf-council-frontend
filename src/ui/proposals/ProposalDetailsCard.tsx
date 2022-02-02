@@ -87,7 +87,7 @@ export function ProposalDetailsCard(
   const proposalStatus = getProposalStatus(
     isVotingOpen,
     isExecuted,
-    `${quorum}`,
+    quorum,
     proposalVotingResults,
   );
 
@@ -190,7 +190,7 @@ export function ProposalDetailsCard(
           </Tag>
         ) : (
           <QuorumBar
-            quorum={Number(quorum)}
+            quorum={quorum}
             proposalId={proposalId}
             status={proposalStatus}
           />
