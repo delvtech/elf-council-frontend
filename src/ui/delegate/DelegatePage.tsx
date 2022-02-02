@@ -62,22 +62,25 @@ export default function DelegatePage(): ReactElement {
     }
   };
 
-  // Used to verify if delegate inputted is an actual delegate in our system
+  // Used to verify if the custom delegate inputted is an actual address
   useEffect(() => {
-    if (isValidAddress(delegateAddressInput)) {
-      const chosenDelegate = delegates.find(
-        (delegate) => delegate.address === delegateAddressInput,
-      );
+    if (delegateAddressInput.length === 0) {
+      return;
+    }
 
-      if (chosenDelegate) {
-        setSelectedDelegate(chosenDelegate.address);
+    if (isValidAddress(delegateAddressInput)) {
+      setSelectedDelegate(delegateAddressInput);
+
+      if (delegateAddressInput === account) {
+        setIsSelfDelegated(true);
       } else {
-        setSelectedDelegate("");
+        setIsSelfDelegated(false);
       }
     } else {
+      setIsSelfDelegated(false);
       setSelectedDelegate("");
     }
-  }, [delegateAddressInput]);
+  }, [account, delegateAddressInput]);
 
   return (
     <div
@@ -123,8 +126,10 @@ export default function DelegatePage(): ReactElement {
         <div className="flex flex-col mt-8 xl:w-8/12 xl:mt-0">
           {/* Delegates List */}
           <DelegatesList
+            account={account}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
+            setSelectedDelegate={setSelectedDelegate}
             setIsSelfDelegated={setIsSelfDelegated}
           />
 
@@ -142,6 +147,7 @@ export default function DelegatePage(): ReactElement {
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
+              setSelectedDelegate={setSelectedDelegate}
               isSelfDelegated={isSelfDelegated}
               setIsSelfDelegated={setIsSelfDelegated}
             />

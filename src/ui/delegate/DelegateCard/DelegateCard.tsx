@@ -26,6 +26,7 @@ interface DelegateCardProps {
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
+  setSelectedDelegate: (address: string) => void;
   isSelfDelegated: boolean;
   setIsSelfDelegated: (state: boolean) => void;
 }
@@ -39,6 +40,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     delegateAddressInput,
     setDelegateAddressInput,
     selectedDelegate,
+    setSelectedDelegate,
     isSelfDelegated,
     setIsSelfDelegated,
   } = props;
@@ -54,11 +56,9 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     isLoading,
   } = useChangeDelegation(account, signer);
 
-  const onDelegateClick = useCallback(() => {
-    if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
-      changeDelegation([delegateAddressInput]);
-    }
-  }, [changeDelegation, delegateAddressInput]);
+  const handleDelegateClick = useCallback(() => {
+    changeDelegation([selectedDelegate]);
+  }, [changeDelegation, selectedDelegate]);
 
   const walletLink = (
     <a
@@ -84,9 +84,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     }, TWO_SECONDS_IN_MILLISECONDS);
   };
 
-  const handleSelfDelegate = () => {
+  const handleSelfDelegateClick = () => {
     // Safe to typecast as button is disabled on !account || isLoading, which requires account
-    setDelegateAddressInput(account as string);
+    setSelectedDelegate(account as string);
+    setDelegateAddressInput("");
     setIsSelfDelegated(true);
   };
 
@@ -115,7 +116,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setIsSelfDelegated,
   ]);
 
-  const invalidAddress = !isValidAddress(delegateAddressInput);
+  const invalidAddress =
+    !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -167,7 +169,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               <div className="mr-4">
                 {!isSelfDelegated ? (
                   <Button
-                    onClick={handleSelfDelegate}
+                    onClick={handleSelfDelegateClick}
                     variant={ButtonVariant.OUTLINE_WHITE}
                     disabled={!account || isLoading}
                   >
@@ -185,7 +187,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 account={account}
                 currentDelegateAddress={currentDelegateAddress}
                 delegateAddressInput={delegateAddressInput}
-                onDelegateClick={onDelegateClick}
+                selectedDelegate={selectedDelegate}
+                onDelegateClick={handleDelegateClick}
                 invalidAddress={invalidAddress}
                 isLoading={isLoading}
                 buttonVariant={ButtonVariant.GRADIENT}

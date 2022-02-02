@@ -5,14 +5,18 @@ import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
 
 interface DelegatesListProps {
+  account: string | null | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
+  setSelectedDelegate: (address: string) => void;
   setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegatesList({
+  account,
   selectedDelegate,
   setDelegateAddressInput,
+  setSelectedDelegate,
   setIsSelfDelegated,
 }: DelegatesListProps): ReactElement {
   return (
@@ -27,8 +31,14 @@ function DelegatesList({
       >
         {delegates.map((delegate, idx) => {
           const handleSelectDelegate = () => {
-            setDelegateAddressInput(delegate.address);
-            setIsSelfDelegated(false);
+            setSelectedDelegate(delegate.address);
+            setDelegateAddressInput("");
+
+            if (delegate.address === account) {
+              setIsSelfDelegated(true);
+            } else {
+              setIsSelfDelegated(false);
+            }
           };
 
           // TODO: Remove -${idx} for production since addresses are always unique
