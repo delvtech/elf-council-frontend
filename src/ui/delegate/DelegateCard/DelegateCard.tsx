@@ -5,7 +5,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { isValidAddress } from "src/base/isValidAddress";
-import { Delegate, delegates } from "src/elf-council-delegates/delegates";
+import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
@@ -53,16 +53,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     }
   }, [changeDelegation, delegateAddressInput]);
 
-  const walletLink = (
-    <a
-      className="font-semibold text-brandDarkBlue hover:underline"
-      key="delegate-link"
-      href={`https://etherscan.io/address/${delegateAddressOnChain}`}
-    >
-      {formatWalletAddress(delegateAddressOnChain || "")}
-    </a>
-  );
-
   const toggleDelegationSuccess = () => {
     setDelegationSuccess(true);
     setTimeout(() => {
@@ -105,9 +95,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         </div>
         <div className="w-full leading-5 hidden sm:block md:hidden lg:block">
           <div>{t`Change Delegation`}</div>
-          <div className="text-sm">
-            {t`Tokens Eligible to Delegate: ${formatBalance(vaultBalance)}`}
-          </div>
         </div>
       </div>
 
@@ -125,9 +112,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         <div className="block sm:hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
           <div className="w-full leading-5 ">
             <div className="block">{t`Change Delegation`}</div>
-            <div className="text-sm">
-              {t`Tokens Eligible to Delegate: ${formatBalance(vaultBalance)}`}
-            </div>
           </div>
         </div>
         {/* Delegate Input */}
