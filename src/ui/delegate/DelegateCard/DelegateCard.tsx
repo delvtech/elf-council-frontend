@@ -112,9 +112,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         <div className="block sm:hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
           <div className="w-full leading-5 ">
             <div className="block">{t`Change Delegation`}</div>
-            <div className="text-sm">
-              {t`Tokens Eligible to Delegate: ${formatBalance(vaultBalance)}`}
-            </div>
           </div>
         </div>
         {/* Delegate Input */}
