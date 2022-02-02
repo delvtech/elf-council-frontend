@@ -53,16 +53,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     }
   }, [changeDelegation, delegateAddressInput]);
 
-  const walletLink = (
-    <a
-      className="font-semibold text-brandDarkBlue hover:underline"
-      key="delegate-link"
-      href={`https://etherscan.io/address/${delegateAddressOnChain}`}
-    >
-      {formatWalletAddress(delegateAddressOnChain || "")}
-    </a>
-  );
-
   const toggleDelegationSuccess = () => {
     setDelegationSuccess(true);
     setTimeout(() => {
