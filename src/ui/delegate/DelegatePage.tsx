@@ -123,9 +123,9 @@ export default function DelegatePage(): ReactElement {
 
 function NoConnection(): ReactElement {
   return (
-    <p className="text-center w-full">
+    <p className="text-center w-full whitespace-pre-wrap">
       <span className="inline-block">
-        {t`Unable to determine delegation eligibility.`}&nbsp;
+        {t`Unable to determine delegation eligibility.`}{" "}
       </span>
       <span className="inline-block">
         {t`Please connect your wallet`}
@@ -148,9 +148,9 @@ function NoDeposit(): ReactElement {
 
 function NoDelegation(): ReactElement {
   return (
-    <p className="text-center w-full">
+    <p className="text-center w-full whitespace-pre-wrap">
       <span className="inline-block">
-        {t`Please set a delegation in order to deposit.`}&nbsp;
+        {t`Please set a delegation in order to deposit.`}{" "}
       </span>
       <span className="inline-block">
         <a
