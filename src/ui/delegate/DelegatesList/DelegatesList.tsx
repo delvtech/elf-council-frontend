@@ -3,7 +3,7 @@ import { t } from "ttag";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
-import { shuffleDelegates } from "src/elf/delegate/shuffleDelegates";
+import shuffle from "lodash.shuffle";
 
 interface DelegatesListProps {
   selectedDelegate: string;
@@ -14,8 +14,9 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
+  // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
-    return shuffleDelegates(delegates);
+    return shuffle(delegates);
   }, []);
 
   return (

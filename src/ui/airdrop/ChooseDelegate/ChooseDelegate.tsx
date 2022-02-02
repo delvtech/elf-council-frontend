@@ -12,7 +12,7 @@ import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { t } from "ttag";
-import { shuffleDelegates } from "src/elf/delegate/shuffleDelegates";
+import shuffle from "lodash.shuffle";
 
 interface ChooseDelegateProps {
   account: string;
@@ -40,8 +40,9 @@ export function ChooseDelegate({
     string | undefined
   >();
 
+  // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
-    return shuffleDelegates(delegates);
+    return shuffle(delegates);
   }, []);
 
   // disable the button when the user has no featured delegate, or
