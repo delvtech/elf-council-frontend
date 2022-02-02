@@ -131,7 +131,7 @@ export default function DelegatePage(): ReactElement {
             variant={CardVariant.BLUE}
             className="px-6 mt-auto py-7 rounded-xl"
           >
-            <H2 className="mb-4 text-2xl tracking-wide text-white">{t`Delegate`}</H2>
+            <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
               account={account}
               signer={signer}
