@@ -1,8 +1,9 @@
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 import { t } from "ttag";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
+import shuffle from "lodash.shuffle";
 
 interface DelegatesListProps {
   selectedDelegate: string;
@@ -13,6 +14,11 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
+  // shuffle the delegates list on first render to prevent biases
+  const shuffledDelegates = useMemo(() => {
+    return shuffle(delegates);
+  }, []);
+
   return (
     <div className="relative mb-8">
       <H2 className="mb-4 text-2xl text-principalRoyalBlue tracking-wide">{t`Explore Featured Delegates`}</H2>
@@ -23,7 +29,7 @@ function DelegatesList({
         // 428px exactly matches 5 rows of the list
         style={{ maxHeight: "428px" }}
       >
-        {delegates.map((delegate, idx) => {
+        {shuffledDelegates.map((delegate, idx) => {
           const handleSelectDelegate = () => {
             setDelegateAddressInput(delegate.address);
           };

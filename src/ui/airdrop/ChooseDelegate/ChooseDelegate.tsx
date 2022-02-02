@@ -1,6 +1,6 @@
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
@@ -12,6 +12,7 @@ import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { t } from "ttag";
+import shuffle from "lodash.shuffle";
 
 interface ChooseDelegateProps {
   account: string;
@@ -38,6 +39,11 @@ export function ChooseDelegate({
   const [customDelegateAddress, setCustomDelegateAddress] = useState<
     string | undefined
   >();
+
+  // shuffle the delegates list on first render to prevent biases
+  const shuffledDelegates = useMemo(() => {
+    return shuffle(delegates);
+  }, []);
 
   // disable the button when the user has no featured delegate, or
   // self-delegate, or valid custom address selected.
@@ -126,7 +132,7 @@ export function ChooseDelegate({
           <div className="pr-1 overflow-auto shadow h-72 rounded-xl">
             {/* List of delegates */}
             <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
-              {delegates.map((delegate, idx) => {
+              {shuffledDelegates.map((delegate, idx) => {
                 const handleSelectDelegate = () => {
                   setSelectedDelegateIndex(idx);
 
