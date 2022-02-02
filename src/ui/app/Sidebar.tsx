@@ -148,15 +148,18 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
-    <div className="flex justify-center items-center hover:bg-blue-50 cursor-pointer">
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      className="w-full flex justify-center items-center hover:bg-blue-50"
+    >
       {/* Empty span w/ same width as icon to center the label text */}
       <span className="w-4" />
-      <a href={link} target="_blank" rel="noreferrer">
-        <div className="flex justify-center p-3 cursor-pointer text-brandDarkBlue-dark">
-          <p>{label}</p>
-        </div>
-      </a>
+      <div className="flex justify-center p-3 cursor-pointer text-brandDarkBlue-dark">
+        <p>{label}</p>
+      </div>
       <ExternalLinkIcon className="w-4 h-4 text-principalRoyalBlue" />
-    </div>
+    </a>
   );
 }
