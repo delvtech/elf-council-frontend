@@ -100,6 +100,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
       // Success
       if (nextDelegate || delegateAddressOnChain) {
+        setSelectedDelegate("");
         setDelegateAddressInput("");
         setIsSelfDelegated(false);
         toggleDelegationSuccess();
@@ -114,6 +115,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setDelegateAddressInput,
     isError,
     setIsSelfDelegated,
+    setSelectedDelegate,
   ]);
 
   const invalidAddress =
