@@ -10,10 +10,20 @@ import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import { RESOURCES_URL } from "src/ui/resources";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 
-export default function Sidebar(): ReactElement {
+interface SidebarProps {
+  account: string | null | undefined;
+}
+
+export default function Sidebar(props: SidebarProps): ReactElement {
+  const { account } = props;
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+
+  const { data: merkleInfo } = useMerkleInfo(account);
+  const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
 
   const onOpen = useCallback(() => {
     setIsOpen(true);
@@ -61,7 +71,8 @@ export default function Sidebar(): ReactElement {
             label={t`Forum`}
           />
           <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
-          <AirdropLink link="/airdrop" />
+
+          {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
         </div>
         <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
           <span className="text-sm">{t`Powered by`}</span>

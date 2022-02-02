@@ -14,24 +14,24 @@ import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
 import { t } from "ttag";
 
-import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
-import { SnapshotProposal } from "src/elf-snapshot/queries/proposals";
 import { VotingPower } from "src/elf/proposals/VotingPower";
+import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import { Intent } from "src/ui/base/Intent";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Tag } from "src/ui/base/Tag/Tag";
-import { Intent } from "src/ui/base/Intent";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import {
   getProposalStatus,
   ProposalStatus,
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
+import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
@@ -42,7 +42,6 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
 
@@ -50,8 +49,7 @@ interface ProposalDetailsCardProps {
   className?: string;
   account: string | null | undefined;
   signer: Signer | undefined;
-  proposal: Proposal | undefined;
-  proposalsBySnapshotId: Record<string, Proposal>;
+  proposal: Proposal;
   isOpen: boolean;
   onClose: () => void;
 }
@@ -59,70 +57,38 @@ interface ProposalDetailsCardProps {
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement | null {
-  const {
-    className,
-    proposal,
-    account,
-    signer,
-    proposalsBySnapshotId,
-    isOpen,
-    onClose,
-  } = props;
+  const { className, proposal, account, signer, isOpen, onClose } = props;
+  const { proposalId, snapshotId, quorum } = proposal;
 
-  const snapshotProposal = useSnapshotProposal(
-    proposal?.snapshotId,
-    proposalsBySnapshotId,
-  );
+  const [newBallot, setCurrentBallot] = useState<Ballot>();
+  const [isVoteTxPending, setIsVoteTxPending] = useState(false);
+
+  const { data: snapshotProposals } = useSnapshotProposals([snapshotId]);
+  const snapshotProposal = snapshotProposals && snapshotProposals[0];
 
   const accountVotingPower = useVotingPowerForAccount(account);
 
-  const proposalVotingPower = useVotingPowerForProposal(proposal?.proposalId);
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
+  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
 
-  const formattedAccountVotingPower = commify((+accountVotingPower).toFixed(4));
+  const isExecuted = useProposalExecuted(proposalId);
 
-  const isExecuted = useProposalExecuted(proposal?.proposalId);
-  const [newBallot, setCurrentBallot] = useState<Ballot>();
-
-  const { data: currentBallot } = useBallot(account, proposal?.proposalId);
+  const { data: currentBallot } = useBallot(account, proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
-
-  const [isVoteTxPending, setIsVoteTxPending] = useState(false);
 
   const { data: voteTransacation } = useLastVoteTransactionForAccount(
     account,
-    proposal?.proposalId,
+    proposalId,
   );
 
   const etherscanLink = `${ETHERSCAN_TRANSACTION_DOMAIN}/${voteTransacation?.hash}`;
 
-  const { mutate: vote } = useVote(account, signer, proposal?.created, {
-    onTransactionSubmitted: () => {
-      setIsVoteTxPending(true);
-    },
-    onTransactionMined: () => setIsVoteTxPending(false),
-  });
-
-  const handleVote = useCallback(() => {
-    if (!proposal || !isNumber(newBallot)) {
-      return;
-    }
-    const { proposalId } = proposal;
-    vote(proposalId, newBallot);
-  }, [newBallot, proposal, vote]);
-
-  if (!proposal) {
-    return null;
-  }
-
-  const { quorum } = proposal;
-  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
-  const votes = getVoteCount(proposalVotingPower);
+  const proposalVotingResults = useVotingPowerForProposal(proposalId);
   const proposalStatus = getProposalStatus(
     isVotingOpen,
     isExecuted,
-    quorum,
-    proposalVotingPower,
+    `${quorum}`,
+    proposalVotingResults,
   );
 
   const submitButtonDisabled =
@@ -131,6 +97,18 @@ export function ProposalDetailsCard(
     !isVotingOpen ||
     isVoteTxPending ||
     !+accountVotingPower;
+
+  const { mutate: vote } = useVote(account, signer, proposal?.created, {
+    onTransactionSubmitted: () => setIsVoteTxPending(true),
+    onTransactionMined: () => setIsVoteTxPending(false),
+  });
+
+  const handleVote = useCallback(() => {
+    if (!isNumber(newBallot)) {
+      return;
+    }
+    vote(proposalId, newBallot);
+  }, [newBallot, proposalId, vote]);
 
   return (
     <GradientCard
@@ -152,7 +130,7 @@ export function ProposalDetailsCard(
           <XIcon className="w-6 h-6 text-white" />
         </button>
         <h1 className="text-2xl font-bold text-white shrink-0">
-          {t`Proposal ${proposal.proposalId}`}
+          {t`Proposal ${proposalId}`}
         </h1>
         <div className="flex justify-between w-full">
           <div className="flex-1 font-light text-white text-ellipsis shrink-0">
@@ -211,11 +189,15 @@ export function ProposalDetailsCard(
             <CheckCircleIcon className="ml-2" height="24" />
           </Tag>
         ) : (
-          <QuorumBar quorum={quorum} votes={votes} status={proposalStatus} />
+          <QuorumBar
+            quorum={Number(quorum)}
+            proposalId={proposalId}
+            status={proposalStatus}
+          />
         )}
         <BalanceWithLabel
           className="w-full mt-4"
-          balance={formattedAccountVotingPower}
+          balance={accountVotingPower}
           tooltipText={votingPowerTooltipText}
           tooltipHref={RESOURCES_URL}
           label={t`Voting Power`}
@@ -293,16 +275,18 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
 }
 
 interface QuorumBarProps {
-  // votes in X * 1e18 format, i.e. '50' = 50 Eth
-  votes: string;
+  proposalId: string;
 
   // quorum in X * 1e18 format, i.e. '50' = 50 Eth
-  quorum: string;
+  quorum: number;
   status: ProposalStatus | undefined;
 }
 
 function QuorumBar(props: QuorumBarProps) {
-  const { votes, quorum } = props;
+  const { proposalId, quorum } = props;
+  const proposalVotingResults = useVotingPowerForProposal(proposalId);
+  const votes = getVoteCount(proposalVotingResults);
+
   const quorumPercent = Math.floor((+votes / +quorum) * 100);
   return (
     <div className="w-full space-y-1 text-sm text-white">
@@ -318,17 +302,6 @@ function QuorumBar(props: QuorumBarProps) {
       </div>
     </div>
   );
-}
-
-function useSnapshotProposal(
-  snapshotId: string | undefined,
-  proposalsBySnapshotId: Record<string, Proposal>,
-): SnapshotProposal | undefined {
-  const { data: snapshotProposals } = useSnapshotProposals(
-    Object.keys(proposalsBySnapshotId),
-  );
-
-  return snapshotProposals?.find((s) => s.id === snapshotId);
 }
 
 const CHARACTER_LIMIT = 750;

@@ -29,7 +29,7 @@ export default function PageView(props: PageViewProps): ReactElement {
     showFooter = false,
     childrenContainerClassName,
   } = props;
-  const { chainId } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const isWrongChain = !!chainId && chainId !== addressesJson.chainId;
   return (
     <Fragment>
@@ -41,8 +41,8 @@ export default function PageView(props: PageViewProps): ReactElement {
           },
         )}
       >
-        {showSidebar ? <Sidebar /> : null}
-        <div className="w-full h-full p-6 flex flex-col flex-1 overflow-auto items-center">
+        {showSidebar ? <Sidebar account={account} /> : null}
+        <div className="flex flex-col items-center flex-1 w-full h-full p-6 overflow-auto">
           {showHeader ? <Header /> : null}
 
           <div

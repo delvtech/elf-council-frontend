@@ -20,6 +20,7 @@ import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatus
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 interface ProposalListItemProps {
   account: string | null | undefined;
@@ -38,10 +39,13 @@ export function ProposalListItem({
 }: ProposalListItemProps): ReactElement {
   const { proposalId, snapshotId } = proposal;
   const { data: [snapshotProposal] = [] } = useSnapshotProposals([snapshotId]);
+  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
 
-  const votingPeriodEndsTimestampMS =
-    proposal.createdTimestamp * MS_PER_S +
-    Math.round(proposal.expiration * SECONDS_PER_BLOCK * MS_PER_S);
+  const now = Date.now();
+  const votingPeriodEndsTimestampMS = Math.round(
+    now +
+      (proposal.expiration - currentBlockNumber) * SECONDS_PER_BLOCK * MS_PER_S,
+  );
 
   const votingPeriodEndsDate = formatAbbreviatedDate(
     new Date(votingPeriodEndsTimestampMS),
@@ -71,7 +75,9 @@ export function ProposalListItem({
               "h-full items-center justify-between flex space-x-4 text-principalRoyalBlue",
             )}
           >
-            <div className="text-sm">{t`voting ends ${votingPeriodEndsDate}`}</div>
+            {currentBlockNumber && (
+              <div className="text-sm">{t`voting ends ${votingPeriodEndsDate}`}</div>
+            )}
             <div className="flex items-center space-x-4">
               <div className="pb-0.5">
                 <BallotIcon account={account} proposalId={proposalId} />

@@ -11,6 +11,7 @@ export function useLatestBlockNumber(): QueryObserverResult<
       return defaultProvider.getBlockNumber();
     },
     refetchInterval: 5000,
+    keepPreviousData: true,
     enabled: !!defaultProvider,
   });
 
