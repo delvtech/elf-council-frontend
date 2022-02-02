@@ -278,7 +278,7 @@ interface QuorumBarProps {
   proposalId: string;
 
   // quorum in X * 1e18 format, i.e. '50' = 50 Eth
-  quorum: number;
+  quorum: string;
   status: ProposalStatus | undefined;
 }
 

@@ -22,7 +22,7 @@ export const ProposalStatusLabels: Record<ProposalStatus, string> = {
 export function getProposalStatus(
   isVotingOpen: boolean,
   isExecuted: boolean,
-  quourum: number,
+  quourum: string,
   votingPower: VotingPower | undefined,
 ): ProposalStatus | undefined {
   // TODO: add if voting power is loading and return undefined
@@ -36,11 +36,9 @@ export function getProposalStatus(
   }
 
   // if there are enough yes votes to pass quorum
-  const hasEnoughYes = votingPower?.[0]?.gte(
-    parseEther(String(quourum) || "0"),
-  );
+  const hasEnoughYes = votingPower?.[0]?.gte(parseEther(quourum || "0"));
   // if there are enough no votes to pass quorum
-  const hasEnoughNo = votingPower?.[1]?.gte(parseEther(String(quourum) || "0"));
+  const hasEnoughNo = votingPower?.[1]?.gte(parseEther(quourum || "0"));
 
   if (!isVotingOpen) {
     if (isExecuted) {
