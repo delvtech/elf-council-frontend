@@ -30,6 +30,7 @@ export default function DelegatePage(): ReactElement {
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
+  const [isSelfDelegated, setIsSelfDelegated] = useState(false);
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
@@ -124,6 +125,7 @@ export default function DelegatePage(): ReactElement {
           <DelegatesList
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
+            setIsSelfDelegated={setIsSelfDelegated}
           />
 
           {/* Delegate Card */}
@@ -140,6 +142,8 @@ export default function DelegatePage(): ReactElement {
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
+              isSelfDelegated={isSelfDelegated}
+              setIsSelfDelegated={setIsSelfDelegated}
             />
           </Card>
         </div>

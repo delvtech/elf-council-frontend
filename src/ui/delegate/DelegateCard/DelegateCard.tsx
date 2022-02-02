@@ -1,5 +1,6 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import { formatBalance } from "src/formatBalance";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
@@ -13,6 +14,9 @@ import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
 import { useDelegate } from "src/ui/delegate/useDelegate";
+import Button from "src/ui/base/Button/Button";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -22,6 +26,8 @@ interface DelegateCardProps {
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
+  isSelfDelegated: boolean;
+  setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -33,8 +39,9 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     delegateAddressInput,
     setDelegateAddressInput,
     selectedDelegate,
+    isSelfDelegated,
+    setIsSelfDelegated,
   } = props;
-
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
@@ -75,6 +82,12 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setTimeout(() => {
       setDelegationFail(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
+  };
+
+  const handleSelfDelegate = () => {
+    // Safe to typecast as button is disabled on !account || isLoading, which requires account
+    setDelegateAddressInput(account as string);
+    setIsSelfDelegated(true);
   };
 
   // Updates the state after every click on 'Delegate' button
@@ -144,6 +157,23 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
           <div className="text-center">
             <div className="flex justify-end items-end">
+              <div className="mr-4">
+                {!isSelfDelegated ? (
+                  <Button
+                    onClick={handleSelfDelegate}
+                    variant={ButtonVariant.OUTLINE_WHITE}
+                    disabled={!account || isLoading}
+                  >
+                    {t`Self-delegate`}
+                  </Button>
+                ) : (
+                  <Tag intent={Intent.SUCCESS}>
+                    <CheckCircleIcon height={24} className="mr-2" />
+                    <span className="font-bold">{t`Self-delegated!`}</span>
+                  </Tag>
+                )}
+              </div>
+
               <DelegateButton
                 account={account}
                 currentDelegateAddress={currentDelegateAddress}
