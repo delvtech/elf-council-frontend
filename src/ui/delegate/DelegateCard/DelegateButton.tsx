@@ -9,6 +9,7 @@ interface DelegateButtonProps {
   account: string | null | undefined;
   currentDelegateAddress: string | undefined;
   delegateAddressInput: string;
+  selectedDelegate: string;
   onDelegateClick: () => void;
   invalidAddress: boolean;
   isLoading?: boolean;
@@ -21,6 +22,7 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
     account,
     currentDelegateAddress,
     delegateAddressInput,
+    selectedDelegate,
     onDelegateClick,
     invalidAddress,
     isLoading = false,
@@ -29,7 +31,7 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
   } = props;
 
   const noAccount = !account;
-  const noInput = delegateAddressInput.length === 0;
+  const noSelection = selectedDelegate.length === 0;
   const sameDelegate =
     currentDelegateAddress?.toLowerCase() ===
     delegateAddressInput.toLowerCase();
@@ -38,7 +40,7 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
     <Tooltip
       content={getTooltipContent(
         noAccount,
-        noInput,
+        noSelection,
         invalidAddress,
         sameDelegate,
       )}
@@ -49,7 +51,11 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
         variant={buttonVariant}
         className={classNames("w-full", buttonClassName)}
         disabled={
-          noAccount || isLoading || noInput || invalidAddress || sameDelegate
+          noAccount ||
+          isLoading ||
+          noSelection ||
+          invalidAddress ||
+          sameDelegate
         }
       >{t`Delegate`}</Button>
     </Tooltip>
@@ -58,7 +64,7 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
 
 function getTooltipContent(
   noAccount: boolean,
-  noInput: boolean,
+  noSelection: boolean,
   invalidAddress: boolean,
   sameDelegate: boolean,
 ): string {
@@ -66,8 +72,8 @@ function getTooltipContent(
     return t`Connect wallet`;
   }
 
-  if (noInput) {
-    return t`Enter an address`;
+  if (noSelection) {
+    return t`Select a delegate`;
   }
 
   if (invalidAddress) {

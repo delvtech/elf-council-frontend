@@ -6,13 +6,19 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import shuffle from "lodash.shuffle";
 
 interface DelegatesListProps {
+  account: string | null | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
+  setSelectedDelegate: (address: string) => void;
+  setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegatesList({
+  account,
   selectedDelegate,
   setDelegateAddressInput,
+  setSelectedDelegate,
+  setIsSelfDelegated,
 }: DelegatesListProps): ReactElement {
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
@@ -31,7 +37,14 @@ function DelegatesList({
       >
         {shuffledDelegates.map((delegate, idx) => {
           const handleSelectDelegate = () => {
-            setDelegateAddressInput(delegate.address);
+            setSelectedDelegate(delegate.address);
+            setDelegateAddressInput("");
+
+            if (delegate.address === account) {
+              setIsSelfDelegated(true);
+            } else {
+              setIsSelfDelegated(false);
+            }
           };
 
           // TODO: Remove -${idx} for production since addresses are always unique

@@ -6,7 +6,7 @@ import {
   CheckIcon,
   ExclamationCircleIcon,
 } from "@heroicons/react/solid";
-
+import { isValidAddress } from "src/base/isValidAddress";
 import TextInput from "src/ui/base/Input/TextInput";
 interface DelegateAddressInputProps {
   account: string | null | undefined;
@@ -48,7 +48,7 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
         autoComplete="off"
       />
 
-      {!!selectedDelegate ? (
+      {isValidAddress(delegateAddressInput) ? (
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
           <CheckIcon className="fill-topaz h-6" />
         </div>

@@ -117,8 +117,8 @@ function DetailedDelegateProfile({
           </div>
         </div>
 
-        {/* Close Button */}
         <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
+          {/* Choose Delegate Button */}
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             <Button
               className="grid place-items-center w-full !p-0"
@@ -129,6 +129,7 @@ function DetailedDelegateProfile({
             </Button>
           </Tooltip>
 
+          {/* Close Button */}
           <Button
             variant={ButtonVariant.WHITE}
             className="grid place-items-center w-1/2"

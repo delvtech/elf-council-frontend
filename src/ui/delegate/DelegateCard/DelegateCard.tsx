@@ -1,5 +1,6 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import { formatBalance } from "src/formatBalance";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
@@ -13,6 +14,9 @@ import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
 import { useDelegate } from "src/ui/delegate/useDelegate";
+import Button from "src/ui/base/Button/Button";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 
 interface DelegateCardProps {
   account: string | null | undefined;
@@ -22,6 +26,9 @@ interface DelegateCardProps {
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
+  setSelectedDelegate: (address: string) => void;
+  isSelfDelegated: boolean;
+  setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -33,8 +40,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     delegateAddressInput,
     setDelegateAddressInput,
     selectedDelegate,
+    setSelectedDelegate,
+    isSelfDelegated,
+    setIsSelfDelegated,
   } = props;
-
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
@@ -47,11 +56,9 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     isLoading,
   } = useChangeDelegation(account, signer);
 
-  const onDelegateClick = useCallback(() => {
-    if (delegateAddressInput && isValidAddress(delegateAddressInput)) {
-      changeDelegation([delegateAddressInput]);
-    }
-  }, [changeDelegation, delegateAddressInput]);
+  const handleDelegateClick = useCallback(() => {
+    changeDelegation([selectedDelegate]);
+  }, [changeDelegation, selectedDelegate]);
 
   const toggleDelegationSuccess = () => {
     setDelegationSuccess(true);
@@ -67,6 +74,16 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     }, TWO_SECONDS_IN_MILLISECONDS);
   };
 
+  const handleSelfDelegateClick = () => {
+    if (!account) {
+      return;
+    }
+
+    setSelectedDelegate(account);
+    setDelegateAddressInput("");
+    setIsSelfDelegated(true);
+  };
+
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
     if (isSuccess) {
@@ -76,16 +93,26 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
       // Success
       if (nextDelegate || delegateAddressOnChain) {
+        setSelectedDelegate("");
         setDelegateAddressInput("");
+        setIsSelfDelegated(false);
         toggleDelegationSuccess();
       }
       // Fail
     } else if (isError) {
       toggleDelegationFail();
     }
-  }, [isSuccess, delegateAddressOnChain, setDelegateAddressInput, isError]);
+  }, [
+    isSuccess,
+    delegateAddressOnChain,
+    setDelegateAddressInput,
+    isError,
+    setIsSelfDelegated,
+    setSelectedDelegate,
+  ]);
 
-  const invalidAddress = !isValidAddress(delegateAddressInput);
+  const invalidAddress =
+    !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
@@ -128,11 +155,29 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
           <div className="text-center">
             <div className="flex justify-end items-end">
+              <div className="mr-4">
+                {!isSelfDelegated ? (
+                  <Button
+                    onClick={handleSelfDelegateClick}
+                    variant={ButtonVariant.OUTLINE_WHITE}
+                    disabled={!account || isLoading}
+                  >
+                    {t`Self-delegate`}
+                  </Button>
+                ) : (
+                  <Tag intent={Intent.SUCCESS}>
+                    <CheckCircleIcon height={24} className="mr-2" />
+                    <span className="font-bold">{t`Self-delegated!`}</span>
+                  </Tag>
+                )}
+              </div>
+
               <DelegateButton
                 account={account}
                 currentDelegateAddress={currentDelegateAddress}
                 delegateAddressInput={delegateAddressInput}
-                onDelegateClick={onDelegateClick}
+                selectedDelegate={selectedDelegate}
+                onDelegateClick={handleDelegateClick}
                 invalidAddress={invalidAddress}
                 isLoading={isLoading}
                 buttonVariant={ButtonVariant.GRADIENT}
