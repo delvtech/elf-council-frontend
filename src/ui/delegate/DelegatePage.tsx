@@ -12,13 +12,11 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import GradientCard from "src/ui/base/Card/GradientCard";
 import H2 from "src/ui/base/H2/H2";
 import { useDeposits } from "src/ui/contracts/useDeposits";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
-import PortfolioCard from "src/ui/delegate/PortfolioCard/PortfolioCard";
-import WarningLabel from "src/ui/delegate/PortfolioCard/WarningLabel";
+import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { RESOURCES_URL } from "src/ui/resources";
 
@@ -84,42 +82,17 @@ export default function DelegatePage(): ReactElement {
         "pt-16": !showWarning,
       })}
     >
-      {/* Warning Card */}
-      {showWarning ? (
-        <div className="flex flex-col w-full mb-4 xl:flex-row xl:justify-center max-w-7xl">
-          <WarningLabel className="p-2 px-6 xl:w-4/12 xl:mr-16">
-            {renderWarning()}
-          </WarningLabel>
-
-          {/***
-           * This is just a empty placeholder to match the width of its
-           * counterpart container: delegates list. Matches the '8/12' width.
-           * Helps keep warning label flush with the main content of the page,
-           * i.e. the PortfolioCard & DelegateList + DelegateCard, due to the
-           * 'justify-center' attribute on the main content, which makes it hard
-           * to keep things flush and responsive.
-           */}
-          <div className="xl:w-8/12" />
-        </div>
-      ) : null}
-
-      <div className="flex flex-col xl:flex-row xl:justify-center max-w-7xl">
-        {/* Portfolio Card */}
-        <GradientCard className="flex flex-col shadow lg:flex-row xl:flex-col xl:w-4/12 rounded-xl xl:mr-16">
-          <div className="px-6 py-7">
-            <H2 className="mb-4 text-2xl tracking-wide text-white">{t`Portfolio`}</H2>
-            <PortfolioCard
-              account={account}
-              signer={signer}
-              currentDelegateAddress={currentDelegateAddress}
-              walletBalance={walletBalance}
-              vaultBalance={vaultBalance}
-            />
+      <div className="flex flex-col max-w-7xl">
+        {/* Warning Card */}
+        {showWarning ? (
+          <div className="flex flex-col w-full mb-4 xl:flex-row xl:justify-center max-w-7xl">
+            <WarningLabel className="p-2 px-6 w-full">
+              {renderWarning()}
+            </WarningLabel>
           </div>
-        </GradientCard>
-
+        ) : null}
         {/* Delegates */}
-        <div className="flex flex-col mt-8 xl:w-8/12 xl:mt-0">
+        <div className="flex flex-col xl:w-full">
           {/* Delegates List */}
           <DelegatesList
             selectedDelegate={selectedDelegate}
@@ -150,8 +123,10 @@ export default function DelegatePage(): ReactElement {
 
 function NoConnection(): ReactElement {
   return (
-    <p className="text-left">
-      <span className="inline-block">{t`Unable to determine delegation eligibility`}</span>
+    <p className="text-center w-full whitespace-pre-wrap">
+      <span className="inline-block">
+        {t`Unable to determine delegation eligibility.`}{" "}
+      </span>
       <span className="inline-block">
         {t`Please connect your wallet`}
         <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
@@ -162,7 +137,7 @@ function NoConnection(): ReactElement {
 
 function NoDeposit(): ReactElement {
   return (
-    <p className="text-left">
+    <p className="text-center w-full">
       <span className="inline-block">
         {t`Please ensure you deposit your tokens to earn your delegating power`}
         <SparklesIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
@@ -173,14 +148,18 @@ function NoDeposit(): ReactElement {
 
 function NoDelegation(): ReactElement {
   return (
-    <p className="text-left">
-      <span className="inline-block">{t`Please set a delegation in order to deposit.`}</span>
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href={RESOURCES_URL}
-        className="underline"
-      >{t`To learn more about delegations click here.`}</a>
+    <p className="text-center w-full whitespace-pre-wrap">
+      <span className="inline-block">
+        {t`Please set a delegation in order to deposit.`}{" "}
+      </span>
+      <span className="inline-block">
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={RESOURCES_URL}
+          className="underline"
+        >{t`To learn more about delegations click here`}</a>
+      </span>
     </p>
   );
 }

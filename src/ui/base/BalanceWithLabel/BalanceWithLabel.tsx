@@ -31,7 +31,7 @@ export function BalanceWithLabel(props: BalanceWithLabelProps): ReactElement {
       <div className="flex items-center">
         <span className="mb-1 mr-2 text-xl">{label}</span>
         {tooltipText && (
-          <Tooltip content={t`Click to find out more.`}>
+          <Tooltip content={tooltipText}>
             {tooltipHref ? (
               <a
                 target="_blank"
