@@ -83,7 +83,7 @@ export function ChooseDelegate({
 
     // Somewhat of a hack to clear all other selections when the
     // user self-delegates
-    const indexOfAccountInDelegatesList = delegates.findIndex(
+    const indexOfAccountInDelegatesList = shuffledDelegates.findIndex(
       ({ address }) => address === account,
     );
     setSelectedDelegateIndex(
@@ -92,7 +92,7 @@ export function ChooseDelegate({
         : indexOfAccountInDelegatesList,
     );
     setCustomDelegateAddress("");
-  }, [account]);
+  }, [account, shuffledDelegates]);
 
   const handleCustomDelegateInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>): void => {
