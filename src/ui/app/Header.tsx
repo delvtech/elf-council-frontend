@@ -7,6 +7,8 @@ import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import { RESOURCES_URL } from "src/ui/resources";
 
+const GAS_URL = "https://www.etherchain.org/tools/gasnow";
+
 function Header(): ReactElement {
   const { account, active } = useWeb3React();
   const { data: gasPrice } = useGasPrice();
@@ -28,7 +30,12 @@ function Header(): ReactElement {
                 <ExternalLinkIcon className="h-4 shrink-0 text-principalRoyalBlue" />
               </a>
             </div>
-            <div className="flex items-center mr-8">
+            <a
+              href={GAS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center mr-8"
+            >
               <div className="relative w-5 h-5">
                 <Image
                   layout="fill"
@@ -37,9 +44,9 @@ function Header(): ReactElement {
                 />
               </div>
               <span className="ml-2 mr-1 font-bold text-principalRoyalBlue">
-                {gasPrice?.recommendedBaseFee}
+                {gasPrice?.recommendedBaseFee || 0.0}
               </span>
-            </div>
+            </a>
           </div>
         ) : null}
 
