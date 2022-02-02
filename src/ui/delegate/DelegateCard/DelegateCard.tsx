@@ -85,8 +85,11 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   };
 
   const handleSelfDelegateClick = () => {
-    // Safe to typecast as button is disabled on !account || isLoading, which requires account
-    setSelectedDelegate(account as string);
+    if (!account) {
+      return;
+    }
+
+    setSelectedDelegate(account);
     setDelegateAddressInput("");
     setIsSelfDelegated(true);
   };
