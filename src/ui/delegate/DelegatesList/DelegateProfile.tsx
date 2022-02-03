@@ -9,7 +9,11 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
-import { ButtonVariant } from "src/ui/base/Button/styles";
+import {
+  ButtonVariant,
+  ButtonStyles,
+  getButtonClass,
+} from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileProps {
@@ -110,7 +114,6 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveFrom="opacity-100 sm:scale-100"
           leaveTo="opacity-0 sm:scale-95"
         >
-          {/* TODO: TRAP THE MOUSE IN MODAL */}
           <Popover.Panel
             className="fixed lg:absolute z-20 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
           lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
