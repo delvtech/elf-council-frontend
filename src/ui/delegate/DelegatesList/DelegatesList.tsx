@@ -4,6 +4,7 @@ import H2 from "src/ui/base/H2/H2";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
 import shuffle from "lodash.shuffle";
+import { size } from "lodash";
 
 interface DelegatesListProps {
   account: string | null | undefined;
@@ -30,35 +31,47 @@ function DelegatesList({
       <H2 className="mb-4 text-2xl text-principalRoyalBlue tracking-wide">{t`Explore Featured Delegates`}</H2>
 
       {/* List of delegates */}
-      <ul
-        className="flex flex-col gap-y-2 overflow-y-scroll"
-        // 392px exactly matches 5 rows of the list
-        style={{ maxHeight: "392px" }}
-      >
-        {shuffledDelegates.map((delegate, idx) => {
-          const handleSelectDelegate = () => {
-            setSelectedDelegate(delegate.address);
-            setDelegateAddressInput("");
+      <div>
+        {/* Header */}
+        <div className="flex border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
+          <div className="ml-4">Name</div>
+          <div className="flex ml-auto mr-14">
+            <div>Votes</div>
+            {/* Width of buttons is 205px + 16px to account for scrollbar width */}
+            <span className={`w-[85px] lg:w-[220px]`} />
+          </div>
+        </div>
 
-            if (delegate.address === account) {
-              setIsSelfDelegated(true);
-            } else {
-              setIsSelfDelegated(false);
-            }
-          };
+        {/* Delegates */}
+        <ul
+          // 392px exactly matches 5 rows of the list
+          className="flex flex-col gap-y-2 overflow-y-scroll min-h-[392px] h-[40vh]"
+        >
+          {shuffledDelegates.map((delegate, idx) => {
+            const handleSelectDelegate = () => {
+              setSelectedDelegate(delegate.address);
+              setDelegateAddressInput("");
 
-          // TODO: Remove -${idx} for production since addresses are always unique
-          return (
-            <li key={`${delegate.address}-${idx}}`}>
-              <DelegateProfile
-                selected={delegate.address === selectedDelegate}
-                delegate={delegate}
-                onSelectDelegate={handleSelectDelegate}
-              />
-            </li>
-          );
-        })}
-      </ul>
+              if (delegate.address === account) {
+                setIsSelfDelegated(true);
+              } else {
+                setIsSelfDelegated(false);
+              }
+            };
+
+            // TODO: Remove -${idx} for production since addresses are always unique
+            return (
+              <li key={`${delegate.address}-${idx}}`}>
+                <DelegateProfile
+                  selected={delegate.address === selectedDelegate}
+                  delegate={delegate}
+                  onSelectDelegate={handleSelectDelegate}
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }
