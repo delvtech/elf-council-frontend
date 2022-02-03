@@ -68,7 +68,11 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           <Popover.Button as="div" className="w-full">
             <Button variant={ButtonVariant.SECONDARY}>Profile</Button>
           </Popover.Button>
-          <Button variant={ButtonVariant.PRIMARY} className="hidden lg:block">
+          <Button
+            onClick={onSelectDelegate}
+            variant={ButtonVariant.PRIMARY}
+            className="hidden lg:block"
+          >
             <span>Delegate</span>
           </Button>
         </div>
