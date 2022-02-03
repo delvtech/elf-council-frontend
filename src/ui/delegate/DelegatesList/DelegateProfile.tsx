@@ -65,15 +65,20 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
         {/* Buttons */}
         <div className="flex gap-x-4 w-[85px] lg:w-[205px]">
-          <Popover.Button as="div" className="w-full">
-            <Button variant={ButtonVariant.SECONDARY}>Profile</Button>
+          <Popover.Button as={Fragment}>
+            <Button
+              variant={ButtonVariant.SECONDARY}
+              className="w-full justify-center"
+            >
+              Profile
+            </Button>
           </Popover.Button>
           <Button
             onClick={onSelectDelegate}
             variant={ButtonVariant.PRIMARY}
-            className="hidden lg:block"
+            className="hidden lg:block w-full"
           >
-            <span>Delegate</span>
+            Select
           </Button>
         </div>
 
