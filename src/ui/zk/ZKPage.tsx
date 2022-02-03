@@ -99,9 +99,9 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
       />
 
       {/* STEP 3 */}
-      {platform === Platform.DISCORD && (
+      {platform === Platform.DISCORD && publicId && (
         <ShareCard
-          publicId={publicId as string}
+          publicId={publicId}
           className={getStepClassName(3)}
           label="Discord"
           url={DISCORD_ZK_URL}
@@ -127,9 +127,9 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
           }
         />
       )}
-      {platform === Platform.GITHUB && (
+      {platform === Platform.GITHUB && publicId && (
         <ShareCard
-          publicId={publicId as string}
+          publicId={publicId}
           className={getStepClassName(3)}
           label="GitHub"
           url={GITHUB_ZK_URL}
