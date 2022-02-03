@@ -9,11 +9,7 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
-import {
-  ButtonVariant,
-  ButtonStyles,
-  getButtonClass,
-} from "src/ui/base/Button/styles";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileProps {
