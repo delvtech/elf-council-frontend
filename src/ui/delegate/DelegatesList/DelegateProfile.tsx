@@ -9,6 +9,8 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileProps {
   selected: boolean;
@@ -22,43 +24,59 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
   return (
     <Popover>
-      <Popover.Button className="w-full">
-        <div
-          className={classNames(
-            "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
-            {
-              "!bg-votingGreen": selected,
-            },
-          )}
-        >
-          <div className="items-start w-10/12 text-left truncate">
-            <div
-              className={classNames(
-                "flex items-center mb-1 font-bold text-principalRoyalBlue",
-              )}
-            >
-              <WalletJazzicon
-                account={delegate.address}
-                size={20}
-                className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
-              />
-              <span className="truncate">{delegate.name}</span>
-            </div>
-            <span className={selected ? "text-gray-400" : "text-blueGrey"}>
-              <NumDelegatedVotes account={delegate.address} />
-            </span>
-          </div>
-
-          {/* Element member verified delegate icon */}
-          <div className="relative flex w-4 h-4">
-            <Image
-              layout="fill"
-              src="/assets/crown.svg"
-              alt={t`Affiliated with Element Finance`}
+      <div
+        className={classNames(
+          "flex items-center justify-between py-3 px-4 bg-white rounded-xl",
+          {
+            "!bg-votingGreen": selected,
+          },
+        )}
+      >
+        {/* LeftSide */}
+        <div className="items-start text-left truncate mr-4">
+          <div
+            className={classNames(
+              "flex items-center font-bold text-principalRoyalBlue",
+            )}
+          >
+            <WalletJazzicon
+              account={delegate.address}
+              size={20}
+              className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-2"
             />
+            <span className="truncate">{delegate.name}</span>
+            {/* Crown Icon */}
+            <div className="relative flex w-4 h-4 ml-2 shrink-0">
+              <Image
+                layout="fill"
+                src="/assets/crown.svg"
+                alt={t`Affiliated with Element Finance`}
+              />
+            </div>
           </div>
         </div>
-      </Popover.Button>
+
+        {/* Score */}
+        <div className="ml-auto mr-10">
+          <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+            <NumDelegatedVotes account={delegate.address} />
+          </span>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-x-4">
+          <Popover.Button className="w-full">
+            <Button variant={ButtonVariant.SECONDARY}>Profile</Button>
+          </Popover.Button>
+          <Button variant={ButtonVariant.PRIMARY} className="hidden lg:block">
+            <span>Delegate</span>
+          </Button>
+        </div>
+
+        {/* Score */}
+
+        {/* Element member verified delegate icon */}
+      </div>
 
       <Transition>
         {/* Greyed out background overlay */}
@@ -112,7 +130,7 @@ interface NumDelegatedVotesProps {
 function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const { account } = props;
   const votePower = useVotingPowerForAccount(account);
-  return <span>{t`${formatBalance(votePower)} votes`}</span>;
+  return <span>{formatBalance(votePower)}</span>;
 }
 
 export default dynamic(() => Promise.resolve(DelegateProfile), {
