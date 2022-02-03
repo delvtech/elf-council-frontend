@@ -16,6 +16,7 @@ interface DetailedDelegateProfileProps {
   delegate: Delegate;
   onSelectDelegate: () => void;
   onCloseProfileClick: () => void;
+  selected: boolean;
   className?: string;
 }
 
@@ -23,6 +24,7 @@ function DetailedDelegateProfile({
   delegate,
   onSelectDelegate,
   onCloseProfileClick,
+  selected,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
@@ -123,7 +125,7 @@ function DetailedDelegateProfile({
             <Button
               className="grid place-items-center w-full !p-0"
               onClick={onSelectDelegate}
-              disabled={!account}
+              disabled={!account || selected}
             >
               <span className="font-bold text-lg">{t`Choose Delegate`}</span>
             </Button>

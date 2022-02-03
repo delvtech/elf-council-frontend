@@ -73,18 +73,16 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               Profile
             </Button>
           </Popover.Button>
+
           <Button
             onClick={onSelectDelegate}
             variant={ButtonVariant.PRIMARY}
+            disabled={selected}
             className="hidden lg:block w-full"
           >
-            Select
+            Choose
           </Button>
         </div>
-
-        {/* Score */}
-
-        {/* Element member verified delegate icon */}
       </div>
 
       <Transition>
@@ -125,6 +123,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
                   close();
                 }}
                 onCloseProfileClick={close}
+                selected={selected}
               />
             )}
           </Popover.Panel>
