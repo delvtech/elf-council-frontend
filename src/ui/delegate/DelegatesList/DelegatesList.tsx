@@ -34,9 +34,9 @@ function DelegatesList({
       <div>
         {/* Header */}
         <div className="flex border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
-          <div className="ml-4">Name</div>
+          <span className="ml-4">{t`Name`}</span>
           <div className="flex ml-auto mr-14">
-            <div>Votes</div>
+            <span>{t`Votes`}</span>
             {/* Width of buttons is 205px + 16px to account for scrollbar width */}
             <span className={`w-[85px] lg:w-[220px]`} />
           </div>

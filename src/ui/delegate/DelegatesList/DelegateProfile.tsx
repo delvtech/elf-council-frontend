@@ -70,7 +70,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
               variant={ButtonVariant.SECONDARY}
               className="w-full justify-center"
             >
-              Profile
+              {t`Profile`}
             </Button>
           </Popover.Button>
 
@@ -80,7 +80,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
             disabled={selected}
             className="hidden lg:block w-full"
           >
-            Choose
+            {t`Choose`}
           </Button>
         </div>
       </div>
