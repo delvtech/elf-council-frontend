@@ -37,7 +37,8 @@ function DelegatesList({
           <span className="ml-4">{t`Name`}</span>
           <div className="flex ml-auto mr-14">
             <span>{t`Votes`}</span>
-            {/* Width of buttons is 205px + 16px to account for scrollbar width */}
+            {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
+            {/* Width of buttons is 205px + 15px to account for scrollbar width */}
             <span className={`w-[85px] lg:w-[220px]`} />
           </div>
         </div>

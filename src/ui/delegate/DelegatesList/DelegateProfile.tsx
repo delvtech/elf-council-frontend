@@ -32,7 +32,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           },
         )}
       >
-        {/* LeftSide */}
+        {/* Name */}
         <div className="items-start text-left truncate mr-4">
           <div
             className={classNames(
