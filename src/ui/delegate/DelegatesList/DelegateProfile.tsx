@@ -9,7 +9,7 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
-import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileProps {
@@ -66,13 +66,13 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
 
         {/* Buttons */}
         <div className="flex gap-x-4 w-[85px] lg:w-[205px]">
-          <Popover.Button as={Fragment}>
-            <Button
-              variant={ButtonVariant.SECONDARY}
-              className="w-full justify-center"
-            >
-              {t`Profile`}
-            </Button>
+          <Popover.Button
+            className={classNames(
+              getButtonClass({ variant: ButtonVariant.SECONDARY }),
+              "w-full justify-center",
+            )}
+          >
+            {t`Profile`}
           </Popover.Button>
 
           <Button
