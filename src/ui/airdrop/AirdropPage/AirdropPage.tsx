@@ -90,7 +90,7 @@ export default function AirdropPage(): ReactElement {
           <StepItem
             stepLabel="3"
             status={claimAndDelegateStatus}
-          >{t`Review deposit`}</StepItem>
+          >{t`Review Transaction`}</StepItem>
         </Steps>
       </div>
 
