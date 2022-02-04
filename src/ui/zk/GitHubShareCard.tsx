@@ -1,29 +1,31 @@
 import React, { ReactElement } from "react";
+import { GITHUB_ZK_URL } from "./constants";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import Image from "next/image";
-import { t } from "ttag";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
+import Image from "next/image";
+import { t, jt } from "ttag";
 import classNames from "classnames";
+
+const githubIssueLink = (
+  <a
+    href={GITHUB_ZK_URL}
+    target="_blank"
+    rel="noreferrer"
+    className="text-yieldLightBlue"
+  >{t`GitHub issue`}</a>
+);
 
 interface ShareCardProps {
   className?: string;
   publicId: string;
-  label: string;
-  url: string;
-  icon?: string | ReactElement;
-  description: string | ReactElement;
 }
 
 export default function ShareCard({
   className,
   publicId,
-  label,
-  url,
-  icon,
-  description,
 }: ShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -59,30 +61,33 @@ export default function ShareCard({
         </div>
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Succesfully created`}</h1>
-          <p className="w-0 min-w-full">{description}</p>
+          <p className="w-0 min-w-full">
+            {jt`Share your new Public ID in a comment on Element's ${githubIssueLink} to associate it with your GitHub username.`}
+          </p>
         </div>
         <HashString
-          label={`${label} Public ID`}
+          label={t`GitHub Public ID`}
           className="mb-10"
-          showCopyButton={true}
+          showCopyButton
           inputProps={{
             value: publicId,
-            placeholder: "0x".padEnd(42, "0"),
             readOnly: true,
           }}
         />
         <div className="flex gap-12">
           <AnchorButton
             variant={ButtonVariant.GRADIENT}
-            href={url}
+            href={GITHUB_ZK_URL}
             className="flex gap-2"
+            target="_blank"
           >
-            {t`Go to ${label}`}
-            {typeof icon === "string" ? (
-              <Image width={24} height={24} src={icon} alt="" />
-            ) : (
-              icon
-            )}
+            {t`Go to GitHub Issue`}
+            <Image
+              width={24}
+              height={24}
+              src="/assets/githublogo--light.svg"
+              alt=""
+            />
           </AnchorButton>
         </div>
       </div>

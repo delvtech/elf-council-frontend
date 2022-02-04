@@ -1,15 +1,14 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
-import ShareCard from "./ShareCard";
+import GitHubShareCard from "./GitHubShareCard";
+import DiscordShareCard from "./DiscordShareCard";
 import { Platform } from "./types";
-import { DISCORD_ZK_URL, GITHUB_ZK_URL } from "./constants";
 import useRouterSteps from "src/ui/router/useRouterSteps";
 import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
-import Image from "next/image";
 import { t } from "ttag";
 import { pedersenHashConcat, toHex } from "zkp-merkle-airdrop-lib";
 
@@ -100,60 +99,10 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
 
       {/* STEP 3 */}
       {platform === Platform.DISCORD && publicId && (
-        <ShareCard
-          publicId={publicId}
-          className={getStepClassName(3)}
-          label="Discord"
-          url={DISCORD_ZK_URL}
-          icon={
-            <Image
-              width={24}
-              height={24}
-              src="/assets/discordlogo--light.svg"
-              alt=""
-            />
-          }
-          description={
-            <>
-              {t`Send your new Public ID in our `}
-              <a
-                href={DISCORD_ZK_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="text-yieldLightBlue"
-              >{t`Discord channel`}</a>
-              {t` to associate it with your Discord username.`}
-            </>
-          }
-        />
+        <DiscordShareCard className={getStepClassName(3)} publicId={publicId} />
       )}
       {platform === Platform.GITHUB && publicId && (
-        <ShareCard
-          publicId={publicId}
-          className={getStepClassName(3)}
-          label="GitHub"
-          url={GITHUB_ZK_URL}
-          icon={
-            <Image
-              width={24}
-              height={24}
-              src="/assets/githublogo--light.svg"
-              alt=""
-            />
-          }
-          description={
-            <>
-              {t`Share your new Public ID in a comment on our `}
-              <a
-                href={GITHUB_ZK_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="text-yieldLightBlue"
-              >{t`GitHub issue`}</a>
-              {t` to associate it with your GitHub username.`}
-            </>
-          }
-        />
+        <GitHubShareCard className={getStepClassName(3)} publicId={publicId} />
       )}
 
       <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
