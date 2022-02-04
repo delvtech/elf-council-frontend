@@ -135,11 +135,7 @@ export function ChooseDelegate({
   );
 
   useEffect(() => {
-    if (
-      selectedDelegateIndex &&
-      selectedDelegateIndex !== -1 &&
-      scrollRefs.current.length > 0
-    ) {
+    if (selectedDelegateIndex && selectedDelegateIndex !== -1) {
       const delegateRef = scrollRefs.current[selectedDelegateIndex];
       delegateRef?.current?.scrollIntoView({
         behavior: "smooth",
