@@ -1,13 +1,4 @@
-import React, {
-  ReactElement,
-  useEffect,
-  useCallback,
-  useMemo,
-  useState,
-  useRef,
-  createRef,
-  RefObject,
-} from "react";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { isValidAddress } from "src/base/isValidAddress";
@@ -36,12 +27,6 @@ export function ChooseDelegate({
   onChooseDelegate,
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
-  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
-
-  scrollRefs.current = [...delegates].map((_, i) => {
-    return scrollRefs.current[i] ?? createRef();
-  });
-
   // Holds state for the Featured delegate selection
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
@@ -134,18 +119,6 @@ export function ChooseDelegate({
     [account, shuffledDelegates],
   );
 
-  useEffect(() => {
-    if (selectedDelegateIndex && selectedDelegateIndex !== -1) {
-      const delegateRef = scrollRefs.current[selectedDelegateIndex];
-      delegateRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
-      console.log(selectedDelegateIndex);
-      console.log(delegateRef.current);
-    }
-  }, [selectedDelegateIndex, shuffledDelegates]);
-
   return (
     <StepCard
       // relative so the delegate profile popover stays contained within the card
@@ -187,10 +160,7 @@ export function ChooseDelegate({
                 };
 
                 return (
-                  <li
-                    key={`${delegate.address}-${idx}}`}
-                    ref={scrollRefs.current[idx]}
-                  >
+                  <li key={`${delegate.address}-${idx}}`}>
                     <DelegateProfile
                       account={account}
                       selected={idx === selectedDelegateIndex}
