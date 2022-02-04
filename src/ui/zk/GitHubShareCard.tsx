@@ -60,7 +60,7 @@ export default function ShareCard({
           <ShieldExclamationIcon className="relative z-10 h-10" />
         </div>
         <div className="flex flex-col items-stretch">
-          <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Succesfully Created`}</h1>
+          <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Successfully Created`}</h1>
           <p className="w-0 min-w-full">
             {jt`Share your new Public ID in a comment on Element's ${githubIssueLink} to associate it with your GitHub username.`}
           </p>
