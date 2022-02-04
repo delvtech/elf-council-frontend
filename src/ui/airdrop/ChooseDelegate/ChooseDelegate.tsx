@@ -1,6 +1,15 @@
+import React, {
+  ReactElement,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+  createRef,
+  RefObject,
+} from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
@@ -27,6 +36,12 @@ export function ChooseDelegate({
   onChooseDelegate,
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
+  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
+
+  scrollRefs.current = [...delegates].map((_, i) => {
+    return scrollRefs.current[i] ?? createRef();
+  });
+
   // Holds state for the Featured delegate selection
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
@@ -63,9 +78,9 @@ export function ChooseDelegate({
       onChooseDelegate(customDelegateAddress);
     } else if (
       selectedDelegateIndex !== undefined &&
-      delegates[selectedDelegateIndex].address
+      shuffledDelegates[selectedDelegateIndex].address
     ) {
-      onChooseDelegate(delegates[selectedDelegateIndex].address);
+      onChooseDelegate(shuffledDelegates[selectedDelegateIndex].address);
     }
 
     onNextStepFromProps();
@@ -76,6 +91,7 @@ export function ChooseDelegate({
     onChooseDelegate,
     onNextStepFromProps,
     selectedDelegateIndex,
+    shuffledDelegates,
   ]);
 
   const handleSelfDelegateButtonClick = useCallback(() => {
@@ -83,7 +99,7 @@ export function ChooseDelegate({
 
     // Somewhat of a hack to clear all other selections when the
     // user self-delegates
-    const indexOfAccountInDelegatesList = delegates.findIndex(
+    const indexOfAccountInDelegatesList = shuffledDelegates.findIndex(
       ({ address }) => address === account,
     );
     setSelectedDelegateIndex(
@@ -92,7 +108,7 @@ export function ChooseDelegate({
         : indexOfAccountInDelegatesList,
     );
     setCustomDelegateAddress("");
-  }, [account]);
+  }, [account, shuffledDelegates]);
 
   const handleCustomDelegateInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -100,9 +116,10 @@ export function ChooseDelegate({
 
       // Somewhat of a hack to clear all other selections when the
       // user provides a custom address
-      const indexOfAccountInDelegatesList = delegates.findIndex(
+      const indexOfAccountInDelegatesList = shuffledDelegates.findIndex(
         ({ address }) => address === event.target.value,
       );
+
       setSelectedDelegateIndex(
         indexOfAccountInDelegatesList === -1
           ? undefined
@@ -114,8 +131,24 @@ export function ChooseDelegate({
         setIsSelfDelegated(false);
       }
     },
-    [account],
+    [account, shuffledDelegates],
   );
+
+  useEffect(() => {
+    if (
+      selectedDelegateIndex &&
+      selectedDelegateIndex !== -1 &&
+      scrollRefs.current.length > 0
+    ) {
+      console.log("Index: ", selectedDelegateIndex);
+      const delegateRef = scrollRefs.current[selectedDelegateIndex];
+      delegateRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+      console.log(!!delegateRef.current);
+    }
+  }, [selectedDelegateIndex, shuffledDelegates]);
 
   return (
     <StepCard
@@ -158,7 +191,10 @@ export function ChooseDelegate({
                 };
 
                 return (
-                  <li key={`${delegate.address}-${idx}}`}>
+                  <li
+                    key={`${delegate.address}-${idx}}`}
+                    ref={scrollRefs.current[idx]}
+                  >
                     <DelegateProfile
                       selected={idx === selectedDelegateIndex}
                       delegate={delegate}
@@ -182,7 +218,7 @@ export function ChooseDelegate({
                     {t`Self-delegate`}
                   </Button>
                 ) : (
-                  <div className={classNames("text-right mb-8")}>
+                  <div className={classNames("text-right")}>
                     <Tag intent={Intent.SUCCESS}>
                       <CheckCircleIcon height={24} className="mr-2" />
                       <span className="font-bold">{t`Self-delegated!`}</span>
