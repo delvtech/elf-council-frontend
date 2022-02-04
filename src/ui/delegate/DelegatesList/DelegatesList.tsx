@@ -43,7 +43,7 @@ function DelegatesList({
       return delegate.address === selectedDelegate;
     });
 
-    if (verifiedDelegateIdx && scrollRefs.current.length > 0) {
+    if (verifiedDelegateIdx !== -1 && scrollRefs.current.length > 0) {
       const delegateRef = scrollRefs.current[verifiedDelegateIdx];
       delegateRef?.current?.scrollIntoView({
         behavior: "smooth",

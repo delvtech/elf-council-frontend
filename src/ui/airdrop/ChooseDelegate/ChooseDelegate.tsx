@@ -140,13 +140,11 @@ export function ChooseDelegate({
       selectedDelegateIndex !== -1 &&
       scrollRefs.current.length > 0
     ) {
-      console.log("Index: ", selectedDelegateIndex);
       const delegateRef = scrollRefs.current[selectedDelegateIndex];
       delegateRef?.current?.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
-      console.log(!!delegateRef.current);
     }
   }, [selectedDelegateIndex, shuffledDelegates]);
 
