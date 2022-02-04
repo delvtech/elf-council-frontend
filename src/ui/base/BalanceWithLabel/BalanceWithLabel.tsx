@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import classNames from "classnames";
-import { t } from "ttag";
 import { InformationCircleIcon } from "@heroicons/react/solid";
 import { formatBalance } from "src/formatBalance";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";

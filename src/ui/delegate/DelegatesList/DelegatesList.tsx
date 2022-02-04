@@ -4,7 +4,6 @@ import H2 from "src/ui/base/H2/H2";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
 import { delegates } from "src/elf-council-delegates/delegates";
 import shuffle from "lodash.shuffle";
-import { size } from "lodash";
 
 interface DelegatesListProps {
   account: string | null | undefined;
