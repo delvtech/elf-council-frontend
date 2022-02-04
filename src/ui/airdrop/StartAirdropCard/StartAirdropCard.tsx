@@ -57,17 +57,17 @@ export function StartAirdropCard({
       <div className="flex flex-col items-center justify-center h-full p-12 space-y-5">
         <div className="flex flex-col items-center justify-center w-full space-y-8 md:w-7/12">
           <span className="flex items-center text-base font-semibold tracking-wider text-center">{jt`Introducing ${elementIconInSubtitle} ELFI`}</span>
-          <div className="text-3xl font-bold">{t`Help contribute to the next wave of Element`}</div>
+          <div className="text-3xl font-bold">{t`Contribute to the evolution of the Element DAO`}</div>
           <div className="flex flex-col px-2 space-y-8 text-base text-justify">
             <p className="inline">
-              {jt`With the launch of the ${elementIconInBodyText}ELFI token and
-              the Element DAO, the community now leads the future of the
-              protocol.`}
+              {jt`With the launch of the Element DAO and its
+              ${elementIconInBodyText}ELFI governance token, the community now
+              leads the future of the protocol.`}
             </p>
             <p className="inline">
-              {jt`${elementIconInBodyText}ELFI token depositors can choose to
-              directly participate in governance or delegate their votes to
-              another member.`}
+              {jt`${elementIconInBodyText}ELFI airdrop recipients can use their
+              non-transferrable tokens to participate in governance, or delegate
+              their votes to another member.`}
             </p>
           </div>
         </div>
