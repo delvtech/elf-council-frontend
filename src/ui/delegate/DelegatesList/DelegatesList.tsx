@@ -45,7 +45,7 @@ function DelegatesList({
 
     if (verifiedDelegateIdx !== -1) {
       const delegateRef = scrollRefs.current[verifiedDelegateIdx];
-      delegateRef?.current?.scrollIntoView({
+      delegateRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });

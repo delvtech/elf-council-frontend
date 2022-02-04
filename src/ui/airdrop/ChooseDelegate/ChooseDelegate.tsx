@@ -137,10 +137,12 @@ export function ChooseDelegate({
   useEffect(() => {
     if (selectedDelegateIndex && selectedDelegateIndex !== -1) {
       const delegateRef = scrollRefs.current[selectedDelegateIndex];
-      delegateRef?.current?.scrollIntoView({
+      delegateRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
+      console.log(selectedDelegateIndex);
+      console.log(delegateRef.current);
     }
   }, [selectedDelegateIndex, shuffledDelegates]);
 
@@ -169,7 +171,7 @@ export function ChooseDelegate({
 
           <div className="pr-1 overflow-auto shadow min-h-[392px] h-[40vh]">
             {/* List of delegates */}
-            <ul className="flex flex-col gap-y-2 ">
+            <ul className="flex flex-col gap-y-2">
               {shuffledDelegates.map((delegate, idx) => {
                 const handleSelectDelegate = () => {
                   setSelectedDelegateIndex(idx);
