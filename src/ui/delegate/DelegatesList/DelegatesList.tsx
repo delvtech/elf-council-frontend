@@ -93,6 +93,7 @@ function DelegatesList({
                 ref={scrollRefs.current[idx]}
               >
                 <DelegateProfile
+                  account={account}
                   selected={delegate.address === selectedDelegate}
                   delegate={delegate}
                   onSelectDelegate={handleSelectDelegate}

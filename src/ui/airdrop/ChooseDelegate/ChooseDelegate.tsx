@@ -192,6 +192,7 @@ export function ChooseDelegate({
                     ref={scrollRefs.current[idx]}
                   >
                     <DelegateProfile
+                      account={account}
                       selected={idx === selectedDelegateIndex}
                       delegate={delegate}
                       onSelectDelegate={handleSelectDelegate}

@@ -13,6 +13,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileProps {
+  account: string | null | undefined;
   selected: boolean;
   delegate: Delegate;
   onSelectDelegate: () => void;
@@ -20,7 +21,7 @@ interface DelegateProfileProps {
 }
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate, onSelectDelegate } = props;
+  const { account, selected = false, delegate, onSelectDelegate } = props;
 
   return (
     <Popover>
@@ -77,7 +78,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           <Button
             onClick={onSelectDelegate}
             variant={ButtonVariant.PRIMARY}
-            disabled={selected}
+            disabled={selected || !account}
             className="hidden lg:block w-full"
           >
             {t`Choose`}
