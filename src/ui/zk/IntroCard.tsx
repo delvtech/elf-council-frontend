@@ -20,18 +20,9 @@ export default function IntroCard({
         <h1 className="mb-4 text-3xl font-semibold text-white">{t`Claiming`}</h1>
         <div className="flex flex-col gap-2 px-5 py-4 mb-6 rounded-lg sm:py-6 sm:px-8 bg-white/10">
           <H2 className="text-white">{t`Creating your Public ID`}</H2>
-          <p>{t`The Public ID is created using two components, The Private Key and
-         The Secret. Both are strings randomly created by using ZK Method.`}</p>
+          <p>{t`In the next step, you'll randomly generate a new private key and secret which are used to create your Public ID. This Public ID allows you claim participation in our governance system without revealing any personal information. This process is called ZK Method. You will not be inputting any information through this flow.`}</p>
           <H2 className="mt-4 text-white">{t`What is ZK Method?`}</H2>
-          <p>{t`ZK is an encryptation process that hide your Public Address 
-        provides you a new one to interact with Element Governance platform and 
-        protocol access.`}</p>
-          <H2 className="mt-4 text-white">{t`Why do I need Public ID?`}</H2>
-          <p>{t`With the launch of the $ELFI and the DAO, we want provide unique 
-        Private Keys to give an extra layer of security. Please keep it in a 
-        safe place. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur 
-        aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione
-         voluptatem sequi nesciunt, neque porro quisquam est`}</p>
+          <p>{t`A ZK Method refers to a proof construction where one can prove possession of certain information, e.g. a secret key, without revealing that information, and without any interaction between the prover and verifier. To learn more about the ZK Method read here.`}</p>
         </div>
         <div className="text-right">
           <Button
