@@ -36,7 +36,7 @@ function DetailedDelegateProfile({
         className="z-10 absolute top-0 right-0 m-5"
         onClick={onCloseProfileClick}
       >
-        <XIcon className="h-6" />
+        <XIcon className="h-6 text-black" />
       </button>
 
       <div className="flex flex-col relative p-5 h-full">
