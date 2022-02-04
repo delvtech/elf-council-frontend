@@ -63,9 +63,9 @@ export function ChooseDelegate({
       onChooseDelegate(customDelegateAddress);
     } else if (
       selectedDelegateIndex !== undefined &&
-      delegates[selectedDelegateIndex].address
+      shuffledDelegates[selectedDelegateIndex].address
     ) {
-      onChooseDelegate(delegates[selectedDelegateIndex].address);
+      onChooseDelegate(shuffledDelegates[selectedDelegateIndex].address);
     }
 
     onNextStepFromProps();
@@ -76,6 +76,7 @@ export function ChooseDelegate({
     onChooseDelegate,
     onNextStepFromProps,
     selectedDelegateIndex,
+    shuffledDelegates,
   ]);
 
   const handleSelfDelegateButtonClick = useCallback(() => {
@@ -100,7 +101,7 @@ export function ChooseDelegate({
 
       // Somewhat of a hack to clear all other selections when the
       // user provides a custom address
-      const indexOfAccountInDelegatesList = delegates.findIndex(
+      const indexOfAccountInDelegatesList = shuffledDelegates.findIndex(
         ({ address }) => address === event.target.value,
       );
       setSelectedDelegateIndex(
@@ -114,7 +115,7 @@ export function ChooseDelegate({
         setIsSelfDelegated(false);
       }
     },
-    [account],
+    [account, shuffledDelegates],
   );
 
   return (
