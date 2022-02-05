@@ -59,7 +59,6 @@
     "react-use": "^17.3.2",
     "storybook-color-picker": "^2.3.0",
     "tailwindcss": "^3.0.17",
-    "tailwindcss-classnames": "^3.0.0",
     "tsconfig-paths-webpack-plugin": "^3.5.2",
     "ttag": "^1.7.24",
     "zkp-merkle-airdrop-lib": "github:a16z/zkp-merkle-airdrop-lib#c793c2d8aa864ece151d57c04905c973a45a0416"
@@ -117,7 +116,6 @@
   "scripts": {
     "build": "next build",
     "build:tailwind": "npx tailwindcss build -i styles/globals.css -o src/tailwind.output.css",
-    "build:tailwindcss-classnames": "tailwindcss-classnames -i tailwind.config.js -o src/elf-tailwindcss-classnames/index.ts",
     "depcruise": "depcruise --config .dependency-cruiser.js .",
     "dev": "next dev",
     "dev-goerli": "cross-env NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
