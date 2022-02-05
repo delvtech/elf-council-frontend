@@ -23,7 +23,7 @@ const StatusLabels: Record<ProposalStatus, string> = {
 };
 
 const StatusTagIntents: Record<ProposalStatus, Intent> = {
-  [ProposalStatus.IN_PROGRESS]: Intent.WARNING,
+  [ProposalStatus.IN_PROGRESS]: Intent.PRIMARY,
   [ProposalStatus.PASSING]: Intent.SUCCESS,
   [ProposalStatus.FAILING]: Intent.ERROR,
   [ProposalStatus.PASSED]: Intent.SUCCESS,
