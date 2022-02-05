@@ -12,6 +12,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { RESOURCES_URL } from "src/ui/resources";
 import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -37,9 +38,16 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
     >
       <div>
         <span className="text-xl font-bold tracking-widest text-white">{t`Portfolio`}</span>
-        <span className="ml-2 text-sm font-light tracking-widest text-white">
-          {account && `(${formatWalletAddress(account)})`}
-        </span>
+        {account && (
+          <a
+            href={getEtherscanAddress(account)}
+            target="_blank"
+            rel="noreferrer"
+            className="ml-2 text-sm font-light tracking-widest text-white underline hover:no-underline"
+          >
+            ({formatWalletAddress(account)})
+          </a>
+        )}
       </div>
       <div className="flex flex-col min-h-full mb-8 align-bottom">
         <BalanceWithLabel

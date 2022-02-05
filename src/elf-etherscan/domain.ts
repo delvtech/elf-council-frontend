@@ -13,6 +13,10 @@ function getDomain() {
   return "https://etherscan.io";
 }
 
+export function getEtherscanAddress(account: string): string {
+  return `${ETHERSCAN_DOMAIN}/address/${account}`;
+}
+
 export const ETHERSCAN_TRANSACTION_DOMAIN =
   addressesJson.chainId === ChainId.LOCAL
     ? `${ETHERSCAN_DOMAIN}/transaction`
