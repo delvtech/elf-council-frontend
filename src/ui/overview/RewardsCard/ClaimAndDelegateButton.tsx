@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
-import { width } from "src/elf-tailwindcss-classnames";
 import Button from "src/ui/base/Button/Button";
 import { t } from "ttag";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
@@ -48,10 +47,10 @@ export function ClaimAndDelegateButton(
           disabled={
             !account || !hasAnyBalance || isLoading || !hasValidDelegateAddress
           }
-          className={width("w-full")}
+          className={"w-full"}
           onClick={onClaimAndDelegate}
         >
-          <span className={width("w-full")}>{t`Claim and deposit`}</span>
+          <span className={"w-full"}>{t`Claim and deposit`}</span>
         </Button>
       </div>
     </Tooltip>
