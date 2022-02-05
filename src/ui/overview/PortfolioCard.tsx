@@ -54,7 +54,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           balance={votingPower}
           tooltipText={votingPowerTooltipText}
           tooltipHref={RESOURCES_URL}
-          label={t`Voting Power`}
+          label={t`Your Voting Power`}
         />
         {!!Number(unclaimedAirdrop) && (
           <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
