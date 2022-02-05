@@ -7,6 +7,19 @@ import { CheckCircleIcon } from "@heroicons/react/outline";
 import { copyToClipboard } from "src/base/copyToClipboard";
 import { t } from "ttag";
 
+/**
+ * TODO:
+ * This component has some functionality that would be useful for more than just
+ * hash strings:
+ * - Label
+ * - Dynamic input size
+ * - Copy button w/ overlay
+ *
+ * It should probably be made into something more generic and hash strings would
+ * use the generic version of this component with the specific styles (e.g.
+ * border radius, colors, font, letter spacing) passed in props.
+ */
+
 interface HashStringProps {
   className?: string;
   value?: string;

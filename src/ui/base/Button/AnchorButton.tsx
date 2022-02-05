@@ -37,6 +37,8 @@ export default function AnchorButton({
       role="button"
       onClick={onClick}
       className={classNames(buttonClass, className)}
+      // https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
+      rel={target === "_blank" ? "noreferrer" : undefined}
     >
       {children}
     </a>
