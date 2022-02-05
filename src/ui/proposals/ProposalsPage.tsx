@@ -93,7 +93,7 @@ export default function ProposalsPage({
   return (
     <div className="flex h-full lg:justify-center">
       <div className="flex-1 w-full h-full px-8 pt-8 space-y-8 lg:max-w-lg">
-        <H1 className="flex-1 text-center text-principalRoyalBlue">{t`Proposals`}</H1>
+        <H1 className="flex-1 text-center text-principalRoyalBlue">{t`On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
           <OffChainProposalsLink />
