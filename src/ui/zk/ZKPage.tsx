@@ -30,6 +30,16 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
     canViewStep,
   } = useRouterSteps({ initialCompleted: 1 });
 
+  let platformName = "";
+  switch (platform) {
+    case Platform.DISCORD:
+      platformName = "Discord";
+      break;
+    case Platform.GITHUB:
+      platformName = "GitHub";
+      break;
+  }
+
   // TODO: transition styles
   const getStepClassName = (step: number) => {
     if (step > currentStep) {
@@ -86,7 +96,11 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
         </Steps>
       </div>
       {/* STEP 1 */}
-      <IntroCard className={getStepClassName(1)} onNextClick={goToNextStep} />
+      <IntroCard
+        className={getStepClassName(1)}
+        onNextClick={goToNextStep}
+        platformName={platformName}
+      />
 
       {/* STEP 2 */}
       <EncryptionCard

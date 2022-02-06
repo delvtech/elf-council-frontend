@@ -76,13 +76,9 @@ export default function EncryptionCard({
       <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
         <h1 className="mb-2 text-3xl font-semibold">{t`Encryption`}</h1>
         <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
-          <H2 className="text-white">{t`Drag the slider below to generate a random string`}</H2>
+          <H2 className="text-white">{t`Drag the slider below to generate your key and secret`}</H2>
           <p>
-            {t`Numbers are generated based on how the mouse changes horizontal or
-          vertical direction. You need two strings because lorem ipsum dolor ut 
-          perspiciatis, unde omnis iste natus error sit voluptatem accusantium 
-          dolore.`}{" "}
-            <a href="http://TODO">{t`Learn more`}</a>
+            {t`Move your cursor in any direction while dragging the slider to generate a new key and secret. Once the progress bar is completely full, download the JSON file containing your new key and secret before continuing to the next step.`}
           </p>
         </div>
         <HashSlider

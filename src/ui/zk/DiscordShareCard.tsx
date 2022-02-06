@@ -21,22 +21,22 @@ const discordServerLink = (
   </a>
 );
 
-interface GitHubShareCardProps {
+interface DiscordShareCardProps {
   className?: string;
   publicId: string;
 }
 
-export default function GitHubShareCard({
+export default function DiscordShareCard({
   className,
   publicId,
-}: GitHubShareCardProps): ReactElement {
+}: DiscordShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
       <div className="flex flex-col items-center justify-center gap-2 px-4 pt-3 pb-4 text-center text-white md:pt-8 md:px-14 md:pb-14">
         <RadiantShieldIcon className="mb-5" />
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Successfully Created`}</h1>
-          <p className="w-0 min-w-full">{jt`Paste the command below into any channel in the ${discordServerLink} to associate your new Public ID with your Discord username.`}</p>
+          <p className="w-0 min-w-full">{jt`Use the command below in the ${discordServerLink} to associate your new Public ID with your Discord ID.`}</p>
         </div>
 
         <HashString
