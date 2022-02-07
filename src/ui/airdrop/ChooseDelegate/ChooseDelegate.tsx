@@ -1,4 +1,13 @@
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useEffect,
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+  createRef,
+  RefObject,
+} from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { isValidAddress } from "src/base/isValidAddress";
@@ -27,6 +36,12 @@ export function ChooseDelegate({
   onChooseDelegate,
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
+  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
+
+  scrollRefs.current = delegates.map((_, i) => {
+    return scrollRefs.current[i] ?? createRef();
+  });
+
   // Holds state for the Featured delegate selection
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
@@ -118,6 +133,20 @@ export function ChooseDelegate({
     },
     [account, shuffledDelegates],
   );
+
+  useEffect(() => {
+    if (
+      selectedDelegateIndex &&
+      selectedDelegateIndex !== -1 &&
+      scrollRefs.current.length > 0
+    ) {
+      const delegateRef = scrollRefs.current[selectedDelegateIndex];
+      delegateRef?.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [selectedDelegateIndex, shuffledDelegates]);
 
   return (
     <StepCard

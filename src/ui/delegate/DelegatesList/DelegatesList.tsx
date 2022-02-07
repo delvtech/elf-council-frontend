@@ -1,4 +1,11 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useMemo,
+  useRef,
+  createRef,
+  RefObject
+} from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -30,6 +37,12 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
+  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
+
+  scrollRefs.current = delegates.map((_, i) => {
+    return scrollRefs.current[i] ?? createRef();
+  });
+
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
