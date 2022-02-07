@@ -60,7 +60,7 @@ export default function ClaimPage(): ReactElement {
     }
   }, [data /*, merkleTree */]);
 
-  const handleStep1Complete = useCallback(
+  const handleLookupStepComplete = useCallback(
     (data: ZKData): void => {
       setData(data);
       completeStep(1);
@@ -81,7 +81,7 @@ export default function ClaimPage(): ReactElement {
       {/* STEP 1 */}
       <LookupCard
         className={getStepClassName(1)}
-        onComplete={handleStep1Complete}
+        onComplete={handleLookupStepComplete}
         onNextClick={goToNextStep}
       />
 
