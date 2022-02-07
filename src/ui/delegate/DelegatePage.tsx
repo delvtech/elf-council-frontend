@@ -94,6 +94,7 @@ export default function DelegatePage(): ReactElement {
           {/* Delegates List */}
           <DelegatesList
             account={account}
+            signer={signer}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
             setSelectedDelegate={setSelectedDelegate}

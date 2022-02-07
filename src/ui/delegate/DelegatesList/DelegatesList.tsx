@@ -1,5 +1,7 @@
 import { ReactElement, useMemo } from "react";
+import { Signer } from "ethers";
 import { t } from "ttag";
+import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/elf-council-delegates/delegates";
@@ -7,6 +9,7 @@ import shuffle from "lodash.shuffle";
 
 interface DelegatesListProps {
   account: string | null | undefined;
+  signer: Signer | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
   setSelectedDelegate: (address: string) => void;
@@ -14,10 +17,18 @@ interface DelegatesListProps {
 
 function DelegatesList({
   account,
+  signer,
   selectedDelegate,
   setDelegateAddressInput,
   setSelectedDelegate,
 }: DelegatesListProps): ReactElement {
+  const {
+    mutate: changeDelegation,
+    isSuccess,
+    isError,
+    isLoading,
+  } = useChangeDelegation(account, signer);
+
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
@@ -52,6 +63,11 @@ function DelegatesList({
               setDelegateAddressInput("");
             };
 
+            const handleDelegation = () => {
+              changeDelegation([delegate.address]);
+              setDelegateAddressInput("");
+            };
+
             // TODO: Remove -${idx} for production since addresses are always unique
             return (
               <li key={`${delegate.address}-${idx}}`}>
@@ -60,6 +76,7 @@ function DelegatesList({
                   selected={delegate.address === selectedDelegate}
                   delegate={delegate}
                   onSelectDelegate={handleSelectDelegate}
+                  onDelegation={handleDelegation}
                 />
               </li>
             );

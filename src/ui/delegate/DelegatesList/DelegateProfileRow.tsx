@@ -17,11 +17,20 @@ interface DelegateProfileRowProps {
   selected: boolean;
   delegate: Delegate;
   onSelectDelegate: () => void;
+  onDelegation?: () => void;
   active?: boolean;
+  airdrop?: boolean;
 }
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
-  const { account, selected = false, delegate, onSelectDelegate } = props;
+  const {
+    account,
+    selected = false,
+    delegate,
+    onSelectDelegate,
+    onDelegation,
+    airdrop = false,
+  } = props;
   const votePower = useVotingPowerForAccount(account);
 
   return (
@@ -84,12 +93,12 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           </Popover.Button>
 
           <Button
-            onClick={onSelectDelegate}
-            variant={ButtonVariant.GRADIENT}
+            onClick={!airdrop && onDelegation ? onDelegation : onSelectDelegate}
+            variant={airdrop ? ButtonVariant.PRIMARY : ButtonVariant.GRADIENT}
             disabled={selected || !account}
             className="hidden lg:block w-full"
           >
-            {t`Choose`}
+            {airdrop ? t`Choose` : t`Delegate`}
           </Button>
         </div>
       </div>

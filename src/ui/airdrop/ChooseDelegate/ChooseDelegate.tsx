@@ -166,6 +166,7 @@ export function ChooseDelegate({
                       selected={idx === selectedDelegateIndex}
                       delegate={delegate}
                       onSelectDelegate={handleSelectDelegate}
+                      airdrop={true}
                     />
                   </li>
                 );
