@@ -1,10 +1,8 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
 import { Signer } from "ethers";
 import { CheckCircleIcon } from "@heroicons/react/solid";
-import { formatBalance } from "src/formatBalance";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
@@ -35,7 +33,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
     signer,
-    vaultBalance,
     currentDelegateAddress,
     delegateAddressInput,
     setDelegateAddressInput,
