@@ -11,6 +11,7 @@ import { utils } from "ethers";
 import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import downloadFile, { DownloadType } from "src/base/downloadFile";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { ZKData } from "./types";
 import { HASH_LENGTH } from "./constants";
 
@@ -119,11 +120,16 @@ export default function EncryptionCard({
               onClick={handleDownloadClick}
               disabled={!keySecretPair || progress < 100}
             >{t`Download JSON`}</Button>
-            <Button
-              variant={ButtonVariant.GRADIENT}
-              onClick={onNextClick}
-              disabled={!downloaded}
-            >{t`Next`}</Button>
+            <Tooltip
+              content={t`Download JSON before continuing`}
+              disabled={!keySecretPair || progress < 100 || downloaded}
+            >
+              <Button
+                variant={ButtonVariant.GRADIENT}
+                onClick={onNextClick}
+                disabled={!downloaded}
+              >{t`Next`}</Button>
+            </Tooltip>
           </div>
         </div>
       </div>
