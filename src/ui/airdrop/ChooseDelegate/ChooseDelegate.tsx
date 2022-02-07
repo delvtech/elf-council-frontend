@@ -136,7 +136,7 @@ export function ChooseDelegate({
             <span className="col-span-4 ml-4">{t`Name`}</span>
             <div className="col-span-1 ml-auto mr-14">
               <span>{t`Votes`}</span>
-              {/* Spacer for button */}
+              {/* Spacer for buttons */}
               <span className={`col-span-2`} />
             </div>
           </div>
