@@ -55,28 +55,28 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     changeDelegation([selectedDelegate]);
   }, [changeDelegation, selectedDelegate]);
 
-  const toggleDelegationSuccess = () => {
+  const toggleDelegationSuccess = useCallback(() => {
     setDelegationSuccess(true);
     setTimeout(() => {
       setDelegationSuccess(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
-  };
+  }, []);
 
-  const toggleDelegationFail = () => {
+  const toggleDelegationFail = useCallback(() => {
     setDelegationFail(true);
     setTimeout(() => {
       setDelegationFail(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
-  };
+  }, []);
 
-  const handleSelfDelegateClick = () => {
+  const handleSelfDelegateClick = useCallback(() => {
     if (!account) {
       return;
     }
 
-    setSelectedDelegate(account);
+    changeDelegation([account]);
     setDelegateAddressInput("");
-  };
+  }, [account, changeDelegation, setDelegateAddressInput]);
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
@@ -101,6 +101,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setDelegateAddressInput,
     isError,
     setSelectedDelegate,
+    toggleDelegationSuccess,
+    toggleDelegationFail,
   ]);
 
   const invalidAddress =
