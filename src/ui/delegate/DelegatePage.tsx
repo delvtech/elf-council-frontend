@@ -27,7 +27,9 @@ export default function DelegatePage(): ReactElement {
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
-  const isSelfDelegated = account && account === currentDelegateAddress;
+  const isSelfDelegated = !!account
+    ? account === currentDelegateAddress
+    : false;
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
