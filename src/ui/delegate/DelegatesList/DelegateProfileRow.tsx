@@ -85,7 +85,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
 
           <Button
             onClick={onSelectDelegate}
-            variant={ButtonVariant.PRIMARY}
+            variant={ButtonVariant.GRADIENT}
             disabled={selected || !account}
             className="hidden lg:block w-full"
           >
