@@ -1,4 +1,11 @@
-import { ReactElement, useMemo } from "react";
+import {
+  ReactElement,
+  useEffect,
+  useMemo,
+  useRef,
+  createRef,
+  RefObject,
+} from "react";
 import { t } from "ttag";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
@@ -20,10 +27,29 @@ function DelegatesList({
   setSelectedDelegate,
   setIsSelfDelegated,
 }: DelegatesListProps): ReactElement {
+  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
+
+  scrollRefs.current = [...delegates].map((_, i) => {
+    return scrollRefs.current[i] ?? createRef();
+  });
+
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
   }, []);
+
+  useEffect(() => {
+    const verifiedDelegateIdx = shuffledDelegates.findIndex((delegate) => {
+      return delegate.address === selectedDelegate;
+    });
+
+    if (verifiedDelegateIdx !== -1) {
+      scrollRefs.current[verifiedDelegateIdx].current?.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [selectedDelegate, shuffledDelegates]);
 
   return (
     <div className="relative mb-8">
@@ -61,7 +87,10 @@ function DelegatesList({
 
             // TODO: Remove -${idx} for production since addresses are always unique
             return (
-              <li key={`${delegate.address}-${idx}}`}>
+              <li
+                key={`${delegate.address}-${idx}}`}
+                ref={scrollRefs.current[idx]}
+              >
                 <DelegateProfile
                   account={account}
                   selected={delegate.address === selectedDelegate}

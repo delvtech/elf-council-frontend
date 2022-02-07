@@ -132,13 +132,12 @@ export function ChooseDelegate({
         <H2>{t`Choose a delegate from the list below`}</H2>
         <div className="w-full">
           {/* Header */}
-          <div className="flex border-b-2 pb-2 mb-4 font-bold text-white">
-            <span className="ml-4">{t`Name`}</span>
-            <div className="flex ml-auto mr-14">
+          <div className="grid grid-cols-7 border-b-2 pb-2 mb-4 font-bold text-white">
+            <span className="col-span-4 ml-4">{t`Name`}</span>
+            <div className="col-span-1 ml-auto mr-14">
               <span>{t`Votes`}</span>
-              {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
-              {/* Width of buttons is 205px + 15px to account for scrollbar width */}
-              <span className={`w-[85px] lg:w-[220px]`} />
+              {/* Spacer for button */}
+              <span className={`col-span-2`} />
             </div>
           </div>
 

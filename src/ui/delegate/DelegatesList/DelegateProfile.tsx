@@ -22,50 +22,58 @@ interface DelegateProfileProps {
 
 function DelegateProfile(props: DelegateProfileProps): ReactElement {
   const { account, selected = false, delegate, onSelectDelegate } = props;
+  const votePower = useVotingPowerForAccount(account);
 
   return (
     <Popover>
       <div
         className={classNames(
-          "flex items-center justify-between py-3 px-4 bg-white rounded-xl",
+          "grid grid-cols-7 items-center justify-between py-3 px-4 bg-white rounded-xl",
           {
             "!bg-votingGreen": selected,
           },
         )}
       >
         {/* Name */}
-        <div className="items-start text-left truncate mr-4">
-          <div
-            className={classNames(
-              "flex items-center font-bold text-principalRoyalBlue",
-            )}
-          >
-            <WalletJazzicon
-              account={delegate.address}
-              size={20}
-              className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-2"
-            />
-            <span className="truncate">{delegate.name}</span>
-            {/* Crown Icon */}
-            <div className="relative flex w-4 h-4 ml-2 shrink-0">
-              <Image
-                layout="fill"
-                src="/assets/crown.svg"
-                alt={t`Affiliated with Element Finance`}
+        <div className="col-span-5 lg:col-span-4 items-start text-left truncate mr-4">
+          <div className="flex flex-col">
+            <div
+              className={classNames(
+                "flex items-center font-bold text-principalRoyalBlue",
+              )}
+            >
+              <WalletJazzicon
+                account={delegate.address}
+                size={20}
+                className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-2"
               />
+              <span className="truncate">{delegate.name}</span>
+              {/* Crown Icon */}
+              <div className="relative flex w-4 h-4 ml-2 shrink-0">
+                <Image
+                  layout="fill"
+                  src="/assets/crown.svg"
+                  alt={t`Affiliated with Element Finance`}
+                />
+              </div>
+            </div>
+            <div className="lg:hidden">
+              <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+                <span>{t`${formatBalance(votePower)} votes`}</span>
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Score */}
-        <div className="ml-auto mr-10">
+        {/* Votes */}
+        <div className="hidden lg:block col-span-1 ml-auto mr-10">
           <span className={selected ? "text-gray-400" : "text-blueGrey"}>
-            <NumDelegatedVotes account={delegate.address} />
+            <span>{formatBalance(votePower)}</span>
           </span>
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-x-4 w-[85px] lg:w-[205px]">
+        <div className="col-span-2 flex gap-x-4">
           <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),
