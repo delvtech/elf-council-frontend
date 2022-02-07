@@ -26,7 +26,6 @@ interface DelegateCardProps {
   selectedDelegate: string;
   setSelectedDelegate: (address: string) => void;
   isSelfDelegated: boolean;
-  setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -39,7 +38,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     selectedDelegate,
     setSelectedDelegate,
     isSelfDelegated,
-    setIsSelfDelegated,
   } = props;
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
@@ -78,7 +76,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
     setSelectedDelegate(account);
     setDelegateAddressInput("");
-    setIsSelfDelegated(true);
   };
 
   // Updates the state after every click on 'Delegate' button
@@ -92,7 +89,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       if (nextDelegate || delegateAddressOnChain) {
         setSelectedDelegate("");
         setDelegateAddressInput("");
-        setIsSelfDelegated(false);
         toggleDelegationSuccess();
       }
       // Fail
@@ -104,7 +100,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     delegateAddressOnChain,
     setDelegateAddressInput,
     isError,
-    setIsSelfDelegated,
     setSelectedDelegate,
   ]);
 

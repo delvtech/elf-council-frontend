@@ -8,7 +8,6 @@ import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
 import { isValidAddress } from "src/base/isValidAddress";
-import { delegates } from "src/elf-council-delegates/delegates";
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -28,7 +27,7 @@ export default function DelegatePage(): ReactElement {
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
-  const [isSelfDelegated, setIsSelfDelegated] = useState(false);
+  const isSelfDelegated = account && account === currentDelegateAddress;
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
@@ -68,14 +67,7 @@ export default function DelegatePage(): ReactElement {
 
     if (isValidAddress(delegateAddressInput)) {
       setSelectedDelegate(delegateAddressInput);
-
-      if (delegateAddressInput === account) {
-        setIsSelfDelegated(true);
-      } else {
-        setIsSelfDelegated(false);
-      }
     } else {
-      setIsSelfDelegated(false);
       setSelectedDelegate("");
     }
   }, [account, delegateAddressInput]);
@@ -103,7 +95,6 @@ export default function DelegatePage(): ReactElement {
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
             setSelectedDelegate={setSelectedDelegate}
-            setIsSelfDelegated={setIsSelfDelegated}
           />
 
           {/* Delegate Card */}
@@ -122,7 +113,6 @@ export default function DelegatePage(): ReactElement {
               selectedDelegate={selectedDelegate}
               setSelectedDelegate={setSelectedDelegate}
               isSelfDelegated={isSelfDelegated}
-              setIsSelfDelegated={setIsSelfDelegated}
             />
           </Card>
         </div>
