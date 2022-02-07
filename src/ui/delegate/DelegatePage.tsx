@@ -86,17 +86,17 @@ export default function DelegatePage(): ReactElement {
         "pt-16": !showWarning,
       })}
     >
-      <div className="flex flex-col max-w-7xl">
+      <div className="flex flex-col w-full max-w-4xl">
         {/* Warning Card */}
         {showWarning ? (
-          <div className="flex flex-col w-full mb-4 xl:flex-row xl:justify-center max-w-7xl">
+          <div className="flex flex-col w-full mb-4 xl:flex-row xl:justify-center">
             <WarningLabel className="p-2 px-6 w-full">
               {renderWarning()}
             </WarningLabel>
           </div>
         ) : null}
         {/* Delegates */}
-        <div className="flex flex-col xl:w-full">
+        <div className="flex flex-col">
           {/* Delegates List */}
           <DelegatesList
             account={account}

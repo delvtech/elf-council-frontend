@@ -9,56 +9,90 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
+import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
+import Button from "src/ui/base/Button/Button";
 
-interface DelegateProfileProps {
+interface DelegateProfileRowProps {
+  account: string | null | undefined;
   selected: boolean;
   delegate: Delegate;
   onSelectDelegate: () => void;
   active?: boolean;
 }
 
-function DelegateProfile(props: DelegateProfileProps): ReactElement {
-  const { selected = false, delegate, onSelectDelegate } = props;
+function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
+  const { account, selected = false, delegate, onSelectDelegate } = props;
+  const votePower = useVotingPowerForAccount(account);
 
   return (
     <Popover>
-      <Popover.Button className="w-full">
-        <div
-          className={classNames(
-            "flex items-center justify-between py-3 px-4 bg-hackerSky rounded-xl",
-            {
-              "!bg-votingGreen": selected,
-            },
-          )}
-        >
-          <div className="items-start w-10/12 text-left truncate">
+      <div
+        className={classNames(
+          "grid grid-cols-7 items-center justify-between py-3 px-4 bg-white rounded-xl",
+          {
+            "!bg-votingGreen": selected,
+          },
+        )}
+      >
+        {/* Name */}
+        <div className="col-span-5 lg:col-span-4 items-start text-left truncate mr-4">
+          <div className="flex flex-col">
             <div
               className={classNames(
-                "flex items-center mb-1 font-bold text-principalRoyalBlue",
+                "flex items-center font-bold text-principalRoyalBlue",
               )}
             >
               <WalletJazzicon
                 account={delegate.address}
                 size={20}
-                className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
+                className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-2"
               />
               <span className="truncate">{delegate.name}</span>
+              {/* Crown Icon */}
+              <div className="relative flex w-4 h-4 ml-2 shrink-0">
+                <Image
+                  layout="fill"
+                  src="/assets/crown.svg"
+                  alt={t`Affiliated with Element Finance`}
+                />
+              </div>
             </div>
-            <span className={selected ? "text-gray-400" : "text-blueGrey"}>
-              <NumDelegatedVotes account={delegate.address} />
-            </span>
-          </div>
-
-          {/* Element member verified delegate icon */}
-          <div className="relative flex w-4 h-4">
-            <Image
-              layout="fill"
-              src="/assets/crown.svg"
-              alt={t`Affiliated with Element Finance`}
-            />
+            <div className="lg:hidden">
+              <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+                <span>{t`${formatBalance(votePower)} votes`}</span>
+              </span>
+            </div>
           </div>
         </div>
-      </Popover.Button>
+
+        {/* Votes */}
+        <div className="hidden lg:block col-span-1 ml-auto mr-10">
+          <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+            <span>{formatBalance(votePower)}</span>
+          </span>
+        </div>
+
+        {/* Buttons */}
+        <div className="col-span-2 flex gap-x-4">
+          <Popover.Button
+            className={classNames(
+              getButtonClass({ variant: ButtonVariant.SECONDARY }),
+              "w-full justify-center",
+            )}
+          >
+            {t`Profile`}
+          </Popover.Button>
+
+          <Button
+            onClick={onSelectDelegate}
+            variant={ButtonVariant.PRIMARY}
+            disabled={selected || !account}
+            className="hidden lg:block w-full"
+          >
+            {t`Choose`}
+          </Button>
+        </div>
+      </div>
 
       <Transition>
         {/* Greyed out background overlay */}
@@ -86,6 +120,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
           leaveTo="opacity-0 sm:scale-95"
         >
           <Popover.Panel
+            focus
             className="fixed lg:absolute z-20 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
           lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
           >
@@ -97,6 +132,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
                   close();
                 }}
                 onCloseProfileClick={close}
+                selected={selected}
               />
             )}
           </Popover.Panel>
@@ -106,16 +142,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
   );
 }
 
-interface NumDelegatedVotesProps {
-  account: string;
-}
-function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
-  const { account } = props;
-  const votePower = useVotingPowerForAccount(account);
-  return <span>{t`${formatBalance(votePower)} votes`}</span>;
-}
-
-export default dynamic(() => Promise.resolve(DelegateProfile), {
+export default dynamic(() => Promise.resolve(DelegateProfileRow), {
   // we cant server side render the Popover component, so we turn this off for DelegateProfile
   ssr: false,
 });

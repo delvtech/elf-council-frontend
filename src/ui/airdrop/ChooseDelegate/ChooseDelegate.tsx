@@ -1,6 +1,6 @@
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
@@ -10,7 +10,7 @@ import H2 from "src/ui/base/H2/H2";
 import TextInput from "src/ui/base/Input/TextInput";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
-import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
+import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 
@@ -63,9 +63,9 @@ export function ChooseDelegate({
       onChooseDelegate(customDelegateAddress);
     } else if (
       selectedDelegateIndex !== undefined &&
-      delegates[selectedDelegateIndex].address
+      shuffledDelegates[selectedDelegateIndex].address
     ) {
-      onChooseDelegate(delegates[selectedDelegateIndex].address);
+      onChooseDelegate(shuffledDelegates[selectedDelegateIndex].address);
     }
 
     onNextStepFromProps();
@@ -76,6 +76,7 @@ export function ChooseDelegate({
     onChooseDelegate,
     onNextStepFromProps,
     selectedDelegateIndex,
+    shuffledDelegates,
   ]);
 
   const handleSelfDelegateButtonClick = useCallback(() => {
@@ -100,9 +101,10 @@ export function ChooseDelegate({
 
       // Somewhat of a hack to clear all other selections when the
       // user provides a custom address
-      const indexOfAccountInDelegatesList = delegates.findIndex(
+      const indexOfAccountInDelegatesList = shuffledDelegates.findIndex(
         ({ address }) => address === event.target.value,
       );
+
       setSelectedDelegateIndex(
         indexOfAccountInDelegatesList === -1
           ? undefined
@@ -114,7 +116,7 @@ export function ChooseDelegate({
         setIsSelfDelegated(false);
       }
     },
-    [account],
+    [account, shuffledDelegates],
   );
 
   return (
@@ -128,10 +130,21 @@ export function ChooseDelegate({
     >
       <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
         <H2>{t`Choose a delegate from the list below`}</H2>
-        <div className="w-full space-y-8">
-          <div className="pr-1 overflow-auto shadow h-72 rounded-xl">
+        <div className="w-full">
+          {/* Header */}
+          <div className="grid grid-cols-7 border-b-2 pb-2 mb-4 font-bold text-white">
+            <span className="hidden lg:block col-span-5 lg:col-span-4 ml-4">{t`Name`}</span>
+            <span className="lg:hidden col-span-5 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
+            <div className="hidden lg:block col-span-1 ml-auto mr-14">
+              <span>{t`Votes`}</span>
+              {/* Spacer for buttons */}
+              <span className={`col-span-2`} />
+            </div>
+          </div>
+
+          <div className="pr-1 overflow-auto shadow min-h-[392px] h-[40vh]">
             {/* List of delegates */}
-            <ul className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-3">
+            <ul className="flex flex-col gap-y-2">
               {shuffledDelegates.map((delegate, idx) => {
                 const handleSelectDelegate = () => {
                   setSelectedDelegateIndex(idx);
@@ -148,7 +161,8 @@ export function ChooseDelegate({
 
                 return (
                   <li key={`${delegate.address}-${idx}}`}>
-                    <DelegateProfile
+                    <DelegateProfileRow
+                      account={account}
                       selected={idx === selectedDelegateIndex}
                       delegate={delegate}
                       onSelectDelegate={handleSelectDelegate}
@@ -158,7 +172,8 @@ export function ChooseDelegate({
               })}
             </ul>
           </div>
-          <div className="flex px-4">
+
+          <div className="flex px-4 mt-6">
             <div className="flex flex-col flex-1 space-y-2">
               <H2 className="text-center">{t`or`}</H2>
               <div className="flex items-center justify-center space-x-4">
@@ -170,7 +185,7 @@ export function ChooseDelegate({
                     {t`Self-delegate`}
                   </Button>
                 ) : (
-                  <div className={classNames("text-right mb-8")}>
+                  <div className={classNames("text-right")}>
                     <Tag intent={Intent.SUCCESS}>
                       <CheckCircleIcon height={24} className="mr-2" />
                       <span className="font-bold">{t`Self-delegated!`}</span>
