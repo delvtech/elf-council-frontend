@@ -153,7 +153,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 {!isSelfDelegated ? (
                   <Button
                     onClick={handleSelfDelegateClick}
-                    variant={ButtonVariant.OUTLINE_WHITE}
+                    variant={ButtonVariant.GRADIENT}
                     disabled={!account || isLoading}
                   >
                     {t`Self-delegate`}
