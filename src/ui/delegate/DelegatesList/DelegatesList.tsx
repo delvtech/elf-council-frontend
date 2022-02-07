@@ -1,15 +1,26 @@
 import { ReactElement, useMemo } from "react";
-import { Signer } from "ethers";
 import { t } from "ttag";
-import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
+import shuffle from "lodash.shuffle";
+import { UseMutationResult } from "react-query";
+import { ContractReceipt, Overrides } from "ethers";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/elf-council-delegates/delegates";
-import shuffle from "lodash.shuffle";
-
 interface DelegatesListProps {
   account: string | null | undefined;
-  signer: Signer | undefined;
+  changeDelegationResult: UseMutationResult<
+    ContractReceipt | undefined,
+    unknown,
+    [
+      newDelegate: string,
+      overrides?:
+        | (Overrides & {
+            from?: string | Promise<string> | undefined;
+          })
+        | undefined,
+    ],
+    unknown
+  >;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
   setSelectedDelegate: (address: string) => void;
@@ -17,17 +28,17 @@ interface DelegatesListProps {
 
 function DelegatesList({
   account,
-  signer,
+  changeDelegationResult,
   selectedDelegate,
   setDelegateAddressInput,
   setSelectedDelegate,
 }: DelegatesListProps): ReactElement {
   const {
     mutate: changeDelegation,
-    isSuccess,
-    isError,
     isLoading,
-  } = useChangeDelegation(account, signer);
+    isError,
+    isSuccess,
+  } = changeDelegationResult;
 
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
@@ -77,6 +88,7 @@ function DelegatesList({
                   delegate={delegate}
                   onSelectDelegate={handleSelectDelegate}
                   onDelegation={handleDelegation}
+                  isLoading={isLoading}
                 />
               </li>
             );

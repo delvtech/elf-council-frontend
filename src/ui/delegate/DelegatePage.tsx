@@ -7,6 +7,7 @@ import { Signer } from "ethers";
 import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
+import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { isValidAddress } from "src/base/isValidAddress";
 import { elementTokenContract } from "src/elf/contracts";
 import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
@@ -24,12 +25,13 @@ export default function DelegatePage(): ReactElement {
   const signer = account ? (library?.getSigner(account) as Signer) : undefined;
 
   const currentDelegateAddress = useDelegate(account);
-
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
   const isSelfDelegated = !!account
     ? account === currentDelegateAddress
     : false;
+
+  const changeDelegationResult = useChangeDelegation(account, signer);
 
   const { data: walletBalanceBN } = useTokenBalanceOf(
     elementTokenContract,
@@ -94,7 +96,7 @@ export default function DelegatePage(): ReactElement {
           {/* Delegates List */}
           <DelegatesList
             account={account}
-            signer={signer}
+            changeDelegationResult={changeDelegationResult}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
             setSelectedDelegate={setSelectedDelegate}
@@ -108,8 +110,7 @@ export default function DelegatePage(): ReactElement {
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
               account={account}
-              signer={signer}
-              vaultBalance={vaultBalance}
+              changeDelegationResult={changeDelegationResult}
               currentDelegateAddress={currentDelegateAddress}
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}

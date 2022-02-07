@@ -18,7 +18,7 @@ interface DelegateProfileRowProps {
   delegate: Delegate;
   onSelectDelegate: () => void;
   onDelegation?: () => void;
-  active?: boolean;
+  isLoading?: boolean;
   airdrop?: boolean;
 }
 
@@ -29,6 +29,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     delegate,
     onSelectDelegate,
     onDelegation,
+    isLoading = false,
     airdrop = false,
   } = props;
   const votePower = useVotingPowerForAccount(account);
@@ -95,8 +96,9 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           <Button
             onClick={!airdrop && onDelegation ? onDelegation : onSelectDelegate}
             variant={airdrop ? ButtonVariant.PRIMARY : ButtonVariant.GRADIENT}
-            disabled={selected || !account}
-            className="hidden lg:block w-full"
+            disabled={selected || !account || isLoading}
+            className="hidden lg:inline-flex w-full justify-center"
+            loading={isLoading}
           >
             {airdrop ? t`Choose` : t`Delegate`}
           </Button>

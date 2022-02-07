@@ -1,8 +1,6 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
-import { Signer } from "ethers";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
@@ -15,11 +13,24 @@ import { useDelegate } from "src/ui/delegate/useDelegate";
 import Button from "src/ui/base/Button/Button";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
+import { UseMutationResult } from "react-query";
+import { ContractReceipt, Overrides } from "ethers";
 
 interface DelegateCardProps {
   account: string | null | undefined;
-  signer: Signer | undefined;
-  vaultBalance: string;
+  changeDelegationResult: UseMutationResult<
+    ContractReceipt | undefined,
+    unknown,
+    [
+      newDelegate: string,
+      overrides?:
+        | (Overrides & {
+            from?: string | Promise<string> | undefined;
+          })
+        | undefined,
+    ],
+    unknown
+  >;
   currentDelegateAddress: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
@@ -31,7 +42,7 @@ interface DelegateCardProps {
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
-    signer,
+    changeDelegationResult,
     currentDelegateAddress,
     delegateAddressInput,
     setDelegateAddressInput,
@@ -39,17 +50,18 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setSelectedDelegate,
     isSelfDelegated,
   } = props;
+
+  const {
+    mutate: changeDelegation,
+    isLoading,
+    isError,
+    isSuccess,
+  } = changeDelegationResult;
+
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
   const delegateAddressOnChain = useDelegate(account);
-
-  const {
-    mutate: changeDelegation,
-    isSuccess,
-    isError,
-    isLoading,
-  } = useChangeDelegation(account, signer);
 
   const handleDelegateClick = useCallback(() => {
     changeDelegation([selectedDelegate]);
@@ -155,6 +167,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                     onClick={handleSelfDelegateClick}
                     variant={ButtonVariant.GRADIENT}
                     disabled={!account || isLoading}
+                    loading={isLoading}
+                    className="w-36"
                   >
                     {t`Self-delegate`}
                   </Button>
