@@ -59,8 +59,9 @@ function DelegatesList({
       <div>
         {/* Header */}
         <div className="grid grid-cols-7 border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
-          <span className="col-span-4 ml-4">{t`Name`}</span>
-          <div className="col-span-1 ml-auto mr-14">
+          <span className="hidden lg:block col-span-5 lg:col-span-4 ml-4">{t`Name`}</span>
+          <span className="lg:hidden col-span-5 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
+          <div className="hidden lg:block col-span-1 ml-auto mr-14">
             <span>{t`Votes`}</span>
             {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
             {/* Spacer for buttons */}
