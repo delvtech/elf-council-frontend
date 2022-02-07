@@ -12,7 +12,7 @@ import dynamic from "next/dynamic";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import Button from "src/ui/base/Button/Button";
 
-interface DelegateProfileProps {
+interface DelegateProfileRowProps {
   account: string | null | undefined;
   selected: boolean;
   delegate: Delegate;
@@ -20,7 +20,7 @@ interface DelegateProfileProps {
   active?: boolean;
 }
 
-function DelegateProfile(props: DelegateProfileProps): ReactElement {
+function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
   const { account, selected = false, delegate, onSelectDelegate } = props;
   const votePower = useVotingPowerForAccount(account);
 
@@ -142,16 +142,7 @@ function DelegateProfile(props: DelegateProfileProps): ReactElement {
   );
 }
 
-interface NumDelegatedVotesProps {
-  account: string;
-}
-function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
-  const { account } = props;
-  const votePower = useVotingPowerForAccount(account);
-  return <span>{formatBalance(votePower)}</span>;
-}
-
-export default dynamic(() => Promise.resolve(DelegateProfile), {
+export default dynamic(() => Promise.resolve(DelegateProfileRow), {
   // we cant server side render the Popover component, so we turn this off for DelegateProfile
   ssr: false,
 });

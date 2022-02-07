@@ -8,7 +8,7 @@ import {
 } from "react";
 import { t } from "ttag";
 import H2 from "src/ui/base/H2/H2";
-import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
+import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/elf-council-delegates/delegates";
 import shuffle from "lodash.shuffle";
 
@@ -91,7 +91,7 @@ function DelegatesList({
                 key={`${delegate.address}-${idx}}`}
                 ref={scrollRefs.current[idx]}
               >
-                <DelegateProfile
+                <DelegateProfileRow
                   account={account}
                   selected={delegate.address === selectedDelegate}
                   delegate={delegate}

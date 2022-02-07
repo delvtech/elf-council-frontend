@@ -10,7 +10,7 @@ import H2 from "src/ui/base/H2/H2";
 import TextInput from "src/ui/base/Input/TextInput";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
-import DelegateProfile from "src/ui/delegate/DelegatesList/DelegateProfile";
+import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 
@@ -160,7 +160,7 @@ export function ChooseDelegate({
 
                 return (
                   <li key={`${delegate.address}-${idx}}`}>
-                    <DelegateProfile
+                    <DelegateProfileRow
                       account={account}
                       selected={idx === selectedDelegateIndex}
                       delegate={delegate}
