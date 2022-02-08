@@ -2,8 +2,8 @@
   "dependencies": {
     "@alch/alchemy-web3": "^1.2.2",
     "@blueprintjs/popover2": "^0.12.9",
-    "@elementfi/react-query-typechain": "^1.0.5",
     "@ethersproject/providers": "^5.5.3",
+    "@elementfi/react-query-typechain": "^1.2.0",
     "@fontsource/roboto-mono": "^4.5.1",
     "@fontsource/rubik": "^4.5.1",
     "@headlessui/react": "^1.4.3",
@@ -69,7 +69,7 @@
     "@storybook/addon-essentials": "^6.4.18",
     "@storybook/addon-links": "^6.4.18",
     "@storybook/react": "^6.4.18",
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@types/d3-format": "^3.0.1",
