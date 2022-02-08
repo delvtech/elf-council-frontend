@@ -2,7 +2,7 @@
   "dependencies": {
     "@alch/alchemy-web3": "^1.2.2",
     "@blueprintjs/popover2": "^0.12.9",
-    "@elementfi/react-query-typechain": "^1.0.5",
+    "@elementfi/react-query-typechain": "^1.2.0",
     "@ethersproject/providers": "^5.5.3",
     "@fontsource/roboto-mono": "^4.5.1",
     "@fontsource/rubik": "^4.5.1",
@@ -50,7 +50,7 @@
     "lodash.shuffle": "^4.2.0",
     "lodash.zip": "^4.2.0",
     "next": "^12.0.9",
-    "postcss": "^8.4.5",
+    "postcss": "^8.4.6",
     "react": "17.0.2",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "17.0.2",
@@ -65,7 +65,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.12",
-    "@storybook/addon-actions": "^6.4.14",
+    "@storybook/addon-actions": "^6.4.18",
     "@storybook/addon-essentials": "^6.4.18",
     "@storybook/addon-links": "^6.4.18",
     "@storybook/react": "^6.4.18",
