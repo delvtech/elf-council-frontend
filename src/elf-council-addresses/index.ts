@@ -11,7 +11,6 @@ const localGoerliAddressList = {
     gscCoreVoting: "0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1",
     gscVault: "0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3",
     lockingVault: "0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D",
-    nonFungibleVotingVault: "0x9eE5f603D8dCFbdF06f23aE0960F704b85F12fAb",
     optimisticGrants: "0x092B49777CB45dc4939FBc4029ce7a116D63D29D",
     optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
     spender: "0x722289C399e6f4AbCE80FaFbABC9a9876432834C",
