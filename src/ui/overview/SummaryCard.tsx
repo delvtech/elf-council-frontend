@@ -8,7 +8,7 @@ import { RESOURCES_URL } from "src/ui/resources";
 
 interface SummaryCardProps {
   title: string;
-  tooltipContent: string | ReactElement;
+  tooltipContent?: string | ReactElement;
   balance?: ReactNode;
   children?: ReactNode;
 }
@@ -18,7 +18,18 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
   return (
     <Card className="flex flex-col lg:flex-1">
       <div className="-mt-2 text-sm font-light text-principalRoyalBlue">
-        <Tooltip content={tooltipContent}>
+        {tooltipContent ? (
+          <Tooltip content={tooltipContent}>
+            <a
+              target="_blank"
+              rel="noreferrer"
+              href={RESOURCES_URL}
+              className="underline"
+            >
+              {title}
+            </a>
+          </Tooltip>
+        ) : (
           <a
             target="_blank"
             rel="noreferrer"
@@ -27,7 +38,7 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
           >
             {title}
           </a>
-        </Tooltip>
+        )}
       </div>
       <div className="flex items-center justify-center flex-1 py-4 text-5xl text-center font-extralight text-principalRoyalBlue">
         {balance}
