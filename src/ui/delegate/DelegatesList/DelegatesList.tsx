@@ -1,55 +1,37 @@
-import {
-  ReactElement,
-  useEffect,
-  useMemo,
-  useRef,
-  createRef,
-  RefObject,
-} from "react";
+import { ReactElement, useMemo } from "react";
 import { t } from "ttag";
+import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/elf-council-delegates/delegates";
-import shuffle from "lodash.shuffle";
-
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
+import { Overrides } from "ethers";
 interface DelegatesListProps {
   account: string | null | undefined;
+  changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  delegateAddressOnChain: string | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
   setSelectedDelegate: (address: string) => void;
-  setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegatesList({
   account,
+  changeDelegation,
+  isLoading,
+  delegateAddressOnChain,
   selectedDelegate,
   setDelegateAddressInput,
   setSelectedDelegate,
-  setIsSelfDelegated,
 }: DelegatesListProps): ReactElement {
-  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
-
-  scrollRefs.current = [...delegates].map((_, i) => {
-    return scrollRefs.current[i] ?? createRef();
-  });
-
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
   }, []);
-
-  useEffect(() => {
-    const verifiedDelegateIdx = shuffledDelegates.findIndex((delegate) => {
-      return delegate.address === selectedDelegate;
-    });
-
-    if (verifiedDelegateIdx !== -1) {
-      scrollRefs.current[verifiedDelegateIdx].current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
-    }
-  }, [selectedDelegate, shuffledDelegates]);
 
   return (
     <div className="relative mb-8">
@@ -78,25 +60,40 @@ function DelegatesList({
             const handleSelectDelegate = () => {
               setSelectedDelegate(delegate.address);
               setDelegateAddressInput("");
-
-              if (delegate.address === account) {
-                setIsSelfDelegated(true);
-              } else {
-                setIsSelfDelegated(false);
-              }
             };
+
+            const handleDelegation = () => {
+              changeDelegation([delegate.address]);
+              setDelegateAddressInput("");
+            };
+
+            const currentlyDelegated = delegateAddressOnChain
+              ? delegate.address === delegateAddressOnChain
+              : false;
+
+            const selected = delegate.address === selectedDelegate;
 
             // TODO: Remove -${idx} for production since addresses are always unique
             return (
-              <li
-                key={`${delegate.address}-${idx}}`}
-                ref={scrollRefs.current[idx]}
-              >
+              <li key={`${delegate.address}-${idx}}`}>
                 <DelegateProfileRow
                   account={account}
-                  selected={delegate.address === selectedDelegate}
+                  selected={selected}
                   delegate={delegate}
                   onSelectDelegate={handleSelectDelegate}
+                  actionButton={
+                    <Button
+                      onClick={handleDelegation}
+                      variant={ButtonVariant.GRADIENT}
+                      disabled={
+                        selected || !account || isLoading || currentlyDelegated
+                      }
+                      className="hidden lg:inline-flex w-full justify-center"
+                      loading={isLoading}
+                    >
+                      {t`Delegate`}
+                    </Button>
+                  }
                 />
               </li>
             );

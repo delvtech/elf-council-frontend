@@ -1,10 +1,6 @@
 import { ReactElement, useState, useCallback, useEffect } from "react";
-import { Signer } from "ethers";
 import { CheckCircleIcon } from "@heroicons/react/solid";
-import { formatBalance } from "src/formatBalance";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
@@ -13,76 +9,71 @@ import classNames from "classnames";
 import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
-import { useDelegate } from "src/ui/delegate/useDelegate";
 import Button from "src/ui/base/Button/Button";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
+import { Overrides } from "ethers";
 
 interface DelegateCardProps {
   account: string | null | undefined;
-  signer: Signer | undefined;
-  vaultBalance: string;
-  currentDelegateAddress: string | undefined;
+  changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  delegateAddressOnChain: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   setSelectedDelegate: (address: string) => void;
-  isSelfDelegated: boolean;
-  setIsSelfDelegated: (state: boolean) => void;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
-    signer,
-    vaultBalance,
-    currentDelegateAddress,
+    changeDelegation,
+    isLoading,
+    isError,
+    isSuccess,
     delegateAddressInput,
+    delegateAddressOnChain,
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
-    isSelfDelegated,
-    setIsSelfDelegated,
   } = props;
+
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
-  const delegateAddressOnChain = useDelegate(account);
-
-  const {
-    mutate: changeDelegation,
-    isSuccess,
-    isError,
-    isLoading,
-  } = useChangeDelegation(account, signer);
+  const isSelfDelegated = !!account
+    ? account === delegateAddressOnChain
+    : false;
 
   const handleDelegateClick = useCallback(() => {
     changeDelegation([selectedDelegate]);
   }, [changeDelegation, selectedDelegate]);
 
-  const toggleDelegationSuccess = () => {
+  const toggleDelegationSuccess = useCallback(() => {
     setDelegationSuccess(true);
     setTimeout(() => {
       setDelegationSuccess(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
-  };
+  }, []);
 
-  const toggleDelegationFail = () => {
+  const toggleDelegationFail = useCallback(() => {
     setDelegationFail(true);
     setTimeout(() => {
       setDelegationFail(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
-  };
+  }, []);
 
-  const handleSelfDelegateClick = () => {
+  const handleSelfDelegateClick = useCallback(() => {
     if (!account) {
       return;
     }
 
-    setSelectedDelegate(account);
+    changeDelegation([account]);
     setDelegateAddressInput("");
-    setIsSelfDelegated(true);
-  };
+  }, [account, changeDelegation, setDelegateAddressInput]);
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
@@ -95,7 +86,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       if (nextDelegate || delegateAddressOnChain) {
         setSelectedDelegate("");
         setDelegateAddressInput("");
-        setIsSelfDelegated(false);
         toggleDelegationSuccess();
       }
       // Fail
@@ -107,8 +97,9 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     delegateAddressOnChain,
     setDelegateAddressInput,
     isError,
-    setIsSelfDelegated,
     setSelectedDelegate,
+    toggleDelegationSuccess,
+    toggleDelegationFail,
   ]);
 
   const invalidAddress =
@@ -127,10 +118,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-0 sm:gap-7 md:gap-0 lg:gap-7 mt-2">
         {/* Current Delegate Profile */}
-        {currentDelegateAddress ? (
+        {delegateAddressOnChain ? (
           <CurrentDelegate
             className="w-full sm:w-1/2 md:w-full lg:w-1/2"
-            currentDelegateAddress={currentDelegateAddress}
+            currentDelegateAddress={delegateAddressOnChain}
           />
         ) : (
           <NoDelegate />
@@ -159,8 +150,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
                 {!isSelfDelegated ? (
                   <Button
                     onClick={handleSelfDelegateClick}
-                    variant={ButtonVariant.OUTLINE_WHITE}
+                    variant={ButtonVariant.GRADIENT}
                     disabled={!account || isLoading}
+                    loading={isLoading}
+                    className="w-36"
                   >
                     {t`Self-delegate`}
                   </Button>
@@ -174,8 +167,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
               <DelegateButton
                 account={account}
-                currentDelegateAddress={currentDelegateAddress}
-                delegateAddressInput={delegateAddressInput}
+                currentDelegateAddress={delegateAddressOnChain}
                 selectedDelegate={selectedDelegate}
                 onDelegateClick={handleDelegateClick}
                 invalidAddress={invalidAddress}

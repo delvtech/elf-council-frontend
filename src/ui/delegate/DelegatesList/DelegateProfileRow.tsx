@@ -10,18 +10,23 @@ import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
-import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileRowProps {
   account: string | null | undefined;
   selected: boolean;
   delegate: Delegate;
   onSelectDelegate: () => void;
-  active?: boolean;
+  actionButton: ReactElement;
 }
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
-  const { account, selected = false, delegate, onSelectDelegate } = props;
+  const {
+    account,
+    selected = false,
+    delegate,
+    onSelectDelegate,
+    actionButton,
+  } = props;
   const votePower = useVotingPowerForAccount(account);
 
   return (
@@ -83,14 +88,8 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
             {t`Profile`}
           </Popover.Button>
 
-          <Button
-            onClick={onSelectDelegate}
-            variant={ButtonVariant.PRIMARY}
-            disabled={selected || !account}
-            className="hidden lg:block w-full"
-          >
-            {t`Choose`}
-          </Button>
+          {/* Button unique for Delegate Page & Airdrop Page */}
+          {actionButton}
         </div>
       </div>
 

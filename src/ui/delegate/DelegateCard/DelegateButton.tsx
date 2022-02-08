@@ -8,7 +8,6 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 interface DelegateButtonProps {
   account: string | null | undefined;
   currentDelegateAddress: string | undefined;
-  delegateAddressInput: string;
   selectedDelegate: string;
   onDelegateClick: () => void;
   invalidAddress: boolean;
@@ -21,7 +20,6 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
   const {
     account,
     currentDelegateAddress,
-    delegateAddressInput,
     selectedDelegate,
     onDelegateClick,
     invalidAddress,
@@ -33,8 +31,7 @@ function DelegateButton(props: DelegateButtonProps): ReactElement {
   const noAccount = !account;
   const noSelection = selectedDelegate.length === 0;
   const sameDelegate =
-    currentDelegateAddress?.toLowerCase() ===
-    delegateAddressInput.toLowerCase();
+    currentDelegateAddress?.toLowerCase() === selectedDelegate.toLowerCase();
 
   return (
     <Tooltip
