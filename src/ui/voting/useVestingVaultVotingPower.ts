@@ -16,7 +16,12 @@ export function useVestingVaultVotingPower(
     vestingContract,
     "queryVotePower",
     {
-      callArgs: [account as string, blockNumber as number, "0x00"],
+      callArgs: [
+        account as string,
+        blockNumber as number,
+        // unused calldata, stubbed to make contract call work
+        "0x00",
+      ],
       enabled: !!account && !!blockNumber,
     },
   );
