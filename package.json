@@ -64,7 +64,7 @@
     "zkp-merkle-airdrop-lib": "github:a16z/zkp-merkle-airdrop-lib#c793c2d8aa864ece151d57c04905c973a45a0416"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.0",
+    "@babel/core": "^7.17.2",
     "@storybook/addon-actions": "^6.4.18",
     "@storybook/addon-essentials": "^6.4.18",
     "@storybook/addon-links": "^6.4.18",
