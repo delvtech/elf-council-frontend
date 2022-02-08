@@ -159,14 +159,25 @@ export function ChooseDelegate({
                   }
                 };
 
+                const selected = idx === selectedDelegateIndex;
+
                 return (
                   <li key={`${delegate.address}-${idx}}`}>
                     <DelegateProfileRow
                       account={account}
-                      selected={idx === selectedDelegateIndex}
+                      selected={selected}
                       delegate={delegate}
                       onSelectDelegate={handleSelectDelegate}
-                      airdrop={true}
+                      actionButton={
+                        <Button
+                          onClick={handleSelectDelegate}
+                          variant={ButtonVariant.PRIMARY}
+                          disabled={selected}
+                          className="hidden lg:inline-flex w-full justify-center"
+                        >
+                          {t`Choose`}
+                        </Button>
+                      }
                     />
                   </li>
                 );

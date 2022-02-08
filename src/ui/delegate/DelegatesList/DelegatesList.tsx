@@ -6,6 +6,8 @@ import { ContractReceipt, Overrides } from "ethers";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/elf-council-delegates/delegates";
+import Button from "src/ui/base/Button/Button";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 interface DelegatesListProps {
   account: string | null | undefined;
   changeDelegationResult: UseMutationResult<
@@ -85,17 +87,29 @@ function DelegatesList({
               ? delegate.address === delegateAddressOnChain
               : false;
 
+            const selected = delegate.address === selectedDelegate;
+
             // TODO: Remove -${idx} for production since addresses are always unique
             return (
               <li key={`${delegate.address}-${idx}}`}>
                 <DelegateProfileRow
                   account={account}
-                  selected={delegate.address === selectedDelegate}
+                  selected={selected}
                   delegate={delegate}
                   onSelectDelegate={handleSelectDelegate}
-                  onDelegation={handleDelegation}
-                  currentlyDelegated={currentlyDelegated}
-                  isLoading={isLoading}
+                  actionButton={
+                    <Button
+                      onClick={handleDelegation}
+                      variant={ButtonVariant.GRADIENT}
+                      disabled={
+                        selected || !account || isLoading || currentlyDelegated
+                      }
+                      className="hidden lg:inline-flex w-full justify-center"
+                      loading={isLoading}
+                    >
+                      {t`Delegate`}
+                    </Button>
+                  }
                 />
               </li>
             );
