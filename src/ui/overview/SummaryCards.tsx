@@ -10,6 +10,7 @@ import { lockingVaultContract } from "src/elf/contracts";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import SummaryCard from "src/ui/overview/SummaryCard";
 import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
+import Link from "next/link";
 
 interface SummaryCardsProps {
   proposalsJson: ProposalsJson;
@@ -34,16 +35,26 @@ export function SummaryCards({
 
   return (
     <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
-      <SummaryCard title={t`Active Proposals`} balance={numActiveProposals} />
+      <SummaryCard
+        title={
+          <Link href="/proposals">
+            {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+            <a className="underline hover:no-underline">
+              {t`Active Proposals`}
+            </a>
+          </Link>
+        }
+        balance={numActiveProposals}
+      />
       <SummaryCard
         title={t`Total Delegates`}
         balance={numDelegates}
-        tooltipContent={t`Click to find out more.`}
+        tooltipContent={t`Number of unique delegates with voting power in the system`}
       />
       <SummaryCard
         title={t`Circulating Voting Power`}
         balance={`${formattedTotalVotingPower} ELFI`}
-        tooltipContent={t`Click to find out more.`}
+        tooltipContent={t`The total amount of voting power in the system`}
       />
     </div>
   );
