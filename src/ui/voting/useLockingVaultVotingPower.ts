@@ -32,7 +32,7 @@ export function useLockingVaultVotingPower(
       );
       return votePower;
     },
-    queryKey: ["queryVotePower", "vestingVault", { blockNumber, account }],
+    queryKey: ["queryVotePower", "lockingVault", { blockNumber, account }],
     enabled: !!account && !!blockNumber,
     keepPreviousData: true,
   });
