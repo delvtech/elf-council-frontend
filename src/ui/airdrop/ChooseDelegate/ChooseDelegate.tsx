@@ -193,7 +193,10 @@ export function ChooseDelegate({
                 const selected = idx === selectedDelegateIndex;
 
                 return (
-                  <li key={`${delegate.address}-${idx}}`}>
+                  <li
+                    key={`${delegate.address}-${idx}}`}
+                    ref={scrollRefs.current[idx]}
+                  >
                     <DelegateProfileRow
                       account={account}
                       selected={selected}
