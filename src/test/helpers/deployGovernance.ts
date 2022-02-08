@@ -30,7 +30,6 @@ export interface GovernanceContracts {
   lockingVault: string;
   vestingVault: string;
   optimisticRewardsVault: string;
-  nonFungibleVotingVault: string;
   optimisticGrants: string;
   treasury: string;
   airdrop: string;
@@ -116,13 +115,6 @@ export async function deployGovernanace(
   }
 
   const merkleTree = getMerkleTree(accounts);
-  const nonFungibleVotingVault = await deployOptimisticRewards(
-    signer,
-    votingToken.address,
-    coreVoting.address,
-    merkleTree,
-    lockingVault.address,
-  );
 
   const airdropContract = await deployAirdrop(
     signer,
@@ -138,7 +130,6 @@ export async function deployGovernanace(
 
   // add approved governance vaults. signer is still the owner so we can set these
   await coreVoting.changeVaultStatus(lockingVault.address, true);
-  await coreVoting.changeVaultStatus(nonFungibleVotingVault.address, true);
   await coreVoting.changeVaultStatus(airdropContract.address, true);
   await coreVoting.changeVaultStatus(vestingVault.address, true);
 
@@ -171,7 +162,6 @@ export async function deployGovernanace(
     lockingVault: lockingVault.address,
     vestingVault: vestingVault.address,
     optimisticRewardsVault: ethers.constants.AddressZero,
-    nonFungibleVotingVault: nonFungibleVotingVault.address,
     airdrop: airdropContract.address,
     optimisticGrants: ethers.constants.AddressZero,
     treasury: treasuryContract.address,
