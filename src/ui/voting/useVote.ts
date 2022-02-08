@@ -17,16 +17,13 @@ import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingP
 import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingPower";
 import { CoreVoting } from "elf-council-typechain";
 
-const {
-  // optimisticRewardsVault: optimisticRewardsVaultAddress,
-  lockingVault: lockingVaultAddress,
-  vestingVault: vestingVaultAddress,
-} = addressesJson.addresses;
+const { lockingVault: lockingVaultAddress, vestingVault: vestingVaultAddress } =
+  addressesJson.addresses;
 
 export function useVote(
   account: string | undefined | null,
   signer: Signer | undefined,
-  atBlockNumber?: number,
+  proposalCreatedAtBlockNumber: number,
   options?: UseSmartContractTransactionOptions<CoreVoting, "vote">,
 ): {
   mutate: (proposalId: string, ballot: Ballot) => void;
@@ -46,29 +43,17 @@ export function useVote(
 
   const lockingVaultVotingPower = useLockingVaultVotingPower(
     account,
-    atBlockNumber,
+    proposalCreatedAtBlockNumber,
   );
 
   const vestingVaultVotingPower = useVestingVaultVotingPower(
     account,
-    atBlockNumber,
+    proposalCreatedAtBlockNumber,
   );
-
-  // Commented for now, but we'll need to activate these soon
-  // const rewardsVaultVotingPower = useRewardsVaultVotingPower(
-  //   account,
-  //   rewardsContract,
-  //   atBlockNumber,
-  // );
-  // const nonFungibleVotingPower = useRewardsVaultVotingPower(
-  //   account,
-  //   nonFungibleVotingContract,
-  //   atBlockNumber,
-  // );
 
   const onVote = useCallback(
     (proposalId: string, ballot: Ballot) => {
-      const blockNumber = atBlockNumber || latestBlockNumber;
+      const blockNumber = proposalCreatedAtBlockNumber || latestBlockNumber;
 
       if (!blockNumber || !merkleInfo || !account) {
         return;
@@ -78,18 +63,6 @@ export function useVote(
       // when casting a vote to save gas
       const votingVaults: string[] = [];
       const extraDatas: string[] = [];
-
-      // Commented for now, but we'll need to activate these soon
-      // if (+rewardsVaultVotingPower > 0) {
-      //   votingVaults.push(optimisticRewardsVaultAddress);
-      //   const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
-      //   extraDatas.push(extraData);
-      // }
-      // if (+nonFungibleVotingPower > 0) {
-      //   votingVaults.push(nonFungibleVotingContract.address);
-      //   const extraData = getCallDatasForRewardsVaultQueryVotePower(merkleInfo);
-      //   extraDatas.push(extraData);
-      // }
 
       if (+lockingVaultVotingPower > 0) {
         votingVaults.push(lockingVaultAddress);
@@ -107,7 +80,7 @@ export function useVote(
     },
     [
       account,
-      atBlockNumber,
+      proposalCreatedAtBlockNumber,
       latestBlockNumber,
       lockingVaultVotingPower,
       merkleInfo,
