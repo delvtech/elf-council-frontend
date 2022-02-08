@@ -1,28 +1,15 @@
 import { ReactElement, useMemo } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
-import { UseMutationResult } from "react-query";
-import { ContractReceipt, Overrides } from "ethers";
 import H2 from "src/ui/base/H2/H2";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { delegates } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import { ChangeDelegationResult } from "src/ui/delegate/DelegatePage";
 interface DelegatesListProps {
   account: string | null | undefined;
-  changeDelegationResult: UseMutationResult<
-    ContractReceipt | undefined,
-    unknown,
-    [
-      newDelegate: string,
-      overrides?:
-        | (Overrides & {
-            from?: string | Promise<string> | undefined;
-          })
-        | undefined,
-    ],
-    unknown
-  >;
+  changeDelegationResult: ChangeDelegationResult;
   delegateAddressOnChain: string | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
@@ -37,12 +24,7 @@ function DelegatesList({
   setDelegateAddressInput,
   setSelectedDelegate,
 }: DelegatesListProps): ReactElement {
-  const {
-    mutate: changeDelegation,
-    isLoading,
-    isError,
-    isSuccess,
-  } = changeDelegationResult;
+  const { changeDelegation, isLoading } = changeDelegationResult;
 
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {

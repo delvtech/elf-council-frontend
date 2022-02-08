@@ -12,24 +12,11 @@ import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
 import Button from "src/ui/base/Button/Button";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
-import { UseMutationResult } from "react-query";
-import { ContractReceipt, Overrides } from "ethers";
+import { ChangeDelegationResult } from "src/ui/delegate/DelegatePage";
 
 interface DelegateCardProps {
   account: string | null | undefined;
-  changeDelegationResult: UseMutationResult<
-    ContractReceipt | undefined,
-    unknown,
-    [
-      newDelegate: string,
-      overrides?:
-        | (Overrides & {
-            from?: string | Promise<string> | undefined;
-          })
-        | undefined,
-    ],
-    unknown
-  >;
+  changeDelegationResult: ChangeDelegationResult;
   delegateAddressOnChain: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
@@ -48,12 +35,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setSelectedDelegate,
   } = props;
 
-  const {
-    mutate: changeDelegation,
-    isLoading,
-    isError,
-    isSuccess,
-  } = changeDelegationResult;
+  const { changeDelegation, isLoading, isError, isSuccess } =
+    changeDelegationResult;
 
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);

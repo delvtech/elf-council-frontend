@@ -1,9 +1,9 @@
 import { ReactElement, useEffect, useState } from "react";
 
-import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
+import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
-import { Signer } from "ethers";
+import { ContractReceipt, Overrides, Signer } from "ethers";
 import { t } from "ttag";
 
 import { useDelegate } from "src/ui/delegate/useDelegate";
@@ -14,7 +14,26 @@ import H2 from "src/ui/base/H2/H2";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
-import { RESOURCES_URL } from "src/ui/resources";
+import { UseMutateFunction } from "react-query";
+
+export interface ChangeDelegationResult {
+  changeDelegation: UseMutateFunction<
+    ContractReceipt | undefined,
+    unknown,
+    [
+      newDelegate: string,
+      overrides?:
+        | (Overrides & {
+            from?: string | Promise<string> | undefined;
+          })
+        | undefined,
+    ],
+    unknown
+  >;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+}
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -23,7 +42,13 @@ export default function DelegatePage(): ReactElement {
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
 
-  const changeDelegationResult = useChangeDelegation(account, signer);
+  const {
+    mutate: changeDelegation,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useChangeDelegation(account, signer);
+
   const delegateAddressOnChain = useDelegate(account);
 
   const showNoConnectionWarning = !account;
@@ -67,7 +92,12 @@ export default function DelegatePage(): ReactElement {
           {/* Delegates List */}
           <DelegatesList
             account={account}
-            changeDelegationResult={changeDelegationResult}
+            changeDelegationResult={{
+              changeDelegation,
+              isLoading,
+              isError,
+              isSuccess,
+            }}
             delegateAddressOnChain={delegateAddressOnChain}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
@@ -82,7 +112,12 @@ export default function DelegatePage(): ReactElement {
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
               account={account}
-              changeDelegationResult={changeDelegationResult}
+              changeDelegationResult={{
+                changeDelegation,
+                isLoading,
+                isError,
+                isSuccess,
+              }}
               delegateAddressInput={delegateAddressInput}
               delegateAddressOnChain={delegateAddressOnChain}
               setDelegateAddressInput={setDelegateAddressInput}
@@ -105,35 +140,6 @@ function NoConnection(): ReactElement {
       <span className="inline-block">
         {t`Please connect your wallet`}
         <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
-      </span>
-    </p>
-  );
-}
-
-function NoDeposit(): ReactElement {
-  return (
-    <p className="text-center w-full">
-      <span className="inline-block">
-        {t`Please ensure you deposit your tokens to earn your delegating power`}
-        <SparklesIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
-      </span>
-    </p>
-  );
-}
-
-function NoDelegation(): ReactElement {
-  return (
-    <p className="text-center w-full whitespace-pre-wrap">
-      <span className="inline-block">
-        {t`Please set a delegation in order to deposit.`}{" "}
-      </span>
-      <span className="inline-block">
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={RESOURCES_URL}
-          className="underline"
-        >{t`To learn more about delegations click here`}</a>
       </span>
     </p>
   );
