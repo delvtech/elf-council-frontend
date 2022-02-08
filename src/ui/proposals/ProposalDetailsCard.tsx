@@ -40,7 +40,7 @@ import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
 import { useVote } from "src/ui/voting/useVote";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
 const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
@@ -66,7 +66,10 @@ export function ProposalDetailsCard(
   const { data: snapshotProposals } = useSnapshotProposals([snapshotId]);
   const snapshotProposal = snapshotProposals && snapshotProposals[0];
 
-  const accountVotingPower = useVotingPowerForAccount(account);
+  const accountVotingPower = useVotingPowerForAccountAtBlockNumber(
+    account,
+    proposal.created,
+  );
 
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
@@ -98,7 +101,7 @@ export function ProposalDetailsCard(
     isVoteTxPending ||
     !+accountVotingPower;
 
-  const { mutate: vote } = useVote(account, signer, proposal?.created, {
+  const { mutate: vote } = useVote(account, signer, proposal.created, {
     onTransactionSubmitted: () => setIsVoteTxPending(true),
     onTransactionMined: () => setIsVoteTxPending(false),
   });
