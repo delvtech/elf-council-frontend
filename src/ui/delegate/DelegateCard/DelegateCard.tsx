@@ -9,7 +9,6 @@ import classNames from "classnames";
 import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
-import { useDelegate } from "src/ui/delegate/useDelegate";
 import Button from "src/ui/base/Button/Button";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
@@ -31,6 +30,7 @@ interface DelegateCardProps {
     ],
     unknown
   >;
+  delegateAddressOnChain: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
@@ -42,6 +42,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     account,
     changeDelegationResult,
     delegateAddressInput,
+    delegateAddressOnChain,
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
@@ -56,8 +57,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
-
-  const delegateAddressOnChain = useDelegate(account);
 
   const isSelfDelegated = !!account
     ? account === delegateAddressOnChain
@@ -183,7 +182,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
               <DelegateButton
                 account={account}
                 currentDelegateAddress={delegateAddressOnChain}
-                delegateAddressInput={delegateAddressInput}
                 selectedDelegate={selectedDelegate}
                 onDelegateClick={handleDelegateClick}
                 invalidAddress={invalidAddress}

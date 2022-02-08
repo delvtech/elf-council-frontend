@@ -6,9 +6,9 @@ import classNames from "classnames";
 import { Signer } from "ethers";
 import { t } from "ttag";
 
+import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { isValidAddress } from "src/base/isValidAddress";
-
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2/H2";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
@@ -24,6 +24,7 @@ export default function DelegatePage(): ReactElement {
   const [selectedDelegate, setSelectedDelegate] = useState("");
 
   const changeDelegationResult = useChangeDelegation(account, signer);
+  const delegateAddressOnChain = useDelegate(account);
 
   const showNoConnectionWarning = !account;
 
@@ -67,6 +68,7 @@ export default function DelegatePage(): ReactElement {
           <DelegatesList
             account={account}
             changeDelegationResult={changeDelegationResult}
+            delegateAddressOnChain={delegateAddressOnChain}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
             setSelectedDelegate={setSelectedDelegate}
@@ -82,6 +84,7 @@ export default function DelegatePage(): ReactElement {
               account={account}
               changeDelegationResult={changeDelegationResult}
               delegateAddressInput={delegateAddressInput}
+              delegateAddressOnChain={delegateAddressOnChain}
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
               setSelectedDelegate={setSelectedDelegate}

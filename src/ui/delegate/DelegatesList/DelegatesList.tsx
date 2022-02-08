@@ -21,6 +21,7 @@ interface DelegatesListProps {
     ],
     unknown
   >;
+  delegateAddressOnChain: string | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
   setSelectedDelegate: (address: string) => void;
@@ -29,6 +30,7 @@ interface DelegatesListProps {
 function DelegatesList({
   account,
   changeDelegationResult,
+  delegateAddressOnChain,
   selectedDelegate,
   setDelegateAddressInput,
   setSelectedDelegate,
@@ -79,6 +81,10 @@ function DelegatesList({
               setDelegateAddressInput("");
             };
 
+            const currentlyDelegated = delegateAddressOnChain
+              ? delegate.address === delegateAddressOnChain
+              : false;
+
             // TODO: Remove -${idx} for production since addresses are always unique
             return (
               <li key={`${delegate.address}-${idx}}`}>
@@ -88,6 +94,7 @@ function DelegatesList({
                   delegate={delegate}
                   onSelectDelegate={handleSelectDelegate}
                   onDelegation={handleDelegation}
+                  currentlyDelegated={currentlyDelegated}
                   isLoading={isLoading}
                 />
               </li>
