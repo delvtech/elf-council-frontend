@@ -49,7 +49,7 @@
     "lodash.keyby": "^4.6.0",
     "lodash.shuffle": "^4.2.0",
     "lodash.zip": "^4.2.0",
-    "next": "^12.0.9",
+    "next": "^12.0.10",
     "postcss": "^8.4.6",
     "react": "17.0.2",
     "react-chartjs-2": "^2.11.1",
