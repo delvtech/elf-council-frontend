@@ -31,24 +31,20 @@ interface DelegateCardProps {
     ],
     unknown
   >;
-  currentDelegateAddress: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   setSelectedDelegate: (address: string) => void;
-  isSelfDelegated: boolean;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
     changeDelegationResult,
-    currentDelegateAddress,
     delegateAddressInput,
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
-    isSelfDelegated,
   } = props;
 
   const {
@@ -62,6 +58,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const [delegationFail, setDelegationFail] = useState(false);
 
   const delegateAddressOnChain = useDelegate(account);
+
+  const isSelfDelegated = !!account
+    ? account === delegateAddressOnChain
+    : false;
 
   const handleDelegateClick = useCallback(() => {
     changeDelegation([selectedDelegate]);
@@ -133,10 +133,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
       <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-0 sm:gap-7 md:gap-0 lg:gap-7 mt-2">
         {/* Current Delegate Profile */}
-        {currentDelegateAddress ? (
+        {delegateAddressOnChain ? (
           <CurrentDelegate
             className="w-full sm:w-1/2 md:w-full lg:w-1/2"
-            currentDelegateAddress={currentDelegateAddress}
+            currentDelegateAddress={delegateAddressOnChain}
           />
         ) : (
           <NoDelegate />
@@ -182,7 +182,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
               <DelegateButton
                 account={account}
-                currentDelegateAddress={currentDelegateAddress}
+                currentDelegateAddress={delegateAddressOnChain}
                 delegateAddressInput={delegateAddressInput}
                 selectedDelegate={selectedDelegate}
                 onDelegateClick={handleDelegateClick}

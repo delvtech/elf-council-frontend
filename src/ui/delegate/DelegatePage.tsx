@@ -4,62 +4,32 @@ import { ShieldExclamationIcon, SparklesIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { Signer } from "ethers";
-import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
 import { isValidAddress } from "src/base/isValidAddress";
-import { elementTokenContract } from "src/elf/contracts";
-import { useTokenBalanceOf } from "src/elf/token/useTokenBalanceOf";
+
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2/H2";
-import { useDeposits } from "src/ui/contracts/useDeposits";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
-import { useDelegate } from "src/ui/delegate/useDelegate";
 import { RESOURCES_URL } from "src/ui/resources";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
   const signer = account ? (library?.getSigner(account) as Signer) : undefined;
 
-  const currentDelegateAddress = useDelegate(account);
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
-  const isSelfDelegated = !!account
-    ? account === currentDelegateAddress
-    : false;
 
   const changeDelegationResult = useChangeDelegation(account, signer);
 
-  const { data: walletBalanceBN } = useTokenBalanceOf(
-    elementTokenContract,
-    account,
-  );
-
-  const walletBalance = formatEther(walletBalanceBN || 0);
-
-  const { data: [, vaultBalanceBN] = [] } = useDeposits(account);
-  const vaultBalance = formatEther(vaultBalanceBN || 0);
-
   const showNoConnectionWarning = !account;
-  const showNoDelegationWarning = +walletBalance > 0 && !currentDelegateAddress;
-  const showNoDepositWarning =
-    +walletBalance > 0 && +vaultBalance === 0 && currentDelegateAddress;
-  const showWarning = [
-    showNoConnectionWarning,
-    showNoDelegationWarning,
-    showNoDepositWarning,
-  ].some((x) => x);
 
   const renderWarning = () => {
     if (showNoConnectionWarning) {
       return <NoConnection />;
-    } else if (showNoDelegationWarning) {
-      return <NoDelegation />;
-    } else if (showNoDepositWarning) {
-      return <NoDeposit />;
     }
   };
 
@@ -79,12 +49,12 @@ export default function DelegatePage(): ReactElement {
   return (
     <div
       className={classNames("flex flex-col items-center pb-8", {
-        "pt-16": !showWarning,
+        "pt-16": !showNoConnectionWarning,
       })}
     >
       <div className="flex flex-col w-full max-w-4xl">
         {/* Warning Card */}
-        {showWarning ? (
+        {showNoConnectionWarning ? (
           <div className="flex flex-col w-full mb-4 xl:flex-row xl:justify-center">
             <WarningLabel className="p-2 px-6 w-full">
               {renderWarning()}
@@ -111,12 +81,10 @@ export default function DelegatePage(): ReactElement {
             <DelegateCard
               account={account}
               changeDelegationResult={changeDelegationResult}
-              currentDelegateAddress={currentDelegateAddress}
               delegateAddressInput={delegateAddressInput}
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
               setSelectedDelegate={setSelectedDelegate}
-              isSelfDelegated={isSelfDelegated}
             />
           </Card>
         </div>
