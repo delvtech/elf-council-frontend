@@ -10,17 +10,13 @@ import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
-import Button from "src/ui/base/Button/Button";
 
 interface DelegateProfileRowProps {
   account: string | null | undefined;
   selected: boolean;
   delegate: Delegate;
   onSelectDelegate: () => void;
-  onDelegation?: () => void;
-  currentlyDelegated?: boolean;
-  isLoading?: boolean;
-  airdrop?: boolean;
+  actionButton: ReactElement;
 }
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
@@ -29,10 +25,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     selected = false,
     delegate,
     onSelectDelegate,
-    onDelegation,
-    currentlyDelegated = false,
-    isLoading = false,
-    airdrop = false,
+    actionButton,
   } = props;
   const votePower = useVotingPowerForAccount(account);
 
@@ -95,15 +88,8 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
             {t`Profile`}
           </Popover.Button>
 
-          <Button
-            onClick={!airdrop && onDelegation ? onDelegation : onSelectDelegate}
-            variant={airdrop ? ButtonVariant.PRIMARY : ButtonVariant.GRADIENT}
-            disabled={selected || !account || isLoading || currentlyDelegated}
-            className="hidden lg:inline-flex w-full justify-center"
-            loading={isLoading}
-          >
-            {airdrop ? t`Choose` : t`Delegate`}
-          </Button>
+          {/* Button unique for Delegate Page & Airdrop Page */}
+          {actionButton}
         </div>
       </div>
 
