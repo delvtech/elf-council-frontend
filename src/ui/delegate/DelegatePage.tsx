@@ -3,7 +3,7 @@ import { ReactElement, useEffect, useState } from "react";
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
-import { ContractReceipt, Overrides, Signer } from "ethers";
+import { Signer } from "ethers";
 import { t } from "ttag";
 
 import { useDelegate } from "src/ui/delegate/useDelegate";
@@ -14,26 +14,6 @@ import H2 from "src/ui/base/H2/H2";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
-import { UseMutateFunction } from "react-query";
-
-export interface ChangeDelegationResult {
-  changeDelegation: UseMutateFunction<
-    ContractReceipt | undefined,
-    unknown,
-    [
-      newDelegate: string,
-      overrides?:
-        | (Overrides & {
-            from?: string | Promise<string> | undefined;
-          })
-        | undefined,
-    ],
-    unknown
-  >;
-  isLoading: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-}
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -92,12 +72,10 @@ export default function DelegatePage(): ReactElement {
           {/* Delegates List */}
           <DelegatesList
             account={account}
-            changeDelegationResult={{
-              changeDelegation,
-              isLoading,
-              isError,
-              isSuccess,
-            }}
+            changeDelegation={changeDelegation}
+            isLoading={isLoading}
+            isError={isError}
+            isSuccess={isSuccess}
             delegateAddressOnChain={delegateAddressOnChain}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
@@ -112,12 +90,10 @@ export default function DelegatePage(): ReactElement {
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
               account={account}
-              changeDelegationResult={{
-                changeDelegation,
-                isLoading,
-                isError,
-                isSuccess,
-              }}
+              changeDelegation={changeDelegation}
+              isLoading={isLoading}
+              isError={isError}
+              isSuccess={isSuccess}
               delegateAddressInput={delegateAddressInput}
               delegateAddressOnChain={delegateAddressOnChain}
               setDelegateAddressInput={setDelegateAddressInput}
