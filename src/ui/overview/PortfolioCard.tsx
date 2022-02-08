@@ -11,7 +11,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { RESOURCES_URL } from "src/ui/resources";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
+import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
 const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
@@ -28,7 +28,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
 
   const { data: merkleInfo } = useMerkleInfo(account);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
-  const votingPower = useVotingPowerForAccount(account);
+  const votingPower = useVotingPowerForAccountAtLatestBlock(account);
 
   return (
     <Card

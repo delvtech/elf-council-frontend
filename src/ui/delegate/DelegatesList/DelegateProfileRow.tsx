@@ -2,7 +2,6 @@ import { Fragment, ReactElement } from "react";
 import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import { useVotingPowerForAccount } from "src/ui/voting/useVotingPowerForAccount";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import Image from "next/image";
 import classNames from "classnames";
@@ -10,6 +9,7 @@ import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
+import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 
 interface DelegateProfileRowProps {
   account: string | null | undefined;
@@ -20,14 +20,8 @@ interface DelegateProfileRowProps {
 }
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
-  const {
-    account,
-    selected = false,
-    delegate,
-    onSelectDelegate,
-    actionButton,
-  } = props;
-  const votePower = useVotingPowerForAccount(account);
+  const { selected = false, delegate, onSelectDelegate, actionButton } = props;
+  const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
 
   return (
     <Popover>
@@ -40,7 +34,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         )}
       >
         {/* Name */}
-        <div className="col-span-5 lg:col-span-4 items-start text-left truncate mr-4">
+        <div className="items-start col-span-5 mr-4 text-left truncate lg:col-span-4">
           <div className="flex flex-col">
             <div
               className={classNames(
@@ -50,7 +44,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               <WalletJazzicon
                 account={delegate.address}
                 size={20}
-                className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-2"
+                className="inline-block w-5 h-5 mr-2 rounded-xl bg-principalRoyalBlue"
               />
               <span className="truncate">{delegate.name}</span>
               {/* Crown Icon */}
@@ -71,14 +65,14 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </div>
 
         {/* Votes */}
-        <div className="hidden lg:block col-span-1 ml-auto mr-10">
+        <div className="hidden col-span-1 ml-auto mr-10 lg:block">
           <span className={selected ? "text-gray-400" : "text-blueGrey"}>
             <span>{formatBalance(votePower)}</span>
           </span>
         </div>
 
         {/* Buttons */}
-        <div className="col-span-2 flex gap-x-4">
+        <div className="flex col-span-2 gap-x-4">
           <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),
