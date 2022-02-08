@@ -6,10 +6,13 @@ import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow
 import { delegates } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { ChangeDelegationResult } from "src/ui/delegate/DelegatePage";
+import { Overrides } from "ethers";
 interface DelegatesListProps {
   account: string | null | undefined;
-  changeDelegationResult: ChangeDelegationResult;
+  changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
   delegateAddressOnChain: string | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
@@ -18,14 +21,13 @@ interface DelegatesListProps {
 
 function DelegatesList({
   account,
-  changeDelegationResult,
+  changeDelegation,
+  isLoading,
   delegateAddressOnChain,
   selectedDelegate,
   setDelegateAddressInput,
   setSelectedDelegate,
 }: DelegatesListProps): ReactElement {
-  const { changeDelegation, isLoading } = changeDelegationResult;
-
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);

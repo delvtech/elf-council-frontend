@@ -12,11 +12,14 @@ import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
 import Button from "src/ui/base/Button/Button";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
-import { ChangeDelegationResult } from "src/ui/delegate/DelegatePage";
+import { Overrides } from "ethers";
 
 interface DelegateCardProps {
   account: string | null | undefined;
-  changeDelegationResult: ChangeDelegationResult;
+  changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
   delegateAddressOnChain: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
@@ -27,16 +30,16 @@ interface DelegateCardProps {
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
-    changeDelegationResult,
+    changeDelegation,
+    isLoading,
+    isError,
+    isSuccess,
     delegateAddressInput,
     delegateAddressOnChain,
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
   } = props;
-
-  const { changeDelegation, isLoading, isError, isSuccess } =
-    changeDelegationResult;
 
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
