@@ -34,11 +34,20 @@ export function SummaryCards({
 
   return (
     <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
-      <SummaryCard title={t`Active Proposals`} balance={numActiveProposals} />
-      <SummaryCard title={t`Total Delegates`} balance={numDelegates} />
+      <SummaryCard
+        title={t`Active Proposals`}
+        balance={numActiveProposals}
+        tooltipContent={t`Click to find out more.`}
+      />
+      <SummaryCard
+        title={t`Total Delegates`}
+        balance={numDelegates}
+        tooltipContent={t`Click to find out more.`}
+      />
       <SummaryCard
         title={t`Circulating Voting Power`}
         balance={`${formattedTotalVotingPower} ELFI`}
+        tooltipContent={t`Click to find out more.`}
       />
     </div>
   );

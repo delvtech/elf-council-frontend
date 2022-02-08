@@ -8,16 +8,17 @@ import { RESOURCES_URL } from "src/ui/resources";
 
 interface SummaryCardProps {
   title: string;
+  tooltipContent: string | ReactElement;
   balance?: ReactNode;
   children?: ReactNode;
 }
 export function SummaryCard(props: SummaryCardProps): ReactElement {
-  const { title, balance, children } = props;
+  const { title, balance, children, tooltipContent } = props;
 
   return (
     <Card className="flex flex-col lg:flex-1">
       <div className="-mt-2 text-sm font-light text-principalRoyalBlue">
-        <Tooltip content={t`Click to find out more.`}>
+        <Tooltip content={tooltipContent}>
           <a
             target="_blank"
             rel="noreferrer"
