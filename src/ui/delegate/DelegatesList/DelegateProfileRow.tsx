@@ -20,14 +20,8 @@ interface DelegateProfileRowProps {
 }
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
-  const {
-    account,
-    selected = false,
-    delegate,
-    onSelectDelegate,
-    actionButton,
-  } = props;
-  const votePower = useVotingPowerForAccountAtLatestBlock(account);
+  const { selected = false, delegate, onSelectDelegate, actionButton } = props;
+  const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
 
   return (
     <Popover>
