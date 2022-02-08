@@ -257,7 +257,7 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
       return (
         <div className="flex items-center space-x-2">
           <div>{t`Voted no`}</div>
-          <div className="flex h-full pt-1 text-green-500">
+          <div className="flex h-full pt-1 text-red-500">
             <ThumbDownIcon height="18" />
           </div>
         </div>
