@@ -10,9 +10,6 @@ export function useSnapshotProposals(
 ): UseQueryResult<SnapshotProposal[]> {
   return useQuery({
     queryKey: ["snapshot-proposals", snapshotIds],
-    queryFn: async () => {
-      const proposals = await fetchSnapshotProposals(snapshotIds);
-      return proposals;
-    },
+    queryFn: () => fetchSnapshotProposals(snapshotIds),
   });
 }
