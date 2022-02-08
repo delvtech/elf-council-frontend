@@ -7,8 +7,6 @@ import Tooltip from "src/ui/base/Tooltip/Tooltip";
 interface SummaryCardProps {
   title: string | ReactElement;
   tooltipContent?: string | ReactElement;
-
-  href?: string;
   balance?: ReactNode;
   children?: ReactNode;
 }
