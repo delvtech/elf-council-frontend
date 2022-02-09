@@ -35,7 +35,6 @@ import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatus
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { RESOURCES_URL } from "src/ui/resources";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
@@ -43,7 +42,7 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
-const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
+const votingPowerTooltipText = t`The sum of all voting power delegated to you`;
 
 interface ProposalDetailsCardProps {
   className?: string;
@@ -203,7 +202,6 @@ export function ProposalDetailsCard(
           className="w-full mt-4"
           balance={accountVotingPower}
           tooltipText={votingPowerTooltipText}
-          tooltipHref={RESOURCES_URL}
           label={t`Voting Power`}
         />
 

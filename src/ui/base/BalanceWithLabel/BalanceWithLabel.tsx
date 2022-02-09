@@ -41,7 +41,7 @@ export function BalanceWithLabel(props: BalanceWithLabelProps): ReactElement {
                 <InformationCircleIcon className="h-4" />
               </a>
             ) : (
-              <InformationCircleIcon className="h-4" />
+              <InformationCircleIcon className="h-4 cursor-help" />
             )}
           </Tooltip>
         )}
