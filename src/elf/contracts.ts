@@ -24,11 +24,6 @@ export const rewardsContract = OptimisticRewards__factory.connect(
   defaultProvider,
 );
 
-export const nonFungibleVotingContract = OptimisticRewards__factory.connect(
-  addressesJson.addresses.nonFungibleVotingVault,
-  defaultProvider,
-);
-
 export const coreVotingContract = CoreVoting__factory.connect(
   addressesJson.addresses.coreVoting,
   defaultProvider,

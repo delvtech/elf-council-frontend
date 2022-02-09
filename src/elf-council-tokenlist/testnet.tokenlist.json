@@ -1,7 +1,7 @@
 {
   "name": "Council testnet token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2022-02-08T20:54:55.415Z",
+  "timestamp": "2022-02-08T22:33:10.286Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -75,22 +75,6 @@
         "coreVoting": "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
         "votingPowerBound": "100",
         "idleDuration": "345600"
-      }
-    },
-    {
-      "chainId": 31337,
-      "address": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
-      "name": "Element Non Fungible Voting Vault",
-      "decimals": 0,
-      "symbol": "",
-      "extensions": {
-        "pendingRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "proposalTime": 0,
-        "proposer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        "challengePeriod": 604800,
-        "rewardsRoot": "0x6dc5a608f709803fbd085c6fa82f7c1def6e42c351101dbc17767d4f3262ce62",
-        "lockingVault": "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
-        "token": "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c"
       }
     },
     {
