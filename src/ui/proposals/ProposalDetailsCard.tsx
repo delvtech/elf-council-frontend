@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import {
@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
-import { Signer } from "ethers";
+import { Signer, ContractTransaction } from "ethers";
 import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
 import { t } from "ttag";
@@ -60,7 +60,10 @@ export function ProposalDetailsCard(
   const { proposalId, snapshotId, quorum } = proposal;
 
   const [newBallot, setCurrentBallot] = useState<Ballot>();
+  const [isChangingVote, setIsChangingVote] = useState(false);
   const [isVoteTxPending, setIsVoteTxPending] = useState(false);
+  const [newVoteTransaction, setNewVoteTransaction] =
+    useState<ContractTransaction>();
 
   const { data: snapshotProposals } = useSnapshotProposals([snapshotId]);
   const snapshotProposal = snapshotProposals && snapshotProposals[0];
@@ -78,12 +81,18 @@ export function ProposalDetailsCard(
   const { data: currentBallot } = useBallot(account, proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
-  const { data: voteTransacation } = useLastVoteTransactionForAccount(
+  const { data: lastVoteTransaction } = useLastVoteTransactionForAccount(
     account,
     proposalId,
   );
 
-  const etherscanLink = `${ETHERSCAN_TRANSACTION_DOMAIN}/${voteTransacation?.hash}`;
+  const etherscanLink = useMemo(() => {
+    const hash = newVoteTransaction?.hash || lastVoteTransaction?.hash;
+    if (hash && !isChangingVote) {
+      return `${ETHERSCAN_TRANSACTION_DOMAIN}/${hash}`;
+    }
+    return null;
+  }, [isChangingVote, lastVoteTransaction, newVoteTransaction]);
 
   const proposalVotingResults = useVotingPowerForProposal(proposalId);
   const proposalStatus = getProposalStatus(
@@ -101,7 +110,11 @@ export function ProposalDetailsCard(
     !+accountVotingPower;
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
-    onTransactionSubmitted: () => setIsVoteTxPending(true),
+    onTransactionSubmitted: (pendingTransaction) => {
+      setIsChangingVote(false);
+      setIsVoteTxPending(true);
+      setNewVoteTransaction(pendingTransaction);
+    },
     onTransactionMined: () => setIsVoteTxPending(false),
   });
 
@@ -109,6 +122,7 @@ export function ProposalDetailsCard(
     if (!isNumber(newBallot)) {
       return;
     }
+    setIsChangingVote(true);
     vote(proposalId, newBallot);
   }, [newBallot, proposalId, vote]);
 
@@ -206,7 +220,7 @@ export function ProposalDetailsCard(
         />
 
         <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
-          {voteTransacation && (
+          {etherscanLink && (
             <a
               target="_blank"
               href={etherscanLink}
