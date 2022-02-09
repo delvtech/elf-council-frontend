@@ -1,5 +1,4 @@
 import { Proposal } from "elf-council-proposals";
-import keyBy from "lodash.keyby";
 import { addressesJson } from "src/elf-council-addresses";
 import { ChainId } from "src/ethereum";
 
@@ -14,12 +13,6 @@ function getProposalsJsonUrl() {
     default:
       return "https://elementfi.s3.us-east-2.amazonaws.com/testnet.proposals.json";
   }
-}
-
-export function getProposalsBySnapshotId(
-  proposals: Proposal[],
-): Record<string, Proposal> {
-  return keyBy(proposals, "snapshotId");
 }
 
 export function getIsVotingOpen(
