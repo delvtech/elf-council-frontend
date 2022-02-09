@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@alch/alchemy-web3": "^1.2.2",
+    "@alch/alchemy-web3": "^1.2.3",
     "@blueprintjs/popover2": "^0.13.0",
     "@elementfi/react-query-typechain": "^1.2.0",
     "@ethersproject/providers": "^5.5.3",
