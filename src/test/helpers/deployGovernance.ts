@@ -11,7 +11,6 @@ import { deployAirdrop } from "./deployAirdrop";
 import { deployCoreVoting } from "./deployCoreVoting";
 import { deployGSCVault } from "./deployGSCVault";
 import { deployLockingVault } from "./deployLockingVault";
-import { deployOptimisticRewards } from "./deployOptimisticRewards";
 import { deployTimelock } from "./deployTimelock";
 import { deployTreasury } from "./deployTreasury";
 import { deployVestingVault } from "./deployVestingVault";
