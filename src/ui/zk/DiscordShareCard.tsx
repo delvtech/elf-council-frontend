@@ -36,7 +36,7 @@ export default function DiscordShareCard({
         <RadiantShieldIcon className="mb-5" />
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Successfully Created`}</h1>
-          <p className="w-0 min-w-full">{jt`Use the command below in the ${discordServerLink} to associate your new Public ID with your Discord ID.`}</p>
+          <p className="w-0 min-w-full">{jt`Use the command below in the ${discordServerLink} to associate your new Public ID with your Discord ID. You'll see a confirmation message from the Public ID Collection Bot after it's submitted.`}</p>
         </div>
 
         <HashString
