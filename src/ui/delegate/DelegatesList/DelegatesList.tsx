@@ -1,6 +1,7 @@
 import React, {
   ReactElement,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   createRef,
@@ -39,9 +40,11 @@ function DelegatesList({
 }: DelegatesListProps): ReactElement {
   const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
 
-  scrollRefs.current = delegates.map((_, i) => {
-    return scrollRefs.current[i] ?? createRef();
-  });
+  useEffect(() => {
+    scrollRefs.current = delegates.map((_, i) => {
+      return scrollRefs.current[i] ?? createRef();
+    });
+  }, []);
 
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
