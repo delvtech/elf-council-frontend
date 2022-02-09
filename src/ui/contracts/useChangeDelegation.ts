@@ -1,4 +1,5 @@
 import { lockingVaultContract } from "src/elf/contracts";
+import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
 import { LockingVault } from "elf-council-typechain";
@@ -21,6 +22,9 @@ export function useChangeDelegation(
     "changeDelegation",
     signer,
     {
+      onError: (e) => {
+        toast.error(e.message);
+      },
       onTransactionMined: () => {
         // Invalidate `deposits` so that consumers of `useDelegate` refresh
         queryClient.invalidateQueries(
