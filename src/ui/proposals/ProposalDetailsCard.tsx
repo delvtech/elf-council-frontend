@@ -35,7 +35,6 @@ import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatus
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
-import { RESOURCES_URL } from "src/ui/resources";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useBallot } from "src/ui/voting/useBallot";
 import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTransactionForAccount";
@@ -203,7 +202,6 @@ export function ProposalDetailsCard(
           className="w-full mt-4"
           balance={accountVotingPower}
           tooltipText={votingPowerTooltipText}
-          tooltipHref={RESOURCES_URL}
           label={t`Voting Power`}
         />
 

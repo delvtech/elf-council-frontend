@@ -10,7 +10,6 @@ import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
-import { RESOURCES_URL } from "src/ui/resources";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
@@ -54,14 +53,12 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           className="w-full mt-8"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
-          tooltipHref={RESOURCES_URL}
           label={t`Voting Vault Balance`}
         />
         <BalanceWithLabel
           className="w-full mt-8"
           balance={votingPower}
           tooltipText={votingPowerTooltipText}
-          tooltipHref={RESOURCES_URL}
           label={t`Your Voting Power`}
         />
         {!!Number(unclaimedAirdrop) && (
