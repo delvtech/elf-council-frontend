@@ -43,7 +43,7 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
-const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
+const votingPowerTooltipText = t`The sum of your vesting vault voting power and all voting power delegated to you`;
 
 interface ProposalDetailsCardProps {
   className?: string;

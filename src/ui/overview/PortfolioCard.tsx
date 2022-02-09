@@ -14,8 +14,8 @@ import { RESOURCES_URL } from "src/ui/resources";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
-const votingBalanceTooltipText = t`Don't know what your voting balance is?  Click on the icon to find out more.`;
-const votingPowerTooltipText = t`Don't know what your voting power is?  Click on the icon to find out more.`;
+const votingBalanceTooltipText = t`The amount of voting power you own in the system`;
+const votingPowerTooltipText = t`The sum of your vesting vault voting power and all voting power delegated to you`;
 
 interface PortfolioCardProps {
   account: string | undefined | null;
