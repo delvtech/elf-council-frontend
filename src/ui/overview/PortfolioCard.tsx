@@ -14,7 +14,7 @@ import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPo
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
 const votingBalanceTooltipText = t`The amount of voting power you own in the system`;
-const votingPowerTooltipText = t`The sum of your vesting vault voting power and all voting power delegated to you`;
+const votingPowerTooltipText = t`The sum of all voting power delegated to you`;
 
 interface PortfolioCardProps {
   account: string | undefined | null;
