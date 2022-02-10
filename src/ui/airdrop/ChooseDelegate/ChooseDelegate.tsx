@@ -166,6 +166,7 @@ export function ChooseDelegate({
                     <DelegateProfileRow
                       account={account}
                       selected={selected}
+                      highlightSelected
                       delegate={delegate}
                       actionButton={
                         <Button

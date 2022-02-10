@@ -14,6 +14,7 @@ import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPo
 interface DelegateProfileRowProps {
   account: string | null | undefined;
   selected: boolean;
+  highlightSelected?: boolean;
   delegate: Delegate;
   actionButton: ReactElement;
   profileActionButton: ReactElement;
@@ -22,6 +23,7 @@ interface DelegateProfileRowProps {
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
   const {
     selected = false,
+    highlightSelected = false,
     delegate,
     actionButton,
     profileActionButton,
@@ -35,7 +37,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         className={classNames(
           "grid grid-cols-7 items-center justify-between py-3 px-4 bg-white rounded-xl",
           {
-            "!bg-votingGreen": selected,
+            "!bg-votingGreen": highlightSelected && selected,
           },
         )}
       >
