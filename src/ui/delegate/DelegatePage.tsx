@@ -79,7 +79,6 @@ export default function DelegatePage(): ReactElement {
             delegateAddressOnChain={delegateAddressOnChain}
             selectedDelegate={selectedDelegate}
             setDelegateAddressInput={setDelegateAddressInput}
-            setSelectedDelegate={setSelectedDelegate}
           />
 
           {/* Delegate Card */}

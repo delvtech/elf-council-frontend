@@ -167,7 +167,6 @@ export function ChooseDelegate({
                       account={account}
                       selected={selected}
                       delegate={delegate}
-                      onSelectDelegate={handleSelectDelegate}
                       actionButton={
                         <Button
                           onClick={handleSelectDelegate}
@@ -176,6 +175,16 @@ export function ChooseDelegate({
                           className="hidden lg:inline-flex w-full justify-center"
                         >
                           {t`Choose`}
+                        </Button>
+                      }
+                      profileActionButton={
+                        <Button
+                          onClick={handleSelectDelegate}
+                          variant={ButtonVariant.PRIMARY}
+                          disabled={selected}
+                          className="inline-flex w-full justify-center"
+                        >
+                          {t`Choose Delegate`}
                         </Button>
                       }
                     />

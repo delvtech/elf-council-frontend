@@ -129,7 +129,7 @@ function DetailedDelegateProfile({
         </div>
 
         <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
-          {/* Choose Delegate Button */}
+          {/* Action Button */}
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             {actionButton}
           </Tooltip>
