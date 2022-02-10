@@ -109,10 +109,10 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     <div className={classNames({ "opacity-50": !account })}>
       <div className="flex gap-7 flex-1 text-white text-xl">
         <div className="w-full">
-          <span>{t`Current Delegation`}</span>
+          <span>{t`Current delegation`}</span>
         </div>
         <div className="w-full leading-5 hidden sm:block md:hidden lg:block">
-          <div>{t`Change Delegation`}</div>
+          <div>{t`Delegate to any address`}</div>
         </div>
       </div>
 
@@ -129,7 +129,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
         <div className="block sm:hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
           <div className="w-full leading-5 ">
-            <div className="block">{t`Change Delegation`}</div>
+            <div className="block">{t`Delegate to any address`}</div>
           </div>
         </div>
         {/* Delegate Input */}
