@@ -102,18 +102,12 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
 
   return (
     <div className="text-center">
-      <Link href={link}>
-        {/* There's a big discussion about how awful the Link api is for a11y
-      here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
-      best thing to do for now is just ignore this rule when an anchor tag is
-      the child of a Link since all a tags *should* have an href 🙁 */
-        /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a>
-          <AnchorButton variant={ButtonVariant.GRADIENT}>
-            {t`Claim airdrop`}
-          </AnchorButton>
-        </a>
-      </Link>
+      {/* Don't use the next router for this, since the user might already be on
+      the airdrop page when they click this. This way, users can always go back
+      to the beginning of the airdrop by clicking the sidebar link */}
+      <AnchorButton href={link} variant={ButtonVariant.GRADIENT}>
+        {t`Claim airdrop`}
+      </AnchorButton>
     </div>
   );
 }
@@ -152,7 +146,7 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="w-full flex justify-center items-center hover:bg-blue-50"
+      className="flex items-center justify-center w-full hover:bg-blue-50"
     >
       {/* Empty span w/ same width as icon to center the label text */}
       <span className="w-4" />
