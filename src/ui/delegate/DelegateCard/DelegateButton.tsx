@@ -68,17 +68,16 @@ function getTooltipContent(
   if (noAccount) {
     return t`Connect wallet`;
   }
-
-  if (noSelection) {
-    return t`Select a delegate`;
+  if (sameDelegate) {
+    return t`Delegate already delegated to`;
   }
 
   if (invalidAddress) {
     return t`Enter a valid address`;
   }
 
-  if (sameDelegate) {
-    return t`Delegate already delegated to`;
+  if (noSelection) {
+    return t`Select a delegate`;
   }
 
   return "";

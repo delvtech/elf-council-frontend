@@ -120,12 +120,9 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
             {({ close }) => (
               <DetailedDelegateProfile
                 delegate={delegate}
-                onSelectDelegate={() => {
-                  onSelectDelegate();
-                  close();
-                }}
                 onCloseProfileClick={close}
                 selected={selected}
+                actionButton={actionButton}
               />
             )}
           </Popover.Panel>
