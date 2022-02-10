@@ -92,6 +92,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const invalidAddress =
     !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
 
+  const isSelfDelegated = account ? account === delegateAddressOnChain : false;
+
   return (
     <div className={classNames({ "opacity-50": !account })}>
       <div className="flex gap-7 flex-1 text-white text-xl">
@@ -109,6 +111,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
           <CurrentDelegate
             className="w-full sm:w-1/2 md:w-full lg:w-1/2"
             currentDelegateAddress={delegateAddressOnChain}
+            isSelfDelegated={isSelfDelegated}
           />
         ) : (
           <NoDelegate />

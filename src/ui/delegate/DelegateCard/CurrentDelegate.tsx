@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { formatWalletAddress } from "src/formatWalletAddress";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import classNames from "classnames";
@@ -7,14 +8,16 @@ import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPo
 import Image from "next/image";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
-
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
 interface CurrentDelegateProps {
   className?: string;
   currentDelegateAddress: string;
+  isSelfDelegated: boolean;
 }
 
 function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { className = "", currentDelegateAddress } = props;
+  const { className = "", currentDelegateAddress, isSelfDelegated } = props;
   const delegate = getFeaturedDelegate(currentDelegateAddress);
 
   return (
@@ -31,9 +34,18 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             size={20}
             className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
           />
-          <span>
-            {delegate?.name || formatWalletAddress(currentDelegateAddress)}
-          </span>
+          <div className="flex items-center gap-2">
+            <span>
+              {delegate?.name || formatWalletAddress(currentDelegateAddress)}
+            </span>
+            <div className="relative w-4 h-4">
+              <Image
+                layout="fill"
+                src="/assets/crown.svg"
+                alt={t`Crown icon`}
+              />
+            </div>
+          </div>
         </div>
         <span className="text-blueGrey">
           <NumDelegatedVotes account={currentDelegateAddress} />
@@ -50,11 +62,14 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         </a>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-2">
-        <div className="relative w-4 h-4">
-          <Image layout="fill" src="/assets/crown.svg" alt={t`Crown icon`} />
+      {isSelfDelegated ? (
+        <div className="flex items-end justify-end">
+          <Tag intent={Intent.SUCCESS}>
+            <CheckCircleIcon height={24} className="mr-2" />
+            <span className="font-bold">{t`Self-delegated!`}</span>
+          </Tag>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
