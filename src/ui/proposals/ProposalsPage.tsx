@@ -23,7 +23,7 @@ import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
 
-type TabId = "active-proposals-tab" | "past-proposals-tab";
+type TabId = "active" | "past";
 
 interface ProposalsPageProps {
   proposalsJson: ProposalsJson;
@@ -38,7 +38,7 @@ export default function ProposalsPage({
 
   const isSmallScreen = useIsTailwindSmallScreen();
 
-  const [activeTabId, setActiveTab] = useState<TabId>("active-proposals-tab");
+  const [activeTabId, setActiveTab] = useState<TabId>("active");
   const [activeProposalId, setActiveProposalId] = useState<
     string | undefined
   >();
@@ -76,15 +76,13 @@ export default function ProposalsPage({
   const proposalTabs: TabInfo[] = useMemo(() => {
     return [
       {
-        id: "active-proposals-tab",
-        current: activeTabId === "active-proposals-tab",
-        onTabClick: () => setActiveTab("active-proposals-tab"),
+        current: activeTabId === "active",
+        onTabClick: () => setActiveTab("active"),
         name: t`Active`,
       },
       {
-        id: "past-proposals-tab",
-        current: activeTabId === "past-proposals-tab",
-        onTabClick: () => setActiveTab("past-proposals-tab"),
+        current: activeTabId === "past",
+        onTabClick: () => setActiveTab("past"),
         name: t`Past`,
       },
     ];
@@ -149,18 +147,18 @@ function OffChainProposalsLink() {
  * @returns
  */
 function useFilteredProposals(
-  activeTabId: string,
+  activeTabId: TabId,
   proposals: Proposal[],
   currentBlockNumber: number,
 ): Proposal[] {
   return useMemo(() => {
-    if (activeTabId === "active-proposals-tab") {
+    if (activeTabId === "active") {
       return proposals?.filter(
         (proposal) => proposal.expiration > currentBlockNumber,
       );
     }
 
-    if (activeTabId === "past-proposals-tab") {
+    if (activeTabId === "past") {
       return proposals?.filter(
         (proposal) => proposal.expiration <= currentBlockNumber,
       );

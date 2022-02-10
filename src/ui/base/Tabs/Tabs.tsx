@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { t } from "ttag";
 
 export interface TabInfo {
-  id: string;
   name: string;
   current: boolean;
   onTabClick?: () => void;
