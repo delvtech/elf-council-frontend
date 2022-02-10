@@ -92,7 +92,7 @@ export default function ProposalsPage({
 
   return (
     <div className="flex h-full lg:justify-center">
-      <div className="flex-1 w-full h-full px-8 pt-8 space-y-8 lg:max-w-lg">
+      <div className="h-full w-full flex-1 space-y-8 px-8 pt-8 lg:max-w-lg">
         <H1 className="flex-1 text-center text-principalRoyalBlue">{t`On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
@@ -131,7 +131,7 @@ function OffChainProposalsLink() {
       href={ELEMENT_FINANCE_SNAPSHOT_URL}
       variant={ButtonVariant.SECONDARY}
     >
-      <div className="flex items-center h-full">
+      <div className="flex h-full items-center">
         {t`Off-chain`}
         <ExternalLinkIcon height={24} />
       </div>

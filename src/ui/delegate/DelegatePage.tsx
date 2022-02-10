@@ -58,11 +58,11 @@ export default function DelegatePage(): ReactElement {
         "pt-16": !showNoConnectionWarning,
       })}
     >
-      <div className="flex flex-col w-full max-w-4xl">
+      <div className="flex w-full max-w-4xl flex-col">
         {/* Warning Card */}
         {showNoConnectionWarning ? (
-          <div className="flex flex-col w-full mb-4 xl:flex-row xl:justify-center">
-            <WarningLabel className="p-2 px-6 w-full">
+          <div className="mb-4 flex w-full flex-col xl:flex-row xl:justify-center">
+            <WarningLabel className="w-full p-2 px-6">
               {renderWarning()}
             </WarningLabel>
           </div>
@@ -84,7 +84,7 @@ export default function DelegatePage(): ReactElement {
           {/* Delegate Card */}
           <Card
             variant={CardVariant.BLUE}
-            className="px-6 mt-auto py-7 rounded-xl"
+            className="mt-auto rounded-xl px-6 py-7"
           >
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
@@ -108,13 +108,13 @@ export default function DelegatePage(): ReactElement {
 
 function NoConnection(): ReactElement {
   return (
-    <p className="text-center w-full whitespace-pre-wrap">
+    <p className="w-full whitespace-pre-wrap text-center">
       <span className="inline-block">
         {t`Unable to determine delegation eligibility.`}{" "}
       </span>
       <span className="inline-block">
         {t`Please connect your wallet`}
-        <ShieldExclamationIcon className="relative bottom-0.5 inline-block h-4 ml-2" />
+        <ShieldExclamationIcon className="relative bottom-0.5 ml-2 inline-block h-4" />
       </span>
     </p>
   );

@@ -11,10 +11,10 @@ export default function ClaimAmountCard({
 }: ClaimAmountCardProps): ReactElement {
   const ElfiTokenAmountParts = amount.toString().split(".");
   return (
-    <div className="bg-white rounded-lg flex flex-col items-center justify-center pt-16 px-10 pb-14 mb-6 min-w-full shadow-[0_0_52px_rgba(143,216,231,.7)]">
+    <div className="mb-6 flex min-w-full flex-col items-center justify-center rounded-lg bg-white px-10 pt-16 pb-14 shadow-[0_0_52px_rgba(143,216,231,.7)]">
       <ElementIcon
         size={IconSize.LARGE}
-        className="bg-paleLily mb-8 shadow-none"
+        className="mb-8 bg-paleLily shadow-none"
       />
       <p className="text-3xl font-semibold text-blueGrey">
         <span className="text-principalRoyalBlue">

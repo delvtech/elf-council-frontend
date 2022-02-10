@@ -30,7 +30,7 @@ export function VotingBallotButton(
       className="p-0"
       popover={
         <Card variant={CardVariant.BLUE}>
-          <div className="flex flex-col py-2 -mx-4 -my-5 text-white">
+          <div className="-mx-4 -my-5 flex flex-col py-2 text-white">
             <BallotDropdownItem
               ballot={Ballot.YES}
               ballotLabel={t`Yes`}
@@ -61,8 +61,8 @@ export function VotingBallotButton(
 
           <ChevronDownIcon
             className={classNames(
-              open ? classNames("transform rotate-180") : "",
-              "ml-2 h-5 w-5 transition ease-in-out duration-150",
+              open ? classNames("rotate-180 transform") : "",
+              "ml-2 h-5 w-5 transition duration-150 ease-in-out",
             )}
             aria-hidden="true"
           />
@@ -87,14 +87,14 @@ function BallotDropdownItem(props: BallotDropdownItemProps) {
 
   return (
     <button
-      className="flex items-center justify-between px-4 py-2 rounded hover:bg-white hover:bg-opacity-20"
+      className="flex items-center justify-between rounded px-4 py-2 hover:bg-white hover:bg-opacity-20"
       onClick={handleSelectItem}
     >
       <span>{ballotLabel}</span>
       {active ? (
         <CheckCircleIcon className="ml-2" height="24" />
       ) : (
-        <div className="w-5 h-5 ml-2 mr-1 bg-transparent border-2 border-white rounded-full" />
+        <div className="ml-2 mr-1 h-5 w-5 rounded-full border-2 border-white bg-transparent" />
       )}
     </button>
   );

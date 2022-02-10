@@ -35,19 +35,19 @@ export default function PageView(props: PageViewProps): ReactElement {
     <Fragment>
       <div
         className={classNames(
-          "flex w-full h-full bg-appBackgroundLight justify-between",
+          "flex h-full w-full justify-between bg-appBackgroundLight",
           {
             "md:pl-60": showSidebar,
           },
         )}
       >
         {showSidebar ? <Sidebar account={account} /> : null}
-        <div className="flex flex-col items-center flex-1 w-full h-full p-6">
+        <div className="flex h-full w-full flex-1 flex-col items-center p-6">
           {showHeader ? <Header /> : null}
 
           <div
             className={classNames(
-              "mt-6 w-full h-full flex-1",
+              "mt-6 h-full w-full flex-1",
               childrenContainerClassName,
             )}
           >

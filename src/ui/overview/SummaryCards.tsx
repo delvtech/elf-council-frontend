@@ -34,7 +34,7 @@ export function SummaryCards({
   );
 
   return (
-    <div className="flex flex-col justify-around space-y-6 lg:space-y-0 lg:flex-row lg:space-x-6">
+    <div className="flex flex-col justify-around space-y-6 lg:flex-row lg:space-y-0 lg:space-x-6">
       <SummaryCard
         title={
           <Link href="/proposals">

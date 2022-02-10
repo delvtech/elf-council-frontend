@@ -21,15 +21,15 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
     <div
       className={classNames(
         className,
-        "flex py-4 px-4 justify-between bg-hackerSky rounded-xl",
+        "flex justify-between rounded-xl bg-hackerSky py-4 px-4",
       )}
     >
       <div className="flex flex-col">
-        <div className="flex items-center mb-1 font-bold text-principalRoyalBlue">
+        <div className="mb-1 flex items-center font-bold text-principalRoyalBlue">
           <WalletJazzicon
             account={currentDelegateAddress}
             size={20}
-            className="inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue mr-1.5"
+            className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           <span>
             {delegate?.name || formatWalletAddress(currentDelegateAddress)}
@@ -51,7 +51,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       </div>
 
       <div className="flex flex-col items-center justify-center gap-2">
-        <div className="relative w-4 h-4">
+        <div className="relative h-4 w-4">
           <Image layout="fill" src="/assets/crown.svg" alt={t`Crown icon`} />
         </div>
       </div>

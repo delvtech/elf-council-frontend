@@ -48,28 +48,28 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           </a>
         )}
       </div>
-      <div className="flex flex-col min-h-full mb-8 align-bottom">
+      <div className="mb-8 flex min-h-full flex-col align-bottom">
         <BalanceWithLabel
-          className="w-full mt-8"
+          className="mt-8 w-full"
           balance={amountDeposited}
           tooltipText={votingBalanceTooltipText}
           label={t`Voting Vault Balance`}
         />
         <BalanceWithLabel
-          className="w-full mt-8"
+          className="mt-8 w-full"
           balance={votingPower}
           tooltipText={votingPowerTooltipText}
           label={t`Your Voting Power`}
         />
         {!!Number(unclaimedAirdrop) && (
-          <div className="flex items-center justify-between pt-4 mt-4 border-t border-white">
+          <div className="mt-4 flex items-center justify-between border-t border-white pt-4">
             <BalanceWithLabel
               balance={unclaimedAirdrop}
               label={t`Unclaimed Airdrop`}
             />
             <LinkButton
               link="/airdrop"
-              className="self-end mb-5"
+              className="mb-5 self-end"
               variant={ButtonVariant.OUTLINE_WHITE}
             >{t`Claim`}</LinkButton>
           </div>

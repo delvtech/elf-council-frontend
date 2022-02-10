@@ -64,7 +64,7 @@ export function ProposalListItem({
       key={proposal.proposalId}
       className="flex items-center justify-between"
     >
-      <div className="flex flex-col w-full space-y-4">
+      <div className="flex w-full flex-col space-y-4">
         <div className="flex flex-col justify-between">
           <CardHeader
             title={snapshotProposal?.title}
@@ -72,7 +72,7 @@ export function ProposalListItem({
           />
           <div
             className={classNames(
-              "h-full items-center justify-between flex space-x-4 text-principalRoyalBlue",
+              "flex h-full items-center justify-between space-x-4 text-principalRoyalBlue",
             )}
           >
             {currentBlockNumber && (
@@ -109,7 +109,7 @@ function BallotIcon({
 
   if (votingPower && castBallot === Ballot.YES) {
     return (
-      <div className="w-4 h-4 text-green-500">
+      <div className="h-4 w-4 text-green-500">
         <Tooltip content={t`Voted yes`}>
           <ThumbUpIcon height="18" />
         </Tooltip>
@@ -119,7 +119,7 @@ function BallotIcon({
 
   if (votingPower && castBallot === Ballot.NO) {
     return (
-      <div className="w-4 h-4 text-red-500">
+      <div className="h-4 w-4 text-red-500">
         <Tooltip content={t`Voted no`}>
           <ThumbDownIcon height="18" />
         </Tooltip>
@@ -129,7 +129,7 @@ function BallotIcon({
 
   if (votingPower && castBallot === Ballot.MAYBE) {
     return (
-      <div className="w-4 h-4 text-principalRoyalBlue">
+      <div className="h-4 w-4 text-principalRoyalBlue">
         <Tooltip content={t`Voted abstain`}>
           <XCircleIcon height="18" />
         </Tooltip>

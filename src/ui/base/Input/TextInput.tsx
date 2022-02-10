@@ -45,7 +45,7 @@ export default function TextInput({
         className={classNames(
           inputBorderColor,
           ringColor,
-          "shadow-sm text-black block w-full sm:text-sm rounded-md",
+          "block w-full rounded-md text-black shadow-sm sm:text-sm",
           className,
         )}
         placeholder={placeholder}

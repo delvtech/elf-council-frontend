@@ -13,7 +13,7 @@ export function CallToActionCard({
     <Card
       interactive
       variant={CardVariant.HACKER_SKY}
-      className="w-full h-full"
+      className="h-full w-full"
     >
       <div className="flex flex-col">
         <div className="flex-1">
