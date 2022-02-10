@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import Image from "next/image";
 import { t } from "ttag";
 import { formatWalletAddress } from "src/formatWalletAddress";
@@ -14,7 +14,6 @@ import { XIcon } from "@heroicons/react/solid";
 
 interface DetailedDelegateProfileProps {
   delegate: Delegate;
-  onSelectDelegate: () => void;
   onCloseProfileClick: () => void;
   selected: boolean;
   actionButton: ReactElement;
@@ -23,14 +22,22 @@ interface DetailedDelegateProfileProps {
 
 function DetailedDelegateProfile({
   delegate,
-  onSelectDelegate,
   onCloseProfileClick,
   actionButton,
   selected,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
   const { account } = useWeb3React();
+  const previousSelectedRef = useRef<boolean>();
   const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
+
+  useEffect(() => {
+    // Hacky-ish way to close the modal on selection
+    if (previousSelectedRef.current === false) {
+      onCloseProfileClick();
+    }
+    previousSelectedRef.current = selected;
+  }, [onCloseProfileClick, selected]);
 
   return (
     <div className={classNames(className, "h-full", "relative", "pt-7")}>
