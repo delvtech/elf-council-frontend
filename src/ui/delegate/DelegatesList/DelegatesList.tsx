@@ -51,8 +51,8 @@ function DelegatesList({
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="grid grid-cols-7 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
-          <span className="hidden lg:block col-span-5 lg:col-span-4 ml-4">{t`Name`}</span>
+        <div className="grid grid-cols-7 px-4 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
+          <span className="hidden lg:block col-span-5 lg:col-span-4">{t`Name`}</span>
           <span className="lg:hidden col-span-5 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
           <div className="hidden lg:block col-span-1 ml-auto mr-14">
             <span>{t`Votes`}</span>
@@ -63,7 +63,7 @@ function DelegatesList({
             <Button
               onClick={handleSelfDelegateClick}
               variant={ButtonVariant.GRADIENT}
-              disabled={!account || isLoading}
+              disabled={!account || isLoading || isSelfDelegated}
               loading={isLoading}
               className="w-36"
             >
