@@ -125,6 +125,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                   close();
                 }}
                 onCloseProfileClick={close}
+                actionButton={actionButton}
                 selected={selected}
               />
             )}

@@ -17,6 +17,7 @@ interface DetailedDelegateProfileProps {
   onSelectDelegate: () => void;
   onCloseProfileClick: () => void;
   selected: boolean;
+  actionButton: ReactElement;
   className?: string;
 }
 
@@ -24,6 +25,7 @@ function DetailedDelegateProfile({
   delegate,
   onSelectDelegate,
   onCloseProfileClick,
+  actionButton,
   selected,
   className = "",
 }: DetailedDelegateProfileProps): ReactElement {
@@ -122,13 +124,7 @@ function DetailedDelegateProfile({
         <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
           {/* Choose Delegate Button */}
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
-            <Button
-              className="grid place-items-center w-full !p-0"
-              onClick={onSelectDelegate}
-              disabled={!account || selected}
-            >
-              <span className="font-bold text-lg">{t`Choose Delegate`}</span>
-            </Button>
+            {actionButton}
           </Tooltip>
 
           {/* Close Button */}
