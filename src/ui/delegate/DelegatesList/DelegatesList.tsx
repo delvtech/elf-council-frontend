@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from "react";
+import { ReactElement, useCallback, useMemo } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -31,6 +31,19 @@ function DelegatesList({
     return shuffle(delegates);
   }, []);
 
+  const isSelfDelegated = !!account
+    ? account === delegateAddressOnChain
+    : false;
+
+  const handleSelfDelegateClick = useCallback(() => {
+    if (!account) {
+      return;
+    }
+
+    changeDelegation([account]);
+    setDelegateAddressInput("");
+  }, [account, changeDelegation, setDelegateAddressInput]);
+
   return (
     <div className="relative mb-8">
       <H2 className="mb-4 text-2xl text-principalRoyalBlue tracking-wide">{t`Explore Featured Delegates`}</H2>
@@ -38,14 +51,24 @@ function DelegatesList({
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="grid grid-cols-7 border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
+        <div className="grid grid-cols-7 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
           <span className="hidden lg:block col-span-5 lg:col-span-4 ml-4">{t`Name`}</span>
           <span className="lg:hidden col-span-5 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
           <div className="hidden lg:block col-span-1 ml-auto mr-14">
             <span>{t`Votes`}</span>
             {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
             {/* Spacer for buttons */}
-            <span className="col-span-2" />
+          </div>
+          <div className="col-span-2 place-self-end">
+            <Button
+              onClick={handleSelfDelegateClick}
+              variant={ButtonVariant.GRADIENT}
+              disabled={!account || isLoading}
+              loading={isLoading}
+              className="w-36"
+            >
+              {t`Self-delegate`}
+            </Button>
           </div>
         </div>
 

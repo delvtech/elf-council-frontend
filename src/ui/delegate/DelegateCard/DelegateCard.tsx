@@ -44,10 +44,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
-  const isSelfDelegated = !!account
-    ? account === delegateAddressOnChain
-    : false;
-
   const handleDelegateClick = useCallback(() => {
     changeDelegation([selectedDelegate]);
   }, [changeDelegation, selectedDelegate]);
@@ -65,15 +61,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       setDelegationFail(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
   }, []);
-
-  const handleSelfDelegateClick = useCallback(() => {
-    if (!account) {
-      return;
-    }
-
-    changeDelegation([account]);
-    setDelegateAddressInput("");
-  }, [account, changeDelegation, setDelegateAddressInput]);
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
@@ -146,25 +133,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
           <div className="text-center">
             <div className="flex justify-end items-end">
-              <div className="mr-4">
-                {!isSelfDelegated ? (
-                  <Button
-                    onClick={handleSelfDelegateClick}
-                    variant={ButtonVariant.GRADIENT}
-                    disabled={!account || isLoading}
-                    loading={isLoading}
-                    className="w-36"
-                  >
-                    {t`Self-delegate`}
-                  </Button>
-                ) : (
-                  <Tag intent={Intent.SUCCESS}>
-                    <CheckCircleIcon height={24} className="mr-2" />
-                    <span className="font-bold">{t`Self-delegated!`}</span>
-                  </Tag>
-                )}
-              </div>
-
               <DelegateButton
                 account={account}
                 currentDelegateAddress={delegateAddressOnChain}
