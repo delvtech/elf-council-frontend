@@ -33,7 +33,7 @@ export function DelegateInstructions({
         <p
           className={"w-2/3 mb-8"}
         >{jt`As a participant in Element DAO, you can use your
-        ${elementIconInBodyText}ELFI voting power yourself (ie: self-delegate),
+        ${elementIconInBodyText}ELFI voting power yourself (i.e., self-delegate),
         or you can delegate it to another member to represent you and your
         vision. You can only delegate it to one user, but you can change your
         selection at any time.`}</p>
