@@ -100,9 +100,7 @@ function DelegatesList({
                     <Button
                       onClick={handleDelegation}
                       variant={ButtonVariant.GRADIENT}
-                      disabled={
-                        selected || !account || isLoading || currentlyDelegated
-                      }
+                      disabled={!account || isLoading || currentlyDelegated}
                       className="hidden lg:inline-flex w-full justify-center"
                       loading={isLoading}
                     >
@@ -113,9 +111,7 @@ function DelegatesList({
                     <Button
                       onClick={handleDelegation}
                       variant={ButtonVariant.GRADIENT}
-                      disabled={
-                        selected || !account || isLoading || currentlyDelegated
-                      }
+                      disabled={!account || isLoading || currentlyDelegated}
                       className="inline-flex w-full justify-center"
                       loading={isLoading}
                     >
