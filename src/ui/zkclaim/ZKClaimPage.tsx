@@ -77,7 +77,7 @@ export default function ClaimPage(): ReactElement {
       : "block"; // current step
 
   return (
-    <div className="flex flex-col items-center flex-1 max-w-4xl gap-12">
+    <div className="flex max-w-4xl flex-1 flex-col items-center gap-12">
       {/* STEP 1 */}
       <LookupCard
         className={getStepClassName(1)}
@@ -99,7 +99,7 @@ export default function ClaimPage(): ReactElement {
         />
       )}
 
-      <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
+      <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />
       </div>

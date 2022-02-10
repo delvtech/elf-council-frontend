@@ -73,7 +73,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
   };
 
   return (
-    <div className="flex flex-col items-center flex-1 w-full max-w-4xl gap-12">
+    <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-12">
       <div style={{ width: 600, maxWidth: "100%" }}>
         <Steps className="w-full">
           <StepItem
@@ -119,7 +119,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
         <GitHubShareCard className={getStepClassName(3)} publicId={publicId} />
       )}
 
-      <div className="flex flex-col items-center flex-1 mt-auto text-principalRoyalBlue">
+      <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
         <ElementLogo height={"40"} />
       </div>

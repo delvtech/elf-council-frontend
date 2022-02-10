@@ -23,7 +23,7 @@ export function WalletProfileButton(
   const onOpenWalletDialog = useCallback(() => setWalletDialogOpen(true), []);
 
   return (
-    <div className={classNames(className, "flex space-x-8 items-center")}>
+    <div className={classNames(className, "flex items-center space-x-8")}>
       {!account ? (
         <ConnectWalletButton />
       ) : (

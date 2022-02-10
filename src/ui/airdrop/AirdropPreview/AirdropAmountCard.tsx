@@ -22,10 +22,10 @@ export function AirdropAmountCard({
       variant={CardVariant.HACKER_SKY}
       className="h-64 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]"
     >
-      <div className="flex flex-col items-center justify-center w-full h-full p-6">
+      <div className="flex h-full w-full flex-col items-center justify-center p-6">
         <div className="mb-3 text-lg font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
-        <div className="flex justify-center gap-2 text-5xl font-bold text-center text-principalRoyalBlue">
-          <ElementIcon className="bg-paleLily mr-2" size={IconSize.LARGE} />
+        <div className="flex justify-center gap-2 text-center text-5xl font-bold text-principalRoyalBlue">
+          <ElementIcon className="mr-2 bg-paleLily" size={IconSize.LARGE} />
           <span>{airdropAmountLabel}</span>
         </div>
       </div>

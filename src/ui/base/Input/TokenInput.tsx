@@ -57,7 +57,7 @@ export default function TokenInput({
           name={name}
           id={id}
           className={classNames(
-            "shadow-sm text-black block w-full sm:text-sm border-gray-300 rounded-md",
+            "block w-full rounded-md border-gray-300 text-black shadow-sm sm:text-sm",
             {
               "focus:border-brandDarkBlue": !error,
               "focus:border-red-500": error,
@@ -73,11 +73,11 @@ export default function TokenInput({
         />
         {showMaxButton && maxValue ? (
           <button
-            className="absolute bg-principalRoyalBlue rounded-md px-2 py-1 top-1/2 right-3 -translate-y-1/2"
+            className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md bg-principalRoyalBlue px-2 py-1"
             onClick={() => onChange(maxValue)}
             disabled={disabled}
           >
-            <span className="text-white text-xs">{t`MAX`}</span>
+            <span className="text-xs text-white">{t`MAX`}</span>
           </button>
         ) : null}
       </div>

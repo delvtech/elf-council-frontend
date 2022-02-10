@@ -42,23 +42,23 @@ function DetailedDelegateProfile({
   return (
     <div className={classNames(className, "h-full", "relative", "pt-7")}>
       <button
-        className="z-10 absolute top-0 right-0 m-5"
+        className="absolute top-0 right-0 z-10 m-5"
         onClick={onCloseProfileClick}
       >
         <XIcon className="h-6 text-black" />
       </button>
 
-      <div className="flex flex-col relative p-5 h-full">
-        <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+      <div className="relative flex h-full flex-col p-5">
+        <div className="flex flex-col gap-4 md:flex-row md:gap-8">
           {/* Left Hand Column */}
           <div className="w-full md:w-[72.5%]">
             {/* Name */}
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <div className="flex items-center">
                 <WalletJazzicon
                   account={delegate.address}
                   size={20}
-                  className="h-5 mr-3"
+                  className="mr-3 h-5"
                 />
                 <H2 className="text-principalRoyalBlue">{delegate.name}</H2>
               </div>
@@ -84,17 +84,17 @@ function DetailedDelegateProfile({
           </div>
 
           {/* Right Hand Column */}
-          <div className="flex flex-col w-full md:w-[27.5%]">
+          <div className="flex w-full flex-col md:w-[27.5%]">
             {/* Some handle/username */}
             <div>
-              <span className="font-bold text-xl text-principalRoyalBlue">
+              <span className="text-xl font-bold text-principalRoyalBlue">
                 username.eth
               </span>
             </div>
 
             {/* Contact Info. */}
             <div className="mt-5">
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <span className="text-blueGrey">discord-handle</span>
                 <div className="relative h-5 w-5">
                   <Image
@@ -105,7 +105,7 @@ function DetailedDelegateProfile({
                 </div>
               </div>
 
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 {/* Empty span used for justify-between trick */}
                 <span />
                 <div className="relative h-5 w-5">
@@ -128,7 +128,7 @@ function DetailedDelegateProfile({
           </div>
         </div>
 
-        <div className="flex gap-4 mt-auto sm:mt-14 lg:mt-auto">
+        <div className="mt-auto flex gap-4 sm:mt-14 lg:mt-auto">
           {/* Action Button */}
           <Tooltip content={chooseDelegateTooltip} className="w-1/2">
             {actionButton}
@@ -137,10 +137,10 @@ function DetailedDelegateProfile({
           {/* Close Button */}
           <Button
             variant={ButtonVariant.WHITE}
-            className="grid place-items-center w-1/2"
+            className="grid w-1/2 place-items-center"
             onClick={onCloseProfileClick}
           >
-            <span className="font-bold text-lg">{t`Close`}</span>
+            <span className="text-lg font-bold">{t`Close`}</span>
           </Button>
         </div>
       </div>

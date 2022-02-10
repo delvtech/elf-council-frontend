@@ -4,7 +4,7 @@ import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
 
 function Footer(): ReactElement {
   return (
-    <div className="flex justify-end w-full px-16 pb-8 space-x-3">
+    <div className="flex w-full justify-end space-x-3 px-16 pb-8">
       <a href="https://twitter.com/element_fi">
         <TwitterIconFromFigma />
       </a>

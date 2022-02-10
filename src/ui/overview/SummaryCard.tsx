@@ -19,11 +19,11 @@ export function SummaryCard(props: SummaryCardProps): ReactElement {
         {title}
         {tooltipContent ? (
           <Tooltip content={tooltipContent}>
-            <InformationCircleIcon className="h-4 ml-1 cursor-help" />
+            <InformationCircleIcon className="ml-1 h-4 cursor-help" />
           </Tooltip>
         ) : null}
       </div>
-      <div className="flex items-center justify-center flex-1 py-4 text-5xl text-center font-extralight text-principalRoyalBlue">
+      <div className="flex flex-1 items-center justify-center py-4 text-center text-5xl font-extralight text-principalRoyalBlue">
         {balance}
       </div>
       {children}

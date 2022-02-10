@@ -27,7 +27,7 @@ export function ElementIcon({
       className={classNames(
         className,
         iconSizeClass,
-        "shadow opacity-90 rounded-full bg-white",
+        "rounded-full bg-white opacity-90 shadow",
       )}
     >
       <svg

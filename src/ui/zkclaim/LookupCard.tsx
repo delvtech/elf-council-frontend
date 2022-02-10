@@ -105,7 +105,7 @@ export default function LookupCard({
             maxLength: HASH_LENGTH,
           }}
         />
-        <div className="flex justify-end gap-4 mt-6 text-right">
+        <div className="mt-6 flex justify-end gap-4 text-right">
           <Button
             variant={ButtonVariant.WHITE}
             onClick={openFileBrowser}

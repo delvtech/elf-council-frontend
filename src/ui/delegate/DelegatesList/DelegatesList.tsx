@@ -33,15 +33,15 @@ function DelegatesList({
 
   return (
     <div className="relative mb-8">
-      <H2 className="mb-4 text-2xl text-principalRoyalBlue tracking-wide">{t`Explore Featured Delegates`}</H2>
+      <H2 className="mb-4 text-2xl tracking-wide text-principalRoyalBlue">{t`Explore Featured Delegates`}</H2>
 
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="grid grid-cols-7 border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
-          <span className="hidden lg:block col-span-5 lg:col-span-4 ml-4">{t`Name`}</span>
-          <span className="lg:hidden col-span-5 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
-          <div className="hidden lg:block col-span-1 ml-auto mr-14">
+        <div className="mb-4 grid grid-cols-7 border-b-2 pb-2 font-bold text-principalRoyalBlue">
+          <span className="col-span-5 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
+          <span className="col-span-5 ml-4 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
+          <div className="col-span-1 ml-auto mr-14 hidden lg:block">
             <span>{t`Votes`}</span>
             {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
             {/* Spacer for buttons */}
@@ -52,7 +52,7 @@ function DelegatesList({
         {/* Delegates */}
         <ul
           // 392px exactly matches 5 rows of the list
-          className="flex flex-col gap-y-2 pr-1 overflow-y-scroll min-h-[392px] h-[40vh]"
+          className="flex h-[40vh] min-h-[392px] flex-col gap-y-2 overflow-y-scroll pr-1"
         >
           {shuffledDelegates.map((delegate, idx) => {
             const handleDelegation = () => {
@@ -80,7 +80,7 @@ function DelegatesList({
                       disabled={
                         selected || !account || isLoading || currentlyDelegated
                       }
-                      className="hidden lg:inline-flex w-full justify-center"
+                      className="hidden w-full justify-center lg:inline-flex"
                       loading={isLoading}
                     >
                       {t`Delegate`}

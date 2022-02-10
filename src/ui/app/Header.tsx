@@ -14,17 +14,17 @@ function Header(): ReactElement {
   const { data: gasPrice } = useGasPrice();
 
   return (
-    <div className="flex justify-between w-full">
+    <div className="flex w-full justify-between">
       <div className="flex space-x-3"></div>
-      <div className="flex items-center mr-3 space-x-4 text-gray-400">
+      <div className="mr-3 flex items-center space-x-4 text-gray-400">
         {account ? (
           <div className="flex items-center">
-            <div className="flex items-center gap-1 mr-8">
+            <div className="mr-8 flex items-center gap-1">
               <a
                 target="_blank"
                 rel="noreferrer"
                 href={RESOURCES_URL}
-                className="items-center hidden gap-2 md:flex"
+                className="hidden items-center gap-2 md:flex"
               >
                 <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
                 <ExternalLinkIcon className="h-4 shrink-0 text-principalRoyalBlue" />
@@ -34,9 +34,9 @@ function Header(): ReactElement {
               href={GAS_URL}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center mr-8"
+              className="mr-8 flex items-center"
             >
-              <div className="relative w-5 h-5">
+              <div className="relative h-5 w-5">
                 <Image
                   layout="fill"
                   src="/assets/gas.svg"

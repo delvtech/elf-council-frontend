@@ -13,7 +13,7 @@ interface DelegateInstructionsProps {
 const elementIconInBodyText = (
   <ElementIcon
     key="element-icon-in-body-text"
-    className="bg-paleLily inline-block ml-0.5 mr-1 -mb-1.5"
+    className="ml-0.5 mr-1 -mb-1.5 inline-block bg-paleLily"
     size={IconSize.MEDIUM}
   />
 );
@@ -28,17 +28,17 @@ export function DelegateInstructions({
       className="md:h-[624px]"
       nextStepLabel={t`Pick Delegate`}
     >
-      <div className="flex flex-col items-center justify-center w-full h-full space-y-8">
+      <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
         <H1>{t`Vote or delegate?`}</H1>
         <p
-          className={"w-2/3 mb-8"}
+          className={"mb-8 w-2/3"}
         >{jt`As a participant in Element DAO, you can use your
         ${elementIconInBodyText}ELFI voting power yourself (i.e., self-delegate),
         or you can delegate it to another member to represent you and your
         vision. You can only delegate it to one user, but you can change your
         selection at any time.`}</p>
 
-        <p className="w-2/3 mb-2 font-bold">{t`In all cases you maintain
+        <p className="mb-2 w-2/3 font-bold">{t`In all cases you maintain
         ownership of your tokens, which will remain in the Voting Vault.`}</p>
       </div>
     </StepCard>

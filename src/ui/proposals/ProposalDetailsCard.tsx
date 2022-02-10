@@ -136,47 +136,47 @@ export function ProposalDetailsCard(
         className,
         !isOpen && "translate-x-full",
 
-        "z-10 rounded-none inset-0 fixed lg:sticky lg:rounded-xl lg:top-10 flex flex-1 flex-col items-start w-full lg:max-w-[48rem] h-full min-h-[85vh] overflow-auto",
+        "fixed inset-0 z-10 flex h-full min-h-[85vh] w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:max-w-[48rem] lg:rounded-xl",
       )}
     >
-      <div className="flex flex-col flex-1 w-full p-6">
+      <div className="flex w-full flex-1 flex-col p-6">
         <button
           onClick={onClose}
-          className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer lg:hidden hover:shadow"
+          className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow lg:hidden"
         >
-          <XIcon className="w-6 h-6 text-white" />
+          <XIcon className="h-6 w-6 text-white" />
         </button>
-        <h1 className="text-2xl font-bold text-white shrink-0">
+        <h1 className="shrink-0 text-2xl font-bold text-white">
           {t`Proposal ${proposalId}`}
         </h1>
-        <div className="flex justify-between w-full">
-          <div className="flex-1 font-light text-white text-ellipsis shrink-0">
+        <div className="flex w-full justify-between">
+          <div className="flex-1 shrink-0 text-ellipsis font-light text-white">
             {snapshotProposal?.title}
           </div>
           <div className="lg:-mt-6">
             {proposalStatus && (
-              <div className="flex items-center justify-end w-full space-x-2 text-white">
+              <div className="flex w-full items-center justify-end space-x-2 text-white">
                 <div>{ProposalStatusLabels[proposalStatus]}</div>
                 <ProposalStatusIcon signer={signer} proposal={proposal} />
               </div>
             )}
             {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-              <div className="flex items-center justify-end w-full text-white">
+              <div className="flex w-full items-center justify-end text-white">
                 <BallotLabel ballot={ballotChoice} />
               </div>
             )}
           </div>
         </div>
 
-        <p className="my-3 overflow-hidden text-sm font-light text-white shrink-0">
+        <p className="my-3 shrink-0 overflow-hidden text-sm font-light text-white">
           {t`Proposal Description:`}
         </p>
 
-        <p className="overflow-hidden text-sm font-light text-white shrink-0 text-ellipsis">
+        <p className="shrink-0 overflow-hidden text-ellipsis text-sm font-light text-white">
           {truncateText(snapshotProposal?.body || "")}
         </p>
 
-        <p className="my-3 overflow-hidden shrink-0">
+        <p className="my-3 shrink-0 overflow-hidden">
           <a
             target="_blank"
             href={snapshotProposal?.link || ""}
@@ -184,11 +184,11 @@ export function ProposalDetailsCard(
             rel="noreferrer"
           >
             {t`View proposal`}
-            <ExternalLinkIcon className="h-4 ml-2" />
+            <ExternalLinkIcon className="ml-2 h-4" />
           </a>
         </p>
 
-        <p className="my-3 overflow-hidden shrink-0">
+        <p className="my-3 shrink-0 overflow-hidden">
           <a
             target="_blank"
             href="https://forum.element.fi"
@@ -196,7 +196,7 @@ export function ProposalDetailsCard(
             rel="noreferrer"
           >
             {t`View Discussion`}
-            <ExternalLinkIcon className="h-4 ml-2" />
+            <ExternalLinkIcon className="ml-2 h-4" />
           </a>
         </p>
 
@@ -213,25 +213,25 @@ export function ProposalDetailsCard(
           />
         )}
         <BalanceWithLabel
-          className="w-full mt-4"
+          className="mt-4 w-full"
           balance={accountVotingPower}
           tooltipText={votingPowerTooltipText}
           label={t`Voting Power`}
         />
 
-        <div className="flex flex-col items-end justify-end flex-1 w-full space-y-2">
+        <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
           {etherscanLink && (
             <a
               target="_blank"
               href={etherscanLink}
-              className="flex items-center justify-end w-full text-white"
+              className="flex w-full items-center justify-end text-white"
               rel="noreferrer"
             >
               <span>{t`View on etherscan`}</span>
               <ExternalLinkIcon className="ml-2" height={18} />
             </a>
           )}
-          <div className="flex justify-between w-full">
+          <div className="flex w-full justify-between">
             <VotingBallotButton
               proposal={proposal}
               currentBallot={newBallot}

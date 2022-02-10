@@ -66,7 +66,7 @@ export default function HashString({
       <div className="flex gap-3 sm:gap-4">
         <div
           className={classNames(
-            "grid items-center relative overflow-hidden",
+            "relative grid items-center overflow-hidden",
             inputClassName,
           )}
           style={{
@@ -101,7 +101,7 @@ export default function HashString({
           <span
             className={classNames(
               inputClassName,
-              "invisible hidden sm:block whitespace-pre",
+              "invisible hidden whitespace-pre sm:block",
             )}
             aria-hidden="true"
             style={{
@@ -117,7 +117,7 @@ export default function HashString({
 
           <span
             className={classNames(
-              "bg-topaz text-white absolute inset-0 rounded-full flex items-center justify-center pointer-events-none transition-opacity gap-1 opacity-0 m-px",
+              "pointer-events-none absolute inset-0 m-px flex items-center justify-center gap-1 rounded-full bg-topaz text-white opacity-0 transition-opacity",
               copied && "opacity-100",
             )}
           >

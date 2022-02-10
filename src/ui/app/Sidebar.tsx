@@ -36,19 +36,19 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   return (
     <Fragment>
       <button
-        className="fixed top-0 left-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
+        className="fixed top-0 left-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
         onClick={onOpen}
       >
-        <MenuAlt4Icon className="w-6 h-6" />
+        <MenuAlt4Icon className="h-6 w-6" />
       </button>
       <div
         className={classNames(
           { "-translate-x-full": !isOpen },
-          "flex flex-col items-center w-full md:w-60 h-full py-14 ease-in-out transition-all duration-300 z-10 fixed top-0 left-0 bg-white transform-gpu md:translate-x-0",
+          "fixed top-0 left-0 z-10 flex h-full w-full transform-gpu flex-col items-center bg-white py-14 transition-all duration-300 ease-in-out md:w-60 md:translate-x-0",
         )}
       >
-        <div className="flex justify-around py-3 mt-1">
-          <div className="relative w-24 h-24">
+        <div className="mt-1 flex justify-around py-3">
+          <div className="relative h-24 w-24">
             <Image
               layout="fill"
               src="/assets/CouncilLogo.svg"
@@ -57,12 +57,12 @@ export default function Sidebar(props: SidebarProps): ReactElement {
           </div>
           <button
             onClick={onClose}
-            className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 p-0 rounded-md cursor-pointer md:hidden hover:shadow"
+            className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
           >
-            <XIcon className="w-6 h-6" />
+            <XIcon className="h-6 w-6" />
           </button>
         </div>
-        <div className="w-full mt-8 space-y-6">
+        <div className="mt-8 w-full space-y-6">
           <SidebarLink link="/" label={t`Overview`} router={router} />
           <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
           <SidebarLink link="/delegate" label={t`Delegate`} router={router} />
@@ -74,7 +74,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
 
           {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
         </div>
-        <div className="flex flex-col items-center mt-auto text-principalRoyalBlue">
+        <div className="mt-auto flex flex-col items-center text-principalRoyalBlue">
           <span className="text-sm">{t`Powered by`}</span>
           <ElementLogo height={"40"} />
         </div>
@@ -127,7 +127,7 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
         <a>
           <div
             className={classNames(
-              "flex justify-center p-3 hover:bg-blue-50 cursor-pointer text-brandDarkBlue-dark",
+              "flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark hover:bg-blue-50",
               { "font-bold": isActive },
             )}
           >
@@ -146,14 +146,14 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
       href={link}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center justify-center w-full hover:bg-blue-50"
+      className="flex w-full items-center justify-center hover:bg-blue-50"
     >
       {/* Empty span w/ same width as icon to center the label text */}
       <span className="w-4" />
-      <div className="flex justify-center p-3 cursor-pointer text-brandDarkBlue-dark">
+      <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
         <p>{label}</p>
       </div>
-      <ExternalLinkIcon className="w-4 h-4 text-principalRoyalBlue" />
+      <ExternalLinkIcon className="h-4 w-4 text-principalRoyalBlue" />
     </a>
   );
 }

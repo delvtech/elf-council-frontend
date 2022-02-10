@@ -11,8 +11,8 @@ export function ProgressCircle(props: ProgressCircleProps): ReactElement {
   const { percent } = props;
   const circumference = CIRCLE_RADIUS * 2 * Math.PI;
   return (
-    <div className="relative flex items-center justify-center w-20 h-20 overflow-hidden rounded-full">
-      <svg className="w-20 h-20">
+    <div className="relative flex h-20 w-20 items-center justify-center overflow-hidden rounded-full">
+      <svg className="h-20 w-20">
         <circle
           className="text-gray-300"
           strokeWidth="5"

@@ -19,7 +19,7 @@ export function ProposalList({
   onClickItem,
 }: ProposalListProps): ReactElement {
   return (
-    <div className="flex flex-col w-full pb-8 space-y-4">
+    <div className="flex w-full flex-col space-y-4 pb-8">
       {proposals.map((proposal) => (
         <ProposalListItem
           key={proposal.proposalId}
