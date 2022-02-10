@@ -184,7 +184,7 @@ export function ChooseDelegate({
                           disabled={selected}
                           className="inline-flex w-full justify-center"
                         >
-                          {t`Choose`}
+                          {t`Choose Delegate`}
                         </Button>
                       }
                     />
