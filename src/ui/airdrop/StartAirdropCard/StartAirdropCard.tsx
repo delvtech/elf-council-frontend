@@ -1,3 +1,4 @@
+import { Provider } from "@ethersproject/providers";
 import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -11,6 +12,7 @@ import { jt, t } from "ttag";
 
 interface StartAirdropCardProps {
   account: string | null | undefined;
+  library: Provider | undefined;
   walletConnectionActive: boolean | undefined;
   onNextStep: () => void;
 }
@@ -33,6 +35,7 @@ const elementIconInBodyText = (
 export function StartAirdropCard({
   walletConnectionActive,
   account,
+  library,
   onNextStep,
 }: StartAirdropCardProps): ReactElement {
   return (
@@ -48,6 +51,7 @@ export function StartAirdropCard({
           />
         ) : (
           <WalletProfileButton
+            provider={library}
             variant={ButtonVariant.PRIMARY}
             account={account}
             walletConnectionActive={walletConnectionActive}
@@ -60,9 +64,8 @@ export function StartAirdropCard({
           <div className="text-3xl font-bold">{t`Contribute to the evolution of the Element DAO`}</div>
           <div className="flex flex-col space-y-8 px-2 text-justify text-base">
             <p className="inline">
-              {jt`With the launch of the Element DAO and its
-              ${elementIconInBodyText}ELFI governance token, the community now
-              leads the future of the protocol.`}
+              {jt`With the launch of the Element DAO,  the community now leads
+              the future of the protocol.`}
             </p>
             <p className="inline">
               {jt`${elementIconInBodyText}ELFI airdrop recipients can use their
