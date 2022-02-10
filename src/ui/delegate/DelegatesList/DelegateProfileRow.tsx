@@ -15,12 +15,18 @@ interface DelegateProfileRowProps {
   account: string | null | undefined;
   selected: boolean;
   delegate: Delegate;
-  onSelectDelegate: () => void;
   actionButton: ReactElement;
+  profileActionButton: ReactElement;
 }
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
-  const { selected = false, delegate, onSelectDelegate, actionButton } = props;
+  const {
+    selected = false,
+    delegate,
+    actionButton,
+    profileActionButton,
+  } = props;
+
   const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
 
   return (
@@ -122,7 +128,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                 delegate={delegate}
                 onCloseProfileClick={close}
                 selected={selected}
-                actionButton={actionButton}
+                actionButton={profileActionButton}
               />
             )}
           </Popover.Panel>

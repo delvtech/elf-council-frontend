@@ -16,7 +16,6 @@ interface DelegatesListProps {
   delegateAddressOnChain: string | undefined;
   selectedDelegate: string;
   setDelegateAddressInput: (address: string) => void;
-  setSelectedDelegate: (address: string) => void;
 }
 
 function DelegatesList({
@@ -26,7 +25,6 @@ function DelegatesList({
   delegateAddressOnChain,
   selectedDelegate,
   setDelegateAddressInput,
-  setSelectedDelegate,
 }: DelegatesListProps): ReactElement {
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
@@ -57,11 +55,6 @@ function DelegatesList({
           className="flex flex-col gap-y-2 pr-1 overflow-y-scroll min-h-[392px] h-[40vh]"
         >
           {shuffledDelegates.map((delegate, idx) => {
-            const handleSelectDelegate = () => {
-              setSelectedDelegate(delegate.address);
-              setDelegateAddressInput("");
-            };
-
             const handleDelegation = () => {
               changeDelegation([delegate.address]);
               setDelegateAddressInput("");
@@ -80,7 +73,6 @@ function DelegatesList({
                   account={account}
                   selected={selected}
                   delegate={delegate}
-                  onSelectDelegate={handleSelectDelegate}
                   actionButton={
                     <Button
                       onClick={handleDelegation}
@@ -89,6 +81,19 @@ function DelegatesList({
                         selected || !account || isLoading || currentlyDelegated
                       }
                       className="hidden lg:inline-flex w-full justify-center"
+                      loading={isLoading}
+                    >
+                      {t`Delegate`}
+                    </Button>
+                  }
+                  profileActionButton={
+                    <Button
+                      onClick={handleDelegation}
+                      variant={ButtonVariant.GRADIENT}
+                      disabled={
+                        selected || !account || isLoading || currentlyDelegated
+                      }
+                      className="inline-flex w-full justify-center"
                       loading={isLoading}
                     >
                       {t`Delegate`}
