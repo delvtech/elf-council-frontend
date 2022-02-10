@@ -65,7 +65,13 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               </div>
             </div>
             <div className="lg:hidden">
-              <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+              <span
+                className={
+                  highlightSelected && selected
+                    ? "text-gray-400"
+                    : "text-blueGrey"
+                }
+              >
                 <span>{t`${formatBalance(votePower)} votes`}</span>
               </span>
             </div>
@@ -74,7 +80,11 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
 
         {/* Votes */}
         <div className="hidden col-span-1 ml-auto mr-10 lg:block">
-          <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+          <span
+            className={
+              highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
+            }
+          >
             <span>{formatBalance(votePower)}</span>
           </span>
         </div>
