@@ -42,7 +42,7 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
-const votingPowerTooltipText = t`The sum of all voting power delegated to you`;
+const votingPowerTooltipText = t`The voting power delegated to you for this proposal`;
 
 interface ProposalDetailsCardProps {
   className?: string;
