@@ -55,21 +55,21 @@ function DelegatesList({
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="grid grid-cols-10 px-4 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
+        <div className="mb-4 grid grid-cols-10 items-center border-b-2 px-4 pb-2 font-bold text-principalRoyalBlue">
           {/* Name */}
-          <span className="hidden lg:block col-span-6 lg:col-span-4">{t`Name`}</span>
+          <span className="col-span-6 hidden lg:col-span-4 lg:block">{t`Name`}</span>
           {/* Name & Vote Power */}
-          <span className="lg:hidden col-span-6 lg:col-span-4">{t`Name / Votes`}</span>
+          <span className="col-span-6 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
 
           {/* Vote Power */}
-          <div className="hidden lg:block col-span-2 ml-auto mr-14">
+          <div className="col-span-2 ml-auto mr-14 hidden lg:block">
             <span>{t`Votes`}</span>
           </div>
 
           {/* Buttons */}
-          <div className="flex col-span-4 gap-x-4 mr-4">
+          <div className="col-span-4 mr-4 flex gap-x-4">
             {/* Spacer for Profile Button */}
-            <div className="hidden lg:block w-full" />
+            <div className="hidden w-full lg:block" />
             <Button
               onClick={handleSelfDelegateClick}
               variant={ButtonVariant.GRADIENT}
@@ -159,7 +159,7 @@ function ActionButton({
           intent={Intent.SUCCESS}
           className={classNames(tagClassName, "w-full shadow")}
         >
-          <div className="font-bold text-center text-base">{t`Delegated`}</div>
+          <div className="text-center text-base font-bold">{t`Delegated`}</div>
         </Tag>
       ) : (
         <Button

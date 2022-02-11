@@ -135,7 +135,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
           />
 
           <div className="text-center">
-            <div className="flex justify-end items-end">
+            <div className="flex items-end justify-end">
               <DelegateButton
                 account={account}
                 currentDelegateAddress={delegateAddressOnChain}

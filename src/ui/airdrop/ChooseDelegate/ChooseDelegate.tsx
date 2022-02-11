@@ -132,10 +132,10 @@ export function ChooseDelegate({
         <H2>{t`Choose a delegate from the list below`}</H2>
         <div className="w-full">
           {/* Header */}
-          <div className="grid grid-cols-10 border-b-2 pb-2 mb-4 font-bold text-white">
-            <span className="hidden lg:block col-span-6 lg:col-span-4 ml-4">{t`Name`}</span>
-            <span className="lg:hidden col-span-6 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
-            <div className="hidden lg:block col-span-2 ml-auto mr-14">
+          <div className="mb-4 grid grid-cols-10 border-b-2 pb-2 font-bold text-white">
+            <span className="col-span-6 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
+            <span className="col-span-6 ml-4 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
+            <div className="col-span-2 ml-auto mr-14 hidden lg:block">
               <span>{t`Votes`}</span>
               {/* Spacer for buttons */}
             </div>

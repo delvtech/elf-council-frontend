@@ -38,7 +38,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             <span>
               {delegate?.name || formatWalletAddress(currentDelegateAddress)}
             </span>
-            <div className="relative w-4 h-4">
+            <div className="relative h-4 w-4">
               <Image
                 layout="fill"
                 src="/assets/crown.svg"
