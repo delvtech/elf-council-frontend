@@ -154,7 +154,7 @@ function ActionButton({
           intent={Intent.SUCCESS}
           className={classNames(tagClassName, "w-full shadow")}
         >
-          <span className="font-bold text-base">{t`Delegated`}</span>
+          <div className="font-bold text-center text-base">{t`Delegated`}</div>
         </Tag>
       ) : (
         <Button
