@@ -124,7 +124,7 @@ function DelegatesList({
                   selected={selected}
                   delegate={delegate}
                   actionButton={
-                    <ActionButton
+                    <ChangeDelegateButton
                       tagClassName="hidden lg:block"
                       buttonClassName="hidden lg:inline-flex"
                       onDelegationClick={handleDelegation}
@@ -134,7 +134,7 @@ function DelegatesList({
                     />
                   }
                   profileActionButton={
-                    <ActionButton
+                    <ChangeDelegateButton
                       buttonClassName="inline-flex"
                       onDelegationClick={handleDelegation}
                       account={account}
@@ -152,7 +152,7 @@ function DelegatesList({
   );
 }
 
-interface ActionButtonProps {
+interface ChangeDelegateButtonProps {
   tagClassName?: string;
   buttonClassName?: string;
   onDelegationClick: () => void;
@@ -161,14 +161,14 @@ interface ActionButtonProps {
   currentlyDelegated: boolean;
 }
 
-function ActionButton({
+function ChangeDelegateButton({
   tagClassName = "",
   buttonClassName = "",
   onDelegationClick,
   account,
   isLoading,
   currentlyDelegated,
-}: ActionButtonProps): ReactElement {
+}: ChangeDelegateButtonProps): ReactElement {
   return (
     <React.Fragment>
       {currentlyDelegated ? (
