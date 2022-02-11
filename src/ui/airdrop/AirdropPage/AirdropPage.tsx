@@ -102,6 +102,7 @@ export default function AirdropPage(): ReactElement {
               return (
                 <StartAirdropCard
                   account={account}
+                  library={library}
                   walletConnectionActive={active}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {

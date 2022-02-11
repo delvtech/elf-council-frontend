@@ -6,11 +6,12 @@ import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import { RESOURCES_URL } from "src/ui/resources";
+import { Provider } from "@ethersproject/providers";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
 
 function Header(): ReactElement {
-  const { account, active } = useWeb3React();
+  const { account, active, library } = useWeb3React<Provider>();
   const { data: gasPrice } = useGasPrice();
 
   return (
@@ -52,6 +53,7 @@ function Header(): ReactElement {
 
         <WalletProfileButton
           account={account}
+          provider={library}
           walletConnectionActive={active}
         />
       </div>
