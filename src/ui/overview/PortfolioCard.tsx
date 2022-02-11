@@ -65,7 +65,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
           <div className="mt-4 flex items-center justify-between border-t border-white pt-4">
             <BalanceWithLabel
               balance={unclaimedAirdrop}
-              label={t`Unclaimed Airdrop`}
+              label={t`Unclaimed Voting Power`}
             />
             <LinkButton
               link="/airdrop"
