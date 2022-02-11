@@ -50,7 +50,36 @@ function DelegatesList({
 
   return (
     <div className="relative mb-8">
-      <H2 className="mb-4 text-2xl tracking-wide text-principalRoyalBlue">{t`Explore Featured Delegates`}</H2>
+      <div className="mb-4 grid grid-cols-10 items-center pr-8">
+        {/* Title */}
+        <div className="col-span-7 lg:col-span-4">
+          <H2 className="text-2xl tracking-wide text-principalRoyalBlue">
+            <div className="hidden sm:block">{t`Explore Featured Delegates`}</div>
+            <div className="leading-6 sm:hidden">
+              <div>{t`Explore Featured`}</div>
+              <div>{t`Delegates`}</div>
+            </div>
+          </H2>
+        </div>
+
+        {/* Vote Spacer */}
+        <div className="col-span-2 ml-auto mr-14 hidden lg:block" />
+
+        <div className="col-span-3 flex gap-x-4 lg:col-span-4">
+          <div className="hidden w-full lg:block" />
+          <div className="w-full">
+            <Button
+              onClick={handleSelfDelegateClick}
+              variant={ButtonVariant.GRADIENT}
+              disabled={!account || isLoading || isSelfDelegated}
+              loading={isLoading}
+              className="w-full justify-center"
+            >
+              {t`Self-delegate`}
+            </Button>
+          </div>
+        </div>
+      </div>
 
       {/* List of delegates */}
       <div>
@@ -66,20 +95,8 @@ function DelegatesList({
             <span>{t`Votes`}</span>
           </div>
 
-          {/* Buttons */}
-          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4">
-            {/* Spacer for Profile Button */}
-            <div className="hidden w-full lg:block" />
-            <Button
-              onClick={handleSelfDelegateClick}
-              variant={ButtonVariant.GRADIENT}
-              disabled={!account || isLoading || isSelfDelegated}
-              loading={isLoading}
-              className="w-full justify-center"
-            >
-              {t`Self-delegate`}
-            </Button>
-          </div>
+          {/* Spacer for Buttons */}
+          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4" />
         </div>
 
         {/* Delegates */}
