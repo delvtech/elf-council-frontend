@@ -10,7 +10,6 @@ import { Overrides } from "ethers";
 import classNames from "classnames";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
-import { CheckCircleIcon } from "@heroicons/react/solid";
 
 interface DelegatesListProps {
   account: string | null | undefined;
@@ -57,20 +56,26 @@ function DelegatesList({
       <div>
         {/* Header */}
         <div className="grid grid-cols-10 px-4 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
+          {/* Name */}
           <span className="hidden lg:block col-span-6 lg:col-span-4">{t`Name`}</span>
+          {/* Name & Vote Power */}
           <span className="lg:hidden col-span-6 lg:col-span-4">{t`Name / Votes`}</span>
+
+          {/* Vote Power */}
           <div className="hidden lg:block col-span-2 ml-auto mr-14">
             <span>{t`Votes`}</span>
-            {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
-            {/* Spacer for buttons */}
           </div>
-          <div className="col-span-4 place-self-end mr-5">
+
+          {/* Buttons */}
+          <div className="flex col-span-4 gap-x-4 mr-4">
+            {/* Spacer for Profile Button */}
+            <div className="hidden lg:block w-full" />
             <Button
               onClick={handleSelfDelegateClick}
               variant={ButtonVariant.GRADIENT}
               disabled={!account || isLoading || isSelfDelegated}
               loading={isLoading}
-              className="w-36"
+              className="w-full justify-center"
             >
               {t`Self-delegate`}
             </Button>
