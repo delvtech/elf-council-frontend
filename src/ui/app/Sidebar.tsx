@@ -106,7 +106,7 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
       the airdrop page when they click this. This way, users can always go back
       to the beginning of the airdrop by clicking the sidebar link */}
       <AnchorButton href={link} variant={ButtonVariant.GRADIENT}>
-        {t`Claim airdrop`}
+        {t`Claim ELFI`}
       </AnchorButton>
     </div>
   );
