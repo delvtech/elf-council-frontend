@@ -88,11 +88,11 @@ function DelegatesList({
           {/* Name */}
           <span className="col-span-7 hidden lg:col-span-4 lg:block">{t`Name`}</span>
           {/* Name & Vote Power */}
-          <span className="col-span-7 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
+          <span className="col-span-7 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
 
           {/* Vote Power */}
           <div className="col-span-2 ml-auto mr-14 hidden lg:block">
-            <span>{t`Votes`}</span>
+            <span>{t`Voting Power`}</span>
           </div>
 
           {/* Spacer for Buttons */}

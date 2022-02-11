@@ -135,10 +135,10 @@ export function ChooseDelegate({
           <div className="mb-4 grid grid-cols-10 border-b-2 pb-2 font-bold text-white">
             {/* Name */}
             <span className="col-span-7 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
-            <span className="col-span-7 ml-4 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
-            {/* Votes */}
+            <span className="col-span-7 ml-4 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
+            {/* Voting Power */}
             <div className="col-span-2 ml-auto mr-14 hidden lg:block">
-              <span>{t`Votes`}</span>
+              <span>{t`Voting Power`}</span>
             </div>
             {/* Spacer for Buttons */}
             <span className="col-span-3 lg:col-span-4" />

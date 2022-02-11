@@ -80,7 +80,7 @@ interface NumDelegatedVotesProps {
 function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const { account } = props;
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
-  return <span>{t`voting power: ${formatBalance(votePower)}`}</span>;
+  return <span>{t`Voting Power: ${formatBalance(votePower)}`}</span>;
 }
 
 export default CurrentDelegate;

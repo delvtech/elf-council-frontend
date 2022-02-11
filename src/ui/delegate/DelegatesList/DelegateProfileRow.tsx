@@ -72,13 +72,13 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                     : "text-blueGrey"
                 }
               >
-                <span>{t`${formatBalance(votePower)} votes`}</span>
+                <span>{formatBalance(votePower)}</span>
               </span>
             </div>
           </div>
         </div>
 
-        {/* Votes */}
+        {/* Voting Power */}
         <div className="col-span-2 ml-auto mr-10 hidden lg:block">
           <span
             className={
