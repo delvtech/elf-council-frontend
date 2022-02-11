@@ -72,7 +72,7 @@ export function ReviewTransaction({
         isTransactionPending || !isValidAddress(delegateAddress)
       }
       nextStepLabel={
-        isTransactionPending ? <Spinner /> : t`Confirm Transaction`
+        isTransactionPending ? <Spinner /> : t`Confirm transaction`
       }
       onPrevStep={onPrevStep}
     >
