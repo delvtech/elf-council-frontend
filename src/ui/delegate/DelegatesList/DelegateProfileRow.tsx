@@ -42,7 +42,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         )}
       >
         {/* Name */}
-        <div className="col-span-6 mr-4 items-start truncate text-left lg:col-span-4">
+        <div className="col-span-7 mr-4 items-start truncate text-left lg:col-span-4">
           <div className="flex flex-col">
             <div
               className={classNames(
@@ -90,7 +90,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </div>
 
         {/* Buttons */}
-        <div className="col-span-4 flex gap-x-4">
+        <div className="col-span-3 flex gap-x-4 lg:col-span-4">
           <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),

@@ -57,9 +57,9 @@ function DelegatesList({
         {/* Header */}
         <div className="mb-4 grid grid-cols-10 items-center border-b-2 px-4 pb-2 font-bold text-principalRoyalBlue">
           {/* Name */}
-          <span className="col-span-6 hidden lg:col-span-4 lg:block">{t`Name`}</span>
+          <span className="col-span-7 hidden lg:col-span-4 lg:block">{t`Name`}</span>
           {/* Name & Vote Power */}
-          <span className="col-span-6 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
+          <span className="col-span-7 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
 
           {/* Vote Power */}
           <div className="col-span-2 ml-auto mr-14 hidden lg:block">
@@ -67,7 +67,7 @@ function DelegatesList({
           </div>
 
           {/* Buttons */}
-          <div className="col-span-4 mr-4 flex gap-x-4">
+          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4">
             {/* Spacer for Profile Button */}
             <div className="hidden w-full lg:block" />
             <Button
