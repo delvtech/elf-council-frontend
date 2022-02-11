@@ -35,14 +35,14 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     <Popover>
       <div
         className={classNames(
-          "grid grid-cols-7 items-center justify-between py-3 px-4 bg-white rounded-xl",
+          "grid grid-cols-10 items-center justify-between py-3 px-4 bg-white rounded-xl",
           {
             "!bg-votingGreen": highlightSelected && selected,
           },
         )}
       >
         {/* Name */}
-        <div className="items-start col-span-5 mr-4 text-left truncate lg:col-span-4">
+        <div className="items-start col-span-6 mr-4 text-left truncate lg:col-span-4">
           <div className="flex flex-col">
             <div
               className={classNames(
@@ -79,7 +79,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </div>
 
         {/* Votes */}
-        <div className="hidden col-span-1 ml-auto mr-10 lg:block">
+        <div className="hidden col-span-2 ml-auto mr-10 lg:block">
           <span
             className={
               highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
@@ -90,7 +90,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </div>
 
         {/* Buttons */}
-        <div className="flex col-span-2 gap-x-4">
+        <div className="flex col-span-4 gap-x-4">
           <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),

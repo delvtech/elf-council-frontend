@@ -56,15 +56,15 @@ function DelegatesList({
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="grid grid-cols-7 px-4 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
-          <span className="hidden lg:block col-span-5 lg:col-span-4">{t`Name`}</span>
-          <span className="lg:hidden col-span-5 lg:col-span-4 ml-4">{t`Name / Votes`}</span>
-          <div className="hidden lg:block col-span-1 ml-auto mr-14">
+        <div className="grid grid-cols-10 px-4 items-center border-b-2 pb-2 mb-4 font-bold text-principalRoyalBlue">
+          <span className="hidden lg:block col-span-6 lg:col-span-4">{t`Name`}</span>
+          <span className="lg:hidden col-span-6 lg:col-span-4">{t`Name / Votes`}</span>
+          <div className="hidden lg:block col-span-2 ml-auto mr-14">
             <span>{t`Votes`}</span>
             {/* TODO: Instead of adding 15px for scrollbar width, determine that width based on browser */}
             {/* Spacer for buttons */}
           </div>
-          <div className="col-span-2 place-self-end">
+          <div className="col-span-4 place-self-end mr-5">
             <Button
               onClick={handleSelfDelegateClick}
               variant={ButtonVariant.GRADIENT}
@@ -152,7 +152,7 @@ function ActionButton({
       {currentlyDelegated ? (
         <Tag
           intent={Intent.SUCCESS}
-          className={classNames(tagClassName, "shadow")}
+          className={classNames(tagClassName, "w-full shadow")}
         >
           <span className="font-bold text-base">{t`Delegated`}</span>
         </Tag>
