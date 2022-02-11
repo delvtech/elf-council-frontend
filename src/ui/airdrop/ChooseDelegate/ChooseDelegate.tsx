@@ -137,7 +137,7 @@ export function ChooseDelegate({
             <span className="col-span-7 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
             <span className="col-span-7 ml-4 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
             {/* Voting Power */}
-            <div className="col-span-2 ml-auto mr-14 hidden lg:block">
+            <div className="col-span-2 ml-auto mr-14 hidden truncate lg:block">
               <span>{t`Voting Power`}</span>
             </div>
             {/* Spacer for Buttons */}

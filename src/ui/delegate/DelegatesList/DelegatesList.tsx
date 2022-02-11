@@ -91,7 +91,7 @@ function DelegatesList({
           <span className="col-span-7 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
 
           {/* Vote Power */}
-          <div className="col-span-2 ml-auto mr-14 hidden lg:block">
+          <div className="col-span-2 ml-auto mr-14 hidden truncate lg:block">
             <span>{t`Voting Power`}</span>
           </div>
 
