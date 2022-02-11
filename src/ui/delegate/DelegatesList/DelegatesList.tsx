@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -7,6 +7,11 @@ import { delegates } from "src/elf-council-delegates/delegates";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { Overrides } from "ethers";
+import classNames from "classnames";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
+import { CheckCircleIcon } from "@heroicons/react/solid";
+
 interface DelegatesListProps {
   account: string | null | undefined;
   changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
@@ -97,26 +102,23 @@ function DelegatesList({
                   selected={selected}
                   delegate={delegate}
                   actionButton={
-                    <Button
-                      onClick={handleDelegation}
-                      variant={ButtonVariant.GRADIENT}
-                      disabled={!account || isLoading || currentlyDelegated}
-                      className="hidden lg:inline-flex w-full justify-center"
-                      loading={isLoading}
-                    >
-                      {t`Delegate`}
-                    </Button>
+                    <ActionButton
+                      tagClassName="hidden lg:block"
+                      buttonClassName="hidden lg:inline-flex"
+                      onDelegationClick={handleDelegation}
+                      account={account}
+                      isLoading={isLoading}
+                      currentlyDelegated={currentlyDelegated}
+                    />
                   }
                   profileActionButton={
-                    <Button
-                      onClick={handleDelegation}
-                      variant={ButtonVariant.GRADIENT}
-                      disabled={!account || isLoading || currentlyDelegated}
-                      className="inline-flex w-full justify-center"
-                      loading={isLoading}
-                    >
-                      {t`Delegate`}
-                    </Button>
+                    <ActionButton
+                      buttonClassName="inline-flex"
+                      onDelegationClick={handleDelegation}
+                      account={account}
+                      isLoading={isLoading}
+                      currentlyDelegated={currentlyDelegated}
+                    />
                   }
                 />
               </li>
@@ -125,6 +127,47 @@ function DelegatesList({
         </ul>
       </div>
     </div>
+  );
+}
+
+interface ActionButtonProps {
+  tagClassName?: string;
+  buttonClassName?: string;
+  onDelegationClick: () => void;
+  account: string | null | undefined;
+  isLoading: boolean;
+  currentlyDelegated: boolean;
+}
+
+function ActionButton({
+  tagClassName = "",
+  buttonClassName = "",
+  onDelegationClick,
+  account,
+  isLoading,
+  currentlyDelegated,
+}: ActionButtonProps): ReactElement {
+  return (
+    <React.Fragment>
+      {currentlyDelegated ? (
+        <Tag
+          intent={Intent.SUCCESS}
+          className={classNames(tagClassName, "shadow")}
+        >
+          <span className="font-bold text-base">{t`Delegated`}</span>
+        </Tag>
+      ) : (
+        <Button
+          onClick={onDelegationClick}
+          variant={ButtonVariant.GRADIENT}
+          disabled={!account || isLoading || currentlyDelegated}
+          className={classNames(buttonClassName, "w-full justify-center")}
+          loading={isLoading}
+        >
+          {t`Delegate`}
+        </Button>
+      )}
+    </React.Fragment>
   );
 }
 
