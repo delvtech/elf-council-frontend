@@ -71,7 +71,9 @@ export function ReviewTransaction({
       nextStepDisabled={
         isTransactionPending || !isValidAddress(delegateAddress)
       }
-      nextStepLabel={isTransactionPending ? <Spinner /> : t`Delegate airdrop`}
+      nextStepLabel={
+        isTransactionPending ? <Spinner /> : t`Confirm transaction`
+      }
       onPrevStep={onPrevStep}
     >
       <div className="flex flex-col">
