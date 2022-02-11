@@ -14,6 +14,7 @@ import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPo
 interface DelegateProfileRowProps {
   account: string | null | undefined;
   selected: boolean;
+  highlightSelected?: boolean;
   delegate: Delegate;
   actionButton: ReactElement;
   profileActionButton: ReactElement;
@@ -22,6 +23,7 @@ interface DelegateProfileRowProps {
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
   const {
     selected = false,
+    highlightSelected = false,
     delegate,
     actionButton,
     profileActionButton,
@@ -33,14 +35,14 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     <Popover>
       <div
         className={classNames(
-          "grid grid-cols-7 items-center justify-between rounded-xl bg-white py-3 px-4",
+          "grid grid-cols-10 items-center justify-between rounded-xl bg-white py-3 px-4",
           {
-            "!bg-votingGreen": selected,
+            "!bg-votingGreen": highlightSelected && selected,
           },
         )}
       >
         {/* Name */}
-        <div className="col-span-5 mr-4 items-start truncate text-left lg:col-span-4">
+        <div className="col-span-7 mr-4 items-start truncate text-left lg:col-span-4">
           <div className="flex flex-col">
             <div
               className={classNames(
@@ -63,22 +65,32 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               </div>
             </div>
             <div className="lg:hidden">
-              <span className={selected ? "text-gray-400" : "text-blueGrey"}>
-                <span>{t`${formatBalance(votePower)} votes`}</span>
+              <span
+                className={
+                  highlightSelected && selected
+                    ? "text-gray-400"
+                    : "text-blueGrey"
+                }
+              >
+                <span>{formatBalance(votePower)}</span>
               </span>
             </div>
           </div>
         </div>
 
-        {/* Votes */}
-        <div className="col-span-1 ml-auto mr-10 hidden lg:block">
-          <span className={selected ? "text-gray-400" : "text-blueGrey"}>
+        {/* Voting Power */}
+        <div className="col-span-2 ml-auto mr-10 hidden lg:block">
+          <span
+            className={
+              highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
+            }
+          >
             <span>{formatBalance(votePower)}</span>
           </span>
         </div>
 
         {/* Buttons */}
-        <div className="col-span-2 flex gap-x-4">
+        <div className="col-span-3 flex gap-x-4 lg:col-span-4">
           <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),

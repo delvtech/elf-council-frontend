@@ -44,10 +44,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const [delegationSuccess, setDelegationSuccess] = useState(false);
   const [delegationFail, setDelegationFail] = useState(false);
 
-  const isSelfDelegated = !!account
-    ? account === delegateAddressOnChain
-    : false;
-
   const handleDelegateClick = useCallback(() => {
     changeDelegation([selectedDelegate]);
   }, [changeDelegation, selectedDelegate]);
@@ -65,15 +61,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       setDelegationFail(false);
     }, TWO_SECONDS_IN_MILLISECONDS);
   }, []);
-
-  const handleSelfDelegateClick = useCallback(() => {
-    if (!account) {
-      return;
-    }
-
-    changeDelegation([account]);
-    setDelegateAddressInput("");
-  }, [account, changeDelegation, setDelegateAddressInput]);
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
@@ -105,6 +92,8 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   const invalidAddress =
     !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
 
+  const isSelfDelegated = account ? account === delegateAddressOnChain : false;
+
   return (
     <div className={classNames({ "opacity-50": !account })}>
       <div className="flex flex-1 gap-7 text-xl text-white">
@@ -122,6 +111,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
           <CurrentDelegate
             className="w-full sm:w-1/2 md:w-full lg:w-1/2"
             currentDelegateAddress={delegateAddressOnChain}
+            isSelfDelegated={isSelfDelegated}
           />
         ) : (
           <NoDelegate />
@@ -146,25 +136,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
           <div className="text-center">
             <div className="flex items-end justify-end">
-              <div className="mr-4">
-                {!isSelfDelegated ? (
-                  <Button
-                    onClick={handleSelfDelegateClick}
-                    variant={ButtonVariant.GRADIENT}
-                    disabled={!account || isLoading}
-                    loading={isLoading}
-                    className="w-36"
-                  >
-                    {t`Self-delegate`}
-                  </Button>
-                ) : (
-                  <Tag intent={Intent.SUCCESS}>
-                    <CheckCircleIcon height={24} className="mr-2" />
-                    <span className="font-bold">{t`Self-delegated!`}</span>
-                  </Tag>
-                )}
-              </div>
-
               <DelegateButton
                 account={account}
                 currentDelegateAddress={delegateAddressOnChain}

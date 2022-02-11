@@ -132,14 +132,16 @@ export function ChooseDelegate({
         <H2>{t`Choose a delegate from the list below`}</H2>
         <div className="w-full">
           {/* Header */}
-          <div className="mb-4 grid grid-cols-7 border-b-2 pb-2 font-bold text-white">
-            <span className="col-span-5 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
-            <span className="col-span-5 ml-4 lg:col-span-4 lg:hidden">{t`Name / Votes`}</span>
-            <div className="col-span-1 ml-auto mr-14 hidden lg:block">
-              <span>{t`Votes`}</span>
-              {/* Spacer for buttons */}
-              <span className={`col-span-2`} />
+          <div className="mb-4 grid grid-cols-10 border-b-2 pb-2 font-bold text-white">
+            {/* Name */}
+            <span className="col-span-7 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
+            <span className="col-span-7 ml-4 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
+            {/* Voting Power */}
+            <div className="col-span-2 ml-auto mr-14 hidden truncate lg:block">
+              <span>{t`Voting Power`}</span>
             </div>
+            {/* Spacer for Buttons */}
+            <span className="col-span-3 lg:col-span-4" />
           </div>
 
           <div className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow">
@@ -166,6 +168,7 @@ export function ChooseDelegate({
                     <DelegateProfileRow
                       account={account}
                       selected={selected}
+                      highlightSelected
                       delegate={delegate}
                       actionButton={
                         <Button
