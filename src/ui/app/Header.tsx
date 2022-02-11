@@ -6,13 +6,18 @@ import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import { RESOURCES_URL } from "src/ui/resources";
+import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { Provider } from "@ethersproject/providers";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
+const elfiTooltipText = t`The amount of voting power you own in the system`;
 
 function Header(): ReactElement {
   const { account, active, library } = useWeb3React<Provider>();
   const { data: gasPrice } = useGasPrice();
+  const amountDeposited = useDeposited(account) || "0";
 
   return (
     <div className="flex w-full justify-between">
@@ -48,6 +53,15 @@ function Header(): ReactElement {
                 {gasPrice?.recommendedBaseFee || 0.0}
               </span>
             </a>
+            <Tooltip content={elfiTooltipText}>
+              <span className="mr-8 flex items-center gap-2 font-bold text-principalRoyalBlue">
+                <ElementIcon size={IconSize.MEDIUM} />
+                <span>
+                  {amountDeposited}
+                  <span className="hidden md:inline"> ELFI</span>
+                </span>
+              </span>
+            </Tooltip>
           </div>
         ) : null}
 

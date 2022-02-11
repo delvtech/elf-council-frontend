@@ -13,7 +13,7 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
-const votingBalanceTooltipText = t`The amount of voting power you own in the system`;
+const elfiTooltipText = t`The amount of voting power you own in the system`;
 const votingPowerTooltipText = t`The sum of all voting power delegated to you`;
 
 interface PortfolioCardProps {
@@ -52,7 +52,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <BalanceWithLabel
           className="mt-8 w-full"
           balance={amountDeposited}
-          tooltipText={votingBalanceTooltipText}
+          tooltipText={elfiTooltipText}
           label={t`ELFI`}
         />
         <BalanceWithLabel
