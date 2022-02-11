@@ -64,8 +64,8 @@ export function StartAirdropCard({
           <div className="text-3xl font-bold">{t`Contribute to the evolution of the Element DAO`}</div>
           <div className="flex flex-col space-y-8 px-2 text-justify text-base">
             <p className="inline">
-              {jt`With the launch of the Element DAO,  the community now leads
-              the future of the protocol.`}
+              {t`With the launch of the Element DAO, the community now leads the
+              future of the protocol.`}
             </p>
             <p className="inline">
               {jt`${elementIconInBodyText}ELFI airdrop recipients can use their
