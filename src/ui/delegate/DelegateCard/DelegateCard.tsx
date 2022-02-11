@@ -96,16 +96,16 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 
   return (
     <div className={classNames({ "opacity-50": !account })}>
-      <div className="flex gap-7 flex-1 text-white text-xl">
+      <div className="flex flex-1 gap-7 text-xl text-white">
         <div className="w-full">
           <span>{t`Current delegation`}</span>
         </div>
-        <div className="w-full leading-5 hidden sm:block md:hidden lg:block">
+        <div className="hidden w-full leading-5 sm:block md:hidden lg:block">
           <div>{t`Delegate to any address`}</div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-0 sm:gap-7 md:gap-0 lg:gap-7 mt-2">
+      <div className="mt-2 flex flex-col gap-0 sm:flex-row sm:gap-7 md:flex-col md:gap-0 lg:flex-row lg:gap-7">
         {/* Current Delegate Profile */}
         {delegateAddressOnChain ? (
           <CurrentDelegate
@@ -117,13 +117,13 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
           <NoDelegate />
         )}
 
-        <div className="block sm:hidden md:block lg:hidden text-white text-xl mb-2 mt-8">
+        <div className="mb-2 mt-8 block text-xl text-white sm:hidden md:block lg:hidden">
           <div className="w-full leading-5 ">
             <div className="block">{t`Delegate to any address`}</div>
           </div>
         </div>
         {/* Delegate Input */}
-        <div className="flex flex-col w-full sm:w-1/2 md:w-full lg:w-1/2">
+        <div className="flex w-full flex-col sm:w-1/2 md:w-full lg:w-1/2">
           <DelegateAddressInput
             account={account}
             delegateAddressInput={delegateAddressInput}
@@ -157,7 +157,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
 function NoDelegate(): ReactElement {
   return (
     // 112px is the height CurrentDelegate; this is a placeholder for CurrentDelegate
-    <div className="grid place-items-center w-full h-[112px] sm:w-1/2 md:w-full lg:w-1/2 bg-white rounded-md font-bold text-principalRoyalBlue">
+    <div className="grid h-[112px] w-full place-items-center rounded-md bg-white font-bold text-principalRoyalBlue sm:w-1/2 md:w-full lg:w-1/2">
       <span>{t`No current delegation`}</span>
     </div>
   );

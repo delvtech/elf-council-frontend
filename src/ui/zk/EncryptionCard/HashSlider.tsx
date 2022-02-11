@@ -175,7 +175,7 @@ export default function HashSlider({
   const trackerCSSLeft = `max(${containerPaddingLeft}, min(${trackerLeft}px, calc(${containerWidth}px - ${trackerWidth}px - ${containerPaddingRight})))`;
 
   return (
-    <div className={classNames("flex flex-col gap-4 relative", className)}>
+    <div className={classNames("relative flex flex-col gap-4", className)}>
       <div
         ref={containerRef}
         className={classNames(
@@ -205,7 +205,7 @@ export default function HashSlider({
             aria-valuetext={hash}
             tabIndex={0}
             ref={trackerRef}
-            className="absolute flex items-center w-8 h-8 rounded-full shadow bg-gradient-to-b from-principalBlue to-principalRoyalBlue cursor-grab active:cursor-grabbing group"
+            className="group absolute flex h-8 w-8 cursor-grab items-center rounded-full bg-gradient-to-b from-principalBlue to-principalRoyalBlue shadow active:cursor-grabbing"
             style={{
               left: trackerCSSLeft,
             }}
@@ -259,8 +259,8 @@ export default function HashSlider({
           {/* semi-opaque white bg and pulse effect on finish */}
           <div
             className={classNames(
-              "absolute w-full h-full box-content top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50 p-0 opacity-100 transition-all duration-1000",
-              progress === 100 && "p-2 !opacity-0 !bg-topaz",
+              "absolute top-1/2 left-1/2 box-content h-full w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50 p-0 opacity-100 transition-all duration-1000",
+              progress === 100 && "!bg-topaz p-2 !opacity-0",
             )}
           ></div>
           {/* overflow container for gradient bg and green bg */}
@@ -268,7 +268,7 @@ export default function HashSlider({
             {/* gradient bg */}
             <div
               className={classNames(
-                "absolute inset-0 transition-transform duration-700 ease-in bg-gradient-to-r from-deepRed via-goldYellow to-topaz",
+                "absolute inset-0 bg-gradient-to-r from-deepRed via-goldYellow to-topaz transition-transform duration-700 ease-in",
                 progress === 100 && "-translate-x-full",
               )}
               style={{
@@ -278,7 +278,7 @@ export default function HashSlider({
             {/* green bg */}
             <div
               className={classNames(
-                "absolute inset-0 transition-transform duration-700 ease-in bg-topaz translate-x-full",
+                "absolute inset-0 translate-x-full bg-topaz transition-transform duration-700 ease-in",
                 progress === 100 && "!translate-x-0",
               )}
             ></div>

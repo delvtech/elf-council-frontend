@@ -76,7 +76,7 @@ export function ReviewTransaction({
     >
       <div className="flex flex-col">
         <H1 className="mt-8 mb-10 text-center">{t`Review Transaction`}</H1>
-        <div className="flex flex-col justify-center w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
+        <div className="mb-10 flex w-full flex-col justify-center space-y-10 px-12 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard
             account={account}
             delegateAddress={delegateAddress}

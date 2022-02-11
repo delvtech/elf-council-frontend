@@ -52,11 +52,11 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               <WalletJazzicon
                 account={delegate.address}
                 size={20}
-                className="inline-block w-5 h-5 mr-2 rounded-xl bg-principalRoyalBlue"
+                className="mr-2 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
               />
               <span className="truncate">{delegate.name}</span>
               {/* Crown Icon */}
-              <div className="relative flex w-4 h-4 ml-2 shrink-0">
+              <div className="relative ml-2 flex h-4 w-4 shrink-0">
                 <Image
                   layout="fill"
                   src="/assets/crown.svg"
@@ -117,7 +117,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           leaveTo="opacity-0"
         >
           {/* z-30 in order to overlap sidebar z-index */}
-          <Popover.Overlay className="fixed inset-0 z-10 transition-opacity bg-black bg-opacity-50" />
+          <Popover.Overlay className="fixed inset-0 z-10 bg-black bg-opacity-50 transition-opacity" />
         </Transition.Child>
 
         {/* Detailed delegate profile */}
@@ -132,8 +132,8 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         >
           <Popover.Panel
             focus
-            className="fixed lg:absolute z-20 box-content sm:rounded-xl sm:top-[50%] sm:left-[50%] sm:transform sm:translate-x-[-50%] sm:translate-y-[-50%] lg:translate-x-0 lg:translate-y-0 lg:top-0 
-          lg:right-0 inset-0 sm:inset-[initial] lg:left-0 sm:w-[400px] md:w-[700px] lg:h-full lg:w-full bg-hackerSky"
+            className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform sm:rounded-xl 
+          md:w-[700px] lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0"
           >
             {({ close }) => (
               <DetailedDelegateProfile

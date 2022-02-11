@@ -1,3 +1,4 @@
+import { Provider } from "@ethersproject/providers";
 import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -11,6 +12,7 @@ import { jt, t } from "ttag";
 
 interface StartAirdropCardProps {
   account: string | null | undefined;
+  library: Provider | undefined;
   walletConnectionActive: boolean | undefined;
   onNextStep: () => void;
 }
@@ -18,14 +20,14 @@ interface StartAirdropCardProps {
 const elementIconInSubtitle = (
   <ElementIcon
     key="element-icon-in-subtitle"
-    className="inline-block mx-1 bg-paleLily"
+    className="mx-1 inline-block bg-paleLily"
     size={IconSize.MEDIUM}
   />
 );
 const elementIconInBodyText = (
   <ElementIcon
     key="element-icon-in-body-text"
-    className="bg-paleLily inline-block ml-0.5 mr-2 -mb-1.5"
+    className="ml-0.5 mr-2 -mb-1.5 inline-block bg-paleLily"
     size={IconSize.MEDIUM}
   />
 );
@@ -33,12 +35,13 @@ const elementIconInBodyText = (
 export function StartAirdropCard({
   walletConnectionActive,
   account,
+  library,
   onNextStep,
 }: StartAirdropCardProps): ReactElement {
   return (
     <Card
       variant={CardVariant.BLUE}
-      className="flex flex-col w-full h-full min-h-full text-center text-white"
+      className="flex h-full min-h-full w-full flex-col text-center text-white"
     >
       <div className="flex justify-end p-2">
         {!account ? (
@@ -48,21 +51,21 @@ export function StartAirdropCard({
           />
         ) : (
           <WalletProfileButton
+            provider={library}
             variant={ButtonVariant.PRIMARY}
             account={account}
             walletConnectionActive={walletConnectionActive}
           />
         )}
       </div>
-      <div className="flex flex-col items-center justify-center h-full p-12 space-y-5">
-        <div className="flex flex-col items-center justify-center w-full space-y-8 md:w-7/12">
-          <span className="flex items-center text-base font-semibold tracking-wider text-center">{jt`Introducing ${elementIconInSubtitle} ELFI`}</span>
+      <div className="flex h-full flex-col items-center justify-center space-y-5 p-12">
+        <div className="flex w-full flex-col items-center justify-center space-y-8 md:w-7/12">
+          <span className="flex items-center text-center text-base font-semibold tracking-wider">{jt`Introducing ${elementIconInSubtitle} ELFI`}</span>
           <div className="text-3xl font-bold">{t`Contribute to the evolution of the Element DAO`}</div>
-          <div className="flex flex-col px-2 space-y-8 text-base text-justify">
+          <div className="flex flex-col space-y-8 px-2 text-justify text-base">
             <p className="inline">
-              {jt`With the launch of the Element DAO and its
-              ${elementIconInBodyText}ELFI governance token, the community now
-              leads the future of the protocol.`}
+              {t`With the launch of the Element DAO, the community now leads the
+              future of the protocol.`}
             </p>
             <p className="inline">
               {jt`${elementIconInBodyText}ELFI airdrop recipients can use their
@@ -72,7 +75,7 @@ export function StartAirdropCard({
           </div>
         </div>
 
-        <div className="flex justify-center w-full pt-12 space-x-4">
+        <div className="flex w-full justify-center space-x-4 pt-12">
           <Button
             disabled={!account}
             variant={ButtonVariant.GRADIENT}

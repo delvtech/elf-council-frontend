@@ -47,13 +47,13 @@ export function ConnectWalletButtons({
       data-testid="connect-wallet-buttons"
       className="flex flex-col justify-center overflow-auto p-2"
     >
-      <H3 className="text-brandDarkBlue-dark text-center mb-8">{t`Select Wallet`}</H3>
+      <H3 className="mb-8 text-center text-brandDarkBlue-dark">{t`Select Wallet`}</H3>
       <div className="grid grid-cols-3 gap-2">
         <Button
           size={ButtonSize.AUTO}
           variant={ButtonVariant.MINIMAL}
           onClick={connectToMetaMask}
-          className="grid place-items-center hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white shadow-none"
+          className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
         >
           <div className="grid place-items-center">
             <div className="relative h-16 w-16">
@@ -66,9 +66,9 @@ export function ConnectWalletButtons({
           size={ButtonSize.AUTO}
           variant={ButtonVariant.MINIMAL}
           onClick={connectToWalletConnect}
-          className="grid place-items-center hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white shadow-none"
+          className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
         >
-          <div className="h-full w-full grid place-items-center">
+          <div className="grid h-full w-full place-items-center">
             <div className="relative h-16 w-16">
               <Image
                 layout="fill"
@@ -89,7 +89,7 @@ export function ConnectWalletButtons({
         <Button
           variant={ButtonVariant.PALE}
           onClick={onClickClose}
-          className="grid place-items-center mt-4"
+          className="mt-4 grid place-items-center"
         >
           <span>{t`Close Wallet Connection`}</span>
         </Button>

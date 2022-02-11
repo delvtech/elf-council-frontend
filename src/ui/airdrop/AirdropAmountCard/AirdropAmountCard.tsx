@@ -31,17 +31,17 @@ export function AirdropAmountCard({
       variant={CardVariant.HACKER_SKY}
       className="h-64 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]"
     >
-      <div className="flex flex-col justify-center w-full h-full px-8 ">
+      <div className="flex h-full w-full flex-col justify-center px-8 ">
         <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
         <div className="mb-10">
-          <div className="flex items-center justify-center gap-2 font-bold md:text-3xl text-principalRoyalBlue">
-            <ElementIcon className="bg-paleLily ml-1" size={IconSize.MEDIUM} />
+          <div className="flex items-center justify-center gap-2 font-bold text-principalRoyalBlue md:text-3xl">
+            <ElementIcon className="ml-1 bg-paleLily" size={IconSize.MEDIUM} />
             {t`${claimableBalance ? commify(claimableBalance) : 0} ELFI`}
           </div>
         </div>
 
         <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`will be delegated to`}</div>
-        <div className="flex items-center justify-center font-bold md:text-3xl text-principalRoyalBlue">
+        <div className="flex items-center justify-center font-bold text-principalRoyalBlue md:text-3xl">
           <WalletJazzicon
             className="flex justify-center"
             account={delegateAddress}

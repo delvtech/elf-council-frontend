@@ -12,16 +12,16 @@ export function ClaimedAmountCard({
 }: ClaimedAmountCardProps): ReactElement {
   const claimedAmount = useClaimedAirdrop(account);
   return (
-    <Card variant={CardVariant.HACKER_SKY} className="flex-1 h-64">
-      <div className="h-full w-full flex flex-col">
-        <div className="text-lg font-bold text-gray-500 mb-2">{t`You claimed and deposited`}</div>
+    <Card variant={CardVariant.HACKER_SKY} className="h-64 flex-1">
+      <div className="flex h-full w-full flex-col">
+        <div className="mb-2 text-lg font-bold text-gray-500">{t`You claimed and deposited`}</div>
         <div className="flex-1">
-          <div className="text-principalRoyalBlue text-2xl font-bold">
+          <div className="text-2xl font-bold text-principalRoyalBlue">
             {claimedAmount}
           </div>
-          <div className="text-gray-500 flex flex-col items-center">
+          <div className="flex flex-col items-center text-gray-500">
             <span className="mb-4">{t`$ELFI tokens`}</span>
-            <ElementIcon className="bg-paleLily ml-2" size={IconSize.LARGE} />
+            <ElementIcon className="ml-2 bg-paleLily" size={IconSize.LARGE} />
           </div>
         </div>
       </div>

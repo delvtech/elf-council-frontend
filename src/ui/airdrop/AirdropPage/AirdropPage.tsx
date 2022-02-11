@@ -74,7 +74,7 @@ export default function AirdropPage(): ReactElement {
   const claimAndDelegateStatus = getClaimAndDelegateStatus(activeStep);
 
   return (
-    <div className="flex flex-col items-center flex-1 w-full max-w-4xl gap-4">
+    <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
       <div className="w-[600px] max-w-full">
         <Steps className="w-full">
           <StepItem
@@ -102,6 +102,7 @@ export default function AirdropPage(): ReactElement {
               return (
                 <StartAirdropCard
                   account={account}
+                  library={library}
                   walletConnectionActive={active}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {

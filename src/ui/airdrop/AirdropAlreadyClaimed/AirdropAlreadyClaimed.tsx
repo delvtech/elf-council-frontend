@@ -17,7 +17,7 @@ export function AirdropAlreadyClaimed({
   return (
     <Card
       variant={CardVariant.BLUE}
-      className="flex flex-col text-white text-center h-[600px]"
+      className="flex h-[600px] flex-col text-center text-white"
     >
       <div className="flex flex-col p-2">
         <div className="text-right">
@@ -26,15 +26,15 @@ export function AirdropAlreadyClaimed({
             <ShieldExclamationIcon height={24} className="ml-4" />
           </Tag>
         </div>
-        <div className="mb-10 text-3xl font-bold text-left">{t`Review Claim`}</div>
-        <div className="flex justify-center w-full mb-10 text-base font-bold">
+        <div className="mb-10 text-left text-3xl font-bold">{t`Review Claim`}</div>
+        <div className="mb-10 flex w-full justify-center text-base font-bold">
           <span className="w-full md:w-1/2">{t`You have already claimed the $ELFI tokens in which you were eligible for.`}</span>
         </div>
-        <div className="flex flex-col w-full px-12 mb-10 space-y-10 md:flex-row md:space-x-10 md:space-y-0">
+        <div className="mb-10 flex w-full flex-col space-y-10 px-12 md:flex-row md:space-x-10 md:space-y-0">
           <ClaimedAmountCard account={account} />
           <DelegatedCard account={account} />
         </div>
-        <div className="flex justify-center w-full text-base">
+        <div className="flex w-full justify-center text-base">
           <span className="w-full md:w-1/2">{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</span>
         </div>
       </div>

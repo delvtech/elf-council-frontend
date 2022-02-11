@@ -30,7 +30,7 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
   } = props;
 
   return (
-    <div className="relative mb-4 rounded-md overflow-hidden">
+    <div className="relative mb-4 overflow-hidden rounded-md">
       <TextInput
         screenReaderLabel={t`Enter delegate address`}
         id={"delegate-address"}
@@ -49,22 +49,22 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
       />
 
       {isValidAddress(delegateAddressInput) ? (
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 mr-4">
-          <CheckIcon className="fill-topaz h-6" />
+        <div className="absolute right-0 top-1/2 mr-4 -translate-y-1/2 transform">
+          <CheckIcon className="h-6 fill-topaz" />
         </div>
       ) : null}
 
       {delegationSuccess ? (
-        <div className="flex absolute inset-0 bg-topaz items-center justify-center gap-2">
-          <span className="text-white font-bold">{t`Delegation Successful`}</span>
-          <BadgeCheckIcon className="fill-white h-6" />
+        <div className="absolute inset-0 flex items-center justify-center gap-2 bg-topaz">
+          <span className="font-bold text-white">{t`Delegation Successful`}</span>
+          <BadgeCheckIcon className="h-6 fill-white" />
         </div>
       ) : null}
 
       {delegationFail ? (
-        <div className="flex absolute inset-0 bg-deepRed items-center justify-center gap-2">
-          <span className="text-white font-bold">{t`Delegation Failed`}</span>
-          <ExclamationCircleIcon className="fill-white h-6" />
+        <div className="absolute inset-0 flex items-center justify-center gap-2 bg-deepRed">
+          <span className="font-bold text-white">{t`Delegation Failed`}</span>
+          <ExclamationCircleIcon className="h-6 fill-white" />
         </div>
       ) : null}
     </div>

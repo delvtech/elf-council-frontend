@@ -50,9 +50,9 @@ export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
   };
   return (
     <Card className={className} variant={CardVariant.BLUE}>
-      <div className="flex flex-col justify-center gap-2 px-8 pt-2 pb-4 text-white sm:pt-6 sm:px-16 md:px-60 sm:pb-14 sm:text-center sm:items-center">
+      <div className="flex flex-col justify-center gap-2 px-8 pt-2 pb-4 text-white sm:items-center sm:px-16 sm:pt-6 sm:pb-14 sm:text-center md:px-60">
         <h1 className="mb-5 text-3xl font-semibold">{t`Congratulations`}</h1>
-        <H2 className="text-2xl text-votingGreen mb-9">{t`You're eligible for this Airdrop`}</H2>
+        <H2 className="mb-9 text-2xl text-votingGreen">{t`You're eligible for this Airdrop`}</H2>
         <ClaimAmountCard amount={ELFI_TOKEN_AMOUNT} />
         {/* <label className="flex items-center gap-3 mb-6 text-blueGrey group">
           <input
@@ -66,7 +66,7 @@ export default function ClaimCard({ className }: ClaimCardProps): ReactElement {
           <span className="transition-all peer-checked:text-white">{t`Add $ELFI to my Metamask`}</span>
         </label> */}
         <Button
-          className="justify-center min-w-full"
+          className="min-w-full justify-center"
           variant={ButtonVariant.GRADIENT}
           onClick={handleClaimClick}
         >{t`Claim my $ELFI`}</Button>

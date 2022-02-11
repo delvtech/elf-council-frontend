@@ -22,7 +22,7 @@ export function OverviewPage({
 }: OverviewPageProps): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   return (
-    <div className="w-full h-full space-y-6 lg:max-w-[1024px]">
+    <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
       <div className="px-8 py-1">
         <H1 className="text-center text-principalRoyalBlue">
           {" "}
@@ -30,7 +30,7 @@ export function OverviewPage({
         </H1>
       </div>
       <SummaryCards proposalsJson={proposalsJson} />
-      <div className="flex flex-col justify-center w-full grid-cols-2 space-y-6 lg:space-x-6 lg:flex-row lg:space-y-0">
+      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
         <div className="w-full">
           <PortfolioCard account={account} />
         </div>
@@ -49,17 +49,17 @@ function FAQ() {
     <Card className="w-full shadow-md lg:max-w-[512px]">
       <span className="text-xl font-bold tracking-widest text-principalRoyalBlue">{t`FAQ`}</span>
       <div className="w-full pt-4">
-        <div className="w-full max-w-md mx-auto bg-white rounded-2xl">
+        <div className="mx-auto w-full max-w-md rounded-2xl bg-white">
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`What is Element Council?`}</span>
 
                   <ChevronDownIcon
                     className={classNames(
-                      open ? classNames("transform rotate-180") : "",
-                      "ml-2 h-5 w-5 transition ease-in-out duration-150",
+                      open ? classNames("rotate-180 transform") : "",
+                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
                     )}
                     aria-hidden="true"
                   />
@@ -73,12 +73,12 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`How does delegated voting work?`}</span>
                   <ChevronDownIcon
                     className={classNames(
-                      open ? classNames("transform rotate-180") : "",
-                      "ml-2 h-5 w-5 transition ease-in-out duration-150",
+                      open ? classNames("rotate-180 transform") : "",
+                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
                     )}
                     aria-hidden="true"
                   />
@@ -93,12 +93,12 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`Who are the GSC (Governance Steering Council)?`}</span>
                   <ChevronDownIcon
                     className={classNames(
-                      open ? classNames("transform rotate-180") : "",
-                      "ml-2 h-5 w-5 transition ease-in-out duration-150",
+                      open ? classNames("rotate-180 transform") : "",
+                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
                     )}
                     aria-hidden="true"
                   />
@@ -112,12 +112,12 @@ function FAQ() {
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
-                <Disclosure.Button className="flex justify-between w-full px-4 py-4 text-sm font-medium text-left rounded-lg bg-hackerSky text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <Disclosure.Button className="flex w-full justify-between rounded-lg bg-hackerSky px-4 py-4 text-left text-sm font-medium text-principalRoyalBlue hover:bg-hackerSky-dark focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
                   <span>{t`What is a voting vault?`}</span>
                   <ChevronDownIcon
                     className={classNames(
-                      open ? classNames("transform rotate-180") : "",
-                      "ml-2 h-5 w-5 transition ease-in-out duration-150",
+                      open ? classNames("rotate-180 transform") : "",
+                      "ml-2 h-5 w-5 transition duration-150 ease-in-out",
                     )}
                     aria-hidden="true"
                   />

@@ -128,7 +128,7 @@ export function ChooseDelegate({
       nextStepLabel={t`Review deposit`}
       onPrevStep={onPrevStep}
     >
-      <div className="flex flex-col items-center justify-center w-full h-full space-y-4">
+      <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
         <H2>{t`Choose a delegate from the list below`}</H2>
         <div className="w-full">
           {/* Header */}
@@ -142,7 +142,7 @@ export function ChooseDelegate({
             <span className={`col-span-4`} />
           </div>
 
-          <div className="pr-1 overflow-auto shadow min-h-[392px] h-[40vh]">
+          <div className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow">
             {/* List of delegates */}
             <ul className="flex flex-col gap-y-2">
               {shuffledDelegates.map((delegate, idx) => {
@@ -173,7 +173,7 @@ export function ChooseDelegate({
                           onClick={handleSelectDelegate}
                           variant={ButtonVariant.PRIMARY}
                           disabled={selected}
-                          className="hidden lg:inline-flex w-full justify-center"
+                          className="hidden w-full justify-center lg:inline-flex"
                         >
                           {t`Choose`}
                         </Button>
@@ -195,8 +195,8 @@ export function ChooseDelegate({
             </ul>
           </div>
 
-          <div className="flex px-4 mt-6">
-            <div className="flex flex-col flex-1 space-y-2">
+          <div className="mt-6 flex px-4">
+            <div className="flex flex-1 flex-col space-y-2">
               <H2 className="text-center">{t`or`}</H2>
               <div className="flex items-center justify-center space-x-4">
                 {!isSelfDelegated ? (
@@ -216,7 +216,7 @@ export function ChooseDelegate({
                 )}
               </div>
             </div>
-            <div className="flex flex-col flex-1 space-y-2">
+            <div className="flex flex-1 flex-col space-y-2">
               <H2 className="text-center">{t`or enter an address`}</H2>
               <div className="relative flex items-center justify-center space-x-4">
                 <TextInput
@@ -226,7 +226,7 @@ export function ChooseDelegate({
                   placeholder={t`Enter delegate address`}
                   containerClassName="flex-1"
                   className={classNames(
-                    "flex-1 h-12 mb-4 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
+                    "mb-4 h-12 flex-1 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
                     {
                       "pr-12": isValidCustomDelegateAddress,
                     },
@@ -235,8 +235,8 @@ export function ChooseDelegate({
                   onChange={handleCustomDelegateInputChange}
                 />
                 {isValidCustomDelegateAddress ? (
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none bottom-4">
-                    <CheckCircleIcon className="w-8 h-8 text-statusGreen" />
+                  <div className="pointer-events-none absolute inset-y-0 right-0 bottom-4 flex items-center pr-3">
+                    <CheckCircleIcon className="h-8 w-8 text-statusGreen" />
                   </div>
                 ) : null}
               </div>

@@ -16,10 +16,10 @@ export function ProgressBar(props: ProgressBarProps): ReactElement {
   }
 
   return (
-    <div className="relative w-full h-2 bg-opacity-50 rounded-full bg-sky-300 ">
+    <div className="relative h-2 w-full rounded-full bg-sky-300 bg-opacity-50 ">
       <div
         style={{ width: `${percentComplete}%` }}
-        className="h-full text-xs text-center text-white rounded-full bg-sky-100"
+        className="h-full rounded-full bg-sky-100 text-center text-xs text-white"
       ></div>
       {!!barPosition && enableBar && (
         <div
@@ -29,7 +29,7 @@ export function ProgressBar(props: ProgressBarProps): ReactElement {
             left: `${barPosition}%`,
             top: "-50%",
           }}
-          className="absolute top-0 h-full border border-white rounded bg-principalRoyalBlue"
+          className="absolute top-0 h-full rounded border border-white bg-principalRoyalBlue"
         ></div>
       )}
     </div>

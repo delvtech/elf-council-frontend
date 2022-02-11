@@ -76,7 +76,7 @@ export default function EncryptionCard({
     <Card variant={CardVariant.BLUE} className={className}>
       <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
         <h1 className="mb-2 text-3xl font-semibold">{t`Encryption`}</h1>
-        <div className="flex flex-col gap-2 px-5 py-4 mb-4 rounded-lg sm:py-6 sm:px-8 bg-white/10">
+        <div className="mb-4 flex flex-col gap-2 rounded-lg bg-white/10 px-5 py-4 sm:py-6 sm:px-8">
           <H2 className="text-white">{t`Drag the slider below to generate your key and secret`}</H2>
           <p>
             {t`Move your cursor in any direction while dragging the slider to generate a new key and secret. Once the progress bar is completely full, download the JSON file containing your new key and secret before continuing to the next step.`}
@@ -107,14 +107,14 @@ export default function EncryptionCard({
             readOnly: true,
           }}
         />
-        <div className="flex gap-4 mt-6 text-right">
+        <div className="mt-6 flex gap-4 text-right">
           {onBackClick && (
             <Button
               variant={ButtonVariant.WHITE}
               onClick={onBackClick}
             >{t`Back`}</Button>
           )}
-          <div className="flex gap-4 ml-auto">
+          <div className="ml-auto flex gap-4">
             <Button
               variant={ButtonVariant.WHITE}
               onClick={handleDownloadClick}

@@ -35,7 +35,7 @@ export default function IntroCard({
         <h1 className="mb-4 text-4xl font-semibold text-white">{t`${platformName} Airdrop`}</h1>
         <p>{jt`This airdrop utilizes a method named Zero Knowledge Proof that allows you to claim participation in our governance system based on your ${platformName} ID without revealing any personal information. You can ${learnMoreHereLink}.`}</p>
         <H2 className="mt-4 text-2xl text-white">{t`How does it work?`}</H2>
-        <div className="flex flex-col gap-2 px-5 py-4 mt-6 mb-6 rounded-lg sm:py-6 sm:px-8 bg-white/10">
+        <div className="mt-6 mb-6 flex flex-col gap-2 rounded-lg bg-white/10 px-5 py-4 sm:py-6 sm:px-8">
           <H3 className="text-white">{t`Generate your Key, Secret, & Public ID.`}</H3>
           <p>{t`Use your cursor to randomly generate a new Key and Secret pair which you'll download for later use, then get a Public ID derived from your Key and Secret.`}</p>
           <H3 className="mt-4 text-white">{t`Share your new Public ID on ${platformName}.`}</H3>

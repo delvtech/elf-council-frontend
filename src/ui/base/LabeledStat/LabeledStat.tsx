@@ -9,10 +9,10 @@ export function LabeledStat(props: LabeledStatProps): ReactElement {
   const { data, topLabel, bottomLabel, whiteText } = props;
 
   return (
-    <div className="flex flex-col px-4 py-5 sm:p-6 overflow-hidden">
+    <div className="flex flex-col overflow-hidden px-4 py-5 sm:p-6">
       {topLabel && (
         <div>
-          <dt className="text-sm font-light truncate">{topLabel}</dt>
+          <dt className="truncate text-sm font-light">{topLabel}</dt>
         </div>
       )}
 
@@ -22,7 +22,7 @@ export function LabeledStat(props: LabeledStatProps): ReactElement {
 
       {bottomLabel && (
         <div>
-          <dt className="text-sm font-light truncate">{bottomLabel}</dt>
+          <dt className="truncate text-sm font-light">{bottomLabel}</dt>
         </div>
       )}
     </div>

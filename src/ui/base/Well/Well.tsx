@@ -9,7 +9,7 @@ interface WellProps {
 }
 export default function Well({ className, children }: WellProps): ReactElement {
   return (
-    <div className="bg-blue-100 overflow-hidden rounded-2xl">
+    <div className="overflow-hidden rounded-2xl bg-blue-100">
       <div className={classNames("px-4 py-5 sm:p-6", className)}>
         {children}
       </div>

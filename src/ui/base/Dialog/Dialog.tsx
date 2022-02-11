@@ -14,10 +14,10 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
       <Dialog
         as="div"
         // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
-        className="fixed z-50 inset-0 overflow-y-auto"
+        className="fixed inset-0 z-50 overflow-y-auto"
         onClose={onClose ? onClose : () => {}}
       >
-        <div className="flex sm:block items-end justify-center min-h-screen pt-4 px-4 pb-20 sm:p-0 text-center">
+        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -32,7 +32,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
 
           {/* This element is to trick the browser into centering the modal contents. */}
           <span
-            className="hidden sm:inline-block sm:align-middle sm:h-screen"
+            className="hidden sm:inline-block sm:h-screen sm:align-middle"
             aria-hidden="true"
           >
             &#8203;
@@ -46,7 +46,7 @@ export default function SimpleDialog(props: SimpleDialogProps): ReactElement {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            <div className="relative inline-block align-bottom sm:align-middle bg-white rounded-lg px-4 pt-5 pb-4 sm:p-6 text-left overflow-hidden shadow-xl transform-gpu transition-all sm:my-8 sm:max-w-lg sm:w-full">
+            <div className="relative inline-block transform-gpu overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6 sm:align-middle">
               {children}
             </div>
           </Transition.Child>

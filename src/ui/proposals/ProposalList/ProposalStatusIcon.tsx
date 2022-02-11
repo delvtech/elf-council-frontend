@@ -63,7 +63,7 @@ export function ProposalStatusIcon({
           intentTextColors[StatusTagIntents[status]],
         )}
       >
-        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 8 8">
+        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 8 8">
           <circle cx={4} cy={4} r={3} />
         </svg>
       </div>
