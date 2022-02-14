@@ -35,7 +35,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           <div className="flex items-center gap-2">
-            <span>
+            <span className="leading-4">
               {delegate?.name || formatWalletAddress(currentDelegateAddress)}
             </span>
             <div className="relative h-4 w-4">
@@ -66,7 +66,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         <div className="flex items-end justify-end">
           <Tag intent={Intent.SUCCESS}>
             <CheckCircleIcon height={24} className="mr-2" />
-            <span className="font-bold">{t`Self-delegated!`}</span>
+            <span className="whitespace-nowrap font-bold">{t`Self-delegated!`}</span>
           </Tag>
         </div>
       ) : null}
@@ -80,7 +80,7 @@ interface NumDelegatedVotesProps {
 function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const { account } = props;
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
-  return <span>{t`Voting Power: ${formatBalance(votePower)}`}</span>;
+  return <span>{formatBalance(votePower)}</span>;
 }
 
 export default CurrentDelegate;
