@@ -29,7 +29,7 @@ export function DelegateInstructions({
       nextStepLabel={t`Pick Delegate`}
     >
       <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
-        <H1>{t`Vote or delegate?`}</H1>
+        <H1>{t`What is delegation?`}</H1>
         <p
           className={"mb-8 w-2/3"}
         >{jt`As a participant in Element DAO, you can use your
@@ -37,9 +37,6 @@ export function DelegateInstructions({
         or you can delegate it to another member to represent you and your
         vision. You can only delegate it to one user, but you can change your
         selection at any time.`}</p>
-
-        <p className="mb-2 w-2/3 font-bold">{t`In all cases you maintain
-        ownership of your tokens, which will remain in the Voting Vault.`}</p>
       </div>
     </StepCard>
   );
