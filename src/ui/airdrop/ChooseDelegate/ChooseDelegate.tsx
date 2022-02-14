@@ -125,7 +125,7 @@ export function ChooseDelegate({
       className="relative"
       onNextStep={onNextStep}
       nextStepDisabled={isNextStepDisabled}
-      nextStepLabel={t`Review deposit`}
+      nextStepLabel={t`Review transaction`}
       onPrevStep={onPrevStep}
     >
       <div className="flex h-full w-full flex-col items-center justify-center space-y-4">

@@ -54,11 +54,11 @@ export function AirdropPreview({
           <span className="text-center">{t`Congratulations!`}</span>
         </div>
         <div className="mb-10 flex w-full flex-col items-center justify-center text-center text-base">
-          <span className="mb-6 w-full font-bold ">{jt`You have some ${elementIconInBodyText}ELFI to deposit.`}</span>
-          <span className="w-3/4 text-justify">{t`You've earned this voting power
-          for being an active member of the Element community. We hope to see
-          you continue to contribute to the future of Element. Use or delegate
-          your voting power wisely!`}</span>
+          <span className="mb-6 w-full font-bold ">{jt`You have some ${elementIconInBodyText}ELFI to claim.`}</span>
+          <span className="w-3/4 text-justify">{t`You've received this voting
+          power for being an active member of the Element community. We hope to
+          see you continue to contribute to the future of Element. Use or
+          delegate your voting power wisely!`}</span>
         </div>
         <div className="mb-8 flex flex-col justify-center space-y-10 px-12 md:flex-row md:space-x-10 md:space-y-0">
           <AirdropAmountCard account={account} />

@@ -69,8 +69,8 @@ export function StartAirdropCard({
             </p>
             <p className="inline">
               {jt`${elementIconInBodyText}ELFI airdrop recipients can use their
-              non-transferrable voting power to participate in governance, or delegate
-              their votes to another member.`}
+              voting power to participate in governance, or delegate their votes
+              to another member.`}
             </p>
           </div>
         </div>

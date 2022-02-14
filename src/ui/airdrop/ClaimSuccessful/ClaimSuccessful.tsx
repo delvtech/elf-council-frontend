@@ -25,13 +25,14 @@ export function ClaimSuccessful(): ReactElement {
       <div className="flex flex-col items-center justify-center p-6">
         <h2 className="mb-6 text-3xl font-bold">{t`Delegation Successful!`}</h2>
         <div className="mb-10 flex w-full flex-col items-center space-y-3 text-base">
-          <p className="flex justify-center font-bold">{jt`Congratulations on delegating your ${elfiLogoElement} $ELFI tokens.`}</p>
+          <p className="flex justify-center font-bold">{jt`Congratulations on
+          delegating your ${elfiLogoElement} ELFI.`}</p>
         </div>
         <Link href="/">
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a className="mb-10 w-2/3">
             <CallToActionCard
-              label={t`Back to Element Council Governance`}
+              label={t`Back to Overview`}
               icon={
                 <Image
                   height="24px"
@@ -43,8 +44,9 @@ export function ClaimSuccessful(): ReactElement {
             />
           </a>
         </Link>
-        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element discord 
-	  to get more involved in our community and governance system.`}</p>
+        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop
+        experience on Twitter and join the Element Discord to get more involved
+        in our community and governance system.`}</p>
         <div className="flex w-full space-x-4">
           <a
             target="_blank"
@@ -66,13 +68,13 @@ export function ClaimSuccessful(): ReactElement {
             className="flex-1"
           >
             <CallToActionCard
-              label={t`Join #ELFArmy Discord`}
+              label={t`Join Discord`}
               icon={<DiscordIconFromFigma />}
             />
           </a>
           <a href="https://forum.element.fi" className="flex-1">
             <CallToActionCard
-              label={t`Join the discussion`}
+              label={t`Visit forum`}
               icon={<CommonwealthIcon />}
             />
           </a>
