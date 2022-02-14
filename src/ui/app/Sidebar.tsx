@@ -6,7 +6,6 @@ import { useRouter, NextRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
 import Image from "next/image";
-import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import { RESOURCES_URL } from "src/ui/resources";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -44,39 +43,48 @@ export default function Sidebar(props: SidebarProps): ReactElement {
       <div
         className={classNames(
           { "-translate-x-full": !isOpen },
-          "fixed top-0 left-0 z-10 flex h-full w-full transform-gpu flex-col items-center bg-white py-14 transition-all duration-300 ease-in-out md:w-60 md:translate-x-0",
+          "fixed top-0 left-0 z-10 flex h-full w-full transform-gpu flex-col items-center justify-between bg-white py-14 transition-all duration-300 ease-in-out md:w-60 md:translate-x-0",
         )}
       >
-        <div className="mt-1 flex justify-around py-3">
-          <div className="relative h-24 w-24">
-            <Image
-              layout="fill"
-              src="/assets/ElementLogoSidebar.svg"
-              alt={t`Element Council logo`}
-            />
+        <div>
+          <div className="mt-1 flex justify-around py-3">
+            <div className="relative h-24 w-24">
+              <Image
+                layout="fill"
+                src="/assets/ElementLogoSidebar.svg"
+                alt={t`Element Council`}
+              />
+            </div>
+            <button
+              onClick={onClose}
+              className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
+            >
+              <XIcon className="h-6 w-6" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
-          >
-            <XIcon className="h-6 w-6" />
-          </button>
-        </div>
-        <div className="mt-8 w-full space-y-6">
-          <SidebarLink link="/" label={t`Overview`} router={router} />
-          <SidebarLink link="/proposals" label={t`Proposals`} router={router} />
-          <SidebarLink link="/delegate" label={t`Delegate`} router={router} />
-          <SidebarLinkExternal
-            link="https://forum.element.fi"
-            label={t`Forum`}
-          />
-          <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
+          <div className="mt-16 w-full space-y-6">
+            <SidebarLink link="/" label={t`Overview`} router={router} />
+            <SidebarLink
+              link="/proposals"
+              label={t`Proposals`}
+              router={router}
+            />
+            <SidebarLink link="/delegate" label={t`Delegate`} router={router} />
+            <SidebarLinkExternal
+              link="https://forum.element.fi"
+              label={t`Forum`}
+            />
+            <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
 
-          {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
+            {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
+          </div>
         </div>
-        <div className="mt-auto flex flex-col items-center text-principalRoyalBlue">
-          <span className="text-sm">{t`Powered by`}</span>
-          <ElementLogo height={"40"} />
+        <div className="relative h-24 w-24">
+          <Image
+            layout="fill"
+            src="/assets/PoweredByCouncil.svg"
+            alt={t`Powered by Council`}
+          />
         </div>
       </div>
     </Fragment>
