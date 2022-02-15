@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
-import { CheckCircleIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
@@ -9,11 +9,12 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import H2 from "src/ui/base/H2/H2";
 import TextInput from "src/ui/base/Input/TextInput";
 import { Tag } from "src/ui/base/Tag/Tag";
-import { Intent } from "src/ui/base/Intent";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import { useScrollDelegateIntoViewEffect } from "src/ui/airdrop/useScrollDelegateIntoViewEffect";
+import { Intent } from "src/ui/base/Intent";
+import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface ChooseDelegateProps {
   account: string;
@@ -236,6 +237,9 @@ export function ChooseDelegate({
                   id={"delegate-address"}
                   name={t`Enter delegate address`}
                   placeholder={t`Enter delegate address`}
+                  error={
+                    !isValidCustomDelegateAddress && !!customDelegateAddress
+                  }
                   containerClassName="flex-1"
                   className={classNames(
                     "mb-4 h-12 flex-1 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
@@ -246,11 +250,14 @@ export function ChooseDelegate({
                   value={customDelegateAddress}
                   onChange={handleCustomDelegateInputChange}
                 />
-                {isValidCustomDelegateAddress ? (
-                  <div className="pointer-events-none absolute inset-y-0 right-0 bottom-4 flex items-center pr-3">
-                    <CheckCircleIcon className="h-8 w-8 text-statusGreen" />
-                  </div>
-                ) : null}
+                <div className="pointer-events-none absolute inset-y-0 right-0 bottom-4 flex items-center pr-3">
+                  {customDelegateAddress ? (
+                    <InputValidationIcon
+                      isValid={isValidCustomDelegateAddress}
+                      invalidToolipContent={t`Invalid address`}
+                    />
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
@@ -258,4 +265,25 @@ export function ChooseDelegate({
       </div>
     </StepCard>
   );
+
+  function InputValidationIcon({
+    isValid,
+    invalidToolipContent,
+  }: {
+    isValid: boolean;
+    invalidToolipContent: string;
+  }): ReactElement {
+    if (isValid) {
+      return <CheckCircleIcon className="h-8 w-8 text-statusGreen" />;
+    }
+
+    return (
+      <Tooltip
+        isOpen
+        content={<span className="text-deepRed">{invalidToolipContent}</span>}
+      >
+        <XCircleIcon className="h-8 w-8 text-deepRed" />
+      </Tooltip>
+    );
+  }
 }
