@@ -13,6 +13,7 @@ import { Intent } from "src/ui/base/Intent";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
+import { useScrollDelegateIntoViewEffect } from "src/ui/airdrop/useScrollDelegateIntoViewEffect";
 
 interface ChooseDelegateProps {
   account: string;
@@ -39,6 +40,12 @@ export function ChooseDelegate({
   const [customDelegateAddress, setCustomDelegateAddress] = useState<
     string | undefined
   >();
+
+  // Ref that holds list of refs for the delegate list elements; used for auto-scrolling
+  const scrollRefs = useScrollDelegateIntoViewEffect(
+    delegates,
+    selectedDelegateIndex,
+  );
 
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
@@ -164,7 +171,10 @@ export function ChooseDelegate({
                 const selected = idx === selectedDelegateIndex;
 
                 return (
-                  <li key={`${delegate.address}-${idx}}`}>
+                  <li
+                    key={`${delegate.address}-${idx}}`}
+                    ref={scrollRefs.current[idx]}
+                  >
                     <DelegateProfileRow
                       account={account}
                       selected={selected}
