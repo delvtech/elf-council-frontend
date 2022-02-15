@@ -1,5 +1,5 @@
 import { lockingVaultContract } from "src/elf/contracts";
-import { toast, Toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
 import { LockingVault } from "elf-council-typechain";
@@ -41,8 +41,10 @@ export function useChangeDelegation(
             [address as string],
           ),
         );
-        toast.dismiss(toastIdRef.current);
-        toast.success("Delegation successfully changed");
+
+        toast.success("Delegation successfully changed", {
+          id: toastIdRef.current,
+        });
       },
     },
   );
