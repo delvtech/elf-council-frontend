@@ -149,14 +149,14 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
   const isActive = router.pathname === link;
 
   return (
-    <div className="flex justify-center hover:bg-blue-50">
+    <div className="flex justify-center">
       <Link href={link}>
         {/* There's a big discussion about how awful the Link api is for a11y
       here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
       best thing to do for now is just ignore this rule when an anchor tag is
       the child of a Link since all a tags *should* have an href 🙁 */
         /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="flex items-center md:w-1/2">
+        <a className="flex items-center px-2 hover:bg-blue-50 md:w-[55%]">
           {icon}
           <div
             className={classNames(
@@ -175,12 +175,12 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
-    <div className="flex justify-center hover:bg-blue-50">
+    <div className="flex justify-center ">
       <a
         href={link}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center md:w-1/2"
+        className="flex items-center px-2  hover:bg-blue-50 md:w-[55%]"
       >
         <ExternalLinkIcon className="h-4 w-4 text-principalRoyalBlue" />
         <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
