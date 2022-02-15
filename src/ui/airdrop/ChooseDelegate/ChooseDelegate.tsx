@@ -1,13 +1,4 @@
-import React, {
-  ReactElement,
-  useEffect,
-  useCallback,
-  useMemo,
-  useState,
-  useRef,
-  createRef,
-  RefObject,
-} from "react";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { isValidAddress } from "src/base/isValidAddress";
@@ -22,6 +13,7 @@ import { Intent } from "src/ui/base/Intent";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
+import { useScrollDelegateIntoViewEffect } from "src/ui/airdrop/useScrollDelegateIntoViewEffect";
 
 interface ChooseDelegateProps {
   account: string;
@@ -36,12 +28,6 @@ export function ChooseDelegate({
   onChooseDelegate,
   onPrevStep,
 }: ChooseDelegateProps): ReactElement {
-  const scrollRefs = useRef<RefObject<HTMLLIElement>[]>([]);
-
-  scrollRefs.current = delegates.map((_, i) => {
-    return scrollRefs.current[i] ?? createRef();
-  });
-
   // Holds state for the Featured delegate selection
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
@@ -54,6 +40,12 @@ export function ChooseDelegate({
   const [customDelegateAddress, setCustomDelegateAddress] = useState<
     string | undefined
   >();
+
+  // Ref that holds list of refs for the delegate list elements; used for auto-scrolling
+  const scrollRefs = useScrollDelegateIntoViewEffect(
+    delegates,
+    selectedDelegateIndex,
+  );
 
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
@@ -133,12 +125,6 @@ export function ChooseDelegate({
     },
     [account, shuffledDelegates],
   );
-
-  useEffect(() => {
-    if (!!selectedDelegateIndex && selectedDelegateIndex !== -1) {
-      scrollRefs.current[selectedDelegateIndex].current?.scrollIntoView();
-    }
-  }, [selectedDelegateIndex, shuffledDelegates]);
 
   return (
     <StepCard
