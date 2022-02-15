@@ -26,8 +26,9 @@ export function useChangeDelegation(
     signer,
     {
       onError: (e) => {
-        toast.dismiss(toastIdRef.current);
-        toast.error(e.message);
+        toast.error(e.message, {
+          id: toastIdRef.current,
+        });
       },
       onTransactionSubmitted: () => {
         toastIdRef.current = toast.loading("Changing delegation");
