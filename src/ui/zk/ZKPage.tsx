@@ -58,7 +58,7 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
       case StepStatus.COMPLETE:
         return StepItemStatus.COMPLETE;
       case StepStatus.PENDING:
-        return StepItemStatus.UPCOMING;
+        return StepItemStatus.PENDING;
       default:
         return StepItemStatus.CURRENT;
     }

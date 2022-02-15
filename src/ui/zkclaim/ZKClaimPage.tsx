@@ -114,7 +114,7 @@ export default function ClaimPage(): ReactElement {
       return StepItemStatus.CURRENT;
     }
     if (statuses.includes(StepStatus.PENDING)) {
-      return StepItemStatus.UPCOMING;
+      return StepItemStatus.PENDING;
     }
     return StepItemStatus.COMPLETE;
   };
