@@ -136,10 +136,7 @@ export function ChooseDelegate({
 
   useEffect(() => {
     if (!!selectedDelegateIndex && selectedDelegateIndex !== -1) {
-      scrollRefs.current[selectedDelegateIndex].current?.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
+      scrollRefs.current[selectedDelegateIndex].current?.scrollIntoView();
     }
   }, [selectedDelegateIndex, shuffledDelegates]);
 
