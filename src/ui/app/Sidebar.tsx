@@ -51,7 +51,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
             <div className="relative h-24 w-24">
               <Image
                 layout="fill"
-                src="/assets/ElementLogoSidebar.svg"
+                src="/assets/ElementLogo--dark.svg"
                 alt={t`Element Council`}
               />
             </div>

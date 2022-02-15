@@ -10,12 +10,8 @@ interface DelegateInstructionsProps {
   onPrevStep: () => void;
 }
 
-const elementIconInBodyText = (
-  <ElementIcon
-    key="element-icon-in-body-text"
-    className="ml-0.5 mr-1 -mb-1.5 inline-block bg-paleLily"
-    size={IconSize.MEDIUM}
-  />
+const elementIcon = (
+  <ElementIcon key="element-icon" inline size={IconSize.MEDIUM} />
 );
 export function DelegateInstructions({
   onNextStep,
@@ -30,13 +26,13 @@ export function DelegateInstructions({
     >
       <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
         <H1>{t`What is delegation?`}</H1>
-        <p
+        <div
           className={"mb-8 w-2/3"}
         >{jt`As a participant in Element DAO, you can use your
-        ${elementIconInBodyText}ELFI voting power yourself (i.e., self-delegate),
+        ${elementIcon}ELFI voting power yourself (i.e., self-delegate),
         or you can delegate it to another member to represent you and your
         vision. You can only delegate it to one user, but you can change your
-        selection at any time.`}</p>
+        selection at any time.`}</div>
       </div>
     </StepCard>
   );

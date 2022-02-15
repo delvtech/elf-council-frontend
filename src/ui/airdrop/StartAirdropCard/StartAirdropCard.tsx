@@ -17,19 +17,8 @@ interface StartAirdropCardProps {
   onNextStep: () => void;
 }
 
-const elementIconInSubtitle = (
-  <ElementIcon
-    key="element-icon-in-subtitle"
-    className="mx-1 inline-block bg-paleLily"
-    size={IconSize.MEDIUM}
-  />
-);
-const elementIconInBodyText = (
-  <ElementIcon
-    key="element-icon-in-body-text"
-    className="ml-0.5 mr-2 -mb-1.5 inline-block bg-paleLily"
-    size={IconSize.MEDIUM}
-  />
+const elementIcon = (
+  <ElementIcon key="element-icon" inline size={IconSize.MEDIUM} />
 );
 
 export function StartAirdropCard({
@@ -60,7 +49,7 @@ export function StartAirdropCard({
       </div>
       <div className="flex h-full flex-col items-center justify-center space-y-5 p-12">
         <div className="flex w-full flex-col items-center justify-center space-y-8 md:w-7/12">
-          <span className="flex items-center text-center text-base font-semibold tracking-wider">{jt`Introducing ${elementIconInSubtitle} ELFI`}</span>
+          <span className="flex items-center text-center text-base font-semibold tracking-wider">{jt`Introducing ${elementIcon} ELFI`}</span>
           <div className="text-3xl font-bold">{t`Contribute to the evolution of the Element DAO`}</div>
           <div className="flex flex-col space-y-8 px-2 text-justify text-base">
             <p className="inline">
@@ -68,7 +57,7 @@ export function StartAirdropCard({
               future of the protocol.`}
             </p>
             <p className="inline">
-              {jt`${elementIconInBodyText}ELFI airdrop recipients can use their
+              {jt`${elementIcon}ELFI airdrop recipients can use their
               voting power to participate in governance, or delegate their votes
               to another member.`}
             </p>
