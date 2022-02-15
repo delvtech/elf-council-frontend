@@ -238,7 +238,7 @@ export function ChooseDelegate({
                   name={t`Enter delegate address`}
                   placeholder={t`Enter delegate address`}
                   error={
-                    !isValidCustomDelegateAddress && !!customDelegateAddress
+                    !!customDelegateAddress && !isValidCustomDelegateAddress
                   }
                   containerClassName="flex-1"
                   className={classNames(
