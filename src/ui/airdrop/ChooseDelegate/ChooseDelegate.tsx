@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
-import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/solid";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
@@ -14,7 +14,7 @@ import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import { useScrollDelegateIntoViewEffect } from "src/ui/airdrop/useScrollDelegateIntoViewEffect";
 import { Intent } from "src/ui/base/Intent";
-import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { InputValidationIcon } from "src/ui/base/InputValidationIcon";
 
 interface ChooseDelegateProps {
   account: string;
@@ -265,25 +265,4 @@ export function ChooseDelegate({
       </div>
     </StepCard>
   );
-
-  function InputValidationIcon({
-    isValid,
-    invalidToolipContent,
-  }: {
-    isValid: boolean;
-    invalidToolipContent: string;
-  }): ReactElement {
-    if (isValid) {
-      return <CheckCircleIcon className="h-8 w-8 text-statusGreen" />;
-    }
-
-    return (
-      <Tooltip
-        isOpen
-        content={<span className="text-deepRed">{invalidToolipContent}</span>}
-      >
-        <XCircleIcon className="h-8 w-8 text-deepRed" />
-      </Tooltip>
-    );
-  }
 }
