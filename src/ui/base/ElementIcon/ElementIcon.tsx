@@ -1,4 +1,6 @@
 import classNames from "classnames";
+import Image from "next/image";
+import { t } from "ttag";
 import React, { ReactElement } from "react";
 
 export enum IconSize {
@@ -10,6 +12,12 @@ export enum IconSize {
 interface ElementIconProps {
   className?: string;
   size: IconSize;
+
+  /**
+   * Set this to true if displaying the icon inside a block of text,
+   *  eg: when using with jt, example: jt`This is a ${clickableElement}`
+   */
+  inline?: boolean;
 }
 
 /**
@@ -19,52 +27,41 @@ interface ElementIconProps {
  */
 export function ElementIcon({
   className,
+  inline = false,
   size = IconSize.SMALL,
 }: ElementIconProps): ReactElement {
-  const iconSizeClass = getIconSizeClasses(size);
-  return (
+  const iconElement = (
     <div
       className={classNames(
         className,
-        iconSizeClass,
-        "rounded-full bg-white opacity-90 shadow",
+        "flex items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
       )}
     >
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="-5 -7 64 64"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <g mask="url(#mask0)">
-          <circle
-            cx="30"
-            cy="29"
-            r="31"
-            transform="rotate(65.9219 27.2771 26.4914)"
-            fill="#1568CA"
-          />
-          <circle
-            cx="29"
-            cy="25"
-            r="13"
-            transform="rotate(65.9219 27.7559 25.6002)"
-            fill="#8FD8E7"
-          />
-        </g>
-      </svg>
+      <Image
+        height={IconHeight[size]}
+        width={IconWidth[size]}
+        src="/assets/ElementLogo--dark.svg"
+        alt={t`Element Council`}
+      />
     </div>
   );
+
+  if (inline) {
+    return (
+      <span className="mx-1 inline-block align-middle">{iconElement}</span>
+    );
+  }
+
+  return iconElement;
 }
 
-function getIconSizeClasses(size: IconSize) {
-  switch (size) {
-    case IconSize.SMALL:
-      return "h-3 w-3";
-    case IconSize.MEDIUM:
-      return "h-6 w-6";
-    case IconSize.LARGE:
-      return "h-12 w-12";
-  }
-}
+const IconHeight: Record<IconSize, string> = {
+  [IconSize.SMALL]: "12",
+  [IconSize.MEDIUM]: "24",
+  [IconSize.LARGE]: "48",
+};
+const IconWidth: Record<IconSize, string> = {
+  [IconSize.SMALL]: "12",
+  [IconSize.MEDIUM]: "24",
+  [IconSize.LARGE]: "48",
+};

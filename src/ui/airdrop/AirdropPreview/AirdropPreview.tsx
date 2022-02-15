@@ -16,12 +16,8 @@ interface AirdropPreviewProps {
   onPrevStep: () => void;
 }
 
-const elementIconInBodyText = (
-  <ElementIcon
-    key="element-icon-in-body-text"
-    className="ml-0.5 mr-1 -mb-1.5 inline-block bg-paleLily"
-    size={IconSize.MEDIUM}
-  />
+const elementIcon = (
+  <ElementIcon key="element-icon" inline size={IconSize.MEDIUM} />
 );
 export function AirdropPreview({
   onNextStep,
@@ -54,7 +50,7 @@ export function AirdropPreview({
           <span className="text-center">{t`Congratulations!`}</span>
         </div>
         <div className="mb-10 flex w-full flex-col items-center justify-center text-center text-base">
-          <span className="mb-6 w-full font-bold ">{jt`You have some ${elementIconInBodyText}ELFI to claim.`}</span>
+          <div className="mb-6 flex w-full items-center justify-center font-bold">{jt`You have some ${elementIcon}ELFI to claim.`}</div>
           <span className="w-3/4 text-justify">{t`You've received this voting
           power for being an active member of the Element community. We hope to
           see you continue to contribute to the future of Element. Use or
