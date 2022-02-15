@@ -4,6 +4,7 @@ import { ZKData } from "src/ui/zk/types";
 import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
 import NotEligibleCard from "./NotEligibleCard";
+import DelegateInfoCard from "./DelegateInfoCard";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import {
@@ -93,7 +94,7 @@ export default function ClaimPage(): ReactElement {
   const handleLookupStepComplete = useCallback(
     (data: ZKData): void => {
       setData(data);
-      completeStep(1);
+      completeStep(Step.DELEGATE_INFO);
     },
     [completeStep],
   );
@@ -173,6 +174,13 @@ export default function ClaimPage(): ReactElement {
           className={getStepClassName(Step.ELIGIBILITY)}
         />
       )}
+
+      {/* Delegation Information */}
+      <DelegateInfoCard
+        className={getStepClassName(Step.DELEGATE_INFO)}
+        onBackClick={goToPreviousStep}
+        onPickDelegateClick={goToNextStep}
+      />
 
       <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>
