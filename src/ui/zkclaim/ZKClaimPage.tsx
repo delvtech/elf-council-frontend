@@ -1,9 +1,9 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import LookupCard from "./LookupCard";
 import { ZKData } from "src/ui/zk/types";
-import ClaimCard from "./ClaimCard";
+import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
-import ErrorCard from "./ErrorCard";
+import NotEligibleCard from "./NotEligibleCard";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import {
@@ -120,28 +120,35 @@ export default function ClaimPage(): ReactElement {
   };
 
   return (
-    <div className="flex max-w-4xl flex-1 flex-col items-center gap-12">
+    <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
       <div style={{ width: 600, maxWidth: "100%" }}>
         <Steps className="w-full">
           <StepItem
             stepLabel="1"
             status={getStepItemStatus([Step.LOOKUP, Step.ELIGIBILITY])}
-            href={getStepPath(1)}
+            href={getStepPath(Step.LOOKUP)}
           >{t`View Airdrop`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="2"
             status={getStepItemStatus([Step.DELEGATE_INFO, Step.DELEGATE])}
-            href={canViewStep(2) ? getStepPath(2) : undefined}
+            href={
+              canViewStep(Step.DELEGATE_INFO)
+                ? getStepPath(Step.DELEGATE_INFO)
+                : undefined
+            }
           >{t`Choose Delegate`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="3"
             status={getStepItemStatus([Step.REVIEW])}
-            href={canViewStep(3) ? getStepPath(3) : undefined}
+            href={
+              canViewStep(Step.REVIEW) ? getStepPath(Step.REVIEW) : undefined
+            }
           >{t`Review Transaction`}</StepItem>
         </Steps>
       </div>
+
       {/* Lookup */}
       <LookupCard
         className={getStepClassName(Step.LOOKUP)}
@@ -151,13 +158,17 @@ export default function ClaimPage(): ReactElement {
 
       {/* Eligibility */}
       {publicId && !alreadyClaimed && (
-        <ClaimCard className={getStepClassName(Step.ELIGIBILITY)} />
+        <EligibleCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          onBackClick={goToPreviousStep}
+          onNextClick={goToNextStep}
+        />
       )}
       {publicId && alreadyClaimed && (
         <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
       )}
       {!publicId && (
-        <ErrorCard
+        <NotEligibleCard
           onTryAgain={goToPreviousStep}
           className={getStepClassName(Step.ELIGIBILITY)}
         />
