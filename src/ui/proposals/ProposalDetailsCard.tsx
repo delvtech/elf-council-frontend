@@ -160,11 +160,6 @@ export function ProposalDetailsCard(
                 <ProposalStatusIcon signer={signer} proposal={proposal} />
               </div>
             )}
-            {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-              <div className="flex w-full items-center justify-end text-white">
-                <BallotLabel ballot={ballotChoice} />
-              </div>
-            )}
           </div>
         </div>
 
@@ -237,6 +232,12 @@ export function ProposalDetailsCard(
               currentBallot={newBallot}
               onSelectBallot={setCurrentBallot}
             />
+            {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
+              <div className="ml-4 flex w-full items-center  text-white ">
+                <BallotLabel ballot={ballotChoice} />
+              </div>
+            )}
+
             <Button
               disabled={submitButtonDisabled}
               onClick={handleVote}
@@ -259,30 +260,24 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
   switch (ballot) {
     case Ballot.YES:
       return (
-        <div className="flex items-center space-x-2">
-          <div>{t`Voted yes`}</div>
-          <div className="flex h-full pb-1 text-green-500">
-            <ThumbUpIcon height="18" />
-          </div>
-        </div>
+        <Tag intent={Intent.SUCCESS}>
+          <ThumbUpIcon height="18" className={"mr-1 pb-0.5 text-green-700"} />
+          <span className={"font-bold text-green-700"}>{t`Voted yes`}</span>
+        </Tag>
       );
     case Ballot.NO:
       return (
-        <div className="flex items-center space-x-2">
-          <div>{t`Voted no`}</div>
-          <div className="flex h-full pt-1 text-red-500">
-            <ThumbDownIcon height="18" />
-          </div>
-        </div>
+        <Tag intent={Intent.ERROR}>
+          <ThumbDownIcon height="18" className={"mr-1 pb-0.5 text-red-500"} />
+          <span className={"font-bold text-red-500"}>{t`Voted no`}</span>
+        </Tag>
       );
     case Ballot.MAYBE:
       return (
-        <div className="flex items-center space-x-2">
-          <div>{t`Voted abstain`}</div>
-          <div className="flex h-full text-white">
-            <XCircleIcon height="18" />
-          </div>
-        </div>
+        <Tag>
+          <XCircleIcon height="18" className={"mr-1 pb-0.5 "} />
+          <span className={"font-bold "}>{t`Voted abstain`}</span>
+        </Tag>
       );
     default:
       assertNever(ballot);

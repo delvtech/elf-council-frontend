@@ -23,6 +23,7 @@ export function useVestingVaultVotingPower(
         "0x00",
       ],
       enabled: !!account && !!blockNumber,
+      keepPreviousData: true,
     },
   );
 
