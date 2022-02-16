@@ -8,6 +8,7 @@ import {
   useSmartContractTransaction,
 } from "@elementfi/react-query-typechain";
 import { queryClient } from "src/elf/queryClient";
+import { useRef } from "react";
 
 export function useChangeDelegation(
   address: string | null | undefined,
@@ -17,13 +18,20 @@ export function useChangeDelegation(
   unknown,
   Parameters<LockingVault["changeDelegation"]>
 > {
+  const toastIdRef = useRef<string>();
+
   return useSmartContractTransaction(
     lockingVaultContract,
     "changeDelegation",
     signer,
     {
       onError: (e) => {
-        toast.error(e.message);
+        toast.error(e.message, {
+          id: toastIdRef.current,
+        });
+      },
+      onTransactionSubmitted: () => {
+        toastIdRef.current = toast.loading("Changing delegation");
       },
       onTransactionMined: () => {
         // Invalidate `deposits` so that consumers of `useDelegate` refresh
@@ -34,6 +42,10 @@ export function useChangeDelegation(
             [address as string],
           ),
         );
+
+        toast.success("Delegation successfully changed", {
+          id: toastIdRef.current,
+        });
       },
     },
   );
