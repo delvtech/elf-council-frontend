@@ -133,7 +133,7 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
   const { link } = props;
 
   return (
-    <div className="text-left">
+    <div className="text-center">
       {/* Don't use the next router for this, since the user might already be on
       the airdrop page when they click this. This way, users can always go back
       to the beginning of the airdrop by clicking the sidebar link */}
