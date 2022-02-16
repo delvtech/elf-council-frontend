@@ -12,7 +12,6 @@ export function useLockingVaultVotingPower(
 
   const blockNumber = atBlockNumber || latestBlockNumber;
 
-  // TODO: use this when useSmartContractReadCall accepts keepPreviousData
   const { data: lockingVotingPowerBN } = useSmartContractReadCall(
     lockingVaultContract,
     "queryVotePower",
