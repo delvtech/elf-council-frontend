@@ -1,6 +1,13 @@
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import toast from "react-hot-toast";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
@@ -26,12 +33,14 @@ export function ReviewTransaction({
   onPrevStep,
   onNextStep,
 }: ReviewTransactionProps): ReactElement {
+  const toastIdRef = useRef<string>();
+
   const { data: merkleInfo } = useMerkleInfo(account);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
-
   const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
     number | undefined
   >();
+
   useEffect(() => {
     if (selectedDelegateIndex === undefined) {
       return;
@@ -43,10 +52,17 @@ export function ReviewTransaction({
 
   // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
+    onError: (e) => {
+      toast.error(e.message, { id: toastIdRef.current });
+    },
     onTransactionSubmitted: () => {
+      toastIdRef.current = toast.loading("Confirming transaction");
       setIsTransactionPending(true);
     },
     onTransactionMined: () => {
+      toast.success("Transaction successfully confirmed", {
+        id: toastIdRef.current,
+      });
       setIsTransactionPending(false);
       onNextStep();
     },
