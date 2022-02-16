@@ -1,4 +1,11 @@
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import toast from "react-hot-toast";
 
 import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
 import {
@@ -59,6 +66,8 @@ export function ProposalDetailsCard(
   const { className, proposal, account, signer, isOpen, onClose } = props;
   const { proposalId, snapshotId, quorum } = proposal;
 
+  const toastIdRef = useRef<string>();
+
   const [newBallot, setCurrentBallot] = useState<Ballot>();
   const [isChangingVote, setIsChangingVote] = useState(false);
   const [isVoteTxPending, setIsVoteTxPending] = useState(false);
@@ -110,12 +119,19 @@ export function ProposalDetailsCard(
     !+accountVotingPower;
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
+    onError: (e) => {
+      toast.error(e.message, { id: toastIdRef.current });
+    },
     onTransactionSubmitted: (pendingTransaction) => {
+      toastIdRef.current = toast.loading("Submitting vote");
       setIsChangingVote(false);
       setIsVoteTxPending(true);
       setNewVoteTransaction(pendingTransaction);
     },
-    onTransactionMined: () => setIsVoteTxPending(false),
+    onTransactionMined: () => {
+      toast.success("Vote successfully submitted", { id: toastIdRef.current });
+      setIsVoteTxPending(false);
+    },
   });
 
   const handleVote = useCallback(() => {
@@ -135,7 +151,6 @@ export function ProposalDetailsCard(
       className={classNames(
         className,
         !isOpen && "translate-x-full",
-
         "fixed inset-0 z-10 flex h-full min-h-[85vh] w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:max-w-[48rem] lg:rounded-xl",
       )}
     >
