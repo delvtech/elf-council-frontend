@@ -182,7 +182,7 @@ function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
         rel="noreferrer"
         className="flex items-center px-2  hover:bg-blue-50 md:w-[55%]"
       >
-        <ExternalLinkIcon className="h-4 w-4 text-principalRoyalBlue" />
+        <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
         <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
           <p>{label}</p>
         </div>
