@@ -22,7 +22,7 @@ function Header(): ReactElement {
   return (
     <div className="flex w-full justify-between">
       <div className="flex space-x-3"></div>
-      <div className="mr-3 flex items-center space-x-4 text-gray-400">
+      <div className="flex items-center space-x-4 text-gray-400">
         {account ? (
           <div className="flex items-center">
             <span className="mr-8 flex items-center gap-1">
@@ -30,7 +30,7 @@ function Header(): ReactElement {
                 target="_blank"
                 rel="noreferrer"
                 href={RESOURCES_URL}
-                className="hidden items-center gap-2 md:flex"
+                className="hidden items-center gap-2 lg:flex"
               >
                 <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
                 <ExternalLinkIcon className="h-4 shrink-0 text-principalRoyalBlue" />
@@ -58,7 +58,7 @@ function Header(): ReactElement {
                 <ElementIcon size={IconSize.MEDIUM} />
                 <span>
                   {amountDeposited}
-                  <span className="hidden md:inline"> ELFI</span>
+                  <span className="hidden lg:inline"> ELFI</span>
                 </span>
               </span>
             </Tooltip>
