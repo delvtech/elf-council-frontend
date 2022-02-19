@@ -18,7 +18,7 @@ export default function ClaimAmountCard({
   return (
     <div
       className={classNames(
-        "min-w-full rounded-lg bg-white px-10 py-20 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]",
+        "min-w-full rounded-lg bg-white px-10 pt-16 pb-20 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]",
         className,
       )}
     >
