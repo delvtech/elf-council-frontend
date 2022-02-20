@@ -1,10 +1,15 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
 import { ZKData } from "src/ui/zk/types";
 import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
 import NotEligibleCard from "./NotEligibleCard";
 import DelegateInfoCard from "./DelegateInfoCard";
+import DelegateCard from "./DelegateCard";
+import TransactionCard from "./TransactionCard";
+import ShareCard from "./ShareCard";
+import { useSigner } from "src/ui/signer/useSigner";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import {
@@ -23,7 +28,7 @@ export enum Step {
   ELIGIBILITY = "eligibility",
   DELEGATE_INFO = "info",
   DELEGATE = "delegate",
-  REVIEW = "review",
+  TRANSACTION = "transaction",
   SHARE = "share",
 }
 
@@ -41,13 +46,16 @@ export default function ClaimPage(): ReactElement {
       Step.ELIGIBILITY,
       Step.DELEGATE_INFO,
       Step.DELEGATE,
-      Step.REVIEW,
+      Step.TRANSACTION,
       Step.SHARE,
     ],
   });
+  const { account, active, library } = useWeb3React();
+  const signer = useSigner(account, library);
   const [data, setData] = useState<ZKData>();
   const [publicId, setPublicId] = useState<string>();
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
+  const [delegateAddress, setDelegateAddress] = useState<string>();
   // TODO
   // const proofCallResult =
   //   useWorker(a16zLibrary.generateProofCallData);
@@ -99,6 +107,19 @@ export default function ClaimPage(): ReactElement {
     [completeStep],
   );
 
+  const handleDelegateStepComplete = useCallback(
+    (address: string) => {
+      setDelegateAddress(address);
+      completeStep(Step.TRANSACTION);
+    },
+    [completeStep],
+  );
+
+  const handleTransactionComplete = useCallback(() => {
+    completeStep(Step.TRANSACTION);
+    goToNextStep();
+  }, [completeStep, goToNextStep]);
+
   // TODO: transition styles
   const getStepClassName = (step: Step) => {
     switch (getStepStatus(step)) {
@@ -142,9 +163,11 @@ export default function ClaimPage(): ReactElement {
           <StepDivider />
           <StepItem
             stepLabel="3"
-            status={getStepItemStatus([Step.REVIEW])}
+            status={getStepItemStatus([Step.TRANSACTION])}
             href={
-              canViewStep(Step.REVIEW) ? getStepPath(Step.REVIEW) : undefined
+              canViewStep(Step.TRANSACTION)
+                ? getStepPath(Step.TRANSACTION)
+                : undefined
             }
           >{t`Review Transaction`}</StepItem>
         </Steps>
@@ -179,8 +202,32 @@ export default function ClaimPage(): ReactElement {
       <DelegateInfoCard
         className={getStepClassName(Step.DELEGATE_INFO)}
         onBackClick={goToPreviousStep}
-        onPickDelegateClick={goToNextStep}
+        onNextClick={goToNextStep}
       />
+
+      {/* Delegate */}
+      <DelegateCard
+        account={account as string}
+        className={getStepClassName(Step.DELEGATE)}
+        onComplete={handleDelegateStepComplete}
+        onBackClick={goToPreviousStep}
+        onNextClick={goToNextStep}
+      />
+
+      {/* Review & Initiate Transaction */}
+      {account && signer && delegateAddress && (
+        <TransactionCard
+          className={getStepClassName(Step.TRANSACTION)}
+          account={account}
+          signer={signer}
+          delegateAddress={delegateAddress}
+          onBackClick={goToPreviousStep}
+          onComplete={handleTransactionComplete}
+        />
+      )}
+
+      {/* Share */}
+      <ShareCard className={getStepClassName(Step.SHARE)} />
 
       <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>

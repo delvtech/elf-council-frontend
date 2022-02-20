@@ -1,31 +1,20 @@
 import React, { ReactElement } from "react";
+import { InlineElfiLabel } from "./InlineElfiLabel";
 import Button from "src/ui/base/Button/Button";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { jt, t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-
-const elfiAmount = (
-  <span className="whitespace-nowrap">
-    <ElementIcon
-      key="element-icon-in-body-text"
-      className="ml-0.5 mr-1 -mb-1.5 inline-block bg-paleLily"
-      size={IconSize.MEDIUM}
-    />
-    {t`ELFI`}
-  </span>
-);
+import { jt, t } from "ttag";
 
 interface DelegateInfoCardProps {
   className?: string;
   onBackClick?: () => void;
-  onPickDelegateClick?: () => void;
+  onNextClick?: () => void;
 }
 
 export default function DelegateInfoCard({
   className,
   onBackClick,
-  onPickDelegateClick,
+  onNextClick,
 }: DelegateInfoCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -35,7 +24,7 @@ export default function DelegateInfoCard({
           <p
             className={"mb-8 max-w-lg"}
           >{jt`As a participant in Element DAO, you can use your
-          ${elfiAmount} voting power yourself (i.e., self-delegate),
+          ${InlineElfiLabel} voting power yourself (i.e., self-delegate),
           or you can delegate it to another member to represent you and your
           vision. You can only delegate it to one user, but you can change your
           selection at any time.`}</p>
@@ -50,11 +39,11 @@ export default function DelegateInfoCard({
               {t`Back`}
             </Button>
           )}
-          {onPickDelegateClick && (
+          {onNextClick && (
             <Button
               className="px-12"
               variant={ButtonVariant.GRADIENT}
-              onClick={onPickDelegateClick}
+              onClick={onNextClick}
             >
               {t`Pick Delegate`}
             </Button>
