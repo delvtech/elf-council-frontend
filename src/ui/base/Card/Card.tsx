@@ -1,7 +1,7 @@
 // See: https://tailwindui.com/components/application-ui/layout/panels#component-415761fd4b5592742ec78ce4c638973e
 
 import classNames from "classnames";
-import { CSSProperties, ElementType, ReactElement, ReactNode } from "react";
+import { ElementType, ReactElement } from "react";
 import { assertNever } from "src/base/assertNever";
 import { PolymorphicComponentProps } from "src/@types/helper";
 
@@ -13,13 +13,9 @@ export enum CardVariant {
 }
 
 export interface CardProps {
-  children: ReactNode;
   variant?: CardVariant;
-  className?: string;
   interactive?: boolean;
   active?: boolean;
-  style?: CSSProperties;
-  onClick?: () => void;
 }
 
 type PolymorphicCardProps<C extends ElementType = "div"> =
@@ -34,9 +30,7 @@ export default function Card<C extends ElementType>(
     variant = CardVariant.WHITE,
     interactive = false,
     active = false,
-    onClick,
     children,
-    style,
     ...tagProps
   } = props;
 
@@ -52,25 +46,12 @@ export default function Card<C extends ElementType>(
     className,
   );
 
-  if (interactive) {
-    const Component = as || "button";
-    return (
-      <Component
-        className={cardClassName}
-        onClick={onClick}
-        style={style}
-        {...tagProps}
-      >
-        {children}
-      </Component>
-    );
-  }
+  const Tag = as || (interactive ? "button" : "div");
 
-  const Component = as || "div";
   return (
-    <Component className={cardClassName} style={style} {...tagProps}>
+    <Tag className={cardClassName} {...tagProps}>
       {children}
-    </Component>
+    </Tag>
   );
 }
 
