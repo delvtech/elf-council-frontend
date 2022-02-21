@@ -30,8 +30,10 @@ export function ElementIcon({
   inline = false,
   size = IconSize.SMALL,
 }: ElementIconProps): ReactElement {
+  const Tag = inline ? "span" : "div";
+
   const iconElement = (
-    <div
+    <Tag
       className={classNames(
         className,
         "flex items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
@@ -43,7 +45,7 @@ export function ElementIcon({
         src="/assets/ElementLogo--dark.svg"
         alt={t`Element Council`}
       />
-    </div>
+    </Tag>
   );
 
   if (inline) {
