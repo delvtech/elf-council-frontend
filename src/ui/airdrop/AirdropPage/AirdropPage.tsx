@@ -10,51 +10,55 @@ import { parseEther } from "ethers/lib/utils";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
-import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
+import {
+  StepItem,
+  StepStatus as StepItemStatus,
+} from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import { DelegateInstructions } from "src/ui/airdrop/DelegateInstructions/DelegateInstructions";
 import { ReviewTransaction } from "src/ui/airdrop/ReviewClaim/ReviewTransaction";
 import { AirdropAlreadyClaimed } from "src/ui/airdrop/AirdropAlreadyClaimed/AirdropAlreadyClaimed";
 import { ClaimSuccessful } from "src/ui/airdrop/ClaimSuccessful/ClaimSuccessful";
+import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 
-enum AirdropSteps {
+enum Step {
   /**
    * The greeting screen, user is prompted to connect their wallet before they
    * can continue.
    */
-  START_AIRDROP,
+  START_AIRDROP = "start",
 
   /**
    * User sees their airdrop amount and can continue to learn about delegation.
    */
-  AIRDROP_PREVIEW,
+  AIRDROP_PREVIEW = "preview",
 
   /**
-   * User reads instructions on what delegating is and can contine on to
+   * User reads instructions on what delegating is and can continue on to
    * delegate their tokens.
    */
-  DELEGATE_INSTRUCTIONS,
+  DELEGATE_INSTRUCTIONS = "instructions",
 
   /**
    * User selects their delegate and continues on to the delegate their tokens.
    */
-  CHOOSE_DELEGATE,
+  CHOOSE_DELEGATE = "delegate",
 
   /**
    * User can see their tokens and delegate side-by-side then click CLAIM to
    * create the transaction.
    */
-  REVIEW_TRANSACTION,
+  REVIEW_TRANSACTION = "transaction",
 
   /**
    * The final screen where users can then go to governance UI or socials.
    */
-  DELEGATE_COMPLETE,
+  DELEGATE_COMPLETE = "complete",
 
   /**
    * A returning user sees the amount of airdrop they already claimed.
    */
-  ALREADY_CLAIMED,
+  ALREADY_CLAIMED = "claimed",
 }
 
 export default function AirdropPage(): ReactElement {
@@ -67,11 +71,36 @@ export default function AirdropPage(): ReactElement {
 
   const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
 
-  // statuses for the Steps component
-  const [activeStep, setActiveStep] = useState<AirdropSteps | undefined>();
-  const connectWalletStatus = getConnectWalletStatus(account, activeStep);
-  const delegateStatus = getDelegateStatus(activeStep);
-  const claimAndDelegateStatus = getClaimAndDelegateStatus(activeStep);
+  const {
+    currentStep,
+    canViewStep,
+    getStepPath,
+    getStepStatus,
+    goToNextStep,
+    goToPreviousStep,
+    goToStep,
+  } = useRouterSteps({
+    steps: [
+      Step.START_AIRDROP,
+      Step.AIRDROP_PREVIEW,
+      Step.DELEGATE_INSTRUCTIONS,
+      Step.CHOOSE_DELEGATE,
+      Step.REVIEW_TRANSACTION,
+      Step.DELEGATE_COMPLETE,
+      Step.ALREADY_CLAIMED,
+    ],
+  });
+
+  const getStepItemStatus = (steps: Step[]): StepItemStatus => {
+    const statuses = steps.map((step) => getStepStatus(step));
+    if (statuses.includes(StepStatus.CURRENT)) {
+      return StepItemStatus.CURRENT;
+    }
+    if (statuses.includes(StepStatus.PENDING)) {
+      return StepItemStatus.PENDING;
+    }
+    return StepItemStatus.COMPLETE;
+  };
 
   return (
     <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
@@ -79,25 +108,42 @@ export default function AirdropPage(): ReactElement {
         <Steps className="w-full">
           <StepItem
             stepLabel="1"
-            status={connectWalletStatus}
+            status={getStepItemStatus([
+              Step.START_AIRDROP,
+              Step.AIRDROP_PREVIEW,
+            ])}
+            href={getStepPath(Step.START_AIRDROP)}
           >{t`View airdrop`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="2"
-            status={delegateStatus}
+            status={getStepItemStatus([
+              Step.DELEGATE_INSTRUCTIONS,
+              Step.CHOOSE_DELEGATE,
+            ])}
+            href={
+              canViewStep(Step.DELEGATE_INSTRUCTIONS)
+                ? getStepPath(Step.DELEGATE_INSTRUCTIONS)
+                : undefined
+            }
           >{t`Choose delegate`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="3"
-            status={claimAndDelegateStatus}
+            status={getStepItemStatus([Step.REVIEW_TRANSACTION])}
+            href={
+              canViewStep(Step.REVIEW_TRANSACTION)
+                ? getStepPath(Step.REVIEW_TRANSACTION)
+                : undefined
+            }
           >{t`Review Transaction`}</StepItem>
         </Steps>
       </div>
 
       <div className="w-full">
         {(() => {
-          switch (activeStep) {
-            case AirdropSteps.START_AIRDROP:
+          switch (currentStep) {
+            case Step.START_AIRDROP:
             default:
               return (
                 <StartAirdropCard
@@ -106,50 +152,44 @@ export default function AirdropPage(): ReactElement {
                   walletConnectionActive={active}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
-                      setActiveStep(AirdropSteps.ALREADY_CLAIMED);
+                      goToStep(Step.ALREADY_CLAIMED, true);
                       return;
                     }
-                    setActiveStep(AirdropSteps.AIRDROP_PREVIEW);
+                    goToNextStep(true);
                   }}
                 />
               );
 
-            case AirdropSteps.ALREADY_CLAIMED:
+            case Step.ALREADY_CLAIMED:
               return <AirdropAlreadyClaimed account={account} />;
 
-            case AirdropSteps.AIRDROP_PREVIEW:
+            case Step.AIRDROP_PREVIEW:
               return (
                 <AirdropPreview
                   account={account}
-                  onPrevStep={() => setActiveStep(AirdropSteps.START_AIRDROP)}
-                  onNextStep={() =>
-                    setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)
-                  }
+                  onPrevStep={() => goToPreviousStep()}
+                  onNextStep={() => goToNextStep(true)}
                 />
               );
 
-            case AirdropSteps.DELEGATE_INSTRUCTIONS:
+            case Step.DELEGATE_INSTRUCTIONS:
               return (
                 <DelegateInstructions
                   account={account}
-                  onPrevStep={() => setActiveStep(AirdropSteps.AIRDROP_PREVIEW)}
-                  onNextStep={() => setActiveStep(AirdropSteps.CHOOSE_DELEGATE)}
+                  onPrevStep={() => goToPreviousStep()}
+                  onNextStep={() => goToNextStep(true)}
                 />
               );
-            case AirdropSteps.CHOOSE_DELEGATE:
+            case Step.CHOOSE_DELEGATE:
               return (
                 <ChooseDelegate
                   account={account as string}
                   onChooseDelegate={setDelegateAddress}
-                  onPrevStep={() =>
-                    setActiveStep(AirdropSteps.DELEGATE_INSTRUCTIONS)
-                  }
-                  onNextStep={() => {
-                    setActiveStep(AirdropSteps.REVIEW_TRANSACTION);
-                  }}
+                  onPrevStep={() => goToPreviousStep()}
+                  onNextStep={() => goToNextStep(true)}
                 />
               );
-            case AirdropSteps.REVIEW_TRANSACTION:
+            case Step.REVIEW_TRANSACTION:
               return (
                 <ReviewTransaction
                   account={account}
@@ -157,74 +197,17 @@ export default function AirdropPage(): ReactElement {
                   delegateAddress={
                     delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */
                   }
-                  onPrevStep={() => setActiveStep(AirdropSteps.CHOOSE_DELEGATE)}
-                  onNextStep={() => {
-                    setActiveStep(AirdropSteps.DELEGATE_COMPLETE);
-                  }}
+                  onPrevStep={() => goToPreviousStep()}
+                  onNextStep={() => goToNextStep(true)}
                 />
               );
-            case AirdropSteps.DELEGATE_COMPLETE:
+            case Step.DELEGATE_COMPLETE:
               return <ClaimSuccessful />;
           }
         })()}
       </div>
     </div>
   );
-}
-function getConnectWalletStatus(
-  account: string | null | undefined,
-  activeStep: AirdropSteps | undefined,
-): StepStatus {
-  if (account) {
-    return StepStatus.COMPLETE;
-  }
-  if (activeStep === AirdropSteps.START_AIRDROP) {
-    return StepStatus.COMPLETE;
-  }
-  return StepStatus.PENDING;
-}
-
-function getDelegateStatus(activeStep: AirdropSteps | undefined): StepStatus {
-  if (
-    activeStep === undefined ||
-    [AirdropSteps.START_AIRDROP, AirdropSteps.AIRDROP_PREVIEW].includes(
-      activeStep,
-    )
-  ) {
-    return StepStatus.PENDING;
-  }
-
-  if (
-    [AirdropSteps.DELEGATE_INSTRUCTIONS, AirdropSteps.CHOOSE_DELEGATE].includes(
-      activeStep,
-    )
-  ) {
-    return StepStatus.CURRENT;
-  }
-
-  return StepStatus.COMPLETE;
-}
-
-function getClaimAndDelegateStatus(
-  activeStep: AirdropSteps | undefined,
-): StepStatus {
-  if (!activeStep) {
-    return StepStatus.PENDING;
-  }
-
-  if (
-    [AirdropSteps.ALREADY_CLAIMED, AirdropSteps.DELEGATE_COMPLETE].includes(
-      activeStep,
-    )
-  ) {
-    return StepStatus.COMPLETE;
-  }
-
-  if (activeStep === AirdropSteps.REVIEW_TRANSACTION) {
-    return StepStatus.CURRENT;
-  }
-
-  return StepStatus.PENDING;
 }
 
 function hasClaimedAirdrop(
