@@ -73,7 +73,7 @@ export default function LookupCard({
 
   return (
     <Card variant={CardVariant.BLUE} className={className}>
-      <div className="flex flex-col gap-2 p-2 text-white sm:p-6">
+      <div className="flex flex-col gap-2 p-2 text-white sm:px-6 sm:py-4">
         <h1 className="mb-2 text-3xl font-semibold">{t`Claim Airdrop`}</h1>
         <p>
           {jt`To check your elligibility for this airdrop, upload or enter the Key and Secret generated while creating the Public ID you shared in ${discordLink} or on ${githubLink}.`}

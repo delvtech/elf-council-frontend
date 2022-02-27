@@ -10,7 +10,7 @@ export interface Step {
 export enum StepStatus {
   COMPLETE = "complete",
   CURRENT = "current",
-  UPCOMING = "upcoming",
+  PENDING = "pending",
 }
 
 interface StepItemProps {
@@ -36,7 +36,7 @@ export function StepItem({
         className={classNames(
           "flex items-center justify-center text-center font-semibold text-principalRoyalBlue",
           {
-            "text-opacity-50": status === StepStatus.UPCOMING,
+            "text-opacity-50": status === StepStatus.PENDING,
           },
         )}
       >
@@ -78,7 +78,7 @@ function StepLabel({ label, status }: StepLabelProps) {
         "flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-principalRoyalBlue",
         {
           "bg-principalRoyalBlue": status === StepStatus.COMPLETE,
-          "border-opacity-50": status === StepStatus.UPCOMING,
+          "border-opacity-50": status === StepStatus.PENDING,
         },
       )}
     >
@@ -86,7 +86,7 @@ function StepLabel({ label, status }: StepLabelProps) {
         className={classNames(
           "font-semibold",
           status === "complete" ? "text-white" : "text-principalRoyalBlue",
-          { "text-opacity-50": status === StepStatus.UPCOMING },
+          { "text-opacity-50": status === StepStatus.PENDING },
         )}
       >
         {label}

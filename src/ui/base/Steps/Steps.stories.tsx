@@ -24,7 +24,7 @@ const Story: ComponentStory<typeof StepsComponent> = (args) => (
 
     <StepDividerComponent />
 
-    <StepItemComponent stepLabel="3" status={StepStatus.UPCOMING}>
+    <StepItemComponent stepLabel="3" status={StepStatus.PENDING}>
       Step Three
     </StepItemComponent>
   </StepsComponent>

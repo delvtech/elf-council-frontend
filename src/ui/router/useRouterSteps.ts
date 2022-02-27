@@ -4,102 +4,159 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { useRouter } from "next/router";
 import { useParams } from "src/ui/router/useParams";
 
-interface UseRouterStepsOptions {
+export enum StepStatus {
+  COMPLETE,
+  CURRENT,
+  PENDING,
+}
+
+interface UseRouterStepsOptions<Step> {
   paramName?: string;
+  steps?: Step[];
   initialCompleted?: number;
 }
 
-export default function useRouterSteps(options?: UseRouterStepsOptions): {
-  canViewStep: (step: number) => boolean;
+// Step numbers are 1-indexed. They do not start at 0.
+export default function useRouterSteps<Step = number>(
+  options?: UseRouterStepsOptions<Step>,
+): {
+  canViewStep: (step: number | Step) => boolean;
   completedSteps: number;
-  completeStep: (step: number) => void;
-  currentStep: number;
-  getStepPath: (step: number) => string;
+  completeStep: (step: number | Step) => void;
+  currentStep: Step;
+  getStepNumber: (step: number | Step) => number;
+  getStepPath: (step: number | Step) => string;
+  getStepStatus: (step: number | Step) => StepStatus;
   goToNextStep: () => void;
   goToPreviousStep: () => void;
-  goToStep: (step: number) => void;
+  goToStep: (step: number | Step) => void;
   setCompletedSteps: Dispatch<SetStateAction<number>>;
 } {
-  // the options object can be passed as the first argument to accept the
-  // default paramName
-  const { paramName = "step", initialCompleted = 0 } = options || {};
-  const [completedSteps, setCompletedSteps] = useState(initialCompleted);
-  const { pathname, push, replace } = useRouter();
+  // using useRef to ensure these value never trigger rerenders when changed
+  const {
+    paramName = "step",
+    initialCompleted = 0,
+    steps,
+  } = useRef<UseRouterStepsOptions<Step>>(options || {}).current;
 
+  const { pathname, push, replace } = useRouter();
   const { [paramName]: paramStep } = useParams();
+
+  const [completedSteps, setCompletedSteps] = useState(initialCompleted);
+
   const currentStep = useMemo(() => {
-    return parseInt(paramStep as string) || 1;
-  }, [paramStep]);
+    if (steps) {
+      return (paramStep as unknown as Step) || steps[0];
+    }
+    return (paramStep ? parseInt(paramStep) : 1) as unknown as Step;
+  }, [paramStep, steps]);
+
+  const getStepNumber = useCallback(
+    (step: number | Step) => {
+      let stepNumber = 0;
+      if (typeof step === "number") {
+        stepNumber = Math.round(step);
+      } else if (steps) {
+        stepNumber = steps.indexOf(step) + 1;
+      }
+      return stepNumber;
+    },
+    [steps],
+  );
 
   const getStepPath = useCallback(
-    (step: number) => {
+    (step: number | Step) => {
+      const pathStart = `${pathname}?${paramName}=`;
+      if (steps) {
+        return `${pathStart}${
+          typeof step === "number" ? steps[step - 1] : step
+        }`;
+      }
       return `${pathname}?${paramName}=${step}`;
     },
-    [pathname, paramName],
+    [pathname, paramName, steps],
   );
 
-  const navigateToStep = useCallback(
-    (step: number): void => {
-      push(getStepPath(step));
+  const getStepStatus = useCallback(
+    (step: number | Step) => {
+      if (getStepNumber(step) < getStepNumber(currentStep)) {
+        return StepStatus.COMPLETE;
+      }
+      if (getStepNumber(step) > getStepNumber(currentStep)) {
+        return StepStatus.PENDING;
+      }
+      return StepStatus.CURRENT;
     },
-    [push, getStepPath],
+    [getStepNumber, currentStep],
   );
 
+  // returns false if the step is one of the following:
+  //   - 0 or less
+  //   - greater than the step after the last completed one
+  //   - isn't a number or in steps
   const canViewStep = useCallback(
-    (step: number) => {
-      return step <= completedSteps + 1;
+    (step: number | Step) => {
+      const stepNumber = getStepNumber(step);
+      return stepNumber > 0 && stepNumber <= completedSteps + 1;
     },
-    [completedSteps],
+    [getStepNumber, completedSteps],
   );
 
-  const completeStep = useCallback((step: number) => {
-    setCompletedSteps((completedSteps) => Math.max(completedSteps, step));
-  }, []);
-
-  const goToPreviousStep = useCallback(() => {
-    if (currentStep > 0) {
-      navigateToStep(currentStep - 1);
-    } else {
-      // TODO: error notification?
-    }
-  }, [currentStep, navigateToStep]);
-
-  const goToNextStep = useCallback(() => {
-    if (canViewStep(currentStep + 1)) {
-      navigateToStep(currentStep + 1);
-    } else {
-      // TODO: error notification?
-    }
-  }, [currentStep, canViewStep, navigateToStep]);
+  const completeStep = useCallback(
+    (step: number | Step) => {
+      setCompletedSteps((completedSteps) =>
+        Math.max(completedSteps, getStepNumber(step)),
+      );
+    },
+    [getStepNumber],
+  );
 
   const goToStep = useCallback(
-    (step: number) => {
-      if (step >= 0 && canViewStep(step)) {
-        navigateToStep(step);
+    (step: number | Step) => {
+      if (canViewStep(step)) {
+        push(getStepPath(step));
       } else {
         // TODO: error notification?
       }
     },
-    [canViewStep, navigateToStep],
+    [canViewStep, push, getStepPath],
   );
+
+  const goToPreviousStep = useCallback(() => {
+    goToStep(getStepNumber(currentStep) - 1);
+  }, [goToStep, getStepNumber, currentStep]);
+
+  const goToNextStep = useCallback(() => {
+    goToStep(getStepNumber(currentStep) + 1);
+  }, [goToStep, getStepNumber, currentStep]);
 
   useEffect(() => {
     if (!canViewStep(currentStep)) {
       replace(getStepPath(completedSteps + 1), undefined, { shallow: true });
     }
-  }, [canViewStep, currentStep, replace, getStepPath, completedSteps]);
+  }, [
+    paramStep,
+    canViewStep,
+    currentStep,
+    replace,
+    getStepPath,
+    completedSteps,
+  ]);
 
   return {
     canViewStep,
     completedSteps,
     completeStep,
     currentStep,
+    getStepNumber,
     getStepPath,
+    getStepStatus,
     goToNextStep,
     goToPreviousStep,
     goToStep,

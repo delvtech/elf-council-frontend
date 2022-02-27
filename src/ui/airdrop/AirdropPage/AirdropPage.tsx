@@ -181,7 +181,7 @@ function getConnectWalletStatus(
   if (activeStep === AirdropSteps.START_AIRDROP) {
     return StepStatus.COMPLETE;
   }
-  return StepStatus.UPCOMING;
+  return StepStatus.PENDING;
 }
 
 function getDelegateStatus(activeStep: AirdropSteps | undefined): StepStatus {
@@ -191,7 +191,7 @@ function getDelegateStatus(activeStep: AirdropSteps | undefined): StepStatus {
       activeStep,
     )
   ) {
-    return StepStatus.UPCOMING;
+    return StepStatus.PENDING;
   }
 
   if (
@@ -209,7 +209,7 @@ function getClaimAndDelegateStatus(
   activeStep: AirdropSteps | undefined,
 ): StepStatus {
   if (!activeStep) {
-    return StepStatus.UPCOMING;
+    return StepStatus.PENDING;
   }
 
   if (
@@ -224,7 +224,7 @@ function getClaimAndDelegateStatus(
     return StepStatus.CURRENT;
   }
 
-  return StepStatus.UPCOMING;
+  return StepStatus.PENDING;
 }
 
 function hasClaimedAirdrop(
