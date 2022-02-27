@@ -33,9 +33,9 @@ export default function useRouterSteps<Step = number>(
   getStepNumber: (step: number | Step) => number;
   getStepPath: (step: number | Step) => string;
   getStepStatus: (step: number | Step) => StepStatus;
-  goToNextStep: () => void;
+  goToNextStep: (completeCurrent?: boolean) => void;
   goToPreviousStep: () => void;
-  goToStep: (step: number | Step) => void;
+  goToStep: (step: number | Step, completePrereqs?: boolean) => void;
   setCompletedSteps: Dispatch<SetStateAction<number>>;
 } {
   // using useRef to ensure these value never trigger rerenders when changed
@@ -118,23 +118,29 @@ export default function useRouterSteps<Step = number>(
   );
 
   const goToStep = useCallback(
-    (step: number | Step) => {
-      if (canViewStep(step)) {
+    (step: number | Step, completePrereqs?: boolean) => {
+      if (completePrereqs) {
+        completeStep(getStepNumber(step) - 1);
+        push(getStepPath(step));
+      } else if (canViewStep(step)) {
         push(getStepPath(step));
       } else {
         // TODO: error notification?
       }
     },
-    [canViewStep, push, getStepPath],
+    [canViewStep, push, getStepPath, completeStep, getStepNumber],
   );
 
   const goToPreviousStep = useCallback(() => {
     goToStep(getStepNumber(currentStep) - 1);
   }, [goToStep, getStepNumber, currentStep]);
 
-  const goToNextStep = useCallback(() => {
-    goToStep(getStepNumber(currentStep) + 1);
-  }, [goToStep, getStepNumber, currentStep]);
+  const goToNextStep = useCallback(
+    (completeCurrent?: boolean) => {
+      goToStep(getStepNumber(currentStep) + 1, completeCurrent);
+    },
+    [goToStep, getStepNumber, currentStep],
+  );
 
   useEffect(() => {
     if (!canViewStep(currentStep)) {
