@@ -16,3 +16,6 @@ storybook-static/
 
 # coverage files created by Jest
 coverage/
+
+# storybook build log
+build-storybook.log
