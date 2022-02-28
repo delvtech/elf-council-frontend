@@ -1,4 +1,6 @@
 import * as NextImage from "next/image";
+import { addDecorator } from "@storybook/react";
+import { withA11y } from "@storybook/addon-a11y";
 import "../styles/globals.css";
 
 const OriginalNextImage = NextImage.default;
@@ -44,3 +46,5 @@ export const parameters = {
     values: [{ name: "Light", value: "#FAF9F9" }],
   },
 };
+
+addDecorator(withA11y);
