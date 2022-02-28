@@ -152,10 +152,10 @@ export default function AirdropPage(): ReactElement {
                   walletConnectionActive={active}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
-                      goToStep(Step.ALREADY_CLAIMED, true);
+                      goToStep(Step.ALREADY_CLAIMED, { completePrereqs: true });
                       return;
                     }
-                    goToNextStep(true);
+                    goToNextStep({ completePrereqs: true });
                   }}
                 />
               );
@@ -168,7 +168,7 @@ export default function AirdropPage(): ReactElement {
                 <AirdropPreview
                   account={account}
                   onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep(true)}
+                  onNextStep={() => goToNextStep({ completePrereqs: true })}
                 />
               );
 
@@ -177,7 +177,7 @@ export default function AirdropPage(): ReactElement {
                 <DelegateInstructions
                   account={account}
                   onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep(true)}
+                  onNextStep={() => goToNextStep({ completePrereqs: true })}
                 />
               );
             case Step.CHOOSE_DELEGATE:
@@ -186,7 +186,7 @@ export default function AirdropPage(): ReactElement {
                   account={account as string}
                   onChooseDelegate={setDelegateAddress}
                   onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep(true)}
+                  onNextStep={() => goToNextStep({ completePrereqs: true })}
                 />
               );
             case Step.REVIEW_TRANSACTION:
@@ -198,7 +198,7 @@ export default function AirdropPage(): ReactElement {
                     delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */
                   }
                   onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep(true)}
+                  onNextStep={() => goToNextStep({ completePrereqs: true })}
                 />
               );
             case Step.DELEGATE_COMPLETE:

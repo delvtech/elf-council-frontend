@@ -22,6 +22,13 @@ interface UseRouterStepsOptions<Step> {
   initialCompleted?: number;
 }
 
+interface goToStepOptions {
+  /**
+   * Complete prerequisite steps for the target step
+   */
+  completePrereqs?: boolean;
+}
+
 // Step numbers are 1-indexed. They do not start at 0.
 export default function useRouterSteps<Step = number>(
   options?: UseRouterStepsOptions<Step>,
@@ -33,9 +40,9 @@ export default function useRouterSteps<Step = number>(
   getStepNumber: (step: number | Step) => number;
   getStepPath: (step: number | Step) => string;
   getStepStatus: (step: number | Step) => StepStatus;
-  goToNextStep: (completeCurrent?: boolean) => void;
+  goToNextStep: (options?: goToStepOptions) => void;
   goToPreviousStep: () => void;
-  goToStep: (step: number | Step, completePrereqs?: boolean) => void;
+  goToStep: (step: number | Step, options?: goToStepOptions) => void;
   setCompletedSteps: Dispatch<SetStateAction<number>>;
 } {
   // using useRef to ensure these value never trigger rerenders when changed
@@ -118,8 +125,8 @@ export default function useRouterSteps<Step = number>(
   );
 
   const goToStep = useCallback(
-    (step: number | Step, completePrereqs?: boolean) => {
-      if (completePrereqs) {
+    (step: number | Step, options?: goToStepOptions) => {
+      if (options?.completePrereqs) {
         completeStep(getStepNumber(step) - 1);
         push(getStepPath(step));
       } else if (canViewStep(step)) {
@@ -136,8 +143,8 @@ export default function useRouterSteps<Step = number>(
   }, [goToStep, getStepNumber, currentStep]);
 
   const goToNextStep = useCallback(
-    (completeCurrent?: boolean) => {
-      goToStep(getStepNumber(currentStep) + 1, completeCurrent);
+    (options?: goToStepOptions) => {
+      goToStep(getStepNumber(currentStep) + 1, options);
     },
     [goToStep, getStepNumber, currentStep],
   );
