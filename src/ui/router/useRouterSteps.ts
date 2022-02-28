@@ -22,6 +22,13 @@ interface UseRouterStepsOptions<Step> {
   initialCompleted?: number;
 }
 
+interface goToStepOptions {
+  /**
+   * Complete prerequisite steps for the target step
+   */
+  completePrereqs?: boolean;
+}
+
 // Step numbers are 1-indexed. They do not start at 0.
 export default function useRouterSteps<Step = number>(
   options?: UseRouterStepsOptions<Step>,
@@ -33,9 +40,9 @@ export default function useRouterSteps<Step = number>(
   getStepNumber: (step: number | Step) => number;
   getStepPath: (step: number | Step) => string;
   getStepStatus: (step: number | Step) => StepStatus;
-  goToNextStep: () => void;
+  goToNextStep: (options?: goToStepOptions) => void;
   goToPreviousStep: () => void;
-  goToStep: (step: number | Step) => void;
+  goToStep: (step: number | Step, options?: goToStepOptions) => void;
   setCompletedSteps: Dispatch<SetStateAction<number>>;
 } {
   // using useRef to ensure these value never trigger rerenders when changed
@@ -118,23 +125,29 @@ export default function useRouterSteps<Step = number>(
   );
 
   const goToStep = useCallback(
-    (step: number | Step) => {
-      if (canViewStep(step)) {
+    (step: number | Step, options?: goToStepOptions) => {
+      if (options?.completePrereqs) {
+        completeStep(getStepNumber(step) - 1);
+        push(getStepPath(step));
+      } else if (canViewStep(step)) {
         push(getStepPath(step));
       } else {
         // TODO: error notification?
       }
     },
-    [canViewStep, push, getStepPath],
+    [canViewStep, push, getStepPath, completeStep, getStepNumber],
   );
 
   const goToPreviousStep = useCallback(() => {
     goToStep(getStepNumber(currentStep) - 1);
   }, [goToStep, getStepNumber, currentStep]);
 
-  const goToNextStep = useCallback(() => {
-    goToStep(getStepNumber(currentStep) + 1);
-  }, [goToStep, getStepNumber, currentStep]);
+  const goToNextStep = useCallback(
+    (options?: goToStepOptions) => {
+      goToStep(getStepNumber(currentStep) + 1, options);
+    },
+    [goToStep, getStepNumber, currentStep],
+  );
 
   useEffect(() => {
     if (!canViewStep(currentStep)) {
