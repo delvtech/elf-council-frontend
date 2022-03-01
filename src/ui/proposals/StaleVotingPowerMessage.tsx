@@ -31,6 +31,7 @@ export function StaleVotingPowerMessage({
     proposal.created,
   );
   const isLockingVaultVotingPowerStale =
+    parseEther(historicalLockingVaultVotePower).gt(0) &&
     historicalLockingVaultVotePower !== lockingVaultVotePower;
 
   const vestingVaultVotePower = useVestingVaultVotingPower(
@@ -42,6 +43,7 @@ export function StaleVotingPowerMessage({
     proposal.created,
   );
   const isVestingVaultVotingPowerStale =
+    parseEther(historicalVestingVaultVotePower).gt(0) &&
     historicalVestingVaultVotePower !== vestingVaultVotePower;
 
   const isVotingPowerStale =
