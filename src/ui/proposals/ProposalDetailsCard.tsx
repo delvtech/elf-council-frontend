@@ -48,6 +48,7 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
+import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
 
 const votingPowerTooltipText = t`The voting power delegated to you for this proposal`;
 
@@ -223,11 +224,15 @@ export function ProposalDetailsCard(
           />
         )}
         <BalanceWithLabel
-          className="mt-4 w-full"
+          className="my-4 w-full"
           balance={accountVotingPower}
           tooltipText={votingPowerTooltipText}
           label={t`Voting Power`}
         />
+
+        {isVotingOpen ? (
+          <StaleVotingPowerMessage account={account} proposal={proposal} />
+        ) : null}
 
         <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
           {etherscanLink && (
