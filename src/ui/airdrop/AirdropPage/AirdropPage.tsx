@@ -152,10 +152,10 @@ export default function AirdropPage(): ReactElement {
                   walletConnectionActive={active}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
-                      goToStep(Step.ALREADY_CLAIMED, { completePrereqs: true });
+                      goToStep(Step.ALREADY_CLAIMED);
                       return;
                     }
-                    goToNextStep({ completePrereqs: true });
+                    goToNextStep();
                   }}
                 />
               );
@@ -167,8 +167,8 @@ export default function AirdropPage(): ReactElement {
               return (
                 <AirdropPreview
                   account={account}
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
 
@@ -176,8 +176,8 @@ export default function AirdropPage(): ReactElement {
               return (
                 <DelegateInstructions
                   account={account}
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
             case Step.CHOOSE_DELEGATE:
@@ -185,8 +185,8 @@ export default function AirdropPage(): ReactElement {
                 <ChooseDelegate
                   account={account as string}
                   onChooseDelegate={setDelegateAddress}
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
             case Step.REVIEW_TRANSACTION:
@@ -197,8 +197,8 @@ export default function AirdropPage(): ReactElement {
                   delegateAddress={
                     delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */
                   }
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
             case Step.DELEGATE_COMPLETE:
