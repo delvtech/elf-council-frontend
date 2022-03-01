@@ -1,22 +1,61 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-// import { useQuery } from "react-query";
-// import useWorker from "src/ui/base/useWorker";
-import useRouterSteps from "src/ui/router/useRouterSteps";
-import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
-import { t } from "ttag";
-import { utils } from "ethers";
+import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
 import { ZKData } from "src/ui/zk/types";
-import ClaimCard from "./ClaimCard";
+import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
-import ErrorCard from "./ErrorCard";
+import NotEligibleCard from "./NotEligibleCard";
+import DelegateInfoCard from "./DelegateInfoCard";
+import DelegateCard from "./DelegateCard";
+import TransactionCard from "./TransactionCard";
+import ShareCard from "./ShareCard";
+import { useSigner } from "src/ui/signer/useSigner";
+import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
+import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
+import {
+  StepItem,
+  StepStatus as StepItemStatus,
+} from "src/ui/base/Steps/StepItem";
+import { StepDivider } from "src/ui/base/Steps/StepDivider";
+import Steps from "src/ui/base/Steps/Steps";
+// import useWorker from "src/ui/base/useWorker";
+// import { useQuery } from "react-query";
+import { t } from "ttag";
+import { utils } from "ethers";
+
+export enum Step {
+  LOOKUP = "lookup",
+  ELIGIBILITY = "eligibility",
+  DELEGATE_INFO = "info",
+  DELEGATE = "delegate",
+  TRANSACTION = "transaction",
+  SHARE = "share",
+}
 
 export default function ClaimPage(): ReactElement {
-  const { currentStep, completeStep, goToNextStep, goToPreviousStep } =
-    useRouterSteps();
+  const {
+    completeStep,
+    canViewStep,
+    getStepPath,
+    getStepStatus,
+    goToNextStep,
+    goToPreviousStep,
+  } = useRouterSteps({
+    steps: [
+      Step.LOOKUP,
+      Step.ELIGIBILITY,
+      Step.DELEGATE_INFO,
+      Step.DELEGATE,
+      Step.TRANSACTION,
+      Step.SHARE,
+    ],
+  });
+  const { account, active, library } = useWeb3React();
+  const signer = useSigner(account, library);
   const [data, setData] = useState<ZKData>();
   const [publicId, setPublicId] = useState<string>();
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
+  const [delegateAddress, setDelegateAddress] = useState<string>();
   // TODO
   // const proofCallResult =
   //   useWorker(a16zLibrary.generateProofCallData);
@@ -60,44 +99,135 @@ export default function ClaimPage(): ReactElement {
     }
   }, [data /*, merkleTree */]);
 
-  const handleStep1Complete = useCallback(
+  const handleLookupStepComplete = useCallback(
     (data: ZKData): void => {
       setData(data);
-      completeStep(1);
+      completeStep(Step.DELEGATE_INFO);
     },
     [completeStep],
   );
 
+  const handleDelegateStepComplete = useCallback(
+    (address: string) => {
+      setDelegateAddress(address);
+      completeStep(Step.TRANSACTION);
+    },
+    [completeStep],
+  );
+
+  const handleTransactionComplete = useCallback(() => {
+    completeStep(Step.TRANSACTION);
+    goToNextStep();
+  }, [completeStep, goToNextStep]);
+
   // TODO: transition styles
-  const getStepClassName = (step: number) =>
-    step > currentStep
-      ? "hidden" // upcoming step
-      : step < currentStep
-      ? "hidden" // completed step
-      : "block"; // current step
+  const getStepClassName = (step: Step) => {
+    switch (getStepStatus(step)) {
+      case StepStatus.CURRENT:
+        return "block";
+      default:
+        return "hidden";
+    }
+  };
+
+  const getStepItemStatus = (steps: Step[]): StepItemStatus => {
+    const statuses = steps.map((step) => getStepStatus(step));
+    if (statuses.includes(StepStatus.CURRENT)) {
+      return StepItemStatus.CURRENT;
+    }
+    if (statuses.includes(StepStatus.PENDING)) {
+      return StepItemStatus.PENDING;
+    }
+    return StepItemStatus.COMPLETE;
+  };
 
   return (
-    <div className="flex max-w-4xl flex-1 flex-col items-center gap-12">
-      {/* STEP 1 */}
+    <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
+      <div style={{ width: 600, maxWidth: "100%" }}>
+        <Steps className="w-full">
+          <StepItem
+            stepLabel="1"
+            status={getStepItemStatus([Step.LOOKUP, Step.ELIGIBILITY])}
+            href={getStepPath(Step.LOOKUP)}
+          >{t`View Airdrop`}</StepItem>
+          <StepDivider />
+          <StepItem
+            stepLabel="2"
+            status={getStepItemStatus([Step.DELEGATE_INFO, Step.DELEGATE])}
+            href={
+              canViewStep(Step.DELEGATE_INFO)
+                ? getStepPath(Step.DELEGATE_INFO)
+                : undefined
+            }
+          >{t`Choose Delegate`}</StepItem>
+          <StepDivider />
+          <StepItem
+            stepLabel="3"
+            status={getStepItemStatus([Step.TRANSACTION])}
+            href={
+              canViewStep(Step.TRANSACTION)
+                ? getStepPath(Step.TRANSACTION)
+                : undefined
+            }
+          >{t`Review Transaction`}</StepItem>
+        </Steps>
+      </div>
+
+      {/* Lookup */}
       <LookupCard
-        className={getStepClassName(1)}
-        onComplete={handleStep1Complete}
+        className={getStepClassName(Step.LOOKUP)}
+        onComplete={handleLookupStepComplete}
         onNextClick={goToNextStep}
       />
 
-      {/* STEP 2 */}
+      {/* Eligibility */}
       {publicId && !alreadyClaimed && (
-        <ClaimCard className={getStepClassName(2)} />
-      )}
-      {publicId && alreadyClaimed && (
-        <AlreadyClaimedCard className={getStepClassName(2)} />
-      )}
-      {!publicId && (
-        <ErrorCard
-          onTryAgain={goToPreviousStep}
-          className={getStepClassName(2)}
+        <EligibleCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          onBackClick={goToPreviousStep}
+          onNextClick={goToNextStep}
         />
       )}
+      {publicId && alreadyClaimed && (
+        <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
+      )}
+      {!publicId && (
+        <NotEligibleCard
+          onTryAgain={goToPreviousStep}
+          className={getStepClassName(Step.ELIGIBILITY)}
+        />
+      )}
+
+      {/* Delegation Information */}
+      <DelegateInfoCard
+        className={getStepClassName(Step.DELEGATE_INFO)}
+        onBackClick={goToPreviousStep}
+        onNextClick={goToNextStep}
+      />
+
+      {/* Delegate */}
+      <DelegateCard
+        account={account as string}
+        className={getStepClassName(Step.DELEGATE)}
+        onComplete={handleDelegateStepComplete}
+        onBackClick={goToPreviousStep}
+        onNextClick={goToNextStep}
+      />
+
+      {/* Review & Initiate Transaction */}
+      {account && signer && delegateAddress && (
+        <TransactionCard
+          className={getStepClassName(Step.TRANSACTION)}
+          account={account}
+          signer={signer}
+          delegateAddress={delegateAddress}
+          onBackClick={goToPreviousStep}
+          onComplete={handleTransactionComplete}
+        />
+      )}
+
+      {/* Share */}
+      <ShareCard className={getStepClassName(Step.SHARE)} />
 
       <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">
         <span className="text-sm">{t`Powered by`}</span>

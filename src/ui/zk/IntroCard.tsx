@@ -31,7 +31,7 @@ export default function IntroCard({
 }: IntroCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
-      <div className="p-2 text-white sm:p-6">
+      <div className="p-2 text-white sm:px-6 sm:py-4">
         <h1 className="mb-4 text-4xl font-semibold text-white">{t`${platformName} Airdrop`}</h1>
         <p>{jt`This airdrop utilizes a method named Zero Knowledge Proof that allows you to claim participation in our governance system based on your ${platformName} ID without revealing any personal information. You can ${learnMoreHereLink}.`}</p>
         <H2 className="mt-4 text-2xl text-white">{t`How does it work?`}</H2>

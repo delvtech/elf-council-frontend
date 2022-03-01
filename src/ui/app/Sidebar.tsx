@@ -134,12 +134,11 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
 
   return (
     <div className="text-center">
-      {/* Don't use the next router for this, since the user might already be on
-      the airdrop page when they click this. This way, users can always go back
-      to the beginning of the airdrop by clicking the sidebar link */}
-      <AnchorButton href={link} variant={ButtonVariant.GRADIENT}>
-        {t`Claim ELFI`}
-      </AnchorButton>
+      <Link href={link} passHref>
+        <AnchorButton variant={ButtonVariant.GRADIENT}>
+          {t`Claim ELFI`}
+        </AnchorButton>
+      </Link>
     </div>
   );
 }

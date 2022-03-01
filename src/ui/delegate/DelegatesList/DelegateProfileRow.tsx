@@ -12,7 +12,6 @@ import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 
 interface DelegateProfileRowProps {
-  account: string | null | undefined;
   selected: boolean;
   highlightSelected?: boolean;
   delegate: Delegate;

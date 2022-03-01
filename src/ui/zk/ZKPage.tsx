@@ -4,8 +4,11 @@ import EncryptionCard from "./EncryptionCard";
 import GitHubShareCard from "./GitHubShareCard";
 import DiscordShareCard from "./DiscordShareCard";
 import { Platform } from "./types";
-import useRouterSteps from "src/ui/router/useRouterSteps";
-import { StepItem, StepStatus } from "src/ui/base/Steps/StepItem";
+import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
+import {
+  StepItem,
+  StepStatus as StepItemStatus,
+} from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
@@ -22,12 +25,12 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
   const secret = keySecretPair?.[1];
   const [publicId, setPublicId] = useState<string>();
   const {
-    currentStep,
     completeStep,
     goToNextStep,
     goToPreviousStep,
     getStepPath,
     canViewStep,
+    getStepStatus,
   } = useRouterSteps({ initialCompleted: 1 });
 
   let platformName = "";
@@ -42,26 +45,23 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
 
   // TODO: transition styles
   const getStepClassName = (step: number) => {
-    if (step > currentStep) {
-      // upcoming
-      return "hidden";
+    switch (getStepStatus(step)) {
+      case StepStatus.CURRENT:
+        return "block";
+      default:
+        return "hidden";
     }
-    if (step < currentStep) {
-      // completed
-      return "hidden";
-    }
-    // current
-    return "block";
   };
 
-  const getStepStatus = (step: number): StepStatus => {
-    if (step > currentStep) {
-      return StepStatus.UPCOMING;
+  const getStepItemStatus = (step: number): StepItemStatus => {
+    switch (getStepStatus(step)) {
+      case StepStatus.COMPLETE:
+        return StepItemStatus.COMPLETE;
+      case StepStatus.PENDING:
+        return StepItemStatus.PENDING;
+      default:
+        return StepItemStatus.CURRENT;
     }
-    if (step < currentStep) {
-      return StepStatus.COMPLETE;
-    }
-    return StepStatus.CURRENT;
   };
 
   const handleEncryptionStepComplete = () => {
@@ -78,19 +78,19 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
         <Steps className="w-full">
           <StepItem
             stepLabel="1"
-            status={getStepStatus(1)}
+            status={getStepItemStatus(1)}
             href={getStepPath(1)}
           >{t`Get Started`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="2"
-            status={getStepStatus(2)}
+            status={getStepItemStatus(2)}
             href={canViewStep(2) ? getStepPath(2) : undefined}
           >{t`Encryption`}</StepItem>
           <StepDivider />
           <StepItem
             stepLabel="3"
-            status={getStepStatus(3)}
+            status={getStepItemStatus(3)}
             href={canViewStep(3) ? getStepPath(3) : undefined}
           >{t`Share Public ID`}</StepItem>
         </Steps>

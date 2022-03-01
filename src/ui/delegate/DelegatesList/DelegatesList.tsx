@@ -120,7 +120,6 @@ function DelegatesList({
             return (
               <li key={`${delegate.address}-${idx}}`}>
                 <DelegateProfileRow
-                  account={account}
                   selected={selected}
                   delegate={delegate}
                   actionButton={
