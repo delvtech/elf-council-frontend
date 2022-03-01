@@ -34,7 +34,7 @@ export function ElementIcon({
     <div
       className={classNames(
         className,
-        "flex items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
+        "flex w-max items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
       )}
     >
       <Image
