@@ -8,7 +8,7 @@ export function useVestingVaultVotingPower(
   account: string | undefined | null,
   atBlockNumber?: number,
 ): string {
-  return useQueryVotePower(account, vestingContract, atBlockNumber);
+  return useQueryVotePower(account, vestingContract, atBlockNumber, "0x00");
 }
 
 export function useVestingVaultVotingPowerView(

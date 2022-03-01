@@ -1,6 +1,7 @@
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { formatEther } from "@ethersproject/units";
 import { LockingVault, VestingVault } from "elf-council-typechain";
+import { BytesLike } from "ethers";
 
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
@@ -14,6 +15,7 @@ export function useQueryVotePower(
   account: string | undefined | null,
   vaultContract: LockingVault | VestingVault,
   atBlockNumber?: number,
+  extraData?: BytesLike,
 ): string {
   const { data: latestBlockNumber } = useLatestBlockNumber();
 
@@ -23,8 +25,12 @@ export function useQueryVotePower(
     vaultContract,
     "queryVotePower",
     {
-      callArgs: [account as string, blockNumber as number, "0x00"],
-      enabled: !!account && !!blockNumber,
+      callArgs: [
+        account as string,
+        blockNumber as number,
+        extraData as BytesLike,
+      ],
+      enabled: !!account && !!blockNumber && !!extraData,
       keepPreviousData: true,
     },
   );

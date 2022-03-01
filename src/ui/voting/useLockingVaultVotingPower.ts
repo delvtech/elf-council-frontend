@@ -14,7 +14,12 @@ export function useLockingVaultVotingPower(
   account: string | undefined | null,
   atBlockNumber?: number,
 ): string {
-  return useQueryVotePower(account, lockingVaultContract, atBlockNumber);
+  return useQueryVotePower(
+    account,
+    lockingVaultContract,
+    atBlockNumber,
+    "0x00",
+  );
 }
 
 /**
