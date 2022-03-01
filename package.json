@@ -96,7 +96,7 @@
     "lint-staged": "^12.3.4",
     "merkletreejs": "^0.2.30",
     "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.7",
+    "prettier-plugin-tailwindcss": "^0.1.8",
     "stylelint": "^14.5.3",
     "stylelint-config-recommended": "^7.0.0",
     "ts-jest": "^26.5.6",
