@@ -71,7 +71,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                     : "text-blueGrey"
                 }
               >
-                <span>{formatBalance(votePower)}</span>
+                <span>{formatBalance(votePower, 1)}</span>
               </span>
             </div>
           </div>
@@ -84,7 +84,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
             }
           >
-            <span>{formatBalance(votePower)}</span>
+            <span>{formatBalance(votePower, 1)}</span>
           </span>
         </div>
 
