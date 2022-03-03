@@ -1,7 +1,6 @@
 import { ReactElement } from "react";
 import classNames from "classnames";
 import { t } from "ttag";
-import { BadgeCheckIcon, ExclamationCircleIcon } from "@heroicons/react/solid";
 import TextInput from "src/ui/base/Input/TextInput";
 import { InputValidationIcon } from "src/ui/base/InputValidationIcon";
 interface DelegateAddressInputProps {
@@ -10,8 +9,6 @@ interface DelegateAddressInputProps {
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   invalidAddress: boolean;
-  delegationSuccess: boolean;
-  delegationFail: boolean;
 }
 
 function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
@@ -21,8 +18,6 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
     setDelegateAddressInput,
     selectedDelegate,
     invalidAddress,
-    delegationSuccess,
-    delegationFail,
   } = props;
 
   return (
@@ -43,20 +38,6 @@ function DelegateAddressInput(props: DelegateAddressInputProps): ReactElement {
         error={delegateAddressInput.length > 0 && invalidAddress}
         autoComplete="off"
       />
-
-      {delegationSuccess ? (
-        <div className="absolute inset-0 flex items-center justify-center gap-2 bg-topaz">
-          <span className="font-bold text-white">{t`Delegation Successful`}</span>
-          <BadgeCheckIcon className="h-6 fill-white" />
-        </div>
-      ) : null}
-
-      {delegationFail ? (
-        <div className="absolute inset-0 flex items-center justify-center gap-2 bg-deepRed">
-          <span className="font-bold text-white">{t`Delegation Failed`}</span>
-          <ExclamationCircleIcon className="h-6 fill-white" />
-        </div>
-      ) : null}
 
       {!!delegateAddressInput ? (
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
