@@ -16,7 +16,7 @@ import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
-import Tabs, { TabInfo } from "src/ui/base/Tabs/Tabs";
+import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
@@ -74,27 +74,25 @@ export default function ProposalsPage({
     [filteredProposals],
   );
 
-  const proposalTabs: TabInfo[] = useMemo(() => {
-    return [
-      {
-        current: activeTabId === "active",
-        onTabClick: () => setActiveTab("active"),
-        name: t`Active`,
-      },
-      {
-        current: activeTabId === "past",
-        onTabClick: () => setActiveTab("past"),
-        name: t`Past`,
-      },
-    ];
-  }, [activeTabId]);
-
   return (
     <div className="flex h-full lg:justify-center">
       <div className="h-full w-full flex-1 space-y-8 px-8 pt-8 lg:max-w-lg">
         <H1 className="flex-1 text-center text-principalRoyalBlue">{t`On-chain Proposals`}</H1>
         <div className="flex justify-between">
-          <Tabs aria-label={t`Filter proposals`} tabs={proposalTabs} />
+          <Tabs aria-label={t`Filter proposals`}>
+            <Tab
+              first
+              current={activeTabId === "active"}
+              onClick={() => setActiveTab("active")}
+              name={t`Active`}
+            />
+            <Tab
+              last
+              current={activeTabId === "past"}
+              onClick={() => setActiveTab("past")}
+              name={t`Past`}
+            />
+          </Tabs>
           <OffChainProposalsLink />
         </div>
         <div className="flex space-x-12">
