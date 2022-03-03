@@ -9,7 +9,8 @@ import { jt, t } from "ttag";
 const elementIconInBodyText = (
   <ElementIcon
     key="element-icon-in-body-text"
-    className="ml-0.5 mr-1 -mb-1.5 inline-block bg-paleLily"
+    className="ml-0.5 mr-1 inline-block bg-paleLily"
+    inline
     size={IconSize.MEDIUM}
   />
 );
