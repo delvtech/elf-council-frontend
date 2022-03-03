@@ -107,17 +107,7 @@ export default function ProposalsPage({
               onClickItem={onSetActiveProposalId}
             />
           ) : (
-            <div className="my-6 flex-1 text-center text-blueGrey">
-              <span className="-mr-[27px]">
-                <Image
-                  width={327}
-                  height={107}
-                  src="/assets/empty-space-face.svg"
-                  alt=" "
-                />
-              </span>
-              <p className="mt-4 text-xl font-semibold leading-6">{t`no ${activeTabId} proposals`}</p>
-            </div>
+            <NoProposalsEmptyState activeTabId={activeTabId} />
           )}
         </div>
       </div>
@@ -181,4 +171,20 @@ function useFilteredProposals(
 
     return [];
   }, [activeTabId, currentBlockNumber, proposals]);
+}
+
+function NoProposalsEmptyState(props: { activeTabId: TabId }) {
+  return (
+    <div className="my-6 flex-1 text-center text-blueGrey">
+      <span className="-mr-[27px]">
+        <Image
+          width={327}
+          height={107}
+          src="/assets/empty-space-face.svg"
+          alt=" "
+        />
+      </span>
+      <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
+    </div>
+  );
 }
