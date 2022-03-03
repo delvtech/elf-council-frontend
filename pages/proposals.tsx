@@ -2,6 +2,7 @@ import { ProposalsJson } from "elf-council-proposals";
 import React, { ReactElement } from "react";
 import { PROPOSALS_JSON_URL } from "src/elf-council-proposals";
 import PageView from "src/ui/app/PageView";
+import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import ProposalsPage from "src/ui/proposals/ProposalsPage";
 
 interface ProposalsProps {
@@ -9,10 +10,17 @@ interface ProposalsProps {
 }
 export default function Proposals({
   proposalsJson,
-}: ProposalsProps): ReactElement {
+}: ProposalsProps): ReactElement | null {
+  const { data: currentBlockNumber } = useLatestBlockNumber();
+  if (!currentBlockNumber) {
+    return null;
+  }
   return (
     <PageView>
-      <ProposalsPage proposalsJson={proposalsJson} />
+      <ProposalsPage
+        proposalsJson={proposalsJson}
+        currentBlockNumber={currentBlockNumber}
+      />
     </PageView>
   );
 }
