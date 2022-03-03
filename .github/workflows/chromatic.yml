@@ -4,9 +4,12 @@
 name: "Chromatic"
 
 # Event for the workflow
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - chromatic-tests
 
-# List of jobs
+# List of jobsq
 jobs:
   chromatic-deployment:
     # Operating System
