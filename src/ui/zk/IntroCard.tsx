@@ -20,13 +20,13 @@ const learnMoreHereLink = (
 
 interface IntroCardProps {
   className?: string;
-  onNextClick: () => void;
+  onNextStep: () => void;
   platformName: string;
 }
 
 export default function IntroCard({
   className,
-  onNextClick,
+  onNextStep,
   platformName,
 }: IntroCardProps): ReactElement {
   return (
@@ -46,7 +46,7 @@ export default function IntroCard({
         <div className="text-right">
           <Button
             variant={ButtonVariant.GRADIENT}
-            onClick={onNextClick}
+            onClick={onNextStep}
           >{t`Get Started`}</Button>
         </div>
       </div>

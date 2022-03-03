@@ -1,12 +1,11 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
-import { ZKData } from "src/ui/zk/types";
 import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
 import NotEligibleCard from "./NotEligibleCard";
 import DelegateInfoCard from "./DelegateInfoCard";
-import DelegateCard from "./DelegateCard";
+import ChooseDelegateCard from "./ChooseDelegateCard";
 import TransactionCard from "./TransactionCard";
 import ShareCard from "./ShareCard";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -33,8 +32,15 @@ export enum Step {
 }
 
 export default function ClaimPage(): ReactElement {
+  const { account, active, library } = useWeb3React();
+  const signer = useSigner(account, library);
+  const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
+  const key = keySecretPair?.[0];
+  const secret = keySecretPair?.[1];
+  const [publicId, setPublicId] = useState<string>();
+  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
+  const [delegateAddress, setDelegateAddress] = useState<string>();
   const {
-    completeStep,
     canViewStep,
     getStepPath,
     getStepStatus,
@@ -50,12 +56,6 @@ export default function ClaimPage(): ReactElement {
       Step.SHARE,
     ],
   });
-  const { account, active, library } = useWeb3React();
-  const signer = useSigner(account, library);
-  const [data, setData] = useState<ZKData>();
-  const [publicId, setPublicId] = useState<string>();
-  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
-  const [delegateAddress, setDelegateAddress] = useState<string>();
   // TODO
   // const proofCallResult =
   //   useWorker(a16zLibrary.generateProofCallData);
@@ -75,50 +75,27 @@ export default function ClaimPage(): ReactElement {
     // if (data && merkleTree) {
     //   proofCallResult.run(
     //     merkleTree,
-    //     data.privateKey,
-    //     data.secret,
+    //     key,
+    //     secret,
     //     redeemerAddress,
     //   );
     // }
 
     const placeholderSuccessKey =
       "0x321718eb3db448ca864758c7cc54fd72e7a88b982a308f07b16d156fe6592e37";
-    if (data?.privateKey === placeholderSuccessKey) {
-      setPublicId(utils.id(`${data.privateKey}${data.secret}`));
+    const placeholderClaimedKey =
+      "0x181a6585d99fdd4a22d02d1609d4d2a5498777523560905a3c069fd6f61feb1a";
+
+    if (key === placeholderSuccessKey) {
+      setPublicId(utils.id(`${key}${secret}`));
       setAlreadyClaimed(false);
+    } else if (key === placeholderClaimedKey) {
+      setPublicId(utils.id(`${key}${secret}`));
+      setAlreadyClaimed(true);
     } else {
       setPublicId(undefined);
     }
-
-    // TODO: check if already claimed
-    const placeholderClaimedKey =
-      "0x181a6585d99fdd4a22d02d1609d4d2a5498777523560905a3c069fd6f61feb1a";
-    if (data?.privateKey === placeholderClaimedKey) {
-      setPublicId(utils.id(`${data.privateKey}${data.secret}`));
-      setAlreadyClaimed(true);
-    }
-  }, [data /*, merkleTree */]);
-
-  const handleLookupStepComplete = useCallback(
-    (data: ZKData): void => {
-      setData(data);
-      completeStep(Step.DELEGATE_INFO);
-    },
-    [completeStep],
-  );
-
-  const handleDelegateStepComplete = useCallback(
-    (address: string) => {
-      setDelegateAddress(address);
-      completeStep(Step.TRANSACTION);
-    },
-    [completeStep],
-  );
-
-  const handleTransactionComplete = useCallback(() => {
-    completeStep(Step.TRANSACTION);
-    goToNextStep();
-  }, [completeStep, goToNextStep]);
+  }, [key, secret /*, merkleTree */]);
 
   // TODO: transition styles
   const getStepClassName = (step: Step) => {
@@ -176,16 +153,16 @@ export default function ClaimPage(): ReactElement {
       {/* Lookup */}
       <LookupCard
         className={getStepClassName(Step.LOOKUP)}
-        onComplete={handleLookupStepComplete}
-        onNextClick={goToNextStep}
+        onChange={setKeySecretPair}
+        onNextStep={goToNextStep}
       />
 
       {/* Eligibility */}
       {publicId && !alreadyClaimed && (
         <EligibleCard
           className={getStepClassName(Step.ELIGIBILITY)}
-          onBackClick={goToPreviousStep}
-          onNextClick={goToNextStep}
+          onPreviousStep={goToPreviousStep}
+          onNextStep={goToNextStep}
         />
       )}
       {publicId && alreadyClaimed && (
@@ -201,17 +178,17 @@ export default function ClaimPage(): ReactElement {
       {/* Delegation Information */}
       <DelegateInfoCard
         className={getStepClassName(Step.DELEGATE_INFO)}
-        onBackClick={goToPreviousStep}
-        onNextClick={goToNextStep}
+        onPreviousStep={goToPreviousStep}
+        onNextStep={goToNextStep}
       />
 
       {/* Delegate */}
-      <DelegateCard
+      <ChooseDelegateCard
         account={account as string}
         className={getStepClassName(Step.DELEGATE)}
-        onComplete={handleDelegateStepComplete}
-        onBackClick={goToPreviousStep}
-        onNextClick={goToNextStep}
+        onChooseDelegate={setDelegateAddress}
+        onPreviousStep={goToPreviousStep}
+        onNextStep={goToNextStep}
       />
 
       {/* Review & Initiate Transaction */}
@@ -221,8 +198,9 @@ export default function ClaimPage(): ReactElement {
           account={account}
           signer={signer}
           delegateAddress={delegateAddress}
-          onBackClick={goToPreviousStep}
-          onComplete={handleTransactionComplete}
+          onPreviousStep={goToPreviousStep}
+          onSuccess={goToNextStep}
+          onNextStep={goToNextStep}
         />
       )}
 

@@ -21,21 +21,21 @@ import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import classNames from "classnames";
 
-interface DelegateCardProps {
+interface ChooseDelegateCardProps {
   account: string;
   className?: string;
-  onComplete?: (address: string) => void;
-  onBackClick?: () => void;
-  onNextClick?: () => void;
+  onChooseDelegate?: (address: string) => void;
+  onPreviousStep?: () => void;
+  onNextStep?: () => void;
 }
 
-export default function DelegateCard({
+export default function ChooseDelegateCard({
   account,
   className,
-  onComplete,
-  onBackClick,
-  onNextClick,
-}: DelegateCardProps): ReactElement {
+  onChooseDelegate,
+  onPreviousStep,
+  onNextStep,
+}: ChooseDelegateCardProps): ReactElement {
   const [selectedAddress, setSelectedAddress] = useState<string>();
   const [customAddress, setCustomAddress] = useState<string>();
 
@@ -51,15 +51,15 @@ export default function DelegateCard({
 
   useEffect(() => {
     if (isValidSelectedAddress) {
-      onComplete?.(selectedAddress);
+      onChooseDelegate?.(selectedAddress);
     }
-  }, [isValidSelectedAddress, selectedAddress, onComplete]);
+  }, [isValidSelectedAddress, selectedAddress, onChooseDelegate]);
 
   const scrollRef = useCallback((node: HTMLLIElement) => {
     node?.scrollIntoView();
   }, []);
 
-  const handleAddressChange = (address: string) => {
+  const handleChoose = (address: string) => {
     setSelectedAddress(address);
     setCustomAddress("");
   };
@@ -90,7 +90,7 @@ export default function DelegateCard({
           {/* List of delegates */}
           <ul className="flex flex-col gap-y-2">
             {shuffledDelegates.map((delegate) => {
-              const handleChoose = () => handleAddressChange(delegate.address);
+              const handleChooseClick = () => handleChoose(delegate.address);
               const isSelected = selectedAddress === delegate.address;
               return (
                 <li
@@ -103,7 +103,7 @@ export default function DelegateCard({
                     delegate={delegate}
                     actionButton={
                       <Button
-                        onClick={handleChoose}
+                        onClick={handleChooseClick}
                         variant={ButtonVariant.PRIMARY}
                         disabled={isSelected}
                         className="hidden w-full justify-center lg:inline-flex"
@@ -113,7 +113,7 @@ export default function DelegateCard({
                     }
                     profileActionButton={
                       <Button
-                        onClick={handleChoose}
+                        onClick={handleChooseClick}
                         variant={ButtonVariant.PRIMARY}
                         disabled={isSelected}
                         className="inline-flex w-full justify-center"
@@ -132,15 +132,13 @@ export default function DelegateCard({
             <H2 className="text-center">{t`or`}</H2>
             <div className="flex items-center justify-center space-x-4">
               {account && account === selectedAddress ? (
-                <div className={classNames("text-right")}>
-                  <Tag intent={Intent.SUCCESS}>
-                    <CheckCircleIcon height={24} className="mr-2" />
-                    <span className="font-bold">{t`Self-delegated!`}</span>
-                  </Tag>
-                </div>
+                <Tag intent={Intent.SUCCESS}>
+                  <CheckCircleIcon height={24} className="mr-2" />
+                  <span className="font-bold">{t`Self-delegated!`}</span>
+                </Tag>
               ) : (
                 <Button
-                  onClick={() => handleAddressChange(account)}
+                  onClick={() => handleChoose(account)}
                   variant={ButtonVariant.OUTLINE_WHITE}
                 >
                   {t`Self-delegate`}
@@ -179,21 +177,21 @@ export default function DelegateCard({
           </div>
         </div>
         <div className="mt-6 flex justify-between gap-2 text-right">
-          {onBackClick && (
+          {onPreviousStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.WHITE}
-              onClick={onBackClick}
+              onClick={onPreviousStep}
             >
               {t`Back`}
             </Button>
           )}
-          {onNextClick && (
+          {onNextStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.GRADIENT}
               disabled={!isValidSelectedAddress}
-              onClick={onNextClick}
+              onClick={onNextStep}
             >
               {t`Review Transaction`}
             </Button>

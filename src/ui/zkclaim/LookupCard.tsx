@@ -14,24 +14,22 @@ import { t, jt } from "ttag";
 
 interface LookupCardProps {
   className?: string;
-  onComplete?: (data: ZKData) => void;
-  onNextClick: () => void;
+  onChange?: ([key, secret]: [string, string]) => void;
+  onNextStep: () => void;
 }
 
 export default function LookupCard({
   className,
-  onComplete,
-  onNextClick,
+  onChange,
+  onNextStep,
 }: LookupCardProps): ReactElement {
   const [key, setKey] = useState("");
   const [secret, setSecret] = useState("");
   const { file, openFileBrowser } = useFile({ accept: ".json" });
 
   useEffect(() => {
-    if (key && secret) {
-      onComplete?.({ privateKey: key, secret });
-    }
-  }, [key, secret, onComplete]);
+    onChange?.([key, secret]);
+  }, [key, secret, onChange]);
 
   useEffect(() => {
     if (!file) {
@@ -113,7 +111,7 @@ export default function LookupCard({
           <Button
             variant={ButtonVariant.GRADIENT}
             disabled={!key || !secret}
-            onClick={onNextClick}
+            onClick={onNextStep}
           >{t`Check Airdrop`}</Button>
         </div>
       </div>

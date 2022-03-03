@@ -1,7 +1,10 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { Signer } from "ethers";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import { Tag } from "src/ui/base/Tag/Tag";
+import { Intent } from "src/ui/base/Intent";
+import { CheckCircleIcon } from "@heroicons/react/solid";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
@@ -15,8 +18,9 @@ interface TransactionCardProps {
   account: string;
   signer: Signer;
   delegateAddress: string;
-  onBackClick?: () => void;
-  onComplete?: () => void;
+  onPreviousStep?: () => void;
+  onSuccess?: () => void;
+  onNextStep?: () => void;
 }
 
 // PLACEHOLDER
@@ -27,15 +31,19 @@ export default function TransactionCard({
   account,
   signer,
   delegateAddress,
-  onBackClick,
-  onComplete,
+  onPreviousStep,
+  onSuccess,
+  onNextStep,
 }: TransactionCardProps): ReactElement {
+  const [success, setSuccess] = useState(false);
   const delegateLabel =
     getFeaturedDelegate(delegateAddress)?.name ||
     formatWalletAddress(delegateAddress);
 
   const handleConfirm = () => {
-    onComplete?.();
+    // handle transaction
+    setSuccess(true);
+    onSuccess?.();
   };
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -74,22 +82,40 @@ export default function TransactionCard({
         </div>
 
         <div className="flex justify-between">
-          {onBackClick && (
+          {onPreviousStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.WHITE}
-              onClick={onBackClick}
+              onClick={onPreviousStep}
             >
               {t`Back`}
             </Button>
           )}
-          <Button
-            className="px-12"
-            variant={ButtonVariant.GRADIENT}
-            onClick={handleConfirm}
-          >
-            {t`Confirm transaction`}
-          </Button>
+          {success ? (
+            <>
+              <Tag intent={Intent.SUCCESS}>
+                <CheckCircleIcon height={24} className="mr-2" />
+                <span className="font-bold">{t`Success!`}</span>
+              </Tag>
+              {onNextStep && (
+                <Button
+                  className="px-12"
+                  variant={ButtonVariant.GRADIENT}
+                  onClick={onNextStep}
+                >
+                  {t`Next`}
+                </Button>
+              )}
+            </>
+          ) : (
+            <Button
+              className="px-12"
+              variant={ButtonVariant.GRADIENT}
+              onClick={handleConfirm}
+            >
+              {t`Confirm transaction`}
+            </Button>
+          )}
         </div>
       </div>
     </Card>
