@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactElement, useCallback, useMemo, useState } from "react";
 
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
@@ -18,7 +12,6 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
-import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
@@ -28,52 +21,80 @@ type TabId = "active" | "past";
 
 interface ProposalsPageProps {
   proposalsJson: ProposalsJson;
+  currentBlockNumber: number;
 }
 
 export default function ProposalsPage({
   proposalsJson,
+  currentBlockNumber,
 }: ProposalsPageProps): ReactElement {
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
-  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
-
-  const isSmallScreen = useIsTailwindSmallScreen();
 
   const [activeTabId, setActiveTab] = useState<TabId>("active");
-  const [activeProposalId, setActiveProposalId] = useState<
-    string | undefined
-  >();
-  const [activeProposal, setActiveProposal] = useState<Proposal | undefined>();
 
-  const filteredProposals = useFilteredProposals(
-    activeTabId,
+  const isTailwindSmallScreen = useIsTailwindSmallScreen();
+
+  const activeProposals = useFilteredProposals(
+    "active",
+    proposalsJson.proposals,
+    currentBlockNumber,
+  );
+  const pastProposals = useFilteredProposals(
+    "past",
     proposalsJson.proposals,
     currentBlockNumber,
   );
 
-  // set the active proposal when the user switches between Active and Past
-  // tabs.
-  useEffect(() => {
-    if (isSmallScreen) {
-      setActiveProposalId(undefined);
-      setActiveProposal(undefined);
-      return;
-    }
-    setActiveProposalId(filteredProposals?.[0]?.proposalId);
-    setActiveProposal(filteredProposals?.[0]);
-  }, [activeTabId, filteredProposals, isSmallScreen]);
+  // set the default to the first active proposal, since that's what filter is
+  // on by default
+  const [selectedProposalId, setSelectedProposalId] = useState<
+    string | undefined
+  >(isTailwindSmallScreen ? undefined : activeProposals?.[0].proposalId);
+  const [selectedProposal, setSelectedProposal] = useState<
+    Proposal | undefined
+  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]);
 
-  const onSetActiveProposalId = useCallback(
+  const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = filteredProposals?.find(
+      const proposal = [...activeProposals, ...pastProposals]?.find(
         (p) => p.proposalId === proposalId,
       );
-      setActiveProposal(proposal);
-      setActiveProposalId(proposalId);
+      setSelectedProposal(proposal);
+      setSelectedProposalId(proposalId);
     },
-    [filteredProposals],
+    [activeProposals, pastProposals],
   );
 
+  const handleActiveTabClick = () => {
+    if (activeTabId !== "active") {
+      setActiveTab("active");
+      // select the first proposal when the user clicks to view the
+      // active tab
+      if (isTailwindSmallScreen) {
+        setSelectedProposalId(undefined);
+        setSelectedProposal(undefined);
+      } else {
+        setSelectedProposalId(activeProposals?.[0]?.proposalId);
+        setSelectedProposal(activeProposals?.[0]);
+      }
+    }
+  };
+
+  const handlePastTabClick = () => {
+    if (activeTabId !== "past") {
+      setActiveTab("past");
+      if (isTailwindSmallScreen) {
+        setSelectedProposalId(undefined);
+        setSelectedProposal(undefined);
+      } else {
+        // select the first proposal when the user clicks to view the
+        // past tab
+        setSelectedProposalId(pastProposals?.[0]?.proposalId);
+        setSelectedProposal(pastProposals?.[0]);
+      }
+    }
+  };
   return (
     <div className="flex h-full lg:justify-center">
       <div className="h-full w-full flex-1 space-y-8 px-8 pt-8 lg:max-w-lg">
@@ -83,42 +104,44 @@ export default function ProposalsPage({
             <Tab
               first
               current={activeTabId === "active"}
-              onClick={() => setActiveTab("active")}
+              onClick={handleActiveTabClick}
               name={t`Active`}
             />
             <Tab
               last
               current={activeTabId === "past"}
-              onClick={() => setActiveTab("past")}
+              onClick={handlePastTabClick}
               name={t`Past`}
             />
           </Tabs>
           <OffChainProposalsLink />
         </div>
         <div className="flex space-x-12">
-          {filteredProposals.length ? (
+          {activeProposals.length ? (
             <ProposalList
               account={account}
               signer={signer}
-              proposals={filteredProposals}
-              activeProposalId={activeProposalId}
-              onClickItem={onSetActiveProposalId}
+              proposals={
+                activeTabId === "active" ? activeProposals : pastProposals
+              }
+              selectedProposalId={selectedProposalId}
+              onClickItem={handleSelectProposal}
             />
           ) : (
             <NoProposalsEmptyState activeTabId={activeTabId} />
           )}
         </div>
       </div>
-      {activeProposal && (
+      {selectedProposal && (
         <ProposalDetailsCard
-          isOpen={!!activeProposal}
+          isOpen={!!selectedProposal}
           onClose={() => {
-            setActiveProposal(undefined);
-            setActiveProposalId(undefined);
+            setSelectedProposal(undefined);
+            setSelectedProposalId(undefined);
           }}
           account={account}
           signer={signer}
-          proposal={activeProposal}
+          proposal={selectedProposal}
         />
       )}
     </div>

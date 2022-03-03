@@ -8,14 +8,14 @@ interface ProposalListProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   proposals: Proposal[];
-  activeProposalId: string | undefined;
+  selectedProposalId: string | undefined;
   onClickItem: (proposalId: string | undefined) => void;
 }
 export function ProposalList({
   account,
   proposals,
   signer,
-  activeProposalId,
+  selectedProposalId,
   onClickItem,
 }: ProposalListProps): ReactElement {
   return (
@@ -23,7 +23,7 @@ export function ProposalList({
       {proposals.map((proposal) => (
         <ProposalListItem
           key={proposal.proposalId}
-          active={proposal.proposalId === activeProposalId}
+          active={proposal.proposalId === selectedProposalId}
           proposal={proposal}
           onClick={onClickItem}
           account={account}
