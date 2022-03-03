@@ -7,7 +7,7 @@
     "@fontsource/roboto-mono": "^4.5.3",
     "@fontsource/rubik": "^4.5.3",
     "@headlessui/react": "^1.5.0",
-    "@heroicons/react": "^1.0.5",
+    "@heroicons/react": "^1.0.6",
     "@metamask/jazzicon": "^2.0.0",
     "@popperjs/core": "^2.11.2",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
