@@ -57,13 +57,13 @@ export default function ProposalsPage({
 
   const handleSelectProposal = useCallback(
     (proposalId: string | undefined) => {
-      const proposal = [...activeProposals, ...pastProposals]?.find(
+      const proposal = proposalsJson.proposals.find(
         (p) => p.proposalId === proposalId,
       );
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
     },
-    [activeProposals, pastProposals],
+    [proposalsJson.proposals],
   );
 
   const handleActiveTabClick = () => {
