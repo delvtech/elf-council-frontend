@@ -38,13 +38,6 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             <span className="leading-4">
               {delegate?.name || formatWalletAddress(currentDelegateAddress)}
             </span>
-            <div className="relative h-4 w-4">
-              <Image
-                layout="fill"
-                src="/assets/crown.svg"
-                alt={t`Crown icon`}
-              />
-            </div>
           </div>
         </div>
         <span className="text-blueGrey">

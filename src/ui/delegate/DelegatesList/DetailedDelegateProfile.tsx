@@ -96,30 +96,11 @@ function DetailedDelegateProfile({
             <div className="mt-5">
               <div className="flex items-center justify-between">
                 <span className="text-blueGrey">discord-handle</span>
-                <div className="relative h-5 w-5">
-                  <Image
-                    layout="fill"
-                    src="/assets/Discord.svg"
-                    alt={t`Crown icon`}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                {/* Empty span used for justify-between trick */}
-                <span />
-                <div className="relative h-5 w-5">
-                  <Image
-                    layout="fill"
-                    src="/assets/crown.svg"
-                    alt={t`Crown icon`}
-                  />
-                </div>
               </div>
             </div>
 
             {/* Background */}
-            <div className="mt-auto">
+            <div className="mt-2">
               <h3 className="text-principalRoyalBlue">{t`Background`}</h3>
               <p className="text-sm text-principalRoyalBlue">
                 Ex. Matcha, DyDX, ENS, Full stack engineer and solidity engineer
