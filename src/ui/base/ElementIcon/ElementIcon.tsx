@@ -36,7 +36,7 @@ export function ElementIcon({
     <Tag
       className={classNames(
         className,
-        "flex flex-shrink-0 items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
+        "flex w-max flex-shrink-0 items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
       )}
     >
       <Image
