@@ -121,17 +121,18 @@ export function ProposalDetailsCard(
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
     onError: (e) => {
-      toast.error(t`${e.message}`, { id: toastIdRef.current });
+      toast.error(e.message, { id: toastIdRef.current });
     },
     onTransactionSubmitted: (pendingTransaction) => {
       const pendingEtherscanLink = (
         <a
+          key="etherscan-link"
           href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
           target="_blank"
           rel="noreferrer"
           className="block underline"
         >
-          View on etherscan
+          {t`View on etherscan`}
         </a>
       );
 

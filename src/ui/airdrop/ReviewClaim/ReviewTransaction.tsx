@@ -53,17 +53,18 @@ export function ReviewTransaction({
 
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
     onError: (e) => {
-      toast.error(t`${e.message}`, { id: toastIdRef.current });
+      toast.error(e.message, { id: toastIdRef.current });
     },
     onTransactionSubmitted: (tx) => {
       const etherscanLink = (
         <a
+          key="etherscan-link"
           href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
           target="_blank"
           rel="noreferrer"
           className="block underline"
         >
-          View on etherscan
+          {t`View on etherscan`}
         </a>
       );
 
