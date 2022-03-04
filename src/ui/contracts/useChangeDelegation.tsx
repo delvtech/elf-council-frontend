@@ -41,7 +41,7 @@ export function useChangeDelegation(
             rel="noreferrer"
             className="underline"
           >
-            etherscan
+            view etherscan
           </a>
         );
 

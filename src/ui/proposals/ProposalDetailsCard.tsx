@@ -121,16 +121,16 @@ export function ProposalDetailsCard(
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
     onError: (e) => {
-      toast.error(e.message, { id: toastIdRef.current });
+      toast.error(t`${e.message}`, { id: toastIdRef.current });
     },
     onTransactionSubmitted: (pendingTransaction) => {
-      toastIdRef.current = toast.loading("Submitting vote");
+      toastIdRef.current = toast.loading(t`Submitting vote`);
       setIsChangingVote(false);
       setIsVoteTxPending(true);
       setNewVoteTransaction(pendingTransaction);
     },
     onTransactionMined: () => {
-      toast.success("Vote successfully submitted", { id: toastIdRef.current });
+      toast.success(t`Vote successfully submitted`, { id: toastIdRef.current });
       setIsVoteTxPending(false);
     },
   });

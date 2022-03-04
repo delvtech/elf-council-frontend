@@ -53,14 +53,14 @@ export function ReviewTransaction({
   // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
     onError: (e) => {
-      toast.error(e.message, { id: toastIdRef.current });
+      toast.error(t`${e.message}`, { id: toastIdRef.current });
     },
     onTransactionSubmitted: () => {
-      toastIdRef.current = toast.loading("Confirming transaction");
+      toastIdRef.current = toast.loading(t`Confirming transaction`);
       setIsTransactionPending(true);
     },
     onTransactionMined: () => {
-      toast.success("Transaction successfully confirmed", {
+      toast.success(t`Transaction successfully confirmed`, {
         id: toastIdRef.current,
       });
       setIsTransactionPending(false);
