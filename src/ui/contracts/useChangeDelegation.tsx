@@ -10,7 +10,7 @@ import {
 import { queryClient } from "src/elf/queryClient";
 import { useRef } from "react";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
-import { jt } from "ttag";
+import { t, jt } from "ttag";
 
 export function useChangeDelegation(
   address: string | null | undefined,
@@ -29,7 +29,7 @@ export function useChangeDelegation(
     {
       // TODO: Add ttags to toast notifications
       onError: (e) => {
-        toast.error(e.message, {
+        toast.error(t`${e.message}`, {
           id: toastIdRef.current,
         });
       },
@@ -61,7 +61,7 @@ export function useChangeDelegation(
           ),
         );
 
-        toast.success("Delegation successfully changed", {
+        toast.success(t`Delegation successfully changed`, {
           id: toastIdRef.current,
         });
       },
