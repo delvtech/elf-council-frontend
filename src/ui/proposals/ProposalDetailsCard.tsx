@@ -19,7 +19,7 @@ import { Proposal } from "elf-council-proposals";
 import { Signer, ContractTransaction } from "ethers";
 import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
-import { t } from "ttag";
+import { t, jt } from "ttag";
 
 import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
@@ -124,13 +124,29 @@ export function ProposalDetailsCard(
       toast.error(e.message, { id: toastIdRef.current });
     },
     onTransactionSubmitted: (pendingTransaction) => {
-      toastIdRef.current = toast.loading("Submitting vote");
+      const pendingEtherscanLink = (
+        <a
+          key="etherscan-link"
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
+          target="_blank"
+          rel="noreferrer"
+          className="block underline"
+        >
+          {t`View on etherscan`}
+        </a>
+      );
+
+      const message = (
+        <div>{jt`Submitting vote... ${pendingEtherscanLink}`}</div>
+      );
+
+      toastIdRef.current = toast.loading(message);
       setIsChangingVote(false);
       setIsVoteTxPending(true);
       setNewVoteTransaction(pendingTransaction);
     },
     onTransactionMined: () => {
-      toast.success("Vote successfully submitted", { id: toastIdRef.current });
+      toast.success(t`Vote successfully submitted`, { id: toastIdRef.current });
       setIsVoteTxPending(false);
     },
   });

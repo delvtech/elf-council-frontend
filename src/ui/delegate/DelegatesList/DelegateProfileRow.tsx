@@ -81,6 +81,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
 
         {/* Buttons */}
         <div className="col-span-3 flex gap-x-4 lg:col-span-4">
+          {/* Button to expand a detailed view of delegate  */}
           <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),
@@ -90,7 +91,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
             {t`Profile`}
           </Popover.Button>
 
-          {/* Button unique for Delegate Page & Airdrop Page */}
+          {/* Unique action event button */}
           {actionButton}
         </div>
       </div>

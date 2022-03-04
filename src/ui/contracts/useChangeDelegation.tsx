@@ -9,6 +9,8 @@ import {
 } from "@elementfi/react-query-typechain";
 import { queryClient } from "src/elf/queryClient";
 import { useRef } from "react";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { t, jt } from "ttag";
 
 export function useChangeDelegation(
   address: string | null | undefined,
@@ -30,8 +32,24 @@ export function useChangeDelegation(
           id: toastIdRef.current,
         });
       },
-      onTransactionSubmitted: () => {
-        toastIdRef.current = toast.loading("Changing delegation");
+      onTransactionSubmitted: (tx) => {
+        const etherscanLink = (
+          <a
+            key="etherscan-link"
+            href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
+            target="_blank"
+            rel="noreferrer"
+            className="block underline"
+          >
+            {t`View on etherscan`}
+          </a>
+        );
+
+        const message = (
+          <div>{jt`Changing delegation... ${etherscanLink}`}</div>
+        );
+
+        toastIdRef.current = toast.loading(message);
       },
       onTransactionMined: () => {
         // Invalidate `deposits` so that consumers of `useDelegate` refresh
@@ -43,7 +61,7 @@ export function useChangeDelegation(
           ),
         );
 
-        toast.success("Delegation successfully changed", {
+        toast.success(t`Delegation successfully changed`, {
           id: toastIdRef.current,
         });
       },

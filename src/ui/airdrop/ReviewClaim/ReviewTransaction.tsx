@@ -10,13 +10,14 @@ import React, {
 import toast from "react-hot-toast";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import H1 from "src/ui/base/H1/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
-import { t } from "ttag";
+import { t, jt } from "ttag";
 
 interface ReviewTransactionProps {
   account: string | null | undefined;
@@ -50,17 +51,32 @@ export function ReviewTransaction({
     }
   }, [delegateAddress, selectedDelegateIndex]);
 
-  // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },
-    onTransactionSubmitted: () => {
-      toastIdRef.current = toast.loading("Confirming transaction");
+    onTransactionSubmitted: (tx) => {
+      const etherscanLink = (
+        <a
+          key="etherscan-link"
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
+          target="_blank"
+          rel="noreferrer"
+          className="block underline"
+        >
+          {t`View on etherscan`}
+        </a>
+      );
+
+      const message = (
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
+      );
+
+      toastIdRef.current = toast.loading(message);
       setIsTransactionPending(true);
     },
     onTransactionMined: () => {
-      toast.success("Transaction successfully confirmed", {
+      toast.success(t`Transaction successfully confirmed`, {
         id: toastIdRef.current,
       });
       setIsTransactionPending(false);
