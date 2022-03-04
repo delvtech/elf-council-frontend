@@ -89,14 +89,11 @@ export default function ChooseDelegateCard({
         <div className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow">
           {/* List of delegates */}
           <ul className="flex flex-col gap-y-2">
-            {shuffledDelegates.map((delegate) => {
+            {shuffledDelegates.map((delegate, i) => {
               const handleChooseClick = () => handleChoose(delegate.address);
               const isSelected = selectedAddress === delegate.address;
               return (
-                <li
-                  key={delegate.address}
-                  ref={isSelected ? scrollRef : undefined}
-                >
+                <li key={i} ref={isSelected ? scrollRef : undefined}>
                   <DelegateProfileRow
                     selected={isSelected}
                     highlightSelected
