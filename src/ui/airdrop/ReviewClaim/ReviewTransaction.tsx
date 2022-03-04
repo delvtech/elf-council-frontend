@@ -10,13 +10,14 @@ import React, {
 import toast from "react-hot-toast";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
 import H1 from "src/ui/base/H1/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
-import { t } from "ttag";
+import { t, jt } from "ttag";
 
 interface ReviewTransactionProps {
   account: string | null | undefined;
@@ -55,8 +56,23 @@ export function ReviewTransaction({
     onError: (e) => {
       toast.error(t`${e.message}`, { id: toastIdRef.current });
     },
-    onTransactionSubmitted: () => {
-      toastIdRef.current = toast.loading(t`Confirming transaction`);
+    onTransactionSubmitted: (tx) => {
+      const etherscanLink = (
+        <a
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
+          target="_blank"
+          rel="noreferrer"
+          className="block underline"
+        >
+          View on etherscan
+        </a>
+      );
+
+      const message = (
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>
+      );
+
+      toastIdRef.current = toast.loading(message);
       setIsTransactionPending(true);
     },
     onTransactionMined: () => {
