@@ -91,7 +91,6 @@ export default function DelegatePage(): ReactElement {
               account={account}
               changeDelegation={changeDelegation}
               isLoading={isLoading}
-              isError={isError}
               isSuccess={isSuccess}
               delegateAddressInput={delegateAddressInput}
               delegateAddressOnChain={delegateAddressOnChain}
