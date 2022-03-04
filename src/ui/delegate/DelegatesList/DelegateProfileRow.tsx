@@ -53,14 +53,6 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                 className="mr-2 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
               />
               <span className="truncate">{delegate.name}</span>
-              {/* Crown Icon */}
-              <div className="relative ml-2 flex h-4 w-4 shrink-0">
-                <Image
-                  layout="fill"
-                  src="/assets/crown.svg"
-                  alt={t`Affiliated with Element Finance`}
-                />
-              </div>
             </div>
             <div className="lg:hidden">
               <span

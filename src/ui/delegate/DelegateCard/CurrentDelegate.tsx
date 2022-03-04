@@ -28,18 +28,17 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
         "flex flex-col rounded-xl bg-hackerSky p-3",
       )}
     >
-      <div className="mb-1 flex items-center font-bold text-principalRoyalBlue">
-        <WalletJazzicon
-          account={currentDelegateAddress}
-          size={20}
-          className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
-        />
-        <div className="flex items-center gap-2">
-          <span className="max-w-max leading-4">
-            {delegate?.name || formatWalletAddress(currentDelegateAddress)}
-          </span>
-          <div className="relative h-4 w-4">
-            <Image layout="fill" src="/assets/crown.svg" alt={t`Crown icon`} />
+      <div className="flex flex-col">
+        <div className="mb-1 flex items-center font-bold text-principalRoyalBlue">
+          <WalletJazzicon
+            account={currentDelegateAddress}
+            size={20}
+            className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
+          />
+          <div className="flex items-center gap-2">
+            <span className="max-w-max leading-4">
+              {delegate?.name || formatWalletAddress(currentDelegateAddress)}
+            </span>
           </div>
         </div>
       </div>
