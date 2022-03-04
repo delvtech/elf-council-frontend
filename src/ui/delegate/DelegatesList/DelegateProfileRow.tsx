@@ -29,8 +29,6 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     profileActionButton,
   } = props;
 
-  const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
-
   return (
     <Popover>
       <div
@@ -73,7 +71,6 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                 }
               >
                 <NumDelegatedVotes account={delegate.address} />
-                {/* <span>{formatBalance(votePower, 1)}</span> */}
               </span>
             </div>
           </div>
@@ -86,7 +83,6 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
             }
           >
-            {/* <span>{formatBalance(votePower, 1)}</span> */}
             <NumDelegatedVotes account={delegate.address} />
           </span>
         </div>
@@ -162,7 +158,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   return (
     <div className="flex items-center">
       <ElementIcon size={IconSize.SMALL} className="mr-1" />
-      <span>{formatBalance(votePower, 1)}</span>
+      <span>{formatBalance(votePower)}</span>
     </div>
   );
 }

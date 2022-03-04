@@ -83,7 +83,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   return (
     <div className="flex items-center">
       <ElementIcon size={IconSize.SMALL} className="mr-1" />
-      <span>{formatBalance(votePower, 1)}</span>
+      <span>{formatBalance(votePower)}</span>
     </div>
   );
 }
