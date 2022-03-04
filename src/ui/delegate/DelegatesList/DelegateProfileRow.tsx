@@ -10,6 +10,7 @@ import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDeleg
 import dynamic from "next/dynamic";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
+import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 
 interface DelegateProfileRowProps {
   selected: boolean;
@@ -27,8 +28,6 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     actionButton,
     profileActionButton,
   } = props;
-
-  const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
 
   return (
     <Popover>
@@ -71,7 +70,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                     : "text-blueGrey"
                 }
               >
-                <span>{formatBalance(votePower)}</span>
+                <NumDelegatedVotes account={delegate.address} />
               </span>
             </div>
           </div>
@@ -84,7 +83,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
             }
           >
-            <span>{formatBalance(votePower)}</span>
+            <NumDelegatedVotes account={delegate.address} />
           </span>
         </div>
 
@@ -146,6 +145,21 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </Transition.Child>
       </Transition>
     </Popover>
+  );
+}
+
+interface NumDelegatedVotesProps {
+  account: string;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccountAtLatestBlock(account);
+
+  return (
+    <div className="flex items-center">
+      <ElementIcon size={IconSize.SMALL} className="mr-1" />
+      <span>{formatBalance(votePower)}</span>
+    </div>
   );
 }
 
