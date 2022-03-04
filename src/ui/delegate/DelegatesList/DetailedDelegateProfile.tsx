@@ -110,11 +110,6 @@ function DetailedDelegateProfile({
         </div>
 
         <div className="mt-auto flex gap-4 sm:mt-14 lg:mt-auto">
-          {/* Action Button */}
-          <Tooltip content={chooseDelegateTooltip} className="w-1/2">
-            {actionButton}
-          </Tooltip>
-
           {/* Close Button */}
           <Button
             variant={ButtonVariant.WHITE}
@@ -123,6 +118,11 @@ function DetailedDelegateProfile({
           >
             <span className="text-lg font-bold">{t`Close`}</span>
           </Button>
+
+          {/* Action Button */}
+          <Tooltip content={chooseDelegateTooltip} className="w-1/2">
+            {actionButton}
+          </Tooltip>
         </div>
       </div>
     </div>

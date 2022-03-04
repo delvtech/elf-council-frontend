@@ -21,7 +21,7 @@ export function BalanceWithLabel(props: BalanceWithLabelProps): ReactElement {
       {/* Balance */}
       <div className="flex items-center">
         <span className="mr-2 text-2xl font-extralight">
-          {formatBalance(balance)}
+          {formatBalance(balance, 4)}
         </span>
         <ElementIcon size={IconSize.MEDIUM} />
       </div>
