@@ -51,7 +51,6 @@ export function ReviewTransaction({
     }
   }, [delegateAddress, selectedDelegateIndex]);
 
-  // const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
     onError: (e) => {
       toast.error(t`${e.message}`, { id: toastIdRef.current });
