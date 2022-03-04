@@ -27,7 +27,6 @@ export function useChangeDelegation(
     "changeDelegation",
     signer,
     {
-      // TODO: Add ttags to toast notifications
       onError: (e) => {
         toast.error(t`${e.message}`, {
           id: toastIdRef.current,
@@ -39,9 +38,9 @@ export function useChangeDelegation(
             href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
             target="_blank"
             rel="noreferrer"
-            className="underline"
+            className="block underline"
           >
-            view etherscan
+            View on etherscan
           </a>
         );
 

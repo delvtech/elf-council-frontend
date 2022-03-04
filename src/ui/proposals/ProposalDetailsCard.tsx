@@ -129,9 +129,9 @@ export function ProposalDetailsCard(
           href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
           target="_blank"
           rel="noreferrer"
-          className="underline"
+          className="block underline"
         >
-          view etherscan
+          View on etherscan
         </a>
       );
 
