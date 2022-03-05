@@ -2,49 +2,44 @@ import { useCallback, useMemo, useState } from "react";
 
 type Callback = (...args: any[]) => any;
 
-const workerFunction = <TCallback extends Callback>(
-  fn: TCallback,
-  args: Parameters<TCallback>,
-) => {
-  // babel converts spread arrays to a function called _toConsumableArray which
-  // isn't defined in the web worker.
-  // eslint-disable-next-line prefer-spread
-  const data = fn.apply(null, args);
+function workerFunction<TCallback extends Callback>(fn: TCallback) {
+  onmessage = ({ data: args }: { data: Parameters<TCallback> }) => {
+    // babel converts spread arrays to a function called _toConsumableArray which
+    // isn't defined in the web worker.
+    // eslint-disable-next-line prefer-spread
+    const result = fn.apply(null, args);
 
-  // If async, return the resolved value instead of the promise.
-  // A better way to check if data is a promise would be
-  // `data instanceOf Promise`, but babel converts instanceOf to _instanceOf
-  // which isn't defined inside the worker.
-  if (data.then) {
-    data.then((res: ReturnType<TCallback>) => {
-      // eslint-disable-next-line no-restricted-globals
-      self.postMessage(res);
-    });
-  } else {
-    // eslint-disable-next-line no-restricted-globals
-    self.postMessage(data);
-  }
-};
+    // If async, return the resolved value instead of the promise.
+    // A better way to check if result is a promise would be
+    // `result instanceOf Promise`, but babel converts instanceOf to _instanceOf
+    // which isn't defined inside the worker.
+    if (result?.then) {
+      result.then((res: ReturnType<TCallback>) => {
+        postMessage(res);
+      });
+    } else {
+      postMessage(result);
+    }
+  };
+}
 
 export function wrapInWorker<TCallback extends Callback>(
   fn: TCallback,
 ): (...args: Parameters<TCallback>) => Worker {
   return function (...args: Parameters<TCallback>) {
     // uses IIFE to automatically invoke the function in the worker.
-    // uses JSON.stringify to ensure strings stay strings when concatenated in
-    // the template literal.
-    const workerBlob = new Blob(
-      [`(${workerFunction})(${fn}, ${JSON.stringify(args)})`],
-      {
-        type: "text/javascript",
-      },
-    );
-    return new Worker(window.URL.createObjectURL(workerBlob));
+    const workerBlob = new Blob([`(${workerFunction})(${fn})`], {
+      type: "text/javascript",
+    });
+    const worker = new Worker(window.URL.createObjectURL(workerBlob));
+    worker.postMessage(args);
+    return worker;
   };
 }
 
 interface UseWorkerResult<TCallback extends Callback> {
   run: (...args: Parameters<TCallback>) => void;
+  hasRun: boolean;
   loading: boolean;
   data?: Awaited<ReturnType<TCallback>>;
   error?: ErrorEvent;
@@ -54,17 +49,18 @@ interface UseWorkerResult<TCallback extends Callback> {
 export default function useWorker<TCallback extends Callback>(
   fn: TCallback,
 ): UseWorkerResult<TCallback> {
-  const [state, setState] = useState<Omit<UseWorkerResult<TCallback>, "run">>({
+  const [hasRun, setHasRun] = useState(false);
+  const [state, setState] = useState<
+    Omit<UseWorkerResult<TCallback>, "run" | "hasRun">
+  >({
     loading: false,
-    data: undefined,
-    error: undefined,
-    messageError: undefined,
   });
 
   const wrappedFunction = useMemo(() => wrapInWorker(fn), [fn]);
 
   const run = useCallback(
     (...args: Parameters<TCallback>) => {
+      setHasRun(true);
       setState((prevState) => ({ ...prevState, loading: true }));
       const worker = wrappedFunction(...args);
       worker.onmessage = ({ data }) => {
@@ -82,6 +78,7 @@ export default function useWorker<TCallback extends Callback>(
 
   return {
     run,
+    hasRun,
     ...state,
   };
 }
