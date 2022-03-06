@@ -8,6 +8,7 @@ import DelegateInfoCard from "./DelegateInfoCard";
 import ChooseDelegateCard from "./ChooseDelegateCard";
 import TransactionCard from "./TransactionCard";
 import ShareCard from "./ShareCard";
+import useZKProof from "./useZKProof";
 import { useSigner } from "src/ui/signer/useSigner";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
@@ -17,10 +18,7 @@ import {
 } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
-// import useWorker from "src/ui/base/useWorker";
-// import { useQuery } from "react-query";
 import { t } from "ttag";
-import { utils } from "ethers";
 
 export enum Step {
   LOOKUP = "lookup",
@@ -32,14 +30,27 @@ export enum Step {
 }
 
 export default function ClaimPage(): ReactElement {
-  const { account, active, library } = useWeb3React();
+  const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
+
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
   const secret = keySecretPair?.[1];
-  const [publicId, setPublicId] = useState<string>();
   const [alreadyClaimed, setAlreadyClaimed] = useState(false);
   const [delegateAddress, setDelegateAddress] = useState<string>();
+  const {
+    generate: generateProof,
+    proof,
+    isEligible,
+    isReady,
+    error: proofError,
+    isGenerating,
+  } = useZKProof({
+    key,
+    secret,
+    account: account || undefined,
+  });
+
   const {
     canViewStep,
     getStepPath,
@@ -56,46 +67,6 @@ export default function ClaimPage(): ReactElement {
       Step.SHARE,
     ],
   });
-  // TODO
-  // const proofCallResult =
-  //   useWorker(a16zLibrary.generateProofCallData);
-  // TODO: fetch leafs from aws and generate merkletree
-  // const { data: merkleTree, isLoading: merkleLeafsLoading } = useQuery({
-  //   queryKey: ["zk-merkle-tree-from-leafs"],
-  //   queryFn: async () => {
-  //     const leafs = await fetch(`${awsUrl}/zk-leafs.txt`).then((res) =>
-  //       res.text(),
-  //     );
-  //     return a16zLibrary.queryMerkleTree(ethersProvider, address);
-  //   },
-  // });
-
-  useEffect(() => {
-    // TODO
-    // if (data && merkleTree) {
-    //   proofCallResult.run(
-    //     merkleTree,
-    //     key,
-    //     secret,
-    //     redeemerAddress,
-    //   );
-    // }
-
-    const placeholderSuccessKey =
-      "0x321718eb3db448ca864758c7cc54fd72e7a88b982a308f07b16d156fe6592e37";
-    const placeholderClaimedKey =
-      "0x181a6585d99fdd4a22d02d1609d4d2a5498777523560905a3c069fd6f61feb1a";
-
-    if (key === placeholderSuccessKey) {
-      setPublicId(utils.id(`${key}${secret}`));
-      setAlreadyClaimed(false);
-    } else if (key === placeholderClaimedKey) {
-      setPublicId(utils.id(`${key}${secret}`));
-      setAlreadyClaimed(true);
-    } else {
-      setPublicId(undefined);
-    }
-  }, [key, secret /*, merkleTree */]);
 
   // TODO: transition styles
   const getStepClassName = (step: Step) => {
@@ -158,20 +129,18 @@ export default function ClaimPage(): ReactElement {
       />
 
       {/* Eligibility */}
-      {publicId && !alreadyClaimed && (
+      {!isEligible ? (
+        <NotEligibleCard
+          onTryAgain={goToPreviousStep}
+          className={getStepClassName(Step.ELIGIBILITY)}
+        />
+      ) : alreadyClaimed ? (
+        <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
+      ) : (
         <EligibleCard
           className={getStepClassName(Step.ELIGIBILITY)}
           onPreviousStep={goToPreviousStep}
           onNextStep={goToNextStep}
-        />
-      )}
-      {publicId && alreadyClaimed && (
-        <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
-      )}
-      {!publicId && (
-        <NotEligibleCard
-          onTryAgain={goToPreviousStep}
-          className={getStepClassName(Step.ELIGIBILITY)}
         />
       )}
 
@@ -192,11 +161,11 @@ export default function ClaimPage(): ReactElement {
       />
 
       {/* Review & Initiate Transaction */}
-      {account && signer && delegateAddress && (
+      {delegateAddress && (
         <TransactionCard
           className={getStepClassName(Step.TRANSACTION)}
-          account={account}
-          signer={signer}
+          account={account || undefined}
+          signer={signer || undefined}
           delegateAddress={delegateAddress}
           onPreviousStep={goToPreviousStep}
           onSuccess={goToNextStep}
