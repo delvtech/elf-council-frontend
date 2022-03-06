@@ -44,7 +44,7 @@ export default function useAddToWallet(): {
             if (wasAdded) {
               setSuccess(true);
             } else {
-              throw new Error("Unable to addToken token to wallet.");
+              throw new Error("Unable to add token to wallet.");
             }
           })
           .catch((err: any) => {
