@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import {
   generateProofCallData,
   MerkleTree,
@@ -66,8 +66,6 @@ export default function useZKProof({
   secret,
   account,
 }: UseZKProofProps): UseZKProof {
-  const [isReady, setIsReady] = useState(false);
-  const [isEligible, setIsEligible] = useState(false);
   const [state, dispatch] = useReducer(reducer, {
     isGenerating: false,
   });
@@ -98,35 +96,19 @@ export default function useZKProof({
     staleTime: Infinity,
   });
 
-  // set isReady after all required files have been fetched
-  useEffect(() => {
-    const filesFetched = merkleTree && wasmBuffer && zkeyBuffer;
-    if (filesFetched && !isReady) {
-      setIsReady(true);
-    } else if (!filesFetched && isReady) {
-      setIsReady(false);
-    }
-  }, [merkleTree, wasmBuffer, zkeyBuffer, isReady]);
-
   // set isEligible when the key, secret, and/or merkleTree change
-  useEffect(() => {
+  const isEligible = useMemo(() => {
     if (key && secret && merkleTree) {
       const commitment = toHex(pedersenHashConcat(BigInt(key), BigInt(secret)));
-      setIsEligible(merkleTree.leafExists(BigInt(commitment)));
+      return merkleTree.leafExists(BigInt(commitment));
     }
+    return false;
   }, [key, secret, merkleTree]);
 
+  const isReady = !!(merkleTree && wasmBuffer && zkeyBuffer);
+
   const generate = useCallback(() => {
-    if (
-      isReady &&
-      isEligible &&
-      merkleTree &&
-      key &&
-      secret &&
-      account &&
-      wasmBuffer &&
-      zkeyBuffer
-    ) {
+    if (isReady && isEligible && key && secret && account) {
       dispatch({ type: "startGenerating" });
       generateProofCallData(
         merkleTree,
