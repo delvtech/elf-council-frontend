@@ -16,17 +16,23 @@ interface VotingBallotButtonProps {
   proposal: Proposal;
   currentBallot: Ballot | undefined;
   onSelectBallot: (choice: Ballot) => void;
+  disableCondition?: boolean;
 }
 
 export function VotingBallotButton(
   props: VotingBallotButtonProps,
 ): ReactElement {
-  const { proposal, currentBallot, onSelectBallot } = props;
+  const {
+    proposal,
+    currentBallot,
+    onSelectBallot,
+    disableCondition = false,
+  } = props;
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
   return (
     <PopoverButton
-      disabled={!isVotingOpen}
+      disabled={!isVotingOpen || disableCondition}
       className="p-0"
       popover={
         <Card variant={CardVariant.BLUE}>
