@@ -42,7 +42,9 @@ interface UseWorkerResult<TCallback extends Callback> {
   hasRun: boolean;
   loading: boolean;
   data?: Awaited<ReturnType<TCallback>>;
+  // Defined when an error event occurs in the worker
   error?: ErrorEvent;
+  // Defined when the worker receives a message that can't be deserialized.
   messageError?: MessageEvent;
 }
 
