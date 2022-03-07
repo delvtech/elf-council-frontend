@@ -29,7 +29,7 @@ export enum Step {
   SHARE = "share",
 }
 
-export default function ClaimPage(): ReactElement {
+export default function ZKClaimPage(): ReactElement {
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
