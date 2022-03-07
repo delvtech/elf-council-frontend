@@ -5,7 +5,7 @@ import Image from "next/image";
 import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
-import { RESOURCES_URL } from "src/ui/resources";
+import urls from "src/elf/urls";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
@@ -29,7 +29,7 @@ function Header(): ReactElement {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href={RESOURCES_URL}
+                href={urls.resources}
                 className="hidden items-center gap-2 lg:flex"
               >
                 <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>

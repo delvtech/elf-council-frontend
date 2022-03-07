@@ -5,6 +5,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
 import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
 import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
+import urls from "src/elf/urls";
 import Link from "next/link";
 import Image from "next/image";
 import { t, jt } from "ttag";
@@ -48,7 +49,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
           />
           <CallToActionCard
             as="a"
-            href="https://element.fi/discord"
+            href={urls.discord}
             target="_blank"
             rel="noreferrer"
             label={t`Join Discord`}
@@ -56,7 +57,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
           />
           <CallToActionCard
             as="a"
-            href="https://forum.element.fi"
+            href={urls.forum}
             target="_blank"
             rel="noreferrer"
             label={t`Visit forum`}
