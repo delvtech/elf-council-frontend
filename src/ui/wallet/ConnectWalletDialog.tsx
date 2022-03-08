@@ -11,6 +11,8 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonSize, ButtonVariant } from "src/ui/base/Button/styles";
 import H3 from "src/ui/base/H3/H3";
 import { t } from "ttag";
+import { InjectedConnector } from "@web3-react/injected-connector";
+import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 
 interface ConnectWalletDialogProps {
   isOpen: boolean;
@@ -28,20 +30,25 @@ export function ConnectWalletDialog({
     active,
   } = useWeb3React<Web3Provider>();
 
+  const activateConnector = useCallback(
+    async (connector: InjectedConnector | WalletConnectConnector) => {
+      await activate(connector, deactivateActiveConnector);
+      onConnected?.();
+      onClose?.();
+    },
+    [activate, deactivateActiveConnector, onClose, onConnected],
+  );
+
   const handleConnectToMetaMask = useCallback(async () => {
     await deactivateActiveConnector();
-    await activate(injectedConnector, deactivateActiveConnector);
-    onConnected?.();
-    onClose?.();
-  }, [activate, deactivateActiveConnector, onClose, onConnected]);
+    await activateConnector(injectedConnector);
+  }, [activateConnector, deactivateActiveConnector]);
 
   const handleConnectToWalletConnect = useCallback(async () => {
     await deactivateActiveConnector();
     const walletConnectConnector = getWalletConnectConnector();
-    await activate(walletConnectConnector, deactivateActiveConnector);
-    onConnected?.();
-    onClose?.();
-  }, [activate, deactivateActiveConnector, onClose, onConnected]);
+    await activateConnector(walletConnectConnector);
+  }, [activateConnector, deactivateActiveConnector]);
 
   return (
     <SimpleDialog isOpen={isOpen} onClose={onClose}>
