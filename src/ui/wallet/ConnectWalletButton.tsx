@@ -52,21 +52,32 @@ export function WalletProfileButton(
 }
 
 export function ConnectWalletButton({
+  className,
   label = t`Connect Wallet`,
   variant = ButtonVariant.OUTLINE_BLUE,
   onConnected,
+  onDialogClose,
 }: {
+  className?: string;
   label?: string;
   variant?: ButtonVariant;
   onConnected?: () => void;
+  onDialogClose?: () => void;
 }): ReactElement {
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
-  const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
+  const onCloseWalletDialog = useCallback(() => {
+    setWalletDialogOpen(false);
+    onDialogClose?.();
+  }, [onDialogClose]);
   const onOpenWalletDialog = useCallback(() => setWalletDialogOpen(true), []);
 
   return (
     <Fragment>
-      <Button variant={variant} onClick={onOpenWalletDialog}>
+      <Button
+        className={className}
+        variant={variant}
+        onClick={onOpenWalletDialog}
+      >
         {label}
       </Button>
       <ConnectWalletDialog

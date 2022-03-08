@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from "react";
+import React, { ReactElement, useCallback, useEffect } from "react";
 import SimpleDialog from "src/ui/base/Dialog/Dialog";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
@@ -25,18 +25,24 @@ export function ConnectWalletDialog({
   onConnected,
 }: ConnectWalletDialogProps): ReactElement {
   const {
+    account,
     activate,
     deactivate: deactivateActiveConnector,
     active,
   } = useWeb3React<Web3Provider>();
 
+  useEffect(() => {
+    if (account) {
+      onConnected?.();
+    }
+  }, [account, onConnected]);
+
   const activateConnector = useCallback(
     async (connector: InjectedConnector | WalletConnectConnector) => {
       await activate(connector, deactivateActiveConnector);
-      onConnected?.();
       onClose?.();
     },
-    [activate, deactivateActiveConnector, onClose, onConnected],
+    [activate, deactivateActiveConnector, onClose],
   );
 
   const handleConnectToMetaMask = useCallback(async () => {
