@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import TextInput from "src/ui/base/Input/TextInput";
@@ -17,6 +11,7 @@ import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow
 import H2 from "src/ui/base/H2/H2";
 import { InputValidationIcon } from "src/ui/base/InputValidationIcon";
 import { ConnectWalletButton } from "src/ui/wallet/ConnectWalletButton";
+import useOnConnected from "src/ui/wallet/useOnConnected";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
@@ -39,11 +34,13 @@ export default function ChooseDelegateCard({
 }: ChooseDelegateCardProps): ReactElement {
   const [selectedAddress, setSelectedAddress] = useState<string>();
   const [customAddress, setCustomAddress] = useState<string>();
+  const [isSelfDelegated, setIsSelfDelegated] = useState(false);
 
-  const handleChoose = (address: string) => {
-    setSelectedAddress(address);
-    setCustomAddress("");
-  };
+  useOnConnected(() => {
+    if (isSelfDelegated) {
+      setSelectedAddress(account);
+    }
+  });
 
   const isValidSelectedAddress =
     !!selectedAddress && isValidAddress(selectedAddress);
@@ -87,6 +84,11 @@ export default function ChooseDelegateCard({
           {/* List of delegates */}
           <ul className="flex flex-col gap-y-2">
             {shuffledDelegates.map((delegate, i) => {
+              const handleChooseClick = () => {
+                setSelectedAddress(delegate.address);
+                setIsSelfDelegated(false);
+                setCustomAddress("");
+              };
               const isSelected = selectedAddress === delegate.address;
               return (
                 <li key={i}>
@@ -96,7 +98,7 @@ export default function ChooseDelegateCard({
                     delegate={delegate}
                     actionButton={
                       <Button
-                        onClick={() => handleChoose(delegate.address)}
+                        onClick={handleChooseClick}
                         variant={ButtonVariant.PRIMARY}
                         disabled={isSelected}
                         className="hidden w-full justify-center lg:inline-flex"
@@ -106,7 +108,7 @@ export default function ChooseDelegateCard({
                     }
                     profileActionButton={
                       <Button
-                        onClick={() => handleChoose(delegate.address)}
+                        onClick={handleChooseClick}
                         variant={ButtonVariant.PRIMARY}
                         disabled={isSelected}
                         className="inline-flex w-full justify-center"
@@ -124,27 +126,31 @@ export default function ChooseDelegateCard({
           <div className="flex flex-1 flex-col space-y-2">
             <H2 className="text-center">{t`or`}</H2>
             <div className="flex items-center justify-center space-x-4">
-              {account && account === selectedAddress ? (
-                <Tag intent={Intent.SUCCESS}>
-                  <CheckCircleIcon height={24} className="mr-2" />
-                  <span className="font-bold">{t`Self-delegated!`}</span>
-                </Tag>
-              ) : (
-                account && (
+              {account ? (
+                account === selectedAddress ? (
+                  <Tag intent={Intent.SUCCESS}>
+                    <CheckCircleIcon height={24} className="mr-2" />
+                    <span className="font-bold">{t`Self-delegated!`}</span>
+                  </Tag>
+                ) : (
                   <Button
-                    onClick={() => handleChoose(account)}
+                    onClick={() => {
+                      setSelectedAddress(account);
+                      setIsSelfDelegated(true);
+                      setCustomAddress("");
+                    }}
                     variant={ButtonVariant.OUTLINE_WHITE}
                   >
                     {t`Self-delegate`}
                   </Button>
                 )
+              ) : (
+                <ConnectWalletButton
+                  label="Self-delegate"
+                  variant={ButtonVariant.OUTLINE_WHITE}
+                  onClick={() => setIsSelfDelegated(true)}
+                />
               )}
-              <ConnectWalletButton
-                className={account && "hidden"}
-                label="Self-delegate"
-                variant={ButtonVariant.OUTLINE_WHITE}
-                onConnected={() => handleChoose(account)}
-              />
             </div>
           </div>
           <div className="flex flex-1 flex-col space-y-2">

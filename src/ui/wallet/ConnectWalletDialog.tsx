@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useEffect } from "react";
+import React, { ReactElement, useCallback } from "react";
 import SimpleDialog from "src/ui/base/Dialog/Dialog";
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
@@ -17,25 +17,16 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 interface ConnectWalletDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConnected?: () => void;
 }
 export function ConnectWalletDialog({
   isOpen,
   onClose,
-  onConnected,
 }: ConnectWalletDialogProps): ReactElement {
   const {
-    account,
     activate,
     deactivate: deactivateActiveConnector,
     active,
   } = useWeb3React<Web3Provider>();
-
-  useEffect(() => {
-    if (account) {
-      onConnected?.();
-    }
-  }, [account, onConnected]);
 
   const activateConnector = useCallback(
     async (connector: InjectedConnector | WalletConnectConnector) => {
