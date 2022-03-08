@@ -37,6 +37,7 @@ export function StartAirdropCard({
           <ConnectWalletButton
             label={t`Connect wallet`}
             variant={ButtonVariant.GRADIENT}
+            onConnected={onNextStep}
           />
         ) : (
           <WalletProfileButton

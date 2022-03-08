@@ -54,9 +54,11 @@ export function WalletProfileButton(
 export function ConnectWalletButton({
   label = t`Connect Wallet`,
   variant = ButtonVariant.OUTLINE_BLUE,
+  onConnected,
 }: {
   label?: string;
   variant?: ButtonVariant;
+  onConnected?: () => void;
 }): ReactElement {
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
@@ -70,6 +72,7 @@ export function ConnectWalletButton({
       <ConnectWalletDialog
         isOpen={isWalletDialogOpen}
         onClose={onCloseWalletDialog}
+        onConnected={onConnected}
       />
     </Fragment>
   );
