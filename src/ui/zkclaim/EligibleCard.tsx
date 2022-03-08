@@ -9,8 +9,8 @@ import { t } from "ttag";
 
 interface EligibleCardProps {
   className?: string;
-  onBackClick?: () => void;
-  onNextClick?: () => void;
+  onPreviousStep?: () => void;
+  onNextStep?: () => void;
 }
 
 // PLACEHOLDER
@@ -18,8 +18,8 @@ const ELFI_TOKEN_AMOUNT = "10000.0";
 
 export default function EligibleCard({
   className,
-  onBackClick,
-  onNextClick,
+  onPreviousStep,
+  onNextStep,
 }: EligibleCardProps): ReactElement {
   // const { library } = useWeb3React();
 
@@ -74,20 +74,20 @@ export default function EligibleCard({
           </label> */}
         </div>
         <div className="flex justify-between">
-          {onBackClick && (
+          {onPreviousStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.WHITE}
-              onClick={onBackClick}
+              onClick={onPreviousStep}
             >
               {t`Back`}
             </Button>
           )}
-          {onNextClick && (
+          {onNextStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.GRADIENT}
-              onClick={onNextClick}
+              onClick={onNextStep}
             >
               {t`Next`}
             </Button>

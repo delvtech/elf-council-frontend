@@ -2,13 +2,13 @@ import { ReactElement } from "react";
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 
-interface SuccessIconProps {
+interface RadiantShieldIconProps {
   className?: string;
 }
 
-export default function SuccessIcon({
+export default function RadiantShieldIcon({
   className,
-}: SuccessIconProps): ReactElement {
+}: RadiantShieldIconProps): ReactElement {
   return (
     <div
       className={classNames(

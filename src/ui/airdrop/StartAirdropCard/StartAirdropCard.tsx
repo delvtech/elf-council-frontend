@@ -4,6 +4,7 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import useOnConnected from "src/ui/wallet/useOnConnected";
 import {
   ConnectWalletButton,
   WalletProfileButton,
@@ -27,6 +28,7 @@ export function StartAirdropCard({
   library,
   onNextStep,
 }: StartAirdropCardProps): ReactElement {
+  useOnConnected(onNextStep);
   return (
     <Card
       variant={CardVariant.BLUE}
@@ -37,7 +39,6 @@ export function StartAirdropCard({
           <ConnectWalletButton
             label={t`Connect wallet`}
             variant={ButtonVariant.GRADIENT}
-            onConnected={onNextStep}
           />
         ) : (
           <WalletProfileButton

@@ -17,12 +17,10 @@ import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
 interface ConnectWalletDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onConnected?: () => void;
 }
 export function ConnectWalletDialog({
   isOpen,
   onClose,
-  onConnected,
 }: ConnectWalletDialogProps): ReactElement {
   const {
     activate,
@@ -33,10 +31,9 @@ export function ConnectWalletDialog({
   const activateConnector = useCallback(
     async (connector: InjectedConnector | WalletConnectConnector) => {
       await activate(connector, deactivateActiveConnector);
-      onConnected?.();
       onClose?.();
     },
-    [activate, deactivateActiveConnector, onClose, onConnected],
+    [activate, deactivateActiveConnector, onClose],
   );
 
   const handleConnectToMetaMask = useCallback(async () => {

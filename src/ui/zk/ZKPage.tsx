@@ -3,7 +3,7 @@ import IntroCard from "./IntroCard";
 import EncryptionCard from "./EncryptionCard";
 import GitHubShareCard from "./GitHubShareCard";
 import DiscordShareCard from "./DiscordShareCard";
-import { Platform } from "./types";
+import { Platform, ZKData } from "./types";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
 import {
   StepItem,
@@ -13,25 +13,20 @@ import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
 import { t } from "ttag";
-import { pedersenHashConcat, toHex } from "zkp-merkle-airdrop-lib";
 
 interface ZKPageProps {
   platform: Platform;
 }
 
 export default function ZKPage({ platform }: ZKPageProps): ReactElement {
-  const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
-  const key = keySecretPair?.[0];
-  const secret = keySecretPair?.[1];
   const [publicId, setPublicId] = useState<string>();
   const {
-    completeStep,
     goToNextStep,
     goToPreviousStep,
     getStepPath,
     canViewStep,
     getStepStatus,
-  } = useRouterSteps({ initialCompleted: 1 });
+  } = useRouterSteps();
 
   let platformName = "";
   switch (platform) {
@@ -64,14 +59,6 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
     }
   };
 
-  const handleEncryptionStepComplete = () => {
-    if (key && secret) {
-      const commit = pedersenHashConcat(BigInt(key), BigInt(secret));
-      setPublicId(toHex(commit));
-      completeStep(2);
-    }
-  };
-
   return (
     <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-12">
       <div style={{ width: 600, maxWidth: "100%" }}>
@@ -98,17 +85,17 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
       {/* STEP 1 */}
       <IntroCard
         className={getStepClassName(1)}
-        onNextClick={goToNextStep}
+        onNextStep={goToNextStep}
         platformName={platformName}
       />
 
       {/* STEP 2 */}
       <EncryptionCard
         className={getStepClassName(2)}
-        onComplete={handleEncryptionStepComplete}
-        onGenerated={setKeySecretPair}
-        onBackClick={goToPreviousStep}
-        onNextClick={goToNextStep}
+        platform={platform}
+        onDownloaded={(data: ZKData) => setPublicId(data.publicId)}
+        onPreviousStep={goToPreviousStep}
+        onNextStep={goToNextStep}
       />
 
       {/* STEP 3 */}
