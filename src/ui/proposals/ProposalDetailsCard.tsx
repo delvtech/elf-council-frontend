@@ -239,50 +239,54 @@ export function ProposalDetailsCard(
             status={proposalStatus}
           />
         )}
-        <BalanceWithLabel
-          className="my-4 w-full"
-          balance={accountVotingPower}
-          tooltipText={votingPowerTooltipText}
-          label={t`Voting Power`}
-        />
 
-        {isVotingOpen ? (
-          <StaleVotingPowerMessage account={account} proposal={proposal} />
-        ) : null}
+        <div className="mt-auto">
+          <BalanceWithLabel
+            className="my-4 w-full"
+            balance={accountVotingPower}
+            tooltipText={votingPowerTooltipText}
+            label={t`Voting Power`}
+          />
 
-        <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
-          {etherscanLink && (
-            <a
-              target="_blank"
-              href={etherscanLink}
-              className="flex w-full items-center justify-end text-white"
-              rel="noreferrer"
-            >
-              <span>{t`View on etherscan`}</span>
-              <ExternalLinkIcon className="ml-2" height={18} />
-            </a>
-          )}
-          <div className="flex w-full justify-between">
-            <VotingBallotButton
-              proposal={proposal}
-              currentBallot={newBallot}
-              onSelectBallot={setCurrentBallot}
-              disabled={!isVotingOpen || !+accountVotingPower}
-            />
-            {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-              <div className="ml-4 flex w-full items-center  text-white ">
-                <BallotLabel ballot={ballotChoice} />
-              </div>
+          {isVotingOpen ? (
+            <div className="my-4">
+              <StaleVotingPowerMessage account={account} proposal={proposal} />
+            </div>
+          ) : null}
+
+          <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
+            {etherscanLink && (
+              <a
+                target="_blank"
+                href={etherscanLink}
+                className="flex w-full items-center justify-end text-white"
+                rel="noreferrer"
+              >
+                <span>{t`View on etherscan`}</span>
+                <ExternalLinkIcon className="ml-2" height={18} />
+              </a>
             )}
+            <div className="flex w-full justify-between">
+              <VotingBallotButton
+                proposal={proposal}
+                currentBallot={newBallot}
+                onSelectBallot={setCurrentBallot}
+              />
+              {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
+                <div className="ml-4 flex w-full items-center  text-white ">
+                  <BallotLabel ballot={ballotChoice} />
+                </div>
+              )}
 
-            <Button
-              disabled={submitButtonDisabled}
-              onClick={handleVote}
-              loading={isVoteTxPending}
-              variant={ButtonVariant.WHITE}
-            >
-              {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
-            </Button>
+              <Button
+                disabled={submitButtonDisabled}
+                onClick={handleVote}
+                loading={isVoteTxPending}
+                variant={ButtonVariant.WHITE}
+              >
+                {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
+              </Button>
+            </div>
           </div>
         </div>
       </div>

@@ -53,6 +53,7 @@ export function StaleVotingPowerMessage({
     return (
       <Tag
         intent={Intent.ERROR}
+        className="w-full"
       >{t`Your voting power has expired for this proposal.`}</Tag>
     );
   }

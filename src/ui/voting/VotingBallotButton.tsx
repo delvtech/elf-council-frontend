@@ -54,7 +54,7 @@ export function VotingBallotButton(
       {(open: boolean) => (
         <div className="flex items-center">
           <span>
-            {isNumber(currentBallot) ? BallotChoices[currentBallot] : t`Choice`}
+            {isNumber(currentBallot) ? BallotChoices[currentBallot] : t`Vote`}
           </span>
 
           <ChevronDownIcon
