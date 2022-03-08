@@ -15,10 +15,12 @@ import { t } from "ttag";
 interface ConnectWalletDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  onConnected?: () => void;
 }
 export function ConnectWalletDialog({
   isOpen,
   onClose,
+  onConnected,
 }: ConnectWalletDialogProps): ReactElement {
   const { activate, deactivate, active } = useWeb3React<Web3Provider>();
 
@@ -28,16 +30,18 @@ export function ConnectWalletDialog({
 
   const connectToMetaMask = useCallback(async () => {
     await deactivateActiveConnector();
-    activate(injectedConnector, deactivateActiveConnector);
+    await activate(injectedConnector, deactivateActiveConnector);
+    onConnected?.();
     onClose?.();
-  }, [activate, deactivateActiveConnector, onClose]);
+  }, [activate, deactivateActiveConnector, onClose, onConnected]);
 
   const connectToWalletConnect = useCallback(async () => {
     await deactivateActiveConnector();
     const walletConnectConnector = getWalletConnectConnector();
-    activate(walletConnectConnector, deactivateActiveConnector);
+    await activate(walletConnectConnector, deactivateActiveConnector);
+    onConnected?.();
     onClose?.();
-  }, [activate, deactivateActiveConnector, onClose]);
+  }, [activate, deactivateActiveConnector, onClose, onConnected]);
 
   return (
     <SimpleDialog isOpen={isOpen} onClose={onClose}>
