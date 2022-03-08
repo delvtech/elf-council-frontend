@@ -69,10 +69,6 @@ export default function ChooseDelegateCard({
     }
   }, [isValidSelectedAddress, selectedAddress, onChooseDelegate]);
 
-  const scrollRef = useCallback((node: HTMLLIElement) => {
-    node?.scrollIntoView();
-  }, []);
-
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => shuffle(delegates), []);
 
@@ -111,7 +107,7 @@ export default function ChooseDelegateCard({
                 };
                 const isSelected = selectedAddress === delegate.address;
                 return (
-                  <li key={i} ref={isSelected ? scrollRef : undefined}>
+                  <li key={i}>
                     <DelegateProfileRow
                       selected={isSelected}
                       highlightSelected
