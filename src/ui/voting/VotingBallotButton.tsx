@@ -8,25 +8,23 @@ import { t } from "ttag";
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { Ballot, BallotChoices } from "src/ui/voting/Ballot";
-import { getIsVotingOpen } from "src/elf-council-proposals";
 import { Proposal } from "elf-council-proposals";
-import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
 interface VotingBallotButtonProps {
   proposal: Proposal;
   currentBallot: Ballot | undefined;
   onSelectBallot: (choice: Ballot) => void;
+  disabled?: boolean;
 }
 
 export function VotingBallotButton(
   props: VotingBallotButtonProps,
 ): ReactElement {
-  const { proposal, currentBallot, onSelectBallot } = props;
-  const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
-  const isVotingOpen = getIsVotingOpen(proposal, currentBlockNumber);
+  const { currentBallot, onSelectBallot, disabled = false } = props;
+
   return (
     <PopoverButton
-      disabled={!isVotingOpen}
+      disabled={disabled}
       className="p-0"
       popover={
         <Card variant={CardVariant.BLUE}>
