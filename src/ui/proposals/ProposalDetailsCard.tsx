@@ -182,12 +182,12 @@ export function ProposalDetailsCard(
           {t`Proposal ${proposalId}`}
         </h1>
         <div className="flex w-full justify-between">
-          <div className="flex-1 shrink-0 text-ellipsis font-light text-white">
+          <div className="flex-1 shrink-0 text-ellipsis font-light text-white lg:mt-2">
             {snapshotProposal?.title}
           </div>
-          <div className="lg:-mt-6">
+          <div className="h-min rounded-md bg-white py-1 px-2 lg:-mt-8">
             {proposalStatus && (
-              <div className="flex w-full items-center justify-end space-x-2 text-white">
+              <div className="flex w-full items-center justify-end space-x-2 text-black">
                 <div>{ProposalStatusLabels[proposalStatus]}</div>
                 <ProposalStatusIcon signer={signer} proposal={proposal} />
               </div>
