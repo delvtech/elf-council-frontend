@@ -22,20 +22,20 @@ export function ConnectWalletDialog({
   onClose,
   onConnected,
 }: ConnectWalletDialogProps): ReactElement {
-  const { activate, deactivate, active } = useWeb3React<Web3Provider>();
+  const {
+    activate,
+    deactivate: deactivateActiveConnector,
+    active,
+  } = useWeb3React<Web3Provider>();
 
-  const deactivateActiveConnector = useCallback(async () => {
-    await deactivate();
-  }, [deactivate]);
-
-  const connectToMetaMask = useCallback(async () => {
+  const handleConnectToMetaMask = useCallback(async () => {
     await deactivateActiveConnector();
     await activate(injectedConnector, deactivateActiveConnector);
     onConnected?.();
     onClose?.();
   }, [activate, deactivateActiveConnector, onClose, onConnected]);
 
-  const connectToWalletConnect = useCallback(async () => {
+  const handleConnectToWalletConnect = useCallback(async () => {
     await deactivateActiveConnector();
     const walletConnectConnector = getWalletConnectConnector();
     await activate(walletConnectConnector, deactivateActiveConnector);
@@ -54,7 +54,7 @@ export function ConnectWalletDialog({
           <Button
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
-            onClick={connectToMetaMask}
+            onClick={handleConnectToMetaMask}
             className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid place-items-center">
@@ -71,7 +71,7 @@ export function ConnectWalletDialog({
           <Button
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
-            onClick={connectToWalletConnect}
+            onClick={handleConnectToWalletConnect}
             className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid h-full w-full place-items-center">
