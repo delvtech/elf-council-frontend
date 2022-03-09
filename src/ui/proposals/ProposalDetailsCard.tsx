@@ -189,7 +189,11 @@ export function ProposalDetailsCard(
             {proposalStatus && (
               <div className="flex w-full items-center justify-end space-x-2 text-black">
                 <div>{ProposalStatusLabels[proposalStatus]}</div>
-                <ProposalStatusIcon signer={signer} proposal={proposal} />
+                <ProposalStatusIcon
+                  signer={signer}
+                  proposal={proposal}
+                  disableTooltip
+                />
               </div>
             )}
           </div>

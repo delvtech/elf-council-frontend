@@ -33,10 +33,12 @@ const StatusTagIntents: Record<ProposalStatus, Intent> = {
 interface ProposalStatusIconProps {
   signer: Signer | undefined;
   proposal: Proposal;
+  disableTooltip?: boolean;
 }
 
 export function ProposalStatusIcon({
   proposal,
+  disableTooltip = false,
 }: ProposalStatusIconProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const { proposalId, quorum } = proposal;
@@ -56,7 +58,7 @@ export function ProposalStatusIcon({
   }
 
   return (
-    <Tooltip content={StatusLabels[status]}>
+    <Tooltip content={disableTooltip ? "" : StatusLabels[status]}>
       <div
         className={classNames(
           "flex items-center space-x-8",
