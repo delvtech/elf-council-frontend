@@ -275,6 +275,7 @@ export function ProposalDetailsCard(
                 proposal={proposal}
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
+                disabled={!isVotingOpen || !+accountVotingPower}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
                 <div className="ml-4 flex w-full items-center  text-white ">
