@@ -184,7 +184,7 @@ export function ProposalDetailsCard(
         {/* Proposal Header */}
         <div className="mb-4 flex justify-between lg:mb-0">
           <H2 className="shrink-0 text-2xl font-bold text-white">
-            {t`Proposal ${proposalId}`}
+            {t`Proposal #${proposalId}`}
           </H2>
           <div className="w-min rounded-md bg-white py-1 px-2 lg:hidden">
             {proposalStatus && (

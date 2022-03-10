@@ -76,7 +76,7 @@ export function ProposalListItem({
             )}
           >
             {currentBlockNumber && (
-              <div className="text-sm">{t`voting ends ${votingPeriodEndsDate}`}</div>
+              <div className="text-sm">{t`Voting ends ${votingPeriodEndsDate}`}</div>
             )}
             <div className="flex items-center space-x-4">
               <div className="pb-0.5">
