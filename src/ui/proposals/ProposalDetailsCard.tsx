@@ -182,32 +182,32 @@ export function ProposalDetailsCard(
         </button>
 
         {/* Proposal Header */}
-        <div className="mb-4 flex flex-col justify-between lg:mb-0">
-          <div className="w-min rounded-md bg-white py-1 px-2 lg:hidden">
-            {proposalStatus && (
-              <div className="flex w-full items-center justify-end space-x-2 text-black">
-                <div className="whitespace-nowrap">
-                  {ProposalStatusLabels[proposalStatus]}
-                </div>
-                <ProposalStatusIcon
-                  signer={signer}
-                  proposal={proposal}
-                  disableTooltip
-                />
-              </div>
-            )}
-          </div>
-          <H2 className="hidden shrink-0 text-2xl font-bold text-white lg:block">
-            {t`Proposal #${proposalId}`}
-          </H2>
-        </div>
+        <H2 className="hidden shrink-0 text-2xl font-bold text-white lg:block">
+          {t`Proposal #${proposalId}`}
+        </H2>
 
         {/* Proposal Title */}
-        <div className="relative flex w-full justify-between">
-          <div className="flex flex-col">
-            <H2 className="text-2xl font-bold text-white lg:hidden">
-              {t`Proposal #${proposalId}`}
-            </H2>
+        <div className="relative flex justify-between">
+          <div className="flex w-full flex-col">
+            <div className="mt-8 flex justify-between lg:mt-0">
+              <H2 className="text-2xl font-bold text-white lg:hidden">
+                {t`Proposal #${proposalId}`}
+              </H2>
+              <div className="w-min rounded-md bg-white py-1 px-2 lg:hidden">
+                {proposalStatus && (
+                  <div className="flex w-full items-center justify-end space-x-2 text-black">
+                    <div className="whitespace-nowrap">
+                      {ProposalStatusLabels[proposalStatus]}
+                    </div>
+                    <ProposalStatusIcon
+                      signer={signer}
+                      proposal={proposal}
+                      disableTooltip
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light text-white lg:mt-2">
               {snapshotProposal?.title}
             </H1>
