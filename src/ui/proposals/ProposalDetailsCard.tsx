@@ -291,7 +291,7 @@ export function ProposalDetailsCard(
 
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
-            <div className="flex w-full items-end justify-between">
+            <div className="flex w-full items-end justify-between lg:flex-col lg:items-start xl:flex-row xl:items-end">
               {/* User Stats */}
               <BalanceWithLabel
                 className="mt-4 w-full"
@@ -304,7 +304,7 @@ export function ProposalDetailsCard(
                 <a
                   target="_blank"
                   href={etherscanLink}
-                  className="flex w-full items-center justify-end text-white"
+                  className="flex items-center justify-end whitespace-nowrap text-white lg:justify-start xl:justify-end"
                   rel="noreferrer"
                 >
                   <span>{t`View on etherscan`}</span>
