@@ -11,12 +11,13 @@ import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
-import Image from "next/image";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
+import ElementIcon from "src/ui/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrls from "src/elf/urls";
+import PoweredByCouncil from "src/ui/svg/PoweredByCouncil";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -54,13 +55,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
       >
         <div className="w-full">
           <div className="mt-1 flex justify-around py-3">
-            <div className="relative h-24 w-24">
-              <Image
-                layout="fill"
-                src="/assets/ElementLogo--dark.svg"
-                alt={t`Element Council`}
-              />
-            </div>
+            <ElementIcon className="h-24 w-24" />
             <button
               onClick={onClose}
               className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
@@ -99,13 +94,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
             {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
           </div>
         </div>
-        <div className="relative h-24 w-24">
-          <Image
-            layout="fill"
-            src="/assets/PoweredByCouncil.svg"
-            alt={t`Powered by Council`}
-          />
-        </div>
+        <PoweredByCouncil className="h-24 w-24" />
       </div>
     </Fragment>
   );

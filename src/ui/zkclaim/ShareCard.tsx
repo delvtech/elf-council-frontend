@@ -2,12 +2,12 @@ import React, { ReactElement } from "react";
 import { InlineElfiLabel } from "./InlineElfiLabel";
 import CallToActionCard from "./CallToActionCard";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
-import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
-import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
 import ElementUrls from "src/elf/urls";
+import CouncilLogo from "src/ui/svg/CouncilLogo/CouncilLogo";
+import TwitterIcon from "src/ui/svg/TwitterIcon";
+import DiscordIcon from "src/ui/svg/DiscordIcon";
+import CommonwealthIcon from "src/ui/svg/CommonwealthIcon";
 import Link from "next/link";
-import Image from "next/image";
 import { t, jt } from "ttag";
 
 interface ShareCardProps {
@@ -25,14 +25,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             as="a"
             className="mb-10 md:w-2/3"
             label={t`Back to Overview`}
-            icon={
-              <Image
-                height="24px"
-                width="24px"
-                src="/assets/CouncilLogo.svg"
-                alt={t`Element Council logo`}
-              />
-            }
+            icon={<CouncilLogo height="24px" width="24px" />}
           />
         </Link>
         <p className="mb-4 text-left md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element Discord to get more involved in our community and governance system.`}</p>
@@ -45,7 +38,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             target="_blank"
             rel="noreferrer"
             label={t`Tweet @element_fi`}
-            icon={<TwitterIconFromFigma />}
+            icon={<TwitterIcon />}
           />
           <CallToActionCard
             as="a"
@@ -53,7 +46,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             target="_blank"
             rel="noreferrer"
             label={t`Join Discord`}
-            icon={<DiscordIconFromFigma />}
+            icon={<DiscordIcon />}
           />
           <CallToActionCard
             as="a"

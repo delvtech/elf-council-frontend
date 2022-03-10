@@ -3,7 +3,6 @@ import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import { Proposal, ProposalsJson } from "elf-council-proposals";
-import Image from "next/image";
 import { t } from "ttag";
 
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
@@ -12,6 +11,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
+import EmptySpaceFace from "src/ui/svg/EmptySpaceFace";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
@@ -196,15 +196,8 @@ function useFilteredProposals(
 
 function NoProposalsEmptyState(props: { activeTabId: TabId }) {
   return (
-    <div className="my-6 flex-1 text-center text-blueGrey">
-      <span className="-mr-[27px]">
-        <Image
-          width={327}
-          height={107}
-          src="/assets/empty-space-face.svg"
-          alt=" "
-        />
-      </span>
+    <div className="my-6 flex flex-1 flex-col items-center text-blueGrey">
+      <EmptySpaceFace width={327} height={107} className="-mr-[27px]" />
       <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
     </div>
   );

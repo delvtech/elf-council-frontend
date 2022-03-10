@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useRef } from "react";
-import Image from "next/image";
 import { t } from "ttag";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2/H2";

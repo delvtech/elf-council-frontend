@@ -1,15 +1,10 @@
 import classNames from "classnames";
-import Image from "next/image";
-import { t } from "ttag";
 import React, { ReactElement } from "react";
+import ElementIcon, { IconSize } from "src/ui/svg/ElementIcon/ElementIcon";
 
-export enum IconSize {
-  SMALL = "small",
-  MEDIUM = "medium",
-  LARGE = "large",
-}
+export { IconSize };
 
-interface ElementIconProps {
+interface ElementIconCircleProps {
   className?: string;
   size: IconSize;
 
@@ -25,11 +20,11 @@ interface ElementIconProps {
  *
  * @returns svg logo
  */
-export function ElementIcon({
+export function ElementIconCircle({
   className,
   inline = false,
   size = IconSize.SMALL,
-}: ElementIconProps): ReactElement {
+}: ElementIconCircleProps): ReactElement {
   const Tag = inline ? "span" : "div";
 
   const iconElement = (
@@ -39,12 +34,7 @@ export function ElementIcon({
         "flex w-max flex-shrink-0 items-center justify-center rounded-full bg-white p-0.5 opacity-90 shadow",
       )}
     >
-      <Image
-        height={IconHeight[size]}
-        width={IconWidth[size]}
-        src="/assets/ElementLogo--dark.svg"
-        alt={t`Element Council`}
-      />
+      <ElementIcon height={IconHeight[size]} width={IconWidth[size]} />
     </Tag>
   );
 

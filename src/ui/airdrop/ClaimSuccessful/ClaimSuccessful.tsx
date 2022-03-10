@@ -1,17 +1,20 @@
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { jt, t } from "ttag";
-import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
-import Image from "next/image";
 import { CallToActionCard } from "./CallToActionCard";
-import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
-import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import CouncilLogo from "src/ui/svg/CouncilLogo/CouncilLogo";
+import TwitterIcon from "src/ui/svg/TwitterIcon";
+import DiscordIcon from "src/ui/svg/DiscordIcon";
+import CommonwealthIcon from "src/ui/svg/CommonwealthIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import ElementUrls from "src/elf/urls";
 import Link from "next/link";
 
 const elfiLogoElement = (
-  <ElementIcon
+  <ElementIconCircle
     key="element-icon"
     className="mx-1 md:mx-2"
     size={IconSize.MEDIUM}
@@ -34,14 +37,7 @@ export function ClaimSuccessful(): ReactElement {
           <a className="mb-10 w-2/3">
             <CallToActionCard
               label={t`Back to Overview`}
-              icon={
-                <Image
-                  height="24px"
-                  width="24px"
-                  src="/assets/CouncilLogo.svg"
-                  alt={t`Element Council logo`}
-                />
-              }
+              icon={<CouncilLogo height="24px" width="24px" />}
             />
           </a>
         </Link>
@@ -59,7 +55,7 @@ export function ClaimSuccessful(): ReactElement {
           >
             <CallToActionCard
               label={t`Tweet @element_fi`}
-              icon={<TwitterIconFromFigma />}
+              icon={<TwitterIcon />}
             />
           </a>
           <a
@@ -68,10 +64,7 @@ export function ClaimSuccessful(): ReactElement {
             href={ElementUrls.DISCORD}
             className="flex-1"
           >
-            <CallToActionCard
-              label={t`Join Discord`}
-              icon={<DiscordIconFromFigma />}
-            />
+            <CallToActionCard label={t`Join Discord`} icon={<DiscordIcon />} />
           </a>
           <a href={ElementUrls.FORUM} className="flex-1">
             <CallToActionCard

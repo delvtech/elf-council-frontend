@@ -1,9 +1,5 @@
 import React, { ReactElement } from "react";
-
-interface ElementLogoProps {
-  height: string;
-  width?: string;
-}
+import { PropsOf } from "src/@types/helper";
 
 /**
  * Oºo Element
@@ -13,7 +9,8 @@ interface ElementLogoProps {
 export function ElementLogo({
   height = "53",
   width = "auto",
-}: ElementLogoProps): ReactElement {
+  ...props
+}: PropsOf<"svg">): ReactElement {
   return (
     <svg
       width={width}
@@ -21,6 +18,7 @@ export function ElementLogo({
       viewBox="0 0 161 53"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <mask
         id="mask0"

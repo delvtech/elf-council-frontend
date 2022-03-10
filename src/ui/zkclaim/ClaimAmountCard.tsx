@@ -1,5 +1,8 @@
 import { ReactElement } from "react";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { commify } from "ethers/lib/utils";
 import { t } from "ttag";
 import classNames from "classnames";
@@ -26,7 +29,7 @@ export default function ClaimAmountCard({
         {label}
       </p>
       <div className="flex items-center justify-center gap-3">
-        <ElementIcon className="bg-paleLily" size={IconSize.LARGE} />
+        <ElementIconCircle className="bg-paleLily" size={IconSize.LARGE} />
         <p className="text-5xl font-semibold text-principalRoyalBlue">
           {t`${commify(amount)} ELFI`}
         </p>

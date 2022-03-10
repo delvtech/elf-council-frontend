@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
 import EligibleCard from "./EligibleCard";
@@ -11,7 +11,7 @@ import ShareCard from "./ShareCard";
 import useZKProof from "./useZKProof";
 import { useSigner } from "src/ui/signer/useSigner";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
-import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
+import { ElementLogo } from "src/ui/svg/ElementLogo/ElementLogo";
 import {
   StepItem,
   StepStatus as StepItemStatus,

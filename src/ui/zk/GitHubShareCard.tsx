@@ -5,7 +5,7 @@ import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Image from "next/image";
+import GitHubIcon from "src/ui/svg/GithubIcon";
 import { t, jt } from "ttag";
 
 const githubIssueLink = (
@@ -53,12 +53,7 @@ export default function GitHubShareCard({
             target="_blank"
           >
             {t`Go to GitHub Issue`}
-            <Image
-              width={24}
-              height={24}
-              src="/assets/githublogo--light.svg"
-              alt=""
-            />
+            <GitHubIcon width={24} height={24} className="fill-white" />
           </AnchorButton>
         </div>
       </div>
