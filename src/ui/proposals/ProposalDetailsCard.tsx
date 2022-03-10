@@ -224,44 +224,40 @@ export function ProposalDetailsCard(
           {t`Proposal Description:`}
         </p>
 
-        <div className="h-[35%] overflow-hidden rounded-xl">
-          <div className="z-10 h-full overflow-auto break-words">
-            <p className="shrink-0 rounded-xl bg-black bg-opacity-20 p-4 font-light text-white ">
+        <div className="h-[35%] overflow-hidden rounded-xl bg-black bg-opacity-20">
+          <div className="h-full overflow-auto break-words py-4">
+            <p className="shrink-0 px-4 font-light text-white ">
               {truncateText(snapshotProposal?.body || "")}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
-              animi tenetur deserunt minima nobis ducimus reiciendis molestias
-              eum dicta! Ut facilis debitis labore nesciunt esse laudantium
-              soluta cumque dicta impedit exercitationem vitae doloremque ab,
-              nihil eaque quasi deleniti beatae molestiae reiciendis fugiat
-              praesentium, fugit quas. Enim dignissimos laborum fugiat
-              distinctio.
             </p>
           </div>
         </div>
 
-        <p className="my-3 shrink-0 overflow-hidden">
-          <a
-            target="_blank"
-            href={snapshotProposal?.link || ""}
-            className="flex items-center text-sm font-light text-white"
-            rel="noreferrer"
-          >
-            {t`View proposal`}
-            <ExternalLinkIcon className="ml-2 h-4" />
-          </a>
-        </p>
+        {/* External Links */}
+        <div className="my-4 flex justify-around">
+          <p className="shrink-0 overflow-hidden">
+            <a
+              target="_blank"
+              href={snapshotProposal?.link || ""}
+              className="flex items-center text-sm font-light text-white"
+              rel="noreferrer"
+            >
+              {t`View proposal`}
+              <ExternalLinkIcon className="ml-2 h-4" />
+            </a>
+          </p>
 
-        <p className="my-3 shrink-0 overflow-hidden">
-          <a
-            target="_blank"
-            href="https://forum.element.fi"
-            className="flex items-center text-sm font-light text-white"
-            rel="noreferrer"
-          >
-            {t`View Discussion`}
-            <ExternalLinkIcon className="ml-2 h-4" />
-          </a>
-        </p>
+          <p className="shrink-0 overflow-hidden">
+            <a
+              target="_blank"
+              href="https://forum.element.fi"
+              className="flex items-center text-sm font-light text-white"
+              rel="noreferrer"
+            >
+              {t`View Discussion`}
+              <ExternalLinkIcon className="ml-2 h-4" />
+            </a>
+          </p>
+        </div>
 
         {isExecuted ? (
           <Tag className="w-full" intent={Intent.SUCCESS}>
@@ -378,7 +374,7 @@ function QuorumBar(props: QuorumBarProps) {
 
   const quorumPercent = Math.floor((+votes / +quorum) * 100);
   return (
-    <div className="w-full space-y-1 text-sm text-white">
+    <div className="w-full space-y-1 text-white">
       <div>
         {votes} {t`total votes`}
       </div>
@@ -386,7 +382,7 @@ function QuorumBar(props: QuorumBarProps) {
       <div>
         {`${quorumPercent}%`} {t`quorum reached`}
       </div>
-      <div className="text-xs">
+      <div className="text-sm">
         {commify(quorum)} {t`(vote quorum)`}
       </div>
     </div>
