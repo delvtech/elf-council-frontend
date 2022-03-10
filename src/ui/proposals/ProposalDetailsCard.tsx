@@ -241,29 +241,29 @@ export function ProposalDetailsCard(
 
         {/* External Links */}
         <div className="my-4 flex justify-around">
-          <p className="shrink-0 overflow-hidden">
-            <a
-              target="_blank"
-              href={snapshotProposal?.link || ""}
-              className="flex items-center text-sm font-light text-white"
-              rel="noreferrer"
-            >
-              {t`View proposal`}
-              <ExternalLinkIcon className="ml-2 h-4" />
-            </a>
-          </p>
+          {/* <p className="shrink-0 overflow-hidden"> */}
+          <a
+            target="_blank"
+            href={snapshotProposal?.link || ""}
+            className="flex shrink-0 items-center overflow-hidden text-sm font-light text-white"
+            rel="noreferrer"
+          >
+            {t`View proposal`}
+            <ExternalLinkIcon className="ml-2 h-4" />
+          </a>
+          {/* </p> */}
 
-          <p className="shrink-0 overflow-hidden">
-            <a
-              target="_blank"
-              href="https://forum.element.fi"
-              className="flex items-center text-sm font-light text-white"
-              rel="noreferrer"
-            >
-              {t`View Discussion`}
-              <ExternalLinkIcon className="ml-2 h-4" />
-            </a>
-          </p>
+          {/* <p className="shrink-0 overflow-hidden"> */}
+          <a
+            target="_blank"
+            href="https://forum.element.fi"
+            className="flex shrink-0 items-center overflow-hidden text-sm font-light text-white"
+            rel="noreferrer"
+          >
+            {t`View Discussion`}
+            <ExternalLinkIcon className="ml-2 h-4" />
+          </a>
+          {/* </p> */}
         </div>
 
         {/* Quorum Bar */}
