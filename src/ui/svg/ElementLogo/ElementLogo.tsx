@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { PropsOf } from "src/@types/helper";
+import { SVGComponentProps } from "src/ui/svg/types";
 
 /**
  * Oºo Element
@@ -10,7 +10,7 @@ export function ElementLogo({
   height = "53",
   width = "auto",
   ...props
-}: PropsOf<"svg">): ReactElement {
+}: SVGComponentProps): ReactElement {
   return (
     <svg
       width={width}

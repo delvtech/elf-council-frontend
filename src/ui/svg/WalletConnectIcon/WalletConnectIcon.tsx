@@ -1,7 +1,9 @@
 import { ReactElement } from "react";
-import { PropsOf } from "src/@types/helper";
+import { SVGComponentProps } from "src/ui/svg/types";
 import Svg from "./walletConnectIcon.svg";
 
-export default function WalletConnectIcon(props: PropsOf<"svg">): ReactElement {
+export default function WalletConnectIcon(
+  props: SVGComponentProps,
+): ReactElement {
   return <Svg {...props} />;
 }

@@ -1,3 +1,5 @@
+const t = require("@babel/types");
+
 /**
  * This template is used in the @svgr/webpack loader options to ensure a unique
  * id for every SVG, even when the same SVG is used multiple times on a single
@@ -11,6 +13,11 @@
  *      `fill="url(#elfi-icon-gradient)"`) will reference the hidden SVG tags
  *      which won't show.
  *
+ * It also adds a conditional `<title>` tag and `aria-labeledby` prop that only
+ * show if a title is passed in the props. This is needed because the title
+ * attribute on `<svg>` tags is invalid, but there may be times when an SVG
+ * needs a descriptor for screen readers, scrapers, and/or mouse over.
+ *
  * https://react-svgr.com/docs/custom-templates/
  *
  * TODO: Handle this in a custom SVGO or Babel plugin
@@ -19,6 +26,7 @@ module.exports = (
   { imports, interfaces, componentName, props, jsx, exports },
   { tpl },
 ) => {
+  addAccessibleTitle(componentName, jsx);
   convertSVGIds(componentName, jsx);
   return tpl`
 ${imports};
@@ -47,6 +55,57 @@ ${exports};
 };
 
 /**
+ * Adds a conditional `<title>` tag and `aria-labeledby` prop that only show
+ * if a title is passed in the props.
+ *
+ * @param {string} componentName Used to prefix the id of the `<title>` tag.
+ * @param {JSXElement} ASTNode The node to add them to.
+ */
+function addAccessibleTitle(componentName, { openingElement, children }) {
+  const nameSpacedId = `${componentName}__title`;
+  if (openingElement) {
+    // AST of `aria-labeledby={props.title ? "foo_title" : undefined}`
+    openingElement.attributes.push(
+      t.jSXAttribute(
+        t.jsxIdentifier("aria-labelledby"),
+        t.jsxExpressionContainer(
+          t.conditionalExpression(
+            t.memberExpression(t.identifier("props"), t.identifier("title")),
+            t.stringLiteral(nameSpacedId),
+            t.identifier("undefined"),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // AST of {props.title && <title id="foo_title" lang="en">{props.title}</title>}
+  children.unshift(
+    t.jSXExpressionContainer(
+      t.logicalExpression(
+        "&&",
+        t.memberExpression(t.identifier("props"), t.identifier("title")),
+        t.jSXElement(
+          t.jSXOpeningElement(t.jSXIdentifier("title"), [
+            t.jSXAttribute(
+              t.jSXIdentifier("id"),
+              t.stringLiteral(nameSpacedId),
+            ),
+            t.jSXAttribute(t.jSXIdentifier("lang"), t.stringLiteral("en")),
+          ]),
+          t.jSXClosingElement(t.jSXIdentifier("title")),
+          [
+            t.jSXExpressionContainer(
+              t.memberExpression(t.identifier("props"), t.identifier("title")),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+/**
  * Modifies all id attributes and attributes that reference ids in an SVG AST
  * node to call a function with a new prefixed id.
  *
@@ -67,22 +126,32 @@ function convertSVGIds(componentName, { openingElement, children }) {
       // example: both `url(#foo)` and `#foo` would become `foo`
       const baseId = value.value.replace(/(^(url\()?#|\)$)/g, "");
       const nameSpacedId = `${componentName}__${baseId}`;
+      let fnName = null;
 
       // has a url reference to an id
       // example: `fill="url(#foo)"`
       if (/^url\(#/.test(value.value)) {
-        attribute.value = getExpressionASTNode("getUrl", nameSpacedId);
+        fnName = "getUrl";
       }
 
       // has an href attribute to an id
       // example: `href="#foo"`
       else if (name.name === "href" || name.name === "xlinkHref") {
-        attribute.value = getExpressionASTNode("getRef", nameSpacedId);
+        fnName = "getRef";
       }
 
-      // has an id attribute
-      else if (name.name === "id") {
-        attribute.value = getExpressionASTNode("getId", nameSpacedId);
+      // has an id or aria-labelledby attribute
+      else if (name.name === "id" || name.name === "aria-labelledby") {
+        fnName = "getId";
+      }
+
+      if (fnName) {
+        // AST of `{foo('baz')}`
+        attribute.value = t.jSXExpressionContainer(
+          t.callExpression(t.identifier(fnName), [
+            t.stringLiteral(nameSpacedId),
+          ]),
+        );
       }
     }
   }
@@ -93,32 +162,4 @@ function convertSVGIds(componentName, { openingElement, children }) {
       convertSVGIds(componentName, child);
     }
   }
-}
-
-/**
- * Returns a JSXExpressionContainer AST node that calls a function with a single
- * string argument.
- *
- * https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-asts
- *
- * @param {string} fnName The name of the function to call.
- * @param {string} argValue The value of the argument to pass to the function.
- */
-function getExpressionASTNode(fnName, argValue) {
-  return {
-    type: "JSXExpressionContainer",
-    expression: {
-      type: "CallExpression",
-      callee: {
-        type: "Identifier",
-        name: fnName,
-      },
-      arguments: [
-        {
-          type: "StringLiteral",
-          value: argValue,
-        },
-      ],
-    },
-  };
 }

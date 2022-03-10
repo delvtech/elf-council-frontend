@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import { PropsOf } from "src/@types/helper";
-import Svg from "./CouncilLogo.svg";
+import { SVGComponentProps } from "src/ui/svg/types";
+import SVG from "./CouncilLogo.svg";
 
-export default function CouncilLogo(props: PropsOf<"svg">): ReactElement {
-  return <Svg {...props} />;
+export default function CouncilLogo(props: SVGComponentProps): ReactElement {
+  return <SVG {...props} />;
 }

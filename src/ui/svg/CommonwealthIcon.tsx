@@ -1,11 +1,11 @@
 import { ReactElement } from "react";
-import { PropsOf } from "src/@types/helper";
 import classNames from "classnames";
+import { SVGComponentProps } from "./types";
 
 export default function CommonwealthIcon({
   className,
   ...props
-}: PropsOf<"svg">): ReactElement {
+}: SVGComponentProps): ReactElement {
   return (
     <svg
       width="26"

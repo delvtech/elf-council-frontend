@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import { PropsOf } from "src/@types/helper";
+import { SVGComponentProps } from "./types";
 
-export default function EmptySpaceFace(props: PropsOf<"svg">): ReactElement {
+export default function EmptySpaceFace(props: SVGComponentProps): ReactElement {
   return (
     <svg
       width="327"

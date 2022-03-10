@@ -1,7 +1,8 @@
 import { JSXElementConstructor, ReactElement } from "react";
 import { InheritableElementProps, PropsOf } from "src/@types/helper";
-import Svg from "./elementIcon.svg";
-import SvgLight from "./elementIcon--light.svg";
+import { SVGComponentProps } from "src/ui/svg/types";
+import SVG from "./elementIcon.svg";
+import SVGLight from "./elementIcon--light.svg";
 
 export enum IconSize {
   SMALL = "small",
@@ -14,7 +15,7 @@ export enum IconVariant {
   LIGHT = "light",
 }
 
-interface ElementIconProps {
+interface ElementIconProps extends SVGComponentProps {
   size?: IconSize;
   variant?: IconVariant;
 }
@@ -34,8 +35,8 @@ const IconComponent: Record<
   IconVariant,
   JSXElementConstructor<PropsOf<"svg">>
 > = {
-  [IconVariant.DARK]: Svg,
-  [IconVariant.LIGHT]: SvgLight,
+  [IconVariant.DARK]: SVG,
+  [IconVariant.LIGHT]: SVGLight,
 };
 const IconHeight = {
   [IconSize.SMALL]: "12",

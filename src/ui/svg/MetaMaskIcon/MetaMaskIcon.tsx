@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
-import { PropsOf } from "src/@types/helper";
+import { SVGComponentProps } from "src/ui/svg/types";
 import Svg from "./metaMaskIcon.svg";
 
-export default function MetaMaskIcon(props: PropsOf<"svg">): ReactElement {
+export default function MetaMaskIcon(props: SVGComponentProps): ReactElement {
   return <Svg {...props} />;
 }

@@ -55,7 +55,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
       >
         <div className="w-full">
           <div className="mt-1 flex justify-around py-3">
-            <ElementIcon className="h-24 w-24" />
+            <ElementIcon className="h-24 w-24" title="Element Finance" />
             <button
               onClick={onClose}
               className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
