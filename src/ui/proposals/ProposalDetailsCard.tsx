@@ -275,8 +275,9 @@ export function ProposalDetailsCard(
           />
         )}
 
-        {/* Voting Stats / Action Buttons */}
+        {/* Voting Related Stats / Action Buttons */}
         <div className="mt-auto">
+          {/* User Stats */}
           <BalanceWithLabel
             className="my-4 w-full"
             balance={accountVotingPower}
@@ -291,6 +292,7 @@ export function ProposalDetailsCard(
             </div>
           ) : null}
 
+          {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
             {etherscanLink && (
               <a
