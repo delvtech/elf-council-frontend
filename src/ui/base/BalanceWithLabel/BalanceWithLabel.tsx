@@ -27,7 +27,6 @@ export function BalanceWithLabel(props: BalanceWithLabelProps): ReactElement {
           {formatBalance(balance, 4)}
         </span>
         <ElementIconCircle size={IconSize.MEDIUM} />
-        <ElementIconCircle size={IconSize.MEDIUM} />
       </div>
 
       {/* Label */}
