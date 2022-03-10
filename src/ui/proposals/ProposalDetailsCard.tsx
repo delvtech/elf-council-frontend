@@ -189,7 +189,7 @@ export function ProposalDetailsCard(
         {/* Proposal Title */}
         <div className="relative flex justify-between">
           <div className="flex w-full flex-col">
-            <div className="mt-8 flex justify-between lg:mt-0">
+            <div className="mt-8 mb-2 flex justify-between lg:m-0">
               <H2 className="text-2xl font-bold text-white lg:hidden">
                 {t`Proposal #${proposalId}`}
               </H2>
@@ -232,8 +232,8 @@ export function ProposalDetailsCard(
           {t`Proposal Description:`}
         </p>
         <div className="h-[30%] overflow-hidden rounded-xl bg-black bg-opacity-20">
-          <div className="h-full overflow-auto break-words py-4">
-            <p className="shrink-0 px-4 font-light text-white ">
+          <div className="h-full overflow-auto break-words">
+            <p className="shrink-0 py-2 px-4 font-light text-white ">
               {truncateText(snapshotProposal?.body || "")}
             </p>
           </div>
