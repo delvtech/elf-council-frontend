@@ -21,6 +21,8 @@ import { commify, formatEther } from "ethers/lib/utils";
 import { isNumber } from "lodash";
 import { t, jt } from "ttag";
 
+import H1 from "src/ui/base/H1/H1";
+import H2 from "src/ui/base/H2/H2";
 import { assertNever } from "src/base/assertNever";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
@@ -168,24 +170,43 @@ export function ProposalDetailsCard(
       className={classNames(
         className,
         !isOpen && "translate-x-full",
-        "fixed inset-0 z-10 flex h-full min-h-[85vh] w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:max-w-[48rem] lg:rounded-xl",
+        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:max-w-[48rem] lg:rounded-xl",
       )}
     >
-      <div className="flex w-full flex-1 flex-col p-6">
+      <div className="flex h-full w-full flex-1 flex-col p-10 lg:p-6">
         <button
           onClick={onClose}
           className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow lg:hidden"
         >
           <XIcon className="h-6 w-6 text-white" />
         </button>
-        <h1 className="shrink-0 text-2xl font-bold text-white">
-          {t`Proposal ${proposalId}`}
-        </h1>
-        <div className="flex w-full justify-between">
-          <div className="flex-1 shrink-0 text-ellipsis font-light text-white lg:mt-2">
-            {snapshotProposal?.title}
+
+        <div className="mb-4 flex justify-between lg:mb-0">
+          <H2 className="shrink-0 text-2xl font-bold text-white">
+            {t`Proposal ${proposalId}`}
+          </H2>
+          <div className="w-min rounded-md bg-white py-1 px-2 lg:hidden">
+            {proposalStatus && (
+              <div className="flex w-full items-center justify-end space-x-2 text-black">
+                <div className="whitespace-nowrap">
+                  {ProposalStatusLabels[proposalStatus]}
+                </div>
+                <ProposalStatusIcon
+                  signer={signer}
+                  proposal={proposal}
+                  disableTooltip
+                />
+              </div>
+            )}
           </div>
-          <div className="h-min rounded-md bg-white py-1 px-2 lg:-mt-8">
+        </div>
+
+        <div className="relative flex w-full justify-between">
+          <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light text-white lg:mt-2">
+            {snapshotProposal?.title}
+          </H1>
+
+          <div className="top-0 right-0 hidden h-min rounded-md bg-white py-1 px-2 lg:absolute lg:-mt-8 lg:block">
             {proposalStatus && (
               <div className="flex w-full items-center justify-end space-x-2 text-black">
                 <div>{ProposalStatusLabels[proposalStatus]}</div>
@@ -199,13 +220,24 @@ export function ProposalDetailsCard(
           </div>
         </div>
 
-        <p className="my-3 shrink-0 overflow-hidden text-sm font-light text-white">
+        <p className="my-3 shrink-0 overflow-hidden font-light text-white">
           {t`Proposal Description:`}
         </p>
 
-        <p className="shrink-0 overflow-hidden text-ellipsis text-sm font-light text-white">
-          {truncateText(snapshotProposal?.body || "")}
-        </p>
+        <div className="h-[35%] overflow-hidden rounded-xl">
+          <div className="z-10 h-full overflow-auto break-words">
+            <p className="shrink-0 rounded-xl bg-black bg-opacity-20 p-4 font-light text-white ">
+              {truncateText(snapshotProposal?.body || "")}
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi
+              animi tenetur deserunt minima nobis ducimus reiciendis molestias
+              eum dicta! Ut facilis debitis labore nesciunt esse laudantium
+              soluta cumque dicta impedit exercitationem vitae doloremque ab,
+              nihil eaque quasi deleniti beatae molestiae reiciendis fugiat
+              praesentium, fugit quas. Enim dignissimos laborum fugiat
+              distinctio.
+            </p>
+          </div>
+        </div>
 
         <p className="my-3 shrink-0 overflow-hidden">
           <a
