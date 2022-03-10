@@ -181,6 +181,7 @@ export function ProposalDetailsCard(
           <XIcon className="h-6 w-6 text-white" />
         </button>
 
+        {/* Proposal Header */}
         <div className="mb-4 flex justify-between lg:mb-0">
           <H2 className="shrink-0 text-2xl font-bold text-white">
             {t`Proposal ${proposalId}`}
@@ -201,6 +202,7 @@ export function ProposalDetailsCard(
           </div>
         </div>
 
+        {/* Proposal Title */}
         <div className="relative flex w-full justify-between">
           <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light text-white lg:mt-2">
             {snapshotProposal?.title}
@@ -220,10 +222,10 @@ export function ProposalDetailsCard(
           </div>
         </div>
 
+        {/* Proposal Description */}
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
           {t`Proposal Description:`}
         </p>
-
         <div className="h-[35%] overflow-hidden rounded-xl bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words py-4">
             <p className="shrink-0 px-4 font-light text-white ">
@@ -259,6 +261,7 @@ export function ProposalDetailsCard(
           </p>
         </div>
 
+        {/* Quorum Bar */}
         {isExecuted ? (
           <Tag className="w-full" intent={Intent.SUCCESS}>
             <span>{t`Executed`}</span>
@@ -272,6 +275,7 @@ export function ProposalDetailsCard(
           />
         )}
 
+        {/* Voting Stats / Action Buttons */}
         <div className="mt-auto">
           <BalanceWithLabel
             className="my-4 w-full"
@@ -280,6 +284,7 @@ export function ProposalDetailsCard(
             label={t`Voting Power`}
           />
 
+          {/* Stale Voting Warning Message */}
           {isVotingOpen ? (
             <div className="my-4">
               <StaleVotingPowerMessage account={account} proposal={proposal} />
@@ -306,7 +311,7 @@ export function ProposalDetailsCard(
                 disabled={!isVotingOpen || !+accountVotingPower}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
-                <div className="ml-4 flex w-full items-center  text-white ">
+                <div className="ml-4 flex w-full items-center text-white ">
                   <BallotLabel ballot={ballotChoice} />
                 </div>
               )}
