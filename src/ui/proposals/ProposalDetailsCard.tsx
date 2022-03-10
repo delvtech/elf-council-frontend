@@ -226,7 +226,7 @@ export function ProposalDetailsCard(
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
           {t`Proposal Description:`}
         </p>
-        <div className="h-[35%] overflow-hidden rounded-xl bg-black bg-opacity-20">
+        <div className="h-[30%] overflow-hidden rounded-xl bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words py-4">
             <p className="shrink-0 px-4 font-light text-white ">
               {truncateText(snapshotProposal?.body || "")}
@@ -277,14 +277,6 @@ export function ProposalDetailsCard(
 
         {/* Voting Related Stats / Action Buttons */}
         <div className="mt-auto">
-          {/* User Stats */}
-          <BalanceWithLabel
-            className="my-4 w-full"
-            balance={accountVotingPower}
-            tooltipText={votingPowerTooltipText}
-            label={t`Voting Power`}
-          />
-
           {/* Stale Voting Warning Message */}
           {isVotingOpen ? (
             <div className="my-4">
@@ -294,17 +286,27 @@ export function ProposalDetailsCard(
 
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
-            {etherscanLink && (
-              <a
-                target="_blank"
-                href={etherscanLink}
-                className="flex w-full items-center justify-end text-white"
-                rel="noreferrer"
-              >
-                <span>{t`View on etherscan`}</span>
-                <ExternalLinkIcon className="ml-2" height={18} />
-              </a>
-            )}
+            <div className="flex w-full items-end justify-between">
+              {/* User Stats */}
+              <BalanceWithLabel
+                className="mt-4 w-full"
+                balance={accountVotingPower}
+                tooltipText={votingPowerTooltipText}
+                label={t`Voting Power`}
+              />
+
+              {etherscanLink && (
+                <a
+                  target="_blank"
+                  href={etherscanLink}
+                  className="flex w-full items-center justify-end text-white"
+                  rel="noreferrer"
+                >
+                  <span>{t`View on etherscan`}</span>
+                  <ExternalLinkIcon className="ml-2" height={18} />
+                </a>
+              )}
+            </div>
             <div className="flex w-full justify-between">
               <VotingBallotButton
                 proposal={proposal}
