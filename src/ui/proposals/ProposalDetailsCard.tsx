@@ -173,7 +173,7 @@ export function ProposalDetailsCard(
         "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:max-w-[48rem] lg:rounded-xl",
       )}
     >
-      <div className="flex h-full w-full flex-1 flex-col p-10 lg:p-6">
+      <div className="flex h-full w-full flex-1 flex-col p-6">
         <button
           onClick={onClose}
           className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow lg:hidden"
@@ -182,10 +182,7 @@ export function ProposalDetailsCard(
         </button>
 
         {/* Proposal Header */}
-        <div className="mb-4 flex justify-between lg:mb-0">
-          <H2 className="shrink-0 text-2xl font-bold text-white">
-            {t`Proposal #${proposalId}`}
-          </H2>
+        <div className="mb-4 flex flex-col justify-between lg:mb-0">
           <div className="w-min rounded-md bg-white py-1 px-2 lg:hidden">
             {proposalStatus && (
               <div className="flex w-full items-center justify-end space-x-2 text-black">
@@ -200,13 +197,21 @@ export function ProposalDetailsCard(
               </div>
             )}
           </div>
+          <H2 className="hidden shrink-0 text-2xl font-bold text-white lg:block">
+            {t`Proposal #${proposalId}`}
+          </H2>
         </div>
 
         {/* Proposal Title */}
         <div className="relative flex w-full justify-between">
-          <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light text-white lg:mt-2">
-            {snapshotProposal?.title}
-          </H1>
+          <div className="flex flex-col">
+            <H2 className="text-2xl font-bold text-white lg:hidden">
+              {t`Proposal #${proposalId}`}
+            </H2>
+            <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light text-white lg:mt-2">
+              {snapshotProposal?.title}
+            </H1>
+          </div>
 
           <div className="top-0 right-0 hidden h-min rounded-md bg-white py-1 px-2 lg:absolute lg:-mt-8 lg:block">
             {proposalStatus && (
