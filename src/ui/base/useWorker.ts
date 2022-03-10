@@ -10,9 +10,6 @@ function workerFunction<TCallback extends Callback>(fn: TCallback) {
     const result = fn.apply(null, args);
 
     // If async, return the resolved value instead of the promise.
-    // A better way to check if result is a promise would be
-    // `result instanceOf Promise`, but babel converts instanceOf to _instanceOf
-    // which isn't defined inside the worker.
     if (result?.then) {
       result.then((res: ReturnType<TCallback>) => {
         postMessage(res);
