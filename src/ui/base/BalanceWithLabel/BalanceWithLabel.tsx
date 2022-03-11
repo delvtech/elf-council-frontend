@@ -28,7 +28,7 @@ export function BalanceWithLabel(props: BalanceWithLabelProps): ReactElement {
 
       {/* Label */}
       <div className="flex items-center">
-        <span className="mb-1 mr-2 text-xl">{label}</span>
+        <span className="mr-2 text-xl">{label}</span>
         {tooltipText && (
           <Tooltip content={tooltipText}>
             {tooltipHref ? (

@@ -170,7 +170,7 @@ export function ProposalDetailsCard(
       className={classNames(
         className,
         !isOpen && "translate-x-full",
-        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:max-w-[48rem] lg:rounded-xl",
+        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:min-w-[390px] lg:max-w-[48rem] lg:rounded-xl",
       )}
     >
       <div className="flex h-full w-full flex-1 flex-col p-6">
@@ -208,7 +208,7 @@ export function ProposalDetailsCard(
                 )}
               </div>
             </div>
-            <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light text-white lg:mt-2">
+            <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light !leading-6 text-white lg:mt-2">
               {snapshotProposal?.title}
             </H1>
           </div>
@@ -231,7 +231,7 @@ export function ProposalDetailsCard(
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
           {t`Proposal Description:`}
         </p>
-        <div className="h-[30%] overflow-hidden rounded-xl bg-black bg-opacity-20">
+        <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
             <p className="shrink-0 py-2 px-4 font-light text-white ">
               {truncateText(snapshotProposal?.body || "")}
@@ -287,7 +287,7 @@ export function ProposalDetailsCard(
 
           {/* Action Buttons */}
           <div className="flex w-full flex-1 flex-col items-end justify-end space-y-2">
-            <div className="flex w-full items-end justify-between lg:flex-col lg:items-start xl:flex-row xl:items-end">
+            <div className="flex w-full items-end justify-between">
               {/* User Stats */}
               <BalanceWithLabel
                 className="mt-4 w-full"
@@ -300,7 +300,7 @@ export function ProposalDetailsCard(
                 <a
                   target="_blank"
                   href={etherscanLink}
-                  className="flex items-center justify-end whitespace-nowrap text-white lg:justify-start xl:justify-end"
+                  className="flex items-center justify-end whitespace-nowrap text-white"
                   rel="noreferrer"
                 >
                   <span>{t`View on etherscan`}</span>
