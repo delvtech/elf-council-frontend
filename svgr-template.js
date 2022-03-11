@@ -13,8 +13,8 @@ const t = require("@babel/types");
  *      `fill="url(#elfi-icon-gradient)"`) will reference the hidden SVG tags
  *      which won't show.
  *
- * It also adds a conditional `<title>` tag and `aria-labeledby` prop that only
- * show if a title is passed in the props. This is needed because the title
+ * It also adds a conditional `<title>` tag and `aria-labeledby` attribute that
+ * only show if a title is passed in the props. This is needed because the title
  * attribute on `<svg>` tags is invalid, but there may be times when an SVG
  * needs a descriptor for screen readers, scrapers, and/or mouse over.
  *
@@ -55,8 +55,8 @@ ${exports};
 };
 
 /**
- * Adds a conditional `<title>` tag and `aria-labeledby` prop that only show
- * if a title is passed in the props.
+ * Adds a conditional `<title>` tag and `aria-labeledby` attribute that only
+ * show if a title is passed in the props.
  *
  * @param {string} componentName Used to prefix the id of the `<title>` tag.
  * @param {JSXElement} ASTNode The node to add them to.
@@ -79,7 +79,7 @@ function addAccessibleTitle(componentName, { openingElement, children }) {
     );
   }
 
-  // AST of {props.title && <title id="foo_title" lang="en">{props.title}</title>}
+  // AST of `{props.title && <title id="foo_title" lang="en">{props.title}</title>}`
   children.unshift(
     t.jSXExpressionContainer(
       t.logicalExpression(
