@@ -241,7 +241,6 @@ export function ProposalDetailsCard(
 
         {/* External Links */}
         <div className="my-4 flex justify-around">
-          {/* <p className="shrink-0 overflow-hidden"> */}
           <a
             target="_blank"
             href={snapshotProposal?.link || ""}
@@ -251,9 +250,7 @@ export function ProposalDetailsCard(
             {t`View proposal`}
             <ExternalLinkIcon className="ml-2 h-4" />
           </a>
-          {/* </p> */}
 
-          {/* <p className="shrink-0 overflow-hidden"> */}
           <a
             target="_blank"
             href="https://forum.element.fi"
@@ -263,7 +260,6 @@ export function ProposalDetailsCard(
             {t`View Discussion`}
             <ExternalLinkIcon className="ml-2 h-4" />
           </a>
-          {/* </p> */}
         </div>
 
         {/* Quorum Bar */}
