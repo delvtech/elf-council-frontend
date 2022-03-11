@@ -51,7 +51,7 @@ export function VotingBallotButton(
         </Card>
       }
     >
-      {(open: boolean) => (
+      {(open) => (
         <div className="flex items-center">
           <span>
             {isNumber(currentBallot) ? BallotChoices[currentBallot] : t`Vote`}
