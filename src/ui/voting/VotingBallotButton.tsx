@@ -9,21 +9,29 @@ import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { Ballot, BallotChoices } from "src/ui/voting/Ballot";
 import { Proposal } from "elf-council-proposals";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface VotingBallotButtonProps {
   proposal: Proposal;
   currentBallot: Ballot | undefined;
   onSelectBallot: (choice: Ballot) => void;
+  variant?: ButtonVariant;
   disabled?: boolean;
 }
 
 export function VotingBallotButton(
   props: VotingBallotButtonProps,
 ): ReactElement {
-  const { currentBallot, onSelectBallot, disabled = false } = props;
+  const {
+    currentBallot,
+    onSelectBallot,
+    variant = ButtonVariant.PRIMARY,
+    disabled = false,
+  } = props;
 
   return (
     <PopoverButton
+      variant={variant}
       disabled={disabled}
       className="p-0"
       popover={

@@ -317,6 +317,7 @@ export function ProposalDetailsCard(
                 proposal={proposal}
                 currentBallot={newBallot}
                 onSelectBallot={setCurrentBallot}
+                variant={ButtonVariant.WHITE}
                 disabled={!isVotingOpen || !+accountVotingPower}
               />
               {ballotVotePower?.gt(0) && isNumber(ballotChoice) && (
@@ -329,7 +330,7 @@ export function ProposalDetailsCard(
                 disabled={submitButtonDisabled}
                 onClick={handleVote}
                 loading={isVoteTxPending}
-                variant={ButtonVariant.WHITE}
+                variant={ButtonVariant.PRIMARY}
               >
                 {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
               </Button>
