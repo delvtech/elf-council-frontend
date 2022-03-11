@@ -386,14 +386,13 @@ function QuorumBar(props: QuorumBarProps) {
   return (
     <div className="w-full space-y-1 text-white">
       <div>
-        {votes} {t`total votes`}
+        {commify(votes)} / {commify(quorum)}{" "}
+        <span className="text-sm">{t`total votes`}</span>
       </div>
       <ProgressBar progress={+votes / +quorum} />
       <div>
-        {`${quorumPercent}%`} {t`quorum reached`}
-      </div>
-      <div className="text-sm">
-        {commify(quorum)} {t`(vote quorum)`}
+        {`${quorumPercent}%`}{" "}
+        <span className="text-sm">{t`quorum reached`}</span>
       </div>
     </div>
   );
