@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { SVGComponentProps } from "src/ui/svg/types";
+import { SVGComponentProps } from "src/ui/base/svg/types";
 
 /**
  * Oºo Element

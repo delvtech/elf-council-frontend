@@ -5,7 +5,7 @@ import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import ElementUrls from "src/elf/urls";
-import GasIcon from "src/ui/svg/GasIcon";
+import GasIcon from "src/ui/base/svg/GasIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import {
   ElementIconCircle,

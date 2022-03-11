@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { ReactElement } from "react";
-import ElementIcon, { IconSize } from "src/ui/svg/ElementIcon/ElementIcon";
+import ElementIcon, { IconSize } from "src/ui/base/svg/ElementIcon/ElementIcon";
 
 export { IconSize };
 

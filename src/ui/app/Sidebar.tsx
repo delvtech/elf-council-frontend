@@ -12,12 +12,12 @@ import { useRouter, NextRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
-import ElementIcon from "src/ui/svg/ElementIcon/ElementIcon";
+import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrls from "src/elf/urls";
-import PoweredByCouncil from "src/ui/svg/PoweredByCouncil";
+import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 
 interface SidebarProps {
   account: string | null | undefined;

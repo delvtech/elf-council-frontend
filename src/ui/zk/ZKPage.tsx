@@ -11,7 +11,7 @@ import {
 } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
-import { ElementLogo } from "src/ui/svg/ElementLogo/ElementLogo";
+import { ElementLogo } from "src/ui/base/svg/ElementLogo/ElementLogo";
 import { t } from "ttag";
 
 interface ZKPageProps {

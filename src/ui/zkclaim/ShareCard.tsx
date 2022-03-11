@@ -3,10 +3,10 @@ import { InlineElfiLabel } from "./InlineElfiLabel";
 import CallToActionCard from "./CallToActionCard";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import ElementUrls from "src/elf/urls";
-import CouncilLogo from "src/ui/svg/CouncilLogo/CouncilLogo";
-import TwitterIcon from "src/ui/svg/TwitterIcon";
-import DiscordIcon from "src/ui/svg/DiscordIcon";
-import CommonwealthIcon from "src/ui/svg/CommonwealthIcon";
+import CouncilLogo from "src/ui/base/svg/CouncilLogo/CouncilLogo";
+import TwitterIcon from "src/ui/base/svg/TwitterIcon";
+import DiscordIcon from "src/ui/base/svg/DiscordIcon";
+import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
 import Link from "next/link";
 import { t, jt } from "ttag";
 

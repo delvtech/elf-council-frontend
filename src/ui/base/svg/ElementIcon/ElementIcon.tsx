@@ -1,6 +1,6 @@
 import { JSXElementConstructor, ReactElement } from "react";
 import { InheritableElementProps, PropsOf } from "src/@types/helper";
-import { SVGComponentProps } from "src/ui/svg/types";
+import { SVGComponentProps } from "src/ui/base/svg/types";
 import SVG from "./elementIcon.svg";
 import SVGLight from "./elementIcon--light.svg";
 

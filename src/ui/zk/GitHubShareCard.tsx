@@ -5,7 +5,7 @@ import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import GitHubIcon from "src/ui/svg/GithubIcon";
+import GitHubIcon from "src/ui/base/svg/GithubIcon";
 import { t, jt } from "ttag";
 
 const githubIssueLink = (

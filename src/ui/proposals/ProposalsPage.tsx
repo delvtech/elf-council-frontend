@@ -11,7 +11,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
-import EmptySpaceFace from "src/ui/svg/EmptySpaceFace";
+import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 

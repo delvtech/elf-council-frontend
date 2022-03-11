@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { jt, t } from "ttag";
 import { CallToActionCard } from "./CallToActionCard";
-import CouncilLogo from "src/ui/svg/CouncilLogo/CouncilLogo";
-import TwitterIcon from "src/ui/svg/TwitterIcon";
-import DiscordIcon from "src/ui/svg/DiscordIcon";
-import CommonwealthIcon from "src/ui/svg/CommonwealthIcon";
+import CouncilLogo from "src/ui/base/svg/CouncilLogo/CouncilLogo";
+import TwitterIcon from "src/ui/base/svg/TwitterIcon";
+import DiscordIcon from "src/ui/base/svg/DiscordIcon";
+import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
 import {
   ElementIconCircle,
   IconSize,

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
-import DiscordIcon from "src/ui/svg/DiscordIcon";
-import TwitterIcon from "src/ui/svg/TwitterIcon";
+import DiscordIcon from "src/ui/base/svg/DiscordIcon";
+import TwitterIcon from "src/ui/base/svg/TwitterIcon";
 import ElementUrls from "src/elf/urls";
 
 function Footer(): ReactElement {

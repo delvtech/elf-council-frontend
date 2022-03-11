@@ -5,7 +5,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
-import DiscordIcon from "src/ui/svg/DiscordIcon";
+import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import { t, jt } from "ttag";
 import classNames from "classnames";
 

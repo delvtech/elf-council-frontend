@@ -11,7 +11,7 @@ import ShareCard from "./ShareCard";
 import useZKProof from "./useZKProof";
 import { useSigner } from "src/ui/signer/useSigner";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
-import { ElementLogo } from "src/ui/svg/ElementLogo/ElementLogo";
+import { ElementLogo } from "src/ui/base/svg/ElementLogo/ElementLogo";
 import {
   StepItem,
   StepStatus as StepItemStatus,

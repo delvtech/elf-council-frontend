@@ -9,8 +9,8 @@ import {
 import Button from "src/ui/base/Button/Button";
 import { ButtonSize, ButtonVariant } from "src/ui/base/Button/styles";
 import H3 from "src/ui/base/H3/H3";
-import MetaMaskIcon from "src/ui/svg/MetaMaskIcon/MetaMaskIcon";
-import WalletConnectIcon from "src/ui/svg/WalletConnectIcon/WalletConnectIcon";
+import MetaMaskIcon from "src/ui/base/svg/MetaMaskIcon/MetaMaskIcon";
+import WalletConnectIcon from "src/ui/base/svg/WalletConnectIcon/WalletConnectIcon";
 import { t } from "ttag";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
