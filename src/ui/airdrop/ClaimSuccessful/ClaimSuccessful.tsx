@@ -7,6 +7,7 @@ import { CallToActionCard } from "./CallToActionCard";
 import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
 import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
 import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import ElementUrls from "src/elf/urls";
 import Link from "next/link";
 
 const elfiLogoElement = (
@@ -64,7 +65,7 @@ export function ClaimSuccessful(): ReactElement {
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://element.fi/discord"
+            href={ElementUrls.DISCORD}
             className="flex-1"
           >
             <CallToActionCard
@@ -72,7 +73,7 @@ export function ClaimSuccessful(): ReactElement {
               icon={<DiscordIconFromFigma />}
             />
           </a>
-          <a href="https://forum.element.fi" className="flex-1">
+          <a href={ElementUrls.FORUM} className="flex-1">
             <CallToActionCard
               label={t`Visit forum`}
               icon={<CommonwealthIcon />}
