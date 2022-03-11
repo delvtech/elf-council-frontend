@@ -60,7 +60,7 @@ export function VotingBallotButton(
       }
     >
       {(open: boolean) => (
-        <div className="flex items-center">
+        <div className="flex w-[90px] items-center justify-center">
           <span>
             {isNumber(currentBallot) ? BallotChoices[currentBallot] : t`Vote`}
           </span>
