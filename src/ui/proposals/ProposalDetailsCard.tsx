@@ -351,21 +351,21 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
       return (
         <Tag intent={Intent.SUCCESS}>
           <ThumbUpIcon height="18" className={"mr-1 pb-0.5 text-green-700"} />
-          <span className={"font-bold text-green-700"}>{t`Voted yes`}</span>
+          <span className={"font-bold text-green-700"}>{t`Yes`}</span>
         </Tag>
       );
     case Ballot.NO:
       return (
         <Tag intent={Intent.ERROR}>
           <ThumbDownIcon height="18" className={"mr-1 pb-0.5 text-red-500"} />
-          <span className={"font-bold text-red-500"}>{t`Voted no`}</span>
+          <span className={"font-bold text-red-500"}>{t`No`}</span>
         </Tag>
       );
     case Ballot.MAYBE:
       return (
         <Tag>
           <XCircleIcon height="18" className={"mr-1 pb-0.5 "} />
-          <span className={"font-bold "}>{t`Voted abstain`}</span>
+          <span className={"font-bold"}>{t`Abstain`}</span>
         </Tag>
       );
     default:
