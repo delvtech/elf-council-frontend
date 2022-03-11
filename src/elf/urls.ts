@@ -1,17 +1,17 @@
-const urls = {
+export enum ElementUrls {
   // apps
-  coreLanding: "https://element.fi",
-  coreApp: "https://app.element.fi",
-  nftApp: "",
+  CORE_LANDING = "https://element.fi",
+  CORE_APP = "https://app.element.fi",
+  NFT_APP = "",
   // socials
-  discord: "https://element.fi/discord",
-  forum: "https://forum.element.fi",
-  telegram: "",
-  twitter: "https://twitter.com/element_fi",
+  DISCORD = "https://element.fi/discord",
+  FORUM = "https://forum.element.fi",
+  TELEGRAM = "",
+  TWITTER = "https://twitter.com/element_fi",
   // resources
-  docs: "https://docs-element-finance.gitbook.io/element-council",
-  github: "https://github.com/element-fi",
-  medium: "https://medium.com/element-finance",
-};
+  DOCS = "https://docs-element-finance.gitbook.io/element-council",
+  GITHUB = "https://github.com/element-fi",
+  MEDIUM = "https://medium.com/element-finance",
+}
 
-export default urls;
+export default ElementUrls;

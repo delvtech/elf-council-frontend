@@ -16,7 +16,7 @@ import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import urls from "src/elf/urls";
+import ElementUrls from "src/elf/urls";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -93,8 +93,8 @@ export default function Sidebar(props: SidebarProps): ReactElement {
                 <UserGroupIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
-            <SidebarLinkExternal link={urls.forum} label={t`Forum`} />
-            <SidebarLinkExternal link={urls.docs} label={t`Resources`} />
+            <SidebarLinkExternal link={ElementUrls.FORUM} label={t`Forum`} />
+            <SidebarLinkExternal link={ElementUrls.DOCS} label={t`Resources`} />
 
             {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
           </div>

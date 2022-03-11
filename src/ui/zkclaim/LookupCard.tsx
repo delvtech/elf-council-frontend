@@ -6,7 +6,7 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import useFile from "src/ui/base/useFile";
 import { ZKData } from "src/ui/zk/types";
 import { GITHUB_ZK_URL, HASH_LENGTH } from "src/ui/zk/constants";
-import urls from "src/elf/urls";
+import ElementUrls from "src/elf/urls";
 import { t, jt } from "ttag";
 
 interface LookupCardProps {
@@ -45,7 +45,7 @@ export default function LookupCard({
   const discordLink = (
     <a
       key="discordLink"
-      href={urls.discord}
+      href={ElementUrls.DISCORD}
       target="_blank"
       rel="noreferrer"
       className="text-yieldLightBlue"

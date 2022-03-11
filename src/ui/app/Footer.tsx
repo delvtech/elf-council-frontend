@@ -1,18 +1,18 @@
 import React, { ReactElement } from "react";
 import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
 import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
-import urls from "src/elf/urls";
+import ElementUrls from "src/elf/urls";
 
 function Footer(): ReactElement {
   return (
     <div className="flex w-full justify-end space-x-3 px-16 pb-8">
-      <a href={urls.twitter}>
+      <a href={ElementUrls.TWITTER}>
         <TwitterIconFromFigma />
       </a>
-      <a href={urls.discord}>
+      <a href={ElementUrls.DISCORD}>
         <DiscordIconFromFigma />
       </a>
-      <a href={urls.coreLanding}>
+      <a href={ElementUrls.CORE_LANDING}>
         <HomeIconFromFigma />
       </a>
     </div>

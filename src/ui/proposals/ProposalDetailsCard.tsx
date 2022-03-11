@@ -22,7 +22,7 @@ import { isNumber } from "lodash";
 import { t, jt } from "ttag";
 
 import { assertNever } from "src/base/assertNever";
-import urls from "src/elf/urls";
+import ElementUrls from "src/elf/urls";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
@@ -219,7 +219,7 @@ export function ProposalDetailsCard(
         <p className="my-3 shrink-0 overflow-hidden">
           <a
             target="_blank"
-            href={urls.forum}
+            href={ElementUrls.FORUM}
             className="flex items-center text-sm font-light text-white"
             rel="noreferrer"
           >
