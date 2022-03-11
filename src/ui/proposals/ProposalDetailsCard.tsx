@@ -193,7 +193,8 @@ export function ProposalDetailsCard(
               <H2 className="text-2xl font-bold text-white lg:hidden">
                 {t`Proposal #${proposalId}`}
               </H2>
-              <div className="w-min rounded-md bg-white py-1 px-2 lg:hidden">
+              {/* <div className=""> */}
+              <Tag className="w-min py-2 lg:hidden">
                 {proposalStatus && (
                   <div className="flex w-full items-center justify-end space-x-2 text-black">
                     <div className="whitespace-nowrap">
@@ -206,17 +207,20 @@ export function ProposalDetailsCard(
                     />
                   </div>
                 )}
-              </div>
+              </Tag>
+              {/* </div> */}
             </div>
-            <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light !leading-6 text-white lg:mt-2">
+            <H1 className="flex-1 shrink-0 text-ellipsis !text-2xl font-light !leading-6 text-white lg:mt-4">
               {snapshotProposal?.title}
             </H1>
           </div>
 
-          <div className="top-0 right-0 hidden h-min rounded-md bg-white py-1 px-2 lg:absolute lg:-mt-8 lg:block">
+          <Tag className="top-0 right-0 hidden h-min py-2 lg:absolute lg:-mt-8 lg:block">
             {proposalStatus && (
               <div className="flex w-full items-center justify-end space-x-2 text-black">
-                <div>{ProposalStatusLabels[proposalStatus]}</div>
+                <div className="whitespace-nowrap">
+                  {ProposalStatusLabels[proposalStatus]}
+                </div>
                 <ProposalStatusIcon
                   signer={signer}
                   proposal={proposal}
@@ -224,7 +228,7 @@ export function ProposalDetailsCard(
                 />
               </div>
             )}
-          </div>
+          </Tag>
         </div>
 
         {/* Proposal Description */}
