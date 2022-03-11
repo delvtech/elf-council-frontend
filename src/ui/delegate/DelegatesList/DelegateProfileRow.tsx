@@ -3,14 +3,16 @@ import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
-import Image from "next/image";
 import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 
 interface DelegateProfileRowProps {
   selected: boolean;
@@ -150,7 +152,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
 
   return (
     <div className="flex items-center">
-      <ElementIcon size={IconSize.SMALL} className="mr-1" />
+      <ElementIconCircle size={IconSize.SMALL} className="mr-1" />
       <span>{formatBalance(votePower)}</span>
     </div>
   );

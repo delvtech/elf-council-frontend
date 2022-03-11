@@ -5,12 +5,14 @@ import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import classNames from "classnames";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
-import Image from "next/image";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 interface CurrentDelegateProps {
   className?: string;
   currentDelegateAddress: string;
@@ -81,7 +83,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
   return (
     <div className="flex items-center">
-      <ElementIcon size={IconSize.SMALL} className="mr-1" />
+      <ElementIconCircle size={IconSize.SMALL} className="mr-1" />
       <span>{formatBalance(votePower)}</span>
     </div>
   );

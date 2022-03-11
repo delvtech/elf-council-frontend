@@ -1,13 +1,16 @@
 import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
-import Image from "next/image";
 import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
 import ElementUrls from "src/elf/urls";
+import GasIcon from "src/ui/base/svg/GasIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { Provider } from "@ethersproject/providers";
 
@@ -42,20 +45,14 @@ function Header(): ReactElement {
               rel="noreferrer"
               className="mr-8 flex items-center"
             >
-              <span className="relative h-5 w-5">
-                <Image
-                  layout="fill"
-                  src="/assets/gas.svg"
-                  alt={t`Gas pump icon`}
-                />
-              </span>
+              <GasIcon className="h-5 w-5" />
               <span className="ml-2 mr-1 font-bold text-principalRoyalBlue">
                 {gasPrice?.recommendedBaseFee || 0.0}
               </span>
             </a>
             <Tooltip content={elfiTooltipText}>
               <span className="mr-8 flex items-center gap-2 font-bold text-principalRoyalBlue">
-                <ElementIcon size={IconSize.MEDIUM} />
+                <ElementIconCircle size={IconSize.MEDIUM} />
                 <span>
                   {amountDeposited}
                   <span className="hidden lg:inline"> ELFI</span>

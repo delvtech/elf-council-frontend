@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@alch/alchemy-web3": "^1.2.5",
+    "@babel/types": "^7.17.0",
     "@blueprintjs/popover2": "^0.13.0",
     "@elementfi/react-query-typechain": "^1.2.0",
     "@ethersproject/providers": "^5.5.3",
@@ -12,6 +13,7 @@
     "@popperjs/core": "^2.11.2",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
     "@storybook/addon-a11y": "^6.4.19",
+    "@svgr/webpack": "^6.2.1",
     "@tailwindcss/forms": "^0.5.0",
     "@types/d3-time-format": "^4.0.0",
     "@types/lodash.isequal": "^4.5.5",

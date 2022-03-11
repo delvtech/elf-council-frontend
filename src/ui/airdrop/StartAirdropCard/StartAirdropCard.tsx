@@ -3,8 +3,11 @@ import React, { ReactElement } from "react";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
 import useOnConnected from "src/ui/wallet/useOnConnected";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import {
   ConnectWalletButton,
   WalletProfileButton,
@@ -19,7 +22,7 @@ interface StartAirdropCardProps {
 }
 
 const elementIcon = (
-  <ElementIcon key="element-icon" inline size={IconSize.MEDIUM} />
+  <ElementIconCircle key="element-icon" inline size={IconSize.MEDIUM} />
 );
 
 export function StartAirdropCard({
