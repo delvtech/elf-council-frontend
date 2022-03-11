@@ -94,7 +94,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               }
             />
             <SidebarLinkExternal link={urls.forum} label={t`Forum`} />
-            <SidebarLinkExternal link={urls.resources} label={t`Resources`} />
+            <SidebarLinkExternal link={urls.docs} label={t`Resources`} />
 
             {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
           </div>

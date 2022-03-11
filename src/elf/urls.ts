@@ -9,8 +9,9 @@ const urls = {
   telegram: "",
   twitter: "https://twitter.com/element_fi",
   // resources
-  resources: "https://docs-element-finance.gitbook.io/element-council",
+  docs: "https://docs-element-finance.gitbook.io/element-council",
   github: "https://github.com/element-fi",
+  medium: "https://medium.com/element-finance",
 };
 
 export default urls;

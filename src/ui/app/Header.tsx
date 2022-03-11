@@ -29,7 +29,7 @@ function Header(): ReactElement {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href={urls.resources}
+                href={urls.docs}
                 className="hidden items-center gap-2 lg:flex"
               >
                 <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
