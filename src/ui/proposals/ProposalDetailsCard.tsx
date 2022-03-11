@@ -170,7 +170,7 @@ export function ProposalDetailsCard(
       className={classNames(
         className,
         !isOpen && "translate-x-full",
-        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:min-w-[390px] lg:max-w-[48rem] lg:rounded-xl",
+        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:min-w-[410px] lg:max-w-[48rem] lg:rounded-xl",
       )}
     >
       <div className="flex h-full w-full flex-1 flex-col p-6">
@@ -182,7 +182,7 @@ export function ProposalDetailsCard(
         </button>
 
         {/* Proposal Header */}
-        <H2 className="hidden shrink-0 text-2xl font-bold text-white lg:block">
+        <H2 className="hidden shrink-0 text-white lg:block">
           {t`Proposal #${proposalId}`}
         </H2>
 
@@ -190,7 +190,7 @@ export function ProposalDetailsCard(
         <div className="relative flex justify-between">
           <div className="flex w-full flex-col">
             <div className="mt-8 mb-2 flex justify-between lg:m-0">
-              <H2 className="text-2xl font-bold text-white lg:hidden">
+              <H2 className="text-white lg:hidden">
                 {t`Proposal #${proposalId}`}
               </H2>
               {/* <div className=""> */}
