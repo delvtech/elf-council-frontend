@@ -9,25 +9,33 @@ import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { Ballot, BallotChoices } from "src/ui/voting/Ballot";
 import { Proposal } from "elf-council-proposals";
+import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface VotingBallotButtonProps {
   proposal: Proposal;
   currentBallot: Ballot | undefined;
   onSelectBallot: (choice: Ballot) => void;
+  variant?: ButtonVariant;
   disabled?: boolean;
 }
 
 export function VotingBallotButton(
   props: VotingBallotButtonProps,
 ): ReactElement {
-  const { currentBallot, onSelectBallot, disabled = false } = props;
+  const {
+    currentBallot,
+    onSelectBallot,
+    variant = ButtonVariant.PRIMARY,
+    disabled = false,
+  } = props;
 
   return (
     <PopoverButton
+      variant={variant}
       disabled={disabled}
       className="p-0"
       popover={
-        <Card variant={CardVariant.BLUE}>
+        <Card variant={CardVariant.HACKER_SKY}>
           <div className="-mx-4 -my-5 flex flex-col py-2 text-white">
             <BallotDropdownItem
               ballot={Ballot.YES}
@@ -51,8 +59,8 @@ export function VotingBallotButton(
         </Card>
       }
     >
-      {(open) => (
-        <div className="flex items-center">
+      {(open: boolean) => (
+        <div className="flex w-[90px] items-center justify-center">
           <span>
             {isNumber(currentBallot) ? BallotChoices[currentBallot] : t`Vote`}
           </span>
@@ -85,14 +93,14 @@ function BallotDropdownItem(props: BallotDropdownItemProps) {
 
   return (
     <button
-      className="flex items-center justify-between rounded px-4 py-2 hover:bg-white hover:bg-opacity-20"
+      className="flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-principalRoyalBlue hover:bg-opacity-20"
       onClick={handleSelectItem}
     >
-      <span>{ballotLabel}</span>
+      <span className="mr-2 text-principalRoyalBlue">{ballotLabel}</span>
       {active ? (
-        <CheckCircleIcon className="ml-2" height="24" />
+        <CheckCircleIcon height={25} className="ml-3 text-principalRoyalBlue" />
       ) : (
-        <div className="ml-2 mr-1 h-5 w-5 rounded-full border-2 border-white bg-transparent" />
+        <div className="mr-0.5 h-5 w-5 rounded-full border-2 border-principalRoyalBlue bg-transparent" />
       )}
     </button>
   );
