@@ -19,6 +19,3 @@ coverage/
 
 # storybook build log
 build-storybook.log
-
-# vscode workspace settings
-.vscode
