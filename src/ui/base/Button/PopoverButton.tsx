@@ -18,6 +18,7 @@ import { isFunction } from "lodash";
 interface PopoverButtonProps extends ButtonProps {
   popover: ReactNode;
   popoverClassName?: string;
+  children: ReactNode | ((open: boolean) => ReactElement);
 }
 
 export default function PopoverButton({

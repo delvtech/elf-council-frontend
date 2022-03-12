@@ -1,7 +1,10 @@
 import React, { ReactElement, useCallback, useState } from "react";
 import { Signer } from "ethers";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { CheckCircleIcon } from "@heroicons/react/solid";
@@ -64,7 +67,10 @@ export default function TransactionCard({
                   {t`Claimable voting power`}
                 </p>
                 <div className="flex items-center justify-center gap-3">
-                  <ElementIcon className="bg-paleLily" size={IconSize.MEDIUM} />
+                  <ElementIconCircle
+                    className="bg-paleLily"
+                    size={IconSize.MEDIUM}
+                  />
                   <p className="text-3xl font-semibold text-principalRoyalBlue">
                     {t`${commify(ELFI_TOKEN_AMOUNT)} ELFI`}
                   </p>

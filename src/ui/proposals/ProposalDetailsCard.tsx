@@ -24,6 +24,7 @@ import { t, jt } from "ttag";
 import H1 from "src/ui/base/H1/H1";
 import H2 from "src/ui/base/H2/H2";
 import { assertNever } from "src/base/assertNever";
+import ElementUrls from "src/elf/urls";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
@@ -257,8 +258,8 @@ export function ProposalDetailsCard(
 
           <a
             target="_blank"
-            href="https://forum.element.fi"
-            className="flex shrink-0 items-center overflow-hidden text-sm font-light text-white"
+            href={ElementUrls.FORUM}
+            className="flex items-center text-sm font-light text-white"
             rel="noreferrer"
           >
             {t`View Discussion`}

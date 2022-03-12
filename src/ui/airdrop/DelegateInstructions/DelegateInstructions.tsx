@@ -1,6 +1,9 @@
 import React, { ReactElement } from "react";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import H1 from "src/ui/base/H1/H1";
 import { jt, t } from "ttag";
 
@@ -11,7 +14,7 @@ interface DelegateInstructionsProps {
 }
 
 const elementIcon = (
-  <ElementIcon key="element-icon" inline size={IconSize.MEDIUM} />
+  <ElementIconCircle key="element-icon" inline size={IconSize.MEDIUM} />
 );
 export function DelegateInstructions({
   onNextStep,

@@ -1,7 +1,10 @@
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { t } from "ttag";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { commify } from "ethers/lib/utils";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
@@ -35,7 +38,10 @@ export function AirdropAmountCard({
         <div className="font-bold text-principalRoyalBlue text-opacity-60">{t`Your voting power`}</div>
         <div className="mb-10">
           <div className="flex items-center justify-center gap-2 font-bold text-principalRoyalBlue md:text-3xl">
-            <ElementIcon className="ml-1 bg-paleLily" size={IconSize.MEDIUM} />
+            <ElementIconCircle
+              className="ml-1 bg-paleLily"
+              size={IconSize.MEDIUM}
+            />
             {t`${claimableBalance ? commify(claimableBalance) : 0} ELFI`}
           </div>
         </div>

@@ -1,18 +1,18 @@
 import { ReactElement } from "react";
 import RadiantShieldIcon from "./RadiantShieldIcon";
-import { DISCORD_ZK_URL } from "./constants";
+import ElementUrls from "src/elf/urls";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
-import Image from "next/image";
+import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import { t, jt } from "ttag";
 import classNames from "classnames";
 
 const discordServerLink = (
   <a
     key="discordServerLink"
-    href={DISCORD_ZK_URL}
+    href={ElementUrls.DISCORD}
     target="_blank"
     rel="noreferrer"
     className="text-yieldLightBlue"
@@ -54,17 +54,12 @@ export default function DiscordShareCard({
         <div className="flex gap-12">
           <AnchorButton
             variant={ButtonVariant.GRADIENT}
-            href={DISCORD_ZK_URL}
+            href={ElementUrls.DISCORD}
             className="flex gap-2"
             target="_blank"
           >
             {t`Go to Discord`}
-            <Image
-              width={24}
-              height={24}
-              src="/assets/discordlogo--light.svg"
-              alt=""
-            />
+            <DiscordIcon width={24} height={24} className="fill-white" />
           </AnchorButton>
         </div>
       </div>
