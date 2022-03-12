@@ -262,7 +262,7 @@ export function ProposalDetailsCard(
             className="flex items-center text-sm font-light text-white"
             rel="noreferrer"
           >
-            {t`View Discussion`}
+            {t`View discussion`}
             <ExternalLinkIcon className="ml-2 h-4" />
           </a>
         </div>
