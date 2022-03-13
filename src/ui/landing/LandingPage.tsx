@@ -16,31 +16,34 @@ import SideBar from "./SideBar";
 
 export default function LandingPage(): ReactElement {
   return (
-    <div className="relative h-screen overflow-hidden">
-      <div className="h-screen overflow-y-auto bg-principalRoyalBlue text-white">
-        <BackgroundGlows />
-        {/* Background Graphics */}
-        <div className="absolute top-[-298px] right-1/4 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]" />
-        <div className="absolute top-1/2 right-1/3 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]" />
+    // outer element is set to overflow: hidden to hide the overflowing
+    // background glows
+    <div className="relative h-screen overflow-hidden bg-principalRoyalBlue text-white">
+      <BackgroundGlows />
+      <BackgroundCircles />
 
-        <div className="relative m-auto mb-5 max-w-7xl flex-1 px-24">
+      {/* scroll container */}
+      <div className="absolute top-0 right-0 bottom-[72px] z-20 overflow-y-auto lg:bottom-0 lg:left-[120px]">
+        {/* wax width and padding container */}
+        <div className="mx-auto max-w-7xl px-[4vw] pb-20 lg:px-24 xl:px-16 xl:pb-5">
           <Header />
 
-          <main className="flex gap-24">
-            <div className="z-10 flex-1 basis-[60%]">
-              <div className="mt-4 flex ">
-                <h1 className="mb-4 flex-1 text-7xl font-semibold leading-tight text-hackerSky">{t`Presenting Council`}</h1>
-                <SparkleIcon className="ml-8 flex-1 fill-hackerSky" />
+          <main className="mt-4 flex flex-col gap-16 xl:mt-0 xl:flex-row xl:gap-24">
+            {/* main left column */}
+            <div className="flex-1 basis-[60%]">
+              <div className="mb-10 mt-4 flex flex-col items-center text-center sm:mb-4 sm:flex-row-reverse sm:text-left lg:items-start">
+                <SparkleIcon className="ml-8 mr-5 fill-hackerSky lg:flex-1 xl:mr-0" />
+                <h1 className="flex-1 text-5xl font-semibold leading-tight text-hackerSky sm:text-7xl">{t`Presenting Council`}</h1>
               </div>
               <p className="mb-8 text-2xl leading-10">{t`Welcome to Element's v0 Governance System. Explore below to learn more about our DAO launch.`}</p>
 
               <Disclosure>
                 {({ open }) => (
-                  <div className="inline-flex flex-col">
+                  <div className="inline-flex w-full flex-col xl:w-auto">
                     <Disclosure.Button
                       as={Button}
                       variant={ButtonVariant.SECONDARY}
-                      className="mb-4 flex h-16 justify-between px-7"
+                      className="mb-4 hidden h-16 justify-between px-7 xl:flex"
                     >
                       <span className="bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-2xl text-transparent">
                         {t`Explore Claiming Rewards`}
@@ -52,7 +55,14 @@ export default function LandingPage(): ReactElement {
                         )}
                       />
                     </Disclosure.Button>
-                    <Disclosure.Panel as="ul" className="flex flex-col gap-4">
+                    <Disclosure.Panel
+                      static
+                      as="ul"
+                      className={classNames(
+                        "flex flex-col gap-4",
+                        !open && "xl:hidden",
+                      )}
+                    >
                       <ClaimLink href="/airdrop">
                         {t`Claim ELFI Governance Power`}
                       </ClaimLink>
@@ -70,14 +80,22 @@ export default function LandingPage(): ReactElement {
                 )}
               </Disclosure>
             </div>
-
+            {/* main right column */}
             <div className="flex-1 basis-[45%]">
               <Disclosure>
                 {({ open }) => (
                   <>
+                    {/* relative container for background box */}
                     <div className="relative">
-                      <Disclosure.Button className="relative z-10 mb-5 flex w-full flex-col items-center rounded-2xl bg-white p-9 pt-11">
-                        <span className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Governance Resources`}</span>
+                      {/* header for small screens */}
+                      <div className="mb-10 flex w-full items-center justify-between gap-5 xl:hidden">
+                        <h2 className="text-left text-3xl font-semibold leading-10">{t`Explore Governance Resources`}</h2>
+                        <CouncilLogo className="mr-5 h-auto w-16" />
+                      </div>
+
+                      {/* large button for large screens */}
+                      <Disclosure.Button className="mb-5 hidden w-full flex-col items-center rounded-2xl bg-white p-9 pt-11 xl:flex">
+                        <h2 className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Governance Resources`}</h2>
                         <CouncilLogo className="mb-16 h-auto w-56" />
                         <ChevronRightIcon
                           className={classNames(
@@ -86,11 +104,17 @@ export default function LandingPage(): ReactElement {
                           )}
                         />
                       </Disclosure.Button>
-                      <div className="absolute -left-20 -bottom-20 h-56 w-80 border-y-2 border-l-2 border-white/20 bg-gradient-to-r from-white/10 to-transparent bg-no-repeat" />
+
+                      {/* background box */}
+                      <div className="absolute -left-20 -bottom-20 -z-10 hidden h-56 w-80 border-y-2 border-l-2 border-white/20 bg-gradient-to-r from-white/10 to-transparent bg-no-repeat xl:block" />
                     </div>
                     <Disclosure.Panel
                       as="ul"
-                      className="relative z-10 flex items-stretch gap-5"
+                      className={classNames(
+                        "flex flex-col items-stretch gap-5 xl:flex-row",
+                        !open && "xl:hidden",
+                      )}
+                      static
                     >
                       <ArticleLink
                         href={`${ElementUrls.MEDIUM}/the-governance-steering-council-63aea7732262`}
@@ -112,9 +136,9 @@ export default function LandingPage(): ReactElement {
             </div>
           </main>
         </div>
-
-        <SideBar />
       </div>
+
+      <SideBar />
     </div>
   );
 }
@@ -128,6 +152,7 @@ function BackgroundGlows() {
           width={1240}
           height={600}
           alt=""
+          className="pointer-events-none"
         />
       </div>
       <div className="pointer-events-none absolute top-1/2 right-1/3 z-10 translate-x-1/2">
@@ -136,16 +161,27 @@ function BackgroundGlows() {
           width={710}
           height={760}
           alt=""
+          className="pointer-events-none"
         />
       </div>
-      <div className="pointer-events-none absolute top-1/2 left-1/3 z-10 -translate-x-3/4">
+      <div className="pointer-events-none absolute top-1/2 left-1/3 z-10 -translate-x-3/4 opacity-75 lg:opacity-100">
         <Image
           src="/assets/landing-page/bottom-left-glow.png"
           width={990}
           height={1080}
           alt=""
+          className="pointer-events-none"
         />
       </div>
+    </>
+  );
+}
+
+function BackgroundCircles() {
+  return (
+    <>
+      <div className="pointer-events-none absolute top-[-298px] right-1/4 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]" />
+      <div className="pointer-events-none absolute top-1/2 right-1/3 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]" />
     </>
   );
 }
@@ -187,10 +223,13 @@ function ArticleLink({
     <li className="flex-1">
       <a
         href={href}
-        className="relative flex h-full flex-col justify-between !rounded-[0_0_40px_0] border-2 border-white/20 !bg-white/10 px-4 pt-3 pb-6 text-xs font-semibold backdrop-blur-sm"
+        className="flex h-16 items-center justify-between rounded-2xl border-2 border-white/50 bg-white/20 px-4 font-semibold backdrop-blur-sm xl:h-full xl:flex-col xl:items-start xl:rounded-[0_0_40px_0] xl:bg-white/10 xl:pt-3 xl:pb-6 xl:text-xs"
+        style={{
+          textShadow: "1px 1px 4px rgba(0,60,120,.5)",
+        }}
       >
         {children}
-        <ArrowRightIcon className="mt-2 h-4 w-4" />
+        <ArrowRightIcon className="h-4 w-4 xl:mt-2" />
       </a>
     </li>
   );

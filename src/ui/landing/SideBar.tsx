@@ -5,10 +5,15 @@ import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import TelegramIcon from "src/ui/base/svg/TelegramIcon";
 import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
 
+// bottom-0 left-0 z-20 flex h-[72px] w-full justify-center px-5 py-4 lg:top-0 lg:z-10 lg:h-screen lg:w-[120px] lg:flex-col lg:items-center lg:justify-end lg:py-10
+
 export default function SideBar(): ReactElement {
   return (
-    <footer className="fixed top-0 left-0 flex h-screen flex-col justify-end bg-gradient-to-br from-principalBlue to-principalRoyalBlue">
-      <ul className="relative z-10 flex flex-col gap-5 p-10">
+    <footer>
+      {/* colored background in a separate container to be under the glows */}
+      <div className="fixed bottom-0 left-0 h-[72px] w-full bg-gradient-to-br from-principalBlue to-principalRoyalBlue lg:h-full lg:w-[120px]" />
+
+      <ul className="fixed left-0 bottom-4 z-10 flex w-full justify-center gap-[8vw] lg:bottom-10 lg:w-[120px] lg:flex-col lg:items-center lg:gap-5">
         <SocialLink href={ElementUrls.TWITTER} title="Twitter">
           <TwitterIcon className="h-auto w-5 fill-white" />
         </SocialLink>
