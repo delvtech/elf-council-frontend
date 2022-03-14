@@ -170,6 +170,7 @@ export default function ProposalsPage({
       </div>
       {selectedProposal && (
         <ProposalDetailsCard
+          key={selectedProposalId}
           isOpen={!!selectedProposal}
           onClose={() => {
             setSelectedProposal(undefined);
