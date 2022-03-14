@@ -333,9 +333,9 @@ export function ProposalDetailsCard(
                 onClick={handleVote}
                 loading={isVoteTxPending}
                 variant={ButtonVariant.PRIMARY}
-                className="max-w-min"
+                className="min-w-[95px] justify-center"
               >
-                {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
+                {ballotChoice ? t`Modify vote` : t`Submit`}
               </Button>
             </div>
           </div>
