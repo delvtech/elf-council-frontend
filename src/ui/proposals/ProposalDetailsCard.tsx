@@ -332,6 +332,7 @@ export function ProposalDetailsCard(
                 onClick={handleVote}
                 loading={isVoteTxPending}
                 variant={ButtonVariant.PRIMARY}
+                className="max-w-min"
               >
                 {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
               </Button>
