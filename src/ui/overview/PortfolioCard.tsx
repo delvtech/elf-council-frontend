@@ -13,8 +13,8 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 
-const elfiTooltipText = t`The amount of voting power you own in the system`;
-const votingPowerTooltipText = t`The sum of all voting power delegated to you`;
+const elfiTooltipText = t`The amount of ELFI you own`;
+const votingPowerTooltipText = t`The amount of voting power you have in Element Council`;
 
 interface PortfolioCardProps {
   account: string | undefined | null;

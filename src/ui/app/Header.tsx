@@ -15,7 +15,7 @@ import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { Provider } from "@ethersproject/providers";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
-const elfiTooltipText = t`The amount of voting power you own in the system`;
+const elfiTooltipText = t`The amount of ELFI you own`;
 
 function Header(): ReactElement {
   const { account, active, library } = useWeb3React<Provider>();
