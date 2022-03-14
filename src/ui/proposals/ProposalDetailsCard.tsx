@@ -124,6 +124,7 @@ export function ProposalDetailsCard(
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
     onError: (e) => {
+      setIsVoteTxPending(false);
       toast.error(e.message, { id: toastIdRef.current });
     },
     onTransactionSubmitted: (pendingTransaction) => {
