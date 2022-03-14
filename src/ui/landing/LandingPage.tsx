@@ -18,7 +18,7 @@ export default function LandingPage(): ReactElement {
   return (
     // outer element is set to overflow: hidden to hide the overflowing
     // background glows
-    <div className="relative h-screen overflow-hidden bg-principalRoyalBlue text-white">
+    <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-principalRoyalBlue text-white">
       <BackgroundGlows />
       <BackgroundCircles />
 
