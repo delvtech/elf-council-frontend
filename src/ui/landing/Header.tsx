@@ -3,6 +3,7 @@ import {
   forwardRef,
   PropsWithChildren,
   ReactElement,
+  MouseEvent,
 } from "react";
 import ElementUrls from "src/elf/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
@@ -54,7 +55,7 @@ export default function Header(): ReactElement {
             {/* full screen menu for smaller screens */}
             <PopoverNavPanel
               ref={setPopperElement}
-              className="!fixed !left-0 !bottom-0 flex !transform-none flex-col justify-center bg-principalRoyalBlue p-[10vw] text-center shadow-[0_4px_4px_#fff] lg:hidden"
+              className="!fixed !left-0 !bottom-[72px] flex !transform-none flex-col justify-center bg-principalRoyalBlue p-[10vw] text-center shadow-[0_4px_4px_#fff] lg:hidden"
               style={menuPopperStyles}
               popperProps={menuPopperProps}
               open={open}
@@ -93,6 +94,10 @@ const PopoverNavPanel = forwardRef<HTMLDivElement, PopoverNavPanelProps>(
         className={className}
         style={style}
         {...popperProps}
+        onMouseDown={(evt: MouseEvent) => {
+          evt.preventDefault();
+          evt.stopPropagation();
+        }}
       >
         <Popover.Button
           title="close menu"
