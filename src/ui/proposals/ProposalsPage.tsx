@@ -1,4 +1,10 @@
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
 
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
@@ -10,7 +16,10 @@ import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
-import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
+import {
+  useIsTailwindSmallScreen,
+  useIsTailwindLargeScreen,
+} from "src/ui/base/tailwindBreakpoints";
 import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
@@ -34,6 +43,7 @@ export default function ProposalsPage({
   const [activeTabId, setActiveTab] = useState<TabId>("active");
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
+  const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
   const activeProposals = useFilteredProposals(
     "active",
@@ -45,6 +55,16 @@ export default function ProposalsPage({
     proposalsJson.proposals,
     currentBlockNumber,
   );
+
+  const setDefaultActiveProposals = useCallback(() => {
+    setSelectedProposalId(activeProposals?.[0]?.proposalId);
+    setSelectedProposal(activeProposals?.[0]);
+  }, [activeProposals]);
+
+  const setDefaultPastProposals = useCallback(() => {
+    setSelectedProposalId(pastProposals?.[0]?.proposalId);
+    setSelectedProposal(pastProposals?.[0]);
+  }, [pastProposals]);
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
@@ -75,8 +95,7 @@ export default function ProposalsPage({
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
       } else {
-        setSelectedProposalId(activeProposals?.[0]?.proposalId);
-        setSelectedProposal(activeProposals?.[0]);
+        setDefaultActiveProposals();
       }
     }
   };
@@ -90,11 +109,28 @@ export default function ProposalsPage({
       } else {
         // select the first proposal when the user clicks to view the
         // past tab
-        setSelectedProposalId(pastProposals?.[0]?.proposalId);
-        setSelectedProposal(pastProposals?.[0]);
+        setDefaultPastProposals();
       }
     }
   };
+
+  useEffect(() => {
+    if (isTailwindLargeScreen && !selectedProposal) {
+      if (activeTabId === "past") {
+        setDefaultPastProposals();
+      } else {
+        setDefaultActiveProposals();
+      }
+    }
+  }, [
+    activeTabId,
+    isTailwindLargeScreen,
+    pastProposals,
+    selectedProposal,
+    setDefaultActiveProposals,
+    setDefaultPastProposals,
+  ]);
+
   return (
     <div className="flex h-full lg:justify-center">
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
