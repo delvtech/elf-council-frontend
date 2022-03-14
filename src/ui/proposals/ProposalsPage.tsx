@@ -56,12 +56,12 @@ export default function ProposalsPage({
     currentBlockNumber,
   );
 
-  const setDefaultActiveProposals = useCallback(() => {
+  const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
   }, [activeProposals]);
 
-  const setDefaultPastProposals = useCallback(() => {
+  const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
   }, [pastProposals]);
@@ -95,7 +95,7 @@ export default function ProposalsPage({
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
       } else {
-        setDefaultActiveProposals();
+        setDefaultActiveProposal();
       }
     }
   };
@@ -109,7 +109,7 @@ export default function ProposalsPage({
       } else {
         // select the first proposal when the user clicks to view the
         // past tab
-        setDefaultPastProposals();
+        setDefaultPastProposal();
       }
     }
   };
@@ -117,9 +117,9 @@ export default function ProposalsPage({
   useEffect(() => {
     if (isTailwindLargeScreen && !selectedProposal) {
       if (activeTabId === "past") {
-        setDefaultPastProposals();
+        setDefaultPastProposal();
       } else {
-        setDefaultActiveProposals();
+        setDefaultActiveProposal();
       }
     }
   }, [
@@ -127,8 +127,8 @@ export default function ProposalsPage({
     isTailwindLargeScreen,
     pastProposals,
     selectedProposal,
-    setDefaultActiveProposals,
-    setDefaultPastProposals,
+    setDefaultActiveProposal,
+    setDefaultPastProposal,
   ]);
 
   return (
