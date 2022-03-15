@@ -13,8 +13,7 @@ export function useLastVoteTransactionForAccount(
 
   return useQuery({
     queryFn: async () => {
-      // should never happen, events.length is requied in enabled statement below.  Makes typing
-      // easier below.
+      // Will return undefined if no history of events
       if (!events?.length) {
         return;
       }
