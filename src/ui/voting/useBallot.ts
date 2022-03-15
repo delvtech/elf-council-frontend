@@ -18,9 +18,20 @@ export type Vote = [votingPower: BigNumber, castBallot: Ballot];
 export function useBallot(
   account: string | undefined | null,
   proposalId: string | undefined,
-): QueryObserverResult<Vote> {
-  return useSmartContractReadCall(coreVotingContract, "votes", {
+): QueryObserverResult<Vote> | undefined {
+  const result = useSmartContractReadCall(coreVotingContract, "votes", {
     callArgs: [account as string, proposalId as string],
     enabled: !!account && !!proposalId,
   });
+
+  // if a user has not voted, the default response is:
+  // { votePower: 0, ballot: 0 }.  This means the user likely hasn't voted
+  // so we return undefined to indicate that.
+
+  // Checks voting power === 0
+  if (result.isSuccess && result.data?.[0].eq(0)) {
+    return undefined;
+  }
+
+  return result;
 }

@@ -91,10 +91,7 @@ export function ProposalDetailsCard(
 
   const isExecuted = useProposalExecuted(proposalId);
 
-  const { isLoading: currentBallotLoading, data: currentBallot } = useBallot(
-    account,
-    proposalId,
-  );
+  const { data: currentBallot } = useBallot(account, proposalId) || {};
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
   const { data: lastVoteTransaction } = useLastVoteTransactionForAccount(
@@ -338,9 +335,7 @@ export function ProposalDetailsCard(
                 variant={ButtonVariant.PRIMARY}
                 className="w-[95px] shrink-0 justify-center"
               >
-                {account && !currentBallotLoading && ballotChoice === undefined
-                  ? t`Submit`
-                  : t`Modify vote`}
+                {ballotChoice === undefined ? t`Submit` : t`Modify vote`}
               </Button>
             </div>
           </div>
