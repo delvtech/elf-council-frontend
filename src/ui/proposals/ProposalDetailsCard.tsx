@@ -335,7 +335,7 @@ export function ProposalDetailsCard(
                 variant={ButtonVariant.PRIMARY}
                 className="max-w-[95px] shrink-0 justify-center"
               >
-                {isNumber(ballotChoice) ? t`Modify vote` : t`Submit`}
+                {ballotChoice === undefined ? t`Modify vote` : t`Submit`}
               </Button>
             </div>
           </div>
