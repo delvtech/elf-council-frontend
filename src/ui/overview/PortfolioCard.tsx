@@ -6,7 +6,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import TooltipDefinitions from "src/ui/base/TooltipDefinitions";
+import TooltipDefinitions from "src/ui/voting/tooltipDefinitions";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";

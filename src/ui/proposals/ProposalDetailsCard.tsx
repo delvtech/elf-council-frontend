@@ -29,7 +29,7 @@ import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import TooltipDefinitions from "src/ui/base/TooltipDefinitions";
+import TooltipDefinitions from "./tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";

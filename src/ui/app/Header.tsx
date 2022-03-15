@@ -12,7 +12,7 @@ import {
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
-import TooltipDefinitions from "src/ui/base/TooltipDefinitions";
+import TooltipDefinitions from "src/ui/voting/tooltipDefinitions";
 import { Provider } from "@ethersproject/providers";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
