@@ -29,6 +29,7 @@ import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
+import { TooltipDefinition } from "./tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import GradientCard from "src/ui/base/Card/GradientCard";
@@ -52,8 +53,6 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
-
-const votingPowerTooltipText = t`The voting power delegated to you for this proposal`;
 
 interface ProposalDetailsCardProps {
   className?: string;
@@ -297,7 +296,7 @@ export function ProposalDetailsCard(
               <BalanceWithLabel
                 className="mt-4 w-full"
                 balance={accountVotingPower}
-                tooltipText={votingPowerTooltipText}
+                tooltipText={t`${TooltipDefinition.OWNED_PROPOSAL_VOTING_POWER}`}
                 label={t`Voting Power`}
               />
 

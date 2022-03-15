@@ -6,15 +6,13 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
+import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
-
-const elfiTooltipText = t`The amount of voting power you own in the system`;
-const votingPowerTooltipText = t`The sum of all voting power delegated to you`;
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -52,13 +50,13 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <BalanceWithLabel
           className="mt-8 w-full"
           balance={amountDeposited}
-          tooltipText={elfiTooltipText}
+          tooltipText={t`${TooltipDefinition.OWNED_ELFI}`}
           label={t`ELFI`}
         />
         <BalanceWithLabel
           className="mt-8 w-full"
           balance={votingPower}
-          tooltipText={votingPowerTooltipText}
+          tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
           label={t`Your Voting Power`}
         />
         {!!Number(unclaimedAirdrop) && (
