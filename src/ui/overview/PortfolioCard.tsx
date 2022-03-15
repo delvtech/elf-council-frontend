@@ -6,7 +6,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import TooltipDefinitions from "src/ui/voting/tooltipDefinitions";
+import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
@@ -50,13 +50,13 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
         <BalanceWithLabel
           className="mt-8 w-full"
           balance={amountDeposited}
-          tooltipText={t`${TooltipDefinitions.OWNED_ELFI}`}
+          tooltipText={t`${TooltipDefinition.OWNED_ELFI}`}
           label={t`ELFI`}
         />
         <BalanceWithLabel
           className="mt-8 w-full"
           balance={votingPower}
-          tooltipText={t`${TooltipDefinitions.OWNED_VOTING_POWER}`}
+          tooltipText={t`${TooltipDefinition.OWNED_VOTING_POWER}`}
           label={t`Your Voting Power`}
         />
         {!!Number(unclaimedAirdrop) && (
