@@ -1,8 +1,9 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
 import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
+import NoPassCard from "./NoPassCard";
 import NotEligibleCard from "./NotEligibleCard";
 import DelegateInfoCard from "./DelegateInfoCard";
 import ChooseDelegateCard from "./ChooseDelegateCard";
@@ -19,6 +20,7 @@ import {
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { t } from "ttag";
+import useAddressScreening from "./useAddressScreening";
 
 export enum Step {
   LOOKUP = "lookup",
@@ -50,13 +52,17 @@ export default function ZKClaimPage(): ReactElement {
     secret,
     account: account || undefined,
   });
+  const { pass } = useAddressScreening(account);
 
   const {
     canViewStep,
+    currentStep,
+    getStepNumber,
     getStepPath,
     getStepStatus,
     goToNextStep,
     goToPreviousStep,
+    goToStep,
   } = useRouterSteps({
     steps: [
       Step.LOOKUP,
@@ -88,6 +94,16 @@ export default function ZKClaimPage(): ReactElement {
     }
     return StepItemStatus.COMPLETE;
   };
+
+  // return to the eligibility step after screening the address if they're on
+  // a later step
+  useEffect(() => {
+    const isPastEligibility =
+      getStepNumber(currentStep) > getStepNumber(Step.ELIGIBILITY);
+    if (pass === false && isPastEligibility) {
+      goToStep(Step.ELIGIBILITY);
+    }
+  }, [pass, getStepNumber, currentStep, goToStep]);
 
   return (
     <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
@@ -129,10 +145,15 @@ export default function ZKClaimPage(): ReactElement {
       />
 
       {/* Eligibility */}
-      {!isEligible ? (
-        <NotEligibleCard
-          onTryAgain={goToPreviousStep}
+      {pass === false ? (
+        <NoPassCard
           className={getStepClassName(Step.ELIGIBILITY)}
+          onPreviousStep={goToPreviousStep}
+        />
+      ) : !isEligible ? (
+        <NotEligibleCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          onTryAgain={goToPreviousStep}
         />
       ) : alreadyClaimed ? (
         <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
