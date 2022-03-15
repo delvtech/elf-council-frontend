@@ -5,7 +5,7 @@ import {
   ReactElement,
   MouseEvent,
 } from "react";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
@@ -106,8 +106,8 @@ const PopoverNavPanel = forwardRef<HTMLDivElement, PopoverNavPanelProps>(
           <XIcon className="h-6 w-6" />
         </Popover.Button>
         <ul className="mb-5 w-0 min-w-full lg:mb-0">
-          <MenuLink href={ElementUrls.CORE_APP}>{t`Main App`}</MenuLink>
-          <MenuLink href={ElementUrls.DOCS}>{t`Docs and Guides`}</MenuLink>
+          <MenuLink href={ElementUrl.CORE_APP}>{t`Main App`}</MenuLink>
+          <MenuLink href={ElementUrl.DOCS}>{t`Docs and Guides`}</MenuLink>
         </ul>
         <LinkButton
           variant={ButtonVariant.REWARD}

@@ -4,7 +4,7 @@ import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import GasIcon from "src/ui/base/svg/GasIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import {
@@ -31,7 +31,7 @@ function Header(): ReactElement {
           <div className="flex items-center">
             <span className="mr-8 hidden items-center gap-1 lg:flex">
               <ExternalLink
-                href={ElementUrls.DOCS}
+                href={ElementUrl.DOCS}
                 text={t`Learn how to vote`}
                 className="text-principalRoyalBlue"
               />
