@@ -163,8 +163,6 @@ export function ProposalDetailsCard(
     vote(proposalId, newBallot);
   }, [newBallot, proposalId, vote]);
 
-  console.log("ballotChoice", ballotChoice);
-
   return (
     <GradientCard
       style={
