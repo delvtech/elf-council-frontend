@@ -48,6 +48,10 @@ export default function useRouterSteps<Step = number>(
   const { pathname, push, replace } = useRouter();
   const { [paramName]: paramStep } = useParams();
 
+  // use these methods in dependency arrays
+  const staticRouterMethods = useRef({ safePush: push, safeReplace: replace });
+  const { safePush, safeReplace } = staticRouterMethods.current;
+
   const [completedSteps, setCompletedSteps] = useState(initialCompleted);
 
   const currentStep = useMemo(() => {
@@ -120,9 +124,9 @@ export default function useRouterSteps<Step = number>(
   const goToStep = useCallback(
     (step: number | Step) => {
       completeStep(getStepNumber(step) - 1);
-      push(getStepPath(step));
+      safePush(getStepPath(step));
     },
-    [push, getStepPath, completeStep, getStepNumber],
+    [safePush, getStepPath, completeStep, getStepNumber],
   );
 
   const goToPreviousStep = useCallback(() => {
@@ -136,13 +140,15 @@ export default function useRouterSteps<Step = number>(
   useEffect(() => {
     if (!canViewStep(currentStep)) {
       // TODO: error notification?
-      replace(getStepPath(completedSteps + 1), undefined, { shallow: true });
+      safeReplace(getStepPath(completedSteps + 1), undefined, {
+        shallow: true,
+      });
     }
   }, [
     paramStep,
     canViewStep,
     currentStep,
-    replace,
+    safeReplace,
     getStepPath,
     completedSteps,
   ]);
