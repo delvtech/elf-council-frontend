@@ -163,6 +163,8 @@ export function ProposalDetailsCard(
     vote(proposalId, newBallot);
   }, [newBallot, proposalId, vote]);
 
+  console.log("ballotChoice", ballotChoice);
+
   return (
     <GradientCard
       style={
@@ -333,9 +335,9 @@ export function ProposalDetailsCard(
                 onClick={handleVote}
                 loading={isVoteTxPending}
                 variant={ButtonVariant.PRIMARY}
-                className="min-w-[95px] justify-center"
+                className="max-w-[95px] shrink-0 justify-center"
               >
-                {ballotChoice ? t`Modify vote` : t`Submit`}
+                {isNumber(ballotChoice) ? t`Modify vote` : t`Submit`}
               </Button>
             </div>
           </div>
