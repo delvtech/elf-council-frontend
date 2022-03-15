@@ -12,6 +12,7 @@ export function useLastVoteTransactionForAccount(
   const { data: events } = useVotedEvents(voterAddress, proposalId);
 
   return useQuery({
+    queryKey: ["last-vote", voterAddress, proposalId],
     queryFn: async () => {
       // Will return undefined if no history of events
       if (!events?.length) {
