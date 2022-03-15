@@ -29,7 +29,7 @@ export function useBallot(
   // so we return undefined to indicate that.
 
   // Checks voting power === 0
-  if (result.isSuccess && result.data?.[0].eq(0)) {
+  if (result.isSuccess && result.data[0].eq(0)) {
     return undefined;
   }
 
