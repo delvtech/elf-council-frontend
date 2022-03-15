@@ -12,10 +12,10 @@ import {
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import TooltipDefinitions from "src/ui/base/TooltipDefinitions";
 import { Provider } from "@ethersproject/providers";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
-const elfiTooltipText = t`The amount of ELFI you own`;
 
 function Header(): ReactElement {
   const { account, active, library } = useWeb3React<Provider>();
@@ -50,7 +50,7 @@ function Header(): ReactElement {
                 {gasPrice?.recommendedBaseFee || 0.0}
               </span>
             </a>
-            <Tooltip content={elfiTooltipText}>
+            <Tooltip content={t`${TooltipDefinitions.OWNED_ELFI}`}>
               <span className="mr-8 flex items-center gap-2 font-bold text-principalRoyalBlue">
                 <ElementIconCircle size={IconSize.MEDIUM} />
                 <span>
