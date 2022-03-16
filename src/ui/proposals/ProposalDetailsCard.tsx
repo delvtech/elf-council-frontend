@@ -123,6 +123,7 @@ export function ProposalDetailsCard(
 
   const { mutate: vote } = useVote(account, signer, proposal.created, {
     onError: (e) => {
+      setIsVoteTxPending(false);
       toast.error(e.message, { id: toastIdRef.current });
     },
     onTransactionSubmitted: (pendingTransaction) => {
@@ -331,8 +332,9 @@ export function ProposalDetailsCard(
                 onClick={handleVote}
                 loading={isVoteTxPending}
                 variant={ButtonVariant.PRIMARY}
+                className="w-[95px] shrink-0 justify-center"
               >
-                {isNumber(currentBallot) ? t`Modify vote` : t`Submit`}
+                {ballotChoice === undefined ? t`Submit` : t`Modify vote`}
               </Button>
             </div>
           </div>

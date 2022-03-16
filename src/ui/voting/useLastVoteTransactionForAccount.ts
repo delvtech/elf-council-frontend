@@ -12,9 +12,9 @@ export function useLastVoteTransactionForAccount(
   const { data: events } = useVotedEvents(voterAddress, proposalId);
 
   return useQuery({
+    queryKey: ["last-vote", voterAddress, proposalId],
     queryFn: async () => {
-      // should never happen, events.length is requied in enabled statement below.  Makes typing
-      // easier below.
+      // Will return undefined if no history of events
       if (!events?.length) {
         return;
       }
@@ -24,6 +24,5 @@ export function useLastVoteTransactionForAccount(
       const transaction = await getTransaction();
       return transaction;
     },
-    enabled: !!events?.length,
   });
 }
