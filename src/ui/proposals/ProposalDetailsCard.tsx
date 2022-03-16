@@ -91,7 +91,7 @@ export function ProposalDetailsCard(
 
   const isExecuted = useProposalExecuted(proposalId);
 
-  const { data: currentBallot } = useBallot(account, proposalId) || {};
+  const { data: currentBallot } = useBallot(account, proposalId);
   const [ballotVotePower, ballotChoice] = currentBallot || [];
 
   const { data: lastVoteTransaction } = useLastVoteTransactionForAccount(

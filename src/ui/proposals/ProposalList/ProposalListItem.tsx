@@ -99,7 +99,7 @@ function BallotIcon({
   account,
   proposalId,
 }: BallotIconProps): ReactElement | null {
-  const { data: ballot } = useBallot(account, proposalId) || {};
+  const { data: ballot } = useBallot(account, proposalId);
   if (ballot === undefined) {
     return null;
   }
