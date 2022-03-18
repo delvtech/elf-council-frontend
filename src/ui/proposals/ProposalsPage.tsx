@@ -179,8 +179,8 @@ export default function ProposalsPage({
           <OffChainProposalsLink />
         </div>
         <div className="flex space-x-12">
-          {/* TODO: Fix empty past proposals state not showing */}
-          {activeProposals.length ? (
+          {(activeTabId === "active" && activeProposals.length) ||
+          (activeTabId === "past" && pastProposals.length) ? (
             <ProposalList
               account={account}
               signer={signer}
