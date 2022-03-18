@@ -26,6 +26,7 @@ import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
+import GradientCard from "src/ui/base/Card/GradientCard";
 
 type TabId = "active" | "past";
 
@@ -69,7 +70,7 @@ export default function ProposalsPage({
     pastProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [pastProposals]);
 
-  const calculateModalState = () => {
+  const calculateModalOpenState = () => {
     if (isTailwindLargeScreen) {
       if (activeTabId === "active") {
         return activeProposals.length ? true : false;
@@ -81,7 +82,7 @@ export default function ProposalsPage({
     }
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(calculateModalState());
+  const [isModalOpen, setIsModalOpen] = useState(calculateModalOpenState());
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
@@ -165,6 +166,10 @@ export default function ProposalsPage({
     />
   ) : null;
 
+  const showNoProposalsState =
+    (activeTabId === "active" && !activeProposals.length) ||
+    (activeTabId === "past" && !pastProposals.length);
+
   return (
     <div className="flex h-full lg:justify-center">
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
@@ -187,8 +192,9 @@ export default function ProposalsPage({
           <OffChainProposalsLink />
         </div>
         <div className="flex space-x-12">
-          {(activeTabId === "active" && activeProposals.length) ||
-          (activeTabId === "past" && pastProposals.length) ? (
+          {showNoProposalsState ? (
+            <NoProposalsList activeTabId={activeTabId} />
+          ) : (
             <ProposalList
               account={account}
               signer={signer}
@@ -199,11 +205,11 @@ export default function ProposalsPage({
               onClickItem={handleSelectProposal}
               isModalOpen={isModalOpen}
             />
-          ) : (
-            <NoProposalsEmptyState activeTabId={activeTabId} />
           )}
         </div>
       </div>
+
+      {showNoProposalsState ? <NoProposalsDetail /> : null}
 
       {isTailwindLargeScreen ? (
         proposalDetail
@@ -292,11 +298,25 @@ function useFilteredProposals(
   }, [activeTabId, currentBlockNumber, proposals]);
 }
 
-function NoProposalsEmptyState(props: { activeTabId: TabId }) {
+function NoProposalsList(props: { activeTabId: TabId }) {
   return (
     <div className="my-6 flex flex-1 flex-col items-center text-blueGrey">
-      <EmptySpaceFace width={327} height={107} className="-mr-[27px]" />
+      <EmptySpaceFace className="-mr-[27px] w-[90%] max-w-[327px]" />
       <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
     </div>
+  );
+}
+
+function NoProposalsDetail() {
+  return (
+    <GradientCard
+      style={
+        // don't scroll app behind popover, makes a double scroll bar
+        { overscrollBehavior: "none" }
+      }
+      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 rounded-xl opacity-90 lg:flex"
+    >
+      {null}
+    </GradientCard>
   );
 }
