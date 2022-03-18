@@ -170,8 +170,7 @@ export function ProposalDetailsCard(
       }
       className={classNames(
         className,
-        !isOpen && "translate-x-full",
-        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:min-w-[410px] lg:max-w-[48rem] lg:rounded-xl",
+        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none sm:inset-[initial] sm:h-[80vh] sm:w-[450px] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl lg:sticky lg:top-10 lg:h-[85vh] lg:max-w-[48rem] lg:translate-y-0 lg:translate-x-0",
       )}
     >
       <div className="flex h-full w-full flex-1 flex-col p-6">

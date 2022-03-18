@@ -1,4 +1,5 @@
-import React, {
+import {
+  Fragment,
   ReactElement,
   useCallback,
   useMemo,
@@ -25,6 +26,7 @@ import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
+import { Dialog, Transition } from "@headlessui/react";
 
 type TabId = "active" | "past";
 
@@ -40,7 +42,7 @@ export default function ProposalsPage({
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
-  const [activeTabId, setActiveTab] = useState<TabId>("active");
+  const [activeTabId, setActiveTabId] = useState<TabId>("active");
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
   const isTailwindLargeScreen = useIsTailwindLargeScreen();
@@ -59,12 +61,18 @@ export default function ProposalsPage({
   const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
+    setIsModalOpen(true);
   }, [activeProposals]);
 
   const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
+    setIsModalOpen(true);
   }, [pastProposals]);
+
+  const [isModalOpen, setIsModalOpen] = useState(
+    isTailwindLargeScreen ? true : false,
+  );
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
@@ -82,13 +90,14 @@ export default function ProposalsPage({
       );
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
+      setIsModalOpen(true);
     },
     [proposalsJson.proposals],
   );
 
   const handleActiveTabClick = () => {
     if (activeTabId !== "active") {
-      setActiveTab("active");
+      setActiveTabId("active");
       // select the first proposal when the user clicks to view the
       // active tab
       if (isTailwindSmallScreen) {
@@ -102,7 +111,7 @@ export default function ProposalsPage({
 
   const handlePastTabClick = () => {
     if (activeTabId !== "past") {
-      setActiveTab("past");
+      setActiveTabId("past");
       if (isTailwindSmallScreen) {
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
@@ -114,8 +123,13 @@ export default function ProposalsPage({
     }
   };
 
+  const handleOnClose = () => {
+    setIsModalOpen(false);
+  };
+
+  // Populates the default past/active proposal when moving from small -> big screen size
   useEffect(() => {
-    if (isTailwindLargeScreen && !selectedProposal) {
+    if (isTailwindLargeScreen && !isModalOpen) {
       if (activeTabId === "past") {
         setDefaultPastProposal();
       } else {
@@ -124,12 +138,24 @@ export default function ProposalsPage({
     }
   }, [
     activeTabId,
+    isModalOpen,
     isTailwindLargeScreen,
     pastProposals,
     selectedProposal,
     setDefaultActiveProposal,
     setDefaultPastProposal,
   ]);
+
+  const proposalDetail = !!selectedProposal && (
+    <ProposalDetailsCard
+      key={selectedProposalId}
+      isOpen={isModalOpen}
+      onClose={handleOnClose}
+      account={account}
+      signer={signer}
+      proposal={selectedProposal}
+    />
+  );
 
   return (
     <div className="flex h-full lg:justify-center">
@@ -153,6 +179,7 @@ export default function ProposalsPage({
           <OffChainProposalsLink />
         </div>
         <div className="flex space-x-12">
+          {/* TODO: Fix empty past proposals state not showing */}
           {activeProposals.length ? (
             <ProposalList
               account={account}
@@ -162,24 +189,50 @@ export default function ProposalsPage({
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
+              isModalOpen={isModalOpen}
             />
           ) : (
             <NoProposalsEmptyState activeTabId={activeTabId} />
           )}
         </div>
       </div>
-      {selectedProposal && (
-        <ProposalDetailsCard
-          key={selectedProposalId}
-          isOpen={!!selectedProposal}
-          onClose={() => {
-            setSelectedProposal(undefined);
-            setSelectedProposalId(undefined);
-          }}
-          account={account}
-          signer={signer}
-          proposal={selectedProposal}
-        />
+
+      {isTailwindLargeScreen ? (
+        proposalDetail
+      ) : (
+        <Transition.Root show={isModalOpen} as={Fragment}>
+          <Dialog
+            // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
+            className="fixed inset-0 z-50 overflow-y-auto"
+            onClose={handleOnClose}
+          >
+            <div className="fixed top-1/2 left-1/2">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              </Transition.Child>
+
+              <Transition.Child
+                as="div"
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 sm:scale-95"
+                enterTo="opacity-100 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 sm:scale-100"
+                leaveTo="opacity-0 sm:scale-95"
+              >
+                {proposalDetail}
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition.Root>
       )}
     </div>
   );
