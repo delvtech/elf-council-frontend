@@ -173,7 +173,10 @@ export function ProposalDetailsCard(
       )}
     >
       <div className="flex h-full w-full flex-1 flex-col p-6">
-        <CloseButton onClose={onClose} className="lg:hidden" />
+        <CloseButton
+          onClose={onClose}
+          className="absolute top-0 right-0 lg:hidden"
+        />
 
         {/* Proposal Header */}
         <H2 className="hidden shrink-0 text-white lg:block">

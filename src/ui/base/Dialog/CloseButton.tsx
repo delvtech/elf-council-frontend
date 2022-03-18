@@ -16,7 +16,7 @@ function CloseButton({
       onClick={onClose}
       className={classNames(
         className,
-        "absolute top-0 right-0 z-10 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow",
+        "z-10 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow",
       )}
     >
       <XIcon className="h-6 w-6 text-white" />
