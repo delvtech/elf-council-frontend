@@ -158,7 +158,6 @@ export default function ProposalsPage({
   const proposalDetail = !!selectedProposal ? (
     <ProposalDetailsCard
       key={selectedProposalId}
-      isOpen={isModalOpen}
       onClose={handleOnClose}
       account={account}
       signer={signer}
