@@ -6,7 +6,7 @@ import {
   useState,
   useEffect,
 } from "react";
-
+import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
 import { Proposal, ProposalsJson } from "elf-council-proposals";
@@ -26,7 +26,6 @@ import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import { Dialog, Transition } from "@headlessui/react";
 
 type TabId = "active" | "past";
 
@@ -61,24 +60,34 @@ export default function ProposalsPage({
   const setDefaultActiveProposal = useCallback(() => {
     setSelectedProposalId(activeProposals?.[0]?.proposalId);
     setSelectedProposal(activeProposals?.[0]);
-    setIsModalOpen(true);
+    activeProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [activeProposals]);
 
   const setDefaultPastProposal = useCallback(() => {
     setSelectedProposalId(pastProposals?.[0]?.proposalId);
     setSelectedProposal(pastProposals?.[0]);
-    setIsModalOpen(true);
+    pastProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
   }, [pastProposals]);
 
-  const [isModalOpen, setIsModalOpen] = useState(
-    isTailwindLargeScreen ? true : false,
-  );
+  const calculateModalState = () => {
+    if (isTailwindLargeScreen) {
+      if (activeTabId === "active") {
+        return activeProposals.length ? true : false;
+      } else {
+        return pastProposals.length ? true : false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(calculateModalState());
 
   // set the default to the first active proposal, since that's what filter is
   // on by default
   const [selectedProposalId, setSelectedProposalId] = useState<
     string | undefined
-  >(isTailwindSmallScreen ? undefined : activeProposals?.[0].proposalId);
+  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]?.proposalId);
   const [selectedProposal, setSelectedProposal] = useState<
     Proposal | undefined
   >(isTailwindSmallScreen ? undefined : activeProposals?.[0]);
@@ -123,9 +132,9 @@ export default function ProposalsPage({
     }
   };
 
-  const handleOnClose = () => {
+  const handleOnClose = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
   // Populates the default past/active proposal when moving from small -> big screen size
   useEffect(() => {
@@ -146,7 +155,7 @@ export default function ProposalsPage({
     setDefaultPastProposal,
   ]);
 
-  const proposalDetail = !!selectedProposal && (
+  const proposalDetail = !!selectedProposal ? (
     <ProposalDetailsCard
       key={selectedProposalId}
       isOpen={isModalOpen}
@@ -155,7 +164,7 @@ export default function ProposalsPage({
       signer={signer}
       proposal={selectedProposal}
     />
-  );
+  ) : null;
 
   return (
     <div className="flex h-full lg:justify-center">
