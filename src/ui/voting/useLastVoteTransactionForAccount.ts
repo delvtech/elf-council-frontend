@@ -9,10 +9,10 @@ export function useLastVoteTransactionForAccount(
   voterAddress: string | null | undefined,
   proposalId: string | undefined,
 ): QueryObserverResult<TransactionResponse> {
-  const { data: events } = useVotedEvents(voterAddress, proposalId);
+  const { data: events, isLoading } = useVotedEvents(voterAddress, proposalId);
 
   return useQuery({
-    queryKey: ["last-vote", voterAddress, proposalId],
+    queryKey: ["last-vote", voterAddress, proposalId, isLoading],
     queryFn: async () => {
       // Will return undefined if no history of events
       if (!events?.length) {
