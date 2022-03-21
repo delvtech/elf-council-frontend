@@ -83,6 +83,9 @@ export default function ProposalsPage({
     if (activeTabId === "past") {
       return !!pastProposals.length;
     }
+
+    // Will not reach this
+    return false;
   };
 
   const [isModalOpen, setIsModalOpen] = useState(calculateModalOpenState());
