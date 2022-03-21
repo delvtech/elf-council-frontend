@@ -2,7 +2,7 @@
   "dependencies": {
     "@alch/alchemy-web3": "^1.2.5",
     "@babel/types": "^7.17.0",
-    "@blueprintjs/popover2": "^0.13.0",
+    "@blueprintjs/popover2": "^0.14.0",
     "@elementfi/react-query-typechain": "^1.2.0",
     "@ethersproject/providers": "^5.5.3",
     "@fontsource/roboto-mono": "^4.5.3",
@@ -30,7 +30,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.10",
     "assert": "^2.0.0",
-    "autoprefixer": "^10.4.2",
+    "autoprefixer": "^10.4.4",
     "chart.js": "^2.9.4",
     "classnames": "^2.3.1",
     "commify": "^1.0.1",
