@@ -12,7 +12,6 @@ import {
   ThumbDownIcon,
   ThumbUpIcon,
   XCircleIcon,
-  XIcon,
 } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { Proposal } from "elf-council-proposals";
@@ -32,6 +31,7 @@ import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel"
 import { TooltipDefinition } from "./tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
 import GradientCard from "src/ui/base/Card/GradientCard";
 import { Intent } from "src/ui/base/Intent";
 import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
@@ -59,14 +59,13 @@ interface ProposalDetailsCardProps {
   account: string | null | undefined;
   signer: Signer | undefined;
   proposal: Proposal;
-  isOpen: boolean;
   onClose: () => void;
 }
 
 export function ProposalDetailsCard(
   props: ProposalDetailsCardProps,
 ): ReactElement | null {
-  const { className, proposal, account, signer, isOpen, onClose } = props;
+  const { className, proposal, account, signer, onClose } = props;
   const { proposalId, snapshotId, quorum } = proposal;
 
   const toastIdRef = useRef<string>();
@@ -170,17 +169,14 @@ export function ProposalDetailsCard(
       }
       className={classNames(
         className,
-        !isOpen && "translate-x-full",
-        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none lg:sticky lg:top-10 lg:h-[85vh] lg:min-w-[410px] lg:max-w-[48rem] lg:rounded-xl",
+        "fixed inset-0 z-10 flex w-full flex-1 flex-col items-start overflow-auto rounded-none sm:inset-[initial] sm:h-[85vh] sm:w-[450px] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-xl lg:sticky lg:top-10 lg:h-[85vh] lg:min-w-[403px] lg:max-w-[48rem] lg:translate-y-0 lg:translate-x-0",
       )}
     >
       <div className="flex h-full w-full flex-1 flex-col p-6">
-        <button
-          onClick={onClose}
-          className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow lg:hidden"
-        >
-          <XIcon className="h-6 w-6 text-white" />
-        </button>
+        <CloseButton
+          onClose={onClose}
+          className="absolute top-0 right-0 lg:hidden"
+        />
 
         {/* Proposal Header */}
         <H2 className="hidden shrink-0 text-white lg:block">

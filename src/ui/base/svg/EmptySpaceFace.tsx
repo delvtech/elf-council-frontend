@@ -4,8 +4,6 @@ import { SVGComponentProps } from "./types";
 export default function EmptySpaceFace(props: SVGComponentProps): ReactElement {
   return (
     <svg
-      width="327"
-      height="107"
       viewBox="0 0 327 107"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

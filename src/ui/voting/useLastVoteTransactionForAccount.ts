@@ -24,5 +24,6 @@ export function useLastVoteTransactionForAccount(
       const transaction = await getTransaction();
       return transaction;
     },
+    enabled: !!events && !!events.length,
   });
 }

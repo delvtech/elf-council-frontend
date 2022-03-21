@@ -124,7 +124,6 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           leaveTo="opacity-0 sm:scale-95"
         >
           <Popover.Panel
-            focus
             className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform sm:rounded-xl 
           md:w-[700px] lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0"
           >
