@@ -16,6 +16,7 @@ import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
+import H2 from "src/ui/base/H2/H2";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import {
   useIsTailwindSmallScreen,
@@ -71,14 +72,16 @@ export default function ProposalsPage({
   }, [pastProposals]);
 
   const calculateModalOpenState = () => {
-    if (isTailwindLargeScreen) {
-      if (activeTabId === "active") {
-        return activeProposals.length ? true : false;
-      } else {
-        return pastProposals.length ? true : false;
-      }
-    } else {
+    if (!isTailwindLargeScreen) {
       return false;
+    }
+
+    if (activeTabId === "active") {
+      return !!activeProposals.length;
+    }
+
+    if (activeTabId === "past") {
+      return !!pastProposals.length;
     }
   };
 
@@ -314,9 +317,9 @@ function NoProposalsDetail() {
         // don't scroll app behind popover, makes a double scroll bar
         { overscrollBehavior: "none" }
       }
-      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 rounded-xl opacity-90 lg:flex"
+      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 items-center justify-center rounded-xl opacity-90 lg:flex"
     >
-      {null}
+      <H2 className="m-4 text-white">{t`Click on a proposal to view it here`}</H2>
     </GradientCard>
   );
 }
