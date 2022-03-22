@@ -53,12 +53,8 @@ function DelegatesList({
       <div className="mb-4 grid grid-cols-10 items-center pr-8">
         {/* Title */}
         <div className="col-span-7 lg:col-span-4">
-          <H2 className="text-2xl tracking-wide text-principalRoyalBlue">
-            <div className="hidden w-max sm:block">{t`Explore Featured Delegates`}</div>
-            <div className="leading-6 sm:hidden">
-              <div>{t`Explore Featured`}</div>
-              <div>{t`Delegates`}</div>
-            </div>
+          <H2 className="tracking-wide text-principalRoyalBlue">
+            <div className="mr-4 text-2xl leading-7 lg:w-max">{t`Explore Featured Delegates`}</div>
           </H2>
         </div>
 

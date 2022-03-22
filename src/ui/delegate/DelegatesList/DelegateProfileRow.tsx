@@ -1,5 +1,4 @@
 import { Fragment, ReactElement } from "react";
-import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
@@ -7,7 +6,6 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
-import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import {
   ElementIconCircle,
