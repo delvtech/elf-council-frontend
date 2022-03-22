@@ -2,7 +2,6 @@ import React, { Fragment, ReactElement, useCallback, useState } from "react";
 import {
   MenuAlt4Icon,
   ExternalLinkIcon,
-  XIcon,
   HomeIcon,
   PencilAltIcon,
   UserGroupIcon,
@@ -18,6 +17,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrls from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -56,12 +56,11 @@ export default function Sidebar(props: SidebarProps): ReactElement {
         <div className="w-full">
           <div className="mt-1 flex justify-around py-3">
             <ElementIcon className="h-24 w-24" title="Element Finance" />
-            <button
-              onClick={onClose}
-              className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
-            >
-              <XIcon className="h-6 w-6" />
-            </button>
+            <CloseButton
+              onClose={onClose}
+              className="absolute top-0 right-0"
+              iconClassName="text-black"
+            />
           </div>
           <div className="mt-16 space-y-6">
             <SidebarLink
