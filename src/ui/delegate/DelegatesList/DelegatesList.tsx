@@ -124,8 +124,8 @@ function DelegatesList({
                   delegate={delegate}
                   actionButton={
                     <ChangeDelegateButton
-                      tagClassName="hidden lg:block"
-                      buttonClassName="hidden lg:inline-flex"
+                      tagClassName="block"
+                      buttonClassName="inline-flex"
                       onDelegationClick={handleDelegation}
                       account={account}
                       isLoading={isLoading}
