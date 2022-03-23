@@ -44,7 +44,6 @@ export default function ChooseDelegateCard({
     selectedAddress,
     provider,
   );
-  const delegateAddress = resolvedDelegateAddress || selectedAddress;
 
   useOnConnected(() => {
     if (isSelfDelegated) {
