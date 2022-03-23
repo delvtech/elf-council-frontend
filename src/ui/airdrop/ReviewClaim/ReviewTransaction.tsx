@@ -1,16 +1,9 @@
 import { Provider } from "@ethersproject/providers";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
-import React, {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { isValidAddress } from "src/base/isValidAddress";
-import { delegates } from "src/elf-council-delegates/delegates";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
@@ -41,18 +34,6 @@ export function ReviewTransaction({
 
   const { data: merkleInfo } = useMerkleInfo(account);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
-  const [selectedDelegateIndex, setSelectedDelegateIndex] = useState<
-    number | undefined
-  >();
-
-  useEffect(() => {
-    if (selectedDelegateIndex === undefined) {
-      return;
-    }
-    if (delegates[selectedDelegateIndex].address !== delegateAddress) {
-      setSelectedDelegateIndex(undefined);
-    }
-  }, [delegateAddress, selectedDelegateIndex]);
 
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
     onError: (e) => {
