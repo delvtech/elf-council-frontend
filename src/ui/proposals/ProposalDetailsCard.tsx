@@ -235,7 +235,7 @@ export function ProposalDetailsCard(
         <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
             <p className="shrink-0 py-2 px-4 font-light text-white ">
-              {truncateText(snapshotProposal?.body || "")}
+              {snapshotProposal?.body || ""}
             </p>
           </div>
         </div>
@@ -399,15 +399,6 @@ function QuorumBar(props: QuorumBarProps) {
       </div>
     </div>
   );
-}
-
-const CHARACTER_LIMIT = 750;
-function truncateText(text: string, characterLimit = CHARACTER_LIMIT) {
-  if (text.length <= characterLimit) {
-    return text;
-  }
-
-  return `${text.slice(0, CHARACTER_LIMIT)}...`;
 }
 
 function getVoteCount(votingPower: VotingPower | undefined): string {
