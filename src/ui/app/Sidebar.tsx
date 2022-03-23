@@ -58,7 +58,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
             <ElementIcon className="h-24 w-24" title="Element Finance" />
             <CloseButton
               onClose={onClose}
-              className="absolute top-0 right-0"
+              className="absolute top-0 right-0 md:hidden"
               iconClassName="text-black"
             />
           </div>
