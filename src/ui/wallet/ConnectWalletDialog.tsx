@@ -55,12 +55,12 @@ export function ConnectWalletDialog({
         className="flex flex-col justify-center overflow-auto p-2"
       >
         <H3 className="mb-8 text-center text-brandDarkBlue-dark">{t`Select Wallet`}</H3>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="flex justify-center gap-4">
           <Button
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToMetaMask}
-            className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
+            className="grid w-1/3 place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid place-items-center">
               <MetaMaskIcon className="h-16 w-16" />
@@ -71,7 +71,7 @@ export function ConnectWalletDialog({
             size={ButtonSize.AUTO}
             variant={ButtonVariant.MINIMAL}
             onClick={handleConnectToWalletConnect}
-            className="grid place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
+            className="grid w-1/3 place-items-center shadow-none hover:bg-yieldLightBlue hover:bg-opacity-100 hover:text-white"
           >
             <div className="grid h-full w-full place-items-center">
               <WalletConnectIcon className="h-16 w-16" />
