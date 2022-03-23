@@ -28,6 +28,7 @@ export function OverviewPage({
     <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
       <Head>
         <title>Element.fi Governance</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="px-8 py-1">
