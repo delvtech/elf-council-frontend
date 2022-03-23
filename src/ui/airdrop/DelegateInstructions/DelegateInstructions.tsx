@@ -14,7 +14,7 @@ interface DelegateInstructionsProps {
 }
 
 const elementIcon = (
-  <ElementIconCircle key="element-icon" inline size={IconSize.MEDIUM} />
+  <ElementIconCircle key="element-icon" inline size={IconSize.SMALL} />
 );
 export function DelegateInstructions({
   onNextStep,
