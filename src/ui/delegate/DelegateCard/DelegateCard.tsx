@@ -1,6 +1,5 @@
 import { ReactElement, useCallback, useEffect } from "react";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
@@ -8,9 +7,11 @@ import classNames from "classnames";
 import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { Overrides } from "ethers";
+import { Provider } from "@ethersproject/providers";
 
 interface DelegateCardProps {
   account: string | null | undefined;
+  provider?: Provider;
   changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
   isLoading: boolean;
   isSuccess: boolean;
@@ -19,11 +20,13 @@ interface DelegateCardProps {
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   setSelectedDelegate: (address: string) => void;
+  resolvedDelegateAddressInput?: string;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
+    provider,
     changeDelegation,
     isLoading,
     isSuccess,
@@ -32,6 +35,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
+    resolvedDelegateAddressInput,
   } = props;
 
   const handleDelegateClick = useCallback(() => {
@@ -59,7 +63,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   ]);
 
   const invalidAddress =
-    !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
+    !resolvedDelegateAddressInput && delegateAddressInput.length !== 0;
 
   const isSelfDelegated = account ? account === delegateAddressOnChain : false;
 
@@ -78,6 +82,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         {/* Current Delegate Profile */}
         {delegateAddressOnChain ? (
           <CurrentDelegate
+            provider={provider}
             className="w-full md:w-full lg:w-1/2"
             currentDelegateAddress={delegateAddressOnChain}
             isSelfDelegated={isSelfDelegated}

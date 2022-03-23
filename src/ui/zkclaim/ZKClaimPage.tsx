@@ -175,6 +175,7 @@ export default function ZKClaimPage(): ReactElement {
       {/* Delegate */}
       <ChooseDelegateCard
         account={account as string}
+        provider={library}
         className={getStepClassName(Step.DELEGATE)}
         onChooseDelegate={setDelegateAddress}
         onPreviousStep={goToPreviousStep}
@@ -185,6 +186,7 @@ export default function ZKClaimPage(): ReactElement {
       {delegateAddress && (
         <TransactionCard
           className={getStepClassName(Step.TRANSACTION)}
+          provider={library}
           // avoiding passing null with `|| undefined`
           account={account || undefined}
           signer={signer}

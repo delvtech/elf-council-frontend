@@ -11,8 +11,10 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
+import { Provider } from "@ethersproject/providers";
 
 interface DelegateProfileRowProps {
+  provider?: Provider;
   selected: boolean;
   highlightSelected?: boolean;
   delegate: Delegate;
@@ -22,6 +24,7 @@ interface DelegateProfileRowProps {
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
   const {
+    provider,
     selected = false,
     highlightSelected = false,
     delegate,
@@ -127,6 +130,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           >
             {({ close }) => (
               <DetailedDelegateProfile
+                provider={provider}
                 delegate={delegate}
                 onCloseProfileClick={close}
                 selected={selected}
