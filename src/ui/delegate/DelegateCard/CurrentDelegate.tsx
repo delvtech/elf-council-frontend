@@ -13,6 +13,7 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 interface CurrentDelegateProps {
   className?: string;
   currentDelegateAddress: string;
@@ -31,14 +32,14 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
       )}
     >
       <div className="flex flex-col">
-        <div className="mb-1 flex items-center font-bold text-principalRoyalBlue">
+        <div className="mb-1 flex items-center  text-principalRoyalBlue">
           <WalletJazzicon
             account={currentDelegateAddress}
             size={20}
             className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           <div className="flex items-center gap-2">
-            <span className="max-w-max leading-4">
+            <span className="max-w-max font-bold leading-4">
               {delegate?.name || formatWalletAddress(currentDelegateAddress)}
             </span>
           </div>
@@ -51,22 +52,20 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             <NumDelegatedVotes account={currentDelegateAddress} />
           </span>
 
-          <a
-            href={`https://etherscan.io/address/${currentDelegateAddress}`}
-            target="_blank"
-            rel="noreferrer"
+          <ExternalLink
+            link={`https://etherscan.io/address/${currentDelegateAddress}`}
           >
-            <span className="text-blueGrey hover:text-principalRoyalBlue">
+            <span className="text-blueGrey underline decoration-current underline-offset-2 hover:no-underline">
               {formatWalletAddress(currentDelegateAddress)}
             </span>
-          </a>
+          </ExternalLink>
         </div>
 
         {isSelfDelegated ? (
-          <div className="flex items-end justify-end">
-            <Tag intent={Intent.SUCCESS}>
-              <CheckCircleIcon height={24} className="mr-2" />
-              <span className="whitespace-nowrap font-bold">{t`Self-delegated!`}</span>
+          <div className="flex items-end justify-end pl-4">
+            <Tag intent={Intent.SUCCESS} className="text-center">
+              <CheckCircleIcon height={24} className="mr-2 shrink-0" />
+              <span className="font-bold">{t`Self-delegated!`}</span>
             </Tag>
           </div>
         ) : null}
@@ -84,7 +83,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   return (
     <div className="flex items-center">
       <ElementIconCircle size={IconSize.SMALL} className="mr-1" />
-      <span>{formatBalance(votePower)}</span>
+      <span>{formatBalance(votePower)} ELFI</span>
     </div>
   );
 }
