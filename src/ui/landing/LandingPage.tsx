@@ -223,7 +223,7 @@ function ArticleLink({
     <li className="flex-1">
       <a
         href={href}
-        className="flex h-16 items-center justify-between rounded-2xl border-2 border-white/50 bg-white/20 px-4 font-semibold backdrop-blur-sm xl:h-full xl:flex-col xl:items-start xl:rounded-[0_0_40px_0] xl:bg-white/10 xl:pt-3 xl:pb-6 xl:text-xs"
+        className="flex h-16 items-center justify-between rounded-2xl border-2 border-white/50 bg-white/20 px-4 font-semibold backdrop-blur-sm hover:bg-white/30 xl:h-full xl:flex-col xl:items-start xl:rounded-[0_0_40px_0] xl:bg-white/10 xl:pt-3 xl:pb-6 xl:text-xs"
         style={{
           textShadow: "1px 1px 4px rgba(0,60,120,.5)",
         }}
