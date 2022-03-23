@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 
+import Head from "next/head";
 import { Web3Provider } from "@ethersproject/providers";
 import { Disclosure } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
@@ -25,9 +26,12 @@ export function OverviewPage({
   const { account, library } = useWeb3React<Web3Provider>();
   return (
     <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
+      <Head>
+        <title>Element.fi Governance</title>
+      </Head>
+
       <div className="px-8 py-1">
         <H1 className="text-center text-principalRoyalBlue">
-          {" "}
           {t`Governance Overview`}
         </H1>
       </div>

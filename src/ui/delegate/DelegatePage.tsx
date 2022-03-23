@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from "react";
+import Head from "next/head";
 
 import { ShieldExclamationIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
@@ -63,6 +64,10 @@ export default function DelegatePage(): ReactElement {
         "pt-16": !showNoConnectionWarning,
       })}
     >
+      <Head>
+        <title>Delegate | Element.fi Governance</title>
+      </Head>
+
       <div className="flex w-full max-w-4xl flex-col">
         {/* Warning Card */}
         {showNoConnectionWarning ? (

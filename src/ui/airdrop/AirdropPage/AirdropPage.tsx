@@ -1,5 +1,7 @@
-import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, useState } from "react";
+import Head from "next/head";
+import { useWeb3React } from "@web3-react/core";
+
 import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
 import { StartAirdropCard } from "src/ui/airdrop/StartAirdropCard/StartAirdropCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
@@ -104,6 +106,10 @@ export default function AirdropPage(): ReactElement {
 
   return (
     <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
+      <Head>
+        <title>Airdrop | Element.fi Governance</title>
+      </Head>
+
       <div className="w-[600px] max-w-full">
         <Steps className="w-full">
           <StepItem
