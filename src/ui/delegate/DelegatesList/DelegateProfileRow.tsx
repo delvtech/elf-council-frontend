@@ -1,5 +1,4 @@
 import { Fragment, ReactElement } from "react";
-import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
@@ -7,7 +6,6 @@ import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
-import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import {
   ElementIconCircle,
@@ -82,19 +80,19 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </div>
 
         {/* Buttons */}
-        <div className="col-span-3 flex gap-x-4 lg:col-span-4">
+        <div className="col-span-3 flex justify-end gap-x-4 lg:col-span-4">
           {/* Button to expand a detailed view of delegate  */}
-          <Popover.Button
+          {/* <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),
               "w-full justify-center",
             )}
           >
             {t`Profile`}
-          </Popover.Button>
+          </Popover.Button> */}
 
           {/* Unique action event button */}
-          {actionButton}
+          <div className="w-full lg:w-1/2 lg:pl-2">{actionButton}</div>
         </div>
       </div>
 

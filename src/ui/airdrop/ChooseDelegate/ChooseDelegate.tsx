@@ -175,7 +175,7 @@ export function ChooseDelegate({
                           onClick={handleSelectDelegate}
                           variant={ButtonVariant.PRIMARY}
                           disabled={selected}
-                          className="hidden w-full justify-center lg:inline-flex"
+                          className="inline-flex w-full justify-center"
                         >
                           {t`Choose`}
                         </Button>
