@@ -3,7 +3,6 @@ import React, { ReactElement } from "react";
 import { t } from "ttag";
 
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
@@ -13,13 +12,17 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
+  provider?: Provider;
 }
 
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const { account } = props;
+  const { account, provider } = props;
+  const formattedAddress = useFormattedWalletAddress(account, provider);
 
   const amountDeposited = useDeposited(account) || "0";
 
@@ -42,7 +45,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             rel="noreferrer"
             className="ml-2 text-sm font-light tracking-widest text-white underline hover:no-underline"
           >
-            ({formatWalletAddress(account)})
+            ({formattedAddress})
           </a>
         )}
       </div>

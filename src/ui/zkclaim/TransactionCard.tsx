@@ -11,15 +11,17 @@ import { CheckCircleIcon } from "@heroicons/react/solid";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog";
 import { commify } from "ethers/lib/utils";
 import { t } from "ttag";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 
 interface TransactionCardProps {
   className?: string;
   account?: string;
+  provider?: Provider;
   signer?: Signer;
   delegateAddress: string;
   onPreviousStep?: () => void;
@@ -33,6 +35,7 @@ const ELFI_TOKEN_AMOUNT = "10000.0";
 export default function TransactionCard({
   className,
   account,
+  provider,
   signer,
   delegateAddress,
   onPreviousStep,
@@ -42,9 +45,9 @@ export default function TransactionCard({
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
   const [success, setSuccess] = useState(false);
+  const formattedAddress = useFormattedWalletAddress(delegateAddress, provider);
   const delegateLabel =
-    getFeaturedDelegate(delegateAddress)?.name ||
-    formatWalletAddress(delegateAddress);
+    getFeaturedDelegate(delegateAddress)?.name || formattedAddress;
 
   const handleConfirm = () => {
     // handle transaction

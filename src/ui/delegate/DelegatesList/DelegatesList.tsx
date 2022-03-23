@@ -10,9 +10,11 @@ import { Overrides } from "ethers";
 import classNames from "classnames";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
+import { Provider } from "@ethersproject/providers";
 
 interface DelegatesListProps {
   account: string | null | undefined;
+  provider?: Provider;
   changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
   isLoading: boolean;
   isError: boolean;
@@ -24,6 +26,7 @@ interface DelegatesListProps {
 
 function DelegatesList({
   account,
+  provider,
   changeDelegation,
   isLoading,
   delegateAddressOnChain,
@@ -116,6 +119,7 @@ function DelegatesList({
             return (
               <li key={`${delegate.address}-${idx}}`}>
                 <DelegateProfileRow
+                  provider={provider}
                   selected={selected}
                   delegate={delegate}
                   actionButton={

@@ -72,6 +72,7 @@ export default function DelegatePage(): ReactElement {
           {/* Delegates List */}
           <DelegatesList
             account={account}
+            provider={library}
             changeDelegation={changeDelegation}
             isLoading={isLoading}
             isError={isError}
@@ -89,6 +90,7 @@ export default function DelegatePage(): ReactElement {
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
               account={account}
+              provider={library}
               changeDelegation={changeDelegation}
               isLoading={isLoading}
               isSuccess={isSuccess}

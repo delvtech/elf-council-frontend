@@ -8,9 +8,11 @@ import classNames from "classnames";
 import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
 import { Overrides } from "ethers";
+import { Provider } from "@ethersproject/providers";
 
 interface DelegateCardProps {
   account: string | null | undefined;
+  provider?: Provider;
   changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
   isLoading: boolean;
   isSuccess: boolean;
@@ -24,6 +26,7 @@ interface DelegateCardProps {
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
+    provider,
     changeDelegation,
     isLoading,
     isSuccess,
@@ -78,6 +81,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         {/* Current Delegate Profile */}
         {delegateAddressOnChain ? (
           <CurrentDelegate
+            provider={provider}
             className="w-full md:w-full lg:w-1/2"
             currentDelegateAddress={delegateAddressOnChain}
             isSelfDelegated={isSelfDelegated}

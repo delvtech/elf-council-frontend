@@ -1,3 +1,4 @@
+import { Provider } from "@ethersproject/providers";
 import { Signer } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import React, {
@@ -21,6 +22,7 @@ import { t, jt } from "ttag";
 
 interface ReviewTransactionProps {
   account: string | null | undefined;
+  provider?: Provider;
   delegateAddress: string;
   signer: Signer | undefined;
   onPrevStep: () => void;
@@ -29,6 +31,7 @@ interface ReviewTransactionProps {
 
 export function ReviewTransaction({
   account,
+  provider,
   delegateAddress,
   signer,
   onPrevStep,
@@ -114,6 +117,7 @@ export function ReviewTransaction({
           <AirdropAmountCard
             account={account}
             delegateAddress={delegateAddress}
+            provider={provider}
           />
         </div>
       </div>

@@ -9,22 +9,25 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { commify } from "ethers/lib/utils";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 
 interface AirdropAmountCardProps {
   account: string | null | undefined;
+  provider?: Provider;
   delegateAddress: string;
 }
 export function AirdropAmountCard({
   account,
+  provider,
   delegateAddress,
 }: AirdropAmountCardProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account);
 
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const featuredDelegate = getFeaturedDelegate(delegateAddress);
-  const formattedAddress = formatWalletAddress(delegateAddress);
+  const formattedAddress = useFormattedWalletAddress(delegateAddress, provider);
   const delegateLabel = featuredDelegate
     ? featuredDelegate.name
     : formattedAddress;

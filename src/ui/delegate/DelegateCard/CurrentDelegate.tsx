@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
@@ -13,15 +12,27 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 interface CurrentDelegateProps {
+  provider?: Provider;
   className?: string;
   currentDelegateAddress: string;
   isSelfDelegated: boolean;
 }
 
 function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { className = "", currentDelegateAddress, isSelfDelegated } = props;
+  const {
+    provider,
+    className = "",
+    currentDelegateAddress,
+    isSelfDelegated,
+  } = props;
   const delegate = getFeaturedDelegate(currentDelegateAddress);
+  const formattedAddress = useFormattedWalletAddress(
+    currentDelegateAddress,
+    provider,
+  );
 
   return (
     <div
@@ -39,7 +50,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           />
           <div className="flex items-center gap-2">
             <span className="max-w-max leading-4">
-              {delegate?.name || formatWalletAddress(currentDelegateAddress)}
+              {delegate?.name || formattedAddress}
             </span>
           </div>
         </div>
@@ -57,7 +68,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             rel="noreferrer"
           >
             <span className="text-blueGrey hover:text-principalRoyalBlue">
-              {formatWalletAddress(currentDelegateAddress)}
+              {formattedAddress}
             </span>
           </a>
         </div>

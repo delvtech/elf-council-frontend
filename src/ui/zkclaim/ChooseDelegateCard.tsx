@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useMemo, useState } from "react";
-import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import TextInput from "src/ui/base/Input/TextInput";
 import { Tag } from "src/ui/base/Tag/Tag";
@@ -16,9 +15,13 @@ import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import classNames from "classnames";
+import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
+import { Provider } from "@ethersproject/providers";
+import { isValidAddress } from "src/base/isValidAddress";
 
 interface ChooseDelegateCardProps {
   account: string;
+  provider?: Provider;
   className?: string;
   onChooseDelegate?: (address: string) => void;
   onPreviousStep?: () => void;
@@ -27,6 +30,7 @@ interface ChooseDelegateCardProps {
 
 export default function ChooseDelegateCard({
   account,
+  provider,
   className,
   onChooseDelegate,
   onPreviousStep,
@@ -36,6 +40,12 @@ export default function ChooseDelegateCard({
   const [customAddress, setCustomAddress] = useState<string>();
   const [isSelfDelegated, setIsSelfDelegated] = useState(false);
 
+  const { data: resolvedDelegateAddress } = useResolvedEnsName(
+    selectedAddress,
+    provider,
+  );
+  const delegateAddress = resolvedDelegateAddress || selectedAddress;
+
   useOnConnected(() => {
     if (isSelfDelegated) {
       setSelectedAddress(account);
@@ -43,8 +53,8 @@ export default function ChooseDelegateCard({
   });
 
   const isValidSelectedAddress =
-    !!selectedAddress && isValidAddress(selectedAddress);
-  const isValidCustomAddress = !!customAddress && isValidAddress(customAddress);
+    !!selectedAddress &&
+    (isValidAddress(selectedAddress) || !!resolvedDelegateAddress);
 
   useEffect(() => {
     if (customAddress) {
@@ -93,6 +103,7 @@ export default function ChooseDelegateCard({
               return (
                 <li key={i}>
                   <DelegateProfileRow
+                    provider={provider}
                     selected={isSelected}
                     highlightSelected
                     delegate={delegate}
@@ -161,12 +172,12 @@ export default function ChooseDelegateCard({
                 id={"delegate-address"}
                 name={t`Enter delegate address`}
                 placeholder={t`Enter delegate address`}
-                error={!!customAddress && !isValidCustomAddress}
+                error={!!customAddress && !isValidSelectedAddress}
                 containerClassName="flex-1"
                 className={classNames(
                   "mb-4 h-12 flex-1 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
                   {
-                    "pr-12": isValidCustomAddress,
+                    "pr-12": !!customAddress && isValidSelectedAddress,
                   },
                 )}
                 value={customAddress}
@@ -175,7 +186,7 @@ export default function ChooseDelegateCard({
               <div className="pointer-events-none absolute inset-y-0 right-0 bottom-4 flex items-center pr-3">
                 {customAddress ? (
                   <InputValidationIcon
-                    isValid={isValidCustomAddress}
+                    isValid={!!customAddress && isValidSelectedAddress}
                     invalidToolipContent={t`Invalid address`}
                   />
                 ) : null}

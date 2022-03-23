@@ -1,6 +1,5 @@
 import { ReactElement, useEffect, useRef } from "react";
 import { t } from "ttag";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
@@ -10,8 +9,11 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useWeb3React } from "@web3-react/core";
 import { XIcon } from "@heroicons/react/solid";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 
 interface DetailedDelegateProfileProps {
+  provider?: Provider;
   delegate: Delegate;
   onCloseProfileClick: () => void;
   selected: boolean;
@@ -20,6 +22,7 @@ interface DetailedDelegateProfileProps {
 }
 
 function DetailedDelegateProfile({
+  provider,
   delegate,
   onCloseProfileClick,
   actionButton,
@@ -29,6 +32,10 @@ function DetailedDelegateProfile({
   const { account } = useWeb3React();
   const previousSelectedRef = useRef<boolean>();
   const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
+  const formattedAddress = useFormattedWalletAddress(
+    delegate.address,
+    provider,
+  );
 
   useEffect(() => {
     // Hacky-ish way to close the modal on selection
@@ -68,7 +75,7 @@ function DetailedDelegateProfile({
                 rel="noreferrer"
               >
                 <span className="text-blueGrey hover:text-principalRoyalBlue">
-                  {formatWalletAddress(delegate.address)}
+                  {formattedAddress}
                 </span>
               </a>
             </div>
