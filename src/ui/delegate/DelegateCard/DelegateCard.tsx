@@ -1,6 +1,5 @@
 import { ReactElement, useCallback, useEffect } from "react";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
@@ -21,6 +20,7 @@ interface DelegateCardProps {
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   setSelectedDelegate: (address: string) => void;
+  resolvedDelegateAddressInput?: string;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
@@ -35,6 +35,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
+    resolvedDelegateAddressInput,
   } = props;
 
   const handleDelegateClick = useCallback(() => {
@@ -62,7 +63,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
   ]);
 
   const invalidAddress =
-    !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
+    !resolvedDelegateAddressInput && delegateAddressInput.length !== 0;
 
   const isSelfDelegated = account ? account === delegateAddressOnChain : false;
 
