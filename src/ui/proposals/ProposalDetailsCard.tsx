@@ -53,6 +53,7 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 interface ProposalDetailsCardProps {
   className?: string;
@@ -242,25 +243,16 @@ export function ProposalDetailsCard(
 
         {/* External Links */}
         <div className="my-4 flex justify-around">
-          <a
-            target="_blank"
+          <ExternalLink
             href={snapshotProposal?.link || ""}
-            className="flex shrink-0 items-center overflow-hidden text-sm font-light text-white"
-            rel="noreferrer"
-          >
-            {t`View proposal`}
-            <ExternalLinkIcon className="ml-2 h-4" />
-          </a>
-
-          <a
-            target="_blank"
+            text={t`View proposal`}
+            className="overflow-hidden text-sm text-white"
+          />
+          <ExternalLink
             href={ElementUrls.FORUM}
-            className="flex items-center text-sm font-light text-white"
-            rel="noreferrer"
-          >
-            {t`View discussion`}
-            <ExternalLinkIcon className="ml-2 h-4" />
-          </a>
+            text={t`View discussion`}
+            className="overflow-hidden text-sm text-white"
+          />
         </div>
 
         {/* Quorum Bar */}

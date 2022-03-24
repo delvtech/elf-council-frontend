@@ -53,12 +53,10 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
           </span>
 
           <ExternalLink
-            link={`https://etherscan.io/address/${currentDelegateAddress}`}
-          >
-            <span className="text-blueGrey underline decoration-current underline-offset-2 hover:no-underline">
-              {formatWalletAddress(currentDelegateAddress)}
-            </span>
-          </ExternalLink>
+            href={`https://etherscan.io/address/${currentDelegateAddress}`}
+            text={formatWalletAddress(currentDelegateAddress)}
+            className="text-blueGrey"
+          />
         </div>
 
         {isSelfDelegated ? (

@@ -13,6 +13,7 @@ import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -30,20 +31,16 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   return (
     <Card
       variant={CardVariant.GRADIENT}
-      // eslint-disable-next-line tailwindcss/no-custom-classname
       className="w-full shadow-md lg:max-w-[512px]"
     >
       <div>
         <span className="text-xl font-bold tracking-widest text-white">{t`Portfolio`}</span>
         {account && (
-          <a
+          <ExternalLink
             href={getEtherscanAddress(account)}
-            target="_blank"
-            rel="noreferrer"
-            className="ml-2 text-sm font-light tracking-widest text-white underline hover:no-underline"
-          >
-            ({formatWalletAddress(account)})
-          </a>
+            text={formatWalletAddress(account)}
+            className="text-sm font-light text-white"
+          />
         )}
       </div>
       <div className="mb-8 flex min-h-full flex-col align-bottom">

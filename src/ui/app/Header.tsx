@@ -14,6 +14,7 @@ import {
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { Provider } from "@ethersproject/providers";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
 
@@ -24,32 +25,29 @@ function Header(): ReactElement {
 
   return (
     <div className="flex w-full justify-between">
-      <div className="flex space-x-3"></div>
+      <div className="flex space-x-3" />
       <div className="flex items-center space-x-4 text-gray-400">
         {account ? (
           <div className="flex items-center">
-            <span className="mr-8 flex items-center gap-1">
-              <a
-                target="_blank"
-                rel="noreferrer"
+            <span className="mr-8 hidden items-center gap-1 lg:flex">
+              <ExternalLink
                 href={ElementUrls.DOCS}
-                className="hidden items-center gap-2 lg:flex"
-              >
-                <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
-                <ExternalLinkIcon className="h-4 shrink-0 text-principalRoyalBlue" />
-              </a>
+                text={t`Learn how to vote`}
+                className="text-principalRoyalBlue"
+              />
             </span>
-            <a
+
+            <ExternalLink
               href={GAS_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="mr-8 flex items-center"
+              className="mr-8 flex items-center text-principalRoyalBlue"
+              showIcon={false}
             >
               <GasIcon className="h-5 w-5" />
-              <span className="ml-2 mr-1 font-bold text-principalRoyalBlue">
+              <span className="font-bold">
                 {gasPrice?.recommendedBaseFee || 0.0}
               </span>
-            </a>
+            </ExternalLink>
+
             <Tooltip content={t`${TooltipDefinition.OWNED_ELFI}`}>
               <span className="mr-8 flex items-center gap-2 font-bold text-principalRoyalBlue">
                 <ElementIconCircle size={IconSize.MEDIUM} />
