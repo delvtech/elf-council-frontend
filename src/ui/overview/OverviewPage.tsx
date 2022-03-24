@@ -20,7 +20,7 @@ interface OverviewPageProps {
 export function OverviewPage({
   proposalsJson,
 }: OverviewPageProps): ReactElement {
-  const { account } = useWeb3React<Web3Provider>();
+  const { account, library } = useWeb3React<Web3Provider>();
   return (
     <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
       <div className="px-8 py-1">
@@ -32,7 +32,7 @@ export function OverviewPage({
       <SummaryCards proposalsJson={proposalsJson} />
       <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
         <div className="w-full">
-          <PortfolioCard account={account} />
+          <PortfolioCard account={account} provider={library} />
         </div>
         <div className="w-full">
           <FAQ />

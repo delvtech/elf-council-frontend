@@ -3,12 +3,12 @@ import { InlineElfiLabel } from "./InlineElfiLabel";
 import CallToActionCard from "./CallToActionCard";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import ElementUrls from "src/elf/urls";
-import CouncilLogo from "src/ui/base/svg/CouncilLogo/CouncilLogo";
 import TwitterIcon from "src/ui/base/svg/TwitterIcon";
 import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
 import Link from "next/link";
 import { t, jt } from "ttag";
+import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 
 interface ShareCardProps {
   className?: string;
@@ -25,7 +25,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             as="a"
             className="mb-10 md:w-2/3"
             label={t`Back to Overview`}
-            icon={<CouncilLogo height="24px" width="24px" />}
+            icon={<ElementIcon className="h-8 w-8" />}
           />
         </Link>
         <p className="mb-4 text-left md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element Discord to get more involved in our community and governance system.`}</p>

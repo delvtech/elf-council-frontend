@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
@@ -14,15 +13,27 @@ import {
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 interface CurrentDelegateProps {
+  provider?: Provider;
   className?: string;
   currentDelegateAddress: string;
   isSelfDelegated: boolean;
 }
 
 function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
-  const { className = "", currentDelegateAddress, isSelfDelegated } = props;
+  const {
+    provider,
+    className = "",
+    currentDelegateAddress,
+    isSelfDelegated,
+  } = props;
   const delegate = getFeaturedDelegate(currentDelegateAddress);
+  const formattedAddress = useFormattedWalletAddress(
+    currentDelegateAddress,
+    provider,
+  );
 
   return (
     <div
@@ -39,8 +50,8 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
             className="mr-1.5 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
           />
           <div className="flex items-center gap-2">
-            <span className="max-w-max font-bold leading-4">
-              {delegate?.name || formatWalletAddress(currentDelegateAddress)}
+            <span className="max-w-max leading-4">
+              {delegate?.name || formattedAddress}
             </span>
           </div>
         </div>
@@ -54,7 +65,7 @@ function CurrentDelegate(props: CurrentDelegateProps): ReactElement {
 
           <ExternalLink
             href={`https://etherscan.io/address/${currentDelegateAddress}`}
-            text={formatWalletAddress(currentDelegateAddress)}
+            text={formattedAddress || ""}
             className="text-blueGrey"
           />
         </div>

@@ -8,12 +8,12 @@ import { t } from "ttag";
 
 import { useDelegate } from "src/ui/delegate/useDelegate";
 import { useChangeDelegation } from "src/ui/contracts/useChangeDelegation";
-import { isValidAddress } from "src/base/isValidAddress";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2/H2";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
 import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
+import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
 
 export default function DelegatePage(): ReactElement {
   const { account, library } = useWeb3React();
@@ -21,6 +21,11 @@ export default function DelegatePage(): ReactElement {
 
   const [delegateAddressInput, setDelegateAddressInput] = useState("");
   const [selectedDelegate, setSelectedDelegate] = useState("");
+
+  const { data: resolvedDelegateAddressInput } = useResolvedEnsName(
+    delegateAddressInput,
+    library,
+  );
 
   const {
     mutate: changeDelegation,
@@ -41,16 +46,16 @@ export default function DelegatePage(): ReactElement {
 
   // Used to verify if the custom delegate inputted is an actual address
   useEffect(() => {
-    if (delegateAddressInput.length === 0) {
+    if (!resolvedDelegateAddressInput) {
       return;
     }
 
-    if (isValidAddress(delegateAddressInput)) {
-      setSelectedDelegate(delegateAddressInput);
+    if (resolvedDelegateAddressInput) {
+      setSelectedDelegate(resolvedDelegateAddressInput);
     } else {
       setSelectedDelegate("");
     }
-  }, [account, delegateAddressInput]);
+  }, [account, resolvedDelegateAddressInput]);
 
   return (
     <div
@@ -72,6 +77,7 @@ export default function DelegatePage(): ReactElement {
           {/* Delegates List */}
           <DelegatesList
             account={account}
+            provider={library}
             changeDelegation={changeDelegation}
             isLoading={isLoading}
             isError={isError}
@@ -89,6 +95,7 @@ export default function DelegatePage(): ReactElement {
             <H2 className="mb-4 text-2xl tracking-wide text-white">{t`My Delegate`}</H2>
             <DelegateCard
               account={account}
+              provider={library}
               changeDelegation={changeDelegation}
               isLoading={isLoading}
               isSuccess={isSuccess}
@@ -97,6 +104,7 @@ export default function DelegatePage(): ReactElement {
               setDelegateAddressInput={setDelegateAddressInput}
               selectedDelegate={selectedDelegate}
               setSelectedDelegate={setSelectedDelegate}
+              resolvedDelegateAddressInput={resolvedDelegateAddressInput}
             />
           </Card>
         </div>

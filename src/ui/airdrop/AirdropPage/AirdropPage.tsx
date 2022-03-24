@@ -161,7 +161,9 @@ export default function AirdropPage(): ReactElement {
               );
 
             case Step.ALREADY_CLAIMED:
-              return <AirdropAlreadyClaimed account={account} />;
+              return (
+                <AirdropAlreadyClaimed account={account} provider={library} />
+              );
 
             case Step.AIRDROP_PREVIEW:
               return (
@@ -184,6 +186,7 @@ export default function AirdropPage(): ReactElement {
               return (
                 <ChooseDelegate
                   account={account as string}
+                  provider={library}
                   onChooseDelegate={setDelegateAddress}
                   onPrevStep={goToPreviousStep}
                   onNextStep={goToNextStep}
@@ -193,6 +196,7 @@ export default function AirdropPage(): ReactElement {
               return (
                 <ReviewTransaction
                   account={account}
+                  provider={library}
                   signer={signer}
                   delegateAddress={
                     delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */

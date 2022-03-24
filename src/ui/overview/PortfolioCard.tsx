@@ -3,7 +3,6 @@ import React, { ReactElement } from "react";
 import { t } from "ttag";
 
 import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
@@ -14,13 +13,17 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
+  provider?: Provider;
 }
 
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const { account } = props;
+  const { account, provider } = props;
+  const formattedAddress = useFormattedWalletAddress(account, provider);
 
   const amountDeposited = useDeposited(account) || "0";
 
@@ -36,11 +39,15 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
       <div>
         <span className="text-xl font-bold tracking-widest text-white">{t`Portfolio`}</span>
         {account && (
-          <ExternalLink
-            href={getEtherscanAddress(account)}
-            text={formatWalletAddress(account)}
-            className="text-sm font-light text-white"
-          />
+          <span className="ml-2 text-white">
+            (
+            <ExternalLink
+              href={getEtherscanAddress(account)}
+              text={formattedAddress || ""}
+              className="inline-flex text-sm font-light text-white"
+            />
+            )
+          </span>
         )}
       </div>
       <div className="mb-8 flex min-h-full flex-col align-bottom">
