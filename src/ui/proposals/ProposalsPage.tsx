@@ -266,7 +266,7 @@ function OffChainProposalsLink() {
       variant={ButtonVariant.SECONDARY}
     >
       <div className="flex h-full items-center">
-        {t`Off-chain`}
+        <span className="mr-1">{t`Off-chain`}</span>
         <ExternalLinkIcon height={24} />
       </div>
     </AnchorButton>
