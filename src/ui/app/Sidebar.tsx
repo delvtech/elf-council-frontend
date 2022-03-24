@@ -140,14 +140,14 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
       best thing to do for now is just ignore this rule when an anchor tag is
       the child of a Link since all a tags *should* have an href 🙁 */
         /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="flex items-center px-2 hover:bg-blue-50 md:w-[55%]">
-          {icon}
+        <a className="hover:bg-blue-50 md:w-full">
           <div
             className={classNames(
-              "flex cursor-pointer justify-start p-3 text-brandDarkBlue-dark",
+              "flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]",
               { "font-bold": isActive },
             )}
           >
+            {icon}
             <p>{label}</p>
           </div>
         </a>
@@ -159,15 +159,15 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <a
         href={link}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center px-2  hover:bg-blue-50 md:w-[55%]"
+        className=" hover:bg-blue-50 md:w-full"
       >
-        <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
-        <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
+        <div className="flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]">
+          <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
           <p>{label}</p>
         </div>
       </a>
