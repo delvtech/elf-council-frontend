@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { jt, t } from "ttag";
 import { CallToActionCard } from "./CallToActionCard";
-import CouncilLogo from "src/ui/base/svg/CouncilLogo/CouncilLogo";
 import TwitterIcon from "src/ui/base/svg/TwitterIcon";
 import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
@@ -12,6 +11,7 @@ import {
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import ElementUrls from "src/elf/urls";
 import Link from "next/link";
+import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 
 const elfiLogoElement = (
   <ElementIconCircle
@@ -37,7 +37,7 @@ export function ClaimSuccessful(): ReactElement {
           <a className="mb-10 w-2/3">
             <CallToActionCard
               label={t`Back to Overview`}
-              icon={<CouncilLogo height="24px" width="24px" />}
+              icon={<ElementIcon className="h-8 w-8" />}
             />
           </a>
         </Link>
