@@ -22,7 +22,7 @@ export default function CardHeader({
       )}
     >
       <div className="ml-4 mt-2">
-        <h2 className="text-left text-lg font-semibold leading-6 text-brandDarkBlue">
+        <h2 className=" text-left text-lg font-semibold leading-6 text-brandDarkBlue">
           {title}
         </h2>
         <p className="mt-1 text-left text-sm text-brandDarkBlue">

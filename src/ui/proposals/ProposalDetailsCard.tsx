@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 
-import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon } from "@heroicons/react/outline";
 import {
   ThumbDownIcon,
   ThumbUpIcon,
@@ -128,15 +128,11 @@ export function ProposalDetailsCard(
     },
     onTransactionSubmitted: (pendingTransaction) => {
       const pendingEtherscanLink = (
-        <a
-          key="etherscan-link"
-          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
-          target="_blank"
-          rel="noreferrer"
-          className="block underline"
-        >
-          {t`View on etherscan`}
-        </a>
+        <ExternalLink
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}}`}
+          text={t`View on etherscan`}
+          className="text-principalRoyalBlue"
+        />
       );
 
       const message = (
@@ -290,15 +286,11 @@ export function ProposalDetailsCard(
               />
 
               {etherscanLink && (
-                <a
-                  target="_blank"
+                <ExternalLink
                   href={etherscanLink}
-                  className="flex items-center justify-end whitespace-nowrap text-white"
-                  rel="noreferrer"
-                >
-                  <span>{t`View on etherscan`}</span>
-                  <ExternalLinkIcon className="ml-2" height={18} />
-                </a>
+                  text={t`View on etherscan`}
+                  className="whitespace-nowrap text-sm text-white"
+                />
               )}
             </div>
             <div className="flex w-full justify-between">
