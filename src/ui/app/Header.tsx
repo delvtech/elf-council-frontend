@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
