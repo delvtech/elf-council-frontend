@@ -40,7 +40,7 @@ export default function Header(): ReactElement {
               aria-hidden={open}
             >{t`Open Governance App`}</LinkButton>
             <div>
-              <div ref={setReferenceElement} />
+              <div ref={setReferenceElement}></div>
               <Popover.Button
                 title={t`open menu`}
                 className={classNames(

@@ -106,7 +106,7 @@ export default function LandingPage(): ReactElement {
                       </Disclosure.Button>
 
                       {/* background box */}
-                      <div className="absolute -left-20 -bottom-20 -z-10 hidden h-56 w-80 border-y-2 border-l-2 border-white/20 bg-gradient-to-r from-white/10 to-transparent bg-no-repeat xl:block" />
+                      <div className="absolute -left-20 -bottom-20 -z-10 hidden h-56 w-80 border-y-2 border-l-2 border-white/20 bg-gradient-to-r from-white/10 to-transparent bg-no-repeat xl:block"></div>
                     </div>
                     <Disclosure.Panel
                       as="ul"
@@ -180,8 +180,8 @@ function BackgroundGlows() {
 function BackgroundCircles() {
   return (
     <>
-      <div className="pointer-events-none absolute top-[-298px] right-1/4 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]" />
-      <div className="pointer-events-none absolute top-1/2 right-1/3 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]" />
+      <div className="pointer-events-none absolute top-[-298px] right-1/4 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]"></div>
+      <div className="pointer-events-none absolute top-1/2 right-1/3 h-[1022px] w-[1022px] translate-x-1/2 rounded-full border border-white opacity-[.16]"></div>
     </>
   );
 }

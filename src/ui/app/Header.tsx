@@ -25,7 +25,7 @@ function Header(): ReactElement {
 
   return (
     <div className="flex w-full justify-between">
-      <div className="flex space-x-3" />
+      <div className="flex space-x-3"></div>
       <div className="flex items-center space-x-4 text-gray-400">
         {account ? (
           <div className="flex items-center">
