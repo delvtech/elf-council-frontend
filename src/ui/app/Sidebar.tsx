@@ -62,7 +62,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
               iconClassName="text-black"
             />
           </div>
-          <div className="mt-16 space-y-6 overflow-hidden">
+          <div className="mt-16 space-y-6 overflow-hidden py-1">
             <SidebarLink
               link="/"
               label={t`Overview`}
