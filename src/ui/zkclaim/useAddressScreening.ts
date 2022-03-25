@@ -19,10 +19,11 @@ export default function useAddressScreening(
     queryFn: () =>
       fetch("https://6zqnxzsgja.execute-api.us-east-2.amazonaws.com/screen", {
         method: "POST",
-        body: JSON.stringify({ address: address }),
+        body: JSON.stringify({ address }),
       }).then((res) => res.json()),
     staleTime: Infinity,
     enabled: !!address,
+    retry: 6,
   });
   return {
     pass: result?.data || undefined,
