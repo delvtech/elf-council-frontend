@@ -1,14 +1,6 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, PropsWithChildren } from "react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-
-interface ExternalLinkProps {
-  href: string;
-  text?: string;
-  children?: ReactNode;
-  className?: string;
-  showIcon?: boolean;
-}
 
 function ExternalLink({
   href,
@@ -16,7 +8,12 @@ function ExternalLink({
   children,
   className,
   showIcon = true,
-}: ExternalLinkProps): ReactElement {
+}: PropsWithChildren<{
+  href: string;
+  text?: string;
+  className?: string;
+  showIcon?: boolean;
+}>): ReactElement {
   return (
     <a
       href={href}
@@ -27,7 +24,7 @@ function ExternalLink({
         "flex shrink-0 items-center gap-2 decoration-current underline-offset-2 hover:underline",
       )}
     >
-      {text ? text : children}
+      {text ?? children}
       {showIcon && (
         <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-current" />
       )}
