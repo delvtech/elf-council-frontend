@@ -100,7 +100,7 @@ function BallotDropdownItem(props: BallotDropdownItemProps) {
       {active ? (
         <CheckCircleIcon height={25} className="ml-3 text-principalRoyalBlue" />
       ) : (
-        <div className="mr-0.5 h-5 w-5 rounded-full border-2 border-principalRoyalBlue bg-transparent" />
+        <div className="mr-0.5 h-5 w-5 rounded-full border-2 border-principalRoyalBlue bg-transparent"></div>
       )}
     </button>
   );

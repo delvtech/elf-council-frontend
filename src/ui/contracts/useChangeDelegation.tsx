@@ -11,6 +11,7 @@ import { queryClient } from "src/elf/queryClient";
 import { useRef } from "react";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { t, jt } from "ttag";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 export function useChangeDelegation(
   address: string | null | undefined,
@@ -34,15 +35,11 @@ export function useChangeDelegation(
       },
       onTransactionSubmitted: (tx) => {
         const etherscanLink = (
-          <a
-            key="etherscan-link"
+          <ExternalLink
             href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
-            target="_blank"
-            rel="noreferrer"
-            className="block underline"
-          >
-            {t`View on etherscan`}
-          </a>
+            text={t`View on etherscan`}
+            className="text-principalRoyalBlue"
+          />
         );
 
         const message = (

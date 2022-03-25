@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 
-import { CheckCircleIcon, ExternalLinkIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon } from "@heroicons/react/outline";
 import {
   ThumbDownIcon,
   ThumbUpIcon,
@@ -53,6 +53,7 @@ import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 interface ProposalDetailsCardProps {
   className?: string;
@@ -127,15 +128,11 @@ export function ProposalDetailsCard(
     },
     onTransactionSubmitted: (pendingTransaction) => {
       const pendingEtherscanLink = (
-        <a
-          key="etherscan-link"
-          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}`}
-          target="_blank"
-          rel="noreferrer"
-          className="block underline"
-        >
-          {t`View on etherscan`}
-        </a>
+        <ExternalLink
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${pendingTransaction.hash}}`}
+          text={t`View on etherscan`}
+          className="text-principalRoyalBlue"
+        />
       );
 
       const message = (
@@ -235,32 +232,23 @@ export function ProposalDetailsCard(
         <div className="h-1/3 overflow-hidden rounded-lg bg-black bg-opacity-20">
           <div className="h-full overflow-auto break-words">
             <p className="shrink-0 py-2 px-4 font-light text-white ">
-              {truncateText(snapshotProposal?.body || "")}
+              {snapshotProposal?.body || ""}
             </p>
           </div>
         </div>
 
         {/* External Links */}
         <div className="my-4 flex justify-around">
-          <a
-            target="_blank"
+          <ExternalLink
             href={snapshotProposal?.link || ""}
-            className="flex shrink-0 items-center overflow-hidden text-sm font-light text-white"
-            rel="noreferrer"
-          >
-            {t`View proposal`}
-            <ExternalLinkIcon className="ml-2 h-4" />
-          </a>
-
-          <a
-            target="_blank"
+            text={t`View proposal`}
+            className="overflow-hidden text-sm text-white"
+          />
+          <ExternalLink
             href={ElementUrls.FORUM}
-            className="flex items-center text-sm font-light text-white"
-            rel="noreferrer"
-          >
-            {t`View discussion`}
-            <ExternalLinkIcon className="ml-2 h-4" />
-          </a>
+            text={t`View discussion`}
+            className="overflow-hidden text-sm text-white"
+          />
         </div>
 
         {/* Quorum Bar */}
@@ -298,15 +286,11 @@ export function ProposalDetailsCard(
               />
 
               {etherscanLink && (
-                <a
-                  target="_blank"
+                <ExternalLink
                   href={etherscanLink}
-                  className="flex items-center justify-end whitespace-nowrap text-white"
-                  rel="noreferrer"
-                >
-                  <span>{t`View on etherscan`}</span>
-                  <ExternalLinkIcon className="ml-2" height={18} />
-                </a>
+                  text={t`View on etherscan`}
+                  className="whitespace-nowrap text-sm text-white"
+                />
               )}
             </div>
             <div className="flex w-full justify-between">
@@ -399,15 +383,6 @@ function QuorumBar(props: QuorumBarProps) {
       </div>
     </div>
   );
-}
-
-const CHARACTER_LIMIT = 750;
-function truncateText(text: string, characterLimit = CHARACTER_LIMIT) {
-  if (text.length <= characterLimit) {
-    return text;
-  }
-
-  return `${text.slice(0, CHARACTER_LIMIT)}...`;
 }
 
 function getVoteCount(votingPower: VotingPower | undefined): string {

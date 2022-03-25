@@ -143,7 +143,7 @@ export function ChooseDelegate({
               <span>{t`Voting Power`}</span>
             </div>
             {/* Spacer for Buttons */}
-            <span className="col-span-3 lg:col-span-4" />
+            <span className="col-span-3 lg:col-span-4"></span>
           </div>
 
           <div className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow">

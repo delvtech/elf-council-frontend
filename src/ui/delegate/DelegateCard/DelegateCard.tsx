@@ -78,7 +78,7 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         </div>
       </div>
 
-      <div className="mt-2 flex flex-col gap-0 md:flex-col md:gap-0 lg:flex-row lg:gap-7">
+      <div className="mt-1 flex flex-col gap-0 md:flex-col md:gap-0 lg:flex-row lg:gap-7">
         {/* Current Delegate Profile */}
         {delegateAddressOnChain ? (
           <CurrentDelegate

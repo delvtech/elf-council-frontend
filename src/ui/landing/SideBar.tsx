@@ -11,7 +11,7 @@ export default function SideBar(): ReactElement {
   return (
     <footer>
       {/* colored background in a separate container to be under the glows */}
-      <div className="fixed bottom-0 left-0 z-20 h-[72px] w-full bg-gradient-to-br from-principalBlue to-principalRoyalBlue lg:z-0 lg:h-full lg:w-[120px]" />
+      <div className="fixed bottom-0 left-0 z-20 h-[72px] w-full bg-gradient-to-br from-principalBlue to-principalRoyalBlue lg:z-0 lg:h-full lg:w-[120px]"></div>
 
       <ul className="fixed left-0 bottom-4 z-20 flex w-full justify-center gap-[8vw] lg:bottom-10 lg:z-10 lg:w-[120px] lg:flex-col lg:items-center lg:gap-5">
         <SocialLink href={ElementUrls.TWITTER} title="Twitter">

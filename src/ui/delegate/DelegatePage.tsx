@@ -66,7 +66,7 @@ export default function DelegatePage(): ReactElement {
       <div className="flex w-full max-w-4xl flex-col">
         {/* Warning Card */}
         {showNoConnectionWarning ? (
-          <div className="mb-4 flex w-full flex-col xl:flex-row xl:justify-center">
+          <div className="mb-8 flex w-full flex-col xl:flex-row xl:justify-center">
             <WarningLabel className="w-full p-2 px-6">
               {renderWarning()}
             </WarningLabel>

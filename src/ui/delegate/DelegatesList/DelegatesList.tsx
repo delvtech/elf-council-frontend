@@ -62,10 +62,10 @@ function DelegatesList({
         </div>
 
         {/* Vote Spacer */}
-        <div className="col-span-2 ml-auto mr-14 hidden lg:block" />
+        <div className="col-span-2 ml-auto mr-14 hidden lg:block"></div>
 
         <div className="col-span-3 flex gap-x-4 lg:col-span-4">
-          <div className="hidden w-full lg:block" />
+          <div className="hidden w-full lg:block"></div>
           <div className="w-full">
             <Button
               onClick={handleSelfDelegateClick}
@@ -95,7 +95,7 @@ function DelegatesList({
           </div>
 
           {/* Spacer for Buttons */}
-          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4" />
+          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4"></div>
         </div>
 
         {/* Delegates */}

@@ -9,6 +9,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import H1 from "src/ui/base/H1/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { t, jt } from "ttag";
@@ -41,15 +42,11 @@ export function ReviewTransaction({
     },
     onTransactionSubmitted: (tx) => {
       const etherscanLink = (
-        <a
-          key="etherscan-link"
+        <ExternalLink
           href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
-          target="_blank"
-          rel="noreferrer"
-          className="block underline"
-        >
-          {t`View on etherscan`}
-        </a>
+          text={t`View on etherscan`}
+          className="text-principalRoyalBlue"
+        />
       );
 
       const message = (

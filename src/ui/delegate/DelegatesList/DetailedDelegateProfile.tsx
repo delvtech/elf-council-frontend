@@ -8,7 +8,7 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useWeb3React } from "@web3-react/core";
-import { XIcon } from "@heroicons/react/solid";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import { Provider } from "@ethersproject/providers";
 
@@ -47,12 +47,11 @@ function DetailedDelegateProfile({
 
   return (
     <div className={classNames(className, "h-full", "relative", "pt-7")}>
-      <button
-        className="absolute top-0 right-0 z-10 m-5"
-        onClick={onCloseProfileClick}
-      >
-        <XIcon className="h-6 text-black" />
-      </button>
+      <CloseButton
+        onClose={onCloseProfileClick}
+        iconClassName="text-black"
+        className="absolute top-0 right-0"
+      />
 
       <div className="relative flex h-full flex-col p-5">
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">

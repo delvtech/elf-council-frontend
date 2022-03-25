@@ -2,7 +2,6 @@ import React, { Fragment, ReactElement, useCallback, useState } from "react";
 import {
   MenuAlt4Icon,
   ExternalLinkIcon,
-  XIcon,
   HomeIcon,
   PencilAltIcon,
   UserGroupIcon,
@@ -18,6 +17,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrls from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -56,14 +56,13 @@ export default function Sidebar(props: SidebarProps): ReactElement {
         <div className="w-full">
           <div className="mt-1 flex justify-around py-3">
             <ElementIcon className="h-24 w-24" title="Element Finance" />
-            <button
-              onClick={onClose}
-              className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
-            >
-              <XIcon className="h-6 w-6" />
-            </button>
+            <CloseButton
+              onClose={onClose}
+              className="absolute top-0 right-0 md:hidden"
+              iconClassName="text-black"
+            />
           </div>
-          <div className="mt-16 space-y-6">
+          <div className="mt-16 space-y-6 overflow-hidden py-1">
             <SidebarLink
               link="/"
               label={t`Overview`}
@@ -141,14 +140,14 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
       best thing to do for now is just ignore this rule when an anchor tag is
       the child of a Link since all a tags *should* have an href 🙁 */
         /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="flex items-center px-2 hover:bg-blue-50 md:w-[55%]">
-          {icon}
+        <a className="hover:bg-blue-50 md:w-full">
           <div
             className={classNames(
-              "flex cursor-pointer justify-start p-3 text-brandDarkBlue-dark",
+              "flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]",
               { "font-bold": isActive },
             )}
           >
+            {icon}
             <p>{label}</p>
           </div>
         </a>
@@ -160,15 +159,15 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <a
         href={link}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center px-2  hover:bg-blue-50 md:w-[55%]"
+        className=" hover:bg-blue-50 md:w-full"
       >
-        <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
-        <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
+        <div className="flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]">
+          <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
           <p>{label}</p>
         </div>
       </a>

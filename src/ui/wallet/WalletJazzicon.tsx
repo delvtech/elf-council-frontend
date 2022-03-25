@@ -41,5 +41,5 @@ export function WalletJazzicon({
     };
   }, [account, size]);
 
-  return <div ref={jazziconRef} className={className} />;
+  return <div ref={jazziconRef} className={className}></div>;
 }
