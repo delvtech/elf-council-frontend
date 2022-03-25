@@ -98,17 +98,19 @@ export default function useZKProof({
 
   // set isEligible when the key, secret, and/or merkleTree change
   const isEligible = useMemo(() => {
-    try {
-      if (key && secret && merkleTree) {
-        const commitment = toHex(
-          pedersenHashConcat(BigInt(key), BigInt(secret)),
-        );
-        return merkleTree.leafExists(BigInt(commitment));
+    if (key && secret && merkleTree) {
+      let commitment: string;
+
+      // OK to catch, as it throws in the case of being not eligible
+      try {
+        commitment = toHex(pedersenHashConcat(BigInt(key), BigInt(secret)));
+      } catch (e) {
+        return false;
       }
-      return false;
-    } catch (e) {
-      return false;
+
+      return merkleTree.leafExists(BigInt(commitment));
     }
+    return false;
   }, [key, secret, merkleTree]);
 
   const isReady = !!(merkleTree && wasmBuffer && zkeyBuffer);
