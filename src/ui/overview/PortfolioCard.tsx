@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 import { t } from "ttag";
 
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
@@ -27,7 +27,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
 
   const amountDeposited = useDeposited(account) || "0";
 
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
 

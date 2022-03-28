@@ -5,7 +5,7 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { commify } from "ethers/lib/utils";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 
@@ -15,7 +15,7 @@ interface AirdropAmountCardProps {
 export function AirdropAmountCard({
   account,
 }: AirdropAmountCardProps): ReactElement {
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
 
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const airdropAmountLabel = getAirdropAmountLabel(claimableBalance);

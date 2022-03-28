@@ -7,7 +7,7 @@ import Steps from "src/ui/base/Steps/Steps";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 import { parseEther } from "ethers/lib/utils";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import {
@@ -64,7 +64,7 @@ enum Step {
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
-  const merkleInfoQueryData = useMerkleInfo(account);
+  const merkleInfoQueryData = useMerkleInfo(account, MerkleRewardType.RETRO);
 
   const { data: merkleInfo } = merkleInfoQueryData;
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);

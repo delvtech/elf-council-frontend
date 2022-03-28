@@ -5,7 +5,7 @@ import React, { ReactElement, useCallback, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { isValidAddress } from "src/base/isValidAddress";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
@@ -34,7 +34,7 @@ export function ReviewTransaction({
 }: ReviewTransactionProps): ReactElement {
   const toastIdRef = useRef<string>();
 
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
 
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);

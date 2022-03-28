@@ -1,7 +1,7 @@
 import { OptimisticRewards } from "elf-council-typechain";
 import { ethers } from "ethers";
 import { parseEther } from "ethers/lib/utils";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useQueryVotePower } from "src/ui/voting/useQueryVotePower";
 
 export function useRewardsVaultVotingPower(
@@ -9,7 +9,7 @@ export function useRewardsVaultVotingPower(
   contract: OptimisticRewards,
   atBlockNumber?: number,
 ): string {
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
 
   const { value: totalGrant } = merkleInfo?.leaf || {};
   const { proof = [] } = merkleInfo || {};

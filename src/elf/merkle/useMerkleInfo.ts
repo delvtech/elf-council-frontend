@@ -16,7 +16,7 @@ export enum MerkleRewardType {
 
 export function useMerkleInfo(
   address: string | undefined | null,
-  rewardType: MerkleRewardType = MerkleRewardType.RETRO,
+  rewardType: MerkleRewardType,
 ): QueryObserverResult<MerkleProof> {
   return useQuery({
     queryKey: ["merkleInfo", address],

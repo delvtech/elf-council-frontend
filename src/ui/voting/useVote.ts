@@ -10,7 +10,7 @@ import { ethers, Signer } from "ethers";
 import { addressesJson } from "src/elf-council-addresses";
 import { coreVotingContract } from "src/elf/contracts";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
@@ -32,7 +32,7 @@ export function useVote(
   isError: boolean;
 } {
   const { data: latestBlockNumber } = useLatestBlockNumber();
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
 
   const {
     mutate: vote,
