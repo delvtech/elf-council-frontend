@@ -13,7 +13,7 @@ import { t } from "ttag";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrls from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
@@ -28,7 +28,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
 
   const onOpen = useCallback(() => {
