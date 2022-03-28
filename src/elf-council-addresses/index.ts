@@ -3,7 +3,7 @@ import { AddressesJsonFile } from "elf-council-tokenlist";
 import testnetAddressList from "./testnet.addresses.json";
 import waffleAddressList from "./waffle.addresses.json";
 
-const localGoerliAddressList = {
+const localGoerliAddressList: AddressesJsonFile = {
   addresses: {
     airdrop: "0xb7920477F7A39c3DffA925076857eB1585503e1B",
     coreVoting: "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
