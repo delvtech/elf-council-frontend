@@ -9,6 +9,7 @@ import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropAmountCard/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import { useClaimAndDepositAirdrop } from "src/ui/airdrop/useClaimAndDepositAirdrop";
+import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import H1 from "src/ui/base/H1/H1";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
@@ -36,6 +37,7 @@ export function ReviewTransaction({
   const { data: merkleInfo } = useMerkleInfo(account);
   const [isTransactionPending, setIsTransactionPending] = useState(false);
 
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
   const { mutate: claimAndDeposit } = useClaimAndDepositAirdrop(signer, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
@@ -67,16 +69,14 @@ export function ReviewTransaction({
   const handleClaimClick = useCallback(() => {
     if (account && merkleInfo) {
       claimAndDeposit([
-        parseEther("1"),
-        // use the full claimable balance when not in development
-        // parseEther(claimableBalance),
+        parseEther(claimableBalance),
         delegateAddress,
         parseEther(merkleInfo.leaf.value),
         merkleInfo.proof,
         account,
       ]);
     }
-  }, [account, claimAndDeposit, delegateAddress, merkleInfo]);
+  }, [account, claimAndDeposit, claimableBalance, delegateAddress, merkleInfo]);
 
   return (
     <StepCard
