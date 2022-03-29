@@ -63,13 +63,15 @@ function ElfiverseBanner() {
         </div>
 
         <div className="ml-2 w-1/4">
-          <Image
-            src="/assets/overview-page/elfi-nft.png"
-            width={100}
-            height={100}
-            alt=""
-            className="pointer-events-none"
-          />
+          <div className="ml-auto w-[fit-content]">
+            <Image
+              src="/assets/overview-page/elfi-nft.png"
+              width={100}
+              height={100}
+              alt="Elfi NFT"
+              className="pointer-events-none"
+            />
+          </div>
         </div>
       </div>
 
