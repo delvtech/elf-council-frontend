@@ -116,19 +116,19 @@ export default function LandingPage(): ReactElement {
                       )}
                       static
                     >
-                      <ArticleLink
+                      <ResourceLink
                         href={`${ElementUrls.MEDIUM}/the-governance-steering-council-63aea7732262`}
                       >
-                        {t`Read about our GSC Campaign`}
-                      </ArticleLink>
-                      <ArticleLink href={ElementUrls.MEDIUM}>
-                        {t`Read about our Proposal Framework`}
-                      </ArticleLink>
-                      <ArticleLink
+                        {t`Read about the Governance Steering Council`}
+                      </ResourceLink>
+                      <ResourceLink
                         href={`${ElementUrls.MEDIUM}/voting-vaults-a-new-defi-and-governance-primitive-b4b2f6289d48`}
                       >
                         {t`Read about Voting Vaults and Delegation`}
-                      </ArticleLink>
+                      </ResourceLink>
+                      <ResourceLink href={`${ElementUrls.GITHUB}/council`}>
+                        {t`View the code behind Council`}
+                      </ResourceLink>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -213,7 +213,7 @@ function ClaimLink({
   );
 }
 
-function ArticleLink({
+function ResourceLink({
   href,
   children,
 }: PropsWithChildren<{
