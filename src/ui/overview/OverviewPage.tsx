@@ -46,8 +46,9 @@ export function OverviewPage({
 
 export default OverviewPage;
 
-const councilLink = (
+const faqDocsLink = (
   <ExternalLink
+    key="faq-docs-link"
     href={ElementUrls.DOCS}
     className="inline-flex !gap-1"
   >{t`Council's Docs.`}</ExternalLink>
@@ -76,7 +77,7 @@ function FAQ() {
                 <Disclosure.Panel className="flex flex-col gap-3 px-4 pt-4 pb-2 text-sm text-gray-500">
                   <p>{t`Council is an on-chain decentralized governance system through which a community can manage a DAO. It gives the community total flexibility over how to distribute Voting Power and allows it to adapt its governance system to the continuously evolving needs of the DAO.`}</p>
                   <p>{t`The system also includes the optional structure of a Governance Steering Council (GSC) with added governance powers and responsibilities, all to be decided upon by the community.`}</p>
-                  <p>{jt`This flexibility is possible thanks to the use of Voting Vaults. Learn more in ${councilLink}`}</p>
+                  <p>{jt`This flexibility is possible thanks to the use of Voting Vaults. Learn more in ${faqDocsLink}`}</p>
                 </Disclosure.Panel>
               </>
             )}
