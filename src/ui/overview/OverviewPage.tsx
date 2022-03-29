@@ -25,7 +25,7 @@ export function OverviewPage({
 }: OverviewPageProps): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   return (
-    <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
+    <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
       <div className="px-8 py-1">
         <H1 className="text-center text-principalRoyalBlue">
           {" "}
@@ -33,7 +33,7 @@ export function OverviewPage({
         </H1>
       </div>
       <SummaryCards proposalsJson={proposalsJson} />
-      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
+      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
         <div className="w-full">
           <PortfolioCard account={account} provider={library} />
         </div>
@@ -50,7 +50,7 @@ export default OverviewPage;
 
 function ElfiverseBanner() {
   return (
-    <Card className="flex w-full flex-col gap-4 shadow-md lg:max-w-[512px]">
+    <Card className="flex w-full flex-col gap-4 shadow-md xl:max-w-[512px]">
       {/* Header */}
       <div className="flex">
         <div className="mt-2 flex w-3/4 flex-col gap-2">
@@ -100,7 +100,7 @@ function ElfiverseBanner() {
 
 function FAQ() {
   return (
-    <Card className="w-full shadow-md lg:max-w-[512px]">
+    <Card className="w-full shadow-md xl:max-w-[512px]">
       <span className="text-xl font-bold tracking-widest text-principalRoyalBlue">{t`FAQ`}</span>
       <div className="w-full pt-4">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white">
