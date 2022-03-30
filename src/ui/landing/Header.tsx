@@ -106,17 +106,8 @@ const PopoverNavPanel = forwardRef<HTMLDivElement, PopoverNavPanelProps>(
           <XIcon className="h-6 w-6" />
         </Popover.Button>
         <ul className="mb-5 w-0 min-w-full lg:mb-0">
-          <MenuLink href={ElementUrls.CORE_APP}>{t`Main Protocol`}</MenuLink>
-          <MenuLink href={ElementUrls.DOCS}>{t`Council Docs`}</MenuLink>
-          <MenuLink
-            href={`${ElementUrls.GITHUB}/council`}
-          >{t`Council Smart Contracts`}</MenuLink>
-          <MenuLink
-            href={`${ElementUrls.GITHUB}/elf-council-frontend`}
-          >{t`Council Frontend`}</MenuLink>
-          <MenuLink
-            href={`${ElementUrls.GITHUB}/elf-council-frontend`}
-          >{t`Council Brand Design`}</MenuLink>
+          <MenuLink href={ElementUrls.CORE_APP}>{t`Main App`}</MenuLink>
+          <MenuLink href={ElementUrls.DOCS}>{t`Docs and Guides`}</MenuLink>
         </ul>
         <LinkButton
           variant={ButtonVariant.REWARD}

@@ -20,9 +20,6 @@ export default function SideBar(): ReactElement {
         <SocialLink href={ElementUrls.DISCORD} title="Discord">
           <DiscordIcon className="h-auto w-5 fill-white" />
         </SocialLink>
-        <SocialLink href={ElementUrls.TELEGRAM} title="Telegram">
-          <TelegramIcon className="h-auto w-5 fill-white" />
-        </SocialLink>
         <SocialLink href={ElementUrls.FORUM} title="Forum">
           <CommonwealthIcon className="h-auto w-5 fill-white" />
         </SocialLink>

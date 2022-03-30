@@ -9,7 +9,7 @@ export enum ElementUrls {
   TELEGRAM = "",
   TWITTER = "https://twitter.com/element_fi",
   // resources
-  DOCS = "https://docs-element-finance.gitbook.io/element-council",
+  DOCS = "https://docs.element.fi/governance-council",
   GITHUB = "https://github.com/element-fi",
   MEDIUM = "https://medium.com/element-finance",
 }

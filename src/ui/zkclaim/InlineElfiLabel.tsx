@@ -9,7 +9,7 @@ export const InlineElfiLabel = (
     <ElementIconCircle
       className="mb-0.5 -mt-0.5 w-6 bg-paleLily"
       inline
-      size={IconSize.MEDIUM}
+      size={IconSize.SMALL}
     />
     {t`ELFI`}
   </span>

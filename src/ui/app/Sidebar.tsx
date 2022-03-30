@@ -93,7 +93,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
             {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
           </div>
         </div>
-        <PoweredByCouncil className="h-24 w-24" />
+        <PoweredByCouncil className="mt-10 h-24 w-24 shrink-0" />
       </div>
     </Fragment>
   );

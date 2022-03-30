@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import Head from "next/head";
 import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
 import EligibleCard from "./EligibleCard";
@@ -107,6 +108,10 @@ export default function ZKClaimPage(): ReactElement {
 
   return (
     <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
+      <Head>
+        <title>{t`ZK Airdrop Claim | Element Council Protocol`}</title>
+      </Head>
+
       <div style={{ width: 600, maxWidth: "100%" }}>
         <Steps className="w-full">
           <StepItem

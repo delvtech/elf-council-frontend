@@ -1,4 +1,5 @@
 import { PropsWithChildren, ReactElement } from "react";
+import Head from "next/head";
 import ElementUrls from "src/elf/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -19,6 +20,11 @@ export default function LandingPage(): ReactElement {
     // outer element is set to overflow: hidden to hide the overflowing
     // background glows
     <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-principalRoyalBlue text-white">
+      <Head>
+        <title>{t`Welcome | Element Council Protocol`}</title>
+        {/* TODO: Update to a favicon with a transparent background */}
+      </Head>
+
       <BackgroundGlows />
       <BackgroundCircles />
 
@@ -116,19 +122,19 @@ export default function LandingPage(): ReactElement {
                       )}
                       static
                     >
-                      <ArticleLink
+                      <ResourceLink
                         href={`${ElementUrls.MEDIUM}/the-governance-steering-council-63aea7732262`}
                       >
-                        {t`Read about our GSC Campaign`}
-                      </ArticleLink>
-                      <ArticleLink href={ElementUrls.MEDIUM}>
-                        {t`Read about our Proposal Framework`}
-                      </ArticleLink>
-                      <ArticleLink
+                        {t`Read about the Governance Steering Council`}
+                      </ResourceLink>
+                      <ResourceLink
                         href={`${ElementUrls.MEDIUM}/voting-vaults-a-new-defi-and-governance-primitive-b4b2f6289d48`}
                       >
                         {t`Read about Voting Vaults and Delegation`}
-                      </ArticleLink>
+                      </ResourceLink>
+                      <ResourceLink href={`${ElementUrls.GITHUB}/council`}>
+                        {t`View the code behind Council`}
+                      </ResourceLink>
                     </Disclosure.Panel>
                   </>
                 )}
@@ -213,7 +219,7 @@ function ClaimLink({
   );
 }
 
-function ArticleLink({
+function ResourceLink({
   href,
   children,
 }: PropsWithChildren<{

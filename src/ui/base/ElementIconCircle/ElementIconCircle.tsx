@@ -48,12 +48,12 @@ export function ElementIconCircle({
 }
 
 const IconHeight: Record<IconSize, string> = {
-  [IconSize.SMALL]: "12",
+  [IconSize.SMALL]: "14",
   [IconSize.MEDIUM]: "24",
   [IconSize.LARGE]: "48",
 };
 const IconWidth: Record<IconSize, string> = {
-  [IconSize.SMALL]: "12",
+  [IconSize.SMALL]: "14",
   [IconSize.MEDIUM]: "24",
   [IconSize.LARGE]: "48",
 };
