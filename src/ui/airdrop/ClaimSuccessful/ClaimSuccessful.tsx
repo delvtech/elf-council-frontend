@@ -41,9 +41,9 @@ export function ClaimSuccessful(): ReactElement {
             />
           </a>
         </Link>
-        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop
-        experience on Twitter and join the Element Discord to get more involved
-        in our community and governance system.`}</p>
+        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop 
+        experience on Twitter and join the Element Discord to get more involved 
+        in the community and governance system.`}</p>
         <div className="flex w-full space-x-4">
           <a
             target="_blank"

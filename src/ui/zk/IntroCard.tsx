@@ -33,7 +33,7 @@ export default function IntroCard({
     <Card className={className} variant={CardVariant.BLUE}>
       <div className="p-2 text-white sm:px-6 sm:py-4">
         <h1 className="mb-4 text-4xl font-semibold text-white">{t`${platformName} Airdrop`}</h1>
-        <p>{jt`This airdrop utilizes a method named Zero Knowledge Proof that allows you to claim participation in our governance system based on your ${platformName} ID without revealing any personal information. You can ${learnMoreHereLink}.`}</p>
+        <p>{jt`This airdrop utilizes a method named Zero Knowledge Proof that allows you to claim participation in the governance system based on your ${platformName} ID without revealing any personal information. You can ${learnMoreHereLink}.`}</p>
         <H2 className="mt-4 text-2xl text-white">{t`How does it work?`}</H2>
         <div className="mt-6 mb-6 flex flex-col gap-2 rounded-lg bg-white/10 px-5 py-4 sm:py-6 sm:px-8">
           <H3 className="text-white">{t`1. Generate your Key, Secret, & Public ID.`}</H3>
