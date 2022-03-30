@@ -36,4 +36,3 @@ export async function getStaticProps(): Promise<{
     revalidate: 60, // seconds,
   };
 }
-
