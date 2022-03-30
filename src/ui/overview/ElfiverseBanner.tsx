@@ -8,7 +8,7 @@ import ElementUrls from "src/elf/urls";
 import Card from "src/ui/base/Card/Card";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { assertNever } from "src/base/assertNever";
-import { useTokenBalanceOf } from "src/ui/overview/useTokenBalanceOf";
+import { useNFTTokenBalanceOf } from "src/ui/overview/useNFTTokenBalanceOf";
 
 interface ElfiverseBannerProps {
   account: string | null | undefined;
@@ -31,7 +31,7 @@ function ElfiverseBanner({
   account,
   recentDelegators,
 }: ElfiverseBannerProps): ReactElement | null {
-  const { data: mintedCount } = useTokenBalanceOf(account);
+  const { data: mintedCount } = useNFTTokenBalanceOf(account);
 
   const remainingElves = TOTAL_ELVES - recentDelegators.length;
 
