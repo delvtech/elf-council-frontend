@@ -2,7 +2,7 @@ export enum ElementUrls {
   // apps
   CORE_LANDING = "https://element.fi",
   CORE_APP = "https://app.element.fi",
-  NFT_APP = "",
+  NFT_APP = "https://elfiverse.element.fi",
   // socials
   DISCORD = "https://element.fi/discord",
   FORUM = "https://forum.element.fi",
