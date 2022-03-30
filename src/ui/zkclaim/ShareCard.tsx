@@ -28,7 +28,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             icon={<ElementIcon className="h-8 w-8" />}
           />
         </Link>
-        <p className="mb-4 text-left md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element Discord to get more involved in our community and governance system.`}</p>
+        <p className="mb-4 text-left md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element Discord to get more involved in the community and governance system.`}</p>
         <div className="flex w-full gap-4 text-center">
           <CallToActionCard
             as="a"

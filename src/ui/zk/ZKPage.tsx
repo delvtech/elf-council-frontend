@@ -20,12 +20,14 @@ interface ZKPageProps {
 
 export default function ZKPage({ platform }: ZKPageProps): ReactElement {
   const [publicId, setPublicId] = useState<string>();
+  const [complete, setComplete] = useState(false);
   const {
     goToNextStep,
     goToPreviousStep,
     getStepPath,
     canViewStep,
     getStepStatus,
+    currentStep,
   } = useRouterSteps();
 
   let platformName = "";
@@ -77,7 +79,11 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
           <StepDivider />
           <StepItem
             stepLabel="3"
-            status={getStepItemStatus(3)}
+            status={
+              currentStep === 3 && complete
+                ? StepItemStatus.COMPLETE
+                : getStepItemStatus(3)
+            }
             href={canViewStep(3) ? getStepPath(3) : undefined}
           >{t`Share Public ID`}</StepItem>
         </Steps>
@@ -100,10 +106,18 @@ export default function ZKPage({ platform }: ZKPageProps): ReactElement {
 
       {/* STEP 3 */}
       {platform === Platform.DISCORD && publicId && (
-        <DiscordShareCard className={getStepClassName(3)} publicId={publicId} />
+        <DiscordShareCard
+          className={getStepClassName(3)}
+          publicId={publicId}
+          onShareClick={() => setComplete(true)}
+        />
       )}
       {platform === Platform.GITHUB && publicId && (
-        <GitHubShareCard className={getStepClassName(3)} publicId={publicId} />
+        <GitHubShareCard
+          className={getStepClassName(3)}
+          publicId={publicId}
+          onShareClick={() => setComplete(true)}
+        />
       )}
 
       <div className="mt-auto flex flex-1 flex-col items-center text-principalRoyalBlue">

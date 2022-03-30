@@ -38,7 +38,7 @@ export function AirdropAlreadyClaimed({
           <DelegatedCard account={account} provider={provider} />
         </div>
         <div className="flex w-full justify-center text-base">
-          <span className="w-full md:w-1/2">{t`To change your delegation, you can visit our delegate dashboard live in our main governance system.`}</span>
+          <span className="w-full md:w-1/2">{t`To change your delegation, you can visit the delegate dashboard live in the main governance system.`}</span>
         </div>
       </div>
     </Card>

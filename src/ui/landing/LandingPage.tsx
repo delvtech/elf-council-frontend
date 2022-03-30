@@ -39,9 +39,9 @@ export default function LandingPage(): ReactElement {
             <div className="flex-1 basis-[60%]">
               <div className="mb-10 mt-4 flex flex-col items-center text-center sm:mb-4 sm:flex-row-reverse sm:text-left lg:items-start">
                 <SparkleIcon className="ml-8 mr-5 fill-hackerSky lg:flex-1 xl:mr-0" />
-                <h1 className="flex-1 text-5xl font-semibold leading-tight text-hackerSky sm:text-7xl">{t`Presenting Council`}</h1>
+                <h1 className="flex-1 text-5xl font-semibold leading-tight text-hackerSky sm:text-7xl">{t`Introducing Council`}</h1>
               </div>
-              <p className="mb-8 text-2xl leading-10">{t`Welcome to Element's v0 Governance System. Explore below to learn more about our DAO launch.`}</p>
+              <p className="mb-8 text-2xl leading-10">{t`Welcome to Element DAO's v0 Governance System. Explore below to learn more about the launch of the DAO.`}</p>
 
               <Disclosure>
                 {({ open }) => (
@@ -52,7 +52,7 @@ export default function LandingPage(): ReactElement {
                       className="mb-4 hidden h-16 justify-between px-7 xl:flex"
                     >
                       <span className="bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-2xl text-transparent">
-                        {t`Explore Claiming Rewards`}
+                        {t`See How to Claim Rewards`}
                       </span>
                       <ChevronRightIcon
                         className={classNames(
@@ -76,10 +76,10 @@ export default function LandingPage(): ReactElement {
                         {t`Claim ELFIverse NFT`}
                       </ClaimLink>
                       <ClaimLink href="/zk/discord">
-                        {t`Claim for Discord Users`}
+                        {t`Airdrop for Discord Users`}
                       </ClaimLink>
                       <ClaimLink href="/zk/github">
-                        {t`Claim for GitHub Users`}
+                        {t`Airdrop for GitHub Users`}
                       </ClaimLink>
                     </Disclosure.Panel>
                   </div>
@@ -101,7 +101,7 @@ export default function LandingPage(): ReactElement {
 
                       {/* large button for large screens */}
                       <Disclosure.Button className="mb-5 hidden w-full flex-col items-center rounded-2xl bg-white p-9 pt-11 xl:flex">
-                        <h2 className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Governance Resources`}</h2>
+                        <h2 className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Council Resources`}</h2>
                         <CouncilLogo className="mb-16 h-auto w-56" />
                         <ChevronRightIcon
                           className={classNames(
