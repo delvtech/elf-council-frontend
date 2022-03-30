@@ -1,22 +1,24 @@
-import { ReactElement } from "react";
+import { ReactElement, useMemo } from "react";
 import { FireIcon } from "@heroicons/react/solid";
 import Image from "next/image";
 import { t } from "ttag";
+import classNames from "classnames";
 
 import ElementUrls from "src/elf/urls";
 import Card from "src/ui/base/Card/Card";
-import Button from "src/ui/base/Button/Button";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
-import classNames from "classnames";
 import { assertNever } from "src/base/assertNever";
+import { useTokenBalanceOf } from "src/ui/overview/useTokenBalanceOf";
 
 interface ElfiverseBannerProps {
   account: string | null | undefined;
   recentDelegators: string[];
 }
 
-const TOTAL_ELVES = 5000;
+// Constants
+const TOTAL_ELVES = 2000;
 const CUT_OFF = 2000;
+const START_DATE = new Date("April 6, 2022");
 
 enum WhitelistStatus {
   WHITELISTED = "Whitelisted",
@@ -28,13 +30,42 @@ enum WhitelistStatus {
 function ElfiverseBanner({
   account,
   recentDelegators,
-}: ElfiverseBannerProps): ReactElement {
-  const remainingElves = TOTAL_ELVES - recentDelegators.length;
-  const whitelistStatus = WhitelistStatus.CLOSED;
+}: ElfiverseBannerProps): ReactElement | null {
+  const { data: mintedCount } = useTokenBalanceOf(account);
 
-  const isWhitelisted = recentDelegators.slice(0, CUT_OFF).some((delegator) => {
-    return new RegExp(account || "", "i").test(delegator);
-  });
+  const remainingElves = TOTAL_ELVES - recentDelegators.length;
+
+  const hasMinted = mintedCount && mintedCount.gt(0);
+  const isWhitelisted = useMemo(() => {
+    return recentDelegators.slice(0, CUT_OFF).some((delegator) => {
+      return new RegExp(account?.slice(2) || "", "i").test(delegator);
+    });
+  }, [account, recentDelegators]);
+
+  if (remainingElves <= 0) {
+    return null;
+  }
+
+  const getWhitelistStatus = () => {
+    if (hasMinted) {
+      return WhitelistStatus.MINTED;
+    }
+
+    if (new Date() < START_DATE) {
+      return WhitelistStatus.CLOSED;
+    }
+
+    if (isWhitelisted) {
+      return WhitelistStatus.WHITELISTED;
+    }
+
+    if (!isWhitelisted) {
+      return WhitelistStatus.NOT_WHITELISTED;
+    }
+
+    // Will not reach this
+    return WhitelistStatus.CLOSED;
+  };
 
   return (
     <Card className="flex w-full flex-col gap-4 shadow-md xl:max-w-[512px]">
@@ -66,7 +97,7 @@ function ElfiverseBanner({
         {/* Whitelist status */}
         {account && (
           <div className="flex w-[fit-content] items-center gap-2 rounded-lg p-4 shadow-[0_6px_23px_rgba(20,20,43,0.08)]">
-            <WhiteListStatusIndicator status={whitelistStatus} />
+            <WhiteListStatusIndicator status={getWhitelistStatus()} />
           </div>
         )}
 
@@ -76,7 +107,7 @@ function ElfiverseBanner({
             <FireIcon className="h-[28px] text-principalRoyalBlue" />
           </div>
           <span className="text-sm leading-4">
-            {t`${remainingElves} / 5000 ELF NFTs Whitelist\u00A0Remaining`}
+            {t`${remainingElves} / ${TOTAL_ELVES} ELF NFTs Whitelist\u00A0Remaining`}
           </span>
 
           <a
