@@ -107,7 +107,7 @@ export default function AirdropPage(): ReactElement {
   return (
     <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
       <Head>
-        <title>Airdrop | Element.fi Governance</title>
+        <title>{t`Element Airdrop | Element Council Protocol`}</title>
       </Head>
 
       <div className="w-[600px] max-w-full">

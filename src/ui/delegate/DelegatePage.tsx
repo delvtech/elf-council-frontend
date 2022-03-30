@@ -65,7 +65,7 @@ export default function DelegatePage(): ReactElement {
       })}
     >
       <Head>
-        <title>Delegate | Element.fi Governance</title>
+        <title>{t`Choose Delegate | Element Council Protocol`}</title>
       </Head>
 
       <div className="flex w-full max-w-4xl flex-col">

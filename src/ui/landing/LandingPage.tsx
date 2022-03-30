@@ -21,7 +21,7 @@ export default function LandingPage(): ReactElement {
     // background glows
     <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-principalRoyalBlue text-white">
       <Head>
-        <title>Council</title>
+        <title>{t`Welcome | Element Council Protocol`}</title>
         {/* TODO: Update to a favicon with a transparent background */}
       </Head>
 

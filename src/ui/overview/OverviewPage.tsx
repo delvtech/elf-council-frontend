@@ -27,7 +27,7 @@ export function OverviewPage({
   return (
     <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
       <Head>
-        <title>Element.fi Governance</title>
+        <title>{t`Overview | Element Council Protocol`}</title>
         <link rel="icon" href="/gov-favicon.ico" />
       </Head>
 

@@ -109,7 +109,7 @@ export default function ZKClaimPage(): ReactElement {
   return (
     <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
       <Head>
-        <title>zkClaim | Element.fi Governance</title>
+        <title>{t`ZK Airdrop Claim | Element Council Protocol`}</title>
       </Head>
 
       <div style={{ width: 600, maxWidth: "100%" }}>

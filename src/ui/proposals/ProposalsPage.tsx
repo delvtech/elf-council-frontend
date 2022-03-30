@@ -180,7 +180,7 @@ export default function ProposalsPage({
   return (
     <div className="flex h-full lg:justify-center">
       <Head>
-        <title>Proposals | Element.fi Governance</title>
+        <title>{t`Proposals | Element Council Protocol`}</title>
       </Head>
 
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
