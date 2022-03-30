@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactElement } from "react";
 import Head from "next/head";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { ArrowRightIcon } from "@heroicons/react/solid";
@@ -45,7 +45,7 @@ export default function LandingPage(): ReactElement {
                   <ClaimLink href="/airdrop">
                     {t`Claim ELFI Governance Power`}
                   </ClaimLink>
-                  <ClaimLink href={ElementUrls.NFT_APP} external>
+                  <ClaimLink href={ElementUrl.NFT_APP} external>
                     {t`Claim ELFIverse NFT`}
                   </ClaimLink>
                   <ClaimLink href="/zk/discord">
@@ -78,16 +78,16 @@ export default function LandingPage(): ReactElement {
               </div>
               <ul className="flex flex-col items-stretch gap-5 xl:flex-row">
                 <ResourceLink
-                  href={`${ElementUrls.MEDIUM}/the-governance-steering-council-63aea7732262`}
+                  href={`${ElementUrl.MEDIUM}/the-governance-steering-council-63aea7732262`}
                 >
                   {t`Read about the Governance Steering Council`}
                 </ResourceLink>
                 <ResourceLink
-                  href={`${ElementUrls.MEDIUM}/voting-vaults-a-new-defi-and-governance-primitive-b4b2f6289d48`}
+                  href={`${ElementUrl.MEDIUM}/voting-vaults-a-new-defi-and-governance-primitive-b4b2f6289d48`}
                 >
                   {t`Read about Voting Vaults and Delegation`}
                 </ResourceLink>
-                <ResourceLink href={`${ElementUrls.GITHUB}/council`}>
+                <ResourceLink href={`${ElementUrl.GITHUB}/council`}>
                   {t`View the code behind Council`}
                 </ResourceLink>
               </ul>

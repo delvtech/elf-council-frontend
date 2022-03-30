@@ -26,7 +26,7 @@ export default function useAddressScreening(
     retry: 6,
   });
   return {
-    pass: result?.data || undefined,
-    error: result?.error || error,
+    pass: result?.data ?? undefined,
+    error: result?.error ?? error,
   };
 }

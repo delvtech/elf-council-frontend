@@ -9,7 +9,7 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import Link from "next/link";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 
@@ -61,12 +61,12 @@ export function ClaimSuccessful(): ReactElement {
           <a
             target="_blank"
             rel="noreferrer"
-            href={ElementUrls.DISCORD}
+            href={ElementUrl.DISCORD}
             className="flex-1"
           >
             <CallToActionCard label={t`Join Discord`} icon={<DiscordIcon />} />
           </a>
-          <a href={ElementUrls.FORUM} className="flex-1">
+          <a href={ElementUrl.FORUM} className="flex-1">
             <CallToActionCard
               label={t`Visit forum`}
               icon={<CommonwealthIcon />}
