@@ -13,6 +13,7 @@ export default function ZK(): ReactElement {
       </Head>
       <PageView
         showSidebar={false}
+        showHeader={false}
         childrenContainerClassName="self-stretch flex justify-center"
       >
         <ZKPage platform={Platform.GITHUB} />
