@@ -72,7 +72,7 @@ function FAQ() {
     <Card className="w-full shadow-md xl:max-w-[512px]">
       <span className="text-xl font-bold tracking-widest text-principalRoyalBlue">{t`FAQ`}</span>
       <div className="w-full pt-4">
-        <div className="mx-auto w-full max-w-md rounded-2xl bg-white">
+        <div className="w-full rounded-2xl bg-white">
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>
