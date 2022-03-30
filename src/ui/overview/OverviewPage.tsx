@@ -17,11 +17,14 @@ import ElfiverseBanner from "./ElfiverseBanner";
 
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
+  recentDelegators: string[];
 }
 export function OverviewPage({
   proposalsJson,
+  recentDelegators,
 }: OverviewPageProps): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
+
   return (
     <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
       <div className="px-8 py-1">
@@ -37,7 +40,10 @@ export function OverviewPage({
         </div>
         <div className="flex w-full flex-col gap-4">
           <FAQ />
-          <ElfiverseBanner />
+          <ElfiverseBanner
+            account={account}
+            recentDelegators={recentDelegators}
+          />
         </div>
       </div>
     </div>
