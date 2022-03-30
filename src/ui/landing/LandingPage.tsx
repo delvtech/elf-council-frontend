@@ -1,4 +1,5 @@
 import { PropsWithChildren, ReactElement } from "react";
+import Head from "next/head";
 import ElementUrls from "src/elf/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -19,6 +20,11 @@ export default function LandingPage(): ReactElement {
     // outer element is set to overflow: hidden to hide the overflowing
     // background glows
     <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-principalRoyalBlue text-white">
+      <Head>
+        <title>{t`Welcome | Element Council Protocol`}</title>
+        {/* TODO: Update to a favicon with a transparent background */}
+      </Head>
+
       <BackgroundGlows />
       <BackgroundCircles />
 
