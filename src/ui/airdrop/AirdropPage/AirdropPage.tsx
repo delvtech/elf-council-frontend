@@ -173,11 +173,7 @@ export default function AirdropPage(): ReactElement {
 
             case Step.AIRDROP_PREVIEW:
               return (
-                <AirdropPreview
-                  account={account}
-                  onPrevStep={goToPreviousStep}
-                  onNextStep={goToNextStep}
-                />
+                <AirdropPreview account={account} onNextStep={goToNextStep} />
               );
 
             case Step.DELEGATE_INSTRUCTIONS:
