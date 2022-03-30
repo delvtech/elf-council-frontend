@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 import { InlineElfiLabel } from "./InlineElfiLabel";
 import CallToActionCard from "./CallToActionCard";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import TwitterIcon from "src/ui/base/svg/TwitterIcon";
 import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
@@ -28,7 +28,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
             icon={<ElementIcon className="h-8 w-8" />}
           />
         </Link>
-        <p className="mb-4 text-left md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element Discord to get more involved in our community and governance system.`}</p>
+        <p className="mb-4 text-left md:w-2/3">{t`Share your airdrop experience on Twitter and join the Element Discord to get more involved in the community and governance system.`}</p>
         <div className="flex w-full gap-4 text-center">
           <CallToActionCard
             as="a"
@@ -42,7 +42,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
           />
           <CallToActionCard
             as="a"
-            href={ElementUrls.DISCORD}
+            href={ElementUrl.DISCORD}
             target="_blank"
             rel="noreferrer"
             label={t`Join Discord`}
@@ -50,7 +50,7 @@ export default function ShareCard({ className }: ShareCardProps): ReactElement {
           />
           <CallToActionCard
             as="a"
-            href={ElementUrls.FORUM}
+            href={ElementUrl.FORUM}
             target="_blank"
             rel="noreferrer"
             label={t`Visit forum`}

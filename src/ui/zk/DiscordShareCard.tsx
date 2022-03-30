@@ -1,6 +1,5 @@
 import { ReactElement } from "react";
 import RadiantShieldIcon from "./RadiantShieldIcon";
-import ElementUrls from "src/elf/urls";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -9,26 +8,31 @@ import DiscordIcon from "src/ui/base/svg/DiscordIcon";
 import { t, jt } from "ttag";
 import classNames from "classnames";
 
-const discordServerLink = (
+const discordClaimChannelUrl =
+  "https://discord.com/channels/754739461707006013/958484548558143518";
+
+const discordChannelLink = (
   <a
-    key="discordServerLink"
-    href={ElementUrls.DISCORD}
+    key="discordChannelLink"
+    href={discordClaimChannelUrl}
     target="_blank"
     rel="noreferrer"
     className="text-yieldLightBlue"
   >
-    {t`Element Discord Server`}
+    {t`#discord-claim channel`}
   </a>
 );
 
 interface DiscordShareCardProps {
   className?: string;
   publicId: string;
+  onShareClick?: () => void;
 }
 
 export default function DiscordShareCard({
   className,
   publicId,
+  onShareClick,
 }: DiscordShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -36,7 +40,7 @@ export default function DiscordShareCard({
         <RadiantShieldIcon className="mb-5" />
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Successfully Created`}</h1>
-          <p className="w-0 min-w-full">{jt`Use the command below in the ${discordServerLink} to associate your new Public ID with your Discord ID. You'll see a confirmation message from the Public ID Collection Bot after it's submitted.`}</p>
+          <p className="w-0 min-w-full">{jt`Copy the command below into the ${discordChannelLink} of the Element Discord server to associate your new Public ID with your Discord ID. You'll see a confirmation message from the Public ID Collection Bot after it's submitted.`}</p>
         </div>
 
         <HashString
@@ -53,8 +57,9 @@ export default function DiscordShareCard({
         />
         <div className="flex gap-12">
           <AnchorButton
+            onClick={onShareClick}
             variant={ButtonVariant.GRADIENT}
-            href={ElementUrls.DISCORD}
+            href={discordClaimChannelUrl}
             className="flex gap-2"
             target="_blank"
           >

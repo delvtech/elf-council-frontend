@@ -15,7 +15,7 @@ import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
 
@@ -87,8 +87,8 @@ export default function Sidebar(props: SidebarProps): ReactElement {
                 <UserGroupIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
-            <SidebarLinkExternal link={ElementUrls.FORUM} label={t`Forum`} />
-            <SidebarLinkExternal link={ElementUrls.DOCS} label={t`Resources`} />
+            <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />
+            <SidebarLinkExternal link={ElementUrl.DOCS} label={t`Resources`} />
 
             {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
           </div>

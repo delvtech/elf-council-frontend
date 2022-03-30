@@ -9,7 +9,7 @@ import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import Link from "next/link";
 import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 
@@ -41,9 +41,9 @@ export function ClaimSuccessful(): ReactElement {
             />
           </a>
         </Link>
-        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop
-        experience on Twitter and join the Element Discord to get more involved
-        in our community and governance system.`}</p>
+        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop 
+        experience on Twitter and join the Element Discord to get more involved 
+        in the community and governance system.`}</p>
         <div className="flex w-full space-x-4">
           <a
             target="_blank"
@@ -61,12 +61,12 @@ export function ClaimSuccessful(): ReactElement {
           <a
             target="_blank"
             rel="noreferrer"
-            href={ElementUrls.DISCORD}
+            href={ElementUrl.DISCORD}
             className="flex-1"
           >
             <CallToActionCard label={t`Join Discord`} icon={<DiscordIcon />} />
           </a>
-          <a href={ElementUrls.FORUM} className="flex-1">
+          <a href={ElementUrl.FORUM} className="flex-1">
             <CallToActionCard
               label={t`Visit forum`}
               icon={<CommonwealthIcon />}

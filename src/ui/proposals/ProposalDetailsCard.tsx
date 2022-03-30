@@ -23,7 +23,7 @@ import { t, jt } from "ttag";
 import H1 from "src/ui/base/H1/H1";
 import H2 from "src/ui/base/H2/H2";
 import { assertNever } from "src/base/assertNever";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { VotingPower } from "src/elf/proposals/VotingPower";
@@ -245,7 +245,7 @@ export function ProposalDetailsCard(
             className="overflow-hidden text-sm text-white"
           />
           <ExternalLink
-            href={ElementUrls.FORUM}
+            href={ElementUrl.FORUM}
             text={t`View discussion`}
             className="overflow-hidden text-sm text-white"
           />

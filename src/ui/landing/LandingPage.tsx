@@ -1,15 +1,12 @@
 import { PropsWithChildren, ReactElement } from "react";
 import Head from "next/head";
-import ElementUrls from "src/elf/urls";
+import ElementUrl from "src/elf/urls";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { ArrowRightIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { ArrowRightIcon } from "@heroicons/react/solid";
 import { t } from "ttag";
-import { Disclosure } from "@headlessui/react";
-import classNames from "classnames";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import CouncilLogo from "src/ui/base/svg/CouncilLogo/CouncilLogo";
-import Button from "src/ui/base/Button/Button";
 import SparkleIcon from "src/ui/base/svg/SparkleIcon";
 import Image from "next/image";
 import Header from "./Header";
@@ -39,106 +36,61 @@ export default function LandingPage(): ReactElement {
             <div className="flex-1 basis-[60%]">
               <div className="mb-10 mt-4 flex flex-col items-center text-center sm:mb-4 sm:flex-row-reverse sm:text-left lg:items-start">
                 <SparkleIcon className="ml-8 mr-5 fill-hackerSky lg:flex-1 xl:mr-0" />
-                <h1 className="flex-1 text-5xl font-semibold leading-tight text-hackerSky sm:text-7xl">{t`Presenting Council`}</h1>
+                <h1 className="flex-1 text-5xl font-semibold leading-tight text-hackerSky sm:text-7xl">{t`Introducing Council`}</h1>
               </div>
-              <p className="mb-8 text-2xl leading-10">{t`Welcome to Element's v0 Governance System. Explore below to learn more about our DAO launch.`}</p>
+              <p className="mb-8 text-2xl leading-10">{t`Welcome to Element DAO's v0 Governance System. Explore below to learn more about the launch of the DAO.`}</p>
 
-              <Disclosure>
-                {({ open }) => (
-                  <div className="inline-flex w-full flex-col xl:w-auto">
-                    <Disclosure.Button
-                      as={Button}
-                      variant={ButtonVariant.SECONDARY}
-                      className="mb-4 hidden h-16 justify-between px-7 xl:flex"
-                    >
-                      <span className="bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-2xl text-transparent">
-                        {t`Explore Claiming Rewards`}
-                      </span>
-                      <ChevronRightIcon
-                        className={classNames(
-                          open && "rotate-90 transform",
-                          "ml-3 h-8 w-8 fill-principalRoyalBlue transition duration-150 ease-in-out",
-                        )}
-                      />
-                    </Disclosure.Button>
-                    <Disclosure.Panel
-                      static
-                      as="ul"
-                      className={classNames(
-                        "flex flex-col gap-4",
-                        !open && "xl:hidden",
-                      )}
-                    >
-                      <ClaimLink href="/airdrop">
-                        {t`Claim ELFI Governance Power`}
-                      </ClaimLink>
-                      <ClaimLink href={ElementUrls.NFT_APP} external>
-                        {t`Claim ELFIverse NFT`}
-                      </ClaimLink>
-                      <ClaimLink href="/zk/discord">
-                        {t`Claim for Discord Users`}
-                      </ClaimLink>
-                      <ClaimLink href="/zk/github">
-                        {t`Claim for GitHub Users`}
-                      </ClaimLink>
-                    </Disclosure.Panel>
-                  </div>
-                )}
-              </Disclosure>
+              <div className="inline-flex w-full flex-col xl:w-auto">
+                <ul className="flex flex-col gap-4">
+                  <ClaimLink href="/airdrop">
+                    {t`Claim ELFI Governance Power`}
+                  </ClaimLink>
+                  <ClaimLink href={ElementUrl.NFT_APP} external>
+                    {t`Claim ELFIverse NFT`}
+                  </ClaimLink>
+                  <ClaimLink href="/zk/discord">
+                    {t`Airdrop for Discord Users`}
+                  </ClaimLink>
+                  <ClaimLink href="/zk/github">
+                    {t`Airdrop for GitHub Users`}
+                  </ClaimLink>
+                </ul>
+              </div>
             </div>
             {/* main right column */}
             <div className="flex-1 basis-[45%]">
-              <Disclosure>
-                {({ open }) => (
-                  <>
-                    {/* relative container for background box */}
-                    <div className="relative">
-                      {/* header for small screens */}
-                      <div className="mb-10 flex w-full items-center justify-between gap-5 xl:hidden">
-                        <h2 className="text-left text-3xl font-semibold leading-10">{t`Explore Governance Resources`}</h2>
-                        <CouncilLogo className="mr-5 h-auto w-16" />
-                      </div>
+              {/* relative container for background box */}
+              <div className="relative">
+                {/* header for small screens */}
+                <div className="mb-10 flex w-full items-center justify-between gap-5 xl:hidden">
+                  <h2 className="text-left text-3xl font-semibold leading-10">{t`Explore Council Resources`}</h2>
+                  <CouncilLogo className="mr-5 h-auto w-16" />
+                </div>
 
-                      {/* large button for large screens */}
-                      <Disclosure.Button className="mb-5 hidden w-full flex-col items-center rounded-2xl bg-white p-9 pt-11 xl:flex">
-                        <h2 className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Governance Resources`}</h2>
-                        <CouncilLogo className="mb-16 h-auto w-56" />
-                        <ChevronRightIcon
-                          className={classNames(
-                            open && "rotate-90 transform",
-                            "ml-auto -mr-2 -mb-2 h-8 w-8 fill-principalRoyalBlue transition duration-150 ease-in-out",
-                          )}
-                        />
-                      </Disclosure.Button>
+                {/* large card for large screens */}
+                <div className="mb-5 hidden w-full flex-col items-center rounded-2xl bg-white p-9 pt-11 xl:flex">
+                  <h2 className="mb-24 bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-left text-3xl font-semibold leading-10 text-transparent">{t`Explore Council Resources`}</h2>
+                  <CouncilLogo className="mb-16 h-auto w-56" />
+                </div>
 
-                      {/* background box */}
-                      <div className="absolute -left-20 -bottom-20 -z-10 hidden h-56 w-80 border-y-2 border-l-2 border-white/20 bg-gradient-to-r from-white/10 to-transparent bg-no-repeat xl:block"></div>
-                    </div>
-                    <Disclosure.Panel
-                      as="ul"
-                      className={classNames(
-                        "flex flex-col items-stretch gap-5 xl:flex-row",
-                        !open && "xl:hidden",
-                      )}
-                      static
-                    >
-                      <ResourceLink
-                        href={`${ElementUrls.MEDIUM}/the-governance-steering-council-63aea7732262`}
-                      >
-                        {t`Read about the Governance Steering Council`}
-                      </ResourceLink>
-                      <ResourceLink
-                        href={`${ElementUrls.MEDIUM}/voting-vaults-a-new-defi-and-governance-primitive-b4b2f6289d48`}
-                      >
-                        {t`Read about Voting Vaults and Delegation`}
-                      </ResourceLink>
-                      <ResourceLink href={`${ElementUrls.GITHUB}/council`}>
-                        {t`View the code behind Council`}
-                      </ResourceLink>
-                    </Disclosure.Panel>
-                  </>
-                )}
-              </Disclosure>
+                {/* background box */}
+                <div className="absolute -left-20 -bottom-20 -z-10 hidden h-56 w-80 border-y-2 border-l-2 border-white/20 bg-gradient-to-r from-white/10 to-transparent bg-no-repeat xl:block"></div>
+              </div>
+              <ul className="flex flex-col items-stretch gap-5 xl:flex-row">
+                <ResourceLink
+                  href={`${ElementUrl.MEDIUM}/the-governance-steering-council-63aea7732262`}
+                >
+                  {t`Read about the Governance Steering Council`}
+                </ResourceLink>
+                <ResourceLink
+                  href={`${ElementUrl.MEDIUM}/voting-vaults-a-new-defi-and-governance-primitive-b4b2f6289d48`}
+                >
+                  {t`Read about Voting Vaults and Delegation`}
+                </ResourceLink>
+                <ResourceLink href={`${ElementUrl.GITHUB}/council`}>
+                  {t`View the code behind Council`}
+                </ResourceLink>
+              </ul>
             </div>
           </main>
         </div>

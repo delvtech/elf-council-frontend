@@ -20,11 +20,13 @@ const githubIssueLink = (
 interface GitHubShareCardProps {
   className?: string;
   publicId: string;
+  onShareClick?: () => void;
 }
 
 export default function GitHubShareCard({
   className,
   publicId,
+  onShareClick,
 }: GitHubShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -47,6 +49,7 @@ export default function GitHubShareCard({
         />
         <div className="flex gap-12">
           <AnchorButton
+            onClick={onShareClick}
             variant={ButtonVariant.GRADIENT}
             href={GITHUB_ZK_URL}
             className="flex gap-2"

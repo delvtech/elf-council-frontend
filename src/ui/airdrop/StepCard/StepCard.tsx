@@ -10,7 +10,7 @@ interface StepCardProps {
   nextStepDisabled?: boolean;
   nextStepLabel?: string | ReactNode;
   prevStepLabel?: string;
-  onPrevStep: () => void;
+  onPrevStep?: () => void;
   children?: ReactNode;
   className?: string;
 }
@@ -33,10 +33,13 @@ export function StepCard({
       <div className="flex h-full flex-col justify-between p-2">
         {children}
         <div className="flex justify-between pt-6">
-          <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
-            <span className="px-10">{prevStepLabel}</span>
-          </Button>
+          {onPrevStep && (
+            <Button onClick={onPrevStep} variant={ButtonVariant.WHITE}>
+              <span className="px-10">{prevStepLabel}</span>
+            </Button>
+          )}
           <Button
+            className="ml-auto"
             disabled={nextStepDisabled}
             onClick={onNextStep}
             variant={ButtonVariant.GRADIENT}

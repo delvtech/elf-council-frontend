@@ -1,4 +1,4 @@
-export enum ElementUrls {
+export enum ElementUrl {
   // apps
   CORE_LANDING = "https://element.fi",
   CORE_APP = "https://app.element.fi",
@@ -14,4 +14,4 @@ export enum ElementUrls {
   MEDIUM = "https://medium.com/element-finance",
 }
 
-export default ElementUrls;
+export default ElementUrl;

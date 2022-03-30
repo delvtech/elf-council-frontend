@@ -16,7 +16,7 @@ import { jt, t } from "ttag";
 interface AirdropPreviewProps {
   account: string | null | undefined;
   onNextStep: () => void;
-  onPrevStep: () => void;
+  onPrevStep?: () => void;
 }
 
 const elementIcon = (
