@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { t } from "ttag";
 
 import { getIsVotingOpen } from "src/elf-council-proposals";

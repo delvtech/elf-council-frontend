@@ -15,7 +15,7 @@ import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import { Ballot } from "src/ui/voting/Ballot";
 import { useLockingVaultVotingPower } from "src/ui/voting/useLockingVaultVotingPower";
 import { useVestingVaultVotingPower } from "src/ui/voting/useVestingVaultVotingPower";
-import { CoreVoting } from "elf-council-typechain";
+import { CoreVoting } from "@elementfi/elf-council-typechain";
 
 const { lockingVault: lockingVaultAddress, vestingVault: vestingVaultAddress } =
   addressesJson.addresses;

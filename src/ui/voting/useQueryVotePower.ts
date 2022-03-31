@@ -4,7 +4,7 @@ import {
   LockingVault,
   OptimisticRewards,
   VestingVault,
-} from "elf-council-typechain";
+} from "@elementfi/elf-council-typechain";
 import { BytesLike } from "ethers";
 
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";

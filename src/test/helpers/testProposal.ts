@@ -1,6 +1,6 @@
 import { parseEther } from "@ethersproject/units";
-import { AddressesJsonFile } from "elf-council-tokenlist";
-import { CoreVoting__factory } from "elf-council-typechain";
+import { AddressesJsonFile } from "@elementfi/elf-council-tokenlist";
+import { CoreVoting__factory } from "@elementfi/elf-council-typechain";
 import { MockProvider } from "ethereum-waffle";
 import { BytesLike, ethers, Wallet } from "ethers";
 

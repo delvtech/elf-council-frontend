@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 import { useSmartContractEvents } from "@elementfi/react-query-typechain";
-import { ProposalsJson } from "elf-council-proposals";
+import { ProposalsJson } from "@elementfi/elf-council-proposals";
 import { BigNumber } from "ethers";
 import { t } from "ttag";
 

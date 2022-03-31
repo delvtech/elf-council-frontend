@@ -5,7 +5,7 @@ import {
   LockingVault__factory,
   OptimisticRewards__factory,
   VestingVault__factory,
-} from "elf-council-typechain";
+} from "@elementfi/elf-council-typechain";
 import { addressesJson } from "src/elf-council-addresses";
 import { defaultProvider } from "src/elf/providers/providers";
 

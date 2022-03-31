@@ -1,4 +1,4 @@
-import { ProposalsJson } from "elf-council-proposals";
+import { ProposalsJson } from "@elementfi/elf-council-proposals";
 import React, { ReactElement } from "react";
 import { PROPOSALS_JSON_URL } from "src/elf-council-proposals";
 import PageView from "src/ui/app/PageView";

@@ -1,4 +1,4 @@
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { parseEther } from "ethers/lib/utils";
 import { ReactElement } from "react";
 import { Intent } from "src/ui/base/Intent";

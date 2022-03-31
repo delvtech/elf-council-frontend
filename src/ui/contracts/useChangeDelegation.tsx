@@ -2,7 +2,7 @@ import { lockingVaultContract } from "src/elf/contracts";
 import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
-import { LockingVault } from "elf-council-typechain";
+import { LockingVault } from "@elementfi/elf-council-typechain";
 import {
   makeSmartContractReadCallQueryKey,
   useSmartContractTransaction,

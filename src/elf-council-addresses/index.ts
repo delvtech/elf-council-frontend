@@ -2,7 +2,7 @@ import {
   AddressesJsonFile,
   mainnetAddressList,
   goerliAddressList,
-} from "elf-council-tokenlist";
+} from "@elementfi/elf-council-tokenlist";
 
 // For local hardhat only, this is inlined as an object to preserve type safety
 const testnetAddressList: AddressesJsonFile = {

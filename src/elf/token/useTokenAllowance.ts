@@ -1,6 +1,6 @@
 import { QueryObserverResult } from "react-query";
 
-import { ERC20Permit } from "elf-council-typechain";
+import { ERC20Permit } from "@elementfi/elf-council-typechain";
 import { BigNumber } from "ethers";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 
