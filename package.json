@@ -125,6 +125,7 @@
     "depcruise": "depcruise --config .dependency-cruiser.js .",
     "dev": "next dev",
     "dev-goerli": "cross-env NEXT_PUBLIC_CHAIN_NAME=goerli next dev",
+    "dev-mainnet": "cross-env NEXT_PUBLIC_CHAIN_NAME=mainnet next dev",
     "lint": "next lint",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --write \"{pages,src}/**/*.ts{,x}\"",
