@@ -13,12 +13,17 @@ export interface DelegatesJson {
 
 export interface Delegate {
   address: string;
-  name: string;
-  description: string;
+  commonwealthPostedFromAddress?: string;
+  commonwealthCommentId?: number;
+  commonwealthName?: string | null;
+  name?: string;
+  ensName?: string | null;
+  description?: string;
+
   /**
    * Twitter handle w/out the @ symbol, eg: "CharlieStLouis" (not "@CharlieStLouis")
    */
-  twitterHandle: string;
+  twitterHandle?: string;
 }
 
 export const delegates = getDelegates();

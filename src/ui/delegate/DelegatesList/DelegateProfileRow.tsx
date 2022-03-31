@@ -12,6 +12,8 @@ import {
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { Provider } from "@ethersproject/providers";
+import { formatWalletAddress } from "src/base/formatWalletAddress";
+import { getGSCCandidateUrl } from "src/commonwealth";
 
 interface DelegateProfileRowProps {
   provider?: Provider;
@@ -32,6 +34,14 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     profileActionButton,
   } = props;
 
+  const formattedDelegateName =
+    delegate.ensName ||
+    delegate.commonwealthName ||
+    delegate.name ||
+    formatWalletAddress(delegate.address);
+  const delegateNameElement = (
+    <span className="truncate">{formattedDelegateName}</span>
+  );
   return (
     <Popover>
       <div
@@ -55,7 +65,20 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                 size={20}
                 className="mr-2 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
               />
-              <span className="truncate">{delegate.name}</span>
+              {delegate.commonwealthPostedFromAddress ? (
+                <a
+                  className="hover:underline"
+                  target="_blank"
+                  href={getGSCCandidateUrl(
+                    delegate.commonwealthPostedFromAddress,
+                  )}
+                  rel="noreferrer"
+                >
+                  {delegateNameElement}
+                </a>
+              ) : (
+                delegateNameElement
+              )}
             </div>
             <div className="lg:hidden">
               <span
