@@ -38,7 +38,7 @@ function ElfiverseBanner({
   const hasMinted = mintedCount && mintedCount.gt(0);
   const isWhitelisted = useMemo(() => {
     return recentDelegators.slice(0, CUT_OFF).some((delegator) => {
-      return new RegExp(account?.slice(2) || "", "i").test(delegator);
+      return new RegExp(account?.slice(2) || " ", "i").test(delegator);
     });
   }, [account, recentDelegators]);
 
