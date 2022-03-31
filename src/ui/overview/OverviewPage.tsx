@@ -8,15 +8,14 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { jt, t } from "ttag";
 
+import { ProposalsJson } from "elf-council-proposals";
 import ElementUrls from "src/elf/urls";
 import Card from "src/ui/base/Card/Card";
 import H1 from "src/ui/base/H1/H1";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
-
-import { SummaryCards } from "./SummaryCards";
-import { ProposalsJson } from "elf-council-proposals";
-import ElfiverseBanner from "./ElfiverseBanner";
+import { SummaryCards } from "src/ui/overview/SummaryCards";
+import ElfiverseBanner from "src/ui/overview/ElfiverseBanner";
 
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
