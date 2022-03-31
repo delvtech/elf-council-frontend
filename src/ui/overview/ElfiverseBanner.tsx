@@ -67,6 +67,10 @@ function ElfiverseBanner({
     return WhitelistStatus.CLOSED;
   };
 
+  if (remainingElves <= 0 && (!hasMinted || !isWhitelisted)) {
+    return <></>;
+  }
+
   return (
     <Card className="flex w-full flex-col gap-4 shadow-md xl:max-w-[512px]">
       {/* Header */}

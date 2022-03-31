@@ -15,7 +15,7 @@ import H1 from "src/ui/base/H1/H1";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 import { SummaryCards } from "src/ui/overview/SummaryCards";
-import ElfiverseBanner, { TOTAL_ELVES } from "src/ui/overview/ElfiverseBanner";
+import ElfiverseBanner from "src/ui/overview/ElfiverseBanner";
 
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
@@ -26,7 +26,6 @@ export function OverviewPage({
   recentDelegators,
 }: OverviewPageProps): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
-  const remainingElves = TOTAL_ELVES - recentDelegators.length;
   return (
     <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
       <Head>
@@ -46,12 +45,10 @@ export function OverviewPage({
         </div>
         <div className="flex w-full flex-col gap-6">
           <FAQ />
-          {remainingElves > 0 && (
-            <ElfiverseBanner
-              account={account}
-              recentDelegators={recentDelegators}
-            />
-          )}
+          <ElfiverseBanner
+            account={account}
+            recentDelegators={recentDelegators}
+          />
         </div>
       </div>
     </div>
