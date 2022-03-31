@@ -3,7 +3,7 @@ import {
   testnetNftTokenContractAddress,
   goerliNftTokenContractAddress,
   mainnetNftTokenContractAddress,
-} from "src/ui/overview/NFTTokenContractAddresses";
+} from "src/ui/overview/NftTokenContractAddresses";
 
 export function getNFTTokenContract(): string {
   const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";
