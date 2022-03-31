@@ -18,7 +18,7 @@ interface ElfiverseBannerProps {
 // Constants
 export const TOTAL_ELVES = 2000;
 const CUT_OFF = 2000;
-const START_DATE = new Date("April 6, 2022");
+const START_DATE = new Date("March 31, 2022");
 
 enum WhitelistStatus {
   WHITELISTED = "Whitelisted",
