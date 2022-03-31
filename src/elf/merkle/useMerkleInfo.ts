@@ -20,7 +20,8 @@ export function useMerkleInfo(
 ): QueryObserverResult<MerkleProof> {
   return useQuery({
     queryKey: ["merkleInfo", address],
-    queryFn: () => fetchMerkleInfo(address as string, rewardType),
+    queryFn: () =>
+      fetchMerkleInfo(address?.toLowerCase() as string, rewardType),
     enabled: !!address,
   });
 }

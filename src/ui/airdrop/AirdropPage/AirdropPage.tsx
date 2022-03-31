@@ -65,7 +65,6 @@ enum Step {
 
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
-
   const signer = useSigner(account, library);
   const merkleInfoQueryData = useMerkleInfo(
     account?.toLowerCase(),
