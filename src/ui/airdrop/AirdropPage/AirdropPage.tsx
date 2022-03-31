@@ -66,7 +66,10 @@ enum Step {
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
-  const merkleInfoQueryData = useMerkleInfo(account, MerkleRewardType.RETRO);
+  const merkleInfoQueryData = useMerkleInfo(
+    account?.toLowerCase(),
+    MerkleRewardType.RETRO,
+  );
 
   const { data: merkleInfo } = merkleInfoQueryData;
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
