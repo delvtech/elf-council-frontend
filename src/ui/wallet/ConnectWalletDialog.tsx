@@ -23,11 +23,8 @@ export function ConnectWalletDialog({
   isOpen,
   onClose,
 }: ConnectWalletDialogProps): ReactElement {
-  const {
-    activate,
-    deactivate: deactivateActiveConnector,
-    active,
-  } = useWeb3React<Web3Provider>();
+  const { activate, deactivate: deactivateActiveConnector } =
+    useWeb3React<Web3Provider>();
 
   const activateConnector = useCallback(
     async (connector: InjectedConnector | WalletConnectConnector) => {
@@ -84,15 +81,13 @@ export function ConnectWalletDialog({
             {t`Note: Some connectors can only disconnect wallets from their app. Some connectors may also cause a page refresh.`}
           </p>
         </div>
-        {active ? (
-          <Button
-            variant={ButtonVariant.PALE}
-            onClick={onClose}
-            className="mt-4 grid place-items-center"
-          >
-            <span>{t`Close Wallet Connection`}</span>
-          </Button>
-        ) : null}
+        <Button
+          variant={ButtonVariant.PALE}
+          onClick={onClose}
+          className="mt-4 grid place-items-center"
+        >
+          <span>{t`Close Wallet Connection`}</span>
+        </Button>
       </div>
     </SimpleDialog>
   );
