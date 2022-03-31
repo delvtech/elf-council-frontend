@@ -50,7 +50,7 @@ export function ClaimSuccessful(): ReactElement {
             rel="noreferrer"
             className="flex-1"
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              t`🧝‍♂️`,
+              t`I just accepted my portion of responsibility to govern the Element DAO. The experimentation of governance, fixed rates, DeFi and so much more has just begun!`,
             )}`}
           >
             <CallToActionCard
