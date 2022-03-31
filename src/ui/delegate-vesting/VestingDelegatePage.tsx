@@ -7,7 +7,6 @@ import classNames from "classnames";
 import { Signer } from "ethers";
 import { t } from "ttag";
 
-import { useDelegate } from "src/ui/delegate/useDelegate";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import H2 from "src/ui/base/H2/H2";
 import DelegateCard from "src/ui/delegate/DelegateCard/DelegateCard";
@@ -15,6 +14,7 @@ import DelegatesList from "src/ui/delegate/DelegatesList/DelegatesList";
 import WarningLabel from "src/ui/delegate/DelegateCard/WarningLabel";
 import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
 import { useDelegationVesting } from "src/ui/contracts/useDelegationVesting";
+import { useDelegateVesting } from "src/ui/delegate/useDelegateVesting";
 
 export default function VestingClaim(): ReactElement {
   const { account, library } = useWeb3React();
@@ -35,7 +35,7 @@ export default function VestingClaim(): ReactElement {
     isSuccess,
   } = useDelegationVesting(account, signer);
 
-  const delegateAddressOnChain = useDelegate(account);
+  const delegateAddressOnChain = useDelegateVesting(account);
 
   const showNoConnectionWarning = !account;
 
