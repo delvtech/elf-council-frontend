@@ -9,6 +9,7 @@ import Card from "src/ui/base/Card/Card";
 import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { assertNever } from "src/base/assertNever";
 import { useNFTTokenBalanceOf } from "src/ui/overview/useNFTTokenBalanceOf";
+import useNumDelegates from "./useNumDelegates";
 
 interface ElfiverseBannerProps {
   account: string | null | undefined;
@@ -32,8 +33,8 @@ function ElfiverseBanner({
   recentDelegators,
 }: ElfiverseBannerProps): ReactElement | null {
   const { data: mintedCount } = useNFTTokenBalanceOf(account);
-
-  const remainingElves = TOTAL_ELVES - recentDelegators.length;
+  const numDelegates = useNumDelegates();
+  const remainingElves = TOTAL_ELVES - numDelegates;
 
   const hasMinted = mintedCount && mintedCount.gt(0);
   const isWhitelisted = useMemo(() => {
@@ -41,10 +42,6 @@ function ElfiverseBanner({
       return new RegExp(account?.slice(2) || " ", "i").test(delegator);
     });
   }, [account, recentDelegators]);
-
-  if (remainingElves <= 0) {
-    return null;
-  }
 
   const getWhitelistStatus = () => {
     if (hasMinted) {
