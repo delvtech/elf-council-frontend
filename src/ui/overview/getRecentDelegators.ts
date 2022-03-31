@@ -3,6 +3,9 @@ import {
   lockingVaultContract as lockingVault,
   vestingContract as vestingVault,
 } from "src/elf/contracts";
+import { Log } from "@ethersproject/providers";
+
+const STARTING_BLOCK_NUMBER = 14496292;
 
 // Fetches the number of unique delegators from both locking and vesting vaults
 // This function should be used within NextJs getStaticProps with a TTL to cache this result
@@ -11,14 +14,22 @@ export async function getRecentDelegators(): Promise<string[]> {
   const lockingFilter = lockingVault.filters.VoteChange(null, null, null);
   const vestingFilter = vestingVault.filters.VoteChange(null, null, null);
 
-  const lockingLogs = await provider.getLogs({
-    fromBlock: 0,
-    ...lockingFilter,
-  });
-  const vestingLogs = await provider.getLogs({
-    fromBlock: 0,
-    ...vestingFilter,
-  });
+  let lockingLogs: Log[];
+  let vestingLogs: Log[];
+
+  try {
+    lockingLogs = await provider.getLogs({
+      fromBlock: STARTING_BLOCK_NUMBER,
+      ...lockingFilter,
+    });
+    vestingLogs = await provider.getLogs({
+      fromBlock: STARTING_BLOCK_NUMBER,
+      ...vestingFilter,
+    });
+  } catch (e) {
+    lockingLogs = [];
+    vestingLogs = [];
+  }
 
   const delegators: Set<string> = new Set([]);
 
