@@ -1,4 +1,5 @@
 import { Provider } from "@ethersproject/providers";
+import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { isValidAddress } from "src/base/isValidAddress";
 import { useEnsName } from "./useEnsName";
 
@@ -12,8 +13,6 @@ export function useFormattedWalletAddress(
   } else if (!accountOrEnsName || !isValidAddress(accountOrEnsName)) {
     return accountOrEnsName;
   } else {
-    // Using slice w/ no-magic-numbers is overkill
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    return `${accountOrEnsName.slice(0, 7)}...${accountOrEnsName.slice(-5)}`;
+    return formatWalletAddress(accountOrEnsName);
   }
 }
