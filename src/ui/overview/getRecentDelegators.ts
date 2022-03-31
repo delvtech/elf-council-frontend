@@ -24,7 +24,6 @@ export async function getRecentDelegators(): Promise<string[]> {
   const delegators = new Set<string>([]);
 
   lockingEvents.forEach((event) => {
-    console.log(event);
     const value = event.args[2];
     const from = event.args[0];
     if (value.gt(0)) {
@@ -33,7 +32,6 @@ export async function getRecentDelegators(): Promise<string[]> {
   });
 
   vestingEvents.forEach((event) => {
-    console.log(event);
     const value = event.args[2];
     const from = event.args[0];
     if (value.gt(0)) {

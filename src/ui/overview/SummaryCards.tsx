@@ -72,6 +72,7 @@ function useNumDelegates() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [unusedAccount, delegate, amount]: [string, string, BigNumber] =
       event.args as [string, string, BigNumber];
+
     if (delegate in votePowerByDelegates) {
       votePowerByDelegates[delegate] =
         votePowerByDelegates[delegate].add(amount);
@@ -82,7 +83,7 @@ function useNumDelegates() {
 
   const delegatedVotes = Object.values(votePowerByDelegates);
 
-  delegatedVotes.filter((votePower) => !votePower.isZero());
+  const filtered = delegatedVotes.filter((votePower) => !votePower.isZero());
 
-  return delegatedVotes.length;
+  return filtered.length;
 }
