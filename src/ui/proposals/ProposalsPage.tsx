@@ -10,7 +10,7 @@ import Head from "next/head";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import { Proposal, ProposalsJson } from "elf-council-proposals";
+import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
 import { t } from "ttag";
 
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";

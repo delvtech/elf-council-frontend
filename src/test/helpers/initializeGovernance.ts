@@ -2,7 +2,7 @@ import {
   LockingVault__factory,
   MockERC20__factory,
   VestingVault__factory,
-} from "elf-council-typechain";
+} from "@elementfi/elf-council-typechain";
 import { MockProvider } from "ethereum-waffle";
 import { ethers, Signer, Wallet } from "ethers";
 import { parseEther } from "ethers/lib/utils";

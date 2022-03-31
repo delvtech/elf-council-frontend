@@ -1,4 +1,4 @@
-import { Treasury, Treasury__factory } from "elf-council-typechain";
+import { Treasury, Treasury__factory } from "@elementfi/elf-council-typechain";
 import { Wallet } from "ethers";
 
 export async function deployTreasury(

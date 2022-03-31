@@ -1,4 +1,4 @@
-import { OptimisticRewards } from "elf-council-typechain";
+import { OptimisticRewards } from "@elementfi/elf-council-typechain";
 import { ethers } from "ethers";
 import { parseEther } from "ethers/lib/utils";
 import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";

@@ -8,7 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { jt, t } from "ttag";
 
-import { ProposalsJson } from "elf-council-proposals";
+import { ProposalsJson } from "@elementfi/elf-council-proposals";
 import ElementUrls from "src/elf/urls";
 import Card from "src/ui/base/Card/Card";
 import H1 from "src/ui/base/H1/H1";

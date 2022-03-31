@@ -8,7 +8,7 @@ import { t } from "ttag";
 import PopoverButton from "src/ui/base/Button/PopoverButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { Ballot, BallotChoices } from "src/ui/voting/Ballot";
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 
 interface VotingBallotButtonProps {

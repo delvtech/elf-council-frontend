@@ -1,4 +1,4 @@
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { addressesJson } from "src/elf-council-addresses";
 import { ChainId } from "src/ethereum";
 

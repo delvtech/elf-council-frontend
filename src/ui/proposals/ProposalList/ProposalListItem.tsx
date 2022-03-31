@@ -7,7 +7,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { formatEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
