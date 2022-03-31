@@ -67,7 +67,7 @@ function ElfiverseBanner({
     return WhitelistStatus.CLOSED;
   };
 
-  if (remainingElves <= 0 && (!hasMinted || !isWhitelisted)) {
+  if (remainingElves <= 0 && !hasMinted && !isWhitelisted) {
     return <></>;
   }
 
