@@ -67,7 +67,8 @@ export function getConnectorName(
 
   if (isWalletConnectConnector(connector)) {
     const walletBrand =
-      connector.walletConnectProvider?.wc?._peerMeta?.name || t`unknown`;
+      connector.walletConnectProvider?.connector?.clientMeta?.name ||
+      t`unknown`;
     return `WalletConnect (${walletBrand})`;
   }
 
