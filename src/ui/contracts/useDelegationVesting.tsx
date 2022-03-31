@@ -1,8 +1,8 @@
-import { lockingVaultContract, vestingContract } from "src/elf/contracts";
+import { vestingContract } from "src/elf/contracts";
 import { toast } from "react-hot-toast";
 import { ContractReceipt, Signer } from "ethers";
 import { UseMutationResult } from "react-query";
-import { LockingVault, VestingVault } from "elf-council-typechain";
+import { VestingVault } from "elf-council-typechain";
 import {
   makeSmartContractReadCallQueryKey,
   useSmartContractTransaction,
@@ -45,11 +45,9 @@ export function useDelegationVesting(
     onTransactionMined: () => {
       // Invalidate `deposits` so that consumers of `useDelegate` refresh
       queryClient.invalidateQueries(
-        makeSmartContractReadCallQueryKey(
-          lockingVaultContract.address,
-          "deposits",
-          [address as string],
-        ),
+        makeSmartContractReadCallQueryKey(vestingContract.address, "deposits", [
+          address as string,
+        ]),
       );
 
       toast.success(t`Delegation successfully changed`, {
