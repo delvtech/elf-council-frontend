@@ -44,7 +44,7 @@ export function OverviewPage({
         <div className="w-full">
           <PortfolioCard account={account} provider={library} />
         </div>
-        <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full flex-col gap-6">
           <FAQ />
           <ElfiverseBanner
             account={account}
