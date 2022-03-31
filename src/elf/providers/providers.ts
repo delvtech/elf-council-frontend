@@ -6,10 +6,15 @@ import { providers } from "ethers";
 import { addressesJson } from "src/elf-council-addresses";
 import { ChainId } from "src/ethereum";
 
+const isBrowser = typeof window !== "undefined";
+
 const LOCAL_RPC_HOST = "http://127.0.0.1:8545";
 const ALCHEMY_GOERLI_KEY = process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_KEY as string;
-const ALCHEMY_MAINNET_KEY = process.env
-  .NEXT_PUBLIC_MAINNET_ALCHEMY_KEY as string;
+const ALCHEMY_MAINNET_KEY = (
+  isBrowser
+    ? process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_KEY
+    : process.env.NEXT_PUBLIC_MAINNET_CI_ALCHEMY_KEY
+) as string;
 
 const { chainId } = addressesJson;
 export const ALCHEMY_GOERLI_HTTP_URL = `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`;
