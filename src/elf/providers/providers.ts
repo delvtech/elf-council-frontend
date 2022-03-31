@@ -13,7 +13,7 @@ const ALCHEMY_GOERLI_KEY = process.env.NEXT_PUBLIC_GOERLI_ALCHEMY_KEY as string;
 const ALCHEMY_MAINNET_KEY = (
   isBrowser
     ? process.env.NEXT_PUBLIC_MAINNET_ALCHEMY_KEY
-    : process.env.NEXT_PUBLIC_MAINNET_CI_ALCHEMY_KEY
+    : process.env.NEXT_PUBLIC_MAINNET_SERVER_ALCHEMY_KEY
 ) as string;
 
 const { chainId } = addressesJson;
