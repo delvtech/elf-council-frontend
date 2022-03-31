@@ -72,10 +72,7 @@ export default function AirdropPage(): ReactElement {
   );
 
   const { data: merkleInfo } = merkleInfoQueryData;
-  const claimableBalance = useUnclaimedAirdrop(
-    account?.toLowerCase(),
-    merkleInfo,
-  );
+  const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
 
   const [delegateAddress, setDelegateAddress] = useState<string | undefined>();
 
