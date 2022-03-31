@@ -13,7 +13,7 @@ import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
 import { t, jt } from "ttag";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
-export function useChangeDelegationVesting(
+export function useDelegationVesting(
   address: string | null | undefined,
   signer: Signer | undefined,
 ): UseMutationResult<
