@@ -8,24 +8,27 @@ import { useWeb3React } from "@web3-react/core";
 import classNames from "classnames";
 import { jt, t } from "ttag";
 
+import { ProposalsJson } from "elf-council-proposals";
 import ElementUrls from "src/elf/urls";
 import Card from "src/ui/base/Card/Card";
 import H1 from "src/ui/base/H1/H1";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
-
-import { SummaryCards } from "./SummaryCards";
-import { ProposalsJson } from "elf-council-proposals";
+import { SummaryCards } from "src/ui/overview/SummaryCards";
+import ElfiverseBanner from "src/ui/overview/ElfiverseBanner";
 
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
+  recentDelegators: string[];
 }
 export function OverviewPage({
   proposalsJson,
+  recentDelegators,
 }: OverviewPageProps): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
+
   return (
-    <div className="h-full w-full space-y-6 lg:max-w-[1024px]">
+    <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
       <Head>
         <title>{t`Overview | Element Council Protocol`}</title>
         <link rel="icon" href="/gov-favicon.ico" />
@@ -37,12 +40,16 @@ export function OverviewPage({
         </H1>
       </div>
       <SummaryCards proposalsJson={proposalsJson} />
-      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 lg:flex-row lg:space-x-6 lg:space-y-0">
+      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
         <div className="w-full">
           <PortfolioCard account={account} provider={library} />
         </div>
-        <div className="w-full">
+        <div className="flex w-full flex-col gap-6">
           <FAQ />
+          <ElfiverseBanner
+            account={account}
+            recentDelegators={recentDelegators}
+          />
         </div>
       </div>
     </div>
@@ -61,10 +68,10 @@ const faqDocsLink = (
 
 function FAQ() {
   return (
-    <Card className="w-full shadow-md lg:max-w-[512px]">
+    <Card className="w-full shadow-md xl:max-w-[512px]">
       <span className="text-xl font-bold tracking-widest text-principalRoyalBlue">{t`FAQ`}</span>
       <div className="w-full pt-4">
-        <div className="mx-auto w-full max-w-md rounded-2xl bg-white">
+        <div className="w-full rounded-2xl bg-white">
           <Disclosure as="div" className="mt-2">
             {({ open }) => (
               <>

@@ -34,7 +34,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   return (
     <Card
       variant={CardVariant.GRADIENT}
-      className="w-full shadow-md lg:max-w-[512px]"
+      className="w-full shadow-md xl:max-w-[512px]"
     >
       <div>
         <span className="text-xl font-bold tracking-widest text-white">{t`Portfolio`}</span>
