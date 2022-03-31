@@ -6,7 +6,7 @@ export function useUnclaimedAirdrop(
   account: string | undefined | null,
   merkleInfo: MerkleProof | undefined,
 ): string {
-  const claimed = useClaimedAirdrop(account?.toLowerCase());
+  const claimed = useClaimedAirdrop(account);
   const { value: totalGrant = "0" } = merkleInfo?.leaf || {};
 
   const unclaimed = FixedNumber.from(totalGrant)
