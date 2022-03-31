@@ -16,7 +16,7 @@ interface ElfiverseBannerProps {
 }
 
 // Constants
-const TOTAL_ELVES = 2000;
+export const TOTAL_ELVES = 2000;
 const CUT_OFF = 2000;
 const START_DATE = new Date("April 6, 2022");
 
