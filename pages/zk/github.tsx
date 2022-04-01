@@ -10,6 +10,7 @@ export default function ZK(): ReactElement {
     <Fragment>
       <Head>
         <title>{t`ZK Github Airdrop | Element Council Protocol`}</title>
+        <link rel="icon" href="/gov-favicon.ico" />
       </Head>
       <PageView
         showSidebar={false}

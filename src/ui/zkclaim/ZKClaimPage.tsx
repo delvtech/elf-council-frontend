@@ -110,6 +110,7 @@ export default function ZKClaimPage(): ReactElement {
     <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
       <Head>
         <title>{t`ZK Airdrop Claim | Element Council Protocol`}</title>
+        <link rel="icon" href="/gov-favicon.ico" />
       </Head>
 
       <div style={{ width: 600, maxWidth: "100%" }}>

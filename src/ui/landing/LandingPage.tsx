@@ -19,6 +19,7 @@ export default function LandingPage(): ReactElement {
     <div className="absolute top-0 left-0 right-0 bottom-0 overflow-hidden bg-principalRoyalBlue text-white">
       <Head>
         <title>{t`Welcome | Element Council Protocol`}</title>
+        <link rel="icon" href="/gov-favicon.ico" />
         {/* TODO: Update to a favicon with a transparent background */}
       </Head>
 
