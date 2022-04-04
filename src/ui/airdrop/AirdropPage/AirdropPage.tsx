@@ -111,7 +111,6 @@ export default function AirdropPage(): ReactElement {
     <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
       <Head>
         <title>{t`Element Airdrop | Element Council Protocol`}</title>
-        <link rel="icon" href="/gov-favicon.ico" />
       </Head>
 
       <div className="w-[600px] max-w-full">

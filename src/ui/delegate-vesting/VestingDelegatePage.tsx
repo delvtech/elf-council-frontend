@@ -66,7 +66,6 @@ export default function VestingClaim(): ReactElement {
     >
       <Head>
         <title>{t`Choose Delegate | Element Council Protocol`}</title>
-        <link rel="icon" href="/gov-favicon.ico" />
       </Head>
 
       <div className="flex w-full max-w-4xl flex-col">

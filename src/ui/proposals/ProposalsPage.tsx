@@ -181,7 +181,6 @@ export default function ProposalsPage({
     <div className="flex h-full lg:justify-center">
       <Head>
         <title>{t`Proposals | Element Council Protocol`}</title>
-        <link rel="icon" href="/gov-favicon.ico" />
       </Head>
 
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
