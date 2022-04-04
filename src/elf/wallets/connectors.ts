@@ -82,7 +82,7 @@ export function getConnectorName(
     return `WalletConnect (${walletBrand})`;
   }
 
-  return t`Uknown connector`;
+  return t`Unknown connector`;
 }
 
 export function isWalletConnectConnector(
