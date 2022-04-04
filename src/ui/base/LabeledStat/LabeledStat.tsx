@@ -1,12 +1,14 @@
+import classNames from "classnames";
 import React, { ReactElement } from "react";
 interface LabeledStatProps {
   data: string;
   topLabel?: string;
   bottomLabel?: string;
-  whiteText?: boolean;
+  textClassName?: string;
 }
+
 export function LabeledStat(props: LabeledStatProps): ReactElement {
-  const { data, topLabel, bottomLabel, whiteText } = props;
+  const { data, topLabel, bottomLabel, textClassName } = props;
 
   return (
     <div className="flex flex-col overflow-hidden px-4 py-5 sm:p-6">
@@ -17,7 +19,11 @@ export function LabeledStat(props: LabeledStatProps): ReactElement {
       )}
 
       <div>
-        <dd className="mt-1 text-4xl font-semibold">{data}</dd>
+        <dd
+          className={classNames(textClassName, "mt-1 text-4xl font-semibold")}
+        >
+          {data}
+        </dd>
       </div>
 
       {bottomLabel && (

@@ -17,7 +17,7 @@ LabeledStat.args = {
   data: "1000000",
   topLabel: "Top Label",
   bottomLabel: "Bottom Label",
-  whiteText: false,
+  textClassName: "",
 };
 
 LabeledStat.storyName = "LabeledStat";
