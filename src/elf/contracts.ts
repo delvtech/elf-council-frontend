@@ -1,5 +1,6 @@
 import {
   Airdrop__factory,
+  PrivateAirdrop__factory,
   CoreVoting__factory,
   ERC20Permit__factory,
   LockingVault__factory,
@@ -36,5 +37,10 @@ export const vestingContract = VestingVault__factory.connect(
 
 export const airdropContract = Airdrop__factory.connect(
   addressesJson.addresses.airdrop,
+  defaultProvider,
+);
+
+export const privateAirdropContract = PrivateAirdrop__factory.connect(
+  "",
   defaultProvider,
 );
