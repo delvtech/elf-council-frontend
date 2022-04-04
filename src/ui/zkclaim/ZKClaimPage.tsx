@@ -22,6 +22,7 @@ import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { t } from "ttag";
 import useAddressScreening from "./useAddressScreening";
+import useAlreadyClaimed from "./useAlreadyClaimed";
 
 export enum Step {
   LOOKUP = "lookup",
@@ -39,7 +40,7 @@ export default function ZKClaimPage(): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
   const secret = keySecretPair?.[1];
-  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
+  const alreadyClaimed = useAlreadyClaimed(key);
   const [delegateAddress, setDelegateAddress] = useState<string>();
   const {
     generate: generateProof,
