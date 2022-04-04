@@ -52,6 +52,11 @@ export function ConnectWalletDialog({
     await activate(coinbaseConnector, deactivateActiveConnector);
   }, [activate, deactivateActiveConnector]);
 
+  const handleCloseWalletConnection = async () => {
+    await deactivateActiveConnector();
+    onClose();
+  };
+
   return (
     <SimpleDialog isOpen={isOpen} onClose={onClose}>
       <div
@@ -101,7 +106,7 @@ export function ConnectWalletDialog({
         </div>
         <Button
           variant={ButtonVariant.PALE}
-          onClick={onClose}
+          onClick={handleCloseWalletConnection}
           className="mt-4 grid place-items-center"
         >
           <span>{t`Close Wallet Connection`}</span>
