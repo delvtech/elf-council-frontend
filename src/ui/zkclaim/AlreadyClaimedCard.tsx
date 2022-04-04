@@ -8,9 +8,6 @@ interface AlreadyClaimedCardProps {
   className?: string;
 }
 
-// PLACEHOLDER
-const ELFI_TOKEN_AMOUNT = "10000.0";
-
 export default function AlreadyClaimedCard({
   className,
 }: AlreadyClaimedCardProps): ReactElement {
@@ -19,10 +16,7 @@ export default function AlreadyClaimedCard({
       <div className="flex flex-col justify-center gap-2 px-8 pt-2 pb-4 text-white sm:items-center sm:px-16 sm:pt-6 sm:pb-14 sm:text-center md:px-32">
         <h1 className="mb-5 text-3xl font-semibold">{t`Congratulations!`}</h1>
         <H2 className="mb-9 text-2xl text-votingGreen">{t`You've already claimed your $ELFI.`}</H2>
-        <ClaimAmountCard
-          amount={ELFI_TOKEN_AMOUNT}
-          label={t`Claimed voting power`}
-        />
+        <ClaimAmountCard label={t`Claimed voting power`} />
       </div>
     </Card>
   );
