@@ -2,6 +2,7 @@ import { Web3Provider } from "@ethersproject/providers";
 import { AbstractConnector } from "@web3-react/abstract-connector";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { WalletConnectConnector } from "@web3-react/walletconnect-connector";
+import { WalletLinkConnector } from "@web3-react/walletlink-connector";
 import {
   ALCHEMY_GOERLI_HTTP_URL,
   ALCHEMY_MAINNET_HTTP_URL,
@@ -9,6 +10,7 @@ import {
 import { t } from "ttag";
 
 import { ChainId, ChainNames, DEFAULT_CHAIN_IDS } from "src/ethereum";
+import { addressesJson } from "src/elf-council-addresses";
 
 /**
  * The 'injected' connector refers to plugin-based wallets like MetaMask, which
@@ -50,6 +52,14 @@ export function getWalletConnectConnector(): WalletConnectConnector {
   });
   return walletConnectConnector;
 }
+
+export const coinbaseConnector = new WalletLinkConnector({
+  url:
+    addressesJson.chainId === ChainId.MAINNET
+      ? ALCHEMY_MAINNET_HTTP_URL
+      : ALCHEMY_GOERLI_HTTP_URL,
+  appName: "Element Finance",
+});
 
 export function getConnectorName(
   connector?: AbstractConnector | undefined,
