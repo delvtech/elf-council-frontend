@@ -25,13 +25,17 @@ export default function Proposals({
   );
 }
 
-export async function getServerSideProps(): Promise<{
+export async function getStaticProps(): Promise<{
   props: { proposalsJson: ProposalsJson };
+  revalidate: number;
 }> {
   // Fetch the proposals.json server side so that it's immediately available on
   // the client. This makes it easy to update the proposals.json as needed
   // without having to do a deploy.
   const res = await fetch(PROPOSALS_JSON_URL);
   const proposalsJson = await res.json();
-  return { props: { proposalsJson } };
+  return {
+    props: { proposalsJson },
+    revalidate: 60, // seconds
+  };
 }
