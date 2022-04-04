@@ -24,6 +24,6 @@ export async function getStaticProps(): Promise<{
 
   return {
     props: { proposalsJson },
-    revalidate: 60 // seconds
+    revalidate: 60, // seconds
   };
 }
