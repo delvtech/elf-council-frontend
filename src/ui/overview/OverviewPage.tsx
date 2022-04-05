@@ -18,11 +18,9 @@ import { SummaryCards } from "src/ui/overview/SummaryCards";
 
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
-  recentDelegators: string[];
 }
 export function OverviewPage({
   proposalsJson,
-  recentDelegators,
 }: OverviewPageProps): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
   return (

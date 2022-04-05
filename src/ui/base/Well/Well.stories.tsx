@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import WellComponent from "./Well";
 
