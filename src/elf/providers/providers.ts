@@ -45,9 +45,7 @@ function getProvider() {
   // otherwise, if a chain id is provided, we'll use the corresponding alchemy provider.  right now
   // this is only goerli.
   if (chainId === ChainId.GOERLI) {
-    const web3Goerli = createAlchemyWeb3(
-      `wss://eth-goerli.ws.alchemyapi.io/v2/${ALCHEMY_GOERLI_KEY}`,
-    );
+    const web3Goerli = createAlchemyWeb3(ALCHEMY_GOERLI_HTTP_URL);
     const alchemyWeb3GoerliWebSocketProvider = new providers.Web3Provider(
       web3Goerli.currentProvider as ExternalProvider,
       ChainId.GOERLI,
@@ -56,9 +54,7 @@ function getProvider() {
   }
 
   if (chainId === ChainId.MAINNET) {
-    const web3Mainnet = createAlchemyWeb3(
-      `wss://eth-mainnet.ws.alchemyapi.io/v2/${ALCHEMY_MAINNET_KEY}`,
-    );
+    const web3Mainnet = createAlchemyWeb3(ALCHEMY_MAINNET_HTTP_URL);
 
     const alchemyWeb3MainnetWebSocketProvider = new providers.Web3Provider(
       web3Mainnet.currentProvider as ExternalProvider,
