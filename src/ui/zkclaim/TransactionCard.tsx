@@ -1,5 +1,4 @@
 import React, { ReactElement, useCallback, useState } from "react";
-import { Signer } from "ethers";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import {
   ElementIconCircle,
@@ -22,7 +21,6 @@ interface TransactionCardProps {
   className?: string;
   account?: string;
   provider?: Provider;
-  signer?: Signer;
   delegateAddress: string;
   onPreviousStep?: () => void;
   onSuccess?: () => void;
@@ -36,7 +34,6 @@ export default function TransactionCard({
   className,
   account,
   provider,
-  signer,
   delegateAddress,
   onPreviousStep,
   onSuccess,
