@@ -56,7 +56,7 @@ export interface UseZKProofProps {
 }
 
 interface UseZKProof extends ProofState {
-  generate: () => void;
+  generate: () => Promise<string> | undefined;
   isEligible: boolean;
   isReady: boolean;
 }
@@ -118,7 +118,7 @@ export default function useZKProof({
   const generate = useCallback(() => {
     if (isReady && isEligible && key && secret && account) {
       dispatch({ type: "startGenerating" });
-      generateProofCallData(
+      return generateProofCallData(
         merkleTree,
         BigInt(key),
         BigInt(secret),
@@ -128,9 +128,11 @@ export default function useZKProof({
       )
         .then((proof) => {
           dispatch({ type: "setProof", payload: proof });
+          return proof;
         })
         .catch((err) => {
           dispatch({ type: "setError", payload: err });
+          return err?.message || "";
         });
     }
   }, [

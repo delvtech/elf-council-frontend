@@ -44,11 +44,8 @@ export default function ZKClaimPage(): ReactElement {
   const [delegateAddress, setDelegateAddress] = useState<string>();
   const {
     generate: generateProof,
-    proof,
     isEligible,
     isReady,
-    error: proofError,
-    isGenerating,
   } = useZKProof({
     key,
     secret,
@@ -193,9 +190,11 @@ export default function ZKClaimPage(): ReactElement {
         <TransactionCard
           className={getStepClassName(Step.TRANSACTION)}
           provider={library}
-          // avoiding passing null with `|| undefined`
-          account={account || undefined}
+          account={account}
           signer={signer}
+          isReady={isReady}
+          generateProof={generateProof}
+          nullifier={key}
           delegateAddress={delegateAddress}
           onPreviousStep={goToPreviousStep}
           onSuccess={goToNextStep}
