@@ -7,7 +7,7 @@ export default function useAlreadyClaimed(key?: string): boolean | undefined {
     privateAirdropContract,
     "nullifierSpent",
     {
-      callArgs: [toHex(pedersenHash(BigInt(key as string)))],
+      callArgs: [toHex(pedersenHash(BigInt(key || "")))],
       enabled: !!key,
     },
   );
