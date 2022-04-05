@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Callback = (...args: any[]) => any;
 
 function workerFunction<TCallback extends Callback>(fn: TCallback) {
