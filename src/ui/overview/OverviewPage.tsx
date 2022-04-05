@@ -29,7 +29,6 @@ export function OverviewPage({
     <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
       <Head>
         <title>{t`Overview | Element Council Protocol`}</title>
-        <link rel="icon" href="/gov-favicon.ico" />
       </Head>
 
       <div className="px-8 py-1">

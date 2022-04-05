@@ -1,7 +1,17 @@
+import { BigNumber } from "ethers";
 import {
   lockingVaultContract as lockingVault,
   vestingContract as vestingVault,
 } from "src/elf/contracts";
+import { TypedEvent } from "src/typechain-types/common";
+
+type Event = TypedEvent<
+  [string, string, BigNumber] & {
+    from: string;
+    to: string;
+    amount: BigNumber;
+  }
+>[];
 
 const STARTING_BLOCK_NUMBER = 14496292;
 
@@ -12,14 +22,22 @@ export async function getRecentDelegators(): Promise<string[]> {
   const lockingFilter = lockingVault.filters.VoteChange(null, null, null);
   const vestingFilter = vestingVault.filters.VoteChange(null, null, null);
 
-  const lockingEvents = await lockingVault.queryFilter(
-    lockingFilter,
-    STARTING_BLOCK_NUMBER,
-  );
-  const vestingEvents = await vestingVault.queryFilter(
-    vestingFilter,
-    STARTING_BLOCK_NUMBER,
-  );
+  let lockingEvents: Event;
+  let vestingEvents: Event;
+
+  try {
+    lockingEvents = await lockingVault.queryFilter(
+      lockingFilter,
+      STARTING_BLOCK_NUMBER,
+    );
+    vestingEvents = await vestingVault.queryFilter(
+      vestingFilter,
+      STARTING_BLOCK_NUMBER,
+    );
+  } catch (e) {
+    lockingEvents = [];
+    vestingEvents = [];
+  }
 
   const delegators = new Set<string>([]);
 
