@@ -40,17 +40,18 @@ export default function ZKClaimPage(): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
   const secret = keySecretPair?.[1];
-  const alreadyClaimed = useAlreadyClaimed(key);
   const [delegateAddress, setDelegateAddress] = useState<string>();
   const {
     generate: generateProof,
     isEligible,
     isReady,
+    contract,
   } = useZKProof({
     key,
     secret,
     account: account || undefined,
   });
+  const alreadyClaimed = useAlreadyClaimed(key, contract);
   const { pass } = useAddressScreening(account);
 
   const {
@@ -159,12 +160,16 @@ export default function ZKClaimPage(): ReactElement {
           onTryAgain={goToPreviousStep}
         />
       ) : alreadyClaimed ? (
-        <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
+        <AlreadyClaimedCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          contract={contract}
+        />
       ) : (
         <EligibleCard
           className={getStepClassName(Step.ELIGIBILITY)}
           onPreviousStep={goToPreviousStep}
           onNextStep={goToNextStep}
+          contract={contract}
         />
       )}
 
@@ -193,6 +198,7 @@ export default function ZKClaimPage(): ReactElement {
           account={account}
           signer={signer}
           isReady={isReady}
+          contract={contract}
           generateProof={generateProof}
           nullifier={key}
           delegateAddress={delegateAddress}

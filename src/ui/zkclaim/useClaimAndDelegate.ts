@@ -2,7 +2,6 @@ import { UseMutationResult } from "react-query";
 
 import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 import { ContractReceipt, Signer } from "ethers";
-import { privateAirdropContract } from "src/elf/contracts";
 import {
   useSmartContractTransaction,
   UseSmartContractTransactionOptions,
@@ -10,6 +9,7 @@ import {
 
 export function useClaimAndDelegate(
   signer: Signer | undefined,
+  contract: PrivateAirdrop | undefined,
   options?: UseSmartContractTransactionOptions<
     PrivateAirdrop,
     "claimAirdropAndDelegate"
@@ -20,7 +20,7 @@ export function useClaimAndDelegate(
   Parameters<PrivateAirdrop["claimAirdropAndDelegate"]>
 > {
   const claimAndDelegate = useSmartContractTransaction(
-    privateAirdropContract,
+    contract,
     "claimAirdropAndDelegate",
     signer,
     options,

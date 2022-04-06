@@ -25,6 +25,7 @@ import { isValidAddress } from "src/base/isValidAddress";
 import { Spinner } from "src/ui/base/Spinner/Spinner";
 import { pedersenHash, toHex } from "zkp-merkle-airdrop-lib";
 import useClaimableAmount from "./useClaimableAmount";
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 
 interface TransactionCardProps {
   className?: string;
@@ -32,6 +33,7 @@ interface TransactionCardProps {
   provider: Provider | undefined;
   signer: Signer | undefined;
   isReady: boolean;
+  contract: PrivateAirdrop | undefined;
   generateProof: () => Promise<string> | undefined;
   nullifier: string | undefined;
   delegateAddress: string;
@@ -46,6 +48,7 @@ export default function TransactionCard({
   provider,
   signer,
   isReady,
+  contract,
   generateProof,
   nullifier,
   delegateAddress,
@@ -55,14 +58,14 @@ export default function TransactionCard({
 }: TransactionCardProps): ReactElement {
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
-  const claimableAmount = useClaimableAmount();
+  const claimableAmount = useClaimableAmount(contract);
   const formattedAddress = useFormattedWalletAddress(delegateAddress, provider);
   const delegateLabel =
     getFeaturedDelegate(delegateAddress)?.name || formattedAddress;
   const [isTransactionPending, setIsTransactionPending] = useState(false);
   const [success, setSuccess] = useState(false);
   const toastIdRef = useRef<string>();
-  const { mutate: claimAndDelegate } = useClaimAndDelegate(signer, {
+  const { mutate: claimAndDelegate } = useClaimAndDelegate(signer, contract, {
     onError: (e) => {
       toast.error(e.message, { id: toastIdRef.current });
     },

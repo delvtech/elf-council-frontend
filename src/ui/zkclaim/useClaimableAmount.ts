@@ -1,12 +1,17 @@
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
 import { formatEther } from "@ethersproject/units";
-import { privateAirdropContract } from "src/elf/contracts";
 
-export default function useClaimableAmount(): string {
+export default function useClaimableAmount(
+  contract: PrivateAirdrop | undefined,
+): string {
   const { data: ClaimableAmount } = useSmartContractReadCall(
-    privateAirdropContract,
+    contract,
     "amountPerRedemption",
+    {
+      enabled: !!contract,
+    },
   );
 
-  return formatEther(ClaimableAmount || 0);
+  return formatEther(ClaimableAmount || 0).replace(/(\.\d{3}).+/, "$1");
 }

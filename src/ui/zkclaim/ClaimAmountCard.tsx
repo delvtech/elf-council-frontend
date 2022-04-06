@@ -7,17 +7,20 @@ import {
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import useClaimableAmount from "./useClaimableAmount";
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 
 interface ClaimAmountCardProps {
   label?: string;
   className?: string;
+  contract: PrivateAirdrop | undefined;
 }
 
 export default function ClaimAmountCard({
   label = t`Claimable voting power`,
   className,
+  contract,
 }: ClaimAmountCardProps): ReactElement {
-  const claimableAmount = useClaimableAmount();
+  const claimableAmount = useClaimableAmount(contract);
   return (
     <div
       className={classNames(
