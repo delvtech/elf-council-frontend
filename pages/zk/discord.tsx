@@ -3,6 +3,7 @@ import React, { Fragment, ReactElement } from "react";
 import PageView from "src/ui/app/PageView";
 import { Platform } from "src/ui/zk/types";
 import ZKPage from "src/ui/zk/ZKPage";
+import ZKPagePaused from "src/ui/zk/ZKPagePaused";
 import { t } from "ttag";
 
 export default function ZK(): ReactElement {
@@ -16,7 +17,8 @@ export default function ZK(): ReactElement {
         showHeader={false}
         childrenContainerClassName="self-stretch flex justify-center"
       >
-        <ZKPage platform={Platform.DISCORD} />
+        {/* <ZKPage platform={Platform.DISCORD} /> */}
+        <ZKPagePaused platform={Platform.DISCORD} />
       </PageView>
     </Fragment>
   );
