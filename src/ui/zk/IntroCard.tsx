@@ -41,7 +41,7 @@ export default function IntroCard({
           <H3 className="mt-4 text-white">{t`2. Share your new Public ID on ${platformName}.`}</H3>
           <p>{t`Share your new Public ID on ${platformName} to associate it with your  ${platformName} ID.`}</p>
           <H3 className="mt-4 text-white">{t`3. Check your eligibility.`}</H3>
-          <p>{t`A new link will be shared on April 6, 2022 where you'll check if your ${platformName} ID was eligible by entering your Key and Secret.`}</p>
+          <p>{t`A new link will be shared on April 11, 2022 where you'll check if your ${platformName} ID was eligible by entering your Key and Secret.`}</p>
         </div>
         <div className="text-right">
           <Button
