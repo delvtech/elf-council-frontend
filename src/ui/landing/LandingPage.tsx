@@ -45,7 +45,7 @@ export default function LandingPage(): ReactElement {
                   <ClaimLink href="/airdrop">
                     {t`Claim ELFI Governance Power`}
                   </ClaimLink>
-                  <ClaimLink href={ElementUrl.NFT_APP} external>
+                  <ClaimLink href={`${ElementUrl.NFT_APP}/mint`} external>
                     {t`Claim ELFIverse NFT`}
                   </ClaimLink>
                   <ClaimLink href="/zk/discord">
@@ -152,21 +152,35 @@ function ClaimLink({
   href: string;
   external?: boolean;
 }>) {
-  const Component = external ? AnchorButton : LinkButton;
-  return (
+  const wrappedChildren = (
+    <>
+      <span className="bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-2xl text-transparent">
+        {children}
+      </span>
+      <div className="ml-3 flex h-8 w-8 items-center justify-center">
+        <ArrowRightIcon className="h-5 w-5 fill-principalRoyalBlue" />
+      </div>
+    </>
+  );
+  return external ? (
     <li>
-      <Component
+      <AnchorButton
+        href={href}
+        className="flex h-16 w-full justify-between px-7"
+        variant={ButtonVariant.SECONDARY}
+      >
+        {wrappedChildren}
+      </AnchorButton>
+    </li>
+  ) : (
+    <li>
+      <LinkButton
         link={href}
         className="flex h-16 w-full justify-between px-7"
         variant={ButtonVariant.SECONDARY}
       >
-        <span className="bg-gradient-to-b from-principalBlue to-principalRoyalBlue bg-clip-text text-2xl text-transparent">
-          {children}
-        </span>
-        <div className="ml-3 flex h-8 w-8 items-center justify-center">
-          <ArrowRightIcon className="h-5 w-5 fill-principalRoyalBlue" />
-        </div>
-      </Component>
+        {wrappedChildren}
+      </LinkButton>
     </li>
   );
 }
