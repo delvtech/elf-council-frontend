@@ -45,9 +45,9 @@ export function SummaryCards({
         balance={numActiveProposals}
       />
       <SummaryCard
-        title={t`Total Delegates`}
+        title={t`Total Participants`}
         balance={numDelegates}
-        tooltipContent={t`The number of unique delegates with voting power in the system.`}
+        tooltipContent={t`The number of unique delegates (including self-delegates) with voting power in the system.`}
       />
       <SummaryCard
         title={t`Circulating ELFI`}
