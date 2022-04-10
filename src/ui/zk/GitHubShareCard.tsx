@@ -8,13 +8,13 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import GitHubIcon from "src/ui/base/svg/GithubIcon";
 import { t, jt } from "ttag";
 
-const githubIssueLink = (
+const githubGistLink = (
   <a
     href={GITHUB_ZK_URL}
     target="_blank"
     rel="noreferrer"
     className="text-yieldLightBlue"
-  >{t`GitHub issue`}</a>
+  >{t`this GitHub gist`}</a>
 );
 
 interface GitHubShareCardProps {
@@ -35,7 +35,7 @@ export default function GitHubShareCard({
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Successfully Created`}</h1>
           <p className="w-0 min-w-full">
-            {jt`Share your new Public ID in a comment on Element's ${githubIssueLink} to associate it with your GitHub username.`}
+            {jt`Associate your new Public ID with your GitHub profile by forking ${githubGistLink} and pasting it in the body.`}
           </p>
         </div>
         <HashString
@@ -55,7 +55,7 @@ export default function GitHubShareCard({
             className="flex gap-2"
             target="_blank"
           >
-            {t`Go to GitHub Issue`}
+            {t`Go to GitHub Gist`}
             <GitHubIcon width={24} height={24} className="fill-white" />
           </AnchorButton>
         </div>
