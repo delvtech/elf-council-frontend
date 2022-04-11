@@ -8,8 +8,8 @@ import {
 import { useQuery } from "react-query";
 import {
   discordTier1PrivateAirdropContract,
-  // discordTier2PrivateAirdropContract,
-  // discordTier3PrivateAirdropContract,
+  discordTier2PrivateAirdropContract,
+  discordTier3PrivateAirdropContract,
   githubTier1PrivateAirdropContract,
   githubTier2PrivateAirdropContract,
   githubTier3PrivateAirdropContract,
@@ -120,31 +120,33 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  // const { data: discordTier2MerkleTree } = useQuery({
-  //   queryKey: "discord-merkle-tree-2",
-  //   queryFn: async () =>
-  //     fetch(`${cdnUrl}/merkle/${discordTier2PrivateAirdropContract.address}.txt`)
-  //       .then((res) => res.text())
-  //       .then((mtss) => MerkleTree.createFromStorageString(mtss)),
-  //   staleTime: Infinity,
-  // });
-  // const { data: discordTier3MerkleTree } = useQuery({
-  //   queryKey: "discord-merkle-tree-3",
-  //   queryFn: async () =>
-  //     fetch(`${cdnUrl}/merkle/${discordTier3PrivateAirdropContract.address}.txt`)
-  //       .then((res) => res.text())
-  //       .then((mtss) => MerkleTree.createFromStorageString(mtss)),
-  //   staleTime: Infinity,
-  // });
+  const { data: discordTier2MerkleTree } = useQuery({
+    queryKey: "discord-merkle-tree-2",
+    queryFn: async () =>
+      fetch(
+        `${cdnUrl}/merkle/${discordTier2PrivateAirdropContract.address}.txt`,
+      )
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
+  const { data: discordTier3MerkleTree } = useQuery({
+    queryKey: "discord-merkle-tree-3",
+    queryFn: async () =>
+      fetch(
+        `${cdnUrl}/merkle/${discordTier3PrivateAirdropContract.address}.txt`,
+      )
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
   const treesReady = !!(
-    (
-      githubTier1MerkleTree &&
-      githubTier2MerkleTree &&
-      githubTier3MerkleTree &&
-      discordTier1MerkleTree
-    ) //&&
-    // discordTier2MerkleTree &&
-    // discordTier3MerkleTree
+    githubTier1MerkleTree &&
+    githubTier2MerkleTree &&
+    githubTier3MerkleTree &&
+    discordTier1MerkleTree &&
+    discordTier2MerkleTree &&
+    discordTier3MerkleTree
   );
   const { data: wasmBuffer } = useQuery({
     queryKey: "zk-wasm-buffer",
@@ -192,14 +194,14 @@ export default function useZKProof({
           merkleTree: discordTier1MerkleTree,
           contract: discordTier1PrivateAirdropContract,
         },
-        // {
-        //   merkleTree: discordTier2MerkleTree,
-        //   contract: discordTier2PrivateAirdropContract,
-        // },
-        // {
-        //   merkleTree: discordTier3MerkleTree,
-        //   contract: discordTier3PrivateAirdropContract,
-        // },
+        {
+          merkleTree: discordTier2MerkleTree,
+          contract: discordTier2PrivateAirdropContract,
+        },
+        {
+          merkleTree: discordTier3MerkleTree,
+          contract: discordTier3PrivateAirdropContract,
+        },
       ];
       for (const treeInfo of merkleTrees) {
         const leafExists = treeInfo.merkleTree.leafExists(BigInt(commitment));
@@ -216,8 +218,8 @@ export default function useZKProof({
     githubTier2MerkleTree,
     githubTier3MerkleTree,
     discordTier1MerkleTree,
-    // discordTier2MerkleTree,
-    // discordTier3MerkleTree,
+    discordTier2MerkleTree,
+    discordTier3MerkleTree,
   ]);
 
   const isReady = !!(treesReady && wasmBuffer && zkeyBuffer);
