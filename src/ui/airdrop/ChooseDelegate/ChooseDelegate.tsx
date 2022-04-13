@@ -1,4 +1,10 @@
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
+import React, {
+  ReactElement,
+  useCallback,
+  useMemo,
+  useState,
+  useRef,
+} from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
 import { delegates } from "src/elf-council-delegates/delegates";
@@ -15,6 +21,7 @@ import { Intent } from "src/ui/base/Intent";
 import { InputValidationIcon } from "src/ui/base/InputValidationIcon";
 import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
 import { Provider } from "@ethersproject/providers";
+import useScrollbarWidth from "src/ui/base/useScrollbarWidth";
 
 interface ChooseDelegateProps {
   account: string;
@@ -23,6 +30,8 @@ interface ChooseDelegateProps {
   onNextStep: () => void;
   onPrevStep: () => void;
 }
+
+const ONE_REM_IN_PIXELS = 16;
 
 export function ChooseDelegate({
   account,
@@ -43,6 +52,10 @@ export function ChooseDelegate({
   const [customDelegateAddress, setCustomDelegateAddress] = useState<
     string | undefined
   >();
+
+  const divRef = useRef<HTMLDivElement | null>(null);
+  const scrollbarWidth = useScrollbarWidth(divRef);
+
   const { data: resolvedCustomDelegateAddress } = useResolvedEnsName(
     customDelegateAddress,
     provider,
@@ -134,19 +147,30 @@ export function ChooseDelegate({
         <H2>{t`Choose a delegate from the list below`}</H2>
         <div className="w-full">
           {/* Header */}
-          <div className="mb-4 grid grid-cols-10 border-b-2 pb-2 font-bold text-white">
+          <div
+            className="mb-4 grid grid-cols-10 border-b-2 pb-2 font-bold text-white"
+            style={{
+              paddingRight:
+                scrollbarWidth > 0
+                  ? `${ONE_REM_IN_PIXELS + scrollbarWidth}px`
+                  : `${ONE_REM_IN_PIXELS}px`,
+            }}
+          >
             {/* Name */}
             <span className="col-span-7 ml-4 hidden lg:col-span-4 lg:block">{t`Name`}</span>
             <span className="col-span-7 ml-4 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
             {/* Voting Power */}
-            <div className="col-span-2 ml-auto mr-14 hidden truncate lg:block">
+            <div className="col-span-2 ml-auto mr-10 hidden truncate lg:block">
               <span>{t`Voting Power`}</span>
             </div>
             {/* Spacer for Buttons */}
             <span className="col-span-3 lg:col-span-4"></span>
           </div>
 
-          <div className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow">
+          <div
+            ref={divRef}
+            className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow"
+          >
             {/* List of delegates */}
             <ul className="flex flex-col gap-y-2">
               {shuffledDelegates.map((delegate, idx) => {
