@@ -151,7 +151,7 @@ export default function TransactionCard({
             </div>
           </div>
 
-          <p className="mb-2 w-0 min-w-full text-sm italic text-white/80">{t`Note: this transaction requires a ZK proof generated from your key and secret. Generating the proof could take up to 30 seconds before the transaction is initiated.`}</p>
+          <p className="mb-2 w-0 min-w-full text-sm italic text-white/80">{t`Note: this transaction requires a ZK proof generated from your key and secret. Generating the proof could take up to 5 minutes before the transaction is initiated.`}</p>
           <div className="flex justify-between">
             {onPreviousStep && (
               <Button
