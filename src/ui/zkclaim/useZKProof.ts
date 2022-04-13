@@ -86,7 +86,7 @@ export default function useZKProof({
 
   // fetch required files
   // TODO: fetch all trees
-  const { data: githubTier1MerkleTree } = useQuery({
+  const { data: githubTier1MerkleTree, isSuccess: isSuccessGHT1 } = useQuery({
     queryKey: "github-merkle-tree-1",
     queryFn: async () =>
       fetch(`${cdnUrl}/merkle/${githubTier1PrivateAirdropContract.address}.txt`)
@@ -94,7 +94,7 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  const { data: githubTier2MerkleTree } = useQuery({
+  const { data: githubTier2MerkleTree, isSuccess: isSuccessGHT2 } = useQuery({
     queryKey: "github-merkle-tree-2",
     queryFn: async () =>
       fetch(`${cdnUrl}/merkle/${githubTier2PrivateAirdropContract.address}.txt`)
@@ -102,7 +102,7 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  const { data: githubTier3MerkleTree } = useQuery({
+  const { data: githubTier3MerkleTree, isSuccess: isSuccessGHT3 } = useQuery({
     queryKey: "github-merkle-tree-3",
     queryFn: async () =>
       fetch(`${cdnUrl}/merkle/${githubTier3PrivateAirdropContract.address}.txt`)
@@ -110,7 +110,7 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  const { data: discordTier1MerkleTree } = useQuery({
+  const { data: discordTier1MerkleTree, isSuccess: isSuccessDT1 } = useQuery({
     queryKey: "discord-merkle-tree-1",
     queryFn: async () =>
       fetch(
@@ -120,7 +120,7 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  const { data: discordTier2MerkleTree } = useQuery({
+  const { data: discordTier2MerkleTree, isSuccess: isSuccessDT2 } = useQuery({
     queryKey: "discord-merkle-tree-2",
     queryFn: async () =>
       fetch(
@@ -130,7 +130,7 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  const { data: discordTier3MerkleTree } = useQuery({
+  const { data: discordTier3MerkleTree, isSuccess: isSuccessDT3 } = useQuery({
     queryKey: "discord-merkle-tree-3",
     queryFn: async () =>
       fetch(
@@ -140,6 +140,7 @@ export default function useZKProof({
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
+
   const treesReady = !!(
     githubTier1MerkleTree &&
     githubTier2MerkleTree &&
@@ -148,21 +149,34 @@ export default function useZKProof({
     discordTier2MerkleTree &&
     discordTier3MerkleTree
   );
-  const { data: wasmBuffer } = useQuery({
+
+  const treesSuccess =
+    isSuccessDT1 &&
+    isSuccessDT2 &&
+    isSuccessDT3 &&
+    isSuccessGHT1 &&
+    isSuccessGHT2 &&
+    isSuccessGHT3;
+
+  const { data: wasmBuffer, isSuccess: wasmBufferSuccess } = useQuery({
     queryKey: "zk-wasm-buffer",
     queryFn: () =>
       fetch(`${cdnUrl}/circuit.wasm`)
         .then((res) => res.arrayBuffer())
         .then((ab) => Buffer.from(ab)),
     staleTime: Infinity,
+    // make sure to download trees first
+    enabled: treesSuccess,
   });
-  const { data: zkeyBuffer } = useQuery({
+  const { data: zkeyBuffer, isSuccess: zkeyBufferSuccess } = useQuery({
     queryKey: "zk-zkey-buffer",
     queryFn: () =>
       fetch(`${cdnUrl}/circuit_final.zkey`)
         .then((res) => res.arrayBuffer())
         .then((ab) => Buffer.from(ab)),
     staleTime: Infinity,
+    // make sure to download trees first
+    enabled: treesSuccess,
   });
 
   // set isEligible when the key, secret, and/or merkleTree change
@@ -222,7 +236,13 @@ export default function useZKProof({
     discordTier3MerkleTree,
   ]);
 
-  const isReady = !!(treesReady && wasmBuffer && zkeyBuffer);
+  const isReady = !!(
+    treesSuccess &&
+    wasmBufferSuccess &&
+    zkeyBufferSuccess &&
+    wasmBuffer &&
+    zkeyBuffer
+  );
 
   const generate = useCallback(() => {
     if (isReady && merkleTreeInfo && key && secret && account) {
