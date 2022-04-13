@@ -226,19 +226,21 @@ export default function useZKProof({
 
   const generate = useCallback(() => {
     if (isReady && merkleTreeInfo && key && secret && account) {
+      // the last 2 characters represent the MSB which are removed by the
+      // pedersenHash function when creating the commitment (public ID). To
+      // generate a valid proof, they need to be removed here too.
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const cleanedKey = key.replace(/^0x0{1,2}/, "0x").slice(0, 64);
+      // the last 2 characters represent the MSB which are removed by the
+      // pedersenHash function when creating the commitment (public ID). To
+      // generate a valid proof, they need to be removed here too.
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const cleanedSecret = secret.replace(/^0x0{1,2}/, "0x").slice(0, 64);
       dispatch({ type: "startGenerating" });
       return generateProofCallData(
         merkleTreeInfo?.merkleTree,
-        // the last 2 characters represent the MSB which are removed by the
-        // pedersenHash function when creating the commitment (public ID). To
-        // generate a valid proof, they need to be removed here too.
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        BigInt(key.slice(0, 64)),
-        // the last 2 characters represent the MSB which are removed by the
-        // pedersenHash function when creating the commitment (public ID). To
-        // generate a valid proof, they need to be removed here too.
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-        BigInt(secret.slice(0, 64)),
+        BigInt(cleanedKey),
+        BigInt(cleanedSecret),
         account,
         wasmBuffer,
         zkeyBuffer,
