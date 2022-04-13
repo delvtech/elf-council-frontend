@@ -92,15 +92,20 @@ export default function TransactionCard({
     },
   });
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     setIsTransactionPending(true);
-    generateProof()?.then((proof) => {
-      claimAndDelegate([
-        proof,
-        toHex(pedersenHash(BigInt(nullifier as string))),
-        delegateAddress,
-      ]);
-    });
+    try {
+      const proof = await generateProof();
+      if (proof) {
+        claimAndDelegate([
+          proof,
+          toHex(pedersenHash(BigInt(nullifier as string))),
+          delegateAddress,
+        ]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
