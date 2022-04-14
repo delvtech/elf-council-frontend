@@ -50,7 +50,7 @@ export function SummaryCards({
         tooltipContent={t`The number of unique delegates (including self-delegates) with voting power in the system.`}
       />
       <SummaryCard
-        title={t`Circulating ELFI`}
+        title={t`Circulating Voting Power`}
         balance={`${formattedTotalVotingPower}`}
         tooltipContent={t`The total amount of voting power in the system.`}
       />
