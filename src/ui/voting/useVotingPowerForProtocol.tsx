@@ -75,6 +75,7 @@ function useVestingVaultVotingPower(): string {
 
     const vestingVaultVotingPower = formatEther(vestingVaultVotingPowerBN);
     return vestingVaultVotingPower;
+    // events are immutable, only update if there are new events.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events?.length]);
 
