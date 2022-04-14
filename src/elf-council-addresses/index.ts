@@ -6,20 +6,36 @@ import {
 
 // For local hardhat only, this is inlined as an object to preserve type safety
 const testnetAddressList: AddressesJsonFile = {
+  //   chainId: 31337,
+  //   addresses: {
+  //     elementToken: "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
+  //     coreVoting: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
+  //     gscCoreVoting: "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+  //     gscVault: "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
+  //     timeLock: "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+  //     lockingVault: "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
+  //     vestingVault: "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+  //     optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
+  //     airdrop: "0x9E545E3C0baAB3E08CdfD552C960A1050f373042",
+  //     optimisticGrants: "0x0000000000000000000000000000000000000000",
+  //     treasury: "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
+  //     spender: "0x0000000000000000000000000000000000000000",
+  //   },
+  // };
   chainId: 31337,
   addresses: {
-    elementToken: "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c",
-    coreVoting: "0xc6e7DF5E7b4f2A278906862b61205850344D4e7d",
-    gscCoreVoting: "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
-    gscVault: "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
-    timeLock: "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
-    lockingVault: "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
-    vestingVault: "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E",
+    elementToken: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    coreVoting: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    gscCoreVoting: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+    gscVault: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+    timeLock: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+    lockingVault: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+    vestingVault: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
     optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
-    airdrop: "0x9E545E3C0baAB3E08CdfD552C960A1050f373042",
+    airdrop: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
     optimisticGrants: "0x0000000000000000000000000000000000000000",
-    treasury: "0xa82fF9aFd8f496c3d6ac40E2a0F282E47488CFc9",
-    spender: "0x0000000000000000000000000000000000000000",
+    treasury: "0x9A676e781A523b5d0C0e43731313A708CB607508",
+    spender: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
   },
 };
 
