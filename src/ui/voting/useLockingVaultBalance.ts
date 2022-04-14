@@ -4,10 +4,7 @@ import { lockingVaultContract } from "src/elf/contracts";
 import {} from "src/ui/voting/useQueryVotePower";
 
 /**
- * Use this to get the current vote power.
- *
- * Voting power can go stale if the current block is beyond the staleBlockLag +
- * atBlockNumber. In the case of stale voting power, this will return "0".
+ * Use this to get the amount deposited into the locking vault for an account.
  */
 export function useLockingVaultBalance(
   account: string | undefined | null,
