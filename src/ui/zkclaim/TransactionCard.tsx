@@ -1,5 +1,7 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback, useRef, useState } from "react";
 import { Signer } from "ethers";
+import { Provider } from "@ethersproject/providers";
+import toast from "react-hot-toast";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import {
   ElementIconCircle,
@@ -14,29 +16,41 @@ import { getFeaturedDelegate } from "src/elf/delegate/isFeaturedDelegate";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { ConnectWalletDialog } from "src/ui/wallet/ConnectWalletDialog";
 import { commify } from "ethers/lib/utils";
-import { t } from "ttag";
+import { jt, t } from "ttag";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
-import { Provider } from "@ethersproject/providers";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
+import { useClaimAndDelegate } from "./useClaimAndDelegate";
+import { isValidAddress } from "src/base/isValidAddress";
+import { Spinner } from "src/ui/base/Spinner/Spinner";
+import { pedersenHash, toHex } from "zkp-merkle-airdrop-lib";
+import useClaimableAmount from "./useClaimableAmount";
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 
 interface TransactionCardProps {
   className?: string;
-  account?: string;
-  provider?: Provider;
-  signer?: Signer;
+  account: string | null | undefined;
+  provider: Provider | undefined;
+  signer: Signer | undefined;
+  isReady: boolean;
+  contract: PrivateAirdrop | undefined;
+  generateProof: () => Promise<string> | undefined;
+  nullifier: string | undefined;
   delegateAddress: string;
   onPreviousStep?: () => void;
   onSuccess?: () => void;
   onNextStep?: () => void;
 }
 
-// PLACEHOLDER
-const ELFI_TOKEN_AMOUNT = "10000.0";
-
 export default function TransactionCard({
   className,
   account,
   provider,
   signer,
+  isReady,
+  contract,
+  generateProof,
+  nullifier,
   delegateAddress,
   onPreviousStep,
   onSuccess,
@@ -44,15 +58,54 @@ export default function TransactionCard({
 }: TransactionCardProps): ReactElement {
   const [isWalletDialogOpen, setWalletDialogOpen] = useState(false);
   const onCloseWalletDialog = useCallback(() => setWalletDialogOpen(false), []);
-  const [success, setSuccess] = useState(false);
+  const claimableAmount = useClaimableAmount(contract);
   const formattedAddress = useFormattedWalletAddress(delegateAddress, provider);
   const delegateLabel =
     getFeaturedDelegate(delegateAddress)?.name || formattedAddress;
+  const [isTransactionPending, setIsTransactionPending] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const toastIdRef = useRef<string>();
+  const { mutate: claimAndDelegate } = useClaimAndDelegate(signer, contract, {
+    onError: (e) => {
+      toast.error(e.message, { id: toastIdRef.current });
+    },
+    onTransactionSubmitted: (tx) => {
+      const etherscanLink = (
+        <ExternalLink
+          href={`${ETHERSCAN_TRANSACTION_DOMAIN}/${tx.hash}`}
+          text={t`View on etherscan`}
+          className="text-principalRoyalBlue"
+        />
+      );
 
-  const handleConfirm = () => {
-    // handle transaction
-    setSuccess(true);
-    onSuccess?.();
+      toastIdRef.current = toast.loading(
+        <div>{jt`Confirming transaction... ${etherscanLink}`}</div>,
+      );
+    },
+    onTransactionMined: () => {
+      toast.success(t`Transaction successfully confirmed`, {
+        id: toastIdRef.current,
+      });
+      setIsTransactionPending(false);
+      setSuccess(true);
+      onSuccess?.();
+    },
+  });
+
+  const handleConfirm = async () => {
+    setIsTransactionPending(true);
+    try {
+      const proof = await generateProof();
+      if (proof) {
+        claimAndDelegate([
+          proof,
+          toHex(pedersenHash(BigInt(nullifier as string))),
+          delegateAddress,
+        ]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -62,7 +115,7 @@ export default function TransactionCard({
       />
       <Card className={className} variant={CardVariant.BLUE}>
         <div className="flex flex-col gap-2 p-2 text-white sm:px-6 sm:py-4">
-          <div className="mb-12 text-center text-white sm:items-center sm:px-10 sm:text-center md:px-32">
+          <div className="mb-8 text-center text-white sm:items-center sm:px-10 sm:text-center md:px-32">
             <h1 className="mb-10 text-3xl font-semibold">{t`Review Transaction`}</h1>
             <div className="flex min-w-full flex-col gap-10 rounded-lg bg-white px-14 pt-8 pb-10 text-center shadow-[0_0_52px_rgba(143,216,231,.7)]">
               <div>
@@ -75,7 +128,7 @@ export default function TransactionCard({
                     size={IconSize.MEDIUM}
                   />
                   <p className="text-3xl font-semibold text-principalRoyalBlue">
-                    {t`${commify(ELFI_TOKEN_AMOUNT)} ELFI`}
+                    {t`${commify(claimableAmount)} ELFI`}
                   </p>
                 </div>
               </div>
@@ -98,6 +151,7 @@ export default function TransactionCard({
             </div>
           </div>
 
+          <p className="mb-2 w-0 min-w-full text-sm italic text-white/80">{t`Note: this transaction requires a ZK proof generated from your key and secret. Generating the proof could take up to 5 minutes before the transaction is initiated.`}</p>
           <div className="flex justify-between">
             {onPreviousStep && (
               <Button
@@ -108,6 +162,7 @@ export default function TransactionCard({
                 {t`Back`}
               </Button>
             )}
+
             {success ? (
               <>
                 <Tag intent={Intent.SUCCESS}>
@@ -129,8 +184,17 @@ export default function TransactionCard({
                 className="px-12"
                 variant={ButtonVariant.GRADIENT}
                 onClick={handleConfirm}
+                disabled={
+                  !isReady ||
+                  !isValidAddress(delegateAddress) ||
+                  isTransactionPending
+                }
               >
-                {t`Confirm transaction`}
+                {!isReady || isTransactionPending ? (
+                  <Spinner />
+                ) : (
+                  t`Confirm transaction`
+                )}
               </Button>
             ) : (
               <Button

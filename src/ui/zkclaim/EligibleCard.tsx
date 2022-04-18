@@ -5,18 +5,18 @@ import { ButtonVariant } from "src/ui/base/Button/styles";
 import H2 from "src/ui/base/H2/H2";
 import ClaimAmountCard from "./ClaimAmountCard";
 import { t } from "ttag";
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 
 interface EligibleCardProps {
   className?: string;
+  contract: PrivateAirdrop | undefined;
   onPreviousStep?: () => void;
   onNextStep?: () => void;
 }
 
-// PLACEHOLDER
-const ELFI_TOKEN_AMOUNT = "10000.0";
-
 export default function EligibleCard({
   className,
+  contract,
   onPreviousStep,
   onNextStep,
 }: EligibleCardProps): ReactElement {
@@ -26,7 +26,7 @@ export default function EligibleCard({
         <div className="mb-12 text-center text-white sm:items-center sm:px-10 sm:text-center md:px-32">
           <h1 className="mb-2 text-3xl font-semibold">{t`Congratulations!`}</h1>
           <H2 className="mb-10 text-2xl text-votingGreen">{t`You're eligible for this Airdrop`}</H2>
-          <ClaimAmountCard amount={ELFI_TOKEN_AMOUNT} />
+          <ClaimAmountCard contract={contract} />
         </div>
         <div className="flex justify-between">
           {onPreviousStep && (

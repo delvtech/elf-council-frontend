@@ -6,6 +6,15 @@ import {
   toHex,
 } from "zkp-merkle-airdrop-lib";
 import { useQuery } from "react-query";
+import {
+  discordTier1PrivateAirdropContract,
+  discordTier2PrivateAirdropContract,
+  discordTier3PrivateAirdropContract,
+  githubTier1PrivateAirdropContract,
+  githubTier2PrivateAirdropContract,
+  githubTier3PrivateAirdropContract,
+} from "src/elf/contracts";
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 
 // TODO: Move cdn base url to environment variable
 const cdnUrl = `https://elementfi.s3.us-east-2.amazonaws.com/rewards/${
@@ -55,8 +64,13 @@ export interface UseZKProofProps {
   account?: string;
 }
 
-interface UseZKProof extends ProofState {
-  generate: () => void;
+export interface MerkleTreeInfo {
+  merkleTree: MerkleTree;
+  contract: PrivateAirdrop;
+}
+
+interface UseZKProof extends ProofState, Partial<MerkleTreeInfo> {
+  generate: () => Promise<string> | undefined;
   isEligible: boolean;
   isReady: boolean;
 }
@@ -71,83 +85,202 @@ export default function useZKProof({
   });
 
   // fetch required files
-  const { data: merkleTree } = useQuery({
-    queryKey: "zk-merkle-tree",
+  // TODO: fetch all trees
+  const { data: githubTier1MerkleTree, isSuccess: isSuccessGHT1 } = useQuery({
+    queryKey: "github-merkle-tree-1",
     queryFn: async () =>
-      fetch(`${cdnUrl}/merkle_tree_storage_string.txt`)
+      fetch(`${cdnUrl}/merkle/${githubTier1PrivateAirdropContract.address}.txt`)
         .then((res) => res.text())
         .then((mtss) => MerkleTree.createFromStorageString(mtss)),
     staleTime: Infinity,
   });
-  const { data: wasmBuffer } = useQuery({
+  const { data: githubTier2MerkleTree, isSuccess: isSuccessGHT2 } = useQuery({
+    queryKey: "github-merkle-tree-2",
+    queryFn: async () =>
+      fetch(`${cdnUrl}/merkle/${githubTier2PrivateAirdropContract.address}.txt`)
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
+  const { data: githubTier3MerkleTree, isSuccess: isSuccessGHT3 } = useQuery({
+    queryKey: "github-merkle-tree-3",
+    queryFn: async () =>
+      fetch(`${cdnUrl}/merkle/${githubTier3PrivateAirdropContract.address}.txt`)
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
+  const { data: discordTier1MerkleTree, isSuccess: isSuccessDT1 } = useQuery({
+    queryKey: "discord-merkle-tree-1",
+    queryFn: async () =>
+      fetch(
+        `${cdnUrl}/merkle/${discordTier1PrivateAirdropContract.address}.txt`,
+      )
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
+  const { data: discordTier2MerkleTree, isSuccess: isSuccessDT2 } = useQuery({
+    queryKey: "discord-merkle-tree-2",
+    queryFn: async () =>
+      fetch(
+        `${cdnUrl}/merkle/${discordTier2PrivateAirdropContract.address}.txt`,
+      )
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
+  const { data: discordTier3MerkleTree, isSuccess: isSuccessDT3 } = useQuery({
+    queryKey: "discord-merkle-tree-3",
+    queryFn: async () =>
+      fetch(
+        `${cdnUrl}/merkle/${discordTier3PrivateAirdropContract.address}.txt`,
+      )
+        .then((res) => res.text())
+        .then((mtss) => MerkleTree.createFromStorageString(mtss)),
+    staleTime: Infinity,
+  });
+
+  const treesReady = !!(
+    githubTier1MerkleTree &&
+    githubTier2MerkleTree &&
+    githubTier3MerkleTree &&
+    discordTier1MerkleTree &&
+    discordTier2MerkleTree &&
+    discordTier3MerkleTree
+  );
+
+  const treesSuccess =
+    isSuccessDT1 &&
+    isSuccessDT2 &&
+    isSuccessDT3 &&
+    isSuccessGHT1 &&
+    isSuccessGHT2 &&
+    isSuccessGHT3;
+
+  const { data: wasmBuffer, isSuccess: wasmBufferSuccess } = useQuery({
     queryKey: "zk-wasm-buffer",
     queryFn: () =>
       fetch(`${cdnUrl}/circuit.wasm`)
         .then((res) => res.arrayBuffer())
         .then((ab) => Buffer.from(ab)),
     staleTime: Infinity,
+    // make sure to download trees first
+    enabled: treesSuccess,
   });
-  const { data: zkeyBuffer } = useQuery({
+  const { data: zkeyBuffer, isSuccess: zkeyBufferSuccess } = useQuery({
     queryKey: "zk-zkey-buffer",
     queryFn: () =>
       fetch(`${cdnUrl}/circuit_final.zkey`)
         .then((res) => res.arrayBuffer())
         .then((ab) => Buffer.from(ab)),
     staleTime: Infinity,
+    // make sure to download trees first
+    enabled: treesSuccess,
   });
 
   // set isEligible when the key, secret, and/or merkleTree change
-  const isEligible = useMemo(() => {
-    if (key && secret && merkleTree) {
+  const merkleTreeInfo = useMemo<MerkleTreeInfo | undefined>(() => {
+    if (key && secret && treesReady) {
       let commitment: string;
 
       // OK to catch, as it throws in the case of being not eligible
       try {
         commitment = toHex(pedersenHashConcat(BigInt(key), BigInt(secret)));
       } catch (e) {
-        return false;
+        return undefined;
       }
 
-      return merkleTree.leafExists(BigInt(commitment));
+      const merkleTrees = [
+        {
+          merkleTree: githubTier1MerkleTree,
+          contract: githubTier1PrivateAirdropContract,
+        },
+        {
+          merkleTree: githubTier2MerkleTree,
+          contract: githubTier2PrivateAirdropContract,
+        },
+        {
+          merkleTree: githubTier3MerkleTree,
+          contract: githubTier3PrivateAirdropContract,
+        },
+        {
+          merkleTree: discordTier1MerkleTree,
+          contract: discordTier1PrivateAirdropContract,
+        },
+        {
+          merkleTree: discordTier2MerkleTree,
+          contract: discordTier2PrivateAirdropContract,
+        },
+        {
+          merkleTree: discordTier3MerkleTree,
+          contract: discordTier3PrivateAirdropContract,
+        },
+      ];
+      for (const treeInfo of merkleTrees) {
+        const leafExists = treeInfo.merkleTree.leafExists(BigInt(commitment));
+        if (leafExists) {
+          return treeInfo;
+        }
+      }
     }
-    return false;
-  }, [key, secret, merkleTree]);
+  }, [
+    key,
+    secret,
+    treesReady,
+    githubTier1MerkleTree,
+    githubTier2MerkleTree,
+    githubTier3MerkleTree,
+    discordTier1MerkleTree,
+    discordTier2MerkleTree,
+    discordTier3MerkleTree,
+  ]);
 
-  const isReady = !!(merkleTree && wasmBuffer && zkeyBuffer);
+  const isReady = !!(
+    treesSuccess &&
+    wasmBufferSuccess &&
+    zkeyBufferSuccess &&
+    wasmBuffer &&
+    zkeyBuffer
+  );
 
   const generate = useCallback(() => {
-    if (isReady && isEligible && key && secret && account) {
+    if (isReady && merkleTreeInfo && key && secret && account) {
+      // the last 2 characters represent the MSB which are removed by the
+      // pedersenHash function when creating the commitment (public ID). To
+      // generate a valid proof, they need to be removed here too.
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const cleanedKey = key.replace(/^0x0{1,2}/, "0x").slice(0, 64);
+      // the last 2 characters represent the MSB which are removed by the
+      // pedersenHash function when creating the commitment (public ID). To
+      // generate a valid proof, they need to be removed here too.
+      // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+      const cleanedSecret = secret.replace(/^0x0{1,2}/, "0x").slice(0, 64);
       dispatch({ type: "startGenerating" });
-      generateProofCallData(
-        merkleTree,
-        BigInt(key),
-        BigInt(secret),
+      return generateProofCallData(
+        merkleTreeInfo?.merkleTree,
+        BigInt(cleanedKey),
+        BigInt(cleanedSecret),
         account,
         wasmBuffer,
         zkeyBuffer,
       )
         .then((proof) => {
           dispatch({ type: "setProof", payload: proof });
+          return proof;
         })
         .catch((err) => {
           dispatch({ type: "setError", payload: err });
+          return err?.message || "";
         });
     }
-  }, [
-    key,
-    secret,
-    account,
-    merkleTree,
-    wasmBuffer,
-    zkeyBuffer,
-    isEligible,
-    isReady,
-  ]);
+  }, [key, secret, account, merkleTreeInfo, wasmBuffer, zkeyBuffer, isReady]);
 
   return {
     generate,
     isReady,
-    isEligible,
+    isEligible: !!merkleTreeInfo,
     ...state,
+    ...merkleTreeInfo,
   };
 }

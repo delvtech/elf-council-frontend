@@ -22,6 +22,7 @@ import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
 import { t } from "ttag";
 import useAddressScreening from "./useAddressScreening";
+import useAlreadyClaimed from "./useAlreadyClaimed";
 
 export enum Step {
   LOOKUP = "lookup",
@@ -39,20 +40,18 @@ export default function ZKClaimPage(): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
   const secret = keySecretPair?.[1];
-  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
   const [delegateAddress, setDelegateAddress] = useState<string>();
   const {
     generate: generateProof,
-    proof,
     isEligible,
     isReady,
-    error: proofError,
-    isGenerating,
+    contract,
   } = useZKProof({
     key,
     secret,
     account: account || undefined,
   });
+  const alreadyClaimed = useAlreadyClaimed(key, contract);
   const { pass } = useAddressScreening(account);
 
   const {
@@ -161,12 +160,16 @@ export default function ZKClaimPage(): ReactElement {
           onTryAgain={goToPreviousStep}
         />
       ) : alreadyClaimed ? (
-        <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
+        <AlreadyClaimedCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          contract={contract}
+        />
       ) : (
         <EligibleCard
           className={getStepClassName(Step.ELIGIBILITY)}
           onPreviousStep={goToPreviousStep}
           onNextStep={goToNextStep}
+          contract={contract}
         />
       )}
 
@@ -192,9 +195,12 @@ export default function ZKClaimPage(): ReactElement {
         <TransactionCard
           className={getStepClassName(Step.TRANSACTION)}
           provider={library}
-          // avoiding passing null with `|| undefined`
-          account={account || undefined}
+          account={account}
           signer={signer}
+          isReady={isReady}
+          contract={contract}
+          generateProof={generateProof}
+          nullifier={key}
           delegateAddress={delegateAddress}
           onPreviousStep={goToPreviousStep}
           onSuccess={goToNextStep}

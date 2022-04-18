@@ -1,23 +1,26 @@
 import { ReactElement } from "react";
+import { commify } from "ethers/lib/utils";
+import { t } from "ttag";
+import classNames from "classnames";
 import {
   ElementIconCircle,
   IconSize,
 } from "src/ui/base/ElementIconCircle/ElementIconCircle";
-import { commify } from "ethers/lib/utils";
-import { t } from "ttag";
-import classNames from "classnames";
+import useClaimableAmount from "./useClaimableAmount";
+import { PrivateAirdrop } from "@elementfi/elf-council-typechain";
 
 interface ClaimAmountCardProps {
-  amount: number | string;
   label?: string;
   className?: string;
+  contract: PrivateAirdrop | undefined;
 }
 
 export default function ClaimAmountCard({
-  amount,
   label = t`Claimable voting power`,
   className,
+  contract,
 }: ClaimAmountCardProps): ReactElement {
+  const claimableAmount = useClaimableAmount(contract);
   return (
     <div
       className={classNames(
@@ -31,7 +34,7 @@ export default function ClaimAmountCard({
       <div className="flex items-center justify-center gap-3">
         <ElementIconCircle className="bg-paleLily" size={IconSize.LARGE} />
         <p className="text-5xl font-semibold text-principalRoyalBlue">
-          {t`${commify(amount)} ELFI`}
+          {t`${commify(claimableAmount)} ELFI`}
         </p>
       </div>
     </div>
