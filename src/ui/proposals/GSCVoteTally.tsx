@@ -1,11 +1,8 @@
 import { Provider } from "@ethersproject/providers";
 import { ethers } from "ethers";
 import { ReactElement } from "react";
-import Button from "src/ui/base/Button/Button";
-import { ButtonVariant } from "src/ui/base/Button/styles";
-import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
-import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
 import { t } from "ttag";
+import { GSCMember } from "./GSCMember";
 
 const forList = [
   ethers.Wallet.createRandom().address,
@@ -64,28 +61,3 @@ export function GSCVoteTallys(props: GSCVoteTallysProps): ReactElement {
 }
 
 export default GSCVoteTallys;
-
-interface GSCMemberProps {
-  account: string;
-  provider: Provider;
-}
-function GSCMember(props: GSCMemberProps): ReactElement {
-  const { account, provider } = props;
-
-  const formattedAddress = useFormattedWalletAddress(account, provider);
-  return (
-    <Button variant={ButtonVariant.OUTLINE_WHITE}>
-      <div className="flex w-full items-center overflow-hidden">
-        <WalletJazzicon
-          size={28}
-          account={account}
-          className="mr-4 flex-shrink-0 flex-grow-0"
-        />
-        <div className="max-w-0 flex-shrink text-sm font-thin">
-          {formattedAddress}
-        </div>
-        {/* {formattedAddress} */}
-      </div>
-    </Button>
-  );
-}

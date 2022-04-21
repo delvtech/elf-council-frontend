@@ -15,7 +15,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { ContractTransaction, Signer } from "ethers";
+import { ContractTransaction, ethers, Signer } from "ethers";
 import { isNumber } from "lodash";
 import { jt, t } from "ttag";
 
@@ -53,6 +53,9 @@ import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPo
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
 
 import { TooltipDefinition } from "./tooltipDefinitions";
+import { GSCMember } from "src/ui/proposals/GSCMember";
+
+const author = ethers.Wallet.createRandom().address;
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -224,6 +227,12 @@ export function GSCProposalDetailsCard(
           </Tag>
         </div>
 
+        {/* Proposal Author */}
+        <p className="my-3 shrink-0 overflow-hidden font-light text-white">
+          {t`Author:`}
+        </p>
+        <GSCMember account={author} provider={defaultProvider} />
+
         {/* Proposal Description */}
         <p className="my-3 shrink-0 overflow-hidden font-light text-white">
           {t`Proposal Description:`}
@@ -321,9 +330,6 @@ export function GSCProposalDetailsCard(
   );
 }
 
-interface BallotLabelProps {
-  ballot: Ballot;
-}
 function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
   switch (ballot) {
     case Ballot.YES:
