@@ -2,33 +2,34 @@ import {
   Fragment,
   ReactElement,
   useCallback,
+  useEffect,
   useMemo,
   useState,
-  useEffect,
 } from "react";
-import Head from "next/head";
+
+import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
+import Head from "next/head";
 import { t } from "ttag";
 
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
+import GradientCard from "src/ui/base/Card/GradientCard";
 import H1 from "src/ui/base/H1/H1";
 import H2 from "src/ui/base/H2/H2";
+import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
 import {
-  useIsTailwindSmallScreen,
   useIsTailwindLargeScreen,
+  useIsTailwindSmallScreen,
 } from "src/ui/base/tailwindBreakpoints";
-import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
-import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
+import { GSCProposalDetailsCard } from "src/ui/proposals/GSCProposalsDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
-import GradientCard from "src/ui/base/Card/GradientCard";
 
 type TabId = "active" | "past";
 
@@ -164,7 +165,7 @@ export default function GSCProposalsPage({
   ]);
 
   const proposalDetail = !!selectedProposal ? (
-    <ProposalDetailsCard
+    <GSCProposalDetailsCard
       key={selectedProposalId}
       onClose={handleOnClose}
       account={account}
