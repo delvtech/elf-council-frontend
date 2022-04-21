@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import toast from "react-hot-toast";
 
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { CheckCircleIcon } from "@heroicons/react/outline";
 import {
   ThumbDownIcon,
@@ -14,35 +15,33 @@ import {
   XCircleIcon,
 } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { Proposal } from "@elementfi/elf-council-proposals";
-import { Signer, ContractTransaction } from "ethers";
-import { commify, formatEther } from "ethers/lib/utils";
+import { ContractTransaction, Signer } from "ethers";
 import { isNumber } from "lodash";
-import { t, jt } from "ttag";
+import { jt, t } from "ttag";
 
-import H1 from "src/ui/base/H1/H1";
-import H2 from "src/ui/base/H2/H2";
 import { assertNever } from "src/base/assertNever";
-import ElementUrl from "src/elf/urls";
 import { getIsVotingOpen } from "src/elf-council-proposals";
 import { ETHERSCAN_TRANSACTION_DOMAIN } from "src/elf-etherscan/domain";
-import { VotingPower } from "src/elf/proposals/VotingPower";
+import { defaultProvider } from "src/elf/providers/providers";
+import ElementUrl from "src/elf/urls";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import { TooltipDefinition } from "./tooltipDefinitions";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import CloseButton from "src/ui/base/Dialog/CloseButton";
 import GradientCard from "src/ui/base/Card/GradientCard";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import H1 from "src/ui/base/H1/H1";
+import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
-import { ProgressBar } from "src/ui/base/ProgressBar/ProgressBar";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
+import GSCVoteTallys from "src/ui/proposals/GSCVoteTally";
 import {
   getProposalStatus,
-  ProposalStatus,
   ProposalStatusLabels,
 } from "src/ui/proposals/ProposalList/ProposalStatus";
 import { ProposalStatusIcon } from "src/ui/proposals/ProposalList/ProposalStatusIcon";
+import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
 import { useProposalExecuted } from "src/ui/proposals/useProposalExecuted";
 import { useSnapshotProposals } from "src/ui/proposals/useSnapshotProposals";
 import { useVotingPowerForProposal } from "src/ui/proposals/useVotingPowerForProposal";
@@ -52,8 +51,8 @@ import { useLastVoteTransactionForAccount } from "src/ui/voting/useLastVoteTrans
 import { useVote } from "src/ui/voting/useVote";
 import { useVotingPowerForAccountAtBlockNumber } from "src/ui/voting/useVotingPowerForAccount";
 import { VotingBallotButton } from "src/ui/voting/VotingBallotButton";
-import { StaleVotingPowerMessage } from "src/ui/proposals/StaleVotingPowerMessage";
-import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+
+import { TooltipDefinition } from "./tooltipDefinitions";
 
 interface GSCProposalDetailsCardProps {
   className?: string;
@@ -251,18 +250,16 @@ export function GSCProposalDetailsCard(
           />
         </div>
 
-        {/* Quorum Bar */}
+        {/* Vote Tallys */}
         {isExecuted ? (
           <Tag className="w-full" intent={Intent.SUCCESS}>
             <span>{t`Executed`}</span>
             <CheckCircleIcon className="ml-2" height="24" />
           </Tag>
         ) : (
-          <QuorumBar
-            quorum={quorum}
-            proposalId={proposalId}
-            status={proposalStatus}
-          />
+          <div className="max-h-72 w-full overflow-scroll">
+            <GSCVoteTallys provider={defaultProvider} />
+          </div>
         )}
 
         {/* Voting Related Stats / Action Buttons */}
@@ -354,43 +351,4 @@ function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
       assertNever(ballot);
       return null;
   }
-}
-
-interface QuorumBarProps {
-  proposalId: string;
-
-  // quorum in X * 1e18 format, i.e. '50' = 50 Eth
-  quorum: string;
-  status: ProposalStatus | undefined;
-}
-
-function QuorumBar(props: QuorumBarProps) {
-  const { proposalId, quorum } = props;
-  const proposalVotingResults = useVotingPowerForProposal(proposalId);
-  const votes = getVoteCount(proposalVotingResults);
-
-  const quorumPercent = Math.floor((+votes / +quorum) * 100);
-  return (
-    <div className="w-full space-y-1 text-white">
-      <div>
-        {commify(votes)} / {commify(quorum)}{" "}
-        <span className="text-sm">{t`total votes`}</span>
-      </div>
-      <ProgressBar progress={+votes / +quorum} />
-      <div>
-        {`${quorumPercent}%`}{" "}
-        <span className="text-sm">{t`quorum reached`}</span>
-      </div>
-    </div>
-  );
-}
-
-function getVoteCount(votingPower: VotingPower | undefined): string {
-  if (!votingPower) {
-    return "0";
-  }
-
-  return votingPower[0].gt(votingPower[1])
-    ? formatEther(votingPower[0])
-    : formatEther(votingPower[1]);
 }

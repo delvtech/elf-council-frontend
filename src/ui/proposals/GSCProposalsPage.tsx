@@ -185,7 +185,7 @@ export default function GSCProposalsPage({
       </Head>
 
       <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
-        <H1 className="flex-1 text-center text-principalRoyalBlue">{t`On-chain Proposals`}</H1>
+        <H1 className="flex-1 text-center text-principalRoyalBlue">{t`GSC On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`}>
             <Tab
