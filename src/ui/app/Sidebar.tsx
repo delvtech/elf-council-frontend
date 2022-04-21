@@ -18,6 +18,8 @@ import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrl from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
+import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
+import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -38,6 +40,8 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   const onClose = useCallback(() => {
     setIsOpen(false);
   }, []);
+
+  const hasGscFlag = useFeatureFlag(FeatureFlag.GSC);
 
   return (
     <Fragment>
@@ -87,6 +91,26 @@ export default function Sidebar(props: SidebarProps): ReactElement {
                 <UserGroupIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
+            {hasGscFlag && (
+              <SidebarLink
+                link="/"
+                label={t`GSC Overview`}
+                router={router}
+                icon={
+                  <HomeIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+                }
+              />
+            )}
+            {hasGscFlag && (
+              <SidebarLink
+                link="/gsc-proposals"
+                label={t`GSC Proposals`}
+                router={router}
+                icon={
+                  <PencilAltIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+                }
+              />
+            )}
             <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />
             <SidebarLinkExternal link={ElementUrl.DOCS} label={t`Resources`} />
 
