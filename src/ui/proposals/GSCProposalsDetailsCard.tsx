@@ -330,6 +330,9 @@ export function GSCProposalDetailsCard(
   );
 }
 
+interface BallotLabelProps {
+  ballot: Ballot;
+}
 function BallotLabel({ ballot }: BallotLabelProps): ReactElement | null {
   switch (ballot) {
     case Ballot.YES:
