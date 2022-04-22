@@ -14,9 +14,20 @@ import H1 from "src/ui/base/H1/H1";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
+import { Delegate } from "src/elf-council-delegates/delegates";
+import GSCMemberProfileRow from "src/ui/gsc/GSCMemberProfileRow";
+import H2 from "src/ui/base/H2/H2";
 
 const provider = defaultProvider;
-const delegates = [
+
+const members: Delegate[] = [
+  { address: ethers.Wallet.createRandom().address },
+  { address: ethers.Wallet.createRandom().address },
+  { address: ethers.Wallet.createRandom().address },
+  { address: ethers.Wallet.createRandom().address },
+  { address: ethers.Wallet.createRandom().address },
+];
+const delegates: Delegate[] = [
   { address: ethers.Wallet.createRandom().address },
   { address: ethers.Wallet.createRandom().address },
   { address: ethers.Wallet.createRandom().address },
@@ -44,6 +55,61 @@ export function GSCOverviewPage(
       </div>
       <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
         <div className="flex w-full flex-col gap-6">
+          <H2 className="text-principalRoyalBlue">{t`Council Assembly`}</H2>
+          {/* Members */}
+          <ul
+            // 392px exactly matches 5 rows of the list
+            className="flex h-[40vh] min-h-[392px] w-full flex-col gap-y-2 overflow-y-scroll pr-1"
+          >
+            {members.map((member, idx) => {
+              const handleDelegation = () => {};
+
+              const currentlyDelegated = delegateAddressOnChain
+                ? member.address === delegateAddressOnChain
+                : false;
+
+              const selected = member.address === selectedDelegate;
+
+              // TODO: Remove -${idx} for production since addresses are always unique
+              return (
+                <li className="w-full" key={`${member.address}-${idx}}`}>
+                  <GSCMemberProfileRow
+                    provider={provider}
+                    selected={selected}
+                    delegate={member}
+                    kickButton={
+                      member.address === members[4].address ? (
+                        <Button className="w-full bg-red-500 text-center">
+                          <div className="flex w-full justify-center">Kick</div>
+                        </Button>
+                      ) : undefined
+                    }
+                    delegateButton={
+                      <ChangeDelegateButton
+                        tagClassName="block"
+                        buttonClassName="inline-flex"
+                        onDelegationClick={handleDelegation}
+                        account={account}
+                        isLoading={false}
+                        currentlyDelegated={currentlyDelegated}
+                      />
+                    }
+                    profileActionButton={
+                      <ChangeDelegateButton
+                        buttonClassName="inline-flex"
+                        onDelegationClick={handleDelegation}
+                        account={account}
+                        isLoading={false}
+                        currentlyDelegated={currentlyDelegated}
+                      />
+                    }
+                  />
+                </li>
+              );
+            })}
+          </ul>
+
+          <H2 className="text-principalRoyalBlue">{t`Candidates`}</H2>
           {/* Delegates */}
           <ul
             // 392px exactly matches 5 rows of the list

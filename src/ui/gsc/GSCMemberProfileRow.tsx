@@ -15,22 +15,24 @@ import { Provider } from "@ethersproject/providers";
 import { formatWalletAddress } from "src/base/formatWalletAddress";
 import { getGSCCandidateUrl } from "src/commonwealth";
 
-interface DelegateProfileRowProps {
+interface GSCMemberProfileRowProps {
   provider?: Provider;
   selected: boolean;
   highlightSelected?: boolean;
   delegate: Delegate;
-  actionButton: ReactElement;
+  delegateButton: ReactElement;
+  kickButton?: ReactElement;
   profileActionButton: ReactElement;
 }
 
-function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
+function GSCMemberProfileRow(props: GSCMemberProfileRowProps): ReactElement {
   const {
     provider,
     selected = false,
     highlightSelected = false,
     delegate,
-    actionButton,
+    delegateButton,
+    kickButton,
     profileActionButton,
   } = props;
 
@@ -107,18 +109,9 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
 
         {/* Buttons */}
         <div className="col-span-3 flex justify-end gap-x-4 lg:col-span-4">
-          {/* Button to expand a detailed view of delegate  */}
-          {/* <Popover.Button
-            className={classNames(
-              getButtonClass({ variant: ButtonVariant.SECONDARY }),
-              "w-full justify-center",
-            )}
-          >
-            {t`Profile`}
-          </Popover.Button> */}
-
           {/* Unique action event button */}
-          <div className="w-full lg:w-1/2 lg:pl-2">{actionButton}</div>
+          <div className="w-full lg:w-1/2 lg:pl-2">{kickButton}</div>
+          <div className="w-full lg:w-1/2 lg:pl-2">{delegateButton}</div>
         </div>
       </div>
 
@@ -148,7 +141,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           leaveTo="opacity-0 sm:scale-95"
         >
           <Popover.Panel
-            className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform sm:rounded-xl 
+            className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform sm:rounded-xl
           md:w-[700px] lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0"
           >
             {({ close }) => (
@@ -182,7 +175,7 @@ function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
   );
 }
 
-export default dynamic(() => Promise.resolve(DelegateProfileRow), {
+export default dynamic(() => Promise.resolve(GSCMemberProfileRow), {
   // we cant server side render the Popover component, so we turn this off for DelegateProfile
   ssr: false,
 });

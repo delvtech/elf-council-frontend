@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 import PageView from "src/ui/app/PageView";
-import GSCOverviewPage from "src/ui/overview/GSCOverviewPage";
+import GSCOverviewPage from "src/ui/gsc/GSCOverviewPage";
 
 interface GSCOverviewProps {}
 export default function GSCOverview(
