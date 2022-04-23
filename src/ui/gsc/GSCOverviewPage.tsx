@@ -6,26 +6,20 @@ import { ethers } from "ethers";
 import Head from "next/head";
 import { t } from "ttag";
 
+import { Delegate } from "src/elf-council-delegates/delegates";
 import { defaultProvider } from "src/elf/providers/providers";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
+import H2 from "src/ui/base/H2/H2";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
-import { Delegate } from "src/elf-council-delegates/delegates";
-import H2 from "src/ui/base/H2/H2";
 import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
+import { useGSCMembers } from "./useGSCMembers";
 
 const provider = defaultProvider;
 
-const members: Delegate[] = [
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-];
 const delegates: Delegate[] = [
   { address: ethers.Wallet.createRandom().address },
   { address: ethers.Wallet.createRandom().address },
@@ -33,10 +27,13 @@ const delegates: Delegate[] = [
   { address: ethers.Wallet.createRandom().address },
   { address: ethers.Wallet.createRandom().address },
 ];
+
 export function GSCOverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   const selectedDelegate = delegates[0].address;
   const delegateAddressOnChain = delegates[0].address;
+
+  const members = useGSCMembers();
 
   return (
     <div className="w-full space-y-6 xl:max-w-[1024px]">
@@ -68,7 +65,7 @@ export function GSCOverviewPage(): ReactElement {
                   delegate={member}
                   kickButton={
                     // TODO: this is stubbed, add real logic
-                    member.address === members[4].address ? (
+                    member.address === members[members.length - 1].address ? (
                       <Button
                         variant={ButtonVariant.DANGER}
                         className="w-full text-center"
