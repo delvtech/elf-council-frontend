@@ -16,15 +16,10 @@ export function GSCMember(props: GSCMemberProps): ReactElement {
   return (
     <Button variant={ButtonVariant.OUTLINE_WHITE}>
       <div className="flex w-full items-center overflow-hidden">
-        <WalletJazzicon
-          size={28}
-          account={account}
-          className="mr-4 flex-shrink-0 flex-grow-0"
-        />
+        <WalletJazzicon size={28} account={account} className="mr-4" />
         <div className="max-w-0 flex-shrink text-sm font-thin">
           {formattedAddress}
         </div>
-        {/* {formattedAddress} */}
       </div>
     </Button>
   );

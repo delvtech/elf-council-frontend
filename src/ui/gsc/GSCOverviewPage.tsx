@@ -2,7 +2,6 @@ import React, { ReactElement } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import classNames from "classnames";
 import { ethers } from "ethers";
 import Head from "next/head";
 import { t } from "ttag";
@@ -15,8 +14,8 @@ import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { Delegate } from "src/elf-council-delegates/delegates";
-import GSCMemberProfileRow from "src/ui/gsc/GSCMemberProfileRow";
 import H2 from "src/ui/base/H2/H2";
+import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
 
 const provider = defaultProvider;
 
@@ -34,171 +33,143 @@ const delegates: Delegate[] = [
   { address: ethers.Wallet.createRandom().address },
   { address: ethers.Wallet.createRandom().address },
 ];
-interface GSCOverviewPageProps {}
-export function GSCOverviewPage(
-  unusedProps: GSCOverviewPageProps,
-): ReactElement {
+export function GSCOverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
   const selectedDelegate = delegates[0].address;
   const delegateAddressOnChain = delegates[0].address;
 
   return (
-    <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
+    <div className="w-full space-y-6 xl:max-w-[1024px]">
       <Head>
         <title>{t`GSCOverview | Element Council Protocol`}</title>
       </Head>
 
-      <div className="px-8 py-1">
-        <H1 className="text-center text-principalRoyalBlue">
-          {t`Governance GSCOverview`}
-        </H1>
-      </div>
-      <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
-        <div className="flex w-full flex-col gap-6">
-          <H2 className="text-principalRoyalBlue">{t`Council Assembly`}</H2>
-          {/* Members */}
-          <ul
-            // 392px exactly matches 5 rows of the list
-            className="flex h-[40vh] min-h-[392px] w-full flex-col gap-y-2 overflow-y-scroll pr-1"
-          >
-            {members.map((member, idx) => {
-              const handleDelegation = () => {};
+      <H1 className="text-center text-principalRoyalBlue">
+        {t`Governance GSC Overview`}
+      </H1>
 
-              const currentlyDelegated = delegateAddressOnChain
-                ? member.address === delegateAddressOnChain
-                : false;
+      <div className="w-full flex-col justify-center space-y-6">
+        {/* Members */}
+        <H2 className="text-principalRoyalBlue">{t`Council Assembly`}</H2>
+        <ul className="space-y-2">
+          {members.map((member) => {
+            const handleDelegation = () => {};
 
-              const selected = member.address === selectedDelegate;
+            const currentlyDelegated = delegateAddressOnChain
+              ? member.address === delegateAddressOnChain
+              : false;
 
-              // TODO: Remove -${idx} for production since addresses are always unique
-              return (
-                <li className="w-full" key={`${member.address}-${idx}}`}>
-                  <GSCMemberProfileRow
-                    provider={provider}
-                    selected={selected}
-                    delegate={member}
-                    kickButton={
-                      member.address === members[4].address ? (
-                        <Button className="w-full bg-red-500 text-center">
-                          <div className="flex w-full justify-center">Kick</div>
-                        </Button>
-                      ) : undefined
-                    }
-                    delegateButton={
-                      <ChangeDelegateButton
-                        tagClassName="block"
-                        buttonClassName="inline-flex"
-                        onDelegationClick={handleDelegation}
-                        account={account}
-                        isLoading={false}
-                        currentlyDelegated={currentlyDelegated}
-                      />
-                    }
-                    profileActionButton={
-                      <ChangeDelegateButton
-                        buttonClassName="inline-flex"
-                        onDelegationClick={handleDelegation}
-                        account={account}
-                        isLoading={false}
-                        currentlyDelegated={currentlyDelegated}
-                      />
-                    }
-                  />
-                </li>
-              );
-            })}
-          </ul>
+            const selected = member.address === selectedDelegate;
 
-          <H2 className="text-principalRoyalBlue">{t`Candidates`}</H2>
-          {/* Delegates */}
-          <ul
-            // 392px exactly matches 5 rows of the list
-            className="flex h-[40vh] min-h-[392px] w-full flex-col gap-y-2 overflow-y-scroll pr-1"
-          >
-            {delegates.map((delegate, idx) => {
-              const handleDelegation = () => {};
+            return (
+              <li key={`${member.address}`}>
+                <GSCMemberProfileRow
+                  selected={selected}
+                  delegate={member}
+                  kickButton={
+                    // TODO: this is stubbed, add real logic
+                    member.address === members[4].address ? (
+                      <Button
+                        variant={ButtonVariant.DANGER}
+                        className="w-full text-center"
+                      >
+                        <div className="flex w-full justify-center">{t`Kick`}</div>
+                      </Button>
+                    ) : undefined
+                  }
+                  delegateButton={
+                    <ChangeDelegateButton
+                      onDelegationClick={handleDelegation}
+                      account={account}
+                      isLoading={false}
+                      isCurrentDelegate={currentlyDelegated}
+                    />
+                  }
+                />
+              </li>
+            );
+          })}
+        </ul>
 
-              const currentlyDelegated = delegateAddressOnChain
-                ? delegate.address === delegateAddressOnChain
-                : false;
+        {/* Candidates */}
+        <H2 className="text-principalRoyalBlue">{t`Candidates`}</H2>
+        <ul className="space-y-2">
+          {delegates.map((delegate) => {
+            const handleDelegation = () => {};
 
-              const selected = delegate.address === selectedDelegate;
+            const currentlyDelegated = delegateAddressOnChain
+              ? delegate.address === delegateAddressOnChain
+              : false;
 
-              // TODO: Remove -${idx} for production since addresses are always unique
-              return (
-                <li className="w-full" key={`${delegate.address}-${idx}}`}>
-                  <DelegateProfileRow
-                    provider={provider}
-                    selected={selected}
-                    delegate={delegate}
-                    actionButton={
-                      <ChangeDelegateButton
-                        tagClassName="block"
-                        buttonClassName="inline-flex"
-                        onDelegationClick={handleDelegation}
-                        account={account}
-                        isLoading={false}
-                        currentlyDelegated={currentlyDelegated}
-                      />
-                    }
-                    profileActionButton={
-                      <ChangeDelegateButton
-                        buttonClassName="inline-flex"
-                        onDelegationClick={handleDelegation}
-                        account={account}
-                        isLoading={false}
-                        currentlyDelegated={currentlyDelegated}
-                      />
-                    }
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+            const selected = delegate.address === selectedDelegate;
+
+            return (
+              <li key={`${delegate.address}`}>
+                <DelegateProfileRow
+                  provider={provider}
+                  selected={selected}
+                  delegate={delegate}
+                  actionButton={
+                    <ChangeDelegateButton
+                      onDelegationClick={handleDelegation}
+                      account={account}
+                      isLoading={false}
+                      isCurrentDelegate={currentlyDelegated}
+                    />
+                  }
+                  profileActionButton={
+                    <ChangeDelegateButton
+                      onDelegationClick={handleDelegation}
+                      account={account}
+                      isLoading={false}
+                      isCurrentDelegate={currentlyDelegated}
+                    />
+                  }
+                />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );
 }
 
-export default GSCOverviewPage;
-
 interface ChangeDelegateButtonProps {
-  tagClassName?: string;
-  buttonClassName?: string;
   onDelegationClick: () => void;
   account: string | null | undefined;
   isLoading: boolean;
-  currentlyDelegated: boolean;
+  isCurrentDelegate: boolean;
 }
 function ChangeDelegateButton({
-  tagClassName = "",
-  buttonClassName = "",
   onDelegationClick,
   account,
   isLoading,
-  currentlyDelegated,
+  isCurrentDelegate,
 }: ChangeDelegateButtonProps): ReactElement {
+  if (isCurrentDelegate) {
+    // !font-bold because Tag has font-medium which has cascade priority over font-bold
+    return (
+      <Tag
+        intent={Intent.SUCCESS}
+        className="block w-full text-center !font-bold shadow"
+      >
+        {t`Delegated`}
+      </Tag>
+    );
+  }
+
   return (
-    <React.Fragment>
-      {currentlyDelegated ? (
-        <Tag
-          intent={Intent.SUCCESS}
-          className={classNames(tagClassName, "w-full shadow")}
-        >
-          <div className="text-center text-base font-bold">{t`Delegated`}</div>
-        </Tag>
-      ) : (
-        <Button
-          onClick={onDelegationClick}
-          variant={ButtonVariant.GRADIENT}
-          disabled={!account || isLoading || currentlyDelegated}
-          className={classNames(buttonClassName, "w-full justify-center")}
-          loading={isLoading}
-        >
-          {t`Delegate`}
-        </Button>
-      )}
-    </React.Fragment>
+    <Button
+      onClick={onDelegationClick}
+      variant={ButtonVariant.GRADIENT}
+      disabled={!account || isLoading}
+      className="w-full justify-center"
+      loading={isLoading}
+    >
+      {t`Delegate`}
+    </Button>
   );
 }
+
+export default GSCOverviewPage;
