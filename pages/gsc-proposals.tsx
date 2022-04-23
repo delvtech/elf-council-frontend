@@ -5,21 +5,21 @@ import { ProposalsJson } from "@elementfi/elf-council-proposals";
 import { PROPOSALS_JSON_URL } from "src/elf-council-proposals";
 import PageView from "src/ui/app/PageView";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
-import ProposalsPage from "src/ui/proposals/ProposalsPage";
+import GSCProposalsPage from "src/ui/proposals/GSCProposalsPage";
 
-interface ProposalsProps {
+interface GSCProposalsProps {
   proposalsJson: ProposalsJson;
 }
-export default function Proposals({
+export default function GSCProposals({
   proposalsJson,
-}: ProposalsProps): ReactElement | null {
+}: GSCProposalsProps): ReactElement | null {
   const { data: currentBlockNumber } = useLatestBlockNumber();
   if (!currentBlockNumber) {
     return null;
   }
   return (
     <PageView>
-      <ProposalsPage
+      <GSCProposalsPage
         proposalsJson={proposalsJson}
         currentBlockNumber={currentBlockNumber}
       />

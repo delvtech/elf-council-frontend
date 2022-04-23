@@ -18,6 +18,8 @@ import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import ElementUrl from "src/elf/urls";
 import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
 import CloseButton from "src/ui/base/Dialog/CloseButton";
+import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
+import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -38,6 +40,8 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   const onClose = useCallback(() => {
     setIsOpen(false);
   }, []);
+
+  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
 
   return (
     <Fragment>
@@ -87,6 +91,24 @@ export default function Sidebar(props: SidebarProps): ReactElement {
                 <UserGroupIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
+            <SidebarLink
+              className={hasGSCFlag ? "block" : "hidden"}
+              link="/gsc-overview"
+              label={t`GSC Overview`}
+              router={router}
+              icon={
+                <HomeIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+              }
+            />
+            <SidebarLink
+              className={hasGSCFlag ? "block" : "hidden"}
+              link="/gsc-proposals"
+              label={t`GSC Proposals`}
+              router={router}
+              icon={
+                <PencilAltIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+              }
+            />
             <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />
             <SidebarLinkExternal link={ElementUrl.DOCS} label={t`Resources`} />
 
@@ -97,13 +119,6 @@ export default function Sidebar(props: SidebarProps): ReactElement {
       </div>
     </Fragment>
   );
-}
-
-interface SidebarLinkProps {
-  link: string;
-  label: string;
-  router: NextRouter;
-  icon?: ReactElement;
 }
 
 interface SidebarLinkExternalProps {
@@ -127,13 +142,22 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
     </div>
   );
 }
+
+interface SidebarLinkProps {
+  className?: string;
+  link: string;
+  label: string;
+  router: NextRouter;
+  icon?: ReactElement;
+}
+
 function SidebarLink(props: SidebarLinkProps): ReactElement {
-  const { link, label, router, icon } = props;
+  const { className, link, label, router, icon } = props;
 
   const isActive = router.pathname === link;
 
   return (
-    <div className="flex justify-center">
+    <div className={classNames(className, "flex justify-center")}>
       <Link href={link}>
         {/* There's a big discussion about how awful the Link api is for a11y
       here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
