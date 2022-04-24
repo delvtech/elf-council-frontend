@@ -53,7 +53,7 @@ export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
         <Card variant={CardVariant.HACKER_SKY}>
           <div className="-mx-4 -my-5 flex flex-col py-2 text-white">
             <DropdownItem
-              disabled={!hasEnoughToJoinGSC}
+              disabled={!hasEnoughToJoinGSC || isOnGSC}
               label={t`Join`}
               onSelectItem={handleJoin}
             />
@@ -95,10 +95,14 @@ function DropdownItem(props: DropdownItemProps) {
     onSelectItem(label);
   }, [label, onSelectItem]);
 
+  const hoverBackground = disabled ? undefined : "hover:bg-principalRoyalBlue";
   return (
     <button
       disabled={disabled}
-      className="flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-principalRoyalBlue hover:bg-opacity-20"
+      className={classNames(
+        hoverBackground,
+        "flex w-[125px] items-center justify-between rounded px-3 py-2 hover:bg-opacity-20",
+      )}
       onClick={handleSelectItem}
     >
       <span className="mr-2 text-principalRoyalBlue">{label}</span>
