@@ -2,11 +2,9 @@ import React, { ReactElement } from "react";
 
 import { Web3Provider } from "@ethersproject/providers";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
 import Head from "next/head";
 import { t } from "ttag";
 
-import { Delegate } from "src/elf-council-delegates/delegates";
 import { defaultProvider } from "src/elf/providers/providers";
 import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
@@ -17,23 +15,21 @@ import { Tag } from "src/ui/base/Tag/Tag";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { GSCMemberProfileRow } from "src/ui/gsc/GSCMemberProfileRow";
 import { useGSCMembers } from "./useGSCMembers";
+import { useGSCCandidates } from "./useCandidates";
 
 const provider = defaultProvider;
-
-const delegates: Delegate[] = [
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-  { address: ethers.Wallet.createRandom().address },
-];
+const NUM_CANDIDATES_TO_SHOW = 20;
 
 export function GSCOverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
-  const selectedDelegate = delegates[0].address;
-  const delegateAddressOnChain = delegates[0].address;
 
   const members = useGSCMembers();
+  const candidates = useGSCCandidates();
+  const topTwentyCandidates = candidates.slice(0, NUM_CANDIDATES_TO_SHOW);
+
+  // TODO: stubbed, get real delegate
+  const selectedDelegate = candidates[0]?.address;
+  const delegateAddressOnChain = candidates[0]?.address;
 
   return (
     <div className="w-full space-y-6 xl:max-w-[1024px]">
@@ -91,7 +87,7 @@ export function GSCOverviewPage(): ReactElement {
         {/* Candidates */}
         <H2 className="text-principalRoyalBlue">{t`Candidates`}</H2>
         <ul className="space-y-2">
-          {delegates.map((delegate) => {
+          {topTwentyCandidates.map((delegate) => {
             const handleDelegation = () => {};
 
             const currentlyDelegated = delegateAddressOnChain

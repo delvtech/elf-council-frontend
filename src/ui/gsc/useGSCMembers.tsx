@@ -32,10 +32,12 @@ export function useGSCMembers(): Delegate[] {
         }),
       );
 
+      // TODO: query the vote power of each gsc member so we sort descending
       const validMembers = zip<string, BigNumber>(membersArray, timeStamps)
+        // 0 value for timestamp means no entry, so we filter
         .filter(([unusedMember, timeStamp]) => !!timeStamp?.toNumber())
-        .map(([member]) => member)
-        .filter((member): member is string => !!member);
+        .map(([address]) => address) // only care about the addressthrow away the timestamp now
+        .filter((address): address is string => !!address); // typeguard so (string | undefined)[] -> string[]
 
       return validMembers;
     },
