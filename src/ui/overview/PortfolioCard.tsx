@@ -1,20 +1,24 @@
 import React, { ReactElement } from "react";
 
+import { Provider } from "@ethersproject/providers";
+import { BigNumber } from "ethers";
 import { t } from "ttag";
 
+import { getEtherscanAddress } from "src/elf-etherscan/domain";
 import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { BalanceWithLabel } from "src/ui/base/BalanceWithLabel/BalanceWithLabel";
-import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import LinkButton from "src/ui/base/Button/LinkButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
-import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
-import { getEtherscanAddress } from "src/elf-etherscan/domain";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
+import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
-import { Provider } from "@ethersproject/providers";
+import { JoinGSCButton } from "src/ui/gsc/JoinGSCButton";
+import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
+import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
+import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
+import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -30,6 +34,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
   const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
   const votingPower = useVotingPowerForAccountAtLatestBlock(account);
+  const showJoinButton = useShowJoinButton(account);
 
   return (
     <Card
@@ -76,7 +81,21 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             >{t`Claim`}</LinkButton>
           </div>
         )}
+        {showJoinButton && <JoinGSCButton />}
       </div>
     </Card>
   );
+}
+
+function useShowJoinButton(account: string | null | undefined) {
+  const votePower = useVotingPowerForAccountAtLatestBlock(account);
+  const { data: threshold, isSuccess } = useGSCVotePowerThreshold();
+  const isOnGSC = useIsGSCMember(account);
+
+  if (isSuccess && Number(votePower) && threshold) {
+    const hasEnoughToJoinGSC = BigNumber.from(votePower).gte(threshold);
+    const canLeaveGSC = isOnGSC && BigNumber.from(votePower).lt(threshold);
+
+    return hasEnoughToJoinGSC || canLeaveGSC;
+  }
 }

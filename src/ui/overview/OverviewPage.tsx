@@ -19,6 +19,7 @@ import { SummaryCards } from "src/ui/overview/SummaryCards";
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
 }
+
 export function OverviewPage({
   proposalsJson,
 }: OverviewPageProps): ReactElement {
