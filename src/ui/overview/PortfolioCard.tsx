@@ -20,6 +20,8 @@ import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
 import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
+import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
+import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
@@ -90,11 +92,12 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
 }
 
 function useShowJoinButton(account: string | null | undefined) {
+  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: threshold, isSuccess } = useGSCVotePowerThreshold();
   const isOnGSC = useIsGSCMember(account);
 
-  if (isSuccess && !!Number(votePower) && !!threshold) {
+  if (hasGSCFlag && isSuccess && !!Number(votePower) && !!threshold) {
     const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
     const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
 
