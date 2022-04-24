@@ -1,7 +1,8 @@
 import React, { ReactElement } from "react";
 
 import { Provider } from "@ethersproject/providers";
-import { BigNumber } from "ethers";
+import { Signer } from "ethers";
+import { parseEther } from "ethers/lib/utils";
 import { t } from "ttag";
 
 import { getEtherscanAddress } from "src/elf-etherscan/domain";
@@ -16,17 +17,18 @@ import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
 import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
 import { JoinGSCButton } from "src/ui/gsc/JoinGSCButton";
 import { useGSCVotePowerThreshold } from "src/ui/gsc/useGSCVotePowerThreshold";
+import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
-import { useIsGSCMember } from "src/ui/gsc/useIsGSCMember";
 
 interface PortfolioCardProps {
   account: string | undefined | null;
   provider?: Provider;
+  signer: Signer | undefined;
 }
 
 export function PortfolioCard(props: PortfolioCardProps): ReactElement {
-  const { account, provider } = props;
+  const { account, provider, signer } = props;
   const formattedAddress = useFormattedWalletAddress(account, provider);
 
   const amountDeposited = useDeposited(account) || "0";
@@ -81,7 +83,7 @@ export function PortfolioCard(props: PortfolioCardProps): ReactElement {
             >{t`Claim`}</LinkButton>
           </div>
         )}
-        {showJoinButton && <JoinGSCButton />}
+        {showJoinButton && <JoinGSCButton account={account} signer={signer} />}
       </div>
     </Card>
   );
@@ -92,9 +94,9 @@ function useShowJoinButton(account: string | null | undefined) {
   const { data: threshold, isSuccess } = useGSCVotePowerThreshold();
   const isOnGSC = useIsGSCMember(account);
 
-  if (isSuccess && Number(votePower) && threshold) {
-    const hasEnoughToJoinGSC = BigNumber.from(votePower).gte(threshold);
-    const canLeaveGSC = isOnGSC && BigNumber.from(votePower).lt(threshold);
+  if (isSuccess && !!Number(votePower) && !!threshold) {
+    const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
+    const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);
 
     return hasEnoughToJoinGSC || canLeaveGSC;
   }

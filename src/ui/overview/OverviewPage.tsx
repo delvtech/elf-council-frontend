@@ -15,6 +15,10 @@ import H1 from "src/ui/base/H1/H1";
 import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 import { PortfolioCard } from "src/ui/overview/PortfolioCard";
 import { SummaryCards } from "src/ui/overview/SummaryCards";
+import { defaultProvider } from "src/elf/providers/providers";
+import { useSigner } from "src/ui/signer/useSigner";
+
+const provider = defaultProvider;
 
 interface OverviewPageProps {
   proposalsJson: ProposalsJson;
@@ -24,6 +28,8 @@ export function OverviewPage({
   proposalsJson,
 }: OverviewPageProps): ReactElement {
   const { account, library } = useWeb3React<Web3Provider>();
+  const signer = useSigner(account, library);
+
   return (
     <div className="h-full w-full space-y-6 xl:max-w-[1024px]">
       <Head>
@@ -38,7 +44,11 @@ export function OverviewPage({
       <SummaryCards proposalsJson={proposalsJson} />
       <div className="flex w-full grid-cols-2 flex-col justify-center space-y-6 xl:flex-row xl:space-x-6 xl:space-y-0">
         <div className="w-full">
-          <PortfolioCard account={account} provider={library} />
+          <PortfolioCard
+            account={account}
+            signer={signer}
+            provider={provider}
+          />
         </div>
         <div className="flex w-full flex-col gap-6">
           <FAQ />
