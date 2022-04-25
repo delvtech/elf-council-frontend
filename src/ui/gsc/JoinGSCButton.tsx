@@ -36,7 +36,7 @@ export function JoinGSCButton(props: JoinGSCButtonProps): ReactElement {
 
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: threshold = BigNumber.from(0) } = useGSCVotePowerThreshold();
-  const isOnGSC = useIsGSCMember(account);
+  const { data: isOnGSC } = useIsGSCMember(account);
 
   const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
   const canLeaveGSC = isOnGSC && parseEther(votePower).lt(threshold);

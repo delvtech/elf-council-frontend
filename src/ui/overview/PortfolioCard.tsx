@@ -127,7 +127,7 @@ function useShowJoinButton(account: string | null | undefined) {
   const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
   const votePower = useVotingPowerForAccountAtLatestBlock(account);
   const { data: threshold, isSuccess } = useGSCVotePowerThreshold();
-  const isOnGSC = useIsGSCMember(account);
+  const { data: isOnGSC } = useIsGSCMember(account);
 
   if (hasGSCFlag && isSuccess && !!Number(votePower) && !!threshold) {
     const hasEnoughToJoinGSC = parseEther(votePower).gte(threshold);
