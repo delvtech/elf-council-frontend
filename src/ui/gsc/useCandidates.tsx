@@ -11,7 +11,7 @@ import { useMemo } from "react";
  * @returns {Delegate[]} a list of candidates
  */
 export function useGSCCandidates(): Delegate[] {
-  const members = useGSCMembers();
+  const { data: members = [] } = useGSCMembers();
   const gscMemberAddresses = members.map(({ address }) => address);
 
   const { data: vestingVaultEvents = [] } = useSmartContractEvents(

@@ -1,30 +1,30 @@
-import { useQuery } from "react-query";
+import { QueryObserverResult, useQuery } from "react-query";
 import { useSmartContractEvents } from "@elementfi/react-query-typechain";
 import { BigNumber } from "ethers";
 import { gscVaultContract } from "src/elf/contracts";
 import zip from "lodash.zip";
 import { Delegate } from "src/elf-council-delegates/delegates";
 
-export function useGSCMembers(): Delegate[] {
+export function useGSCMembers(): QueryObserverResult<Delegate[]> {
   // grab membership approved events
   const { data: events } = useSmartContractEvents(
     gscVaultContract,
     "MembershipProved",
   );
 
-  const membersSet = new Set<string>();
-  events?.forEach((event) => {
-    const [member]: [string] = event.args as [string];
-    membersSet.add(member);
-  });
-
-  // events are sometimes out of order, sort to prevent useQuery cache busting
-  const membersArray = Array.from(membersSet).sort();
-
   // now look to see if the member is *still* in the GSC.  they could have been kicked so we look at
   // the members property and make sure there is an entry.
-  const { data: members } = useQuery({
+  return useQuery({
     queryFn: async () => {
+      const membersSet = new Set<string>();
+      events?.forEach((event) => {
+        const [member]: [string] = event.args as [string];
+        membersSet.add(member);
+      });
+
+      // events are sometimes out of order, sort to prevent useQuery cache busting
+      const membersArray = Array.from(membersSet).sort();
+
       // timestamps in seconds when user joined.  If the user doesn't exist, 0 is returned
       const timeStamps = await Promise.all(
         membersArray.map((member) => {
@@ -39,17 +39,11 @@ export function useGSCMembers(): Delegate[] {
         .map(([address]) => address) // only care about the addressthrow away the timestamp now
         .filter((address): address is string => !!address); // typeguard so (string | undefined)[] -> string[]
 
-      return validMembers;
+      return validMembers.map((address) => ({
+        address,
+      }));
     },
-    queryKey: ["gsc-members", membersArray],
-    enabled: !!membersArray?.length,
+    queryKey: ["gsc-members"],
+    enabled: !!events?.length,
   });
-
-  if (!members) {
-    return [];
-  }
-
-  return members.map((address) => ({
-    address,
-  }));
 }

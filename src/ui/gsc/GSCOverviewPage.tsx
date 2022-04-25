@@ -23,7 +23,7 @@ const NUM_CANDIDATES_TO_SHOW = 20;
 export function GSCOverviewPage(): ReactElement {
   const { account } = useWeb3React<Web3Provider>();
 
-  const members = useGSCMembers();
+  const { data: members = [] } = useGSCMembers();
   const candidates = useGSCCandidates();
   const topTwentyCandidates = candidates.slice(0, NUM_CANDIDATES_TO_SHOW);
 
