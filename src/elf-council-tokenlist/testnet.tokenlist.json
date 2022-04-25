@@ -1,7 +1,7 @@
 {
   "name": "Council testnet token list",
   "logoURI": "https://element.fi/logo.svg",
-  "timestamp": "2022-04-14T19:18:24.873Z",
+  "timestamp": "2022-04-23T21:40:02.410Z",
   "version": {
     "major": 0,
     "minor": 1,
@@ -51,7 +51,7 @@
       "symbol": "",
       "extensions": {
         "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-        "staleBlockLag": 10000
+        "staleBlockLag": 50
       }
     },
     {
@@ -62,7 +62,7 @@
       "symbol": "",
       "extensions": {
         "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-        "staleBlockLag": 10000
+        "staleBlockLag": 50
       }
     },
     {
@@ -73,7 +73,7 @@
       "symbol": "",
       "extensions": {
         "coreVoting": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-        "votingPowerBound": "100",
+        "votingPowerBound": "100000000000000000000",
         "idleDuration": "345600"
       }
     },
@@ -84,9 +84,9 @@
       "decimals": 0,
       "symbol": "",
       "extensions": {
-        "rewardsRoot": "0x6dc5a608f709803fbd085c6fa82f7c1def6e42c351101dbc17767d4f3262ce62",
+        "rewardsRoot": "0x7a0cd759a3fe80f970fcc6f41e5949dcf094e8be8395e12813f6a566c6334dd7",
         "lockingVault": "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
-        "expiration": "1681499900",
+        "expiration": "1682285997",
         "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
       }
     },

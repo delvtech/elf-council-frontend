@@ -6,6 +6,7 @@ import {
   LockingVault__factory,
   OptimisticRewards__factory,
   VestingVault__factory,
+  GSCVault__factory,
 } from "@elementfi/elf-council-typechain";
 import { addressesJson } from "src/elf-council-addresses";
 import { defaultProvider } from "src/elf/providers/providers";
@@ -37,6 +38,16 @@ export const vestingContract = VestingVault__factory.connect(
 
 export const airdropContract = Airdrop__factory.connect(
   addressesJson.addresses.airdrop,
+  defaultProvider,
+);
+
+export const gscVaultContract = GSCVault__factory.connect(
+  addressesJson.addresses.gscVault,
+  defaultProvider,
+);
+
+export const gscCoreVotingContract = CoreVoting__factory.connect(
+  addressesJson.addresses.gscCoreVoting,
   defaultProvider,
 );
 
