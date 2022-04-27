@@ -1,5 +1,7 @@
-import { useWeb3React } from "@web3-react/core";
 import React, { ReactElement, useState } from "react";
+import Head from "next/head";
+import { useWeb3React } from "@web3-react/core";
+
 import { ChooseDelegate } from "src/ui/airdrop/ChooseDelegate/ChooseDelegate";
 import { StartAirdropCard } from "src/ui/airdrop/StartAirdropCard/StartAirdropCard";
 import { AirdropPreview } from "src/ui/airdrop/AirdropPreview/AirdropPreview";
@@ -7,7 +9,7 @@ import Steps from "src/ui/base/Steps/Steps";
 import { useSigner } from "src/ui/signer/useSigner";
 import { t } from "ttag";
 import { parseEther } from "ethers/lib/utils";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
 import { MerkleProof } from "src/elf/merkle/MerkleProof";
 import {
@@ -64,7 +66,10 @@ enum Step {
 export default function AirdropPage(): ReactElement {
   const { account, active, library } = useWeb3React();
   const signer = useSigner(account, library);
-  const merkleInfoQueryData = useMerkleInfo(account);
+  const merkleInfoQueryData = useMerkleInfo(
+    account?.toLowerCase(),
+    MerkleRewardType.RETRO,
+  );
 
   const { data: merkleInfo } = merkleInfoQueryData;
   const claimableBalance = useUnclaimedAirdrop(account, merkleInfo);
@@ -104,6 +109,10 @@ export default function AirdropPage(): ReactElement {
 
   return (
     <div className="flex w-full max-w-4xl flex-1 flex-col items-center gap-4">
+      <Head>
+        <title>{t`Element Airdrop | Element Council Protocol`}</title>
+      </Head>
+
       <div className="w-[600px] max-w-full">
         <Steps className="w-full">
           <StepItem
@@ -152,53 +161,53 @@ export default function AirdropPage(): ReactElement {
                   walletConnectionActive={active}
                   onNextStep={() => {
                     if (hasClaimedAirdrop(merkleInfo, claimableBalance)) {
-                      goToStep(Step.ALREADY_CLAIMED, { completePrereqs: true });
+                      goToStep(Step.ALREADY_CLAIMED);
                       return;
                     }
-                    goToNextStep({ completePrereqs: true });
+                    goToNextStep();
                   }}
                 />
               );
 
             case Step.ALREADY_CLAIMED:
-              return <AirdropAlreadyClaimed account={account} />;
+              return (
+                <AirdropAlreadyClaimed account={account} provider={library} />
+              );
 
             case Step.AIRDROP_PREVIEW:
               return (
-                <AirdropPreview
-                  account={account}
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
-                />
+                <AirdropPreview account={account} onNextStep={goToNextStep} />
               );
 
             case Step.DELEGATE_INSTRUCTIONS:
               return (
                 <DelegateInstructions
                   account={account}
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
             case Step.CHOOSE_DELEGATE:
               return (
                 <ChooseDelegate
                   account={account as string}
+                  provider={library}
                   onChooseDelegate={setDelegateAddress}
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
             case Step.REVIEW_TRANSACTION:
               return (
                 <ReviewTransaction
                   account={account}
+                  provider={library}
                   signer={signer}
                   delegateAddress={
                     delegateAddress as string /* safe to cast because users cannot get to this step w/out choosing a delegate first */
                   }
-                  onPrevStep={() => goToPreviousStep()}
-                  onNextStep={() => goToNextStep({ completePrereqs: true })}
+                  onPrevStep={goToPreviousStep}
+                  onNextStep={goToNextStep}
                 />
               );
             case Step.DELEGATE_COMPLETE:

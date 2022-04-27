@@ -2,7 +2,10 @@ import { ReactElement } from "react";
 import classNames from "classnames";
 import { InformationCircleIcon } from "@heroicons/react/solid";
 import { formatBalance } from "src/formatBalance";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 
 interface BalanceWithLabelProps {
@@ -21,14 +24,14 @@ export function BalanceWithLabel(props: BalanceWithLabelProps): ReactElement {
       {/* Balance */}
       <div className="flex items-center">
         <span className="mr-2 text-2xl font-extralight">
-          {formatBalance(balance)}
+          {formatBalance(balance, 4)}
         </span>
-        <ElementIcon size={IconSize.MEDIUM} />
+        <ElementIconCircle size={IconSize.MEDIUM} />
       </div>
 
       {/* Label */}
       <div className="flex items-center">
-        <span className="mb-1 mr-2 text-xl">{label}</span>
+        <span className="mr-2 text-xl">{label}</span>
         {tooltipText && (
           <Tooltip content={tooltipText}>
             {tooltipHref ? (

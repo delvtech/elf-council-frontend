@@ -1,23 +1,18 @@
 /* This example requires Tailwind CSS v2.0+ */
-import React, {
-  Fragment,
-  LegacyRef,
-  ReactElement,
-  ReactNode,
-  useState,
-} from "react";
-import { usePopper } from "react-popper";
+import React, { Fragment, LegacyRef, ReactElement, ReactNode } from "react";
 
 import { Popover } from "@headlessui/react";
 import classNames from "classnames";
 
 import { ButtonProps } from "src/ui/base/Button/Button";
 import { getButtonClass } from "src/ui/base/Button/styles";
+import usePopperWithRefs from "src/ui/base/usePopperWithRefs";
 import { isFunction } from "lodash";
 
 interface PopoverButtonProps extends ButtonProps {
   popover: ReactNode;
   popoverClassName?: string;
+  children: ReactNode | ((open: boolean) => ReactElement);
 }
 
 export default function PopoverButton({
@@ -40,11 +35,8 @@ export default function PopoverButton({
     disabled,
     error,
   });
-  const [referenceElement, setReferenceElement] = useState(null);
-  const [popperElement, setPopperElement] = useState(null);
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: "bottom",
-  });
+  const { setReferenceElement, setPopperElement, styles, attributes } =
+    usePopperWithRefs();
 
   return (
     <Popover>

@@ -10,9 +10,11 @@ import { Overrides } from "ethers";
 import classNames from "classnames";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
+import { Provider } from "@ethersproject/providers";
 
 interface DelegatesListProps {
   account: string | null | undefined;
+  provider?: Provider;
   changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
   isLoading: boolean;
   isError: boolean;
@@ -24,6 +26,7 @@ interface DelegatesListProps {
 
 function DelegatesList({
   account,
+  provider,
   changeDelegation,
   isLoading,
   delegateAddressOnChain,
@@ -53,20 +56,16 @@ function DelegatesList({
       <div className="mb-4 grid grid-cols-10 items-center pr-8">
         {/* Title */}
         <div className="col-span-7 lg:col-span-4">
-          <H2 className="text-2xl tracking-wide text-principalRoyalBlue">
-            <div className="hidden sm:block">{t`Explore Featured Delegates`}</div>
-            <div className="leading-6 sm:hidden">
-              <div>{t`Explore Featured`}</div>
-              <div>{t`Delegates`}</div>
-            </div>
+          <H2 className="tracking-wide text-principalRoyalBlue">
+            <div className="mr-4 text-2xl leading-7 lg:w-max">{t`Explore Featured Delegates`}</div>
           </H2>
         </div>
 
         {/* Vote Spacer */}
-        <div className="col-span-2 ml-auto mr-14 hidden lg:block" />
+        <div className="col-span-2 ml-auto mr-14 hidden lg:block"></div>
 
         <div className="col-span-3 flex gap-x-4 lg:col-span-4">
-          <div className="hidden w-full lg:block" />
+          <div className="hidden w-full lg:block"></div>
           <div className="w-full">
             <Button
               onClick={handleSelfDelegateClick}
@@ -96,7 +95,7 @@ function DelegatesList({
           </div>
 
           {/* Spacer for Buttons */}
-          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4" />
+          <div className="col-span-3 mr-4 flex gap-x-4 lg:col-span-4"></div>
         </div>
 
         {/* Delegates */}
@@ -120,12 +119,13 @@ function DelegatesList({
             return (
               <li key={`${delegate.address}-${idx}}`}>
                 <DelegateProfileRow
+                  provider={provider}
                   selected={selected}
                   delegate={delegate}
                   actionButton={
                     <ChangeDelegateButton
-                      tagClassName="hidden lg:block"
-                      buttonClassName="hidden lg:inline-flex"
+                      tagClassName="block"
+                      buttonClassName="inline-flex"
                       onDelegationClick={handleDelegation}
                       account={account}
                       isLoading={isLoading}

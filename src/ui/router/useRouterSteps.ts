@@ -22,13 +22,6 @@ interface UseRouterStepsOptions<Step> {
   initialCompleted?: number;
 }
 
-interface goToStepOptions {
-  /**
-   * Complete prerequisite steps for the target step
-   */
-  completePrereqs?: boolean;
-}
-
 // Step numbers are 1-indexed. They do not start at 0.
 export default function useRouterSteps<Step = number>(
   options?: UseRouterStepsOptions<Step>,
@@ -40,9 +33,9 @@ export default function useRouterSteps<Step = number>(
   getStepNumber: (step: number | Step) => number;
   getStepPath: (step: number | Step) => string;
   getStepStatus: (step: number | Step) => StepStatus;
-  goToNextStep: (options?: goToStepOptions) => void;
+  goToNextStep: () => void;
   goToPreviousStep: () => void;
-  goToStep: (step: number | Step, options?: goToStepOptions) => void;
+  goToStep: (step: number | Step) => void;
   setCompletedSteps: Dispatch<SetStateAction<number>>;
 } {
   // using useRef to ensure these value never trigger rerenders when changed
@@ -55,6 +48,10 @@ export default function useRouterSteps<Step = number>(
   const { pathname, push, replace } = useRouter();
   const { [paramName]: paramStep } = useParams();
 
+  // use these methods in dependency arrays
+  const staticRouterMethods = useRef({ safePush: push, safeReplace: replace });
+  const { safePush, safeReplace } = staticRouterMethods.current;
+
   const [completedSteps, setCompletedSteps] = useState(initialCompleted);
 
   const currentStep = useMemo(() => {
@@ -66,13 +63,13 @@ export default function useRouterSteps<Step = number>(
 
   const getStepNumber = useCallback(
     (step: number | Step) => {
-      let stepNumber = 0;
       if (typeof step === "number") {
-        stepNumber = Math.round(step);
-      } else if (steps) {
-        stepNumber = steps.indexOf(step) + 1;
+        return step;
       }
-      return stepNumber;
+      if (steps) {
+        return steps.indexOf(step) + 1;
+      }
+      return 0;
     },
     [steps],
   );
@@ -125,39 +122,33 @@ export default function useRouterSteps<Step = number>(
   );
 
   const goToStep = useCallback(
-    (step: number | Step, options?: goToStepOptions) => {
-      if (options?.completePrereqs) {
-        completeStep(getStepNumber(step) - 1);
-        push(getStepPath(step));
-      } else if (canViewStep(step)) {
-        push(getStepPath(step));
-      } else {
-        // TODO: error notification?
-      }
+    (step: number | Step) => {
+      completeStep(getStepNumber(step) - 1);
+      safePush(getStepPath(step));
     },
-    [canViewStep, push, getStepPath, completeStep, getStepNumber],
+    [safePush, getStepPath, completeStep, getStepNumber],
   );
 
   const goToPreviousStep = useCallback(() => {
     goToStep(getStepNumber(currentStep) - 1);
   }, [goToStep, getStepNumber, currentStep]);
 
-  const goToNextStep = useCallback(
-    (options?: goToStepOptions) => {
-      goToStep(getStepNumber(currentStep) + 1, options);
-    },
-    [goToStep, getStepNumber, currentStep],
-  );
+  const goToNextStep = useCallback(() => {
+    goToStep(getStepNumber(currentStep) + 1);
+  }, [goToStep, getStepNumber, currentStep]);
 
   useEffect(() => {
     if (!canViewStep(currentStep)) {
-      replace(getStepPath(completedSteps + 1), undefined, { shallow: true });
+      // TODO: error notification?
+      safeReplace(getStepPath(completedSteps + 1), undefined, {
+        shallow: true,
+      });
     }
   }, [
     paramStep,
     canViewStep,
     currentStep,
-    replace,
+    safeReplace,
     getStepPath,
     completedSteps,
   ]);

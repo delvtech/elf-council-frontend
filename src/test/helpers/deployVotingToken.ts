@@ -1,4 +1,7 @@
-import { MockERC20, MockERC20__factory } from "elf-council-typechain";
+import {
+  MockERC20,
+  MockERC20__factory,
+} from "@elementfi/elf-council-typechain";
 import { Wallet } from "ethers";
 
 export async function deployVotingToken(signer: Wallet): Promise<MockERC20> {

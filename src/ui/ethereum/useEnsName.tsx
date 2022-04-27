@@ -1,7 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import { QueryObserverResult, useQuery } from "react-query";
 
-export function useEnsName(
+export function useENSName(
   account: string | null | undefined,
   provider?: Provider,
 ): QueryObserverResult<string> {

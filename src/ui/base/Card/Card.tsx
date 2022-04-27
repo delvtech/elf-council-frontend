@@ -18,22 +18,20 @@ export interface CardProps {
   active?: boolean;
 }
 
-type PolymorphicCardProps<C extends ElementType = "div"> =
-  PolymorphicComponentProps<C, CardProps>;
+type PolymorphicCardProps<C extends ElementType> = PolymorphicComponentProps<
+  C,
+  CardProps
+>;
 
-export default function Card<C extends ElementType>(
-  props: PolymorphicCardProps<C>,
-): ReactElement {
-  const {
-    as,
-    className,
-    variant = CardVariant.WHITE,
-    interactive = false,
-    active = false,
-    children,
-    ...tagProps
-  } = props;
-
+export default function Card<C extends ElementType = "div">({
+  as,
+  className,
+  variant = CardVariant.WHITE,
+  interactive = false,
+  active = false,
+  children,
+  ...tagProps
+}: PolymorphicCardProps<C>): ReactElement {
   const cardClassName = classNames(
     getBackgroundColor(variant, active, interactive),
     "overflow-hidden rounded-xl px-4 py-5 sm:p-6",

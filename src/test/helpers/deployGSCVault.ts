@@ -1,4 +1,4 @@
-import { GSCVault, GSCVault__factory } from "elf-council-typechain";
+import { GSCVault, GSCVault__factory } from "@elementfi/elf-council-typechain";
 import { BigNumberish, Wallet } from "ethers";
 
 export async function deployGSCVault(

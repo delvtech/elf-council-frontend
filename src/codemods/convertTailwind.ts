@@ -25,6 +25,7 @@ const convertTw = (sourceFile: SourceFile) => {
     let hasText = true;
     if (ts.isCallExpression(node)) {
       try {
+        // eslint-disable-next-line no-console
         console.log("node", node?.getText());
       } catch (error) {
         // console.log("node", node);

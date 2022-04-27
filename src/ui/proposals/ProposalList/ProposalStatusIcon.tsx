@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { t } from "ttag";
 
 import { getIsVotingOpen } from "src/elf-council-proposals";
@@ -33,10 +33,12 @@ const StatusTagIntents: Record<ProposalStatus, Intent> = {
 interface ProposalStatusIconProps {
   signer: Signer | undefined;
   proposal: Proposal;
+  disableTooltip?: boolean;
 }
 
 export function ProposalStatusIcon({
   proposal,
+  disableTooltip = false,
 }: ProposalStatusIconProps): ReactElement | null {
   const { data: currentBlockNumber = 0 } = useLatestBlockNumber();
   const { proposalId, quorum } = proposal;
@@ -55,7 +57,18 @@ export function ProposalStatusIcon({
     return null;
   }
 
-  return (
+  return disableTooltip ? (
+    <div
+      className={classNames(
+        "flex items-center space-x-8",
+        intentTextColors[StatusTagIntents[status]],
+      )}
+    >
+      <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 8 8">
+        <circle cx={4} cy={4} r={3} />
+      </svg>
+    </div>
+  ) : (
     <Tooltip content={StatusLabels[status]}>
       <div
         className={classNames(

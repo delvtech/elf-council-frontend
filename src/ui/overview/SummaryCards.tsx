@@ -1,16 +1,14 @@
 import React, { ReactElement } from "react";
 
-import { useSmartContractEvents } from "@elementfi/react-query-typechain";
-import { ProposalsJson } from "elf-council-proposals";
-import { BigNumber } from "ethers";
+import { ProposalsJson } from "@elementfi/elf-council-proposals";
 import { t } from "ttag";
 
 import { abbreviateLargeValue } from "src/base/numbers";
-import { lockingVaultContract } from "src/elf/contracts";
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 import SummaryCard from "src/ui/overview/SummaryCard";
 import { useVotingPowerForProtocol } from "src/ui/voting/useVotingPowerForProtocol";
 import Link from "next/link";
+import useNumDelegates from "./useNumDelegates";
 
 interface SummaryCardsProps {
   proposalsJson: ProposalsJson;
@@ -47,42 +45,15 @@ export function SummaryCards({
         balance={numActiveProposals}
       />
       <SummaryCard
-        title={t`Total Delegates`}
+        title={t`Total Participants`}
         balance={numDelegates}
-        tooltipContent={t`Number of unique delegates with voting power in the system`}
+        tooltipContent={t`The number of unique delegates (including self-delegates) with voting power in the system.`}
       />
       <SummaryCard
-        title={t`Circulating ELFI`}
+        title={t`Circulating Voting Power`}
         balance={`${formattedTotalVotingPower}`}
-        tooltipContent={t`The total amount of voting power in the system`}
+        tooltipContent={t`The total amount of voting power in the system.`}
       />
     </div>
   );
-}
-
-function useNumDelegates() {
-  const { data: events } = useSmartContractEvents(
-    lockingVaultContract,
-    "VoteChange",
-  );
-
-  // tally of vote power by delegate
-  const votePowerByDelegates: Record<string, BigNumber> = {};
-  events?.forEach((event) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [unusedAccount, delegate, amount]: [string, string, BigNumber] =
-      event.args as [string, string, BigNumber];
-    if (delegate in votePowerByDelegates) {
-      votePowerByDelegates[delegate] =
-        votePowerByDelegates[delegate].add(amount);
-    }
-
-    votePowerByDelegates[delegate] = amount;
-  });
-
-  const delegatedVotes = Object.values(votePowerByDelegates);
-
-  delegatedVotes.filter((votePower) => !votePower.isZero());
-
-  return delegatedVotes.length;
 }

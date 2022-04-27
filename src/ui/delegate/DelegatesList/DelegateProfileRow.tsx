@@ -1,17 +1,22 @@
 import { Fragment, ReactElement } from "react";
-import { t } from "ttag";
 import { formatBalance } from "src/formatBalance";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
-import Image from "next/image";
 import classNames from "classnames";
 import { Popover, Transition } from "@headlessui/react";
 import DetailedDelegateProfile from "src/ui/delegate/DelegatesList/DetailedDelegateProfile";
 import dynamic from "next/dynamic";
-import { ButtonVariant, getButtonClass } from "src/ui/base/Button/styles";
 import { useVotingPowerForAccountAtLatestBlock } from "src/ui/voting/useVotingPowerForAccount";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
+import { Provider } from "@ethersproject/providers";
+import { formatWalletAddress } from "src/base/formatWalletAddress";
+import { getGSCCandidateUrl } from "src/commonwealth";
 
 interface DelegateProfileRowProps {
+  provider?: Provider;
   selected: boolean;
   highlightSelected?: boolean;
   delegate: Delegate;
@@ -21,6 +26,7 @@ interface DelegateProfileRowProps {
 
 function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
   const {
+    provider,
     selected = false,
     highlightSelected = false,
     delegate,
@@ -28,8 +34,14 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
     profileActionButton,
   } = props;
 
-  const votePower = useVotingPowerForAccountAtLatestBlock(delegate.address);
-
+  const formattedDelegateName =
+    delegate.ensName ||
+    delegate.commonwealthName ||
+    delegate.name ||
+    formatWalletAddress(delegate.address);
+  const delegateNameElement = (
+    <span className="truncate">{formattedDelegateName}</span>
+  );
   return (
     <Popover>
       <div
@@ -43,25 +55,26 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         {/* Name */}
         <div className="col-span-7 mr-4 items-start truncate text-left lg:col-span-4">
           <div className="flex flex-col">
-            <div
-              className={classNames(
-                "flex items-center font-bold text-principalRoyalBlue",
-              )}
-            >
+            <div className="flex items-center font-bold text-principalRoyalBlue">
               <WalletJazzicon
                 account={delegate.address}
                 size={20}
-                className="mr-2 inline-block h-5 w-5 rounded-xl bg-principalRoyalBlue"
+                className="mr-2 h-5 w-5 rounded-xl bg-principalRoyalBlue"
               />
-              <span className="truncate">{delegate.name}</span>
-              {/* Crown Icon */}
-              <div className="relative ml-2 flex h-4 w-4 shrink-0">
-                <Image
-                  layout="fill"
-                  src="/assets/crown.svg"
-                  alt={t`Affiliated with Element Finance`}
-                />
-              </div>
+              {delegate.commonwealthPostedFromAddress ? (
+                <a
+                  className="hover:underline"
+                  target="_blank"
+                  href={getGSCCandidateUrl(
+                    delegate.commonwealthPostedFromAddress,
+                  )}
+                  rel="noreferrer"
+                >
+                  {delegateNameElement}
+                </a>
+              ) : (
+                delegateNameElement
+              )}
             </div>
             <div className="lg:hidden">
               <span
@@ -71,7 +84,7 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
                     : "text-blueGrey"
                 }
               >
-                <span>{formatBalance(votePower)}</span>
+                <NumDelegatedVotes account={delegate.address} />
               </span>
             </div>
           </div>
@@ -84,23 +97,24 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
               highlightSelected && selected ? "text-gray-400" : "text-blueGrey"
             }
           >
-            <span>{formatBalance(votePower)}</span>
+            <NumDelegatedVotes account={delegate.address} />
           </span>
         </div>
 
         {/* Buttons */}
-        <div className="col-span-3 flex gap-x-4 lg:col-span-4">
-          <Popover.Button
+        <div className="col-span-3 flex justify-end gap-x-4 lg:col-span-4">
+          {/* Button to expand a detailed view of delegate  */}
+          {/* <Popover.Button
             className={classNames(
               getButtonClass({ variant: ButtonVariant.SECONDARY }),
               "w-full justify-center",
             )}
           >
             {t`Profile`}
-          </Popover.Button>
+          </Popover.Button> */}
 
-          {/* Button unique for Delegate Page & Airdrop Page */}
-          {actionButton}
+          {/* Unique action event button */}
+          <div className="w-full lg:w-1/2 lg:pl-2">{actionButton}</div>
         </div>
       </div>
 
@@ -130,12 +144,12 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
           leaveTo="opacity-0 sm:scale-95"
         >
           <Popover.Panel
-            focus
-            className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform sm:rounded-xl 
+            className="fixed inset-0 z-20 box-content bg-hackerSky sm:inset-[initial] sm:top-[50%] sm:left-[50%] sm:w-[400px] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:transform sm:rounded-xl
           md:w-[700px] lg:absolute lg:top-0 lg:right-0 lg:left-0 lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0"
           >
             {({ close }) => (
               <DetailedDelegateProfile
+                provider={provider}
                 delegate={delegate}
                 onCloseProfileClick={close}
                 selected={selected}
@@ -146,6 +160,21 @@ function DelegateProfileRow(props: DelegateProfileRowProps): ReactElement {
         </Transition.Child>
       </Transition>
     </Popover>
+  );
+}
+
+interface NumDelegatedVotesProps {
+  account: string | undefined | null;
+}
+function NumDelegatedVotes(props: NumDelegatedVotesProps): ReactElement {
+  const { account } = props;
+  const votePower = useVotingPowerForAccountAtLatestBlock(account);
+
+  return (
+    <div className="flex items-center">
+      <ElementIconCircle size={IconSize.SMALL} className="mr-1" />
+      <span>{formatBalance(votePower)}</span>
+    </div>
   );
 }
 

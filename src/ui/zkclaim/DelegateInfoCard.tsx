@@ -7,14 +7,14 @@ import { jt, t } from "ttag";
 
 interface DelegateInfoCardProps {
   className?: string;
-  onBackClick?: () => void;
-  onNextClick?: () => void;
+  onPreviousStep?: () => void;
+  onNextStep?: () => void;
 }
 
 export default function DelegateInfoCard({
   className,
-  onBackClick,
-  onNextClick,
+  onPreviousStep,
+  onNextStep,
 }: DelegateInfoCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -30,20 +30,20 @@ export default function DelegateInfoCard({
           selection at any time.`}</p>
         </div>
         <div className="flex justify-between">
-          {onBackClick && (
+          {onPreviousStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.WHITE}
-              onClick={onBackClick}
+              onClick={onPreviousStep}
             >
               {t`Back`}
             </Button>
           )}
-          {onNextClick && (
+          {onNextStep && (
             <Button
               className="px-12"
               variant={ButtonVariant.GRADIENT}
-              onClick={onNextClick}
+              onClick={onNextStep}
             >
               {t`Pick Delegate`}
             </Button>

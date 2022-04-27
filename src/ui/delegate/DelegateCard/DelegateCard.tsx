@@ -1,66 +1,46 @@
-import { ReactElement, useState, useCallback, useEffect } from "react";
-import { CheckCircleIcon } from "@heroicons/react/solid";
+import { ReactElement, useCallback, useEffect } from "react";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { t } from "ttag";
 import CurrentDelegate from "src/ui/delegate/DelegateCard/CurrentDelegate";
 import classNames from "classnames";
 import DelegateAddressInput from "./DelegateAddressInput";
 import DelegateButton from "./DelegateButton";
-import { TWO_SECONDS_IN_MILLISECONDS } from "src/base/time";
-import Button from "src/ui/base/Button/Button";
-import { Tag } from "src/ui/base/Tag/Tag";
-import { Intent } from "src/ui/base/Intent";
 import { Overrides } from "ethers";
+import { Provider } from "@ethersproject/providers";
 
 interface DelegateCardProps {
   account: string | null | undefined;
+  provider?: Provider;
   changeDelegation: (arg: [newDelegate: string, overrides?: Overrides]) => void;
   isLoading: boolean;
-  isError: boolean;
   isSuccess: boolean;
   delegateAddressOnChain: string | undefined;
   delegateAddressInput: string;
   setDelegateAddressInput: (address: string) => void;
   selectedDelegate: string;
   setSelectedDelegate: (address: string) => void;
+  resolvedDelegateAddressInput?: string;
 }
 
 function DelegateCard(props: DelegateCardProps): ReactElement {
   const {
     account,
+    provider,
     changeDelegation,
     isLoading,
-    isError,
     isSuccess,
     delegateAddressInput,
     delegateAddressOnChain,
     setDelegateAddressInput,
     selectedDelegate,
     setSelectedDelegate,
+    resolvedDelegateAddressInput,
   } = props;
-
-  const [delegationSuccess, setDelegationSuccess] = useState(false);
-  const [delegationFail, setDelegationFail] = useState(false);
 
   const handleDelegateClick = useCallback(() => {
     changeDelegation([selectedDelegate]);
   }, [changeDelegation, selectedDelegate]);
-
-  const toggleDelegationSuccess = useCallback(() => {
-    setDelegationSuccess(true);
-    setTimeout(() => {
-      setDelegationSuccess(false);
-    }, TWO_SECONDS_IN_MILLISECONDS);
-  }, []);
-
-  const toggleDelegationFail = useCallback(() => {
-    setDelegationFail(true);
-    setTimeout(() => {
-      setDelegationFail(false);
-    }, TWO_SECONDS_IN_MILLISECONDS);
-  }, []);
 
   // Updates the state after every click on 'Delegate' button
   useEffect(() => {
@@ -73,24 +53,17 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
       if (nextDelegate || delegateAddressOnChain) {
         setSelectedDelegate("");
         setDelegateAddressInput("");
-        toggleDelegationSuccess();
       }
-      // Fail
-    } else if (isError) {
-      toggleDelegationFail();
     }
   }, [
     isSuccess,
     delegateAddressOnChain,
     setDelegateAddressInput,
-    isError,
     setSelectedDelegate,
-    toggleDelegationSuccess,
-    toggleDelegationFail,
   ]);
 
   const invalidAddress =
-    !isValidAddress(delegateAddressInput) && delegateAddressInput.length !== 0;
+    !resolvedDelegateAddressInput && delegateAddressInput.length !== 0;
 
   const isSelfDelegated = account ? account === delegateAddressOnChain : false;
 
@@ -105,10 +78,11 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
         </div>
       </div>
 
-      <div className="mt-2 flex flex-col gap-0 md:flex-col md:gap-0 lg:flex-row lg:gap-7">
+      <div className="mt-1 flex flex-col gap-0 md:flex-col md:gap-0 lg:flex-row lg:gap-7">
         {/* Current Delegate Profile */}
         {delegateAddressOnChain ? (
           <CurrentDelegate
+            provider={provider}
             className="w-full md:w-full lg:w-1/2"
             currentDelegateAddress={delegateAddressOnChain}
             isSelfDelegated={isSelfDelegated}
@@ -130,8 +104,6 @@ function DelegateCard(props: DelegateCardProps): ReactElement {
             setDelegateAddressInput={setDelegateAddressInput}
             selectedDelegate={selectedDelegate}
             invalidAddress={invalidAddress}
-            delegationSuccess={delegationSuccess}
-            delegationFail={delegationFail}
           />
 
           <div className="text-center">

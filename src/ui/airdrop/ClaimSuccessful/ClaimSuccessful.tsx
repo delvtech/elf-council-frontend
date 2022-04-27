@@ -1,16 +1,20 @@
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import { jt, t } from "ttag";
-import { TwitterIconFromFigma } from "src/ui/base/TwitterIconFromFigma";
-import Image from "next/image";
 import { CallToActionCard } from "./CallToActionCard";
-import { DiscordIconFromFigma } from "src/ui/base/DiscordIconFromFigma";
-import { CommonwealthIcon } from "src/ui/base/CommonwealthIcon";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import TwitterIcon from "src/ui/base/svg/TwitterIcon";
+import DiscordIcon from "src/ui/base/svg/DiscordIcon";
+import CommonwealthIcon from "src/ui/base/svg/CommonwealthIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
+import ElementUrl from "src/elf/urls";
 import Link from "next/link";
+import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 
 const elfiLogoElement = (
-  <ElementIcon
+  <ElementIconCircle
     key="element-icon"
     className="mx-1 md:mx-2"
     size={IconSize.MEDIUM}
@@ -33,46 +37,36 @@ export function ClaimSuccessful(): ReactElement {
           <a className="mb-10 w-2/3">
             <CallToActionCard
               label={t`Back to Overview`}
-              icon={
-                <Image
-                  height="24px"
-                  width="24px"
-                  src="/assets/CouncilLogo.svg"
-                  alt={t`Element Council logo`}
-                />
-              }
+              icon={<ElementIcon className="h-8 w-8" />}
             />
           </a>
         </Link>
-        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop
-        experience on Twitter and join the Element Discord to get more involved
-        in our community and governance system.`}</p>
+        <p className="mb-4 w-full text-justify md:w-2/3">{t`Share your airdrop 
+        experience on Twitter and join the Element Discord to get more involved 
+        in the community and governance system.`}</p>
         <div className="flex w-full space-x-4">
           <a
             target="_blank"
             rel="noreferrer"
             className="flex-1"
             href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-              t`🧝‍♂️`,
+              t`I just accepted my portion of responsibility to govern the Element DAO. The experimentation of governance, fixed rates, DeFi and so much more has just begun!`,
             )}`}
           >
             <CallToActionCard
               label={t`Tweet @element_fi`}
-              icon={<TwitterIconFromFigma />}
+              icon={<TwitterIcon />}
             />
           </a>
           <a
             target="_blank"
             rel="noreferrer"
-            href="https://element.fi/discord"
+            href={ElementUrl.DISCORD}
             className="flex-1"
           >
-            <CallToActionCard
-              label={t`Join Discord`}
-              icon={<DiscordIconFromFigma />}
-            />
+            <CallToActionCard label={t`Join Discord`} icon={<DiscordIcon />} />
           </a>
-          <a href="https://forum.element.fi" className="flex-1">
+          <a href={ElementUrl.FORUM} className="flex-1">
             <CallToActionCard
               label={t`Visit forum`}
               icon={<CommonwealthIcon />}

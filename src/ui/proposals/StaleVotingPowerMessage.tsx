@@ -1,4 +1,4 @@
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { parseEther } from "ethers/lib/utils";
 import { ReactElement } from "react";
 import { Intent } from "src/ui/base/Intent";
@@ -53,6 +53,7 @@ export function StaleVotingPowerMessage({
     return (
       <Tag
         intent={Intent.ERROR}
+        className="w-full"
       >{t`Your voting power has expired for this proposal.`}</Tag>
     );
   }

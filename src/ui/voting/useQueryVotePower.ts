@@ -1,11 +1,14 @@
-import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
-import { formatEther } from "@ethersproject/units";
+import { useQuery } from "react-query";
+
 import {
   LockingVault,
   OptimisticRewards,
   VestingVault,
-} from "elf-council-typechain";
-import { BytesLike } from "ethers";
+} from "@elementfi/elf-council-typechain";
+import { useSmartContractReadCall } from "@elementfi/react-query-typechain";
+import { formatEther } from "@ethersproject/units";
+import { BytesLike, ethers } from "ethers";
+import { Logger } from "ethers/lib/utils";
 
 import { useLatestBlockNumber } from "src/ui/ethereum/useLatestBlockNumber";
 
@@ -22,22 +25,36 @@ export function useQueryVotePower(
   extraData?: BytesLike,
 ): string {
   const { data: latestBlockNumber } = useLatestBlockNumber();
-
   const blockNumber = atBlockNumber || latestBlockNumber;
 
-  const { data: votePower } = useSmartContractReadCall(
-    vaultContract,
-    "queryVotePower",
-    {
-      callArgs: [
-        account as string,
-        blockNumber as number,
-        extraData as BytesLike,
-      ],
-      enabled: !!account && !!blockNumber && !!extraData,
-      keepPreviousData: true,
+  // TODO: use useSmartContractReadCall when onError is overridable and when we can disable ethers
+  // logging
+  const { data: votePower } = useQuery({
+    queryFn: async () => {
+      try {
+        // TODO: find a better solution for this.
+        // ethers.js will spit out an error message that we can't disable without turning off the
+        // logger.  because the smart contract code for queryVotePower returns an error if the
+        // account is not found, it can flood the console with errors.  this is a workaround until a
+        // better solution is found.
+        ethers.utils.Logger.setLogLevel(Logger.levels.OFF);
+        const votePower = await vaultContract.callStatic.queryVotePower(
+          account as string,
+          blockNumber as number,
+          extraData as BytesLike,
+        );
+        ethers.utils.Logger.setLogLevel(Logger.levels.WARNING);
+        return votePower;
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") {
+          console.error(error);
+        }
+      }
     },
-  );
+    queryKey: ["queryVotePower", account, vaultContract.address, atBlockNumber],
+    enabled: !!account && !!blockNumber && !!extraData,
+    keepPreviousData: true,
+  });
 
   return formatEther(votePower || 0);
 }
@@ -56,6 +73,8 @@ export function useQueryVotePowerView(
 
   const blockNumber = atBlockNumber || latestBlockNumber;
 
+  // TODO: use method in useQueryVotePower instead of useSmartContractReadCall so that we can
+  // prevent flooding of errors in the console
   const { data: votingPower } = useSmartContractReadCall(
     vaultContract,
     "queryVotePowerView",

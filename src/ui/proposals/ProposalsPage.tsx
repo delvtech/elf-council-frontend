@@ -1,21 +1,34 @@
-import React, { ReactElement, useCallback, useMemo, useState } from "react";
-
+import {
+  Fragment,
+  ReactElement,
+  useCallback,
+  useMemo,
+  useState,
+  useEffect,
+} from "react";
+import Head from "next/head";
+import { Dialog, Transition } from "@headlessui/react";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { useWeb3React } from "@web3-react/core";
-import { Proposal, ProposalsJson } from "elf-council-proposals";
-import Image from "next/image";
+import { Proposal, ProposalsJson } from "@elementfi/elf-council-proposals";
 import { t } from "ttag";
 
 import { ELEMENT_FINANCE_SNAPSHOT_URL } from "src/elf-snapshot/endpoints";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import H1 from "src/ui/base/H1/H1";
+import H2 from "src/ui/base/H2/H2";
 import Tabs, { Tab } from "src/ui/base/Tabs/Tabs";
-import { useIsTailwindSmallScreen } from "src/ui/base/tailwindBreakpoints";
+import {
+  useIsTailwindSmallScreen,
+  useIsTailwindLargeScreen,
+} from "src/ui/base/tailwindBreakpoints";
+import EmptySpaceFace from "src/ui/base/svg/EmptySpaceFace";
 import { ProposalDetailsCard } from "src/ui/proposals/ProposalDetailsCard";
 import { useSigner } from "src/ui/signer/useSigner";
 
 import { ProposalList } from "./ProposalList/ProposalList";
+import GradientCard from "src/ui/base/Card/GradientCard";
 
 type TabId = "active" | "past";
 
@@ -31,9 +44,10 @@ export default function ProposalsPage({
   const { account, library } = useWeb3React();
   const signer = useSigner(account, library);
 
-  const [activeTabId, setActiveTab] = useState<TabId>("active");
+  const [activeTabId, setActiveTabId] = useState<TabId>("active");
 
   const isTailwindSmallScreen = useIsTailwindSmallScreen();
+  const isTailwindLargeScreen = useIsTailwindLargeScreen();
 
   const activeProposals = useFilteredProposals(
     "active",
@@ -46,11 +60,42 @@ export default function ProposalsPage({
     currentBlockNumber,
   );
 
+  const setDefaultActiveProposal = useCallback(() => {
+    setSelectedProposalId(activeProposals?.[0]?.proposalId);
+    setSelectedProposal(activeProposals?.[0]);
+    activeProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
+  }, [activeProposals]);
+
+  const setDefaultPastProposal = useCallback(() => {
+    setSelectedProposalId(pastProposals?.[0]?.proposalId);
+    setSelectedProposal(pastProposals?.[0]);
+    pastProposals.length ? setIsModalOpen(true) : setIsModalOpen(false);
+  }, [pastProposals]);
+
+  const calculateModalOpenState = () => {
+    if (!isTailwindLargeScreen) {
+      return false;
+    }
+
+    if (activeTabId === "active") {
+      return !!activeProposals.length;
+    }
+
+    if (activeTabId === "past") {
+      return !!pastProposals.length;
+    }
+
+    // Will not reach this
+    return false;
+  };
+
+  const [isModalOpen, setIsModalOpen] = useState(calculateModalOpenState());
+
   // set the default to the first active proposal, since that's what filter is
   // on by default
   const [selectedProposalId, setSelectedProposalId] = useState<
     string | undefined
-  >(isTailwindSmallScreen ? undefined : activeProposals?.[0].proposalId);
+  >(isTailwindSmallScreen ? undefined : activeProposals?.[0]?.proposalId);
   const [selectedProposal, setSelectedProposal] = useState<
     Proposal | undefined
   >(isTailwindSmallScreen ? undefined : activeProposals?.[0]);
@@ -62,42 +107,83 @@ export default function ProposalsPage({
       );
       setSelectedProposal(proposal);
       setSelectedProposalId(proposalId);
+      setIsModalOpen(true);
     },
     [proposalsJson.proposals],
   );
 
   const handleActiveTabClick = () => {
     if (activeTabId !== "active") {
-      setActiveTab("active");
+      setActiveTabId("active");
       // select the first proposal when the user clicks to view the
       // active tab
       if (isTailwindSmallScreen) {
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
       } else {
-        setSelectedProposalId(activeProposals?.[0]?.proposalId);
-        setSelectedProposal(activeProposals?.[0]);
+        setDefaultActiveProposal();
       }
     }
   };
 
   const handlePastTabClick = () => {
     if (activeTabId !== "past") {
-      setActiveTab("past");
+      setActiveTabId("past");
       if (isTailwindSmallScreen) {
         setSelectedProposalId(undefined);
         setSelectedProposal(undefined);
       } else {
         // select the first proposal when the user clicks to view the
         // past tab
-        setSelectedProposalId(pastProposals?.[0]?.proposalId);
-        setSelectedProposal(pastProposals?.[0]);
+        setDefaultPastProposal();
       }
     }
   };
+
+  const handleOnClose = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  // Populates the default past/active proposal when moving from small -> big screen size
+  useEffect(() => {
+    if (isTailwindLargeScreen && !isModalOpen) {
+      if (activeTabId === "past") {
+        setDefaultPastProposal();
+      } else {
+        setDefaultActiveProposal();
+      }
+    }
+  }, [
+    activeTabId,
+    isModalOpen,
+    isTailwindLargeScreen,
+    pastProposals,
+    selectedProposal,
+    setDefaultActiveProposal,
+    setDefaultPastProposal,
+  ]);
+
+  const proposalDetail = !!selectedProposal ? (
+    <ProposalDetailsCard
+      key={selectedProposalId}
+      onClose={handleOnClose}
+      account={account}
+      signer={signer}
+      proposal={selectedProposal}
+    />
+  ) : null;
+
+  const showNoProposalsState =
+    (activeTabId === "active" && !activeProposals.length) ||
+    (activeTabId === "past" && !pastProposals.length);
+
   return (
     <div className="flex h-full lg:justify-center">
-      <div className="h-full w-full flex-1 space-y-8 px-8 pt-8 lg:max-w-lg">
+      <Head>
+        <title>{t`Proposals | Element Council Protocol`}</title>
+      </Head>
+
+      <div className="h-full w-full flex-1 space-y-8 pr-8 pt-8 lg:max-w-lg">
         <H1 className="flex-1 text-center text-principalRoyalBlue">{t`On-chain Proposals`}</H1>
         <div className="flex justify-between">
           <Tabs aria-label={t`Filter proposals`}>
@@ -117,7 +203,9 @@ export default function ProposalsPage({
           <OffChainProposalsLink />
         </div>
         <div className="flex space-x-12">
-          {activeProposals.length ? (
+          {showNoProposalsState ? (
+            <NoProposalsList activeTabId={activeTabId} />
+          ) : (
             <ProposalList
               account={account}
               signer={signer}
@@ -126,23 +214,50 @@ export default function ProposalsPage({
               }
               selectedProposalId={selectedProposalId}
               onClickItem={handleSelectProposal}
+              isModalOpen={isModalOpen}
             />
-          ) : (
-            <NoProposalsEmptyState activeTabId={activeTabId} />
           )}
         </div>
       </div>
-      {selectedProposal && (
-        <ProposalDetailsCard
-          isOpen={!!selectedProposal}
-          onClose={() => {
-            setSelectedProposal(undefined);
-            setSelectedProposalId(undefined);
-          }}
-          account={account}
-          signer={signer}
-          proposal={selectedProposal}
-        />
+
+      {showNoProposalsState ? <NoProposalsDetail /> : null}
+
+      {isTailwindLargeScreen ? (
+        proposalDetail
+      ) : (
+        <Transition.Root show={isModalOpen} as={Fragment}>
+          <Dialog
+            // Using z-50 so that the dialog appears above the Sidebar, which is currently set to z-10
+            className="fixed inset-0 z-50 overflow-y-auto"
+            onClose={handleOnClose}
+          >
+            <div className="fixed top-1/2 left-1/2">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+              </Transition.Child>
+
+              <Transition.Child
+                as="div"
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 sm:scale-95"
+                enterTo="opacity-100 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 sm:scale-100"
+                leaveTo="opacity-0 sm:scale-95"
+              >
+                {proposalDetail}
+              </Transition.Child>
+            </div>
+          </Dialog>
+        </Transition.Root>
       )}
     </div>
   );
@@ -156,7 +271,7 @@ function OffChainProposalsLink() {
       variant={ButtonVariant.SECONDARY}
     >
       <div className="flex h-full items-center">
-        {t`Off-chain`}
+        <span className="mr-1">{t`Off-chain`}</span>
         <ExternalLinkIcon height={24} />
       </div>
     </AnchorButton>
@@ -194,18 +309,25 @@ function useFilteredProposals(
   }, [activeTabId, currentBlockNumber, proposals]);
 }
 
-function NoProposalsEmptyState(props: { activeTabId: TabId }) {
+function NoProposalsList(props: { activeTabId: TabId }) {
   return (
-    <div className="my-6 flex-1 text-center text-blueGrey">
-      <span className="-mr-[27px]">
-        <Image
-          width={327}
-          height={107}
-          src="/assets/empty-space-face.svg"
-          alt=" "
-        />
-      </span>
+    <div className="my-6 flex flex-1 flex-col items-center text-blueGrey">
+      <EmptySpaceFace className="-mr-[27px] w-[90%] max-w-[327px]" />
       <p className="mt-4 text-xl font-semibold leading-6">{t`no ${props.activeTabId} proposals`}</p>
     </div>
+  );
+}
+
+function NoProposalsDetail() {
+  return (
+    <GradientCard
+      style={
+        // don't scroll app behind popover, makes a double scroll bar
+        { overscrollBehavior: "none" }
+      }
+      className="hidden h-[85vh] min-w-[403px] max-w-[48rem] flex-1 items-center justify-center rounded-xl opacity-90 lg:flex"
+    >
+      <H2 className="m-4 text-white">{t`Click on a proposal to view it here`}</H2>
+    </GradientCard>
   );
 }

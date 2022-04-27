@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 
 import { Signer } from "@ethersproject/abstract-signer";
-import { Proposal } from "elf-council-proposals";
+import { Proposal } from "@elementfi/elf-council-proposals";
 import { ProposalListItem } from "./ProposalListItem";
 
 interface ProposalListProps {
@@ -10,6 +10,7 @@ interface ProposalListProps {
   proposals: Proposal[];
   selectedProposalId: string | undefined;
   onClickItem: (proposalId: string | undefined) => void;
+  isModalOpen: boolean;
 }
 export function ProposalList({
   account,
@@ -17,13 +18,14 @@ export function ProposalList({
   signer,
   selectedProposalId,
   onClickItem,
+  isModalOpen,
 }: ProposalListProps): ReactElement {
   return (
     <div className="flex w-full flex-col space-y-4 pb-8">
       {proposals.map((proposal) => (
         <ProposalListItem
           key={proposal.proposalId}
-          active={proposal.proposalId === selectedProposalId}
+          active={isModalOpen && proposal.proposalId === selectedProposalId}
           proposal={proposal}
           onClick={onClickItem}
           account={account}

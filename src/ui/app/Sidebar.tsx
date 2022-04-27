@@ -2,7 +2,6 @@ import React, { Fragment, ReactElement, useCallback, useState } from "react";
 import {
   MenuAlt4Icon,
   ExternalLinkIcon,
-  XIcon,
   HomeIcon,
   PencilAltIcon,
   UserGroupIcon,
@@ -11,12 +10,16 @@ import Link from "next/link";
 import { useRouter, NextRouter } from "next/router";
 import classNames from "classnames";
 import { t } from "ttag";
-import Image from "next/image";
-import { RESOURCES_URL } from "src/ui/resources";
 import AnchorButton from "src/ui/base/Button/AnchorButton";
+import ElementIcon from "src/ui/base/svg/ElementIcon/ElementIcon";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { useUnclaimedAirdrop } from "src/ui/airdrop/useUnclaimedAirdrop";
+import ElementUrl from "src/elf/urls";
+import PoweredByCouncil from "src/ui/base/svg/PoweredByCouncil";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
+import { useFeatureFlag } from "src/elf/featureFlag/useFeatureFlag";
+import { FeatureFlag } from "src/elf/featureFlag/featureFlag";
 
 interface SidebarProps {
   account: string | null | undefined;
@@ -27,7 +30,7 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  const { data: merkleInfo } = useMerkleInfo(account);
+  const { data: merkleInfo } = useMerkleInfo(account, MerkleRewardType.RETRO);
   const unclaimedAirdrop = useUnclaimedAirdrop(account, merkleInfo);
 
   const onOpen = useCallback(() => {
@@ -37,6 +40,8 @@ export default function Sidebar(props: SidebarProps): ReactElement {
   const onClose = useCallback(() => {
     setIsOpen(false);
   }, []);
+
+  const hasGSCFlag = useFeatureFlag(FeatureFlag.GSC);
 
   return (
     <Fragment>
@@ -54,21 +59,14 @@ export default function Sidebar(props: SidebarProps): ReactElement {
       >
         <div className="w-full">
           <div className="mt-1 flex justify-around py-3">
-            <div className="relative h-24 w-24">
-              <Image
-                layout="fill"
-                src="/assets/ElementLogo--dark.svg"
-                alt={t`Element Council`}
-              />
-            </div>
-            <button
-              onClick={onClose}
-              className="absolute top-0 right-0 flex h-12 w-12 cursor-pointer items-center justify-center rounded-md p-0 hover:shadow md:hidden"
-            >
-              <XIcon className="h-6 w-6" />
-            </button>
+            <ElementIcon className="h-24 w-24" title="Element Finance" />
+            <CloseButton
+              onClose={onClose}
+              className="absolute top-0 right-0 md:hidden"
+              iconClassName="text-black"
+            />
           </div>
-          <div className="mt-16 space-y-6">
+          <div className="mt-16 space-y-6 overflow-hidden py-1">
             <SidebarLink
               link="/"
               label={t`Overview`}
@@ -93,32 +91,34 @@ export default function Sidebar(props: SidebarProps): ReactElement {
                 <UserGroupIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
               }
             />
-            <SidebarLinkExternal
-              link="https://forum.element.fi"
-              label={t`Forum`}
+            <SidebarLink
+              className={hasGSCFlag ? "block" : "hidden"}
+              link="/gsc-overview"
+              label={t`GSC Overview`}
+              router={router}
+              icon={
+                <HomeIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+              }
             />
-            <SidebarLinkExternal link={RESOURCES_URL} label={t`Resources`} />
+            <SidebarLink
+              className={hasGSCFlag ? "block" : "hidden"}
+              link="/gsc-proposals"
+              label={t`GSC Proposals`}
+              router={router}
+              icon={
+                <PencilAltIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
+              }
+            />
+            <SidebarLinkExternal link={ElementUrl.FORUM} label={t`Forum`} />
+            <SidebarLinkExternal link={ElementUrl.DOCS} label={t`Resources`} />
 
             {!!Number(unclaimedAirdrop) && <AirdropLink link="/airdrop" />}
           </div>
         </div>
-        <div className="relative h-24 w-24">
-          <Image
-            layout="fill"
-            src="/assets/PoweredByCouncil.svg"
-            alt={t`Powered by Council`}
-          />
-        </div>
+        <PoweredByCouncil className="mt-10 h-24 w-24 shrink-0" />
       </div>
     </Fragment>
   );
-}
-
-interface SidebarLinkProps {
-  link: string;
-  label: string;
-  router: NextRouter;
-  icon?: ReactElement;
 }
 
 interface SidebarLinkExternalProps {
@@ -142,27 +142,36 @@ function AirdropLink(props: AirdropLinkProps): ReactElement {
     </div>
   );
 }
+
+interface SidebarLinkProps {
+  className?: string;
+  link: string;
+  label: string;
+  router: NextRouter;
+  icon?: ReactElement;
+}
+
 function SidebarLink(props: SidebarLinkProps): ReactElement {
-  const { link, label, router, icon } = props;
+  const { className, link, label, router, icon } = props;
 
   const isActive = router.pathname === link;
 
   return (
-    <div className="flex justify-center">
+    <div className={classNames(className, "flex justify-center")}>
       <Link href={link}>
         {/* There's a big discussion about how awful the Link api is for a11y
       here: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/issues/402 the
       best thing to do for now is just ignore this rule when an anchor tag is
       the child of a Link since all a tags *should* have an href 🙁 */
         /* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a className="flex items-center px-2 hover:bg-blue-50 md:w-[55%]">
-          {icon}
+        <a className="hover:bg-blue-50 md:w-full">
           <div
             className={classNames(
-              "flex cursor-pointer justify-start p-3 text-brandDarkBlue-dark",
+              "flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]",
               { "font-bold": isActive },
             )}
           >
+            {icon}
             <p>{label}</p>
           </div>
         </a>
@@ -174,15 +183,15 @@ function SidebarLink(props: SidebarLinkProps): ReactElement {
 function SidebarLinkExternal(props: SidebarLinkExternalProps): ReactElement {
   const { link, label } = props;
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center">
       <a
         href={link}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center px-2  hover:bg-blue-50 md:w-[55%]"
+        className=" hover:bg-blue-50 md:w-full"
       >
-        <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
-        <div className="flex cursor-pointer justify-center p-3 text-brandDarkBlue-dark">
+        <div className="flex cursor-pointer items-center justify-start gap-2 px-2 py-3 text-brandDarkBlue-dark md:relative md:left-[50%] md:translate-x-[-25%]">
+          <ExternalLinkIcon className="h-4 w-4 flex-shrink-0 text-principalRoyalBlue" />
           <p>{label}</p>
         </div>
       </a>

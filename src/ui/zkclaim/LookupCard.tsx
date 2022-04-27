@@ -5,33 +5,28 @@ import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import useFile from "src/ui/base/useFile";
 import { ZKData } from "src/ui/zk/types";
-import {
-  DISCORD_ZK_URL,
-  GITHUB_ZK_URL,
-  HASH_LENGTH,
-} from "src/ui/zk/constants";
+import { GITHUB_ZK_URL, HASH_LENGTH } from "src/ui/zk/constants";
+import ElementUrl from "src/elf/urls";
 import { t, jt } from "ttag";
 
 interface LookupCardProps {
   className?: string;
-  onComplete?: (data: ZKData) => void;
-  onNextClick: () => void;
+  onChange?: ([key, secret]: [string, string]) => void;
+  onNextStep: () => void;
 }
 
 export default function LookupCard({
   className,
-  onComplete,
-  onNextClick,
+  onChange,
+  onNextStep,
 }: LookupCardProps): ReactElement {
   const [key, setKey] = useState("");
   const [secret, setSecret] = useState("");
   const { file, openFileBrowser } = useFile({ accept: ".json" });
 
   useEffect(() => {
-    if (key && secret) {
-      onComplete?.({ privateKey: key, secret });
-    }
-  }, [key, secret, onComplete]);
+    onChange?.([key, secret]);
+  }, [key, secret, onChange]);
 
   useEffect(() => {
     if (!file) {
@@ -50,7 +45,7 @@ export default function LookupCard({
   const discordLink = (
     <a
       key="discordLink"
-      href={DISCORD_ZK_URL}
+      href={ElementUrl.DISCORD}
       target="_blank"
       rel="noreferrer"
       className="text-yieldLightBlue"
@@ -76,7 +71,7 @@ export default function LookupCard({
       <div className="flex flex-col gap-2 p-2 text-white sm:px-6 sm:py-4">
         <h1 className="mb-2 text-3xl font-semibold">{t`Claim Airdrop`}</h1>
         <p>
-          {jt`To check your elligibility for this airdrop, upload or enter the Key and Secret generated while creating the Public ID you shared in ${discordLink} or on ${githubLink}.`}
+          {jt`To check your eligibility for this airdrop, upload or enter the Key and Secret generated while creating the Public ID you shared in ${discordLink} or through ${githubLink}.`}
         </p>
         <p className="mb-6">
           {t`Element cannot retrieve your Key and Secret for you.`}
@@ -113,7 +108,7 @@ export default function LookupCard({
           <Button
             variant={ButtonVariant.GRADIENT}
             disabled={!key || !secret}
-            onClick={onNextClick}
+            onClick={onNextStep}
           >{t`Check Airdrop`}</Button>
         </div>
       </div>

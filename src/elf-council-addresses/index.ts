@@ -1,40 +1,72 @@
-import { AddressesJsonFile } from "elf-council-tokenlist";
+import {
+  AddressesJsonFile,
+  mainnetAddressList,
+  goerliAddressList,
+} from "@elementfi/elf-council-tokenlist";
 
-import testnetAddressList from "./testnet.addresses.json";
-import waffleAddressList from "./waffle.addresses.json";
-
-const localGoerliAddressList = {
+// For local hardhat only, this is inlined as an object to preserve type safety
+const testnetAddressList: AddressesJsonFile = {
+  chainId: 31337,
   addresses: {
-    airdrop: "0xb7920477F7A39c3DffA925076857eB1585503e1B",
-    coreVoting: "0x0CB8aa45068EE31e97B717b0B35e26A43884c84c",
-    elementToken: "0x2b1a91De5B9C3Ad6439eeAeD0E481F8cf6E22601",
-    gscCoreVoting: "0x600c4926c9F88beCE3533ceaAA36804d6E23F1c1",
-    gscVault: "0x0A575bFA79454112c37B9Af2a6362c9c68f7d2e3",
-    lockingVault: "0xb5E8AF575Ee302A24c6C7746a99D895BeF67cb5D",
-    optimisticGrants: "0x092B49777CB45dc4939FBc4029ce7a116D63D29D",
+    elementToken: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    coreVoting: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    gscCoreVoting: "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+    gscVault: "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+    timeLock: "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+    lockingVault: "0x610178dA211FEF7D417bC0e6FeD39F05609AD788",
+    vestingVault: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
     optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
-    spender: "0x722289C399e6f4AbCE80FaFbABC9a9876432834C",
-    timeLock: "0x36687bdD319a78AB4b4347f3A7459Da235AFc4f4",
-    treasury: "0xd46dDb33A33FD3D352d08cc7022Ce1f5c6ccFF1a",
-    vestingVault: "0xe69D2F8DeD2924e0845118E7E467Fc97F7994ef6",
+    airdrop: "0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82",
+    optimisticGrants: "0x0000000000000000000000000000000000000000",
+    treasury: "0x9A676e781A523b5d0C0e43731313A708CB607508",
+    spender: "0x0B306BF915C4d645ff596e518fAf3F9669b97016",
   },
-  chainId: 5,
+};
+
+// For testing only, this is inlined as an object to preserve type safety
+const waffleAddressList: AddressesJsonFile = {
+  addresses: {
+    airdrop: "0x0BDb999cFA9c47d6d62323a1905F8Eb7B3c9B119",
+    coreVoting: "0xFDFEF9D10d929cB3905C71400ce6be1990EA0F34",
+    elementToken: "0xA193E42526F1FEA8C99AF609dcEabf30C1c29fAA",
+    gscCoreVoting: "0xFf807885934003A35b1284d7445fc83Fd23417e5",
+    gscVault: "0x84e924C5E04438D2c1Df1A981f7E7104952e6de1",
+    lockingVault: "0x4E0597863fA1AA7B6b95a887AD9fEee038815642",
+    optimisticGrants: "0x0000000000000000000000000000000000000000",
+    optimisticRewardsVault: "0x0000000000000000000000000000000000000000",
+    timeLock: "0xdCCc660F92826649754E357b11bd41C31C0609B9",
+    treasury: "0x6f2fa37EBfaf089C4Fd7e6124C1028306943D11d",
+    vestingVault: "0x2061701b22095418514C0D4a28366C54B1464C17",
+    spender: "0x0000000000000000000000000000000000000000",
+  },
+  chainId: 31337,
 };
 
 // Default to the testnet in this repo so `npm start` Just Works without having
-// to specify it on the command line.
-// TODO: Add this env variable (ie: "mainnet") to .env file when we're ready
+// to specify it on the command line. This requires a local hardhat node to be running.
 const chainName = process.env.NEXT_PUBLIC_CHAIN_NAME || "testnet";
 
 export const addressesJson = getAddressesList();
 
-function getAddressesList() {
+function getAddressesList(): AddressesJsonFile {
   if (process.env.NODE_ENV === "test") {
     return waffleAddressList;
   }
 
-  const addressesList: AddressesJsonFile =
-    chainName === "testnet" ? testnetAddressList : localGoerliAddressList;
+  // local hardhat
+  if (chainName === "testnet") {
+    return testnetAddressList;
+  }
 
-  return addressesList;
+  if (chainName === "goerli") {
+    return goerliAddressList;
+  }
+
+  if (chainName === "mainnet") {
+    return mainnetAddressList;
+  }
+
+  // Should not happen because of chainName has a default value set, regardless
+  // we can just default to local hardhat
+  return testnetAddressList;
 }

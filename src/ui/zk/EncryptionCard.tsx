@@ -12,23 +12,26 @@ import { t } from "ttag";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import downloadFile, { DownloadType } from "src/base/downloadFile";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
-import { ZKData } from "./types";
+import { Platform, ZKData } from "./types";
 import { HASH_LENGTH } from "./constants";
+import { pedersenHashConcat, toHex } from "zkp-merkle-airdrop-lib";
 
 interface EncryptionCardProps {
   className?: string;
-  onComplete: () => void;
-  onGenerated: ([key, secret]: [string, string]) => void;
-  onBackClick?: () => void;
-  onNextClick: () => void;
+  platform?: Platform;
+  onGenerated?: ([key, secret]: [string, string]) => void;
+  onDownloaded?: (data: ZKData) => void;
+  onPreviousStep?: () => void;
+  onNextStep?: () => void;
 }
 
 export default function EncryptionCard({
   className,
-  onComplete,
+  platform,
   onGenerated,
-  onBackClick,
-  onNextClick,
+  onDownloaded,
+  onPreviousStep,
+  onNextStep,
 }: EncryptionCardProps): ReactElement {
   const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
   const key = keySecretPair?.[0];
@@ -52,8 +55,12 @@ export default function EncryptionCard({
         secretHashSeed || newKey,
         ...mouseInput.split("").reverse(),
       ].join("");
+
       // reset to avoid reuse
-      setSecretHashSeed(undefined);
+      if (secretHashSeed) {
+        setSecretHashSeed(undefined);
+      }
+
       const newSecret = utils.id(secretInput);
       setKeySecretPair([newKey, newSecret]);
       setProgress(progress);
@@ -63,13 +70,17 @@ export default function EncryptionCard({
   );
 
   const handleDownloadClick = () => {
-    downloadFile(
-      "$elfi-airdrop-key-and-secret",
-      JSON.stringify({ privateKey: key, secret } as ZKData),
-      DownloadType.JSON,
-    );
-    setDownloaded(true);
-    onComplete();
+    if (key && secret) {
+      const publicId = toHex(pedersenHashConcat(BigInt(key), BigInt(secret)));
+      const data: ZKData = { privateKey: key, secret, publicId };
+      downloadFile(
+        `elfi${platform && `-${platform}`}-airdrop-key-and-secret`,
+        JSON.stringify(data),
+        DownloadType.JSON,
+      );
+      setDownloaded(true);
+      onDownloaded?.(data);
+    }
   };
 
   return (
@@ -108,10 +119,10 @@ export default function EncryptionCard({
           }}
         />
         <div className="mt-6 flex gap-4 text-right">
-          {onBackClick && (
+          {onPreviousStep && (
             <Button
               variant={ButtonVariant.WHITE}
-              onClick={onBackClick}
+              onClick={onPreviousStep}
             >{t`Back`}</Button>
           )}
           <div className="ml-auto flex gap-4">
@@ -120,16 +131,18 @@ export default function EncryptionCard({
               onClick={handleDownloadClick}
               disabled={!keySecretPair || progress < 100}
             >{t`Download JSON`}</Button>
-            <Tooltip
-              content={t`Download JSON before continuing`}
-              disabled={!keySecretPair || progress < 100 || downloaded}
-            >
-              <Button
-                variant={ButtonVariant.GRADIENT}
-                onClick={onNextClick}
-                disabled={!downloaded}
-              >{t`Next`}</Button>
-            </Tooltip>
+            {onNextStep && (
+              <Tooltip
+                content={t`Download JSON before continuing`}
+                disabled={!keySecretPair || progress < 100 || downloaded}
+              >
+                <Button
+                  variant={ButtonVariant.GRADIENT}
+                  onClick={onNextStep}
+                  disabled={!downloaded}
+                >{t`Next`}</Button>
+              </Tooltip>
+            )}
           </div>
         </div>
       </div>

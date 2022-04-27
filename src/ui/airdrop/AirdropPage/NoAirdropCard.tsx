@@ -1,13 +1,16 @@
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import React, { ReactElement } from "react";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { Intent } from "src/ui/base/Intent";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { jt, t } from "ttag";
 
 const elementIconInBodyText = (
-  <ElementIcon
+  <ElementIconCircle
     key="element-icon-in-body-text"
     className="ml-0.5 mr-1 inline-block bg-paleLily"
     inline
@@ -38,7 +41,7 @@ export function NoAirdropCard(): ReactElement {
             <div className="flex h-full w-full flex-col items-center justify-center p-6">
               <div className="mb-3 text-lg font-bold text-principalRoyalBlue text-opacity-60">{t`Airdrop amount`}</div>
               <div className="flex justify-center gap-2 text-center text-5xl font-bold text-principalRoyalBlue">
-                <ElementIcon
+                <ElementIconCircle
                   className="mr-2 bg-paleLily"
                   size={IconSize.LARGE}
                 />

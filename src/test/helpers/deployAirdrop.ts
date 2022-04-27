@@ -1,4 +1,4 @@
-import { Airdrop, Airdrop__factory } from "elf-council-typechain";
+import { Airdrop, Airdrop__factory } from "@elementfi/elf-council-typechain";
 import { Wallet } from "ethers";
 import MerkleTree from "merkletreejs";
 

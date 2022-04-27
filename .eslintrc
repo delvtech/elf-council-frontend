@@ -18,6 +18,13 @@
         "no-undef": ["off"],
         "react-hooks/exhaustive-deps": "error"
       }
+    },
+    // js files in the root dir can use `const ... = require(...)`
+    {
+      "files": ["./*.js"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off"
+      }
     }
   ],
   "rules": {

@@ -1,4 +1,2 @@
 export const HASH_LENGTH = 66;
-export const DISCORD_ZK_URL = "https://element.fi/discord";
-export const GITHUB_ZK_URL =
-  "https://github.com/element-fi/elf-council-frontend/issues/384";
+export const GITHUB_ZK_URL = `https://gist.github.com/jrhea/64763b68ab4479aa46429c194d476b82`;

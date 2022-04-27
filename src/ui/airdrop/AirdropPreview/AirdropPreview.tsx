@@ -1,11 +1,14 @@
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import React, { ReactElement } from "react";
-import { useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
+import { MerkleRewardType, useMerkleInfo } from "src/elf/merkle/useMerkleInfo";
 import { LoadingAirdropCard } from "src/ui/airdrop/AirdropPage/LoadingAirdropCard";
 import { NoAirdropCard } from "src/ui/airdrop/AirdropPage/NoAirdropCard";
 import { AirdropAmountCard } from "src/ui/airdrop/AirdropPreview/AirdropAmountCard";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { jt, t } from "ttag";
@@ -13,18 +16,18 @@ import { jt, t } from "ttag";
 interface AirdropPreviewProps {
   account: string | null | undefined;
   onNextStep: () => void;
-  onPrevStep: () => void;
+  onPrevStep?: () => void;
 }
 
 const elementIcon = (
-  <ElementIcon key="element-icon" inline size={IconSize.MEDIUM} />
+  <ElementIconCircle key="element-icon" inline size={IconSize.MEDIUM} />
 );
 export function AirdropPreview({
   onNextStep,
   onPrevStep,
   account,
 }: AirdropPreviewProps): ReactElement {
-  const merkleInfoQueryData = useMerkleInfo(account);
+  const merkleInfoQueryData = useMerkleInfo(account, MerkleRewardType.RETRO);
 
   const { data: merkleInfo, isLoading: isLoadingMerkle } = merkleInfoQueryData;
 

@@ -7,7 +7,7 @@ export const ELEMENT_FINANCE_SNAPSHOT_URL = getSnapshotUrl();
 function getSnapshotUrl() {
   switch (addressesJson.chainId) {
     case ChainId.MAINNET:
-      return "https://snapshot.org/#/element-finance.eth";
+      return "https://snapshot.org/#/elfi.eth";
     case ChainId.GOERLI:
     case ChainId.LOCAL:
     default:

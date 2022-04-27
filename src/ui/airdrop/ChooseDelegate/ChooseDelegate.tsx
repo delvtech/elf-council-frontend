@@ -1,7 +1,6 @@
 import React, { ReactElement, useCallback, useMemo, useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import classNames from "classnames";
-import { isValidAddress } from "src/base/isValidAddress";
 import { delegates } from "src/elf-council-delegates/delegates";
 import { StepCard } from "src/ui/airdrop/StepCard/StepCard";
 import Button from "src/ui/base/Button/Button";
@@ -12,12 +11,14 @@ import { Tag } from "src/ui/base/Tag/Tag";
 import DelegateProfileRow from "src/ui/delegate/DelegatesList/DelegateProfileRow";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
-import { useScrollDelegateIntoViewEffect } from "src/ui/airdrop/useScrollDelegateIntoViewEffect";
 import { Intent } from "src/ui/base/Intent";
 import { InputValidationIcon } from "src/ui/base/InputValidationIcon";
+import { useResolvedEnsName } from "src/ui/ethereum/useResolvedEnsName";
+import { Provider } from "@ethersproject/providers";
 
 interface ChooseDelegateProps {
   account: string;
+  provider?: Provider;
   onChooseDelegate: (delegateAddress: string) => void;
   onNextStep: () => void;
   onPrevStep: () => void;
@@ -25,6 +26,7 @@ interface ChooseDelegateProps {
 
 export function ChooseDelegate({
   account,
+  provider,
   onNextStep: onNextStepFromProps,
   onChooseDelegate,
   onPrevStep,
@@ -41,11 +43,9 @@ export function ChooseDelegate({
   const [customDelegateAddress, setCustomDelegateAddress] = useState<
     string | undefined
   >();
-
-  // Ref that holds list of refs for the delegate list elements; used for auto-scrolling
-  const scrollRefs = useScrollDelegateIntoViewEffect(
-    delegates,
-    selectedDelegateIndex,
+  const { data: resolvedCustomDelegateAddress } = useResolvedEnsName(
+    customDelegateAddress,
+    provider,
   );
 
   // shuffle the delegates list on first render to prevent biases
@@ -53,22 +53,16 @@ export function ChooseDelegate({
     return shuffle(delegates);
   }, []);
 
-  // disable the button when the user has no featured delegate, or
-  // self-delegate, or valid custom address selected.
-  const isValidCustomDelegateAddress =
-    customDelegateAddress !== undefined &&
-    isValidAddress(customDelegateAddress);
-
   const isNextStepDisabled =
     selectedDelegateIndex === undefined &&
     !isSelfDelegated &&
-    !isValidCustomDelegateAddress;
+    !resolvedCustomDelegateAddress;
 
   const onNextStep = useCallback(() => {
     if (isSelfDelegated) {
       onChooseDelegate(account);
-    } else if (customDelegateAddress && isValidAddress(customDelegateAddress)) {
-      onChooseDelegate(customDelegateAddress);
+    } else if (resolvedCustomDelegateAddress) {
+      onChooseDelegate(resolvedCustomDelegateAddress);
     } else if (
       selectedDelegateIndex !== undefined &&
       shuffledDelegates[selectedDelegateIndex].address
@@ -79,7 +73,7 @@ export function ChooseDelegate({
     onNextStepFromProps();
   }, [
     account,
-    customDelegateAddress,
+    resolvedCustomDelegateAddress,
     isSelfDelegated,
     onChooseDelegate,
     onNextStepFromProps,
@@ -149,7 +143,7 @@ export function ChooseDelegate({
               <span>{t`Voting Power`}</span>
             </div>
             {/* Spacer for Buttons */}
-            <span className="col-span-3 lg:col-span-4" />
+            <span className="col-span-3 lg:col-span-4"></span>
           </div>
 
           <div className="h-[40vh] min-h-[392px] overflow-auto pr-1 shadow">
@@ -172,11 +166,9 @@ export function ChooseDelegate({
                 const selected = idx === selectedDelegateIndex;
 
                 return (
-                  <li
-                    key={`${delegate.address}-${idx}}`}
-                    ref={scrollRefs.current[idx]}
-                  >
+                  <li key={`${delegate.address}-${idx}}`}>
                     <DelegateProfileRow
+                      provider={provider}
                       selected={selected}
                       highlightSelected
                       delegate={delegate}
@@ -185,7 +177,7 @@ export function ChooseDelegate({
                           onClick={handleSelectDelegate}
                           variant={ButtonVariant.PRIMARY}
                           disabled={selected}
-                          className="hidden w-full justify-center lg:inline-flex"
+                          className="inline-flex w-full justify-center"
                         >
                           {t`Choose`}
                         </Button>
@@ -237,13 +229,13 @@ export function ChooseDelegate({
                   name={t`Enter delegate address`}
                   placeholder={t`Enter delegate address`}
                   error={
-                    !!customDelegateAddress && !isValidCustomDelegateAddress
+                    !!customDelegateAddress && !resolvedCustomDelegateAddress
                   }
                   containerClassName="flex-1"
                   className={classNames(
                     "mb-4 h-12 flex-1 text-left text-principalRoyalBlue placeholder-principalRoyalBlue",
                     {
-                      "pr-12": isValidCustomDelegateAddress,
+                      "pr-12": resolvedCustomDelegateAddress,
                     },
                   )}
                   value={customDelegateAddress}
@@ -252,7 +244,7 @@ export function ChooseDelegate({
                 <div className="pointer-events-none absolute inset-y-0 right-0 bottom-4 flex items-center pr-3">
                   {customDelegateAddress ? (
                     <InputValidationIcon
-                      isValid={isValidCustomDelegateAddress}
+                      isValid={!!resolvedCustomDelegateAddress}
                       invalidToolipContent={t`Invalid address`}
                     />
                   ) : null}

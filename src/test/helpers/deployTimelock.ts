@@ -1,4 +1,4 @@
-import { Timelock, Timelock__factory } from "elf-council-typechain";
+import { Timelock, Timelock__factory } from "@elementfi/elf-council-typechain";
 import { BigNumberish, Wallet } from "ethers";
 
 export async function deployTimelock(

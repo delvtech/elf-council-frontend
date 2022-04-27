@@ -1,18 +1,21 @@
 import React, { ReactElement } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { ExternalLinkIcon } from "@heroicons/react/solid";
-import Image from "next/image";
 import { t } from "ttag";
 import { WalletProfileButton } from "src/ui/wallet/ConnectWalletButton";
 import { useGasPrice } from "src/ui/ethereum/useGasPrice";
-import { RESOURCES_URL } from "src/ui/resources";
+import ElementUrl from "src/elf/urls";
+import GasIcon from "src/ui/base/svg/GasIcon";
 import { useDeposited } from "src/ui/base/lockingVault/useDeposited";
-import { ElementIcon, IconSize } from "src/ui/base/ElementIcon/ElementIcon";
+import {
+  ElementIconCircle,
+  IconSize,
+} from "src/ui/base/ElementIconCircle/ElementIconCircle";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
+import { TooltipDefinition } from "src/ui/voting/tooltipDefinitions";
 import { Provider } from "@ethersproject/providers";
+import ExternalLink from "src/ui/base/ExternalLink/ExternalLink";
 
 const GAS_URL = "https://www.etherchain.org/tools/gasnow";
-const elfiTooltipText = t`The amount of voting power you own in the system`;
 
 function Header(): ReactElement {
   const { account, active, library } = useWeb3React<Provider>();
@@ -25,37 +28,28 @@ function Header(): ReactElement {
       <div className="flex items-center space-x-4 text-gray-400">
         {account ? (
           <div className="flex items-center">
-            <span className="mr-8 flex items-center gap-1">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={RESOURCES_URL}
-                className="hidden items-center gap-2 lg:flex"
-              >
-                <span className="text-principalRoyalBlue">{t`Learn how to vote`}</span>
-                <ExternalLinkIcon className="h-4 shrink-0 text-principalRoyalBlue" />
-              </a>
+            <span className="mr-8 hidden items-center gap-1 lg:flex">
+              <ExternalLink
+                href={ElementUrl.DOCS}
+                text={t`Learn how to vote`}
+                className="text-principalRoyalBlue"
+              />
             </span>
-            <a
+
+            <ExternalLink
               href={GAS_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="mr-8 flex items-center"
+              className="mr-8 flex items-center text-principalRoyalBlue"
+              showIcon={false}
             >
-              <span className="relative h-5 w-5">
-                <Image
-                  layout="fill"
-                  src="/assets/gas.svg"
-                  alt={t`Gas pump icon`}
-                />
-              </span>
-              <span className="ml-2 mr-1 font-bold text-principalRoyalBlue">
+              <GasIcon className="h-5 w-5" />
+              <span className="font-bold">
                 {gasPrice?.recommendedBaseFee || 0.0}
               </span>
-            </a>
-            <Tooltip content={elfiTooltipText}>
+            </ExternalLink>
+
+            <Tooltip content={t`${TooltipDefinition.OWNED_ELFI}`}>
               <span className="mr-8 flex items-center gap-2 font-bold text-principalRoyalBlue">
-                <ElementIcon size={IconSize.MEDIUM} />
+                <ElementIconCircle size={IconSize.MEDIUM} />
                 <span>
                   {amountDeposited}
                   <span className="hidden lg:inline"> ELFI</span>

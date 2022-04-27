@@ -1,27 +1,28 @@
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
+import Head from "next/head";
 import { useWeb3React } from "@web3-react/core";
 import LookupCard from "./LookupCard";
-import { ZKData } from "src/ui/zk/types";
 import EligibleCard from "./EligibleCard";
 import AlreadyClaimedCard from "./AlreadyClaimedCard";
+import NoPassCard from "./NoPassCard";
 import NotEligibleCard from "./NotEligibleCard";
 import DelegateInfoCard from "./DelegateInfoCard";
-import DelegateCard from "./DelegateCard";
+import ChooseDelegateCard from "./ChooseDelegateCard";
 import TransactionCard from "./TransactionCard";
 import ShareCard from "./ShareCard";
+import useZKProof from "./useZKProof";
 import { useSigner } from "src/ui/signer/useSigner";
 import useRouterSteps, { StepStatus } from "src/ui/router/useRouterSteps";
-import { ElementLogo } from "src/ui/base/ElementLogo/ElementLogo";
+import { ElementLogo } from "src/ui/base/svg/ElementLogo/ElementLogo";
 import {
   StepItem,
   StepStatus as StepItemStatus,
 } from "src/ui/base/Steps/StepItem";
 import { StepDivider } from "src/ui/base/Steps/StepDivider";
 import Steps from "src/ui/base/Steps/Steps";
-// import useWorker from "src/ui/base/useWorker";
-// import { useQuery } from "react-query";
 import { t } from "ttag";
-import { utils } from "ethers";
+import useAddressScreening from "./useAddressScreening";
+import useAlreadyClaimed from "./useAlreadyClaimed";
 
 export enum Step {
   LOOKUP = "lookup",
@@ -32,14 +33,36 @@ export enum Step {
   SHARE = "share",
 }
 
-export default function ClaimPage(): ReactElement {
+export default function ZKClaimPage(): ReactElement {
+  const { account, library } = useWeb3React();
+  const signer = useSigner(account, library);
+
+  const [keySecretPair, setKeySecretPair] = useState<[string, string]>();
+  const key = keySecretPair?.[0];
+  const secret = keySecretPair?.[1];
+  const [delegateAddress, setDelegateAddress] = useState<string>();
   const {
-    completeStep,
+    generate: generateProof,
+    isEligible,
+    isReady,
+    contract,
+  } = useZKProof({
+    key,
+    secret,
+    account: account || undefined,
+  });
+  const alreadyClaimed = useAlreadyClaimed(key, contract);
+  const { pass } = useAddressScreening(account);
+
+  const {
     canViewStep,
+    currentStep,
+    getStepNumber,
     getStepPath,
     getStepStatus,
     goToNextStep,
     goToPreviousStep,
+    goToStep,
   } = useRouterSteps({
     steps: [
       Step.LOOKUP,
@@ -50,75 +73,6 @@ export default function ClaimPage(): ReactElement {
       Step.SHARE,
     ],
   });
-  const { account, active, library } = useWeb3React();
-  const signer = useSigner(account, library);
-  const [data, setData] = useState<ZKData>();
-  const [publicId, setPublicId] = useState<string>();
-  const [alreadyClaimed, setAlreadyClaimed] = useState(false);
-  const [delegateAddress, setDelegateAddress] = useState<string>();
-  // TODO
-  // const proofCallResult =
-  //   useWorker(a16zLibrary.generateProofCallData);
-  // TODO: fetch leafs from aws and generate merkletree
-  // const { data: merkleTree, isLoading: merkleLeafsLoading } = useQuery({
-  //   queryKey: ["zk-merkle-tree-from-leafs"],
-  //   queryFn: async () => {
-  //     const leafs = await fetch(`${awsUrl}/zk-leafs.txt`).then((res) =>
-  //       res.text(),
-  //     );
-  //     return a16zLibrary.queryMerkleTree(ethersProvider, address);
-  //   },
-  // });
-
-  useEffect(() => {
-    // TODO
-    // if (data && merkleTree) {
-    //   proofCallResult.run(
-    //     merkleTree,
-    //     data.privateKey,
-    //     data.secret,
-    //     redeemerAddress,
-    //   );
-    // }
-
-    const placeholderSuccessKey =
-      "0x321718eb3db448ca864758c7cc54fd72e7a88b982a308f07b16d156fe6592e37";
-    if (data?.privateKey === placeholderSuccessKey) {
-      setPublicId(utils.id(`${data.privateKey}${data.secret}`));
-      setAlreadyClaimed(false);
-    } else {
-      setPublicId(undefined);
-    }
-
-    // TODO: check if already claimed
-    const placeholderClaimedKey =
-      "0x181a6585d99fdd4a22d02d1609d4d2a5498777523560905a3c069fd6f61feb1a";
-    if (data?.privateKey === placeholderClaimedKey) {
-      setPublicId(utils.id(`${data.privateKey}${data.secret}`));
-      setAlreadyClaimed(true);
-    }
-  }, [data /*, merkleTree */]);
-
-  const handleLookupStepComplete = useCallback(
-    (data: ZKData): void => {
-      setData(data);
-      completeStep(Step.DELEGATE_INFO);
-    },
-    [completeStep],
-  );
-
-  const handleDelegateStepComplete = useCallback(
-    (address: string) => {
-      setDelegateAddress(address);
-      completeStep(Step.TRANSACTION);
-    },
-    [completeStep],
-  );
-
-  const handleTransactionComplete = useCallback(() => {
-    completeStep(Step.TRANSACTION);
-    goToNextStep();
-  }, [completeStep, goToNextStep]);
 
   // TODO: transition styles
   const getStepClassName = (step: Step) => {
@@ -141,8 +95,22 @@ export default function ClaimPage(): ReactElement {
     return StepItemStatus.COMPLETE;
   };
 
+  // return to the eligibility step after screening the address if they're on
+  // a later step
+  useEffect(() => {
+    const isPastEligibility =
+      getStepNumber(currentStep) > getStepNumber(Step.ELIGIBILITY);
+    if (pass === false && isPastEligibility) {
+      goToStep(Step.ELIGIBILITY);
+    }
+  }, [pass, getStepNumber, currentStep, goToStep]);
+
   return (
     <div className="flex max-w-4xl flex-1 flex-col items-center gap-6">
+      <Head>
+        <title>{t`ZK Airdrop Claim | Element Council Protocol`}</title>
+      </Head>
+
       <div style={{ width: 600, maxWidth: "100%" }}>
         <Steps className="w-full">
           <StepItem
@@ -176,53 +144,67 @@ export default function ClaimPage(): ReactElement {
       {/* Lookup */}
       <LookupCard
         className={getStepClassName(Step.LOOKUP)}
-        onComplete={handleLookupStepComplete}
-        onNextClick={goToNextStep}
+        onChange={setKeySecretPair}
+        onNextStep={goToNextStep}
       />
 
       {/* Eligibility */}
-      {publicId && !alreadyClaimed && (
+      {pass === false ? (
+        <NoPassCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          onPreviousStep={goToPreviousStep}
+        />
+      ) : !isEligible ? (
+        <NotEligibleCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          onTryAgain={goToPreviousStep}
+        />
+      ) : alreadyClaimed ? (
+        <AlreadyClaimedCard
+          className={getStepClassName(Step.ELIGIBILITY)}
+          contract={contract}
+        />
+      ) : (
         <EligibleCard
           className={getStepClassName(Step.ELIGIBILITY)}
-          onBackClick={goToPreviousStep}
-          onNextClick={goToNextStep}
-        />
-      )}
-      {publicId && alreadyClaimed && (
-        <AlreadyClaimedCard className={getStepClassName(Step.ELIGIBILITY)} />
-      )}
-      {!publicId && (
-        <NotEligibleCard
-          onTryAgain={goToPreviousStep}
-          className={getStepClassName(Step.ELIGIBILITY)}
+          onPreviousStep={goToPreviousStep}
+          onNextStep={goToNextStep}
+          contract={contract}
         />
       )}
 
       {/* Delegation Information */}
       <DelegateInfoCard
         className={getStepClassName(Step.DELEGATE_INFO)}
-        onBackClick={goToPreviousStep}
-        onNextClick={goToNextStep}
+        onPreviousStep={goToPreviousStep}
+        onNextStep={goToNextStep}
       />
 
       {/* Delegate */}
-      <DelegateCard
+      <ChooseDelegateCard
         account={account as string}
+        provider={library}
         className={getStepClassName(Step.DELEGATE)}
-        onComplete={handleDelegateStepComplete}
-        onBackClick={goToPreviousStep}
-        onNextClick={goToNextStep}
+        onChooseDelegate={setDelegateAddress}
+        onPreviousStep={goToPreviousStep}
+        onNextStep={goToNextStep}
       />
 
       {/* Review & Initiate Transaction */}
-      {account && signer && delegateAddress && (
+      {delegateAddress && (
         <TransactionCard
           className={getStepClassName(Step.TRANSACTION)}
+          provider={library}
           account={account}
           signer={signer}
+          isReady={isReady}
+          contract={contract}
+          generateProof={generateProof}
+          nullifier={key}
           delegateAddress={delegateAddress}
-          onBackClick={goToPreviousStep}
-          onComplete={handleTransactionComplete}
+          onPreviousStep={goToPreviousStep}
+          onSuccess={goToNextStep}
+          onNextStep={goToNextStep}
         />
       )}
 

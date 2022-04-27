@@ -1,7 +1,5 @@
 import { ReactElement, useEffect, useRef } from "react";
-import Image from "next/image";
 import { t } from "ttag";
-import { formatWalletAddress } from "src/formatWalletAddress";
 import H2 from "src/ui/base/H2/H2";
 import { Delegate } from "src/elf-council-delegates/delegates";
 import { WalletJazzicon } from "src/ui/wallet/WalletJazzicon";
@@ -10,9 +8,12 @@ import Button from "src/ui/base/Button/Button";
 import { ButtonVariant } from "src/ui/base/Button/styles";
 import Tooltip from "src/ui/base/Tooltip/Tooltip";
 import { useWeb3React } from "@web3-react/core";
-import { XIcon } from "@heroicons/react/solid";
+import CloseButton from "src/ui/base/Dialog/CloseButton";
+import { useFormattedWalletAddress } from "src/ui/ethereum/useFormattedWalletAddress";
+import { Provider } from "@ethersproject/providers";
 
 interface DetailedDelegateProfileProps {
+  provider?: Provider;
   delegate: Delegate;
   onCloseProfileClick: () => void;
   selected: boolean;
@@ -21,6 +22,7 @@ interface DetailedDelegateProfileProps {
 }
 
 function DetailedDelegateProfile({
+  provider,
   delegate,
   onCloseProfileClick,
   actionButton,
@@ -30,6 +32,10 @@ function DetailedDelegateProfile({
   const { account } = useWeb3React();
   const previousSelectedRef = useRef<boolean>();
   const chooseDelegateTooltip = !account ? t`Connect wallet` : "";
+  const formattedAddress = useFormattedWalletAddress(
+    delegate.address,
+    provider,
+  );
 
   useEffect(() => {
     // Hacky-ish way to close the modal on selection
@@ -41,12 +47,11 @@ function DetailedDelegateProfile({
 
   return (
     <div className={classNames(className, "h-full", "relative", "pt-7")}>
-      <button
-        className="absolute top-0 right-0 z-10 m-5"
-        onClick={onCloseProfileClick}
-      >
-        <XIcon className="h-6 text-black" />
-      </button>
+      <CloseButton
+        onClose={onCloseProfileClick}
+        iconClassName="text-black"
+        className="absolute top-0 right-0"
+      />
 
       <div className="relative flex h-full flex-col p-5">
         <div className="flex flex-col gap-4 md:flex-row md:gap-8">
@@ -69,7 +74,7 @@ function DetailedDelegateProfile({
                 rel="noreferrer"
               >
                 <span className="text-blueGrey hover:text-principalRoyalBlue">
-                  {formatWalletAddress(delegate.address)}
+                  {formattedAddress}
                 </span>
               </a>
             </div>
@@ -96,30 +101,11 @@ function DetailedDelegateProfile({
             <div className="mt-5">
               <div className="flex items-center justify-between">
                 <span className="text-blueGrey">discord-handle</span>
-                <div className="relative h-5 w-5">
-                  <Image
-                    layout="fill"
-                    src="/assets/Discord.svg"
-                    alt={t`Crown icon`}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between">
-                {/* Empty span used for justify-between trick */}
-                <span />
-                <div className="relative h-5 w-5">
-                  <Image
-                    layout="fill"
-                    src="/assets/crown.svg"
-                    alt={t`Crown icon`}
-                  />
-                </div>
               </div>
             </div>
 
             {/* Background */}
-            <div className="mt-auto">
+            <div className="mt-2">
               <h3 className="text-principalRoyalBlue">{t`Background`}</h3>
               <p className="text-sm text-principalRoyalBlue">
                 Ex. Matcha, DyDX, ENS, Full stack engineer and solidity engineer
@@ -129,11 +115,6 @@ function DetailedDelegateProfile({
         </div>
 
         <div className="mt-auto flex gap-4 sm:mt-14 lg:mt-auto">
-          {/* Action Button */}
-          <Tooltip content={chooseDelegateTooltip} className="w-1/2">
-            {actionButton}
-          </Tooltip>
-
           {/* Close Button */}
           <Button
             variant={ButtonVariant.WHITE}
@@ -142,6 +123,11 @@ function DetailedDelegateProfile({
           >
             <span className="text-lg font-bold">{t`Close`}</span>
           </Button>
+
+          {/* Action Button */}
+          <Tooltip content={chooseDelegateTooltip} className="w-1/2">
+            {actionButton}
+          </Tooltip>
         </div>
       </div>
     </div>

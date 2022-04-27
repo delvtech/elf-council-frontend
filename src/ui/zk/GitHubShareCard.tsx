@@ -5,26 +5,28 @@ import AnchorButton from "src/ui/base/Button/AnchorButton";
 import Card, { CardVariant } from "src/ui/base/Card/Card";
 import HashString from "src/ui/base/HashString";
 import { ButtonVariant } from "src/ui/base/Button/styles";
-import Image from "next/image";
+import GitHubIcon from "src/ui/base/svg/GithubIcon";
 import { t, jt } from "ttag";
 
-const githubIssueLink = (
+const githubGistLink = (
   <a
     href={GITHUB_ZK_URL}
     target="_blank"
     rel="noreferrer"
     className="text-yieldLightBlue"
-  >{t`GitHub issue`}</a>
+  >{t`this GitHub gist`}</a>
 );
 
 interface GitHubShareCardProps {
   className?: string;
   publicId: string;
+  onShareClick?: () => void;
 }
 
 export default function GitHubShareCard({
   className,
   publicId,
+  onShareClick,
 }: GitHubShareCardProps): ReactElement {
   return (
     <Card className={className} variant={CardVariant.BLUE}>
@@ -33,7 +35,7 @@ export default function GitHubShareCard({
         <div className="flex flex-col items-stretch">
           <h1 className="mb-4 text-3xl font-semibold">{t`Public ID Successfully Created`}</h1>
           <p className="w-0 min-w-full">
-            {jt`Share your new Public ID in a comment on Element's ${githubIssueLink} to associate it with your GitHub username.`}
+            {jt`Associate your new Public ID with your GitHub profile by forking ${githubGistLink} and pasting it in the body.`}
           </p>
         </div>
         <HashString
@@ -47,18 +49,14 @@ export default function GitHubShareCard({
         />
         <div className="flex gap-12">
           <AnchorButton
+            onClick={onShareClick}
             variant={ButtonVariant.GRADIENT}
             href={GITHUB_ZK_URL}
             className="flex gap-2"
             target="_blank"
           >
-            {t`Go to GitHub Issue`}
-            <Image
-              width={24}
-              height={24}
-              src="/assets/githublogo--light.svg"
-              alt=""
-            />
+            {t`Go to GitHub Gist`}
+            <GitHubIcon width={24} height={24} className="fill-white" />
           </AnchorButton>
         </div>
       </div>
