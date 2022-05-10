@@ -24,7 +24,7 @@
     "@types/lodash.isnumber": "^3.0.6",
     "@types/lodash.isplainobject": "^4.0.6",
     "@types/lodash.keyby": "^4.6.6",
-    "@types/lodash.shuffle": "^4.2.6",
+    "@types/lodash.shuffle": "^4.2.7",
     "@types/lodash.zip": "^4.2.6",
     "@types/testing-library__jest-dom": "^5.14.3",
     "@uniswap/token-lists": "^1.0.0-beta.27",
