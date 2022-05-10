@@ -13,7 +13,7 @@
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
     "@metamask/jazzicon": "^2.0.0",
-    "@popperjs/core": "^2.11.2",
+    "@popperjs/core": "^2.11.5",
     "@reactchartjs/react-chart.js": "^1.0.0-rc.3",
     "@storybook/addon-a11y": "^6.4.19",
     "@svgr/webpack": "^6.2.1",
