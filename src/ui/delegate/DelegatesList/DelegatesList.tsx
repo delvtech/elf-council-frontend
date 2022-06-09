@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useMemo } from "react";
+import React, { ReactElement, useCallback, useMemo, useRef } from "react";
 import { t } from "ttag";
 import shuffle from "lodash.shuffle";
 import H2 from "src/ui/base/H2/H2";
@@ -11,7 +11,7 @@ import classNames from "classnames";
 import { Tag } from "src/ui/base/Tag/Tag";
 import { Intent } from "src/ui/base/Intent";
 import { Provider } from "@ethersproject/providers";
-
+import useScrollbarWidth from "src/ui/base/useScrollbarWidth";
 interface DelegatesListProps {
   account: string | null | undefined;
   provider?: Provider;
@@ -24,6 +24,8 @@ interface DelegatesListProps {
   setDelegateAddressInput: (address: string) => void;
 }
 
+const ONE_REM_IN_PIXELS = 16;
+
 function DelegatesList({
   account,
   provider,
@@ -33,6 +35,9 @@ function DelegatesList({
   selectedDelegate,
   setDelegateAddressInput,
 }: DelegatesListProps): ReactElement {
+  const ulRef = useRef<HTMLUListElement | null>(null);
+  const scrollbarWidth = useScrollbarWidth(ulRef);
+
   // shuffle the delegates list on first render to prevent biases
   const shuffledDelegates = useMemo(() => {
     return shuffle(delegates);
@@ -53,7 +58,15 @@ function DelegatesList({
 
   return (
     <div className="relative mb-8">
-      <div className="mb-4 grid grid-cols-10 items-center pr-8">
+      <div
+        className="mb-4 grid grid-cols-10 items-center"
+        style={{
+          paddingRight:
+            scrollbarWidth > 0
+              ? `${ONE_REM_IN_PIXELS + scrollbarWidth}px`
+              : `${ONE_REM_IN_PIXELS}px`,
+        }}
+      >
         {/* Title */}
         <div className="col-span-7 lg:col-span-4">
           <H2 className="tracking-wide text-principalRoyalBlue">
@@ -62,7 +75,7 @@ function DelegatesList({
         </div>
 
         {/* Vote Spacer */}
-        <div className="col-span-2 ml-auto mr-14 hidden lg:block"></div>
+        <div className="col-span-2 ml-auto mr-10 hidden lg:block"></div>
 
         <div className="col-span-3 flex gap-x-4 lg:col-span-4">
           <div className="hidden w-full lg:block"></div>
@@ -83,14 +96,22 @@ function DelegatesList({
       {/* List of delegates */}
       <div>
         {/* Header */}
-        <div className="mb-4 grid grid-cols-10 items-center border-b-2 px-4 pb-2 font-bold text-principalRoyalBlue">
+        <div
+          className="mb-4 grid grid-cols-10 items-center border-b-2 px-4 pb-2 pl-4 font-bold text-principalRoyalBlue"
+          style={{
+            paddingRight:
+              scrollbarWidth > 0
+                ? `${ONE_REM_IN_PIXELS + scrollbarWidth}px`
+                : `${ONE_REM_IN_PIXELS}px`,
+          }}
+        >
           {/* Name */}
           <span className="col-span-7 hidden lg:col-span-4 lg:block">{t`Name`}</span>
           {/* Name & Vote Power */}
           <span className="col-span-7 lg:col-span-4 lg:hidden">{t`Name / Voting Power`}</span>
 
           {/* Vote Power */}
-          <div className="col-span-2 ml-auto mr-14 hidden truncate lg:block">
+          <div className="col-span-2 ml-auto mr-10 hidden truncate lg:block">
             <span>{t`Voting Power`}</span>
           </div>
 
@@ -102,6 +123,7 @@ function DelegatesList({
         <ul
           // 392px exactly matches 5 rows of the list
           className="flex h-[40vh] min-h-[392px] flex-col gap-y-2 overflow-y-scroll pr-1"
+          ref={ulRef}
         >
           {shuffledDelegates.map((delegate, idx) => {
             const handleDelegation = () => {
